@@ -30,6 +30,36 @@ export type Reading = {
 
 type Ev = { ref: string; label: string; t?: number }
 
+/** Escape quotes that sit inside a JSON string but do not end it (a quote ends a string only when ,:}] follows). */
+export function repairJson(s: string) {
+  let out = ""
+  let inStr = false
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i]
+    if (inStr && c === "\\") {
+      out += c + (s[i + 1] ?? "")
+      i++
+      continue
+    }
+    if (c === '"') {
+      if (!inStr) inStr = true
+      else {
+        const rest = s.slice(i + 1).match(/^\s*(.)/)
+        if (!rest || ",:}]".includes(rest[1])) inStr = false
+        else {
+          out += '\\"'
+          continue
+        }
+      }
+    } else if (inStr && (c === "\n" || c === "\r")) {
+      out += "\\n"
+      continue
+    }
+    out += c
+  }
+  return out
+}
+
 /** Everything PAX may cite, keyed by a short reference. */
 export function evidenceIndex(take: TakeInfo, state: TakeState, ref: Reference | null, peers: TakeState[]): Ev[] {
   const out: Ev[] = []
@@ -52,7 +82,8 @@ export function evidenceIndex(take: TakeInfo, state: TakeState, ref: Reference |
     out.push({ ref: `take:${p.take.id}`, label: `${scriptById(p.take.scriptId)!.title} — ${takeLabel(p.take)}: Resonance ${p.latest.score.value.toFixed(0)} (${p.latest.score.low!.toFixed(0)}–${p.latest.score.high!.toFixed(0)})` })
   }
   const rm = referenceModel as unknown as { outcomes: Record<string, { features: { key: string; label: string; diff: number; low: number; high: number }[] }> }
-  for (const ft of rm.outcomes.votechoice?.features ?? []) out.push({ ref: `research:${ft.key}`, label: `Swayable archive, vote choice: ads coded “${ft.label}” moved ${ft.diff >= 0 ? "+" : ""}${ft.diff.toFixed(2)} pts vs. those without (95% CI ${ft.low.toFixed(2)} to ${ft.high.toFixed(2)})` })
+  const RELEVANT = new Set(["technique_plain_folks", "messenger_every_people", "narration_personal_story", "narration_explain_facts", "fact_new_yes", "style_text_on_screen", "style_amateur", "explicit_vote_for", "production_value_high", "tone_negative", "emotion_anger", "how_scripted"])
+  for (const ft of (rm.outcomes.votechoice?.features ?? []).filter((x) => RELEVANT.has(x.key))) out.push({ ref: `research:${ft.key}`, label: `Swayable archive, vote choice: ads coded “${ft.label}” moved ${ft.diff >= 0 ? "+" : ""}${ft.diff.toFixed(2)} pts vs. those without (95% CI ${ft.low.toFixed(2)} to ${ft.high.toFixed(2)})` })
   if (ref) out.push({ ref: "reference", label: `Reference scale ref-1, built from ${ref.n} flights in ${ref.dataset} and frozen` })
   return out
 }
@@ -138,15 +169,15 @@ export async function read(take: TakeInfo, state: TakeState, ref: Reference | nu
     const block = r.output?.message?.content?.find((c) => "toolUse" in c && c.toolUse)
     return (block && "toolUse" in block ? block.toolUse?.input : null) as Record<string, unknown> | null
   }
-  const [a, b] = await Promise.all([ask(NARRATIVE, 1200), ask(TOOL, 2200)])
+  const [a, b] = await Promise.all([ask(NARRATIVE, 900), ask(TOOL, 1800)])
   if (!a || !b) throw new Error("PAX returned no reading")
   const input = { ...a, ...b }
-  // Nested arrays sometimes arrive as JSON text; accept either.
+  // Nested arrays sometimes arrive as JSON text, at times with unescaped quotes inside; accept either.
   const arr = <T,>(x: unknown): T[] => {
     if (Array.isArray(x)) return x as T[]
     if (typeof x === "string") {
       try {
-        const p = JSON.parse(x)
+        const p = JSON.parse(repairJson(x))
         return Array.isArray(p) ? (p as T[]) : []
       } catch {
         return x.trim() ? ([x] as T[]) : []
