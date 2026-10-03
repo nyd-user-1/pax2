@@ -10,7 +10,6 @@ import { cn } from "@/ui/lib/utils"
 // ODbL), geometry from GovBlock's public geo bucket. Values join on one feature property.
 
 const BASEMAP = "https://tiles.openfreemap.org/styles/positron"
-export const GEO = "https://govblock-geo-638175140432.s3.amazonaws.com"
 
 export type MapProps = {
   geo: string
@@ -24,6 +23,7 @@ export type MapProps = {
 
 export function Choropleth({ geo, joinOn, values, view, height = 460, className, legend }: MapProps) {
   const [data, setData] = React.useState<GeoJSON.FeatureCollection | null>(null)
+  const [failed, setFailed] = React.useState(false)
   const [hover, setHover] = React.useState<{ x: number; y: number; key: string } | null>(null)
   React.useEffect(() => {
     let alive = true
@@ -37,6 +37,7 @@ export function Choropleth({ geo, joinOn, values, view, height = 460, className,
         })
         setData(fc)
       })
+      .catch(() => alive && setFailed(true))
     return () => {
       alive = false
     }
@@ -66,7 +67,8 @@ export function Choropleth({ geo, joinOn, values, view, height = 460, className,
           </Source>
         )}
       </Map>
-      {!data && <div className="absolute inset-0 animate-pulse bg-slate-100" />}
+      {!data && !failed && <div className="absolute inset-0 animate-pulse bg-slate-100" />}
+      {failed && <p className="absolute inset-x-0 top-4 mx-auto w-fit rounded-full bg-white px-3 py-1 text-xs text-pax-red-deep shadow-e1">The map shapes did not load.</p>}
       {h && hover && (
         <div className="pointer-events-none absolute z-10 w-max max-w-64 rounded-xl bg-slate-900 px-3 py-2 text-xs text-white shadow-e3" style={{ left: Math.min(hover.x + 14, 9999), top: hover.y + 14 }}>
           <p className="font-semibold">{h.title}</p>

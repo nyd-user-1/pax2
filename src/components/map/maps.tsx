@@ -1,6 +1,7 @@
 import ma from "../../../data/generated/ma-house-2022.json"
 import spend from "../../../data/generated/reform-ad-spend.json"
-import { Choropleth, GEO } from "@/components/map/choropleth"
+import { Choropleth } from "@/components/map/choropleth"
+import { GEO } from "@/lib/geo"
 
 const swatch = (c: string) => <span className="inline-block size-2.5 rounded-sm" style={{ background: c }} />
 
