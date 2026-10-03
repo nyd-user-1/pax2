@@ -1,1 +1,4014 @@
-{}
+{
+ "calm-danielle": {
+  "take": "calm-danielle",
+  "analyzedAt": "2026-10-03T09:23:54Z",
+  "audio": {
+   "source": "derived",
+   "durationSec": 31.23,
+   "loudnessDb": [
+    -26.4,
+    -29.9,
+    -30.9,
+    -29.0,
+    -29.3,
+    -72.3,
+    -69.8,
+    -23.3,
+    -28.0,
+    -28.8,
+    -26.9,
+    -23.3,
+    -26.6,
+    -72.8,
+    -30.0,
+    -24.6,
+    -28.4,
+    -26.6,
+    -24.4,
+    -76.8,
+    -30.5,
+    -28.9,
+    -48.5,
+    -58.3,
+    -79.8,
+    -27.0,
+    -29.0,
+    -28.0,
+    -29.7,
+    -80.0,
+    -27.7
+   ],
+   "pitchHz": [
+    220.7,
+    210.5,
+    218.8,
+    186.3,
+    184.8,
+    307.7,
+    213.3,
+    219.2,
+    202.5,
+    222.4,
+    207.9,
+    220.8,
+    170.2,
+    390.2,
+    246.2,
+    217.7,
+    188.2,
+    202.5,
+    195.9,
+    232.4,
+    188.2,
+    192.8,
+    246.2,
+    200.0,
+    152.2,
+    233.6,
+    235.3,
+    200.0,
+    183.9,
+    254.1,
+    192.8,
+    149.5
+   ],
+   "pitchMedianHz": 205.1,
+   "pitchRangeHz": [
+    156.9,
+    273.1
+   ],
+   "pauses": [
+    {
+     "t": 5.0,
+     "sec": 0.5
+    },
+    {
+     "t": 6.2,
+     "sec": 0.5
+    },
+    {
+     "t": 13.0,
+     "sec": 0.6
+    },
+    {
+     "t": 19.1,
+     "sec": 0.4
+    },
+    {
+     "t": 22.8,
+     "sec": 0.4
+    },
+    {
+     "t": 24.5,
+     "sec": 0.4
+    },
+    {
+     "t": 29.0,
+     "sec": 0.5
+    }
+   ],
+   "loudestSec": [
+    7,
+    11,
+    18
+   ],
+   "quietestSec": [
+    19,
+    24,
+    29
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "text": "More than half of Massachusetts' races since 2014 have been completely uncontested. Think about that. When there's only one name on the ballot, there's no debate, no comparison, and no reason for anyone to earn your vote. Question 3 would put every candidate on one primary ballot, and the top finishers would move on to November. Every voter in every party, or none, gets a say. It's a simple change. More choices on the ballot and representatives who have to answer to all of us. Vote yes on question 3.",
+   "words": [
+    {
+     "t": 0.12,
+     "w": "More"
+    },
+    {
+     "t": 0.31,
+     "w": "than"
+    },
+    {
+     "t": 0.52,
+     "w": "half"
+    },
+    {
+     "t": 0.75,
+     "w": "of"
+    },
+    {
+     "t": 0.99,
+     "w": "Massachusetts'"
+    },
+    {
+     "t": 1.75,
+     "w": "races"
+    },
+    {
+     "t": 2.19,
+     "w": "since"
+    },
+    {
+     "t": 2.39,
+     "w": "2014"
+    },
+    {
+     "t": 3.23,
+     "w": "have"
+    },
+    {
+     "t": 3.43,
+     "w": "been"
+    },
+    {
+     "t": 3.77,
+     "w": "completely"
+    },
+    {
+     "t": 4.07,
+     "w": "uncontested"
+    },
+    {
+     "t": 5.37,
+     "w": "Think"
+    },
+    {
+     "t": 5.75,
+     "w": "about"
+    },
+    {
+     "t": 5.96,
+     "w": "that"
+    },
+    {
+     "t": 6.68,
+     "w": "When"
+    },
+    {
+     "t": 6.87,
+     "w": "there's"
+    },
+    {
+     "t": 7.11,
+     "w": "only"
+    },
+    {
+     "t": 7.39,
+     "w": "one"
+    },
+    {
+     "t": 7.67,
+     "w": "name"
+    },
+    {
+     "t": 7.87,
+     "w": "on"
+    },
+    {
+     "t": 8.03,
+     "w": "the"
+    },
+    {
+     "t": 8.16,
+     "w": "ballot"
+    },
+    {
+     "t": 8.72,
+     "w": "there's"
+    },
+    {
+     "t": 8.95,
+     "w": "no"
+    },
+    {
+     "t": 9.27,
+     "w": "debate"
+    },
+    {
+     "t": 9.79,
+     "w": "no"
+    },
+    {
+     "t": 9.96,
+     "w": "comparison"
+    },
+    {
+     "t": 10.8,
+     "w": "and"
+    },
+    {
+     "t": 10.99,
+     "w": "no"
+    },
+    {
+     "t": 11.19,
+     "w": "reason"
+    },
+    {
+     "t": 11.51,
+     "w": "for"
+    },
+    {
+     "t": 11.92,
+     "w": "anyone"
+    },
+    {
+     "t": 12.07,
+     "w": "to"
+    },
+    {
+     "t": 12.15,
+     "w": "earn"
+    },
+    {
+     "t": 12.39,
+     "w": "your"
+    },
+    {
+     "t": 12.63,
+     "w": "vote"
+    },
+    {
+     "t": 13.48,
+     "w": "Question"
+    },
+    {
+     "t": 13.95,
+     "w": "3"
+    },
+    {
+     "t": 14.27,
+     "w": "would"
+    },
+    {
+     "t": 14.47,
+     "w": "put"
+    },
+    {
+     "t": 14.65,
+     "w": "every"
+    },
+    {
+     "t": 14.96,
+     "w": "candidate"
+    },
+    {
+     "t": 15.36,
+     "w": "on"
+    },
+    {
+     "t": 15.53,
+     "w": "one"
+    },
+    {
+     "t": 15.72,
+     "w": "primary"
+    },
+    {
+     "t": 16.27,
+     "w": "ballot"
+    },
+    {
+     "t": 16.76,
+     "w": "and"
+    },
+    {
+     "t": 16.91,
+     "w": "the"
+    },
+    {
+     "t": 17.03,
+     "w": "top"
+    },
+    {
+     "t": 17.31,
+     "w": "finishers"
+    },
+    {
+     "t": 17.83,
+     "w": "would"
+    },
+    {
+     "t": 17.99,
+     "w": "move"
+    },
+    {
+     "t": 18.19,
+     "w": "on"
+    },
+    {
+     "t": 18.4,
+     "w": "to"
+    },
+    {
+     "t": 18.51,
+     "w": "November"
+    },
+    {
+     "t": 19.5,
+     "w": "Every"
+    },
+    {
+     "t": 19.88,
+     "w": "voter"
+    },
+    {
+     "t": 20.4,
+     "w": "in"
+    },
+    {
+     "t": 20.59,
+     "w": "every"
+    },
+    {
+     "t": 20.95,
+     "w": "party"
+    },
+    {
+     "t": 21.36,
+     "w": "or"
+    },
+    {
+     "t": 21.55,
+     "w": "none"
+    },
+    {
+     "t": 22.0,
+     "w": "gets"
+    },
+    {
+     "t": 22.23,
+     "w": "a"
+    },
+    {
+     "t": 22.43,
+     "w": "say"
+    },
+    {
+     "t": 23.2,
+     "w": "It's"
+    },
+    {
+     "t": 23.35,
+     "w": "a"
+    },
+    {
+     "t": 23.55,
+     "w": "simple"
+    },
+    {
+     "t": 23.91,
+     "w": "change"
+    },
+    {
+     "t": 25.0,
+     "w": "More"
+    },
+    {
+     "t": 25.23,
+     "w": "choices"
+    },
+    {
+     "t": 25.68,
+     "w": "on"
+    },
+    {
+     "t": 25.79,
+     "w": "the"
+    },
+    {
+     "t": 25.91,
+     "w": "ballot"
+    },
+    {
+     "t": 26.34,
+     "w": "and"
+    },
+    {
+     "t": 26.86,
+     "w": "representatives"
+    },
+    {
+     "t": 27.31,
+     "w": "who"
+    },
+    {
+     "t": 27.43,
+     "w": "have"
+    },
+    {
+     "t": 27.63,
+     "w": "to"
+    },
+    {
+     "t": 27.78,
+     "w": "answer"
+    },
+    {
+     "t": 28.11,
+     "w": "to"
+    },
+    {
+     "t": 28.25,
+     "w": "all"
+    },
+    {
+     "t": 28.43,
+     "w": "of"
+    },
+    {
+     "t": 28.59,
+     "w": "us"
+    },
+    {
+     "t": 29.48,
+     "w": "Vote"
+    },
+    {
+     "t": 29.79,
+     "w": "yes"
+    },
+    {
+     "t": 30.03,
+     "w": "on"
+    },
+    {
+     "t": 30.31,
+     "w": "question"
+    },
+    {
+     "t": 30.67,
+     "w": "3"
+    }
+   ],
+   "wpm": 174.2,
+   "firstWordSec": 0.12
+  },
+  "shots": {
+   "source": "ai",
+   "segments": [
+    {
+     "type": "TECHNICAL_CUE",
+     "start": 0.0,
+     "end": 23.4,
+     "kind": "Content"
+    },
+    {
+     "type": "SHOT",
+     "start": 0.0,
+     "end": 0.0,
+     "kind": null
+    },
+    {
+     "type": "SHOT",
+     "start": 0.033,
+     "end": 5.366,
+     "kind": null
+    },
+    {
+     "type": "SHOT",
+     "start": 5.4,
+     "end": 31.566,
+     "kind": null
+    }
+   ]
+  },
+  "onScreenText": {
+   "source": "ai",
+   "bySecond": {
+    "0": [
+     "Danielle stand-in voice",
+     "QUESTION 3"
+    ],
+    "1": [
+     "Danielle stand-in voice",
+     "MASSACHUSETTS",
+     "QUESTION 3",
+     "RACES SINCE 2014"
+    ],
+    "2": [
+     "Danielle stand-in voice",
+     "MASSACHUSETTS",
+     "QUESTION 3",
+     "RACES SINCE 2014"
+    ],
+    "3": [
+     "Danielle stand-in voice",
+     "MASSACHUSETTS",
+     "QUESTION 3",
+     "RACES SINCE 2014"
+    ],
+    "4": [
+     "Danielle stand-in voice",
+     "HAVE BEEN COMPLETELY",
+     "QUESTION 3",
+     "UNCONTESTED"
+    ],
+    "5": [
+     "Danielle stand-in voice",
+     "HAVE BEEN COMPLETELY",
+     "QUESTION 3",
+     "UNCONTESTED"
+    ],
+    "6": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "THINK ABOUT THAT WHEN"
+    ],
+    "7": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "THERE'S ONLY ONE NAME"
+    ],
+    "8": [
+     "Danielle stand-in voice",
+     "ON THE BALLOT THERE'S",
+     "QUESTION 3"
+    ],
+    "9": [
+     "Danielle stand-in voice",
+     "NO DEBATE NO COMPARISON",
+     "QUESTION 3"
+    ],
+    "10": [
+     "Danielle stand-in voice",
+     "NO DEBATE NO COMPARISON",
+     "QUESTION 3"
+    ],
+    "11": [
+     "AND NO REASON FOR",
+     "Danielle stand-in voice",
+     "QUESTION 3"
+    ],
+    "12": [
+     "ANYONE TO EARN YOUR",
+     "Danielle stand-in voice",
+     "QUESTION 3"
+    ],
+    "13": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "VOTE QUESTION 3 WOULD"
+    ],
+    "14": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "VOTE QUESTION 3 WOULD"
+    ],
+    "15": [
+     "Danielle stand-in voice",
+     "PUT EVERY CANDIDATE ON",
+     "QUESTION 3"
+    ],
+    "16": [
+     "Danielle stand-in voice",
+     "ONE PRIMARY BALLOT AND",
+     "QUESTION 3"
+    ],
+    "17": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "THE TOP FINISHERS WOULD"
+    ],
+    "18": [
+     "Danielle stand-in voice",
+     "MOVE ON TO NOVEMBER",
+     "QUESTION 3"
+    ],
+    "19": [
+     "Danielle stand-in voice",
+     "EVERY VOTER IN EVERY",
+     "MOVE ON TO NOVEMBER",
+     "QUESTION 3"
+    ],
+    "20": [
+     "Danielle stand-in voice",
+     "EVERY VOTER IN EVERY",
+     "QUESTION 3"
+    ],
+    "21": [
+     "Danielle stand-in voice",
+     "PARTY OR NONE GETS",
+     "QUESTION 3"
+    ],
+    "22": [
+     "A SAY IT'S A",
+     "Danielle stand-in voice",
+     "QUESTION 3"
+    ],
+    "23": [
+     "Danielle stand-in voice",
+     "MORE CHOICES",
+     "QUESTION 3",
+     "SIMPLE CHANGE"
+    ],
+    "24": [
+     "Danielle stand-in voice",
+     "MORE CHOICES",
+     "QUESTION 3",
+     "SIMPLE CHANGE"
+    ],
+    "25": [
+     "Danielle stand-in voice",
+     "ON THE BALLOT AND",
+     "QUESTION 3"
+    ],
+    "26": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "REPRESENTATIVES",
+     "WHO HAVE TO"
+    ],
+    "27": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "REPRESENTATIVES",
+     "WHO HAVE TO"
+    ],
+    "28": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "US VOTE YES ON"
+    ],
+    "29": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "US VOTE YES ON"
+    ],
+    "30": [
+     "Danielle stand-in voice",
+     "QUESTION 3"
+    ]
+   },
+   "secondsWithText": 31
+  },
+  "pegasus": {
+   "source": "ai",
+   "model": "twelvelabs.pegasus-1-2",
+   "ok": true,
+   "result": {
+    "summary": "The video advocates for Question 3, a proposal to implement a non-partisan primary system in Massachusetts, emphasizing increased voter choice and accountability.",
+    "hook": {
+     "t": 0,
+     "text": "QUESTION 3",
+     "assessment": "Direct and impactful, immediately establishing the video's central focus."
+    },
+    "observations": [
+     {
+      "t": 0,
+      "end": 3,
+      "what": "Text: 'MASSACHUSETTS RACES SINCE 2014'"
+     },
+     {
+      "t": 3,
+      "end": 6,
+      "what": "Text: 'HAVE BEEN COMPLETED! UNCONTESTED'"
+     },
+     {
+      "t": 6,
+      "end": 9,
+      "what": "Text: 'THINK ABOUT THAT WHEN THERE'S ONLY ONE NAME ON THE BALLOT THERE'"
+     },
+     {
+      "t": 9,
+      "end": 12,
+      "what": "Text: 'NO DEBATE NO COMPARISON'"
+     },
+     {
+      "t": 12,
+      "end": 15,
+      "what": "Text: 'AND NO REASON FOR ANYONE TO EARN YOUR VOTE'"
+     },
+     {
+      "t": 15,
+      "end": 18,
+      "what": "Text: 'VOTE QUESTION 3 WOULD PUT EVERY CANDIDATE ON ONE PRIMARY BALLOT AND THE TOP FINISHERS WOULD MOVE ON TO NOVEMBER'"
+     },
+     {
+      "t": 18,
+      "end": 21,
+      "what": "Text: 'EVERY VOTER IN EVERY VOTER IN EVERY DISTRICT WOULD HAVE A CHOICE'"
+     },
+     {
+      "t": 21,
+      "end": 24,
+      "what": "Text: 'PART OR NONE GETS A SAY IT'S A SIMPLE CHANGE MORE CHOICES ON THE BALLOT'"
+     },
+     {
+      "t": 24,
+      "end": 27,
+      "what": "Text: 'REPRESENTATIVES WHO HAVE TO ANSWER TO ALL OF US'"
+     },
+     {
+      "t": 27,
+      "end": 30,
+      "what": "Text: 'US VOTES YES ON QUESTION 3'"
+     }
+    ],
+    "characteristics": {
+     "setting": "Plain brown background with text overlays",
+     "on_screen_people": "None",
+     "captions": "None",
+     "text_overlays": "Yes, sequential and persistent",
+     "music": "None",
+     "pace": "Slow, with deliberate text appearance",
+     "call_to_action": "Yes, clear and repeated at the end",
+     "visual_variety": "Minimal, consistent text formatting"
+    },
+    "accessibility": [
+     "No audio or speech information available"
+    ]
+   },
+   "raw": "{\n  \"summary\": \"The video advocates for Question 3, a proposal to implement a non-partisan primary system in Massachusetts, emphasizing increased voter choice and accountability.\",\n  \"hook\": {\"t\": 0, \"text\": \"QUESTION 3\", \"assessment\": \"Direct and impactful, immediately establishing the video's central focus.\"},\n  \"observations\": [\n    {\"t\": 0, \"end\": 3, \"what\": \"Text: 'MASSACHUSETTS RACES SINCE 2014'\"},\n    {\"t\": 3, \"end\": 6, \"what\": \"Text: 'HAVE BEEN COMPLETED! UNCONTESTED'\"},\n    {\"t\": 6, \"end\": 9, \"what\": \"Text: 'THINK ABOUT THAT WHEN THERE'S ONLY ONE NAME ON THE BALLOT THERE'\"},\n    {\"t\": 9, \"end\": 12, \"what\": \"Text: 'NO DEBATE NO COMPARISON'\"},\n    {\"t\": 12, \"end\": 15, \"what\": \"Text: 'AND NO REASON FOR ANYONE TO EARN YOUR VOTE'\"},\n    {\"t\": 15, \"end\": 18, \"what\": \"Text: 'VOTE QUESTION 3 WOULD PUT EVERY CANDIDATE ON ONE PRIMARY BALLOT AND THE TOP FINISHERS WOULD MOVE ON TO NOVEMBER'\"},\n    {\"t\": 18, \"end\": 21, \"what\": \"Text: 'EVERY VOTER IN EVERY VOTER IN EVERY DISTRICT WOULD HAVE A CHOICE'\"},\n    {\"t\": 21, \"end\": 24, \"what\": \"Text: 'PART OR NONE GETS A SAY IT'S A SIMPLE CHANGE MORE CHOICES ON THE BALLOT'\"},\n    {\"t\": 24, \"end\": 27, \"what\": \"Text: 'REPRESENTATIVES WHO HAVE TO ANSWER TO ALL OF US'\"},\n    {\"t\": 27, \"end\": 30, \"what\": \"Text: 'US VOTES YES ON QUESTION 3'\"}\n  ],\n  \"characteristics\": {\n    \"setting\": \"Plain brown background with text overlays\",\n    \"on_screen_people\": \"None\",\n    \"captions\": \"None\",\n    \"text_overlays\": \"Yes, sequential and persistent\",\n    \"music\": \"None\",\n    \"pace\": \"Slow, with deliberate text appearance\",\n    \"call_to_action\": \"Yes, clear and repeated at the end\",\n    \"visual_variety\": \"Minimal, consistent text formatting\"\n  },\n  \"accessibility\": [\"No audio or speech information available\"]\n}"
+  }
+ },
+ "calm-ruth": {
+  "take": "calm-ruth",
+  "analyzedAt": "2026-10-03T09:28:40Z",
+  "audio": {
+   "source": "derived",
+   "durationSec": 32.04,
+   "loudnessDb": [
+    -28.5,
+    -29.1,
+    -28.2,
+    -27.8,
+    -28.9,
+    -82.8,
+    -84.8,
+    -22.7,
+    -31.2,
+    -30.5,
+    -26.4,
+    -27.8,
+    -25.9,
+    -84.5,
+    -28.1,
+    -26.5,
+    -27.0,
+    -32.3,
+    -26.8,
+    -65.6,
+    -45.3,
+    -26.6,
+    -30.5,
+    -77.3,
+    -28.0,
+    -79.4,
+    -31.8,
+    -26.2,
+    -29.0,
+    -64.3,
+    -47.2
+   ],
+   "pitchHz": [
+    202.2,
+    180.8,
+    235.4,
+    195.2,
+    187.7,
+    240.8,
+    141.0,
+    214.8,
+    158.4,
+    175.0,
+    194.0,
+    225.4,
+    177.9,
+    202.7,
+    216.3,
+    183.9,
+    175.8,
+    209.1,
+    179.8,
+    164.1,
+    191.2,
+    200.0,
+    178.1,
+    188.8,
+    193.2,
+    217.7,
+    163.3,
+    197.5,
+    188.2,
+    150.9,
+    205.1,
+    183.9
+   ],
+   "pitchMedianHz": 188.2,
+   "pitchRangeHz": [
+    150.3,
+    236.7
+   ],
+   "pauses": [
+    {
+     "t": 5.0,
+     "sec": 0.6
+    },
+    {
+     "t": 6.4,
+     "sec": 0.6
+    },
+    {
+     "t": 13.3,
+     "sec": 0.5
+    },
+    {
+     "t": 19.6,
+     "sec": 0.6
+    },
+    {
+     "t": 23.2,
+     "sec": 0.6
+    },
+    {
+     "t": 25.0,
+     "sec": 0.5
+    },
+    {
+     "t": 29.7,
+     "sec": 0.5
+    }
+   ],
+   "loudestSec": [
+    7,
+    12,
+    27
+   ],
+   "quietestSec": [
+    5,
+    6,
+    13
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "text": "More than half of Massachusetts' races since 2014 have been completely uncontested. Think about that. When there's only one name on the ballot, there's no debate, no comparison, and no reason for anyone to earn your vote. Question three would put every candidate on one primary ballot, and the top finishers would move on to November. Every voter in every party or none gets a say. It's a simple change, more choices on the ballot and representatives who have to answer to all of us. Vote yes on question 3.",
+   "words": [
+    {
+     "t": 0.16,
+     "w": "More"
+    },
+    {
+     "t": 0.35,
+     "w": "than"
+    },
+    {
+     "t": 0.52,
+     "w": "half"
+    },
+    {
+     "t": 0.71,
+     "w": "of"
+    },
+    {
+     "t": 0.95,
+     "w": "Massachusetts'"
+    },
+    {
+     "t": 1.75,
+     "w": "races"
+    },
+    {
+     "t": 2.15,
+     "w": "since"
+    },
+    {
+     "t": 2.35,
+     "w": "2014"
+    },
+    {
+     "t": 3.15,
+     "w": "have"
+    },
+    {
+     "t": 3.39,
+     "w": "been"
+    },
+    {
+     "t": 3.79,
+     "w": "completely"
+    },
+    {
+     "t": 4.15,
+     "w": "uncontested"
+    },
+    {
+     "t": 5.48,
+     "w": "Think"
+    },
+    {
+     "t": 5.87,
+     "w": "about"
+    },
+    {
+     "t": 6.11,
+     "w": "that"
+    },
+    {
+     "t": 7.04,
+     "w": "When"
+    },
+    {
+     "t": 7.2,
+     "w": "there's"
+    },
+    {
+     "t": 7.43,
+     "w": "only"
+    },
+    {
+     "t": 7.71,
+     "w": "one"
+    },
+    {
+     "t": 7.95,
+     "w": "name"
+    },
+    {
+     "t": 8.19,
+     "w": "on"
+    },
+    {
+     "t": 8.31,
+     "w": "the"
+    },
+    {
+     "t": 8.43,
+     "w": "ballot"
+    },
+    {
+     "t": 9.0,
+     "w": "there's"
+    },
+    {
+     "t": 9.23,
+     "w": "no"
+    },
+    {
+     "t": 9.51,
+     "w": "debate"
+    },
+    {
+     "t": 10.04,
+     "w": "no"
+    },
+    {
+     "t": 10.23,
+     "w": "comparison"
+    },
+    {
+     "t": 11.08,
+     "w": "and"
+    },
+    {
+     "t": 11.23,
+     "w": "no"
+    },
+    {
+     "t": 11.47,
+     "w": "reason"
+    },
+    {
+     "t": 11.76,
+     "w": "for"
+    },
+    {
+     "t": 12.2,
+     "w": "anyone"
+    },
+    {
+     "t": 12.35,
+     "w": "to"
+    },
+    {
+     "t": 12.47,
+     "w": "earn"
+    },
+    {
+     "t": 12.71,
+     "w": "your"
+    },
+    {
+     "t": 12.88,
+     "w": "vote"
+    },
+    {
+     "t": 13.77,
+     "w": "Question"
+    },
+    {
+     "t": 14.38,
+     "w": "three"
+    },
+    {
+     "t": 14.59,
+     "w": "would"
+    },
+    {
+     "t": 14.79,
+     "w": "put"
+    },
+    {
+     "t": 15.02,
+     "w": "every"
+    },
+    {
+     "t": 15.32,
+     "w": "candidate"
+    },
+    {
+     "t": 15.75,
+     "w": "on"
+    },
+    {
+     "t": 15.97,
+     "w": "one"
+    },
+    {
+     "t": 16.19,
+     "w": "primary"
+    },
+    {
+     "t": 16.75,
+     "w": "ballot"
+    },
+    {
+     "t": 17.24,
+     "w": "and"
+    },
+    {
+     "t": 17.39,
+     "w": "the"
+    },
+    {
+     "t": 17.52,
+     "w": "top"
+    },
+    {
+     "t": 17.8,
+     "w": "finishers"
+    },
+    {
+     "t": 18.39,
+     "w": "would"
+    },
+    {
+     "t": 18.55,
+     "w": "move"
+    },
+    {
+     "t": 18.71,
+     "w": "on"
+    },
+    {
+     "t": 18.96,
+     "w": "to"
+    },
+    {
+     "t": 19.08,
+     "w": "November"
+    },
+    {
+     "t": 20.2,
+     "w": "Every"
+    },
+    {
+     "t": 20.55,
+     "w": "voter"
+    },
+    {
+     "t": 21.04,
+     "w": "in"
+    },
+    {
+     "t": 21.23,
+     "w": "every"
+    },
+    {
+     "t": 21.51,
+     "w": "party"
+    },
+    {
+     "t": 21.79,
+     "w": "or"
+    },
+    {
+     "t": 22.02,
+     "w": "none"
+    },
+    {
+     "t": 22.46,
+     "w": "gets"
+    },
+    {
+     "t": 22.67,
+     "w": "a"
+    },
+    {
+     "t": 22.87,
+     "w": "say"
+    },
+    {
+     "t": 23.72,
+     "w": "It's"
+    },
+    {
+     "t": 23.91,
+     "w": "a"
+    },
+    {
+     "t": 24.07,
+     "w": "simple"
+    },
+    {
+     "t": 24.43,
+     "w": "change"
+    },
+    {
+     "t": 25.52,
+     "w": "more"
+    },
+    {
+     "t": 25.79,
+     "w": "choices"
+    },
+    {
+     "t": 26.19,
+     "w": "on"
+    },
+    {
+     "t": 26.31,
+     "w": "the"
+    },
+    {
+     "t": 26.47,
+     "w": "ballot"
+    },
+    {
+     "t": 26.89,
+     "w": "and"
+    },
+    {
+     "t": 27.43,
+     "w": "representatives"
+    },
+    {
+     "t": 27.95,
+     "w": "who"
+    },
+    {
+     "t": 28.11,
+     "w": "have"
+    },
+    {
+     "t": 28.31,
+     "w": "to"
+    },
+    {
+     "t": 28.47,
+     "w": "answer"
+    },
+    {
+     "t": 28.79,
+     "w": "to"
+    },
+    {
+     "t": 28.95,
+     "w": "all"
+    },
+    {
+     "t": 29.15,
+     "w": "of"
+    },
+    {
+     "t": 29.27,
+     "w": "us"
+    },
+    {
+     "t": 30.2,
+     "w": "Vote"
+    },
+    {
+     "t": 30.51,
+     "w": "yes"
+    },
+    {
+     "t": 30.75,
+     "w": "on"
+    },
+    {
+     "t": 31.03,
+     "w": "question"
+    },
+    {
+     "t": 31.43,
+     "w": "3"
+    }
+   ],
+   "wpm": 169.9,
+   "firstWordSec": 0.16
+  },
+  "shots": {
+   "source": "ai",
+   "segments": [
+    {
+     "type": "TECHNICAL_CUE",
+     "start": 0.0,
+     "end": 24.0,
+     "kind": "Content"
+    },
+    {
+     "type": "SHOT",
+     "start": 0.0,
+     "end": 32.266,
+     "kind": null
+    }
+   ]
+  },
+  "onScreenText": {
+   "source": "ai",
+   "bySecond": {
+    "0": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "1": [
+     "MASSACHUSETTS",
+     "QUESTION 3",
+     "RACES SINCE 2014",
+     "Ruth stand-in voice"
+    ],
+    "2": [
+     "MASSACHUSETTS",
+     "QUESTION 3",
+     "RACES SINCE 2014",
+     "Ruth stand-in voice"
+    ],
+    "3": [
+     "MASSACHUSETTS",
+     "QUESTION 3",
+     "RACES SINCE 2014",
+     "Ruth stand-in voice"
+    ],
+    "4": [
+     "HAVE BEEN COMPLETELY",
+     "QUESTION 3",
+     "Ruth stand-in voice",
+     "UNCONTESTED"
+    ],
+    "5": [
+     "HAVE BEEN COMPLETELY",
+     "QUESTION 3",
+     "Ruth stand-in voice",
+     "UNCONTESTED"
+    ],
+    "6": [
+     "QUESTION 3",
+     "Ruth stand-in voice",
+     "THINK ABOUT THAT WHEN"
+    ],
+    "7": [
+     "QUESTION 3",
+     "Ruth stand-in voice",
+     "THINK ABOUT THAT WHEN"
+    ],
+    "8": [
+     "QUESTION 3",
+     "Ruth stand-in voice",
+     "THERE'S ONLY ONE NAME"
+    ],
+    "9": [
+     "ON THE BALLOT THERE'S",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "10": [
+     "NO DEBATE NO COMPARISON",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "11": [
+     "NO DEBATE NO COMPARISON",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "12": [
+     "AND NO REASON FOR",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "13": [
+     "QUESTION 3",
+     "Ruth stand-in voice",
+     "VOTE QUESTION 3 WOULD"
+    ],
+    "14": [
+     "QUESTION 3",
+     "Ruth stand-in voice",
+     "VOTE QUESTION 3 WOULD"
+    ],
+    "15": [
+     "ONE PRIMARY BALLOT AND",
+     "PUT EVERY CANDIDATE ON",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "16": [
+     "ONE PRIMARY BALLOT AND",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "17": [
+     "ONE PRIMARY BALLOT AND",
+     "QUESTION 3",
+     "Ruth stand-in voice",
+     "THE TOP FINISHERS WOULD"
+    ],
+    "18": [
+     "MOVE ON TO NOVEMBER",
+     "QUESTION 3",
+     "Ruth stand-in voice",
+     "THE TOP FINISHERS WOULD"
+    ],
+    "19": [
+     "MOVE ON TO NOVEMBER",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "20": [
+     "EVERY VOTER IN EVERY",
+     "MOVE ON TO NOVEMBER",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "21": [
+     "PARTY OR NONE GETS",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "22": [
+     "A SAY IT'S A",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "23": [
+     "A SAY IT'S A",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "24": [
+     "MORE CHOICES",
+     "QUESTION 3",
+     "Ruth stand-in voice",
+     "SIMPLE CHANGE"
+    ],
+    "25": [
+     "MORE CHOICES",
+     "QUESTION 3",
+     "Ruth stand-in voice",
+     "SIMPLE CHANGE"
+    ],
+    "26": [
+     "ON THE BALLOT AND",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "27": [
+     "QUESTION 3",
+     "REPRESENTATIVES",
+     "Ruth stand-in voice",
+     "WHO HAVE TO"
+    ],
+    "28": [
+     "ANSWER TO ALL OF",
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "29": [
+     "QUESTION 3",
+     "Ruth stand-in voice",
+     "US VOTE YES ON"
+    ],
+    "30": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "31": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ]
+   },
+   "secondsWithText": 32
+  },
+  "pegasus": {
+   "source": "ai",
+   "model": "twelvelabs.pegasus-1-2",
+   "ok": true,
+   "result": {
+    "summary": "The video advocates for Question 3 in Massachusetts, highlighting uncontested races since 2014 and promoting a nonpartisan primary system to increase voter choice and representation.",
+    "hook": {
+     "t": 0,
+     "text": "QUESTION 3",
+     "assessment": "Direct and attention-grabbing introduction to the ballot initiative."
+    },
+    "observations": [
+     {
+      "t": 0,
+      "end": 1,
+      "what": "Text 'QUESTION 3' appears on a purple background."
+     },
+     {
+      "t": 1,
+      "end": 2,
+      "what": "Text 'MASSACHUSETTS RACES SINCE 2014' displayed."
+     },
+     {
+      "t": 2,
+      "end": 3,
+      "what": "Text 'HAVE BEEN COMPLETELY UNCONTESTED' shown."
+     },
+     {
+      "t": 3,
+      "end": 4,
+      "what": "Text 'THINK ABOUT THAT WHEN THERE' appears."
+     },
+     {
+      "t": 4,
+      "end": 5,
+      "what": "Text 'THERE'S ONLY ONE NAME ON THE BALLOT' displayed."
+     },
+     {
+      "t": 5,
+      "end": 6,
+      "what": "Text 'NO DEBATE NO COMPARISON' shown."
+     },
+     {
+      "t": 6,
+      "end": 7,
+      "what": "Text 'AND NO REASON FOR ANYONE TO E' appears."
+     },
+     {
+      "t": 7,
+      "end": 8,
+      "what": "Text 'VOTE QUESTION 3 WOULD PUT EVERY C' displayed."
+     },
+     {
+      "t": 8,
+      "end": 9,
+      "what": "Text 'ON PRIMARY BALLOT AND THE TOP FIN' shown."
+     },
+     {
+      "t": 9,
+      "end": 10,
+      "what": "Text 'MOVE ON TO NOVEMBER' appears."
+     },
+     {
+      "t": 10,
+      "end": 11,
+      "what": "Text 'EVERY VOTER IN EVERY PARTY OR NON' displayed."
+     },
+     {
+      "t": 11,
+      "end": 12,
+      "what": "Text 'A SAY IT'S A SIMPLE CHANGE MORE CH' shown."
+     },
+     {
+      "t": 12,
+      "end": 13,
+      "what": "Text 'ON THE BALLOT AND REPRESENTATIVES' appears."
+     },
+     {
+      "t": 13,
+      "end": 14,
+      "what": "Text 'HAVE TO ANSWER TO ALL OF US' displayed."
+     },
+     {
+      "t": 14,
+      "end": 15,
+      "what": "Text 'VOTE YES ON QUESTION 3' shown."
+     }
+    ],
+    "characteristics": {
+     "setting": "Minimalist digital background with solid color",
+     "on_screen_people": "None",
+     "captions": "Text-based narration with no spoken voice",
+     "text_overlays": "Sequential text lines with smooth transitions",
+     "music": "Subtle background music throughout",
+     "pace": "Fast-paced with rapid text changes",
+     "call_to_action": "Vote yes on Question 3",
+     "visual_variety": "Limited, focused on text animation"
+    },
+    "accessibility": [
+     "Text is legible with high contrast",
+     "No audio cues require hearing",
+     "No complex visuals that hinder comprehension"
+    ]
+   },
+   "raw": "{\n \"summary\": \"The video advocates for Question 3 in Massachusetts, highlighting uncontested races since 2014 and promoting a nonpartisan primary system to increase voter choice and representation.\",\n \"hook\": {\"t\": 0, \"text\": \"QUESTION 3\", \"assessment\": \"Direct and attention-grabbing introduction to the ballot initiative.\"},\n \"observations\": [\n {\"t\": 0, \"end\": 1, \"what\": \"Text 'QUESTION 3' appears on a purple background.\"},\n {\"t\": 1, \"end\": 2, \"what\": \"Text 'MASSACHUSETTS RACES SINCE 2014' displayed.\"},\n {\"t\": 2, \"end\": 3, \"what\": \"Text 'HAVE BEEN COMPLETELY UNCONTESTED' shown.\"},\n {\"t\": 3, \"end\": 4, \"what\": \"Text 'THINK ABOUT THAT WHEN THERE' appears.\"},\n {\"t\": 4, \"end\": 5, \"what\": \"Text 'THERE'S ONLY ONE NAME ON THE BALLOT' displayed.\"},\n {\"t\": 5, \"end\": 6, \"what\": \"Text 'NO DEBATE NO COMPARISON' shown.\"},\n {\"t\": 6, \"end\": 7, \"what\": \"Text 'AND NO REASON FOR ANYONE TO E' appears.\"},\n {\"t\": 7, \"end\": 8, \"what\": \"Text 'VOTE QUESTION 3 WOULD PUT EVERY C' displayed.\"},\n {\"t\": 8, \"end\": 9, \"what\": \"Text 'ON PRIMARY BALLOT AND THE TOP FIN' shown.\"},\n {\"t\": 9, \"end\": 10, \"what\": \"Text 'MOVE ON TO NOVEMBER' appears.\"},\n {\"t\": 10, \"end\": 11, \"what\": \"Text 'EVERY VOTER IN EVERY PARTY OR NON' displayed.\"},\n {\"t\": 11, \"end\": 12, \"what\": \"Text 'A SAY IT'S A SIMPLE CHANGE MORE CH' shown.\"},\n {\"t\": 12, \"end\": 13, \"what\": \"Text 'ON THE BALLOT AND REPRESENTATIVES' appears.\"},\n {\"t\": 13, \"end\": 14, \"what\": \"Text 'HAVE TO ANSWER TO ALL OF US' displayed.\"},\n {\"t\": 14, \"end\": 15, \"what\": \"Text 'VOTE YES ON QUESTION 3' shown.\"}\n ],\n \"characteristics\": {\"setting\": \"Minimalist digital background with solid color\", \"on_screen_people\": \"None\", \"captions\": \"Text-based narration with no spoken voice\", \"text_overlays\": \"Sequential text lines with smooth transitions\", \"music\": \"Subtle background music throughout\", \"pace\": \"Fast-paced with rapid text changes\", \"call_to_action\": \"Vote yes on Question 3\", \"visual_variety\": \"Limited, focused on text animation\"},\n \"accessibility\": [\"Text is legible with high contrast\", \"No audio cues require hearing\", \"No complex visuals that hinder comprehension\"]\n}"
+  }
+ },
+ "calm-stephen": {
+  "take": "calm-stephen",
+  "analyzedAt": "2026-10-03T09:33:22Z",
+  "audio": {
+   "source": "derived",
+   "durationSec": 29.87,
+   "loudnessDb": [
+    -28.4,
+    -27.3,
+    -27.0,
+    -24.5,
+    -65.6,
+    -43.8,
+    -82.6,
+    -22.9,
+    -27.7,
+    -28.9,
+    -26.5,
+    -23.6,
+    -83.7,
+    -24.5,
+    -23.4,
+    -28.5,
+    -25.2,
+    -24.3,
+    -81.2,
+    -28.2,
+    -27.5,
+    -78.6,
+    -29.2,
+    -81.8,
+    -23.7,
+    -27.8,
+    -26.6,
+    -61.5,
+    -44.3
+   ],
+   "pitchHz": [
+    132.2,
+    124.3,
+    155.3,
+    124.3,
+    127.7,
+    161.6,
+    161.8,
+    133.3,
+    140.7,
+    151.7,
+    151.7,
+    130.1,
+    108.2,
+    149.5,
+    133.3,
+    138.5,
+    136.9,
+    122.1,
+    163.3,
+    160.1,
+    128.0,
+    135.6,
+    139.2,
+    105.8,
+    130.9,
+    155.3,
+    125.0,
+    106.5,
+    153.8,
+    143.2
+   ],
+   "pitchMedianHz": 137.9,
+   "pitchRangeHz": [
+    107.4,
+    179.8
+   ],
+   "pauses": [
+    {
+     "t": 4.6,
+     "sec": 0.6
+    },
+    {
+     "t": 6.0,
+     "sec": 0.6
+    },
+    {
+     "t": 12.3,
+     "sec": 0.6
+    },
+    {
+     "t": 18.1,
+     "sec": 0.5
+    },
+    {
+     "t": 21.5,
+     "sec": 0.6
+    },
+    {
+     "t": 23.3,
+     "sec": 0.5
+    },
+    {
+     "t": 27.7,
+     "sec": 0.5
+    }
+   ],
+   "loudestSec": [
+    7,
+    11,
+    14
+   ],
+   "quietestSec": [
+    6,
+    12,
+    23
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "text": "More than half of Massachusetts' races since 2014 have been completely uncontested. Think about that. When there's only one name on the ballot, there's no debate, no comparison, and no reason for anyone to earn your vote. Question three would put every candidate on one primary ballot, and the top finishers would move on to November. Every voter in every party or none gets a say. It's a simple change more choices on the ballot and representatives who have to answer to all of us. Vote yes on question 3.",
+   "words": [
+    {
+     "t": 0.16,
+     "w": "More"
+    },
+    {
+     "t": 0.35,
+     "w": "than"
+    },
+    {
+     "t": 0.51,
+     "w": "half"
+    },
+    {
+     "t": 0.7,
+     "w": "of"
+    },
+    {
+     "t": 0.92,
+     "w": "Massachusetts'"
+    },
+    {
+     "t": 1.71,
+     "w": "races"
+    },
+    {
+     "t": 2.11,
+     "w": "since"
+    },
+    {
+     "t": 2.32,
+     "w": "2014"
+    },
+    {
+     "t": 3.07,
+     "w": "have"
+    },
+    {
+     "t": 3.23,
+     "w": "been"
+    },
+    {
+     "t": 3.55,
+     "w": "completely"
+    },
+    {
+     "t": 3.83,
+     "w": "uncontested"
+    },
+    {
+     "t": 5.12,
+     "w": "Think"
+    },
+    {
+     "t": 5.51,
+     "w": "about"
+    },
+    {
+     "t": 5.72,
+     "w": "that"
+    },
+    {
+     "t": 6.6,
+     "w": "When"
+    },
+    {
+     "t": 6.75,
+     "w": "there's"
+    },
+    {
+     "t": 6.99,
+     "w": "only"
+    },
+    {
+     "t": 7.23,
+     "w": "one"
+    },
+    {
+     "t": 7.47,
+     "w": "name"
+    },
+    {
+     "t": 7.63,
+     "w": "on"
+    },
+    {
+     "t": 7.75,
+     "w": "the"
+    },
+    {
+     "t": 7.87,
+     "w": "ballot"
+    },
+    {
+     "t": 8.36,
+     "w": "there's"
+    },
+    {
+     "t": 8.59,
+     "w": "no"
+    },
+    {
+     "t": 8.87,
+     "w": "debate"
+    },
+    {
+     "t": 9.36,
+     "w": "no"
+    },
+    {
+     "t": 9.51,
+     "w": "comparison"
+    },
+    {
+     "t": 10.32,
+     "w": "and"
+    },
+    {
+     "t": 10.51,
+     "w": "no"
+    },
+    {
+     "t": 10.72,
+     "w": "reason"
+    },
+    {
+     "t": 11.04,
+     "w": "for"
+    },
+    {
+     "t": 11.44,
+     "w": "anyone"
+    },
+    {
+     "t": 11.55,
+     "w": "to"
+    },
+    {
+     "t": 11.63,
+     "w": "earn"
+    },
+    {
+     "t": 11.87,
+     "w": "your"
+    },
+    {
+     "t": 12.07,
+     "w": "vote"
+    },
+    {
+     "t": 12.85,
+     "w": "Question"
+    },
+    {
+     "t": 13.39,
+     "w": "three"
+    },
+    {
+     "t": 13.59,
+     "w": "would"
+    },
+    {
+     "t": 13.75,
+     "w": "put"
+    },
+    {
+     "t": 13.91,
+     "w": "every"
+    },
+    {
+     "t": 14.2,
+     "w": "candidate"
+    },
+    {
+     "t": 14.6,
+     "w": "on"
+    },
+    {
+     "t": 14.75,
+     "w": "one"
+    },
+    {
+     "t": 14.95,
+     "w": "primary"
+    },
+    {
+     "t": 15.43,
+     "w": "ballot"
+    },
+    {
+     "t": 15.92,
+     "w": "and"
+    },
+    {
+     "t": 16.03,
+     "w": "the"
+    },
+    {
+     "t": 16.18,
+     "w": "top"
+    },
+    {
+     "t": 16.43,
+     "w": "finishers"
+    },
+    {
+     "t": 16.87,
+     "w": "would"
+    },
+    {
+     "t": 17.03,
+     "w": "move"
+    },
+    {
+     "t": 17.23,
+     "w": "on"
+    },
+    {
+     "t": 17.44,
+     "w": "to"
+    },
+    {
+     "t": 17.59,
+     "w": "November"
+    },
+    {
+     "t": 18.64,
+     "w": "Every"
+    },
+    {
+     "t": 18.99,
+     "w": "voter"
+    },
+    {
+     "t": 19.48,
+     "w": "in"
+    },
+    {
+     "t": 19.63,
+     "w": "every"
+    },
+    {
+     "t": 19.92,
+     "w": "party"
+    },
+    {
+     "t": 20.19,
+     "w": "or"
+    },
+    {
+     "t": 20.4,
+     "w": "none"
+    },
+    {
+     "t": 20.84,
+     "w": "gets"
+    },
+    {
+     "t": 21.03,
+     "w": "a"
+    },
+    {
+     "t": 21.27,
+     "w": "say"
+    },
+    {
+     "t": 22.12,
+     "w": "It's"
+    },
+    {
+     "t": 22.27,
+     "w": "a"
+    },
+    {
+     "t": 22.44,
+     "w": "simple"
+    },
+    {
+     "t": 22.82,
+     "w": "change"
+    },
+    {
+     "t": 23.84,
+     "w": "more"
+    },
+    {
+     "t": 24.11,
+     "w": "choices"
+    },
+    {
+     "t": 24.48,
+     "w": "on"
+    },
+    {
+     "t": 24.59,
+     "w": "the"
+    },
+    {
+     "t": 24.71,
+     "w": "ballot"
+    },
+    {
+     "t": 25.13,
+     "w": "and"
+    },
+    {
+     "t": 25.67,
+     "w": "representatives"
+    },
+    {
+     "t": 26.11,
+     "w": "who"
+    },
+    {
+     "t": 26.27,
+     "w": "have"
+    },
+    {
+     "t": 26.47,
+     "w": "to"
+    },
+    {
+     "t": 26.56,
+     "w": "answer"
+    },
+    {
+     "t": 26.87,
+     "w": "to"
+    },
+    {
+     "t": 27.03,
+     "w": "all"
+    },
+    {
+     "t": 27.19,
+     "w": "of"
+    },
+    {
+     "t": 27.31,
+     "w": "us"
+    },
+    {
+     "t": 28.16,
+     "w": "Vote"
+    },
+    {
+     "t": 28.48,
+     "w": "yes"
+    },
+    {
+     "t": 28.68,
+     "w": "on"
+    },
+    {
+     "t": 28.92,
+     "w": "question"
+    },
+    {
+     "t": 29.42,
+     "w": "3"
+    }
+   ],
+   "wpm": 182.5,
+   "firstWordSec": 0.16
+  },
+  "shots": {
+   "source": "ai",
+   "segments": [
+    {
+     "type": "TECHNICAL_CUE",
+     "start": 0.0,
+     "end": 30.1,
+     "kind": "Content"
+    },
+    {
+     "type": "SHOT",
+     "start": 0.0,
+     "end": 30.1,
+     "kind": null
+    }
+   ]
+  },
+  "onScreenText": {
+   "source": "ai",
+   "bySecond": {
+    "0": [
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "1": [
+     "MASSACHUSETTS",
+     "QUESTION 3",
+     "RACES SINCE 2014",
+     "Stephen voice"
+    ],
+    "2": [
+     "MASSACHUSETTS",
+     "QUESTION 3",
+     "RACES SINCE 2014",
+     "Stephen voice"
+    ],
+    "3": [
+     "MASSACHUSETTS",
+     "QUESTION 3",
+     "RACES SINCE 2014",
+     "Stephen voice"
+    ],
+    "4": [
+     "HAVE BEEN COMPLETELY",
+     "QUESTION 3",
+     "Stephen voice",
+     "UNCONTESTED"
+    ],
+    "5": [
+     "HAVE BEEN COMPLETELY",
+     "QUESTION 3",
+     "Stephen voice",
+     "UNCONTESTED"
+    ],
+    "6": [
+     "QUESTION 3",
+     "Stephen voice",
+     "THINK ABOUT THAT WHEN"
+    ],
+    "7": [
+     "QUESTION 3",
+     "Stephen voice",
+     "THERE'S ONLY ONE NAME"
+    ],
+    "8": [
+     "ON THE BALLOT THERE'S",
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "9": [
+     "NO DEBATE NO COMPARISON",
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "10": [
+     "NO DEBATE NO COMPARISON",
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "11": [
+     "AND NO REASON FOR",
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "12": [
+     "QUESTION 3",
+     "Stephen voice",
+     "VOTE QUESTION 3 WOULD"
+    ],
+    "13": [
+     "QUESTION 3",
+     "Stephen voice",
+     "VOTE QUESTION 3 WOULD"
+    ],
+    "14": [
+     "PUT EVERY CANDIDATE ON",
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "15": [
+     "ONE PRIMARY BALLOT AND",
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "16": [
+     "ONE PRIMARY BALLOT AND",
+     "QUESTION 3",
+     "Stephen voice",
+     "THE TOP FINISHERS WOULD"
+    ],
+    "17": [
+     "MOVE ON TO NOVEMBER",
+     "QUESTION 3",
+     "Stephen voice",
+     "THE TOP FINISHERS WOULD"
+    ],
+    "18": [
+     "MOVE ON TO NOVEMBER",
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "19": [
+     "EVERY VOTER IN EVERY",
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "20": [
+     "PARTY OR NONE GETS",
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "21": [
+     "A SAY IT'S A",
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "22": [
+     "MORE CHOICES",
+     "QUESTION 3",
+     "SIMPLE CHANGE",
+     "Stephen voice"
+    ],
+    "23": [
+     "MORE CHOICES",
+     "QUESTION 3",
+     "SIMPLE CHANGE",
+     "Stephen voice"
+    ],
+    "24": [
+     "ON THE BALLOT AND",
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "25": [
+     "QUESTION 3",
+     "REPRESENTATIVES",
+     "Stephen voice",
+     "WHO HAVE TO"
+    ],
+    "26": [
+     "ANSWER TO ALL OF",
+     "QUESTION 3",
+     "Stephen voice"
+    ],
+    "27": [
+     "QUESTION 3",
+     "Stephen voice",
+     "US VOTE YES ON"
+    ],
+    "28": [
+     "QUESTION 3",
+     "Stephen voice",
+     "US VOTE YES ON"
+    ],
+    "29": [
+     "QUESTION 3",
+     "Stephen voice"
+    ]
+   },
+   "secondsWithText": 30
+  },
+  "pegasus": {
+   "source": "ai",
+   "model": "twelvelabs.pegasus-1-2",
+   "ok": true,
+   "result": {
+    "summary": "The video advocates for Question 3, a proposed electoral reform in Massachusetts to ensure competitive primaries and broader voter participation.",
+    "hook": {
+     "t": 0,
+     "text": "QUESTION 3",
+     "assessment": "Direct and clear, immediately introduces the topic."
+    },
+    "observations": [
+     {
+      "t": 0,
+      "end": 10,
+      "what": "Text highlighting uncontested races in Massachusetts since 2014"
+     },
+     {
+      "t": 10,
+      "end": 20,
+      "what": "Explanation of how Question 3 would create a single primary ballot with top finishers advancing"
+     },
+     {
+      "t": 20,
+      "end": 30,
+      "what": "Call to action urging voters to support the measure for more representative democracy"
+     }
+    ],
+    "characteristics": {
+     "setting": "Text on a teal background",
+     "on_screen_people": "None",
+     "captions": "Yes",
+     "text_overlays": "Yes",
+     "music": "None",
+     "pace": "Slow",
+     "call_to_action": "Yes",
+     "visual_variety": "None"
+    },
+    "accessibility": [
+     "No audio",
+     "No people shown",
+     "No visual variety"
+    ]
+   },
+   "raw": "{\n \"summary\": \"The video advocates for Question 3, a proposed electoral reform in Massachusetts to ensure competitive primaries and broader voter participation.\",\n \"hook\": {\"t\": 0, \"text\": \"QUESTION 3\", \"assessment\": \"Direct and clear, immediately introduces the topic.\"},\n \"observations\": [\n {\"t\": 0, \"end\": 10, \"what\": \"Text highlighting uncontested races in Massachusetts since 2014\"},\n {\"t\": 10, \"end\": 20, \"what\": \"Explanation of how Question 3 would create a single primary ballot with top finishers advancing\"},\n {\"t\": 20, \"end\": 30, \"what\": \"Call to action urging voters to support the measure for more representative democracy\"}\n ],\n \"characteristics\": {\"setting\": \"Text on a teal background\", \"on_screen_people\": \"None\", \"captions\": \"Yes\", \"text_overlays\": \"Yes\", \"music\": \"None\", \"pace\": \"Slow\", \"call_to_action\": \"Yes\", \"visual_variety\": \"None\"},\n \"accessibility\": [\"No audio\", \"No people shown\", \"No visual variety\"]\n}"
+  }
+ },
+ "coin-danielle": {
+  "take": "coin-danielle",
+  "analyzedAt": "2026-10-03T09:36:39Z",
+  "audio": {
+   "source": "derived",
+   "durationSec": 39.25,
+   "loudnessDb": [
+    -31.3,
+    -70.0,
+    -26.7,
+    -28.9,
+    -25.4,
+    -28.3,
+    -82.2,
+    -28.3,
+    -30.1,
+    -28.6,
+    -30.4,
+    -35.8,
+    -25.4,
+    -80.0,
+    -80.0,
+    -66.0,
+    -44.2,
+    -72.6,
+    -29.3,
+    -29.3,
+    -29.1,
+    -37.6,
+    -66.5,
+    -30.5,
+    -24.7,
+    -78.5,
+    -26.1,
+    -29.2,
+    -32.3,
+    -28.4,
+    -25.3,
+    -26.6,
+    -24.7,
+    -28.7,
+    -82.0,
+    -44.3,
+    -60.9,
+    -27.6,
+    -25.4
+   ],
+   "pitchHz": [
+    200.5,
+    282.1,
+    219.2,
+    212.3,
+    202.7,
+    175.8,
+    254.2,
+    210.5,
+    242.7,
+    188.2,
+    191.8,
+    183.9,
+    197.5,
+    228.6,
+    205.1,
+    231.9,
+    238.8,
+    271.2,
+    200.0,
+    176.9,
+    200.0,
+    159.4,
+    252.2,
+    210.6,
+    246.2,
+    155.3,
+    219.2,
+    205.1,
+    275.9,
+    286.5,
+    234.2,
+    188.2,
+    216.2,
+    178.9,
+    242.4,
+    216.2,
+    248.2,
+    192.8,
+    202.6,
+    143.7
+   ],
+   "pitchMedianHz": 216.2,
+   "pitchRangeHz": [
+    155.3,
+    280.7
+   ],
+   "pauses": [
+    {
+     "t": 1.0,
+     "sec": 0.4
+    },
+    {
+     "t": 6.2,
+     "sec": 0.5
+    },
+    {
+     "t": 11.1,
+     "sec": 0.3
+    },
+    {
+     "t": 13.2,
+     "sec": 0.5
+    },
+    {
+     "t": 14.4,
+     "sec": 0.5
+    },
+    {
+     "t": 15.5,
+     "sec": 0.6
+    },
+    {
+     "t": 17.0,
+     "sec": 0.5
+    },
+    {
+     "t": 21.8,
+     "sec": 0.5
+    },
+    {
+     "t": 25.6,
+     "sec": 0.4
+    },
+    {
+     "t": 34.1,
+     "sec": 0.5
+    },
+    {
+     "t": 35.8,
+     "sec": 0.5
+    }
+   ],
+   "loudestSec": [
+    24,
+    30,
+    32
+   ],
+   "quietestSec": [
+    6,
+    13,
+    34
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "text": "Flip a coin. That's your odds of your state legislative race actually being contested in Massachusetts since 2014. 51% of races in this state, more than half, have had just one name on the ballot. No opponent, no debate, no choice. Massachusetts ranks dead last in the country for electoral competitiveness. That's not democracy. That's your leaders being chosen for you. And it's not because good candidates don't exist, it's because the system makes it nearly impossible for a challenger to even get on the ballot in the first place. So voters show up to rubber stamp a decision that was already made for them.",
+   "words": [
+    {
+     "t": 0.01,
+     "w": "Flip"
+    },
+    {
+     "t": 0.31,
+     "w": "a"
+    },
+    {
+     "t": 0.51,
+     "w": "coin"
+    },
+    {
+     "t": 1.4,
+     "w": "That's"
+    },
+    {
+     "t": 1.63,
+     "w": "your"
+    },
+    {
+     "t": 1.75,
+     "w": "odds"
+    },
+    {
+     "t": 2.11,
+     "w": "of"
+    },
+    {
+     "t": 2.23,
+     "w": "your"
+    },
+    {
+     "t": 2.47,
+     "w": "state"
+    },
+    {
+     "t": 2.74,
+     "w": "legislative"
+    },
+    {
+     "t": 3.39,
+     "w": "race"
+    },
+    {
+     "t": 3.68,
+     "w": "actually"
+    },
+    {
+     "t": 4.15,
+     "w": "being"
+    },
+    {
+     "t": 4.4,
+     "w": "contested"
+    },
+    {
+     "t": 4.95,
+     "w": "in"
+    },
+    {
+     "t": 5.15,
+     "w": "Massachusetts"
+    },
+    {
+     "t": 6.72,
+     "w": "since"
+    },
+    {
+     "t": 6.95,
+     "w": "2014"
+    },
+    {
+     "t": 8.11,
+     "w": "51%"
+    },
+    {
+     "t": 8.99,
+     "w": "of"
+    },
+    {
+     "t": 9.23,
+     "w": "races"
+    },
+    {
+     "t": 9.59,
+     "w": "in"
+    },
+    {
+     "t": 9.75,
+     "w": "this"
+    },
+    {
+     "t": 9.99,
+     "w": "state"
+    },
+    {
+     "t": 10.44,
+     "w": "more"
+    },
+    {
+     "t": 10.63,
+     "w": "than"
+    },
+    {
+     "t": 10.8,
+     "w": "half"
+    },
+    {
+     "t": 11.4,
+     "w": "have"
+    },
+    {
+     "t": 11.59,
+     "w": "had"
+    },
+    {
+     "t": 11.84,
+     "w": "just"
+    },
+    {
+     "t": 12.11,
+     "w": "one"
+    },
+    {
+     "t": 12.35,
+     "w": "name"
+    },
+    {
+     "t": 12.56,
+     "w": "on"
+    },
+    {
+     "t": 12.67,
+     "w": "the"
+    },
+    {
+     "t": 12.83,
+     "w": "ballot"
+    },
+    {
+     "t": 13.72,
+     "w": "No"
+    },
+    {
+     "t": 13.87,
+     "w": "opponent"
+    },
+    {
+     "t": 14.92,
+     "w": "no"
+    },
+    {
+     "t": 15.27,
+     "w": "debate"
+    },
+    {
+     "t": 16.2,
+     "w": "no"
+    },
+    {
+     "t": 16.51,
+     "w": "choice"
+    },
+    {
+     "t": 17.56,
+     "w": "Massachusetts"
+    },
+    {
+     "t": 18.31,
+     "w": "ranks"
+    },
+    {
+     "t": 18.79,
+     "w": "dead"
+    },
+    {
+     "t": 19.0,
+     "w": "last"
+    },
+    {
+     "t": 19.39,
+     "w": "in"
+    },
+    {
+     "t": 19.55,
+     "w": "the"
+    },
+    {
+     "t": 19.71,
+     "w": "country"
+    },
+    {
+     "t": 20.15,
+     "w": "for"
+    },
+    {
+     "t": 20.27,
+     "w": "electoral"
+    },
+    {
+     "t": 20.87,
+     "w": "competitiveness"
+    },
+    {
+     "t": 22.32,
+     "w": "That's"
+    },
+    {
+     "t": 22.63,
+     "w": "not"
+    },
+    {
+     "t": 22.84,
+     "w": "democracy"
+    },
+    {
+     "t": 23.72,
+     "w": "That's"
+    },
+    {
+     "t": 23.91,
+     "w": "your"
+    },
+    {
+     "t": 24.07,
+     "w": "leaders"
+    },
+    {
+     "t": 24.43,
+     "w": "being"
+    },
+    {
+     "t": 24.68,
+     "w": "chosen"
+    },
+    {
+     "t": 25.07,
+     "w": "for"
+    },
+    {
+     "t": 25.23,
+     "w": "you"
+    },
+    {
+     "t": 25.98,
+     "w": "And"
+    },
+    {
+     "t": 26.09,
+     "w": "it's"
+    },
+    {
+     "t": 26.33,
+     "w": "not"
+    },
+    {
+     "t": 26.66,
+     "w": "because"
+    },
+    {
+     "t": 26.89,
+     "w": "good"
+    },
+    {
+     "t": 27.17,
+     "w": "candidates"
+    },
+    {
+     "t": 27.65,
+     "w": "don't"
+    },
+    {
+     "t": 27.97,
+     "w": "exist"
+    },
+    {
+     "t": 28.54,
+     "w": "it's"
+    },
+    {
+     "t": 28.83,
+     "w": "because"
+    },
+    {
+     "t": 29.06,
+     "w": "the"
+    },
+    {
+     "t": 29.23,
+     "w": "system"
+    },
+    {
+     "t": 29.6,
+     "w": "makes"
+    },
+    {
+     "t": 29.85,
+     "w": "it"
+    },
+    {
+     "t": 30.05,
+     "w": "nearly"
+    },
+    {
+     "t": 30.33,
+     "w": "impossible"
+    },
+    {
+     "t": 31.01,
+     "w": "for"
+    },
+    {
+     "t": 31.13,
+     "w": "a"
+    },
+    {
+     "t": 31.33,
+     "w": "challenger"
+    },
+    {
+     "t": 31.81,
+     "w": "to"
+    },
+    {
+     "t": 31.97,
+     "w": "even"
+    },
+    {
+     "t": 32.3,
+     "w": "get"
+    },
+    {
+     "t": 32.45,
+     "w": "on"
+    },
+    {
+     "t": 32.61,
+     "w": "the"
+    },
+    {
+     "t": 32.73,
+     "w": "ballot"
+    },
+    {
+     "t": 33.05,
+     "w": "in"
+    },
+    {
+     "t": 33.21,
+     "w": "the"
+    },
+    {
+     "t": 33.34,
+     "w": "first"
+    },
+    {
+     "t": 33.69,
+     "w": "place"
+    },
+    {
+     "t": 34.7,
+     "w": "So"
+    },
+    {
+     "t": 34.93,
+     "w": "voters"
+    },
+    {
+     "t": 35.34,
+     "w": "show"
+    },
+    {
+     "t": 35.57,
+     "w": "up"
+    },
+    {
+     "t": 36.26,
+     "w": "to"
+    },
+    {
+     "t": 36.37,
+     "w": "rubber"
+    },
+    {
+     "t": 36.73,
+     "w": "stamp"
+    },
+    {
+     "t": 37.05,
+     "w": "a"
+    },
+    {
+     "t": 37.33,
+     "w": "decision"
+    },
+    {
+     "t": 37.65,
+     "w": "that"
+    },
+    {
+     "t": 37.86,
+     "w": "was"
+    },
+    {
+     "t": 38.17,
+     "w": "already"
+    },
+    {
+     "t": 38.46,
+     "w": "made"
+    },
+    {
+     "t": 38.69,
+     "w": "for"
+    },
+    {
+     "t": 38.81,
+     "w": "them"
+    }
+   ],
+   "wpm": 160.9,
+   "firstWordSec": 0.01
+  },
+  "shots": {
+   "source": "ai",
+   "segments": [
+    {
+     "type": "TECHNICAL_CUE",
+     "start": 19.0,
+     "end": 30.266,
+     "kind": "Content"
+    },
+    {
+     "type": "TECHNICAL_CUE",
+     "start": 2.333,
+     "end": 6.6,
+     "kind": "OpeningCredits"
+    },
+    {
+     "type": "TECHNICAL_CUE",
+     "start": 16.366,
+     "end": 31.7,
+     "kind": "EndCredits"
+    },
+    {
+     "type": "SHOT",
+     "start": 0.0,
+     "end": 0.0,
+     "kind": null
+    },
+    {
+     "type": "SHOT",
+     "start": 0.033,
+     "end": 23.966,
+     "kind": null
+    },
+    {
+     "type": "SHOT",
+     "start": 24.0,
+     "end": 27.766,
+     "kind": null
+    },
+    {
+     "type": "SHOT",
+     "start": 27.8,
+     "end": 39.866,
+     "kind": null
+    }
+   ]
+  },
+  "onScreenText": {
+   "source": "ai",
+   "bySecond": {
+    "0": [
+     "Danielle stand-in voice",
+     "QUESTION 3"
+    ],
+    "1": [
+     "Danielle stand-in voice",
+     "FLIP A COIN THAT'S",
+     "QUESTION 3"
+    ],
+    "2": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "YOUR ODDS OF YOUR"
+    ],
+    "3": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "RACE ACTUALLY",
+     "STATE LEGISLATIVE"
+    ],
+    "4": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "RACE ACTUALLY",
+     "STATE LEGISLATIVE"
+    ],
+    "5": [
+     "BEING CONTESTED",
+     "Danielle stand-in voice",
+     "IN MASSACHUSETTS",
+     "QUESTION 3"
+    ],
+    "6": [
+     "BEING CONTESTED",
+     "Danielle stand-in voice",
+     "IN MASSACHUSETTS",
+     "QUESTION 3"
+    ],
+    "7": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "SINCE 2014 51% OF"
+    ],
+    "8": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "SINCE 2014 51% OF"
+    ],
+    "9": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "SINCE 2014 51% OF"
+    ],
+    "10": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "RACES IN THIS STATE"
+    ],
+    "11": [
+     "Danielle stand-in voice",
+     "MORE THAN HALF HAVE",
+     "QUESTION 3"
+    ],
+    "12": [
+     "Danielle stand-in voice",
+     "HAD JUST ONE NAME",
+     "QUESTION 3"
+    ],
+    "13": [
+     "Danielle stand-in voice",
+     "ON THE BALLOT NO",
+     "QUESTION 3"
+    ],
+    "14": [
+     "Danielle stand-in voice",
+     "OPPONENT NO DEBATE NO",
+     "QUESTION 3"
+    ],
+    "15": [
+     "Danielle stand-in voice",
+     "OPPONENT NO DEBATE NO",
+     "QUESTION 3"
+    ],
+    "16": [
+     "CHOICE MASSACHUSETTS",
+     "Danielle stand-in voice",
+     "OPPONENT NO DEBATE NO",
+     "QUESTION 3",
+     "RANKS DEAD"
+    ],
+    "17": [
+     "CHOICE MASSACHUSETTS",
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "RANKS DEAD"
+    ],
+    "18": [
+     "CHOICE MASSACHUSETTS",
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "RANKS DEAD"
+    ],
+    "19": [
+     "Danielle stand-in voice",
+     "LAST IN THE COUNTRY",
+     "QUESTION 3"
+    ],
+    "20": [
+     "COMPETITIVENESS THAT'S",
+     "Danielle stand-in voice",
+     "FOR ELECTORAL",
+     "LAST IN THE COUNTRY",
+     "QUESTION 3"
+    ],
+    "21": [
+     "COMPETITIVENESS THAT'S",
+     "Danielle stand-in voice",
+     "FOR ELECTORAL",
+     "QUESTION 3"
+    ],
+    "22": [
+     "COMPETITIVENESS THAT'S",
+     "Danielle stand-in voice",
+     "FOR ELECTORAL",
+     "QUESTION 3"
+    ],
+    "23": [
+     "Danielle stand-in voice",
+     "NOT DEMOCRACY",
+     "QUESTION 3",
+     "THAT'S YOUR"
+    ],
+    "24": [
+     "Danielle stand-in voice",
+     "LEADERS BEING CHOSEN FOR",
+     "QUESTION 3"
+    ],
+    "25": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "YOU AND IT'S NOT"
+    ],
+    "26": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "YOU AND IT'S NOT"
+    ],
+    "27": [
+     "BECAUSE GOOD",
+     "CANDIDATES DON'T",
+     "Danielle stand-in voice",
+     "QUESTION 3"
+    ],
+    "28": [
+     "Danielle stand-in voice",
+     "EXIST IT'S BECAUSE THE",
+     "QUESTION 3"
+    ],
+    "29": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "SYSTEM MAKES IT NEARLY"
+    ],
+    "30": [
+     "A CHALLENGER",
+     "Danielle stand-in voice",
+     "IMPOSSIBLE FOR",
+     "QUESTION 3"
+    ],
+    "31": [
+     "A CHALLENGER",
+     "Danielle stand-in voice",
+     "IMPOSSIBLE FOR",
+     "QUESTION 3"
+    ],
+    "32": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "TO EVEN GET ON"
+    ],
+    "33": [
+     "Danielle stand-in voice",
+     "FIRST PLACE so VOTERS",
+     "QUESTION 3"
+    ],
+    "34": [
+     "Danielle stand-in voice",
+     "FIRST PLACE so VOTERS",
+     "QUESTION 3"
+    ],
+    "35": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "SHOW UP TO RUBBER-STAMP"
+    ],
+    "36": [
+     "Danielle stand-in voice",
+     "QUESTION 3",
+     "SHOW UP TO RUBBER-STAMP"
+    ],
+    "37": [
+     "A DECISION THAT WAS",
+     "Danielle stand-in voice",
+     "QUESTION 3"
+    ],
+    "38": [
+     "ALREADY MADE FOR THEM",
+     "Danielle stand-in voice",
+     "QUESTION 3"
+    ]
+   },
+   "secondsWithText": 39
+  },
+  "pegasus": {
+   "source": "ai",
+   "model": "twelvelabs.pegasus-1-2",
+   "ok": true,
+   "result": {
+    "summary": "The video critiques Massachusetts's lack of competitive elections, highlighting that over half the races have no opposition, undermining democracy.",
+    "hook": {
+     "t": 0,
+     "text": "FLIP A COIN THAT'S",
+     "assessment": "Attention-grabbing opening statement."
+    },
+    "observations": [
+     {
+      "t": 1,
+      "end": 3,
+      "what": "STATE LEGISLATIVE RACE ACTUALLY"
+     },
+     {
+      "t": 4,
+      "end": 6,
+      "what": "BEING CONTESTED IN MASSACHUSETTS"
+     },
+     {
+      "t": 7,
+      "end": 9,
+      "what": "SINCE 2014, 51% OF"
+     },
+     {
+      "t": 10,
+      "end": 12,
+      "what": "RACES IN THIS STATE"
+     },
+     {
+      "t": 13,
+      "end": 15,
+      "what": "MORE THAN HALF HAVE"
+     },
+     {
+      "t": 16,
+      "end": 18,
+      "what": "HAD JUST ONE NAME"
+     },
+     {
+      "t": 19,
+      "end": 21,
+      "what": "ON THE BALLOT NO"
+     },
+     {
+      "t": 22,
+      "end": 24,
+      "what": "OPPONENT NO DEBATE"
+     },
+     {
+      "t": 25,
+      "end": 27,
+      "what": "CHOICE MASSACHUSETTS RANKS DEAD"
+     },
+     {
+      "t": 28,
+      "end": 30,
+      "what": "LAST IN THE COUNTRY"
+     },
+     {
+      "t": 31,
+      "end": 33,
+      "what": "FOR ELECTORAL COMPETIVENESS THAT'S"
+     },
+     {
+      "t": 34,
+      "end": 36,
+      "what": "NOT DEMOCRACY THAT'S YOUR"
+     },
+     {
+      "t": 37,
+      "end": 39,
+      "what": "LEADERS BEING CHOSEN FOR YOU AND IT'S NOT"
+     },
+     {
+      "t": 40,
+      "end": 42,
+      "what": "BECAUSE GOOD CANDIDATES DON'T EXIST IT'S BECAUSE THE SYSTEM MAKES IT NEARLY IMPOSSIBLE FOR A CHALLENGER TO EVEN GET ON THE BALLOT SO VOTERS SHOW UP TO RUBBER-STAMP A DECISION THAT WAS ALREADY MADE FOR THEM"
+     }
+    ],
+    "characteristics": {
+     "setting": "Brown background",
+     "on_screen_people": "None",
+     "captions": "None",
+     "text_overlays": "Yes",
+     "music": "None",
+     "pace": "Slow",
+     "call_to_action": "None",
+     "visual_variety": "None"
+    },
+    "accessibility": [
+     "No on-screen people",
+     "No captions",
+     "No music"
+    ]
+   },
+   "raw": "{\n  \"summary\": \"The video critiques Massachusetts's lack of competitive elections, highlighting that over half the races have no opposition, undermining democracy.\",\n  \"hook\": {\"t\": 0, \"text\": \"FLIP A COIN THAT'S\", \"assessment\": \"Attention-grabbing opening statement.\"},\n  \"observations\": [\n    {\"t\": 1, \"end\": 3, \"what\": \"STATE LEGISLATIVE RACE ACTUALLY\"},\n    {\"t\": 4, \"end\": 6, \"what\": \"BEING CONTESTED IN MASSACHUSETTS\"},\n    {\"t\": 7, \"end\": 9, \"what\": \"SINCE 2014, 51% OF\"},\n    {\"t\": 10, \"end\": 12, \"what\": \"RACES IN THIS STATE\"},\n    {\"t\": 13, \"end\": 15, \"what\": \"MORE THAN HALF HAVE\"},\n    {\"t\": 16, \"end\": 18, \"what\": \"HAD JUST ONE NAME\"},\n    {\"t\": 19, \"end\": 21, \"what\": \"ON THE BALLOT NO\"},\n    {\"t\": 22, \"end\": 24, \"what\": \"OPPONENT NO DEBATE\"},\n    {\"t\": 25, \"end\": 27, \"what\": \"CHOICE MASSACHUSETTS RANKS DEAD\"},\n    {\"t\": 28, \"end\": 30, \"what\": \"LAST IN THE COUNTRY\"},\n    {\"t\": 31, \"end\": 33, \"what\": \"FOR ELECTORAL COMPETIVENESS THAT'S\"},\n    {\"t\": 34, \"end\": 36, \"what\": \"NOT DEMOCRACY THAT'S YOUR\"},\n    {\"t\": 37, \"end\": 39, \"what\": \"LEADERS BEING CHOSEN FOR YOU AND IT'S NOT\"},\n    {\"t\": 40, \"end\": 42, \"what\": \"BECAUSE GOOD CANDIDATES DON'T EXIST IT'S BECAUSE THE SYSTEM MAKES IT NEARLY IMPOSSIBLE FOR A CHALLENGER TO EVEN GET ON THE BALLOT SO VOTERS SHOW UP TO RUBBER-STAMP A DECISION THAT WAS ALREADY MADE FOR THEM\"}\n  ],\n  \"characteristics\": {\n    \"setting\": \"Brown background\",\n    \"on_screen_people\": \"None\",\n    \"captions\": \"None\",\n    \"text_overlays\": \"Yes\",\n    \"music\": \"None\",\n    \"pace\": \"Slow\",\n    \"call_to_action\": \"None\",\n    \"visual_variety\": \"None\"\n  },\n  \"accessibility\": [\"No on-screen people\", \"No captions\", \"No music\"]\n}"
+  }
+ },
+ "coin-ruth-nocaps": {
+  "take": "coin-ruth-nocaps",
+  "analyzedAt": "2026-10-03T09:38:35Z",
+  "audio": {
+   "source": "derived",
+   "durationSec": 39.64,
+   "loudnessDb": [
+    -33.8,
+    -79.5,
+    -27.9,
+    -28.1,
+    -28.4,
+    -29.2,
+    -81.0,
+    -27.4,
+    -33.0,
+    -28.1,
+    -28.7,
+    -34.7,
+    -25.0,
+    -81.5,
+    -64.0,
+    -45.5,
+    -79.8,
+    -76.6,
+    -27.8,
+    -29.1,
+    -29.0,
+    -35.3,
+    -77.6,
+    -30.5,
+    -26.6,
+    -52.3,
+    -51.0,
+    -28.8,
+    -34.4,
+    -28.2,
+    -27.2,
+    -27.6,
+    -27.8,
+    -31.1,
+    -85.4,
+    -23.9,
+    -77.7,
+    -28.1,
+    -25.6
+   ],
+   "pitchHz": [
+    200.0,
+    224.3,
+    195.1,
+    192.8,
+    188.2,
+    173.1,
+    260.6,
+    198.8,
+    207.8,
+    160.0,
+    181.9,
+    195.3,
+    181.2,
+    212.3,
+    186.0,
+    210.5,
+    212.3,
+    146.8,
+    222.2,
+    188.4,
+    170.2,
+    151.7,
+    231.9,
+    168.4,
+    219.2,
+    148.1,
+    240.6,
+    188.2,
+    172.9,
+    235.4,
+    187.9,
+    173.1,
+    168.4,
+    168.4,
+    149.5,
+    197.5,
+    235.3,
+    183.9,
+    168.4,
+    141.0
+   ],
+   "pitchMedianHz": 186.0,
+   "pitchRangeHz": [
+    146.8,
+    238.8
+   ],
+   "pauses": [
+    {
+     "t": 1.0,
+     "sec": 0.5
+    },
+    {
+     "t": 6.2,
+     "sec": 0.6
+    },
+    {
+     "t": 13.2,
+     "sec": 0.5
+    },
+    {
+     "t": 14.6,
+     "sec": 0.6
+    },
+    {
+     "t": 16.0,
+     "sec": 0.5
+    },
+    {
+     "t": 17.3,
+     "sec": 0.6
+    },
+    {
+     "t": 21.9,
+     "sec": 0.5
+    },
+    {
+     "t": 25.7,
+     "sec": 0.6
+    },
+    {
+     "t": 34.3,
+     "sec": 0.6
+    },
+    {
+     "t": 36.0,
+     "sec": 0.7
+    }
+   ],
+   "loudestSec": [
+    12,
+    35,
+    38
+   ],
+   "quietestSec": [
+    6,
+    13,
+    34
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "text": "Flip a coin. That's your odds of your state legislative race actually being contested in Massachusetts. Since 2014, 51% of races in the state, more than half, have had just one name on the ballot. No opponent, no debate, no choice. Massachusetts ranks dead last in the country for electoral competitiveness. That's not democracy, that's your leaders being chosen for you. And it's not because good candidates don't exist, it's because the system makes it nearly impossible for a challenger to even get on the ballot in the first place. So voters show up to rubber stamp a decision that was already made for them.",
+   "words": [
+    {
+     "t": 0.08,
+     "w": "Flip"
+    },
+    {
+     "t": 0.37,
+     "w": "a"
+    },
+    {
+     "t": 0.55,
+     "w": "coin"
+    },
+    {
+     "t": 1.54,
+     "w": "That's"
+    },
+    {
+     "t": 1.75,
+     "w": "your"
+    },
+    {
+     "t": 1.84,
+     "w": "odds"
+    },
+    {
+     "t": 2.19,
+     "w": "of"
+    },
+    {
+     "t": 2.31,
+     "w": "your"
+    },
+    {
+     "t": 2.52,
+     "w": "state"
+    },
+    {
+     "t": 2.83,
+     "w": "legislative"
+    },
+    {
+     "t": 3.51,
+     "w": "race"
+    },
+    {
+     "t": 3.79,
+     "w": "actually"
+    },
+    {
+     "t": 4.29,
+     "w": "being"
+    },
+    {
+     "t": 4.52,
+     "w": "contested"
+    },
+    {
+     "t": 5.11,
+     "w": "in"
+    },
+    {
+     "t": 5.31,
+     "w": "Massachusetts"
+    },
+    {
+     "t": 6.85,
+     "w": "Since"
+    },
+    {
+     "t": 7.07,
+     "w": "2014"
+    },
+    {
+     "t": 8.12,
+     "w": "51%"
+    },
+    {
+     "t": 9.07,
+     "w": "of"
+    },
+    {
+     "t": 9.27,
+     "w": "races"
+    },
+    {
+     "t": 9.63,
+     "w": "in"
+    },
+    {
+     "t": 9.75,
+     "w": "the"
+    },
+    {
+     "t": 9.99,
+     "w": "state"
+    },
+    {
+     "t": 10.48,
+     "w": "more"
+    },
+    {
+     "t": 10.67,
+     "w": "than"
+    },
+    {
+     "t": 10.85,
+     "w": "half"
+    },
+    {
+     "t": 11.36,
+     "w": "have"
+    },
+    {
+     "t": 11.55,
+     "w": "had"
+    },
+    {
+     "t": 11.75,
+     "w": "just"
+    },
+    {
+     "t": 12.03,
+     "w": "one"
+    },
+    {
+     "t": 12.26,
+     "w": "name"
+    },
+    {
+     "t": 12.47,
+     "w": "on"
+    },
+    {
+     "t": 12.59,
+     "w": "the"
+    },
+    {
+     "t": 12.71,
+     "w": "ballot"
+    },
+    {
+     "t": 13.76,
+     "w": "No"
+    },
+    {
+     "t": 13.95,
+     "w": "opponent"
+    },
+    {
+     "t": 15.24,
+     "w": "no"
+    },
+    {
+     "t": 15.59,
+     "w": "debate"
+    },
+    {
+     "t": 16.56,
+     "w": "no"
+    },
+    {
+     "t": 16.87,
+     "w": "choice"
+    },
+    {
+     "t": 17.92,
+     "w": "Massachusetts"
+    },
+    {
+     "t": 18.67,
+     "w": "ranks"
+    },
+    {
+     "t": 19.07,
+     "w": "dead"
+    },
+    {
+     "t": 19.27,
+     "w": "last"
+    },
+    {
+     "t": 19.59,
+     "w": "in"
+    },
+    {
+     "t": 19.71,
+     "w": "the"
+    },
+    {
+     "t": 19.87,
+     "w": "country"
+    },
+    {
+     "t": 20.23,
+     "w": "for"
+    },
+    {
+     "t": 20.35,
+     "w": "electoral"
+    },
+    {
+     "t": 20.87,
+     "w": "competitiveness"
+    },
+    {
+     "t": 22.44,
+     "w": "That's"
+    },
+    {
+     "t": 22.75,
+     "w": "not"
+    },
+    {
+     "t": 22.96,
+     "w": "democracy"
+    },
+    {
+     "t": 23.88,
+     "w": "that's"
+    },
+    {
+     "t": 24.07,
+     "w": "your"
+    },
+    {
+     "t": 24.23,
+     "w": "leaders"
+    },
+    {
+     "t": 24.59,
+     "w": "being"
+    },
+    {
+     "t": 24.84,
+     "w": "chosen"
+    },
+    {
+     "t": 25.28,
+     "w": "for"
+    },
+    {
+     "t": 25.43,
+     "w": "you"
+    },
+    {
+     "t": 26.27,
+     "w": "And"
+    },
+    {
+     "t": 26.38,
+     "w": "it's"
+    },
+    {
+     "t": 26.62,
+     "w": "not"
+    },
+    {
+     "t": 26.98,
+     "w": "because"
+    },
+    {
+     "t": 27.18,
+     "w": "good"
+    },
+    {
+     "t": 27.46,
+     "w": "candidates"
+    },
+    {
+     "t": 27.98,
+     "w": "don't"
+    },
+    {
+     "t": 28.37,
+     "w": "exist"
+    },
+    {
+     "t": 28.87,
+     "w": "it's"
+    },
+    {
+     "t": 29.17,
+     "w": "because"
+    },
+    {
+     "t": 29.43,
+     "w": "the"
+    },
+    {
+     "t": 29.59,
+     "w": "system"
+    },
+    {
+     "t": 29.97,
+     "w": "makes"
+    },
+    {
+     "t": 30.18,
+     "w": "it"
+    },
+    {
+     "t": 30.38,
+     "w": "nearly"
+    },
+    {
+     "t": 30.66,
+     "w": "impossible"
+    },
+    {
+     "t": 31.38,
+     "w": "for"
+    },
+    {
+     "t": 31.46,
+     "w": "a"
+    },
+    {
+     "t": 31.66,
+     "w": "challenger"
+    },
+    {
+     "t": 32.1,
+     "w": "to"
+    },
+    {
+     "t": 32.31,
+     "w": "even"
+    },
+    {
+     "t": 32.55,
+     "w": "get"
+    },
+    {
+     "t": 32.7,
+     "w": "on"
+    },
+    {
+     "t": 32.82,
+     "w": "the"
+    },
+    {
+     "t": 32.94,
+     "w": "ballot"
+    },
+    {
+     "t": 33.3,
+     "w": "in"
+    },
+    {
+     "t": 33.42,
+     "w": "the"
+    },
+    {
+     "t": 33.55,
+     "w": "first"
+    },
+    {
+     "t": 33.86,
+     "w": "place"
+    },
+    {
+     "t": 34.91,
+     "w": "So"
+    },
+    {
+     "t": 35.14,
+     "w": "voters"
+    },
+    {
+     "t": 35.58,
+     "w": "show"
+    },
+    {
+     "t": 35.78,
+     "w": "up"
+    },
+    {
+     "t": 36.67,
+     "w": "to"
+    },
+    {
+     "t": 36.78,
+     "w": "rubber"
+    },
+    {
+     "t": 37.1,
+     "w": "stamp"
+    },
+    {
+     "t": 37.46,
+     "w": "a"
+    },
+    {
+     "t": 37.74,
+     "w": "decision"
+    },
+    {
+     "t": 38.07,
+     "w": "that"
+    },
+    {
+     "t": 38.27,
+     "w": "was"
+    },
+    {
+     "t": 38.54,
+     "w": "already"
+    },
+    {
+     "t": 38.82,
+     "w": "made"
+    },
+    {
+     "t": 39.06,
+     "w": "for"
+    },
+    {
+     "t": 39.18,
+     "w": "them"
+    }
+   ],
+   "wpm": 159.7,
+   "firstWordSec": 0.08
+  },
+  "shots": {
+   "source": "ai",
+   "segments": [
+    {
+     "type": "TECHNICAL_CUE",
+     "start": 0.0,
+     "end": 40.0,
+     "kind": "Content"
+    },
+    {
+     "type": "SHOT",
+     "start": 0.0,
+     "end": 40.0,
+     "kind": null
+    }
+   ]
+  },
+  "onScreenText": {
+   "source": "ai",
+   "bySecond": {
+    "0": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "1": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "2": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "3": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "4": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "5": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "6": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "7": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "8": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "9": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "10": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "11": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "12": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "13": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "14": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "15": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "16": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "17": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "18": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "19": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "20": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "21": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "22": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "23": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "24": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "25": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "26": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "27": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "28": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "29": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "30": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "31": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "32": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "33": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "34": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "35": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "36": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "37": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ],
+    "38": [
+     "QUESTION 3",
+     "Ruth stand-in voice"
+    ]
+   },
+   "secondsWithText": 39
+  },
+  "pegasus": {
+   "source": "ai",
+   "model": "twelvelabs.pegasus-1-2",
+   "ok": true,
+   "result": {
+    "summary": "The video highlights the lack of competitive elections in Massachusetts, emphasizing that over half the races have no opposition, undermining democratic choice.",
+    "hook": {
+     "t": 0,
+     "text": "Flip a coin. That's your odds of your state legislative race actually being contested in Massachusetts.",
+     "assessment": "The hook is impactful, using a metaphor to immediately convey the lack of electoral competition."
+    },
+    "observations": [
+     {
+      "t": 0,
+      "end": 10,
+      "what": "Text appears on a purple background: 'Flip a coin. That's your odds of your state legislative race actually being contested in Massachusetts.'"
+     },
+     {
+      "t": 10,
+      "end": 21,
+      "what": "Text updates: 'Since 2014, 51% of races in this state, more than half, have had just one name on the ballot.'"
+     },
+     {
+      "t": 21,
+      "end": 31,
+      "what": "Text states: 'No opponent. No debate. No choice. Massachusetts ranks dead last in the country for electoral competitiveness.'"
+     },
+     {
+      "t": 31,
+      "end": 39,
+      "what": "Text concludes: 'That's not democracy, that's your leaders being chosen for you. And it's not because good candidates don't exist, it's because the system makes it nearly impossible for a challenger to even get on the ballot in the first place.'"
+     }
+    ],
+    "characteristics": {
+     "setting": "Static purple screen",
+     "on_screen_people": "None",
+     "captions": "Present",
+     "text_overlays": "Present",
+     "music": "None",
+     "pace": "Slow and deliberate",
+     "call_to_action": "Implied: challenge the system",
+     "visual_variety": "None"
+    },
+    "accessibility": [
+     "Text is large and legible",
+     "No audio required for understanding",
+     "No flashing or distracting visuals"
+    ]
+   },
+   "raw": "{\"summary\": \"The video highlights the lack of competitive elections in Massachusetts, emphasizing that over half the races have no opposition, undermining democratic choice.\",\n \"hook\": {\"t\": 0, \"text\": \"Flip a coin. That's your odds of your state legislative race actually being contested in Massachusetts.\", \"assessment\": \"The hook is impactful, using a metaphor to immediately convey the lack of electoral competition.\"},\n \"observations\": [{\"t\": 0, \"end\": 10, \"what\": \"Text appears on a purple background: 'Flip a coin. That's your odds of your state legislative race actually being contested in Massachusetts.'\"},\n {\"t\": 10, \"end\": 21, \"what\": \"Text updates: 'Since 2014, 51% of races in this state, more than half, have had just one name on the ballot.'\"},\n {\"t\": 21, \"end\": 31, \"what\": \"Text states: 'No opponent. No debate. No choice. Massachusetts ranks dead last in the country for electoral competitiveness.'\"},\n {\"t\": 31, \"end\": 39, \"what\": \"Text concludes: 'That's not democracy, that's your leaders being chosen for you. And it's not because good candidates don't exist, it's because the system makes it nearly impossible for a challenger to even get on the ballot in the first place.'\"}],\n \"characteristics\": {\"setting\": \"Static purple screen\", \"on_screen_people\": \"None\", \"captions\": \"Present\", \"text_overlays\": \"Present\", \"music\": \"None\", \"pace\": \"Slow and deliberate\", \"call_to_action\": \"Implied: challenge the system\", \"visual_variety\": \"None\"},\n \"accessibility\": [\"Text is large and legible\", \"No audio required for understanding\", \"No flashing or distracting visuals\"]}"
+  }
+ }
+}

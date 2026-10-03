@@ -1,0 +1,208 @@
+{
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "source": "ai",
+ "scripts": {
+  "coin": {
+   "codes": {
+    "technique_plain_folks": 0.6,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.8,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.1,
+    "narration_explain_facts": 0.9,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.85,
+    "fact_cite_yes": 0.3,
+    "fact_new_yes": 0.8,
+    "emotion_anger": 0.6,
+    "emotion_enthusiasm": 0.2,
+    "emotion_fear": 0.4,
+    "emotion_hope_pride": 0.1,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.6,
+    "tone_positive": 0.1,
+    "tone_negative": 0.8,
+    "tone_contrast": 0.7,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.05,
+    "style_amateur": 0.9,
+    "style_text_on_screen": 0.85,
+    "style_animation": 0.0,
+    "how_scripted": 0.85
+   },
+   "notes": {
+    "technique_plain_folks": "Volunteer delivery and direct 'your' address positions messenger as an ordinary citizen speaking to peers",
+    "messenger_every_people": "Described as a volunteer reading to a phone camera, clearly not an official or celebrity",
+    "narration_explain_facts": "Core of the script is walking through the 51% statistic and its implications",
+    "narration_advocate_opinions": "Explicitly frames the situation as 'not democracy' and argues the system is rigged against challengers",
+    "policy_facts": "Cites specific statistic about uncontested races and dead-last competitiveness ranking",
+    "fact_new_yes": "The 51% uncontested figure and dead-last ranking are likely unfamiliar to most viewers",
+    "emotion_anger": "Framing of 'chosen for you' and 'rubber-stamp' is designed to provoke indignation",
+    "emotion_somber": "Serious, declarative tone with no uplift or call to action; ends on a bleak note",
+    "tone_negative": "Entire script focuses on a democratic failure with no positive resolution offered",
+    "tone_contrast": "Contrasts real democracy with the current system; contrasts voter agency with predetermined outcomes",
+    "style_amateur": "Explicitly described as volunteer on phone camera",
+    "style_text_on_screen": "Described as having captions; key stats like '51%' and 'ONE' likely displayed as on-screen text",
+    "how_scripted": "Tight rhetorical structure, parallel phrasing, and punchy sentences read as clearly written and rehearsed"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.19,
+     "low": -0.95,
+     "high": 3.33,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.76,
+     "low": -0.79,
+     "high": 2.31,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.26,
+     "low": -0.9,
+     "high": 3.43,
+     "average": 1.405
+    }
+   }
+  },
+  "calm": {
+   "codes": {
+    "technique_plain_folks": 0.7,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.85,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.1,
+    "narration_explain_facts": 0.8,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.85,
+    "fact_cite_yes": 0.2,
+    "fact_new_yes": 0.65,
+    "emotion_anger": 0.3,
+    "emotion_enthusiasm": 0.55,
+    "emotion_fear": 0.2,
+    "emotion_hope_pride": 0.5,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.35,
+    "tone_positive": 0.6,
+    "tone_negative": 0.45,
+    "tone_contrast": 0.75,
+    "explicit_vote_for": 0.95,
+    "production_value_high": 0.05,
+    "style_amateur": 0.9,
+    "style_text_on_screen": 0.85,
+    "style_animation": 0.0,
+    "how_scripted": 0.85
+   },
+   "notes": {
+    "technique_plain_folks": "Volunteer delivery and 'all of us' framing positions speaker as an ordinary citizen",
+    "messenger_every_people": "Described as a volunteer reading to a phone camera, classic everyday-person messenger",
+    "narration_explain_facts": "Explains how uncontested races work and how Q3 would change the ballot structure",
+    "narration_advocate_opinions": "Clearly argues Q3 is a good reform and urges a yes vote",
+    "policy_facts": "Describes specific ballot mechanics and cites uncontested race statistic",
+    "fact_new_yes": "Majority-uncontested-races statistic is likely unfamiliar to most viewers",
+    "emotion_enthusiasm": "Upbeat framing of 'more choices' and empowered voters carries mild enthusiasm",
+    "tone_positive": "Solution-oriented language about more choices and accountability",
+    "tone_contrast": "Explicitly contrasts current uncontested system with proposed open-primary reform",
+    "explicit_vote_for": "Ends with direct call: 'Vote yes on Question 3'",
+    "style_amateur": "Phone camera, volunteer format signals intentionally amateur production",
+    "style_text_on_screen": "Captions specified in the prompt",
+    "how_scripted": "Read from a written script; likely sounds rehearsed rather than spontaneous"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.99,
+     "low": -1.15,
+     "high": 3.13,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 1.29,
+     "low": -0.26,
+     "high": 2.84,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.76,
+     "low": -0.4,
+     "high": 3.93,
+     "average": 1.405
+    }
+   }
+  },
+  "listen": {
+   "codes": {
+    "technique_plain_folks": 0.75,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.85,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.1,
+    "narration_explain_facts": 0.8,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.7,
+    "fact_cite_yes": 0.05,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.2,
+    "emotion_enthusiasm": 0.55,
+    "emotion_fear": 0.25,
+    "emotion_hope_pride": 0.55,
+    "emotion_humor": 0.05,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.65,
+    "tone_negative": 0.35,
+    "tone_contrast": 0.8,
+    "explicit_vote_for": 0.5,
+    "production_value_high": 0.05,
+    "style_amateur": 0.9,
+    "style_text_on_screen": 0.85,
+    "style_animation": 0.0,
+    "how_scripted": 0.85
+   },
+   "notes": {
+    "technique_plain_folks": "Coffee shop analogy and conversational framing position the speaker as an ordinary person making a relatable point",
+    "messenger_every_people": "Described as a volunteer on a phone camera, no credentials or authority signaled",
+    "narration_explain_facts": "Walks through how the current system works and how Question 3 would change it",
+    "narration_advocate_opinions": "Explicitly argues that competition improves representation and endorses Question 3",
+    "policy_facts": "Describes the mechanics of the current primary system and the proposed top-two primary reform",
+    "fact_new_yes": "Many viewers may not know most Massachusetts races are effectively uncontested",
+    "emotion_enthusiasm": "Closing lines frame the reform as a clear positive solution with upbeat framing",
+    "emotion_hope_pride": "Ends on aspirational note about representatives who 'actually listen'",
+    "tone_positive": "Overall framing is solution-oriented and ends on an optimistic note",
+    "tone_contrast": "Explicitly contrasts the broken status quo with the proposed reform throughout",
+    "explicit_vote_for": "Names Question 3 and implies support, though does not say 'vote yes' in so many words",
+    "style_amateur": "Script specifies volunteer reading to a phone camera",
+    "style_text_on_screen": "Script specifies captions are present",
+    "how_scripted": "Script is clearly written and structured; a volunteer reading it will likely sound rehearsed"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.98,
+     "low": -1.15,
+     "high": 3.12,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 1.14,
+     "low": -0.41,
+     "high": 2.69,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.71,
+     "low": -0.45,
+     "high": 3.88,
+     "average": 1.405
+    }
+   }
+  }
+ }
+}
