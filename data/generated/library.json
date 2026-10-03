@@ -1,0 +1,2977 @@
+{
+ "swayable-archive": {
+  "files": [
+   {
+    "key": "raw/swayable/replication_archive.zip",
+    "bytes": 269260296
+   }
+  ],
+  "fileCount": 1,
+  "bytes": 269260296,
+  "tables": [
+   {
+    "key": "curated/swayable/regression_ates.parquet",
+    "name": "regression_ates",
+    "rows": 1583,
+    "columns": [
+     {
+      "name": "study_id",
+      "type": "string"
+     },
+     {
+      "name": "term",
+      "type": "string"
+     },
+     {
+      "name": "estimate",
+      "type": "float64"
+     },
+     {
+      "name": "std.error",
+      "type": "float64"
+     },
+     {
+      "name": "statistic",
+      "type": "float64"
+     },
+     {
+      "name": "p.value",
+      "type": "float64"
+     },
+     {
+      "name": "conf.low",
+      "type": "float64"
+     },
+     {
+      "name": "conf.high",
+      "type": "float64"
+     },
+     {
+      "name": "df",
+      "type": "float64"
+     },
+     {
+      "name": "outcome",
+      "type": "string"
+     },
+     {
+      "name": "outcome_name",
+      "type": "string"
+     },
+     {
+      "name": "content_id",
+      "type": "string"
+     },
+     {
+      "name": "n_obs",
+      "type": "Int32"
+     }
+    ],
+    "columnCount": 13,
+    "sample": [
+     {
+      "study_id": "X495cbb4fe018",
+      "term": "content_idX968edf32f1b4",
+      "estimate": 8.7698,
+      "std.error": 8.9343,
+      "statistic": 0.9816,
+      "p.value": 0.3307,
+      "conf.low": -9.1453,
+      "conf.high": 26.685,
+      "df": 53.6246,
+      "outcome": "favorability",
+      "outcome_name": "Favorability",
+      "content_id": "X968edf32f1b4"
+     },
+     {
+      "study_id": "X495cbb4fe018",
+      "term": "content_idX05df5365013f",
+      "estimate": 17.7614,
+      "std.error": 8.9006,
+      "statistic": 1.9955,
+      "p.value": 0.0513,
+      "conf.low": -0.1057,
+      "conf.high": 35.6286,
+      "df": 51.1925,
+      "outcome": "favorability",
+      "outcome_name": "Favorability",
+      "content_id": "X05df5365013f"
+     },
+     {
+      "study_id": "X495cbb4fe018",
+      "term": "content_idXdbe1138cec23",
+      "estimate": 6.9841,
+      "std.error": 9.3359,
+      "statistic": 0.7481,
+      "p.value": 0.4581,
+      "conf.low": -11.7867,
+      "conf.high": 25.755,
+      "df": 48.0308,
+      "outcome": "favorability",
+      "outcome_name": "Favorability",
+      "content_id": "Xdbe1138cec23"
+     },
+     {
+      "study_id": "X495cbb4fe018",
+      "term": "content_idX3b9cca90c36e",
+      "estimate": 1.9841,
+      "std.error": 9.0066,
+      "statistic": 0.2203,
+      "p.value": 0.8266,
+      "conf.low": -16.1245,
+      "conf.high": 20.0927,
+      "df": 48.0308,
+      "outcome": "favorability",
+      "outcome_name": "Favorability",
+      "content_id": "X3b9cca90c36e"
+     },
+     {
+      "study_id": "X3c2f80c20258",
+      "term": "content_idX412d6c0a63fd",
+      "estimate": -3.8193,
+      "std.error": 1.9485,
+      "statistic": -1.9601,
+      "p.value": 0.0513,
+      "conf.low": -7.6602,
+      "conf.high": 0.0216,
+      "df": 212.3638,
+      "outcome": "favorability",
+      "outcome_name": "Favorability",
+      "content_id": "X412d6c0a63fd"
+     },
+     {
+      "study_id": "X0c2b064a71c5",
+      "term": "content_idX22f692d2c703",
+      "estimate": 5.9076,
+      "std.error": 0.9584,
+      "statistic": 6.1642,
+      "p.value": 0.0,
+      "conf.low": 3.9797,
+      "conf.high": 7.8356,
+      "df": 47.0871,
+      "outcome": "favorability",
+      "outcome_name": "Favorability",
+      "content_id": "X22f692d2c703"
+     },
+     {
+      "study_id": "X0c2b064a71c5",
+      "term": "content_idX031f89e21d56",
+      "estimate": 6.4343,
+      "std.error": 0.8997,
+      "statistic": 7.1519,
+      "p.value": 0.0,
+      "conf.low": 4.6239,
+      "conf.high": 8.2447,
+      "df": 46.4762,
+      "outcome": "favorability",
+      "outcome_name": "Favorability",
+      "content_id": "X031f89e21d56"
+     },
+     {
+      "study_id": "X5a248af8c0f1",
+      "term": "content_idXa0ca2f6dd0e3",
+      "estimate": 3.2646,
+      "std.error": 1.7736,
+      "statistic": 1.8406,
+      "p.value": 0.0675,
+      "conf.low": -0.2381,
+      "conf.high": 6.7672,
+      "df": 160.3937,
+      "outcome": "favorability",
+      "outcome_name": "Favorability",
+      "content_id": "Xa0ca2f6dd0e3"
+     }
+    ]
+   },
+   {
+    "key": "curated/swayable/tagging_2020.parquet",
+    "name": "tagging_2020",
+    "rows": 494,
+    "columns": [
+     {
+      "name": "before_prereg",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_scientist",
+      "type": "float64"
+     },
+     {
+      "name": "style_other",
+      "type": "float64"
+     },
+     {
+      "name": "candidate_facts",
+      "type": "float64"
+     },
+     {
+      "name": "how_persuasive",
+      "type": "float64"
+     },
+     {
+      "name": "how_pushy",
+      "type": "float64"
+     },
+     {
+      "name": "how_scripted",
+      "type": "float64"
+     },
+     {
+      "name": "how_specific_candidate_fact",
+      "type": "float64"
+     },
+     {
+      "name": "how_specific_policy_fact",
+      "type": "float64"
+     },
+     {
+      "name": "policy_facts",
+      "type": "float64"
+     },
+     {
+      "name": "primary_focus_candidate",
+      "type": "float64"
+     },
+     {
+      "name": "primary_focus_issues",
+      "type": "float64"
+     },
+     {
+      "name": "primary_focus_neither",
+      "type": "float64"
+     },
+     {
+      "name": "technique_neg_name",
+      "type": "float64"
+     },
+     {
+      "name": "technique_pos_name",
+      "type": "float64"
+     },
+     {
+      "name": "technique_pos_transfer",
+      "type": "float64"
+     },
+     {
+      "name": "technique_neg_transfer",
+      "type": "float64"
+     },
+     {
+      "name": "technique_pos_testimonial",
+      "type": "float64"
+     },
+     {
+      "name": "technique_neg_testimonial",
+      "type": "float64"
+     },
+     {
+      "name": "technique_plain_folks",
+      "type": "float64"
+     },
+     {
+      "name": "technique_other",
+      "type": "float64"
+     },
+     {
+      "name": "fact_new_yes",
+      "type": "float64"
+     },
+     {
+      "name": "fact_new_no",
+      "type": "float64"
+     },
+     {
+      "name": "fact_new_na",
+      "type": "float64"
+     },
+     {
+      "name": "fact_new_only",
+      "type": "float64"
+     },
+     {
+      "name": "fact_cite_yes",
+      "type": "float64"
+     },
+     {
+      "name": "fact_cite_no",
+      "type": "float64"
+     },
+     {
+      "name": "fact_cite_na",
+      "type": "float64"
+     },
+     {
+      "name": "fact_cite_only",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_anger",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_disgust",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_enthusiasm",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_fear",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_humor",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_pride",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_sadness",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_somber",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_other",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_children",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_young_adult",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_middle_aged",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_elderly",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_voiceover_age",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_male",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_female",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_nonbinary",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_unclear_gender",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_white",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_black",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_asian",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_latinx",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_voiceover_race",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_politician",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_every_people",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_republican",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_healthcare",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_celebrity",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_veteran",
+      "type": "float64"
+     },
+     {
+      "name": "explicit_vote_for",
+      "type": "float64"
+     },
+     {
+      "name": "explicit_turnout",
+      "type": "float64"
+     }
+    ],
+    "columnCount": 119,
+    "sample": [
+     {
+      "before_prereg": 0.0,
+      "messenger_scientist": 0.0,
+      "style_other": 0.0,
+      "candidate_facts": 0.073,
+      "how_persuasive": 0.1263,
+      "how_pushy": 0.0631,
+      "how_scripted": 0.7548,
+      "how_specific_candidate_fact": null,
+      "how_specific_policy_fact": null,
+      "policy_facts": -0.0073,
+      "primary_focus_candidate": 0.0623,
+      "primary_focus_issues": 0.9812
+     },
+     {
+      "before_prereg": 0.0,
+      "messenger_scientist": 0.0,
+      "style_other": 0.0,
+      "candidate_facts": 0.0506,
+      "how_persuasive": 0.3283,
+      "how_pushy": 0.715,
+      "how_scripted": 1.2104,
+      "how_specific_candidate_fact": null,
+      "how_specific_policy_fact": -0.0735,
+      "policy_facts": 0.9309,
+      "primary_focus_candidate": 0.1354,
+      "primary_focus_issues": 0.8351
+     },
+     {
+      "before_prereg": 0.0,
+      "messenger_scientist": 0.0,
+      "style_other": 0.0,
+      "candidate_facts": -0.0134,
+      "how_persuasive": 0.5723,
+      "how_pushy": 0.9507,
+      "how_scripted": 0.8548,
+      "how_specific_candidate_fact": null,
+      "how_specific_policy_fact": 0.6996,
+      "policy_facts": 1.0343,
+      "primary_focus_candidate": 0.0596,
+      "primary_focus_issues": 1.0063
+     },
+     {
+      "before_prereg": 0.0,
+      "messenger_scientist": 0.0,
+      "style_other": 0.0,
+      "candidate_facts": 0.6533,
+      "how_persuasive": 1.5712,
+      "how_pushy": 0.3393,
+      "how_scripted": 0.6131,
+      "how_specific_candidate_fact": -0.1559,
+      "how_specific_policy_fact": null,
+      "policy_facts": 0.0954,
+      "primary_focus_candidate": 0.9152,
+      "primary_focus_issues": 0.0951
+     },
+     {
+      "before_prereg": 0.0,
+      "messenger_scientist": 0.0,
+      "style_other": 0.0,
+      "candidate_facts": 0.0506,
+      "how_persuasive": 0.6851,
+      "how_pushy": 0.7884,
+      "how_scripted": 1.5799,
+      "how_specific_candidate_fact": null,
+      "how_specific_policy_fact": 0.2741,
+      "policy_facts": 0.9533,
+      "primary_focus_candidate": 0.068,
+      "primary_focus_issues": 0.9306
+     },
+     {
+      "before_prereg": 0.0,
+      "messenger_scientist": 0.0,
+      "style_other": 0.0,
+      "candidate_facts": 0.07,
+      "how_persuasive": 0.5085,
+      "how_pushy": 0.7352,
+      "how_scripted": 1.107,
+      "how_specific_candidate_fact": null,
+      "how_specific_policy_fact": 0.627,
+      "policy_facts": 0.9787,
+      "primary_focus_candidate": 0.1208,
+      "primary_focus_issues": 0.9507
+     },
+     {
+      "before_prereg": 0.0,
+      "messenger_scientist": 0.0,
+      "style_other": 0.0,
+      "candidate_facts": 0.4978,
+      "how_persuasive": 1.3204,
+      "how_pushy": 0.6117,
+      "how_scripted": 0.7339,
+      "how_specific_candidate_fact": null,
+      "how_specific_policy_fact": 0.9195,
+      "policy_facts": 0.9287,
+      "primary_focus_candidate": 0.4819,
+      "primary_focus_issues": 0.9229
+     },
+     {
+      "before_prereg": 0.0,
+      "messenger_scientist": 0.0,
+      "style_other": 0.0,
+      "candidate_facts": 0.1366,
+      "how_persuasive": 1.2779,
+      "how_pushy": 0.8821,
+      "how_scripted": 0.3714,
+      "how_specific_candidate_fact": null,
+      "how_specific_policy_fact": 0.7412,
+      "policy_facts": 0.9565,
+      "primary_focus_candidate": 0.0874,
+      "primary_focus_issues": 0.9285
+     }
+    ]
+   },
+   {
+    "key": "curated/swayable/tagging_2018.parquet",
+    "name": "tagging_2018",
+    "rows": 148,
+    "columns": [
+     {
+      "name": "policy_facts",
+      "type": "float64"
+     },
+     {
+      "name": "candidate_facts",
+      "type": "float64"
+     },
+     {
+      "name": "mentions_party",
+      "type": "float64"
+     },
+     {
+      "name": "mentions_trump",
+      "type": "float64"
+     },
+     {
+      "name": "primary_focus_candidate",
+      "type": "float64"
+     },
+     {
+      "name": "primary_focus_issues",
+      "type": "float64"
+     },
+     {
+      "name": "technique_neg_name",
+      "type": "float64"
+     },
+     {
+      "name": "technique_pos_name",
+      "type": "float64"
+     },
+     {
+      "name": "technique_pos_transfer",
+      "type": "float64"
+     },
+     {
+      "name": "technique_neg_transfer",
+      "type": "float64"
+     },
+     {
+      "name": "technique_pos_testimonial",
+      "type": "float64"
+     },
+     {
+      "name": "technique_neg_testimonial",
+      "type": "float64"
+     },
+     {
+      "name": "technique_plain_folks",
+      "type": "float64"
+     },
+     {
+      "name": "how_specific_policy_fact",
+      "type": "float64"
+     },
+     {
+      "name": "how_specific_candidate_fact",
+      "type": "float64"
+     },
+     {
+      "name": "fact_new_yes",
+      "type": "float64"
+     },
+     {
+      "name": "fact_cite_yes",
+      "type": "float64"
+     },
+     {
+      "name": "fact_new_no",
+      "type": "float64"
+     },
+     {
+      "name": "fact_cite_no",
+      "type": "float64"
+     },
+     {
+      "name": "fact_new_na",
+      "type": "float64"
+     },
+     {
+      "name": "fact_cite_na",
+      "type": "float64"
+     },
+     {
+      "name": "fact_new_only",
+      "type": "float64"
+     },
+     {
+      "name": "fact_cite_only",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_anger",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_disgust",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_enthusiasm",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_fear",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_humor",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_pride",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_sadness",
+      "type": "float64"
+     },
+     {
+      "name": "emotion_somber",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_female",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_male",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_children",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_young_adult",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_middle_aged",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_elderly",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_black",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_white",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_asian",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_latinx",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_politician",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_celebrity",
+      "type": "float64"
+     },
+     {
+      "name": "messenger_veteran",
+      "type": "float64"
+     },
+     {
+      "name": "explicit_vote_for",
+      "type": "float64"
+     },
+     {
+      "name": "tone_positive",
+      "type": "float64"
+     },
+     {
+      "name": "tone_negative",
+      "type": "float64"
+     },
+     {
+      "name": "tone_contrast",
+      "type": "float64"
+     },
+     {
+      "name": "issue_healthcare",
+      "type": "float64"
+     },
+     {
+      "name": "issue_taxes",
+      "type": "float64"
+     },
+     {
+      "name": "ask_is_not_persuasion",
+      "type": "float64"
+     },
+     {
+      "name": "production_value_high",
+      "type": "float64"
+     },
+     {
+      "name": "has_story",
+      "type": "float64"
+     },
+     {
+      "name": "how_specific_policy_fact_impute",
+      "type": "float64"
+     },
+     {
+      "name": "how_specific_candidate_fact_impute",
+      "type": "float64"
+     },
+     {
+      "name": "content_id",
+      "type": "string"
+     },
+     {
+      "name": "prometh",
+      "type": "float64"
+     },
+     {
+      "name": "election_type_none",
+      "type": "float64"
+     },
+     {
+      "name": "election_type_max",
+      "type": "float64"
+     },
+     {
+      "name": "race_level",
+      "type": "string"
+     }
+    ],
+    "columnCount": 60,
+    "sample": [
+     {
+      "policy_facts": 0.4116,
+      "candidate_facts": 0.2187,
+      "mentions_party": -0.025,
+      "mentions_trump": 0.9337,
+      "primary_focus_candidate": 0.4116,
+      "primary_focus_issues": 0.602,
+      "technique_neg_name": -0.0047,
+      "technique_pos_name": 0.0036,
+      "technique_pos_transfer": -0.022,
+      "technique_neg_transfer": 0.925,
+      "technique_pos_testimonial": 0.0228,
+      "technique_neg_testimonial": 0.2779
+     },
+     {
+      "policy_facts": 0.7035,
+      "candidate_facts": -0.1068,
+      "mentions_party": 0.9665,
+      "mentions_trump": 1.0066,
+      "primary_focus_candidate": 0.2854,
+      "primary_focus_issues": 0.367,
+      "technique_neg_name": 0.0068,
+      "technique_pos_name": 0.0081,
+      "technique_pos_transfer": -0.0372,
+      "technique_neg_transfer": 0.9822,
+      "technique_pos_testimonial": 0.0352,
+      "technique_neg_testimonial": 0.0199
+     },
+     {
+      "policy_facts": 0.6432,
+      "candidate_facts": 0.888,
+      "mentions_party": 0.963,
+      "mentions_trump": 0.952,
+      "primary_focus_candidate": 0.3783,
+      "primary_focus_issues": 0.5883,
+      "technique_neg_name": 0.3051,
+      "technique_pos_name": 0.0104,
+      "technique_pos_transfer": 0.0092,
+      "technique_neg_transfer": 0.9767,
+      "technique_pos_testimonial": -0.0012,
+      "technique_neg_testimonial": 0.2502
+     },
+     {
+      "policy_facts": 0.0081,
+      "candidate_facts": 0.5831,
+      "mentions_party": 0.996,
+      "mentions_trump": 0.01,
+      "primary_focus_candidate": 0.0599,
+      "primary_focus_issues": 0.1994,
+      "technique_neg_name": -0.0244,
+      "technique_pos_name": 0.003,
+      "technique_pos_transfer": -0.0847,
+      "technique_neg_transfer": 0.3288,
+      "technique_pos_testimonial": 0.0274,
+      "technique_neg_testimonial": 0.6637
+     },
+     {
+      "policy_facts": -0.065,
+      "candidate_facts": 0.8958,
+      "mentions_party": -0.0455,
+      "mentions_trump": 0.0249,
+      "primary_focus_candidate": 0.9188,
+      "primary_focus_issues": 0.02,
+      "technique_neg_name": -0.0167,
+      "technique_pos_name": 0.0149,
+      "technique_pos_transfer": -0.006,
+      "technique_neg_transfer": 0.0339,
+      "technique_pos_testimonial": 1.0112,
+      "technique_neg_testimonial": -0.0077
+     },
+     {
+      "policy_facts": 0.29,
+      "candidate_facts": 0.1679,
+      "mentions_party": -0.0333,
+      "mentions_trump": -0.0755,
+      "primary_focus_candidate": 0.3458,
+      "primary_focus_issues": 0.5953,
+      "technique_neg_name": -0.0224,
+      "technique_pos_name": 0.0054,
+      "technique_pos_transfer": 0.6623,
+      "technique_neg_transfer": -0.0725,
+      "technique_pos_testimonial": 0.666,
+      "technique_neg_testimonial": -0.0666
+     },
+     {
+      "policy_facts": 0.9076,
+      "candidate_facts": 0.1535,
+      "mentions_party": -0.0085,
+      "mentions_trump": -0.0088,
+      "primary_focus_candidate": 0.5689,
+      "primary_focus_issues": 0.9225,
+      "technique_neg_name": 0.3219,
+      "technique_pos_name": -0.0107,
+      "technique_pos_transfer": -0.0004,
+      "technique_neg_transfer": 0.3321,
+      "technique_pos_testimonial": -0.0054,
+      "technique_neg_testimonial": -0.0011
+     },
+     {
+      "policy_facts": -0.0439,
+      "candidate_facts": 0.8505,
+      "mentions_party": 0.6249,
+      "mentions_trump": 0.0154,
+      "primary_focus_candidate": 0.827,
+      "primary_focus_issues": 0.0831,
+      "technique_neg_name": 0.014,
+      "technique_pos_name": -0.0006,
+      "technique_pos_transfer": 0.0605,
+      "technique_neg_transfer": 0.368,
+      "technique_pos_testimonial": 0.0019,
+      "technique_neg_testimonial": 1.0054
+     }
+    ]
+   },
+   {
+    "key": "curated/swayable/studies.parquet",
+    "name": "studies",
+    "rows": 146,
+    "columns": [
+     {
+      "name": "study_id",
+      "type": "string"
+     },
+     {
+      "name": "index_ids",
+      "type": "string"
+     },
+     {
+      "name": "states",
+      "type": "string"
+     },
+     {
+      "name": "dataset_year",
+      "type": "float64"
+     },
+     {
+      "name": "covariate_question_ids",
+      "type": "string"
+     },
+     {
+      "name": "race_level",
+      "type": "string"
+     },
+     {
+      "name": "favorability",
+      "type": "string"
+     },
+     {
+      "name": "votechoice",
+      "type": "string"
+     },
+     {
+      "name": "dataset",
+      "type": "string"
+     },
+     {
+      "name": "n_states",
+      "type": "float64"
+     },
+     {
+      "name": "date",
+      "type": "float64"
+     },
+     {
+      "name": "n_responses_study",
+      "type": "Int32"
+     },
+     {
+      "name": "n_treatments",
+      "type": "Int32"
+     },
+     {
+      "name": "n_per_treatment",
+      "type": "float64"
+     },
+     {
+      "name": "has_votechoice",
+      "type": "boolean"
+     },
+     {
+      "name": "has_favorability",
+      "type": "boolean"
+     },
+     {
+      "name": "any_treatment_added",
+      "type": "boolean"
+     },
+     {
+      "name": "any_treatment_removed",
+      "type": "boolean"
+     },
+     {
+      "name": "covariates.Gender.Xa01aeb488250",
+      "type": "boolean"
+     },
+     {
+      "name": "covariates.Education_Alt2.X39f690afdab3",
+      "type": "boolean"
+     },
+     {
+      "name": "covariates.PoliticalPartyNoOp.Xc0099c5732d9",
+      "type": "boolean"
+     },
+     {
+      "name": "covariates.PoliticalBeliefsNoOp.X756e64b019fe",
+      "type": "boolean"
+     },
+     {
+      "name": "covariates.TrumpApproveNoOp.Xaeca50508c71",
+      "type": "boolean"
+     },
+     {
+      "name": "covariates.BirthYear2020.X8236c9b99112",
+      "type": "boolean"
+     },
+     {
+      "name": "covariates.WhatRaceOrEthnicGroupMostIdentifyWith.Xcbe8335da070",
+      "type": "boolean"
+     },
+     {
+      "name": "election_date",
+      "type": "float64"
+     },
+     {
+      "name": "days_until_election",
+      "type": "float64"
+     }
+    ],
+    "columnCount": 27,
+    "sample": [
+     {
+      "study_id": "X495cbb4fe018",
+      "index_ids": "favorability.X495cbb4fe018",
+      "states": "AZ",
+      "dataset_year": 2018.0,
+      "covariate_question_ids": null,
+      "race_level": null,
+      "favorability": "favorability.X495cbb4fe018",
+      "votechoice": null,
+      "dataset": "2018",
+      "n_states": 1.0,
+      "date": 17630.0,
+      "n_responses_study": 176
+     },
+     {
+      "study_id": "X4cd2c9923737",
+      "index_ids": "votechoice.X4cd2c9923737",
+      "states": null,
+      "dataset_year": 2018.0,
+      "covariate_question_ids": null,
+      "race_level": null,
+      "favorability": null,
+      "votechoice": "votechoice.X4cd2c9923737",
+      "dataset": "2018",
+      "n_states": 50.0,
+      "date": 17642.0,
+      "n_responses_study": 4557
+     },
+     {
+      "study_id": "X3c2f80c20258",
+      "index_ids": "favorability.X3c2f80c20258",
+      "states": "AZ",
+      "dataset_year": 2018.0,
+      "covariate_question_ids": null,
+      "race_level": null,
+      "favorability": "favorability.X3c2f80c20258",
+      "votechoice": null,
+      "dataset": "2018",
+      "n_states": 1.0,
+      "date": 17712.0,
+      "n_responses_study": 801
+     },
+     {
+      "study_id": "X0c2b064a71c5",
+      "index_ids": "favorability.X0c2b064a71c5",
+      "states": "FL",
+      "dataset_year": 2018.0,
+      "covariate_question_ids": null,
+      "race_level": null,
+      "favorability": "favorability.X0c2b064a71c5",
+      "votechoice": null,
+      "dataset": "2018",
+      "n_states": 1.0,
+      "date": 17736.0,
+      "n_responses_study": 1816
+     },
+     {
+      "study_id": "X5a248af8c0f1",
+      "index_ids": "favorability.X5a248af8c0f1,votechoice.X5a248af8c0f1",
+      "states": "MN",
+      "dataset_year": 2018.0,
+      "covariate_question_ids": null,
+      "race_level": null,
+      "favorability": "favorability.X5a248af8c0f1",
+      "votechoice": "votechoice.X5a248af8c0f1",
+      "dataset": "2018",
+      "n_states": 1.0,
+      "date": 17776.0,
+      "n_responses_study": 1306
+     },
+     {
+      "study_id": "X9b63b51005a1",
+      "index_ids": "favorability.X9b63b51005a1",
+      "states": "NJ",
+      "dataset_year": 2018.0,
+      "covariate_question_ids": null,
+      "race_level": null,
+      "favorability": "favorability.X9b63b51005a1",
+      "votechoice": null,
+      "dataset": "2018",
+      "n_states": 1.0,
+      "date": 17794.0,
+      "n_responses_study": 419
+     },
+     {
+      "study_id": "X43915f01925b",
+      "index_ids": "favorability.X43915f01925b,votechoice.X43915f01925b",
+      "states": "MN",
+      "dataset_year": 2018.0,
+      "covariate_question_ids": null,
+      "race_level": null,
+      "favorability": "favorability.X43915f01925b",
+      "votechoice": "votechoice.X43915f01925b",
+      "dataset": "2018",
+      "n_states": 1.0,
+      "date": 17797.0,
+      "n_responses_study": 1155
+     },
+     {
+      "study_id": "X0ca4a39fd242",
+      "index_ids": "favorability.X0ca4a39fd242,votechoice.X0ca4a39fd242",
+      "states": null,
+      "dataset_year": 2018.0,
+      "covariate_question_ids": null,
+      "race_level": null,
+      "favorability": "favorability.X0ca4a39fd242",
+      "votechoice": "votechoice.X0ca4a39fd242",
+      "dataset": "2018",
+      "n_states": 50.0,
+      "date": 17799.0,
+      "n_responses_study": 8854
+     }
+    ]
+   },
+   {
+    "key": "curated/swayable/responses.parquet",
+    "name": "responses",
+    "rows": 607450,
+    "columns": [
+     {
+      "name": "study_id",
+      "type": "string"
+     },
+     {
+      "name": "dataset_year",
+      "type": "float64"
+     },
+     {
+      "name": "response_id",
+      "type": "string"
+     },
+     {
+      "name": "treat",
+      "type": "float64"
+     },
+     {
+      "name": "content_id",
+      "type": "string"
+     },
+     {
+      "name": "start_time",
+      "type": "float64"
+     },
+     {
+      "name": "birth_year",
+      "type": "float64"
+     },
+     {
+      "name": "age",
+      "type": "float64"
+     },
+     {
+      "name": "gender",
+      "type": "string"
+     },
+     {
+      "name": "education",
+      "type": "string"
+     },
+     {
+      "name": "ethnicity",
+      "type": "string"
+     },
+     {
+      "name": "party_continuous",
+      "type": "float64"
+     },
+     {
+      "name": "party",
+      "type": "string"
+     },
+     {
+      "name": "covariates.Gender.Xa01aeb488250",
+      "type": "string"
+     },
+     {
+      "name": "covariates.Education_Alt2.X39f690afdab3",
+      "type": "string"
+     },
+     {
+      "name": "covariates.PoliticalPartyNoOp.Xc0099c5732d9",
+      "type": "float64"
+     },
+     {
+      "name": "covariates.PoliticalBeliefsNoOp.X756e64b019fe",
+      "type": "float64"
+     },
+     {
+      "name": "covariates.TrumpApproveNoOp.Xaeca50508c71",
+      "type": "float64"
+     },
+     {
+      "name": "covariates.BirthYear2020.X8236c9b99112",
+      "type": "float64"
+     },
+     {
+      "name": "covariates.WhatRaceOrEthnicGroupMostIdentifyWith.Xcbe8335da070",
+      "type": "string"
+     },
+     {
+      "name": "favorability",
+      "type": "float64"
+     },
+     {
+      "name": "votechoice",
+      "type": "float64"
+     },
+     {
+      "name": "votechoice_dichotomized",
+      "type": "float64"
+     },
+     {
+      "name": "drop_spammer",
+      "type": "boolean"
+     },
+     {
+      "name": "drop_mistargeted",
+      "type": "boolean"
+     },
+     {
+      "name": "drop_duplicate",
+      "type": "boolean"
+     },
+     {
+      "name": "drop_addtreatment",
+      "type": "boolean"
+     },
+     {
+      "name": "drop_deltreatment",
+      "type": "boolean"
+     },
+     {
+      "name": "drop_treatmentexcluded",
+      "type": "boolean"
+     },
+     {
+      "name": "drop",
+      "type": "boolean"
+     },
+     {
+      "name": "cluster_id",
+      "type": "Int32"
+     }
+    ],
+    "columnCount": 31,
+    "sample": [
+     {
+      "study_id": "X495cbb4fe018",
+      "dataset_year": 2018.0,
+      "response_id": "X6e21b53a5a7e",
+      "treat": 0.0,
+      "content_id": "X8b126c2f3ebc",
+      "start_time": 1522865787.308,
+      "birth_year": 1952.0,
+      "age": 66.0,
+      "gender": "male",
+      "education": "some-college",
+      "ethnicity": "other-mixed",
+      "party_continuous": 6.0
+     },
+     {
+      "study_id": "X495cbb4fe018",
+      "dataset_year": 2018.0,
+      "response_id": "X4ec8b345a7f1",
+      "treat": 1.0,
+      "content_id": "X968edf32f1b4",
+      "start_time": 1522865976.04,
+      "birth_year": 1952.0,
+      "age": 66.0,
+      "gender": "male",
+      "education": "highschool",
+      "ethnicity": "white",
+      "party_continuous": 5.0
+     },
+     {
+      "study_id": "X495cbb4fe018",
+      "dataset_year": 2018.0,
+      "response_id": "X94d05b28ada0",
+      "treat": 1.0,
+      "content_id": "X05df5365013f",
+      "start_time": 1522867505.746,
+      "birth_year": 1933.0,
+      "age": 85.0,
+      "gender": "female",
+      "education": "school",
+      "ethnicity": "white",
+      "party_continuous": 10.0
+     },
+     {
+      "study_id": "X495cbb4fe018",
+      "dataset_year": 2018.0,
+      "response_id": "X443c5e29b42f",
+      "treat": 1.0,
+      "content_id": "X05df5365013f",
+      "start_time": 1522867722.476,
+      "birth_year": 1947.0,
+      "age": 71.0,
+      "gender": "female",
+      "education": "school",
+      "ethnicity": "white",
+      "party_continuous": 10.0
+     },
+     {
+      "study_id": "X495cbb4fe018",
+      "dataset_year": 2018.0,
+      "response_id": "X692d45c36b04",
+      "treat": 1.0,
+      "content_id": "Xdbe1138cec23",
+      "start_time": 1522867832.671,
+      "birth_year": 1957.0,
+      "age": 61.0,
+      "gender": "female",
+      "education": "some-college",
+      "ethnicity": "hispanic-latino",
+      "party_continuous": 0.0
+     },
+     {
+      "study_id": "X495cbb4fe018",
+      "dataset_year": 2018.0,
+      "response_id": "X23d3eb359b18",
+      "treat": 1.0,
+      "content_id": "X3b9cca90c36e",
+      "start_time": 1522870424.908,
+      "birth_year": 1954.0,
+      "age": 64.0,
+      "gender": "male",
+      "education": "some-college",
+      "ethnicity": "white",
+      "party_continuous": 5.0
+     },
+     {
+      "study_id": "X495cbb4fe018",
+      "dataset_year": 2018.0,
+      "response_id": "X84b16cd6d007",
+      "treat": 0.0,
+      "content_id": "X8b126c2f3ebc",
+      "start_time": 1522870677.604,
+      "birth_year": 1990.0,
+      "age": 28.0,
+      "gender": "male",
+      "education": "college",
+      "ethnicity": "white",
+      "party_continuous": 2.0
+     },
+     {
+      "study_id": "X495cbb4fe018",
+      "dataset_year": 2018.0,
+      "response_id": "Xdbf80f0bb537",
+      "treat": 0.0,
+      "content_id": "X8b126c2f3ebc",
+      "start_time": 1522870876.056,
+      "birth_year": 1989.0,
+      "age": 29.0,
+      "gender": "male",
+      "education": "some-college",
+      "ethnicity": "hispanic-latino",
+      "party_continuous": 9.0
+     }
+    ]
+   }
+  ]
+ },
+ "pax-reference-model": {
+  "files": [
+   {
+    "key": "model/ads.json",
+    "bytes": 1404902
+   },
+   {
+    "key": "model/reference-model.json",
+    "bytes": 224274
+   },
+   {
+    "key": "model/script-codes.json",
+    "bytes": 8179
+   }
+  ],
+  "fileCount": 3,
+  "bytes": 1637355,
+  "tables": []
+ },
+ "emotional-ads": {
+  "files": [
+   {
+    "key": "raw/emotional-ads/replication_archive.zip",
+    "bytes": 39434878
+   }
+  ],
+  "fileCount": 1,
+  "bytes": 39434878,
+  "tables": []
+ },
+ "coppock-2020": {
+  "files": [
+   {
+    "key": "raw/coppock2020/exps.rds",
+    "bytes": 7677293
+   },
+   {
+    "key": "raw/coppock2020/exps_with_incompletes.rds",
+    "bytes": 1418242
+   },
+   {
+    "key": "raw/coppock2020/favorability_cates.rds",
+    "bytes": 199241
+   },
+   {
+    "key": "raw/coppock2020/vote_choice_cates.rds",
+    "bytes": 109690
+   },
+   {
+    "key": "raw/coppock2020/favorability_sates.rds",
+    "bytes": 24592
+   },
+   {
+    "key": "raw/coppock2020/vote_choice_sates.rds",
+    "bytes": 14550
+   },
+   {
+    "key": "raw/coppock2020/estimate_favorability_cates.R",
+    "bytes": 5117
+   },
+   {
+    "key": "raw/coppock2020/estimate_vote_choice_cates.R",
+    "bytes": 4299
+   },
+   {
+    "key": "raw/coppock2020/figure_S1.R",
+    "bytes": 3707
+   },
+   {
+    "key": "raw/coppock2020/estimate_favorability_sates.R",
+    "bytes": 3408
+   },
+   {
+    "key": "raw/coppock2020/README.txt",
+    "bytes": 3325
+   },
+   {
+    "key": "raw/coppock2020/table_1.R",
+    "bytes": 3275
+   },
+   {
+    "key": "raw/coppock2020/estimate_vote_choice_sates.R",
+    "bytes": 2936
+   },
+   {
+    "key": "raw/coppock2020/figure_1.R",
+    "bytes": 2543
+   },
+   {
+    "key": "raw/coppock2020/helpers.R",
+    "bytes": 2377
+   },
+   {
+    "key": "raw/coppock2020/ad_df.csv",
+    "bytes": 1911
+   },
+   {
+    "key": "raw/coppock2020/figure_2.R",
+    "bytes": 1844
+   },
+   {
+    "key": "raw/coppock2020/in_text_numbers.R",
+    "bytes": 1734
+   },
+   {
+    "key": "raw/coppock2020/table_S2.R",
+    "bytes": 1514
+   },
+   {
+    "key": "raw/coppock2020/table_S1.R",
+    "bytes": 1150
+   },
+   {
+    "key": "raw/coppock2020/table_S3.R",
+    "bytes": 1043
+   }
+  ],
+  "fileCount": 21,
+  "bytes": 9483791,
+  "tables": [
+   {
+    "key": "curated/coppock2020/vote_choice_sates.parquet",
+    "name": "vote_choice_sates",
+    "rows": 34,
+    "columns": [
+     {
+      "name": "date",
+      "type": "float64"
+     },
+     {
+      "name": "term",
+      "type": "string"
+     },
+     {
+      "name": "estimate",
+      "type": "float64"
+     },
+     {
+      "name": "std.error",
+      "type": "float64"
+     },
+     {
+      "name": "statistic",
+      "type": "float64"
+     },
+     {
+      "name": "p.value",
+      "type": "float64"
+     },
+     {
+      "name": "conf.low",
+      "type": "float64"
+     },
+     {
+      "name": "conf.high",
+      "type": "float64"
+     },
+     {
+      "name": "df",
+      "type": "float64"
+     },
+     {
+      "name": "outcome",
+      "type": "string"
+     },
+     {
+      "name": "ad_id",
+      "type": "float64"
+     },
+     {
+      "name": "ad_title",
+      "type": "string"
+     },
+     {
+      "name": "ad_valence",
+      "type": "string"
+     },
+     {
+      "name": "ad_sponsor",
+      "type": "string"
+     },
+     {
+      "name": "target_candidate",
+      "type": "boolean"
+     },
+     {
+      "name": "attacking_candidate",
+      "type": "boolean"
+     },
+     {
+      "name": "estimate_type",
+      "type": "string"
+     },
+     {
+      "name": "attack",
+      "type": "float64"
+     },
+     {
+      "name": "general",
+      "type": "float64"
+     },
+     {
+      "name": "pro_clinton",
+      "type": "float64"
+     },
+     {
+      "name": "pro_sanders",
+      "type": "float64"
+     },
+     {
+      "name": "pro_cruz",
+      "type": "float64"
+     },
+     {
+      "name": "pro_kasich",
+      "type": "float64"
+     },
+     {
+      "name": "pro_trump",
+      "type": "float64"
+     },
+     {
+      "name": "anti_clinton",
+      "type": "float64"
+     },
+     {
+      "name": "anti_trump",
+      "type": "float64"
+     },
+     {
+      "name": "date_numeric",
+      "type": "float64"
+     },
+     {
+      "name": "attack_d",
+      "type": "float64"
+     },
+     {
+      "name": "general_d",
+      "type": "float64"
+     },
+     {
+      "name": "pro_clinton_d",
+      "type": "float64"
+     },
+     {
+      "name": "pro_sanders_d",
+      "type": "float64"
+     },
+     {
+      "name": "pro_trump_d",
+      "type": "float64"
+     },
+     {
+      "name": "pro_cruz_d",
+      "type": "float64"
+     },
+     {
+      "name": "pro_kasich_d",
+      "type": "float64"
+     },
+     {
+      "name": "anti_clinton_d",
+      "type": "float64"
+     },
+     {
+      "name": "anti_trump_d",
+      "type": "float64"
+     },
+     {
+      "name": "pac",
+      "type": "float64"
+     },
+     {
+      "name": "pac_d",
+      "type": "float64"
+     },
+     {
+      "name": "date_d",
+      "type": "float64"
+     },
+     {
+      "name": "attack_general_d",
+      "type": "float64"
+     },
+     {
+      "name": "attack_date_d",
+      "type": "float64"
+     }
+    ],
+    "columnCount": 41,
+    "sample": [
+     {
+      "date": 16972.0,
+      "term": "ad_id_fac42",
+      "estimate": 0.0372,
+      "std.error": 0.0246,
+      "statistic": 1.5094,
+      "p.value": 0.1313,
+      "conf.low": -0.0111,
+      "conf.high": 0.0855,
+      "df": 1983.0,
+      "outcome": "general_vote_HC",
+      "ad_id": 42.0,
+      "ad_title": "Moments"
+     },
+     {
+      "date": 16986.0,
+      "term": "ad_id_fac45",
+      "estimate": 0.0498,
+      "std.error": 0.0317,
+      "statistic": -1.5709,
+      "p.value": 0.1164,
+      "conf.low": 0.112,
+      "conf.high": -0.0124,
+      "df": 1983.0,
+      "outcome": "general_vote_HC",
+      "ad_id": 45.0,
+      "ad_title": "Stop Clinton"
+     },
+     {
+      "date": 17000.0,
+      "term": "ad_id_fac48",
+      "estimate": -0.0048,
+      "std.error": 0.0297,
+      "statistic": 0.1603,
+      "p.value": 0.8727,
+      "conf.low": 0.0534,
+      "conf.high": -0.0629,
+      "df": 1981.0,
+      "outcome": "general_vote_HC",
+      "ad_id": 48.0,
+      "ad_title": "Same Old"
+     },
+     {
+      "date": 17014.0,
+      "term": "ad_id_fac51",
+      "estimate": -0.0348,
+      "std.error": 0.0281,
+      "statistic": 1.2392,
+      "p.value": 0.2154,
+      "conf.low": 0.0203,
+      "conf.high": -0.0899,
+      "df": 1991.0,
+      "outcome": "general_vote_HC",
+      "ad_id": 51.0,
+      "ad_title": "Outsource"
+     },
+     {
+      "date": 17035.0,
+      "term": "ad_id_fac56",
+      "estimate": -0.0595,
+      "std.error": 0.0446,
+      "statistic": -1.3334,
+      "p.value": 0.1827,
+      "conf.low": -0.1469,
+      "conf.high": 0.028,
+      "df": 992.0,
+      "outcome": "general_vote_HC",
+      "ad_id": 56.0,
+      "ad_title": "Depend"
+     },
+     {
+      "date": 17035.0,
+      "term": "ad_id_fac57",
+      "estimate": 0.0549,
+      "std.error": 0.0454,
+      "statistic": -1.2087,
+      "p.value": 0.2271,
+      "conf.low": 0.144,
+      "conf.high": -0.0342,
+      "df": 992.0,
+      "outcome": "general_vote_HC",
+      "ad_id": 57.0,
+      "ad_title": "2 Americas: Immigration"
+     },
+     {
+      "date": 17042.0,
+      "term": "ad_id_fac58",
+      "estimate": -0.0037,
+      "std.error": 0.0429,
+      "statistic": 0.0864,
+      "p.value": 0.9312,
+      "conf.low": 0.0804,
+      "conf.high": -0.0878,
+      "df": 991.0,
+      "outcome": "general_vote_HC",
+      "ad_id": 58.0,
+      "ad_title": "2 Americas: Economy"
+     },
+     {
+      "date": 17056.0,
+      "term": "ad_id_fac61",
+      "estimate": -0.0338,
+      "std.error": 0.0416,
+      "statistic": 0.8127,
+      "p.value": 0.4166,
+      "conf.low": 0.0479,
+      "conf.high": -0.1155,
+      "df": 989.0,
+      "outcome": "general_vote_HC",
+      "ad_id": 61.0,
+      "ad_title": "Deplorables"
+     }
+    ]
+   },
+   {
+    "key": "curated/coppock2020/exps.parquet",
+    "name": "exps",
+    "rows": 34000,
+    "columns": [
+     {
+      "name": "wave",
+      "type": "float64"
+     },
+     {
+      "name": "date",
+      "type": "float64"
+     },
+     {
+      "name": "election_phase",
+      "type": "string"
+     },
+     {
+      "name": "pid_3_pre",
+      "type": "string"
+     },
+     {
+      "name": "pid_7_pre",
+      "type": "float64"
+     },
+     {
+      "name": "ideo5_pre",
+      "type": "float64"
+     },
+     {
+      "name": "female_pre",
+      "type": "float64"
+     },
+     {
+      "name": "battleground",
+      "type": "float64"
+     },
+     {
+      "name": "assignment",
+      "type": "string"
+     },
+     {
+      "name": "ad_id",
+      "type": "float64"
+     },
+     {
+      "name": "ad_id_fac",
+      "type": "string"
+     },
+     {
+      "name": "ad_title",
+      "type": "string"
+     },
+     {
+      "name": "ad_valence",
+      "type": "string"
+     },
+     {
+      "name": "ad_sponsor",
+      "type": "string"
+     },
+     {
+      "name": "manip",
+      "type": "float64"
+     },
+     {
+      "name": "favorDT_rev",
+      "type": "float64"
+     },
+     {
+      "name": "favorHC_rev",
+      "type": "float64"
+     },
+     {
+      "name": "favorBS_rev",
+      "type": "float64"
+     },
+     {
+      "name": "favorJK_rev",
+      "type": "float64"
+     },
+     {
+      "name": "favorTC_rev",
+      "type": "float64"
+     },
+     {
+      "name": "general_vote_HC",
+      "type": "float64"
+     },
+     {
+      "name": "general_vote_DT",
+      "type": "float64"
+     },
+     {
+      "name": "weights",
+      "type": "float64"
+     }
+    ],
+    "columnCount": 23,
+    "sample": [
+     {
+      "wave": 2.0,
+      "date": 16874.0,
+      "election_phase": "Primary Election",
+      "pid_3_pre": "Democrat",
+      "pid_7_pre": 1.0,
+      "ideo5_pre": 4.0,
+      "female_pre": 1.0,
+      "battleground": 0.0,
+      "assignment": "Control",
+      "ad_id": 3.0,
+      "ad_id_fac": "3",
+      "ad_title": "Nationwide (Control)"
+     },
+     {
+      "wave": 2.0,
+      "date": 16874.0,
+      "election_phase": "Primary Election",
+      "pid_3_pre": "Republican",
+      "pid_7_pre": 7.0,
+      "ideo5_pre": 5.0,
+      "female_pre": 1.0,
+      "battleground": 1.0,
+      "assignment": "Anti Trump",
+      "ad_id": 5.0,
+      "ad_id_fac": "5",
+      "ad_title": "Man of People"
+     },
+     {
+      "wave": 2.0,
+      "date": 16874.0,
+      "election_phase": "Primary Election",
+      "pid_3_pre": "Republican",
+      "pid_7_pre": 7.0,
+      "ideo5_pre": 4.0,
+      "female_pre": 0.0,
+      "battleground": 0.0,
+      "assignment": "Anti Trump",
+      "ad_id": 4.0,
+      "ad_id_fac": "4",
+      "ad_title": "Scam"
+     },
+     {
+      "wave": 2.0,
+      "date": 16874.0,
+      "election_phase": "Primary Election",
+      "pid_3_pre": "Republican",
+      "pid_7_pre": 6.0,
+      "ideo5_pre": 4.0,
+      "female_pre": 1.0,
+      "battleground": 0.0,
+      "assignment": "Anti Trump",
+      "ad_id": 6.0,
+      "ad_id_fac": "6",
+      "ad_title": "Plain Wrong"
+     },
+     {
+      "wave": 2.0,
+      "date": 16874.0,
+      "election_phase": "Primary Election",
+      "pid_3_pre": "Republican",
+      "pid_7_pre": 7.0,
+      "ideo5_pre": 4.0,
+      "female_pre": 0.0,
+      "battleground": 1.0,
+      "assignment": "Anti Trump",
+      "ad_id": 6.0,
+      "ad_id_fac": "6",
+      "ad_title": "Plain Wrong"
+     },
+     {
+      "wave": 2.0,
+      "date": 16874.0,
+      "election_phase": "Primary Election",
+      "pid_3_pre": "Democrat",
+      "pid_7_pre": 1.0,
+      "ideo5_pre": 3.0,
+      "female_pre": 0.0,
+      "battleground": 1.0,
+      "assignment": "Anti Trump",
+      "ad_id": 4.0,
+      "ad_id_fac": "4",
+      "ad_title": "Scam"
+     },
+     {
+      "wave": 2.0,
+      "date": 16874.0,
+      "election_phase": "Primary Election",
+      "pid_3_pre": "Republican",
+      "pid_7_pre": 7.0,
+      "ideo5_pre": 5.0,
+      "female_pre": 1.0,
+      "battleground": 0.0,
+      "assignment": "Anti Trump",
+      "ad_id": 4.0,
+      "ad_id_fac": "4",
+      "ad_title": "Scam"
+     },
+     {
+      "wave": 2.0,
+      "date": 16874.0,
+      "election_phase": "Primary Election",
+      "pid_3_pre": "Democrat",
+      "pid_7_pre": 2.0,
+      "ideo5_pre": 3.0,
+      "female_pre": 0.0,
+      "battleground": 0.0,
+      "assignment": "Anti Trump",
+      "ad_id": 4.0,
+      "ad_id_fac": "4",
+      "ad_title": "Scam"
+     }
+    ]
+   }
+  ]
+ },
+ "upworthy-archive": {
+  "files": [
+   {
+    "key": "raw/upworthy/upworthy-archive-confirmatory-packages-03.12.2020.csv",
+    "bytes": 66517697
+   },
+   {
+    "key": "raw/upworthy/upworthy-archive-undeployed-packages.01.12.2021.csv",
+    "bytes": 33168354
+   },
+   {
+    "key": "raw/upworthy/upworthy-archive-exploratory-packages-03.12.2020.csv",
+    "bytes": 14260949
+   },
+   {
+    "key": "raw/upworthy/upworthy-archive-holdout-packages-03.12.2020.csv",
+    "bytes": 14174776
+   },
+   {
+    "key": "raw/upworthy/Upworthy-Research-Archive-Announcement-CODE-MIT-11.02.2019.pdf",
+    "bytes": 4113078
+   },
+   {
+    "key": "raw/upworthy/Matias-Munger-Upworthy-Research-Archive-09.2019.pdf",
+    "bytes": 161255
+   },
+   {
+    "key": "raw/upworthy/2013.01.01-2015.04.30-daily-users-info.csv",
+    "bytes": 62808
+   },
+   {
+    "key": "raw/upworthy/2013.01.01-2015.04.30-daily-pageviews.csv",
+    "bytes": 17565
+   },
+   {
+    "key": "raw/upworthy/2013.01.01-2015.04.30-aggregate-country-data.csv",
+    "bytes": 12443
+   },
+   {
+    "key": "raw/upworthy/README.md",
+    "bytes": 915
+   }
+  ],
+  "fileCount": 10,
+  "bytes": 132489840,
+  "tables": [
+   {
+    "key": "curated/upworthy/upworthy-archive-confirmatory-packages-03.12.2020.parquet",
+    "name": "upworthy-archive-confirmatory-packages-03.12.2020",
+    "rows": 105551,
+    "columns": [
+     {
+      "name": "Unnamed: 0",
+      "type": "int64"
+     },
+     {
+      "name": "created_at",
+      "type": "string"
+     },
+     {
+      "name": "updated_at",
+      "type": "string"
+     },
+     {
+      "name": "clickability_test_id",
+      "type": "string"
+     },
+     {
+      "name": "excerpt",
+      "type": "string"
+     },
+     {
+      "name": "headline",
+      "type": "string"
+     },
+     {
+      "name": "lede",
+      "type": "string"
+     },
+     {
+      "name": "slug",
+      "type": "string"
+     },
+     {
+      "name": "eyecatcher_id",
+      "type": "string"
+     },
+     {
+      "name": "impressions",
+      "type": "int64"
+     },
+     {
+      "name": "clicks",
+      "type": "int64"
+     },
+     {
+      "name": "significance",
+      "type": "float64"
+     },
+     {
+      "name": "first_place",
+      "type": "bool"
+     },
+     {
+      "name": "winner",
+      "type": "bool"
+     },
+     {
+      "name": "share_text",
+      "type": "string"
+     },
+     {
+      "name": "square",
+      "type": "string"
+     },
+     {
+      "name": "test_week",
+      "type": "int64"
+     }
+    ],
+    "columnCount": 17,
+    "sample": [
+     {
+      "Unnamed: 0": 11,
+      "created_at": "2014-11-20 11:33:26.475",
+      "updated_at": "2016-04-02 16:25:54.046",
+      "clickability_test_id": "546dd17e26714c82cc00001c",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "Let’s See … Hire Cops, Pay Teachers, Buy Books For Schools. Or Kill People. Hard",
+      "lede": "<p>Iff you start with the basic fact that innocent people have been put to death",
+      "slug": "let-s-see-hire-cops-pay-teachers-buy-books-for-schools-or-kill-people-hard-choic",
+      "eyecatcher_id": "546dce659ad54ec65b000041",
+      "impressions": 3118,
+      "clicks": 8,
+      "significance": 0.1
+     },
+     {
+      "Unnamed: 0": 12,
+      "created_at": "2014-11-20 15:00:01.032",
+      "updated_at": "2016-04-02 16:25:54.128",
+      "clickability_test_id": "546e01d626714c6c4400004e",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "People Sent This Lesbian Questions And Her Raised Eyebrow Game Shames Us All",
+      "lede": "<p>I'll be honest. I've wondered about 7.</p>",
+      "slug": "people-sent-this-lesbian-questions-and-her-raised-eyebrow-game-shames-us-all-pg2",
+      "eyecatcher_id": "546d1b4bfd3617f091000041",
+      "impressions": 4587,
+      "clicks": 130,
+      "significance": 55.8
+     },
+     {
+      "Unnamed: 0": 13,
+      "created_at": "2014-11-20 11:33:51.973",
+      "updated_at": "2016-04-02 16:25:54.069",
+      "clickability_test_id": "546dd17e26714c82cc00001c",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "$3 Million Is What It Takes For A State To Legally Kill Someone",
+      "lede": "<p>Iff you start with the basic fact that innocent people have been put to death",
+      "slug": "3-million-is-what-it-takes-for-a-state-to-legally-kill-someone-bw2-1b",
+      "eyecatcher_id": "546dce659ad54ec65b000041",
+      "impressions": 3017,
+      "clicks": 19,
+      "significance": 26.9
+     },
+     {
+      "Unnamed: 0": 14,
+      "created_at": "2014-11-20 11:34:12.107",
+      "updated_at": "2016-04-02 16:25:54.049",
+      "clickability_test_id": "546dd17e26714c82cc00001c",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "The Fact That Sometimes Innocent People Are Executed Is Enough To End The Death ",
+      "lede": "<p>Iff you start with the basic fact that innocent people have been put to death",
+      "slug": "the-fact-that-sometimes-innocent-people-are-executed-is-enough-to-end-the-death-",
+      "eyecatcher_id": "546dce659ad54ec65b000041",
+      "impressions": 2974,
+      "clicks": 26,
+      "significance": 100.0
+     },
+     {
+      "Unnamed: 0": 15,
+      "created_at": "2014-11-20 11:34:33.935",
+      "updated_at": "2016-04-02 16:25:54.072",
+      "clickability_test_id": "546dd17e26714c82cc00001c",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "Reason #351 To End The Death Penalty: It Costs $3 Million Per Case.",
+      "lede": "<p>Iff you start with the basic fact that innocent people have been put to death",
+      "slug": "reason-351-to-end-the-death-penalty-it-costs-3-million-per-case-bw2-1d",
+      "eyecatcher_id": "546dce659ad54ec65b000041",
+      "impressions": 3050,
+      "clicks": 10,
+      "significance": 0.2
+     },
+     {
+      "Unnamed: 0": 16,
+      "created_at": "2014-11-20 11:34:48.474",
+      "updated_at": "2016-04-02 16:25:54.052",
+      "clickability_test_id": "546dd17e26714c82cc00001c",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "I Was Already Against The Death Penalty, But Now That I See What It Costs Us All",
+      "lede": "<p>Iff you start with the basic fact that innocent people have been put to death",
+      "slug": "i-was-already-against-the-death-penalty-but-now-that-i-see-what-it-costs-us-all-",
+      "eyecatcher_id": "546dce659ad54ec65b000041",
+      "impressions": 3061,
+      "clicks": 20,
+      "significance": 32.0
+     },
+     {
+      "Unnamed: 0": 17,
+      "created_at": "2014-11-20 11:36:09.896",
+      "updated_at": "2016-04-02 16:25:54.055",
+      "clickability_test_id": "546dd17e26714c82cc00001c",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "I'll Say It: It's Not OK For States To Legally Murder People.",
+      "lede": "<p>Iff you start with the basic fact that innocent people have been put to death",
+      "slug": "ill-say-it-its-not-ok-for-states-to-legally-murder-people-bw2-1f",
+      "eyecatcher_id": "546dce659ad54ec65b000041",
+      "impressions": 2997,
+      "clicks": 20,
+      "significance": 28.2
+     },
+     {
+      "Unnamed: 0": 18,
+      "created_at": "2014-11-20 11:57:45.239",
+      "updated_at": "2016-04-02 16:25:54.058",
+      "clickability_test_id": "546dd73684ad3817bc000048",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "The Fact That Sometimes Innocent People Are Executed Is Enough To End The Death ",
+      "lede": "<p>Iff you start with the basic fact that innocent people have been put to death",
+      "slug": "the-fact-that-sometimes-innocent-people-are-executed-is-enough-to-end-the-death-",
+      "eyecatcher_id": "546dce659ad54ec65b000041",
+      "impressions": 2959,
+      "clicks": 29,
+      "significance": 26.8
+     }
+    ]
+   },
+   {
+    "key": "curated/upworthy/upworthy-archive-exploratory-packages-03.12.2020.parquet",
+    "name": "upworthy-archive-exploratory-packages-03.12.2020",
+    "rows": 22666,
+    "columns": [
+     {
+      "name": "Unnamed: 0",
+      "type": "int64"
+     },
+     {
+      "name": "created_at",
+      "type": "string"
+     },
+     {
+      "name": "updated_at",
+      "type": "string"
+     },
+     {
+      "name": "clickability_test_id",
+      "type": "string"
+     },
+     {
+      "name": "excerpt",
+      "type": "string"
+     },
+     {
+      "name": "headline",
+      "type": "string"
+     },
+     {
+      "name": "lede",
+      "type": "string"
+     },
+     {
+      "name": "slug",
+      "type": "string"
+     },
+     {
+      "name": "eyecatcher_id",
+      "type": "string"
+     },
+     {
+      "name": "impressions",
+      "type": "int64"
+     },
+     {
+      "name": "clicks",
+      "type": "int64"
+     },
+     {
+      "name": "significance",
+      "type": "float64"
+     },
+     {
+      "name": "first_place",
+      "type": "bool"
+     },
+     {
+      "name": "winner",
+      "type": "bool"
+     },
+     {
+      "name": "share_text",
+      "type": "string"
+     },
+     {
+      "name": "square",
+      "type": "string"
+     },
+     {
+      "name": "test_week",
+      "type": "int64"
+     }
+    ],
+    "columnCount": 17,
+    "sample": [
+     {
+      "Unnamed: 0": 0,
+      "created_at": "2014-11-20 06:43:16.005",
+      "updated_at": "2016-04-02 16:33:38.062",
+      "clickability_test_id": "546d88fb84ad38b2ce000024",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "They're Being Called 'Walmart's Worst Nightmare.' And I *Really* Hope It Comes T",
+      "lede": "<p>When I saw *why* people are calling them \"Walmart's worst nightmare,\" I found",
+      "slug": "theyre-being-called-walmarts-worst-nightmare-and-i-really-hope-it-comes-true-ma3",
+      "eyecatcher_id": "546d6fa19ad54eec8d00002d",
+      "impressions": 3052,
+      "clicks": 150,
+      "significance": 100.0
+     },
+     {
+      "Unnamed: 0": 1,
+      "created_at": "2014-11-20 06:43:44.646",
+      "updated_at": "2016-04-02 16:25:54.021",
+      "clickability_test_id": "546d88fb84ad38b2ce000024",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "They're Being Called 'Walmart's Worst Nightmare.' And I *Really* Hope It Comes T",
+      "lede": "<p>When I saw *why* people are calling them \"Walmart's worst nightmare,\" I found",
+      "slug": "theyre-being-called-walmarts-worst-nightmare-and-i-really-hope-it-comes-true-ma3",
+      "eyecatcher_id": "546d6fa19ad54eec8d00002d",
+      "impressions": 3033,
+      "clicks": 122,
+      "significance": 14.0
+     },
+     {
+      "Unnamed: 0": 2,
+      "created_at": "2014-11-20 06:44:59.804",
+      "updated_at": "2016-04-02 16:25:54.024",
+      "clickability_test_id": "546d88fb84ad38b2ce000024",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "They're Being Called 'Walmart's Worst Nightmare.' And I *Really* Hope It Comes T",
+      "lede": "<p>When I saw *why* people are calling them \"Walmart's worst nightmare,\" I found",
+      "slug": "theyre-being-called-walmarts-worst-nightmare-and-i-really-hope-it-comes-true-ma3",
+      "eyecatcher_id": "546d6fa19ad54eec8d00002d",
+      "impressions": 3092,
+      "clicks": 110,
+      "significance": 1.8
+     },
+     {
+      "Unnamed: 0": 3,
+      "created_at": "2014-11-20 06:54:36.335",
+      "updated_at": "2016-04-02 16:25:54.027",
+      "clickability_test_id": "546d902c26714c6c44000039",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "This Is What Sexism Against Men Sounds Like",
+      "lede": "<p>DISCLOSURE: I'm a dude. I have cried on multiple occasions this year. I have ",
+      "slug": "this-is-what-sexism-against-men-sounds-like-am2-5a",
+      "eyecatcher_id": "546bc55335992b86c8000043",
+      "impressions": 3526,
+      "clicks": 90,
+      "significance": 4.1
+     },
+     {
+      "Unnamed: 0": 4,
+      "created_at": "2014-11-20 06:54:57.878",
+      "updated_at": "2016-04-02 16:31:45.671",
+      "clickability_test_id": "546d902c26714c6c44000039",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "This Is What Sexism Against Men Sounds Like",
+      "lede": "<p>DISCLOSURE: I'm a dude. I have cried on multiple occasions this year. I have ",
+      "slug": "this-is-what-sexism-against-men-sounds-like-am2-5b",
+      "eyecatcher_id": "546d900426714cd2dd00002e",
+      "impressions": 3506,
+      "clicks": 120,
+      "significance": 100.0
+     },
+     {
+      "Unnamed: 0": 5,
+      "created_at": "2014-11-20 06:55:07.212",
+      "updated_at": "2016-04-02 16:25:54.029",
+      "clickability_test_id": "546d902c26714c6c44000039",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "This Is What Sexism Against Men Sounds Like",
+      "lede": "<p>DISCLOSURE: I'm a dude. I have cried on multiple occasions this year. I have ",
+      "slug": "this-is-what-sexism-against-men-sounds-like-am2-5c",
+      "eyecatcher_id": "546d900426714c6c44000038",
+      "impressions": 3380,
+      "clicks": 98,
+      "significance": 25.3
+     },
+     {
+      "Unnamed: 0": 6,
+      "created_at": "2014-11-20 06:55:20.347",
+      "updated_at": "2016-04-02 16:25:54.032",
+      "clickability_test_id": "546d902c26714c6c44000039",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "This Is What Sexism Against Men Sounds Like",
+      "lede": "<p>DISCLOSURE: I'm a dude. I have cried on multiple occasions this year. I have ",
+      "slug": "this-is-what-sexism-against-men-sounds-like-am2-5d",
+      "eyecatcher_id": "546d900426714c1ad900001e",
+      "impressions": 3465,
+      "clicks": 75,
+      "significance": 0.2
+     },
+     {
+      "Unnamed: 0": 7,
+      "created_at": "2014-11-20 06:55:43.497",
+      "updated_at": "2016-04-02 16:25:54.034",
+      "clickability_test_id": "546d902c26714c6c44000039",
+      "excerpt": "Things that matter. Pass 'em on.",
+      "headline": "This Is What Sexism Against Men Sounds Like",
+      "lede": "<p>DISCLOSURE: I'm a dude. I have cried on multiple occasions this year. I have ",
+      "slug": "this-is-what-sexism-against-men-sounds-like-am2-5e",
+      "eyecatcher_id": "546d900484ad38b2ce000027",
+      "impressions": 3431,
+      "clicks": 86,
+      "significance": 3.2
+     }
+    ]
+   }
+  ]
+ },
+ "wesleyan-codebook": {
+  "files": [
+   {
+    "key": "raw/wesleyan/WMP-2020-releasecodebook_v1.0-1.pdf",
+    "bytes": 321732
+   }
+  ],
+  "fileCount": 1,
+  "bytes": 321732,
+  "tables": []
+ },
+ "polis-opendata": {
+  "files": [
+   {
+    "key": "raw/polis-opendata/bg2050-volunteers/votes.csv",
+    "bytes": 88112962
+   },
+   {
+    "key": "raw/polis-opendata/bg2050-volunteers/participant-votes.csv",
+    "bytes": 59677984
+   },
+   {
+    "key": "raw/polis-opendata/march-on.operation-marchin-orders/votes.csv",
+    "bytes": 28865090
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.5tzfrp5eaa.2022-07-07/votes.csv",
+    "bytes": 16579260
+   },
+   {
+    "key": "raw/polis-opendata/march-on.operation-marchin-orders/stats-history.csv",
+    "bytes": 15149280
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.9xnndurbfm.2022-07-07/votes.csv",
+    "bytes": 14494991
+   },
+   {
+    "key": "raw/polis-opendata/march-on.operation-marchin-orders/participants-votes.csv",
+    "bytes": 14386417
+   },
+   {
+    "key": "raw/polis-opendata/american-assembly.bowling-green/votes.csv",
+    "bytes": 12055439
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.5tzfrp5eaa.2022-07-07/stats-history.csv",
+    "bytes": 8451067
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.9xnndurbfm.2022-07-07/stats-history.csv",
+    "bytes": 7321822
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.5tzfrp5eaa.2022-07-07/participants-votes.csv",
+    "bytes": 7164203
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.2vkxcncppn.2022-07-07/votes.csv",
+    "bytes": 7084242
+   },
+   {
+    "key": "raw/polis-opendata/american-assembly.bowling-green/stats-history.csv",
+    "bytes": 5844710
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.9xnndurbfm.2022-07-07/participants-votes.csv",
+    "bytes": 5621684
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.7z7ejpbmv5.2022-08-08/votes.csv",
+    "bytes": 4249551
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.2vkxcncppn.2022-07-07/stats-history.csv",
+    "bytes": 3427257
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.5twd2jsnkf.2022-08-08/votes.csv",
+    "bytes": 3264960
+   },
+   {
+    "key": "raw/polis-opendata/vtaiwan.uberx/votes.csv",
+    "bytes": 2647168
+   },
+   {
+    "key": "raw/polis-opendata/american-assembly.bowling-green/participants-votes.csv",
+    "bytes": 2121295
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.2vkxcncppn.2022-07-07/participants-votes.csv",
+    "bytes": 2013281
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.7z7ejpbmv5.2022-08-08/stats-history.csv",
+    "bytes": 1963162
+   },
+   {
+    "key": "raw/polis-opendata/ssis.land-bank-farmland.2rumnecbeh.2021-08-01/votes.csv",
+    "bytes": 1754038
+   },
+   {
+    "key": "raw/polis-opendata/scoop-hivemind.biodiversity/votes.csv",
+    "bytes": 1558073
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.5twd2jsnkf.2022-08-08/stats-history.csv",
+    "bytes": 1495385
+   },
+   {
+    "key": "raw/polis-opendata/bg2050-volunteers/comments.csv",
+    "bytes": 1304948
+   },
+   {
+    "key": "raw/polis-opendata/vtaiwan.uberx/stats-history.csv",
+    "bytes": 1301333
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.7z7ejpbmv5.2022-08-08/participants-votes.csv",
+    "bytes": 1040271
+   },
+   {
+    "key": "raw/polis-opendata/scoop-hivemind.taxes/scoop-hivemind.taxes.5sw7wa5dep.2020-12-11/votes.csv",
+    "bytes": 903744
+   },
+   {
+    "key": "raw/polis-opendata/scoop-hivemind.taxes/votes.csv",
+    "bytes": 903744
+   },
+   {
+    "key": "raw/polis-opendata/bg2050-volunteers/comment-groups.csv",
+    "bytes": 887824
+   },
+   {
+    "key": "raw/polis-opendata/football-concussions/votes.csv",
+    "bytes": 791288
+   },
+   {
+    "key": "raw/polis-opendata/ssis.land-bank-farmland.2rumnecbeh.2021-08-01/stats-history.csv",
+    "bytes": 787196
+   },
+   {
+    "key": "raw/polis-opendata/scoop-hivemind.affordable-housing/votes.csv",
+    "bytes": 785658
+   },
+   {
+    "key": "raw/polis-opendata/scoop-hivemind.biodiversity/stats-history.csv",
+    "bytes": 699612
+   },
+   {
+    "key": "raw/polis-opendata/austria-climate.5twd2jsnkf.2022-08-08/participants-votes.csv",
+    "bytes": 673864
+   },
+   {
+    "key": "raw/polis-opendata/canadian-electoral-reform/votes.csv",
+    "bytes": 625181
+   },
+   {
+    "key": "raw/polis-opendata/football-concussions/participants-votes.csv",
+    "bytes": 485738
+   },
+   {
+    "key": "raw/polis-opendata/vtaiwan.uberx/participants-votes.csv",
+    "bytes": 470600
+   },
+   {
+    "key": "raw/polis-opendata/football-concussions/stats-history.csv",
+    "bytes": 455300
+   },
+   {
+    "key": "raw/polis-opendata/scoop-hivemind.taxes/scoop-hivemind.taxes.5sw7wa5dep.2020-12-11/stats-history.csv",
+    "bytes": 385530
+   }
+  ],
+  "fileCount": 106,
+  "bytes": 332926481,
+  "tables": []
+ },
+ "hewitt-reproduction": {
+  "files": [
+   {
+    "key": "raw/hewitt-repro/maintained/output/metaregression_estimates.csv",
+    "bytes": 1784725
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_3_results_matrix.png",
+    "bytes": 647746
+   },
+   {
+    "key": "raw/hewitt-repro/report/hewitt_etal_2024_report.pdf",
+    "bytes": 646996
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_oa10_results_by_reliability.png",
+    "bytes": 627018
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/metaregression_contrasts.csv",
+    "bytes": 590067
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_oa12_alternative_specifications.png",
+    "bytes": 586427
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_1_raw_estimates.png",
+    "bytes": 355795
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_4_returns_to_exp.png",
+    "bytes": 343413
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_oa1_demographics.png",
+    "bytes": 329512
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_oa2_favorability_primary.png",
+    "bytes": 288409
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_oa3_votechoice_primary.png",
+    "bytes": 286190
+   },
+   {
+    "key": "raw/hewitt-repro/ground_truth/published_appendix_values.csv",
+    "bytes": 283368
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/ate_estimates.csv",
+    "bytes": 270010
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_oa5_votechoice_secondary.png",
+    "bytes": 264072
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_oa9_reliability.png",
+    "bytes": 260522
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_oa4_favorability_secondary.png",
+    "bytes": 255978
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_2_distribution.png",
+    "bytes": 230531
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_oa6_favorability_new.png",
+    "bytes": 172789
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_oa7_votechoice_new.png",
+    "bytes": 168146
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_1_points.csv",
+    "bytes": 115254
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_oa2_metaregression_coefficients.csv",
+    "bytes": 84945
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_1_raw_estimates.pdf",
+    "bytes": 76353
+   },
+   {
+    "key": "raw/hewitt-repro/ground_truth/archive_values.csv",
+    "bytes": 60218
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_oa12_t_statistics.csv",
+    "bytes": 44182
+   },
+   {
+    "key": "raw/hewitt-repro/hewitt_etal_2024_errata.pdf",
+    "bytes": 39860
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/text_reliability_all_specs.csv",
+    "bytes": 39700
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_3_t_statistics.csv",
+    "bytes": 35265
+   },
+   {
+    "key": "raw/hewitt-repro/ground_truth/build_ground_truth.R",
+    "bytes": 33550
+   },
+   {
+    "key": "raw/hewitt-repro/ground_truth/hewitt_etal_2024_ground_truth.csv",
+    "bytes": 33541
+   },
+   {
+    "key": "raw/hewitt-repro/README.qmd",
+    "bytes": 24566
+   },
+   {
+    "key": "raw/hewitt-repro/README.md",
+    "bytes": 24410
+   },
+   {
+    "key": "raw/hewitt-repro/ground_truth/published_maintext_tables.csv",
+    "bytes": 22271
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/metaregressions.R",
+    "bytes": 21436
+   },
+   {
+    "key": "raw/hewitt-repro/ground_truth/parse_published_values.R",
+    "bytes": 21080
+   },
+   {
+    "key": "raw/hewitt-repro/original_members_manifest.csv",
+    "bytes": 19922
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/in_text_claims.R",
+    "bytes": 19036
+   },
+   {
+    "key": "raw/hewitt-repro/ground_truth/published_claims.csv",
+    "bytes": 17930
+   },
+   {
+    "key": "raw/hewitt-repro/errata.qmd",
+    "bytes": 17211
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/figure_2_distribution.pdf",
+    "bytes": 16085
+   },
+   {
+    "key": "raw/hewitt-repro/maintained/output/table_da1_study_level.csv",
+    "bytes": 15215
+   }
+  ],
+  "fileCount": 100,
+  "bytes": 9483228,
+  "tables": []
+ },
+ "google-reform-ads": {
+  "files": [
+   {
+    "key": "athena/govblock/creatives/97fb374d-3654-49a7-b3a7-1b6e6a8f0a51.csv",
+    "bytes": 1039363
+   },
+   {
+    "key": "athena/govblock/geo/bd8c5ffb-0d6c-4d71-ac05-e96d97d86dc2.csv",
+    "bytes": 57879
+   },
+   {
+    "key": "athena/govblock/measures/bf3dae8b-8503-4227-9058-b492f406fb2e.csv",
+    "bytes": 32431
+   },
+   {
+    "key": "athena/govblock/weekly/34c2b8c7-8939-4337-9662-ac09742bb01b.csv",
+    "bytes": 20415
+   },
+   {
+    "key": "athena/govblock/uncontested/5805c870-33c1-4507-a6c3-2c25094e4861.csv",
+    "bytes": 1183
+   }
+  ],
+  "fileCount": 5,
+  "bytes": 1151271,
+  "tables": []
+ },
+ "pax-takes": {
+  "files": [
+   {
+    "key": "videos/coin-danielle.mp4",
+    "bytes": 713252
+   },
+   {
+    "key": "videos/coin-ruth.mp4",
+    "bytes": 711393
+   },
+   {
+    "key": "videos/coin-stephen.mp4",
+    "bytes": 691050
+   },
+   {
+    "key": "videos/listen-danielle.mp4",
+    "bytes": 588714
+   },
+   {
+    "key": "videos/listen-ruth.mp4",
+    "bytes": 580712
+   },
+   {
+    "key": "videos/listen-stephen.mp4",
+    "bytes": 565623
+   },
+   {
+    "key": "videos/calm-danielle.mp4",
+    "bytes": 564250
+   },
+   {
+    "key": "videos/calm-ruth.mp4",
+    "bytes": 562232
+   },
+   {
+    "key": "videos/calm-stephen.mp4",
+    "bytes": 559179
+   },
+   {
+    "key": "videos/coin-ruth-nocaps.mp4",
+    "bytes": 495021
+   },
+   {
+    "key": "videos/listen-stephen-short.mp4",
+    "bytes": 375678
+   },
+   {
+    "key": "transcribe/coin-ruth-nocaps.json",
+    "bytes": 16821
+   },
+   {
+    "key": "transcribe/coin-ruth.json",
+    "bytes": 16814
+   },
+   {
+    "key": "transcribe/coin-stephen.json",
+    "bytes": 16812
+   },
+   {
+    "key": "transcribe/coin-danielle.json",
+    "bytes": 16728
+   },
+   {
+    "key": "features/coin-danielle.json",
+    "bytes": 14846
+   },
+   {
+    "key": "features/coin-stephen.json",
+    "bytes": 14646
+   },
+   {
+    "key": "transcribe/calm-danielle.json",
+    "bytes": 14452
+   },
+   {
+    "key": "transcribe/calm-ruth.json",
+    "bytes": 14286
+   },
+   {
+    "key": "transcribe/listen-stephen.json",
+    "bytes": 14119
+   },
+   {
+    "key": "transcribe/calm-stephen.json",
+    "bytes": 14117
+   },
+   {
+    "key": "transcribe/listen-ruth.json",
+    "bytes": 14111
+   },
+   {
+    "key": "transcribe/listen-danielle.json",
+    "bytes": 14030
+   },
+   {
+    "key": "features/calm-ruth.json",
+    "bytes": 13541
+   },
+   {
+    "key": "features/coin-ruth.json",
+    "bytes": 13317
+   },
+   {
+    "key": "features/coin-ruth-nocaps.json",
+    "bytes": 13029
+   },
+   {
+    "key": "features/calm-danielle.json",
+    "bytes": 12871
+   },
+   {
+    "key": "features/listen-danielle.json",
+    "bytes": 12216
+   },
+   {
+    "key": "features/listen-ruth.json",
+    "bytes": 12175
+   },
+   {
+    "key": "features/calm-stephen.json",
+    "bytes": 10722
+   },
+   {
+    "key": "features/listen-stephen.json",
+    "bytes": 10362
+   },
+   {
+    "key": "transcribe/listen-stephen-short.json",
+    "bytes": 8896
+   },
+   {
+    "key": "features/listen-stephen-short.json",
+    "bytes": 8440
+   },
+   {
+    "key": "videos/calm-stephen.jpg",
+    "bytes": 8307
+   },
+   {
+    "key": "videos/calm-danielle.jpg",
+    "bytes": 8198
+   },
+   {
+    "key": "videos/calm-ruth.jpg",
+    "bytes": 8003
+   },
+   {
+    "key": "videos/listen-stephen-short.jpg",
+    "bytes": 7915
+   },
+   {
+    "key": "videos/listen-stephen.jpg",
+    "bytes": 7915
+   },
+   {
+    "key": "videos/listen-danielle.jpg",
+    "bytes": 7821
+   },
+   {
+    "key": "videos/listen-ruth.jpg",
+    "bytes": 7639
+   }
+  ],
+  "fileCount": 56,
+  "bytes": 6816786,
+  "tables": []
+ }
+}
