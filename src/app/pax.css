@@ -135,3 +135,11 @@ body {
     transition: none !important;
   }
 }
+
+/* SVG marks grow from their own left edge. */
+.grow-svg {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: pax-grow 800ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 35ms + 100ms);
+}

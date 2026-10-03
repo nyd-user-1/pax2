@@ -17,7 +17,7 @@ const NAV = [
 ]
 const MORE = [
   { href: "/scoring", label: "Scoring", icon: FlaskConical },
-  { href: "/sources", label: "Sources", icon: Library },
+  { href: "/library", label: "Library", icon: Library },
   { href: "/build", label: "Build", icon: Hammer },
 ]
 

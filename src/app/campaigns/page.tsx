@@ -59,6 +59,9 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
             <span className="tabular mt-2 text-sm">
               <b className="font-display text-2xl font-normal text-pax-ink">{s.medianPerDay < 10 ? s.medianPerDay.toFixed(1) : Math.round(s.medianPerDay).toLocaleString()}</b> views/day, median
             </span>
+            <span className="mt-1 block h-1.5 overflow-hidden rounded-full bg-slate-100">
+              <span className="grow block h-full rounded-full bg-pax-plum" style={{ width: `${(s.medianPerDay / Math.max(...stats.map((x) => x.medianPerDay))) * 100}%` }} />
+            </span>
             <span className="tabular text-xs text-muted-foreground">
               {Math.round(s.medianSec)}s median length · {(s.medianEngagement * 100).toFixed(1)}% likes + comments per view
             </span>

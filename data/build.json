@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-03 07:00 ET",
+  "updated": "2026-10-03 09:00 ET",
   "budget": {
     "cap": 10,
     "spent": [
@@ -89,6 +89,14 @@
         {
           "title": "Design pass",
           "detail": "Parallax layout in red, white and blue from GovBlock forecast colors"
+        },
+        {
+          "title": "Design pass 1",
+          "detail": "One sans family, jobs-based navigation, Home rebuilt around next actions and videos, Videos grid, take drawer, motion, elevation, red/white/blue with meaning"
+        },
+        {
+          "title": "Design pass 2",
+          "detail": "Maps (Massachusetts districts, reform ad spend by state), animated slope chart and bars, Dashboard from GovBlock blocks, Library with previews and downloads, Studio for camera-free videos"
         }
       ]
     },
@@ -116,10 +124,6 @@
         {
           "title": "Ask Parallax the four questions",
           "detail": "What Resonance measures, how many labeled pieces, holdout accuracy, any control-group validation"
-        },
-        {
-          "title": "Review on the dev server",
-          "detail": "Not deployed: Amplify shows the earlier build. Say when to start a dev server."
         }
       ]
     },

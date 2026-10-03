@@ -23,7 +23,7 @@ function Forest({ features, max }: { features: Feature[]; max: number }) {
           <span className={cn("truncate", VOLUNTEER.has(f.key) ? "font-medium text-pax-ink" : "text-foreground/80")}>{f.label}</span>
           <svg viewBox="0 0 100 10" preserveAspectRatio="none" className="h-4 w-full">
             <rect x={50} y={0} width={0.25} height={10} className="fill-foreground/30" />
-            <rect x={Math.max(0, x(f.low))} y={4.5} width={Math.max(0.5, Math.min(100, x(f.high)) - Math.max(0, x(f.low)))} height={1} className={f.low > 0 || f.high < 0 ? "fill-pax-plum" : "fill-foreground/35"} />
+            <rect x={Math.max(0, x(f.low))} y={4.5} width={Math.max(0.5, Math.min(100, x(f.high)) - Math.max(0, x(f.low)))} height={1} className={cn("grow-svg", f.low > 0 || f.high < 0 ? "fill-pax-plum" : "fill-foreground/35")} />
             <circle cx={x(f.diff)} cy={5} r={1.6} className={f.low > 0 || f.high < 0 ? "fill-pax-plum" : "fill-foreground/50"} />
           </svg>
           <span className="tabular text-right text-xs text-muted-foreground">
