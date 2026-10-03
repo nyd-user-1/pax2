@@ -121,15 +121,28 @@ const NARRATIVE = {
 
 const TOOL = {
   name: "evidence",
-  description: "Return the findings, next steps and checks of earlier findings, each citing evidence refs exactly as listed.",
+  description: "Return at most six findings (each one or two sentences: at least one observed, one interpretation, one hypothesis) and checks of earlier findings, each citing evidence refs exactly as listed.",
   inputSchema: {
     json: {
       type: "object",
-      required: ["findings", "nextSteps", "priorChecks"],
+      required: ["findings", "priorChecks"],
       properties: {
-        findings:{ type: "array", items: { type: "object", required: ["kind", "text", "evidence"], properties: { kind: { enum: ["observed", "interpretation", "hypothesis"] }, text: { type: "string" }, evidence: { type: "array", items: { type: "string" } } } } },
-        nextSteps: { type: "array", maxItems: 3, items: { type: "object", required: ["change", "prompted", "uncertain", "measure", "evidence"], properties: { change: { type: "string" }, prompted: { type: "string" }, uncertain: { type: "string" }, measure: { type: "string" }, evidence: { type: "array", items: { type: "string" } } } } },
+        findings: { type: "array", maxItems: 6, items: { type: "object", required: ["kind", "text", "evidence"], properties: { kind: { enum: ["observed", "interpretation", "hypothesis"] }, text: { type: "string" }, evidence: { type: "array", items: { type: "string" } } } } },
         priorChecks: { type: "array", items: { type: "object", required: ["finding", "status", "why", "evidence"], properties: { finding: { type: "string" }, status: { enum: ["supported", "challenged", "unresolved"] }, why: { type: "string" }, evidence: { type: "array", items: { type: "string" } } } } },
+      },
+    },
+  },
+}
+
+const STEPS = {
+  name: "steps",
+  description: "Return one to three proposed next tests, each a specific execution change (captions, runtime, opening line, messenger, framing), citing evidence refs exactly as listed.",
+  inputSchema: {
+    json: {
+      type: "object",
+      required: ["nextSteps"],
+      properties: {
+        nextSteps: { type: "array", minItems: 1, maxItems: 3, items: { type: "object", required: ["change", "prompted", "uncertain", "measure", "evidence"], properties: { change: { type: "string" }, prompted: { type: "string" }, uncertain: { type: "string" }, measure: { type: "string" }, evidence: { type: "array", items: { type: "string" } } } } },
       },
     },
   },
@@ -156,7 +169,7 @@ export async function read(take: TakeInfo, state: TakeState, ref: Reference | nu
     earlierFindings: prior,
     evidence: evidence.map((e) => `${e.ref} — ${e.label}`),
   }
-  const ask = async (tool: typeof TOOL | typeof NARRATIVE, maxTokens: number) => {
+  const ask = async (tool: { name: string }, maxTokens: number) => {
     const r = await client.send(
       new ConverseCommand({
         modelId: MODEL,
@@ -169,9 +182,9 @@ export async function read(take: TakeInfo, state: TakeState, ref: Reference | nu
     const block = r.output?.message?.content?.find((c) => "toolUse" in c && c.toolUse)
     return (block && "toolUse" in block ? block.toolUse?.input : null) as Record<string, unknown> | null
   }
-  const [a, b] = await Promise.all([ask(NARRATIVE, 900), ask(TOOL, 1800)])
-  if (!a || !b) throw new Error("PAX returned no reading")
-  const input = { ...a, ...b }
+  const [a, b, c] = await Promise.all([ask(NARRATIVE, 900), ask(TOOL, 1500), ask(STEPS, 1200)])
+  if (!a || !b || !c) throw new Error("PAX returned no reading")
+  const input = { ...a, ...b, ...c }
   // Nested arrays sometimes arrive as JSON text, at times with unescaped quotes inside; accept either.
   const arr = <T,>(x: unknown): T[] => {
     if (Array.isArray(x)) return x as T[]
