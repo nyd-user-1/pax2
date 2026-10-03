@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowRight, Clock, PencilLine, Send, Smile, Video } from "lucide-react"
 
 import { HelpLine } from "@/components/record/chrome"
+import { Wordmark } from "@/components/wordmark"
 
 export const metadata = { title: "Record a video" }
 
@@ -11,7 +12,7 @@ export default function RecordLanding() {
       <section className="relative overflow-hidden bg-gradient-to-b from-pax-lavender to-pax-mist">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-[1.4fr_1fr] md:py-24">
           <div className="flex flex-col gap-6">
-            <Link href="/" className="font-display text-xl text-slate-900">PAX</Link>
+            <Link href="/" aria-label="Home"><Wordmark size={26} /></Link>
             <span className="flex w-fit items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-sm text-pax-ink shadow-sm">
               <Clock className="size-4" /> About five minutes
             </span>

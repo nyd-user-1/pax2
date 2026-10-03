@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Clapperboard, FlaskConical, Hammer, Home, LayoutDashboard, Library, NotebookPen, Plus, PlaySquare, Target } from "lucide-react"
 
+import { Wordmark } from "@/components/wordmark"
 import { cn } from "@/ui/lib/utils"
 
 // The partner's jobs first; the workings of the score and the build underneath.
@@ -43,13 +44,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-dvh">
       <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col gap-6 px-4 py-6 md:flex">
-        <Link href="/" className="flex items-center gap-2 px-3.5">
-          <span className="text-[22px] font-bold tracking-tight text-pax-ink">PAX</span>
-          <span className="flex h-1.5 w-7 overflow-hidden rounded-full">
-            <span className="flex-1 bg-pax-plum" />
-            <span className="flex-1 bg-white" />
-            <span className="flex-1 bg-pax-red" />
-          </span>
+        <Link href="/" className="flex items-center px-3.5" aria-label="Home">
+          <Wordmark size={24} />
         </Link>
         <Link href="/record" className="press flex items-center justify-center gap-2 rounded-full bg-pax-ink px-4 py-3 text-sm font-semibold text-white shadow-e2 transition-shadow hover:shadow-e3">
           <Plus className="size-4" strokeWidth={2.5} /> Record a video
@@ -59,7 +55,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-20 flex items-center gap-3 border-b bg-white/90 px-4 py-2.5 backdrop-blur md:hidden">
-          <Link href="/" className="text-lg font-bold text-pax-ink">PAX</Link>
+          <Link href="/" aria-label="Home"><Wordmark size={18} /></Link>
           <nav className="no-scrollbar flex flex-1 gap-1 overflow-x-auto">
             {NAV.map(({ href, label }) => (
               <Link key={href} href={href} className={cn("whitespace-nowrap rounded-full px-3 py-1 text-xs", active(href) ? "bg-pax-lavender font-semibold text-pax-ink" : "text-slate-500")}>
