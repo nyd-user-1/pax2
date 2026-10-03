@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Check, ChevronRight, Copy } from "lucide-react"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/ui/components/nova/card"
+import { FoldCard } from "@/components/dash/fold-card"
 import { cn } from "@/ui/lib/utils"
 
 export type Todo = { title: string; detail?: string; who: "Brendan" | null; done?: boolean }
@@ -46,15 +46,12 @@ function Row({ t, n }: { t: Todo; n: number }) {
 
 export function TodoCard({ items }: { items: Todo[] }) {
   return (
-    <Card className="gap-4">
-      <CardHeader>
-        <CardTitle>To Do</CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-2">
+    <FoldCard title="To Do" rows={items.map((t) => ({ title: t.title, status: t.done ? "done" : t.who ? "Brendan" : "open", detail: t.detail ?? "" }))} name="to-do">
+      <div className="flex flex-col gap-2">
         {items.map((t, i) => (
           <Row key={t.title} t={t} n={i + 1} />
         ))}
-      </CardContent>
-    </Card>
+      </div>
+    </FoldCard>
   )
 }

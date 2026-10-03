@@ -6,12 +6,13 @@ import { ChevronRight } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, Label, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart, XAxis } from "recharts"
 
 import type { Lesson, Limit } from "@/lib/build-board"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/ui/components/nova/card"
+import { CardAnchor, CardTools, RefreshButton } from "@/components/dash/card-tools"
+import { Card, CardAction, CardContent, CardHeader } from "@/ui/components/nova/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/components/nova/chart"
 import { cn } from "@/ui/lib/utils"
 
 // The interactive blocks of the Build dashboard, after GovBlock's Database page
-// (components/admin/pages/database.tsx): Volume with its ranked list, Budget beside Limits, Lessons Learned.
+// (components/admin/pages/database.tsx): Volume with its ranked list, Budget beside Limits, Insights.
 
 export type VideoCost = { id: string; title: string; label: string; cost: number }
 export type SpendItem = { item: string; short: string; usd: number }
@@ -27,8 +28,9 @@ export function Volume({ spend, videos }: { spend: SpendItem[]; videos: VideoCos
     <div className="grid grid-cols-1 gap-5 xl:grid-cols-3">
       <Card className="xl:col-span-2">
         <CardHeader>
-          <CardTitle>{view === "spend" ? "Spend by Item" : "Analysis Cost by Video"}</CardTitle>
+          <CardAnchor id="volume">{view === "spend" ? "Spend by Item" : "Analysis Cost by Video"}</CardAnchor>
           <CardAction>
+            <CardTools views={[{ value: "spend", label: "Spend by Item" }, { value: "videos", label: "Cost by Video" }]} view={view} onView={(v) => setView(v as "spend" | "videos")} rows={data.map((d) => ({ item: d.full, usd: d.value }))} name="build-volume">
             <div className="flex rounded-lg bg-muted p-0.5 text-xs">
               {(["spend", "videos"] as const).map((v) => (
                 <button key={v} type="button" onClick={() => setView(v)} className={cn("rounded-md px-2.5 py-1", view === v ? "bg-white font-medium shadow-e1" : "text-muted-foreground")}>
@@ -36,6 +38,7 @@ export function Volume({ spend, videos }: { spend: SpendItem[]; videos: VideoCos
                 </button>
               ))}
             </div>
+            </CardTools>
           </CardAction>
         </CardHeader>
         <CardContent>
@@ -51,7 +54,10 @@ export function Volume({ spend, videos }: { spend: SpendItem[]; videos: VideoCos
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Cost by Video</CardTitle>
+          <CardAnchor>Cost by Video</CardAnchor>
+          <CardAction>
+            <CardTools rows={ranked.map((v) => ({ video: `${v.title} · ${v.label}`, usd: v.cost }))} name="cost-by-video" />
+          </CardAction>
         </CardHeader>
         <CardContent>
           <ul className="m-0 flex h-80 list-none flex-col gap-2 overflow-y-auto p-0 [scrollbar-width:none]">
@@ -89,7 +95,12 @@ export function BudgetAndLimits({ spent, cap, facts, limits }: { spent: number; 
       <div className="grid grid-cols-1 xl:grid-cols-2 [&>[data-slot=card]]:py-6">
         <Card className="rounded-none border-0 bg-transparent shadow-none ring-0">
           <CardHeader>
-            <CardTitle>Budget</CardTitle>
+            <CardAnchor>Budget</CardAnchor>
+            <CardAction>
+              <CardTools rows={facts} name="budget">
+                <RefreshButton />
+              </CardTools>
+            </CardAction>
           </CardHeader>
           <CardContent>
             <ChartContainer config={{ used: { label: "Used", color: "var(--chart-1)" } }} className="mx-auto aspect-square h-60">
@@ -127,7 +138,10 @@ export function BudgetAndLimits({ spent, cap, facts, limits }: { spent: number; 
         </Card>
         <Card className="gap-3 rounded-none border-0 bg-transparent shadow-none ring-0 max-xl:border-t xl:border-l">
           <CardHeader>
-            <CardTitle>Limits</CardTitle>
+            <CardAnchor>Limits</CardAnchor>
+            <CardAction>
+              <CardTools rows={limits} name="limits" />
+            </CardAction>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             {limits.map((q) => {
@@ -183,11 +197,14 @@ function LessonRow({ l }: { l: Lesson }) {
   )
 }
 
-export function LessonsCard({ lessons }: { lessons: Lesson[] }) {
+export function InsightsCard({ lessons }: { lessons: Lesson[] }) {
   return (
     <Card className="gap-4">
       <CardHeader>
-        <CardTitle>Lessons Learned</CardTitle>
+        <CardAnchor>Insights</CardAnchor>
+        <CardAction>
+          <CardTools rows={lessons.map((l) => ({ title: l.title, when: l.when, outcome: l.outcome, headline: l.headline, lessons: l.lessons.join(" | ") }))} name="insights" />
+        </CardAction>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         {lessons.map((l) => (

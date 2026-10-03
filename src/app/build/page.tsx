@@ -1,8 +1,10 @@
-import Link from "next/link"
-
 import build from "../../../data/build.json"
 import libraryMeta from "../../../data/library-meta.json"
-import { BudgetAndLimits, LessonsCard, Volume } from "@/components/build/board"
+import { BudgetAndLimits, InsightsCard, Volume } from "@/components/build/board"
+import { PagesBoard } from "@/components/build/pages-board"
+import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
+import { CardAnchor, CardTools, RefreshButton } from "@/components/dash/card-tools"
+import { FoldCard } from "@/components/dash/fold-card"
 import { TodoCard, type Todo } from "@/components/build/todo-card"
 import { FreshReview } from "@/components/fresh-review"
 import { LESSONS, NOT_CONNECTED, PAGES, type SourceRow } from "@/lib/build-board"
@@ -10,7 +12,7 @@ import { FEATURES, TAKES } from "@/lib/catalog"
 import { rows } from "@/lib/pipeline"
 import { workspace } from "@/lib/review"
 import { Badge } from "@/ui/components/nova/badge"
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/ui/components/nova/card"
+import { Card, CardAction, CardContent, CardHeader } from "@/ui/components/nova/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/components/nova/table"
 import { cn } from "@/ui/lib/utils"
 
@@ -19,18 +21,13 @@ export const metadata = { title: "Build" }
 
 // The build's dashboard in the frame of GovBlock's Data Pipeline page (/workspace/dashboard/database):
 // six tiles, Volume with its ranked list, Sources (Feeds), Runs (Run Log), Pages (Jurisdictions),
-// Budget beside Limits (Feed Health beside Quotas), To Do, Lessons Learned. The tracker is data/build.json.
+// Budget beside Limits (Feed Health beside Quotas), To Do, Insights. The tracker is data/build.json.
 
 type Item = { title: string; detail?: string }
 type Build = { updated: string; budget: { cap: number; spent: { item: string; usd: number }[] }; columns: { id: string; title: string; items: Item[] }[]; resources: { name: string; id: string }[] }
 
 const when = (iso: string) => new Date(iso).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })
 const STATUS_TONE: Record<SourceRow["status"], string> = { Loaded: "text-pax-plum", "Stand-in": "text-pax-red-deep", "Not connected": "text-muted-foreground" }
-const PAGE_DOT: Record<string, { dot: string; label: string }> = {
-  real: { dot: "bg-pax-plum", label: "Real data" },
-  "stand-in": { dot: "bg-pax-red", label: "Stand-in data" },
-  mixed: { dot: "bg-slate-400", label: "Real and stand-in" },
-}
 
 /** Analysis runs on record: the videos' analysis times, split wherever twenty minutes pass with none. */
 function runs(cost: Record<string, number>) {
@@ -63,9 +60,9 @@ export default async function BuildPage() {
 
   const tiles = [
     { title: "Spent", value: `$${spent.toFixed(2)}`, note: `of the $${b.budget.cap} cap` },
-    { title: "Done", value: done.length, note: "tracker items" },
-    { title: "Waiting on Brendan", value: you.length, note: "decisions and access" },
-    { title: "Next", value: next.length, note: "queued" },
+    { title: "Done", value: done.length, note: "built and working" },
+    { title: "Waiting on Brendan", value: you.length, note: "data, access and decisions" },
+    { title: "Next", value: next.length, note: "ready to build" },
     { title: "Videos Analyzed", value: `${videos.filter((v) => v.cost > 0).length} of ${TAKES.length}`, note: `$${perVideo.toFixed(2)} each` },
     { title: "Sources", value: `${sources.filter((s) => s.status === "Loaded").length} of ${sources.length}`, note: "loaded" },
   ]
@@ -73,8 +70,8 @@ export default async function BuildPage() {
   const short = (s: string) => s.replace(/\s*\(.*\)$/, "").split(/[,:]/)[0]
 
   return (
-    <div className="flex flex-col gap-5">
-      <header className="flex flex-col gap-1">
+    <div className="flex flex-col">
+      <header className="mb-5 flex flex-col gap-1">
         <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Build</h1>
         <p className="text-sm text-muted-foreground">Updated {b.updated}</p>
       </header>
@@ -93,131 +90,115 @@ export default async function BuildPage() {
         </CardContent>
       </Card>
 
-      <Volume spend={b.budget.spent.map((s) => ({ item: s.item, short: short(s.item), usd: s.usd }))} videos={videos} />
+      <BlockOrder page="build" initial={["volume", "library", "runs", "pages", "budget", "todo", "insights"]}>
+        <OrderedBlock id="volume" label="Volume">
+          <Volume spend={b.budget.spent.map((s) => ({ item: s.item, short: short(s.item), usd: s.usd }))} videos={videos} />
+        </OrderedBlock>
 
-      <Card className="gap-4">
-        <CardHeader>
-          <CardTitle>Sources</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted/60">
-                <TableHead>Source</TableHead>
-                <TableHead>Kind</TableHead>
-                <TableHead>Covers</TableHead>
-                <TableHead>Runs On</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {sources.map((s) => (
-                <TableRow key={s.name}>
-                  <TableCell>
-                    <div className="flex flex-col">
-                      <span className="font-medium whitespace-nowrap">{s.name}</span>
-                      <span className="text-xs text-muted-foreground">{s.publisher}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="whitespace-nowrap">{s.kind}</TableCell>
-                  <TableCell className="max-w-96 truncate" title={s.covers}>
-                    {s.covers}
-                  </TableCell>
-                  <TableCell className="whitespace-nowrap">{s.runsOn}</TableCell>
-                  <TableCell>
-                    <Badge variant="outline" className={cn("h-5", STATUS_TONE[s.status])}>
-                      {s.status}
-                    </Badge>
-                  </TableCell>
+        <OrderedBlock id="library" label="Library">
+          <FoldCard title="Library" rows={sources.map(({ name, publisher, kind, covers, status }) => ({ name, publisher, kind, description: covers, status }))} name="library" tools={<RefreshButton />}>
+            <Table>
+              <TableHeader className="sticky top-0 z-10 bg-white">
+                <TableRow className="bg-muted/60">
+                  <TableHead>Name</TableHead>
+                  <TableHead>Publisher</TableHead>
+                  <TableHead>Kind</TableHead>
+                  <TableHead className="w-[255px]">Description</TableHead>
+                  <TableHead>Status</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+              </TableHeader>
+              <TableBody>
+                {sources.map((s) => (
+                  <TableRow key={s.name}>
+                    <TableCell className="font-medium whitespace-nowrap">{s.name}</TableCell>
+                    <TableCell className="whitespace-nowrap text-muted-foreground">{s.publisher}</TableCell>
+                    <TableCell className="whitespace-nowrap">{s.kind}</TableCell>
+                    <TableCell className="w-[255px] max-w-[255px] truncate" title={s.covers}>
+                      {s.covers}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className={cn("h-5", STATUS_TONE[s.status])}>
+                        {s.status}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </FoldCard>
+        </OrderedBlock>
 
-      <Card className="gap-4">
-        <CardHeader>
-          <CardTitle>Runs</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted/60">
-                <TableHead>Run</TableHead>
-                <TableHead className="text-right">Videos</TableHead>
-                <TableHead className="text-right">Estimated Cost</TableHead>
-                <TableHead>Started</TableHead>
-                <TableHead>Finished</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {ran.map((r, i) => (
-                <TableRow key={r.start}>
-                  <TableCell className="font-medium">Analysis {i + 1}</TableCell>
-                  <TableCell className="tabular text-right">{r.ids.length}</TableCell>
-                  <TableCell className="tabular text-right">${r.cost.toFixed(2)}</TableCell>
-                  <TableCell>{when(r.start)}</TableCell>
-                  <TableCell>{when(r.end)}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+        <OrderedBlock id="runs" label="Runs">
+          <Card className="gap-4">
+            <CardHeader>
+              <CardAnchor>Runs</CardAnchor>
+              <CardAction>
+                <CardTools rows={ran.map((r, i) => ({ run: `Analysis ${i + 1}`, videos: r.ids.length, usd: Number(r.cost.toFixed(2)), started: r.start, finished: r.end }))} name="runs">
+                  <RefreshButton />
+                </CardTools>
+              </CardAction>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-muted/60">
+                    <TableHead>Run</TableHead>
+                    <TableHead className="text-right">Videos</TableHead>
+                    <TableHead className="text-right">Estimated Cost</TableHead>
+                    <TableHead>Started</TableHead>
+                    <TableHead>Finished</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {ran.map((r, i) => (
+                    <TableRow key={r.start}>
+                      <TableCell className="font-medium">Analysis {i + 1}</TableCell>
+                      <TableCell className="tabular text-right">{r.ids.length}</TableCell>
+                      <TableCell className="tabular text-right">${r.cost.toFixed(2)}</TableCell>
+                      <TableCell>{when(r.start)}</TableCell>
+                      <TableCell>{when(r.end)}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </OrderedBlock>
 
-      <Card className="gap-4">
-        <CardHeader>
-          <CardTitle>Pages</CardTitle>
-          <CardAction>
-            <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
-              {Object.values(PAGE_DOT).map((d) => (
-                <span key={d.label} className="flex items-center gap-1.5">
-                  <span className={cn("size-2 rounded-full", d.dot)} />
-                  {d.label}
-                </span>
-              ))}
-            </div>
-          </CardAction>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
-            {PAGES.map((p) => (
-              <Link key={p.href} href={p.href} className="flex flex-col gap-1 rounded-xl border bg-card p-3 transition-shadow hover:shadow-e1">
-                <span className="flex items-center justify-between gap-2">
-                  <span className="font-medium">{p.name}</span>
-                  <span title={PAGE_DOT[p.state].label} className={cn("size-2.5 shrink-0 rounded-full", PAGE_DOT[p.state].dot)} />
-                </span>
-                <span className="font-mono text-[11px] text-muted-foreground">{p.href}</span>
-                <span className="text-xs leading-snug text-muted-foreground">{p.data}</span>
-              </Link>
-            ))}
+        <OrderedBlock id="pages" label="Pages">
+          <PagesBoard pages={PAGES} />
+        </OrderedBlock>
+
+        <OrderedBlock id="budget" label="Budget and Limits">
+          <BudgetAndLimits
+            spent={spent}
+            cap={b.budget.cap}
+            facts={[
+              { label: "Remaining", value: `$${(b.budget.cap - spent).toFixed(2)}`, note: "before the cap" },
+              { label: "Per Video", value: `$${perVideo.toFixed(2)}`, note: "about $0.04 without Rekognition" },
+              { label: "Biggest Item", value: "Rekognition", note: "three-quarters of analysis cost" },
+              { label: "Workspace", value: ws, note: "the review this browser reads" },
+            ]}
+            limits={[
+              { label: "AWS budget", sub: "estimated spend against the cap", used: Math.round(spent * 100) / 100, limit: b.budget.cap, unit: "USD" },
+              { label: "Rekognition jobs", sub: "open at once, per account", used: 0, limit: 20, unit: "jobs" },
+              { label: "PAX reading", sub: "seconds per reading against Amplify's 30-second cut-off", used: 16, limit: 30, unit: "seconds" },
+              { label: "Worker box", sub: "stops itself after this many idle minutes", used: 0, limit: 30, unit: "minutes" },
+            ]}
+          />
+          <div className="mt-3 flex justify-end">
+            <FreshReview />
           </div>
-        </CardContent>
-      </Card>
+        </OrderedBlock>
 
-      <BudgetAndLimits
-        spent={spent}
-        cap={b.budget.cap}
-        facts={[
-          { label: "Remaining", value: `$${(b.budget.cap - spent).toFixed(2)}`, note: "before the cap" },
-          { label: "Per Video", value: `$${perVideo.toFixed(2)}`, note: "about $0.04 without Rekognition" },
-          { label: "Biggest Item", value: "Rekognition", note: "three-quarters of analysis cost" },
-          { label: "Workspace", value: ws, note: "the review this browser reads" },
-        ]}
-        limits={[
-          { label: "AWS budget", sub: "estimated spend against the cap", used: Math.round(spent * 100) / 100, limit: b.budget.cap, unit: "USD" },
-          { label: "Rekognition jobs", sub: "open at once, per account", used: 0, limit: 20, unit: "jobs" },
-          { label: "PAX reading", sub: "seconds per reading against Amplify's 30-second cut-off", used: 16, limit: 30, unit: "seconds" },
-          { label: "Worker box", sub: "stops itself after this many idle minutes", used: 0, limit: 30, unit: "minutes" },
-        ]}
-      />
-      <div className="-mt-2 flex justify-end">
-        <FreshReview />
-      </div>
+        <OrderedBlock id="todo" label="To Do">
+          <TodoCard items={todo} />
+        </OrderedBlock>
 
-      <TodoCard items={todo} />
-      <LessonsCard lessons={LESSONS} />
+        <OrderedBlock id="insights" label="Insights">
+          <InsightsCard lessons={LESSONS} />
+        </OrderedBlock>
+      </BlockOrder>
     </div>
   )
 }
