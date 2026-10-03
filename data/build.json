@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-03 09:00 ET",
+  "updated": "2026-10-03 3:00 PM ET",
   "budget": {
     "cap": 10,
     "spent": [
@@ -30,6 +30,18 @@
       {
         "item": "Amplify builds and hosting",
         "usd": 0.3
+      },
+      {
+        "item": "45-second re-render: Polly generative voices over Mixkit footage, 11 videos",
+        "usd": 0.3
+      },
+      {
+        "item": "Re-analysis of the 11 videos: Rekognition $1.57, Pegasus $0.31, Transcribe $0.19",
+        "usd": 2.07
+      },
+      {
+        "item": "Worker box, re-render and re-analysis (about 1.5 hours)",
+        "usd": 0.1
       }
     ]
   },
@@ -97,6 +109,30 @@
         {
           "title": "Design pass 2",
           "detail": "Maps (Massachusetts districts, reform ad spend by state), animated slope chart and bars, Dashboard from GovBlock blocks, Library with previews and downloads, Studio for camera-free videos"
+        },
+        {
+          "title": "45-second versions",
+          "detail": "Longer scripts, Polly generative voices, Mixkit stock footage one clip per line, re-analyzed; stand-in results rebuilt for the new lengths"
+        },
+        {
+          "title": "Version page to spec",
+          "detail": "Rating, Formula as a timeline, Transcript, Assessment inside Call it; boxes show their summary closed and the rest open"
+        },
+        {
+          "title": "Pipeline page",
+          "detail": "What starts a run, the worker box and its four checks, where results land, per-video status and cost; the analysis job reports progress as it runs"
+        },
+        {
+          "title": "Load Data",
+          "detail": "One dashed drop box wherever results load, with a tooltip naming the expected Ads Manager export; an empty workspace loads the stand-in rounds"
+        },
+        {
+          "title": "Campaigns map modes",
+          "detail": "Google ad spend for every reform group, Unite America and Open Primaries; uncontested legislative races 2014–2022"
+        },
+        {
+          "title": "Real Question 3 shorts, test",
+          "detail": "Two Yes on 3 shorts downloaded from a home connection with youtubei.js (Android client); YouTube blocks the same request from AWS"
         }
       ]
     },
@@ -109,6 +145,10 @@
       "id": "you",
       "title": "Needs Brendan",
       "items": [
+        {
+          "title": "Talk through the three goals",
+          "detail": "Brendan disagrees with much of the current statement of the Resonance score, the PAX AI experience and the ledger; to discuss before more is built on them."
+        },
         {
           "title": "Parallax's videos and Ads Manager export",
           "detail": "Upload the export on Reviews; drop videos in s3://pax-638175140432/videos/ and run worker/analyze.py"
@@ -132,16 +172,24 @@
       "title": "Next",
       "items": [
         {
+          "title": "Drop Rekognition from the pipeline",
+          "detail": "Rekognition is three-quarters of the analysis cost ($0.20 a minute). Pegasus already notes on-screen text; shot changes can come from ffmpeg scene detection on the box for free. Cuts a video from about $0.15 to about $0.04."
+        },
+        {
+          "title": "Start the pipeline from an upload",
+          "detail": "An S3 upload event starts the worker box, which runs the checks and stops itself. Today every run is started by hand."
+        },
+        {
+          "title": "Organic score from YouTube views",
+          "detail": "Views, likes and comments per day against the channel median, for the campaigns' public shorts. Resonance as built needs impressions; this is its organic counterpart."
+        },
+        {
           "title": "Upworthy hook prior on screen",
           "detail": "Score each script's opening line against 32,487 randomized headline tests"
         },
         {
           "title": "Resonance 2, published beside 1",
           "detail": "Quartile retention curve as Hold; labeled as a new version, never in place of 1"
-        },
-        {
-          "title": "Step Functions for the video pipeline",
-          "detail": "Today the box runs it; an S3 upload should trigger it"
         },
         {
           "title": "Persuasion labels",
