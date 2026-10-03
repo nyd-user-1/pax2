@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BookA, Clapperboard, FlaskConical, Hammer, Home, LayoutDashboard, Library, NotebookPen, Plus, PlaySquare, Target } from "lucide-react"
+import { BookA, Clapperboard, FlaskConical, Hammer, Home, LayoutDashboard, Library, NotebookPen, Plus, PlaySquare, Target, Workflow } from "lucide-react"
 
 import { Wordmark } from "@/components/wordmark"
 import { cn } from "@/ui/lib/utils"
@@ -20,6 +20,7 @@ const MORE = [
   { href: "/scoring", label: "Scoring", icon: FlaskConical },
   { href: "/glossary", label: "Glossary", icon: BookA },
   { href: "/library", label: "Library", icon: Library },
+  { href: "/pipeline", label: "Pipeline", icon: Workflow },
   { href: "/build", label: "Build", icon: Hammer },
 ]
 

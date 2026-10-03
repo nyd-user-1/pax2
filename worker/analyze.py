@@ -150,18 +150,35 @@ def have(key):
 
 
 ids = sys.argv[1:] or takes()
+
+# Progress for the Pipeline page: every step of every video, rewritten to S3 as it changes.
+STEPS = ["transcribe", "rekognition", "pegasus", "audio"]
+now = lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+status = {"startedAt": now(), "updatedAt": now(), "finishedAt": None, "videos": {t: {s: "queued" for s in STEPS} for t in ids}}
+
+
+def mark(tid, step, state):
+    status["videos"][tid][step] = state
+    status["updatedAt"] = now()
+    s3.put_object(Bucket=B, Key="jobs/status.json", Body=json.dumps(status).encode())
+
+
 jobs = {}
 for tid in ids:
     jobs[tid] = {"tr": None if have(f"transcribe/{tid}.json") else start_transcribe(tid)}
+    mark(tid, "transcribe", "running")
     print("started", tid, flush=True)
 for tid in ids:
     # Rekognition allows 20 open jobs per account: start each take's two jobs only when its turn comes.
     jobs[tid]["rek"] = start_rek(tid)
+    mark(tid, "rekognition", "running")
+    mark(tid, "audio", "running")
     feat = {"take": tid, "analyzedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     try:
         feat["audio"] = {"source": "derived", **audio_features(tid)}
     except Exception as e:
         feat["audio"] = {"error": repr(e)[:300]}
+    mark(tid, "audio", "failed" if "error" in feat["audio"] else "done")
     st = wait_transcribe(jobs[tid]["tr"]) if jobs[tid]["tr"] else "COMPLETED"
     if st == "COMPLETED":
         t = json.loads(s3.get_object(Bucket=B, Key=f"transcribe/{tid}.json")["Body"].read())
@@ -170,6 +187,7 @@ for tid in ids:
         feat["transcript"] = {"source": "derived", "text": t["results"]["transcripts"][0]["transcript"], "words": words, "wpm": round(len(words) / max(1e-6, (words[-1]["end"] - words[0]["t"]) / 60), 1) if words else None, "firstWordSec": words[0]["t"] if words else None}
     else:
         feat["transcript"] = {"error": st}
+    mark(tid, "transcribe", "failed" if "error" in feat["transcript"] else "done")
     seg, err = wait_rek(rk.get_segment_detection, jobs[tid]["rek"][0])
     feat["shots"] = {"source": "ai", "segments": [{"type": s["Type"], "start": s["StartTimestampMillis"] / 1000, "end": s["EndTimestampMillis"] / 1000, "kind": (s.get("TechnicalCueSegment") or {}).get("Type")} for p in (seg or []) for s in p.get("Segments", [])]} if seg else {"error": str(err)[:300]}
     txt, err = wait_rek(rk.get_text_detection, jobs[tid]["rek"][1])
@@ -184,10 +202,15 @@ for tid in ids:
         feat["onScreenText"] = {"source": "ai", "bySecond": {str(k): sorted(v) for k, v in sorted(lines.items())}, "secondsWithText": len(lines)}
     else:
         feat["onScreenText"] = {"error": str(err)[:300]}
+    mark(tid, "rekognition", "failed" if "error" in feat["shots"] or "error" in feat["onScreenText"] else "done")
+    mark(tid, "pegasus", "running")
     try:
         feat["pegasus"] = {"source": "ai", "model": "twelvelabs.pegasus-1-2", **pegasus(tid)}
     except Exception as e:
         feat["pegasus"] = {"error": repr(e)[:400]}
+    mark(tid, "pegasus", "failed" if "error" in feat["pegasus"] else "done")
     s3.put_object(Bucket=B, Key=f"features/{tid}.json", Body=json.dumps(feat).encode())
     print("done", tid, flush=True)
+status["finishedAt"] = now()
+s3.put_object(Bucket=B, Key="jobs/status.json", Body=json.dumps(status).encode())
 print("all done", flush=True)
