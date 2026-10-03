@@ -94,7 +94,7 @@ export async function board(ws: string): Promise<{ ref: Reference | null; takes:
 
 // ---------- Findings, decisions, forecasts, script choices ----------
 
-export type FindingRecord = Item & { at: string; snapshotId: string; formula: string; reference: string; score: Score; finding: unknown; model: string }
+export type FindingRecord = Item & { at: string; snapshotId: string; formula: string; reference: string; score: Score; finding: unknown; model: string; rawOutput?: string }
 export type StepEvent = Item & { at: string; stepId: string; status: string; change: string; note?: string; prompted?: string; uncertain?: string; measure?: string; snapshotId: string; formula: string; reference: string; findingAt: string }
 export type Forecast = Item & { at: string; by: string; target: string; predicted: "higher" | "lower" | "same"; component: string; reason: string; baseline: number | null; baselineSnapshot: string }
 

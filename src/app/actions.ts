@@ -44,8 +44,8 @@ export async function requestReading(takeId: string): Promise<SavedReading> {
       .filter((x) => x.kind !== "observed")
       .map((x) => ({ finding: `${x.kind}: ${x.text} (said ${f.at.slice(0, 10)}, score ${f.score.value?.toFixed(0) ?? "—"} on ${f.snapshotId.split("~").pop()})`, decided: decisions.filter((d) => d.findingAt === f.at).map((d) => `${d.status}: ${d.change}`).join("; ") || undefined })),
   )
-  const { reading, model } = await read(take, state, ref, takes, prior)
-  const at = await saveFinding(ws, takeId, { snapshotId: state.latest.snapshot.id, formula: FORMULA_V1.version, reference: ref.id, score: state.latest.score, finding: reading, model })
+  const { reading, model, raw } = await read(take, state, ref, takes, prior)
+  const at = await saveFinding(ws, takeId, { snapshotId: state.latest.snapshot.id, formula: FORMULA_V1.version, reference: ref.id, score: state.latest.score, finding: reading, model, rawOutput: JSON.stringify(raw).slice(0, 20000) })
   revalidatePath(`/v/${takeId}`)
   return { at, reading, model, snapshotId: state.latest.snapshot.id, formula: FORMULA_V1.version, reference: ref.id, scoreValue: state.latest.score.value }
 }

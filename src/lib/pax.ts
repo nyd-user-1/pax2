@@ -89,14 +89,20 @@ const TOOL = {
   },
 }
 
-export async function read(take: TakeInfo, state: TakeState, ref: Reference | null, peers: TakeState[], prior: { finding: string; decided?: string }[]): Promise<{ reading: Reading; evidence: Ev[]; model: string }> {
+export async function read(take: TakeInfo, state: TakeState, ref: Reference | null, peers: TakeState[], prior: { finding: string; decided?: string }[]): Promise<{ reading: Reading; evidence: Ev[]; model: string; raw: unknown }> {
   const evidence = evidenceIndex(take, state, ref, peers)
   const script = scriptById(take.scriptId)!
   const s: Score | undefined = state.latest?.score
   const snap: Snapshot | undefined = state.latest?.snapshot
   const f = featuresFor(take.id)
   const context = {
-    take: { id: take.id, script: script.title, framing: script.framing, messenger: take.voice, captions: take.captions, shortCut: take.cut, seconds: take.durationSec },
+    take: { name: `“${script.title}” read by ${take.voice}${take.captions ? "" : ", without captions"}${take.cut ? ", short cut" : ""}`, framing: script.framing, captions: take.captions, shortCut: take.cut, seconds: take.durationSec },
+    definitions: {
+      stop: "Stop = 3-second plays ÷ impressions. Did the opening stop the scroll.",
+      hold: "Hold = average watch time ÷ video length. How much of the video the average viewer watched.",
+      act: "Act = (shares + saves + comments) ÷ 3-second plays. Reactions and link clicks are not in it.",
+      scale: "Each component is placed against the frozen reference set (this first round of flights): 50 = reference average. Resonance = 25% Stop + 40% Hold + 35% Act. The range reflects how much evidence the counts carry.",
+    },
     reportingWindow: snap ? `${snap.windowStart} to ${snap.windowEnd}, reported ${snap.asOf} (${snap.dataset})` : "no results loaded",
     score: s ? { status: s.status, value: s.value && Math.round(s.value), range: s.low != null ? [Math.round(s.low), Math.round(s.high!)] : null, reasons: s.reasons, components: s.components.map((c) => ({ name: c.key, score: c.score && Math.round(c.score), rate: c.rate, weight: c.weight })), deliveryConditions: s.conditions } : null,
     history: state.history.map((h) => ({ asOf: h.snapshot.asOf, value: h.score.value && Math.round(h.score.value), range: h.score.low != null ? [Math.round(h.score.low), Math.round(h.score.high!)] : null })),
@@ -140,11 +146,20 @@ export async function read(take: TakeInfo, state: TakeState, ref: Reference | nu
     priorChecks: withEv(arr<PriorCheck>(input.priorChecks)),
   }
   // Remove any citation that does not exist; a finding left with none is dropped.
+  // A citation written with its label ("metric:plays3s — 3-second plays…") counts as its ref.
   const known = new Set(evidence.map((e) => e.ref))
+  const resolve = (e: unknown) => {
+    const s = String(e ?? "").trim()
+    if (known.has(s)) return s
+    const head = s.split(/\s|—|–|\(/)[0].replace(/[,.;]$/, "")
+    return known.has(head) ? head : null
+  }
+  const refs = (xs: unknown[]) => [...new Set(xs.map(resolve).filter((x): x is string => !!x))]
   let dropped = 0
   const clean = <T extends { evidence: string[] }>(xs: T[]) =>
     xs
-      .map((x) => ({ ...x, evidence: (x.evidence ?? []).filter((e) => known.has(e)) }))
+      .filter((x) => x && typeof x === "object")
+      .map((x) => ({ ...x, evidence: refs(x.evidence ?? []) }))
       .filter((x) => {
         const keep = x.evidence.length > 0
         if (!keep) dropped++
@@ -157,8 +172,8 @@ export async function read(take: TakeInfo, state: TakeState, ref: Reference | nu
     findings: clean(raw.findings ?? []),
     nextSteps: clean(raw.nextSteps ?? []),
     insufficient: raw.insufficient ?? [],
-    priorChecks: (raw.priorChecks ?? []).map((p) => ({ ...p, evidence: (p.evidence ?? []).filter((e) => known.has(e)) })),
+    priorChecks: (raw.priorChecks ?? []).filter((p) => p && typeof p === "object").map((p) => ({ ...p, evidence: refs(p.evidence ?? []) })),
     dropped,
   }
-  return { reading, evidence, model: MODEL }
+  return { reading, evidence, model: MODEL, raw: input }
 }
