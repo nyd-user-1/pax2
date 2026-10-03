@@ -25,23 +25,28 @@ export function Choropleth({ geo, joinOn, values, view, height = 460, className,
   const [data, setData] = React.useState<GeoJSON.FeatureCollection | null>(null)
   const [failed, setFailed] = React.useState(false)
   const [hover, setHover] = React.useState<{ x: number; y: number; key: string } | null>(null)
+  // Shapes load once per file; switching what the map shows only recolors them.
+  const [raw, setRaw] = React.useState<GeoJSON.FeatureCollection | null>(null)
   React.useEffect(() => {
     let alive = true
     fetch(geo)
       .then((r) => r.json())
-      .then((fc: GeoJSON.FeatureCollection) => {
-        if (!alive) return
-        fc.features = fc.features.map((f, i) => {
-          const key = String(f.properties?.[joinOn] ?? "")
-          return { ...f, id: i, properties: { ...f.properties, _key: key, _color: values[key]?.color ?? "#e5e7eb" } }
-        })
-        setData(fc)
-      })
+      .then((fc: GeoJSON.FeatureCollection) => alive && setRaw(fc))
       .catch(() => alive && setFailed(true))
     return () => {
       alive = false
     }
-  }, [geo, joinOn, values])
+  }, [geo])
+  React.useEffect(() => {
+    if (!raw) return
+    setData({
+      ...raw,
+      features: raw.features.map((f, i) => {
+        const key = String(f.properties?.[joinOn] ?? "")
+        return { ...f, id: i, properties: { ...f.properties, _key: key, _color: values[key]?.color ?? "#e5e7eb" } }
+      }),
+    })
+  }, [raw, joinOn, values])
   const onMove = (e: MapLayerMouseEvent) => {
     const f = e.features?.[0]
     setHover(f ? { x: e.point.x, y: e.point.y, key: String(f.properties?._key) } : null)
@@ -72,8 +77,8 @@ export function Choropleth({ geo, joinOn, values, view, height = 460, className,
       {h && hover && (
         <div className="pointer-events-none absolute z-10 w-max max-w-64 rounded-xl bg-slate-900 px-3 py-2 text-xs text-white shadow-e3" style={{ left: Math.min(hover.x + 14, 9999), top: hover.y + 14 }}>
           <p className="font-semibold">{h.title}</p>
-          {h.lines.map((l) => (
-            <p key={l} className="text-white/75">
+          {h.lines.map((l, i) => (
+            <p key={i} className="text-white/75">
               {l}
             </p>
           ))}

@@ -2,7 +2,7 @@ import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
 import shorts from "../../../data/raw/yt-shorts.json"
-import { ReformSpendMap } from "@/components/map/maps"
+import { CampaignMap } from "@/components/map/campaign-map"
 import { cn } from "@/ui/lib/utils"
 
 export const metadata = { title: "Campaign videos" }
@@ -66,11 +66,7 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
         ))}
       </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="font-display text-xl text-slate-900">Google Ads</h2>
-        <ReformSpendMap />
-        <p className="text-xs text-slate-400">Google Political Ads Transparency, via GovBlock. The advertiser “VOTE YES ON 3” here is Nevada's Question 3.</p>
-      </section>
+      <CampaignMap />
 
       <h2 className="font-display text-xl text-slate-900">YouTube Shorts</h2>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">

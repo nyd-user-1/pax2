@@ -1,5 +1,4 @@
 import ma from "../../../data/generated/ma-house-2022.json"
-import spend from "../../../data/generated/reform-ad-spend.json"
 import { Choropleth } from "@/components/map/choropleth"
 import { GEO } from "@/lib/geo"
 
@@ -32,33 +31,6 @@ export function UncontestedMap() {
             <span className="flex items-center gap-1">{swatch("#93c5fd")} two</span>
             <span className="flex items-center gap-1">{swatch("#2563eb")} three or more</span>
           </span>
-        </div>
-      }
-    />
-  )
-}
-
-const money = (n: number) => (n >= 1e6 ? `$${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `$${Math.round(n / 1e3)}K` : `$${n}`)
-
-/** Where reform advertisers bought Google political ads, by state. */
-export function ReformSpendMap() {
-  const s = (spend as unknown as { states: Record<string, { total: number; top: [string, number][] }> }).states
-  const color = (t: number) => (t >= 1e6 ? "#1e3a8a" : t >= 1e5 ? "#2563eb" : t >= 1e4 ? "#60a5fa" : t >= 1e3 ? "#bfdbfe" : "#eff6ff")
-  const tidy = (a: string) => a.replace(/ C\/O .*$/, "").replace(/, SPONSORED BY .*$/i, "").replace(/\b([A-Z]{2,})\b/g, (w) => (w.length > 3 ? w[0] + w.slice(1).toLowerCase() : w))
-  const values = Object.fromEntries(Object.entries(s).map(([st, v]) => [st, { color: color(v.total), title: `${st} · ${money(v.total)}`, lines: v.top.map(([a, n]) => `${tidy(a)}: ${money(n)}`) }]))
-  return (
-    <Choropleth
-      geo={`${GEO}/states.geojson`}
-      joinOn="code"
-      values={values}
-      view={{ longitude: -98, latitude: 39, zoom: 2.9 }}
-      height={420}
-      legend={
-        <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1">{swatch("#bfdbfe")} $1K+</span>
-          <span className="flex items-center gap-1">{swatch("#60a5fa")} $10K+</span>
-          <span className="flex items-center gap-1">{swatch("#2563eb")} $100K+</span>
-          <span className="flex items-center gap-1">{swatch("#1e3a8a")} $1M+</span>
         </div>
       }
     />

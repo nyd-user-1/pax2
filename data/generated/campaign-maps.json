@@ -1,0 +1,3073 @@
+{
+ "spendAll": {
+  "WA": {
+   "total": 8000,
+   "top": [
+    [
+     "Alaskans for Better Elections",
+     2000
+    ],
+    [
+     "Idahoans for Open Primaries",
+     1800
+    ],
+    [
+     "Vote YES on 3",
+     1700
+    ],
+    [
+     "Unite America",
+     900
+    ],
+    [
+     "Protect Voters First",
+     300
+    ]
+   ]
+  },
+  "TX": {
+   "total": 10000,
+   "top": [
+    [
+     "Vote YES on 3",
+     4700
+    ],
+    [
+     "Unite America",
+     1400
+    ],
+    [
+     "Alaskans for Better Elections",
+     1000
+    ],
+    [
+     "California Independent Voter",
+     900
+    ],
+    [
+     "Unite America Institute Inc.",
+     400
+    ]
+   ]
+  },
+  "": {
+   "total": 57900,
+   "top": [
+    [
+     "Protect Voters First",
+     52900
+    ],
+    [
+     "Unite America",
+     1400
+    ],
+    [
+     "Idahoans for Open Primaries",
+     900
+    ],
+    [
+     "Ranked Choice Voting 2020 Committee",
+     700
+    ],
+    [
+     "Vote YES on 3",
+     600
+    ]
+   ]
+  },
+  "TN": {
+   "total": 3000,
+   "top": [
+    [
+     "Vote YES on 3",
+     900
+    ],
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Alaskans for Better Elections",
+     300
+    ],
+    [
+     "California Independent Voter",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "CO": {
+   "total": 4000,
+   "top": [
+    [
+     "Vote YES on 3",
+     1300
+    ],
+    [
+     "Unite America",
+     900
+    ],
+    [
+     "Alaskans for Better Elections",
+     400
+    ],
+    [
+     "Protect Voters First",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "UT": {
+   "total": 5100,
+   "top": [
+    [
+     "Vote YES on 3",
+     2300
+    ],
+    [
+     "Idahoans for Open Primaries",
+     900
+    ],
+    [
+     "Nevada Voters First",
+     400
+    ],
+    [
+     "Unite America",
+     300
+    ],
+    [
+     "Alaskans for Better Elections",
+     200
+    ]
+   ]
+  },
+  "SD": {
+   "total": 12800,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     8900
+    ],
+    [
+     "South Dakota Voters First",
+     2700
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Vote YES on 3",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ]
+   ]
+  },
+  "IL": {
+   "total": 4900,
+   "top": [
+    [
+     "Vote YES on 3",
+     2000
+    ],
+    [
+     "Unite America",
+     800
+    ],
+    [
+     "Alaskans for Better Elections",
+     500
+    ],
+    [
+     "California Independent Voter",
+     300
+    ],
+    [
+     "Nevada Voters First",
+     200
+    ]
+   ]
+  },
+  "WI": {
+   "total": 2700,
+   "top": [
+    [
+     "Vote YES on 3",
+     800
+    ],
+    [
+     "Alaskans for Better Elections",
+     300
+    ],
+    [
+     "Unite America",
+     300
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "South Dakota Voters First",
+     100
+    ]
+   ]
+  },
+  "MO": {
+   "total": 2800,
+   "top": [
+    [
+     "Vote YES on 3",
+     800
+    ],
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Alaskans for Better Elections",
+     300
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "Idahoans for Open Primaries",
+     100
+    ]
+   ]
+  },
+  "NM": {
+   "total": 2200,
+   "top": [
+    [
+     "Vote YES on 3",
+     800
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "California Independent Voter",
+     100
+    ],
+    [
+     "Ranked Choice Voting 2020 Committee",
+     100
+    ],
+    [
+     "Protect Voters First",
+     100
+    ]
+   ]
+  },
+  "AK": {
+   "total": 79300,
+   "top": [
+    [
+     "Alaskans for Better Elections",
+     77800
+    ],
+    [
+     "Unite America",
+     300
+    ],
+    [
+     "Ranked Choice Voting 2020 Committee",
+     100
+    ],
+    [
+     "Fairvote",
+     100
+    ],
+    [
+     "California Independent Voter",
+     100
+    ]
+   ]
+  },
+  "NV": {
+   "total": 2077800,
+   "top": [
+    [
+     "Vote YES on 3",
+     1303700
+    ],
+    [
+     "Nevada Voters First",
+     772000
+    ],
+    [
+     "Protect Voters First",
+     500
+    ],
+    [
+     "Alaskans for Better Elections",
+     300
+    ],
+    [
+     "Unite America",
+     200
+    ]
+   ]
+  },
+  "VA": {
+   "total": 4500,
+   "top": [
+    [
+     "Vote YES on 3",
+     1800
+    ],
+    [
+     "Unite America",
+     700
+    ],
+    [
+     "Alaskans for Better Elections",
+     500
+    ],
+    [
+     "Fairvote",
+     200
+    ],
+    [
+     "California Independent Voter",
+     200
+    ]
+   ]
+  },
+  "NJ": {
+   "total": 4000,
+   "top": [
+    [
+     "Vote YES on 3",
+     1700
+    ],
+    [
+     "Unite America",
+     700
+    ],
+    [
+     "Alaskans for Better Elections",
+     400
+    ],
+    [
+     "California Independent Voter",
+     200
+    ],
+    [
+     "Idahoans for Open Primaries",
+     100
+    ]
+   ]
+  },
+  "AZ": {
+   "total": 18900,
+   "top": [
+    [
+     "Vote YES on 3",
+     13700
+    ],
+    [
+     "Nevada Voters First",
+     2300
+    ],
+    [
+     "Alaskans for Better Elections",
+     700
+    ],
+    [
+     "Protect Voters First",
+     500
+    ],
+    [
+     "Unite America",
+     400
+    ]
+   ]
+  },
+  "OR": {
+   "total": 6600,
+   "top": [
+    [
+     "Oregon Ranked Choice Voting Advocates",
+     2500
+    ],
+    [
+     "Vote YES on 3",
+     1200
+    ],
+    [
+     "Idahoans for Open Primaries",
+     700
+    ],
+    [
+     "Unite America",
+     500
+    ],
+    [
+     "Alaskans for Better Elections",
+     400
+    ]
+   ]
+  },
+  "LA": {
+   "total": 2400,
+   "top": [
+    [
+     "Vote YES on 3",
+     700
+    ],
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Unite America Inc.",
+     200
+    ],
+    [
+     "Alaskans for Better Elections",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "CA": {
+   "total": 3350500,
+   "top": [
+    [
+     "Protect Voters First",
+     3290300
+    ],
+    [
+     "California Independent Voter",
+     27100
+    ],
+    [
+     "Vote YES on 3",
+     24400
+    ],
+    [
+     "Unite America",
+     2800
+    ],
+    [
+     "Nevada Voters First",
+     2600
+    ]
+   ]
+  },
+  "PA": {
+   "total": 4600,
+   "top": [
+    [
+     "Vote YES on 3",
+     2000
+    ],
+    [
+     "Unite America",
+     600
+    ],
+    [
+     "Alaskans for Better Elections",
+     500
+    ],
+    [
+     "California Independent Voter",
+     300
+    ],
+    [
+     "Unite America Institute Inc.",
+     200
+    ]
+   ]
+  },
+  "ID": {
+   "total": 253300,
+   "top": [
+    [
+     "Idahoans for Open Primaries",
+     251300
+    ],
+    [
+     "Vote YES on 3",
+     600
+    ],
+    [
+     "Nevada Voters First",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "Alaskans for Better Elections",
+     100
+    ]
+   ]
+  },
+  "NY": {
+   "total": 7600,
+   "top": [
+    [
+     "Vote YES on 3",
+     3500
+    ],
+    [
+     "Unite America",
+     1300
+    ],
+    [
+     "Alaskans for Better Elections",
+     600
+    ],
+    [
+     "California Independent Voter",
+     500
+    ],
+    [
+     "Protect Voters First",
+     300
+    ]
+   ]
+  },
+  "FL": {
+   "total": 7400,
+   "top": [
+    [
+     "Vote YES on 3",
+     3300
+    ],
+    [
+     "Unite America",
+     1100
+    ],
+    [
+     "Alaskans for Better Elections",
+     1000
+    ],
+    [
+     "California Independent Voter",
+     600
+    ],
+    [
+     "Unite America Institute Inc.",
+     300
+    ]
+   ]
+  },
+  "AL": {
+   "total": 2300,
+   "top": [
+    [
+     "Vote YES on 3",
+     600
+    ],
+    [
+     "Unite America",
+     300
+    ],
+    [
+     "California Independent Voter",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "Protect Voters First",
+     100
+    ]
+   ]
+  },
+  "OH": {
+   "total": 4300,
+   "top": [
+    [
+     "Vote YES on 3",
+     1700
+    ],
+    [
+     "Unite America",
+     600
+    ],
+    [
+     "Alaskans for Better Elections",
+     400
+    ],
+    [
+     "California Independent Voter",
+     300
+    ],
+    [
+     "Unite America Institute Inc.",
+     200
+    ]
+   ]
+  },
+  "MA": {
+   "total": 50900,
+   "top": [
+    [
+     "Ranked Choice Voting 2020 Committee",
+     47400
+    ],
+    [
+     "Vote YES on 3",
+     1600
+    ],
+    [
+     "Unite America",
+     600
+    ],
+    [
+     "Alaskans for Better Elections",
+     200
+    ],
+    [
+     "California Independent Voter",
+     200
+    ]
+   ]
+  },
+  "MD": {
+   "total": 3100,
+   "top": [
+    [
+     "Vote YES on 3",
+     1200
+    ],
+    [
+     "Unite America",
+     500
+    ],
+    [
+     "Alaskans for Better Elections",
+     200
+    ],
+    [
+     "Fairvote",
+     200
+    ],
+    [
+     "California Independent Voter",
+     200
+    ]
+   ]
+  },
+  "SC": {
+   "total": 2100,
+   "top": [
+    [
+     "Vote YES on 3",
+     500
+    ],
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Alaskans for Better Elections",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "Fairvote Minnesota",
+     100
+    ]
+   ]
+  },
+  "HI": {
+   "total": 1700,
+   "top": [
+    [
+     "Vote YES on 3",
+     500
+    ],
+    [
+     "Nevada Voters First",
+     100
+    ],
+    [
+     "California Independent Voter",
+     100
+    ],
+    [
+     "Open Primaries Education Fund",
+     100
+    ],
+    [
+     "Ranked Choice Voting 2020 Committee",
+     100
+    ]
+   ]
+  },
+  "PR": {
+   "total": 1200,
+   "top": [
+    [
+     "Vote YES on 3",
+     500
+    ],
+    [
+     "Alaskans for Better Elections",
+     100
+    ],
+    [
+     "Nevada Voters First",
+     100
+    ],
+    [
+     "Idahoans for Open Primaries",
+     100
+    ],
+    [
+     "California Independent Voter",
+     100
+    ]
+   ]
+  },
+  "MI": {
+   "total": 3300,
+   "top": [
+    [
+     "Vote YES on 3",
+     1000
+    ],
+    [
+     "Alaskans for Better Elections",
+     500
+    ],
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "California Independent Voter",
+     200
+    ],
+    [
+     "Fairvote",
+     200
+    ]
+   ]
+  },
+  "KY": {
+   "total": 2000,
+   "top": [
+    [
+     "Vote YES on 3",
+     400
+    ],
+    [
+     "Alaskans for Better Elections",
+     200
+    ],
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "Ranked Choice Voting 2020 Committee",
+     100
+    ]
+   ]
+  },
+  "NC": {
+   "total": 4000,
+   "top": [
+    [
+     "Vote YES on 3",
+     1700
+    ],
+    [
+     "Alaskans for Better Elections",
+     400
+    ],
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "California Independent Voter",
+     300
+    ],
+    [
+     "Unite America Institute Inc.",
+     200
+    ]
+   ]
+  },
+  "GA": {
+   "total": 3700,
+   "top": [
+    [
+     "Vote YES on 3",
+     1500
+    ],
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Alaskans for Better Elections",
+     400
+    ],
+    [
+     "California Independent Voter",
+     300
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "MN": {
+   "total": 18800,
+   "top": [
+    [
+     "Fairvote Minnesota",
+     15800
+    ],
+    [
+     "Vote YES on 3",
+     1200
+    ],
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Alaskans for Better Elections",
+     300
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "MT": {
+   "total": 1900,
+   "top": [
+    [
+     "Idahoans for Open Primaries",
+     400
+    ],
+    [
+     "Vote YES on 3",
+     200
+    ],
+    [
+     "Alaskans for Better Elections",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "Protect Voters First",
+     100
+    ]
+   ]
+  },
+  "IN": {
+   "total": 2900,
+   "top": [
+    [
+     "Vote YES on 3",
+     1000
+    ],
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Alaskans for Better Elections",
+     200
+    ],
+    [
+     "California Independent Voter",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "NH": {
+   "total": 1500,
+   "top": [
+    [
+     "Ranked Choice Voting 2020 Committee",
+     400
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Fairvote",
+     100
+    ],
+    [
+     "Protect Voters First",
+     100
+    ]
+   ]
+  },
+  "DC": {
+   "total": 2000,
+   "top": [
+    [
+     "Vote YES on 3",
+     400
+    ],
+    [
+     "Unite America",
+     300
+    ],
+    [
+     "Protect Voters First",
+     200
+    ],
+    [
+     "Idahoans for Open Primaries",
+     100
+    ],
+    [
+     "Oregon Ranked Choice Voting Advocates",
+     100
+    ]
+   ]
+  },
+  "CT": {
+   "total": 1900,
+   "top": [
+    [
+     "Vote YES on 3",
+     400
+    ],
+    [
+     "Unite America",
+     300
+    ],
+    [
+     "Alaskans for Better Elections",
+     200
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Ranked Choice Voting 2020 Committee",
+     100
+    ]
+   ]
+  },
+  "IA": {
+   "total": 1800,
+   "top": [
+    [
+     "Vote YES on 3",
+     400
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "Alaskans for Better Elections",
+     100
+    ],
+    [
+     "Nevada Voters First",
+     100
+    ],
+    [
+     "Protect Voters First",
+     100
+    ]
+   ]
+  },
+  "NE": {
+   "total": 1700,
+   "top": [
+    [
+     "Vote YES on 3",
+     300
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "South Dakota Voters First",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "ME": {
+   "total": 1400,
+   "top": [
+    [
+     "Vote YES on 3",
+     300
+    ],
+    [
+     "Protect Voters First",
+     100
+    ],
+    [
+     "Nevada Voters First",
+     100
+    ],
+    [
+     "California Independent Voter",
+     100
+    ],
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "OK": {
+   "total": 1800,
+   "top": [
+    [
+     "Vote YES on 3",
+     300
+    ],
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "Nevada Voters First",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "WV": {
+   "total": 1600,
+   "top": [
+    [
+     "Vote YES on 3",
+     300
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "South Dakota Voters First",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ]
+   ]
+  },
+  "DE": {
+   "total": 1500,
+   "top": [
+    [
+     "Vote YES on 3",
+     300
+    ],
+    [
+     "Fairvote",
+     100
+    ],
+    [
+     "Alaskans for Better Elections",
+     100
+    ],
+    [
+     "Idahoans for Open Primaries",
+     100
+    ],
+    [
+     "Protect Voters First",
+     100
+    ]
+   ]
+  },
+  "KS": {
+   "total": 1700,
+   "top": [
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Vote YES on 3",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "California Independent Voter",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "MS": {
+   "total": 1500,
+   "top": [
+    [
+     "Vote YES on 3",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "California Independent Voter",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Alaskans for Better Elections",
+     100
+    ]
+   ]
+  },
+  "AR": {
+   "total": 1700,
+   "top": [
+    [
+     "Vote YES on 3",
+     200
+    ],
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "Fairvote Minnesota",
+     100
+    ],
+    [
+     "Protect Voters First",
+     100
+    ]
+   ]
+  },
+  "RI": {
+   "total": 1300,
+   "top": [
+    [
+     "Ranked Choice Voting 2020 Committee",
+     200
+    ],
+    [
+     "Vote YES on 3",
+     100
+    ],
+    [
+     "Protect Voters First",
+     100
+    ],
+    [
+     "Open Primaries Education Fund",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ]
+   ]
+  },
+  "VT": {
+   "total": 1200,
+   "top": [
+    [
+     "Ranked Choice Voting 2020 Committee",
+     100
+    ],
+    [
+     "California Independent Voter",
+     100
+    ],
+    [
+     "Protect Voters First",
+     100
+    ],
+    [
+     "Idahoans for Open Primaries",
+     100
+    ],
+    [
+     "Fairvote",
+     100
+    ]
+   ]
+  },
+  "ND": {
+   "total": 1500,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "California Independent Voter",
+     100
+    ],
+    [
+     "Protect Voters First",
+     100
+    ],
+    [
+     "Idahoans for Open Primaries",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "VI": {
+   "total": 400,
+   "top": [
+    [
+     "California Independent Voter",
+     100
+    ],
+    [
+     "Alaskans for Better Elections",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Idahoans for Open Primaries",
+     100
+    ],
+    [
+     "Fairvote Minnesota",
+     0
+    ]
+   ]
+  },
+  "WY": {
+   "total": 1400,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ],
+    [
+     "California Independent Voter",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Protect Voters First",
+     100
+    ]
+   ]
+  },
+  "GU": {
+   "total": 500,
+   "top": [
+    [
+     "California Independent Voter",
+     100
+    ],
+    [
+     "Alaskans for Better Elections",
+     100
+    ],
+    [
+     "Idahoans for Open Primaries",
+     100
+    ],
+    [
+     "Vote YES on 3",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ]
+   ]
+  },
+  "AS": {
+   "total": 100,
+   "top": [
+    [
+     "Alaskans for Better Elections",
+     100
+    ],
+    [
+     "Unite America",
+     0
+    ],
+    [
+     "Nevada Voters First",
+     0
+    ],
+    [
+     "Vote YES on 3",
+     0
+    ]
+   ]
+  },
+  "MP": {
+   "total": 200,
+   "top": [
+    [
+     "South Dakota Voters First",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Vote YES on 3",
+     0
+    ],
+    [
+     "California Independent Voter",
+     0
+    ],
+    [
+     "Protect Voters First",
+     0
+    ]
+   ]
+  }
+ },
+ "spendUnite": {
+  "WA": {
+   "total": 1200,
+   "top": [
+    [
+     "Unite America",
+     900
+    ],
+    [
+     "Unite America Institute Inc.",
+     200
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "CO": {
+   "total": 1100,
+   "top": [
+    [
+     "Unite America",
+     900
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "IL": {
+   "total": 1100,
+   "top": [
+    [
+     "Unite America",
+     800
+    ],
+    [
+     "Unite America Institute Inc.",
+     200
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "VA": {
+   "total": 900,
+   "top": [
+    [
+     "Unite America",
+     700
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "NJ": {
+   "total": 900,
+   "top": [
+    [
+     "Unite America",
+     700
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "CA": {
+   "total": 3500,
+   "top": [
+    [
+     "Unite America",
+     2800
+    ],
+    [
+     "Unite America Institute Inc.",
+     600
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "PA": {
+   "total": 900,
+   "top": [
+    [
+     "Unite America",
+     600
+    ],
+    [
+     "Unite America Institute Inc.",
+     200
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "OH": {
+   "total": 900,
+   "top": [
+    [
+     "Unite America",
+     600
+    ],
+    [
+     "Unite America Institute Inc.",
+     200
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "MA": {
+   "total": 800,
+   "top": [
+    [
+     "Unite America",
+     600
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "MD": {
+   "total": 700,
+   "top": [
+    [
+     "Unite America",
+     500
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "OR": {
+   "total": 700,
+   "top": [
+    [
+     "Unite America",
+     500
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "MI": {
+   "total": 600,
+   "top": [
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "AZ": {
+   "total": 600,
+   "top": [
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "GA": {
+   "total": 600,
+   "top": [
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "MN": {
+   "total": 600,
+   "top": [
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "IN": {
+   "total": 600,
+   "top": [
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "TN": {
+   "total": 600,
+   "top": [
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "TX": {
+   "total": 1900,
+   "top": [
+    [
+     "Unite America",
+     1400
+    ],
+    [
+     "Unite America Institute Inc.",
+     400
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "MO": {
+   "total": 600,
+   "top": [
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "NC": {
+   "total": 700,
+   "top": [
+    [
+     "Unite America",
+     400
+    ],
+    [
+     "Unite America Institute Inc.",
+     200
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "AK": {
+   "total": 500,
+   "top": [
+    [
+     "Unite America",
+     300
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "NY": {
+   "total": 1700,
+   "top": [
+    [
+     "Unite America",
+     1300
+    ],
+    [
+     "Unite America Institute Inc.",
+     300
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "FL": {
+   "total": 1500,
+   "top": [
+    [
+     "Unite America",
+     1100
+    ],
+    [
+     "Unite America Institute Inc.",
+     300
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "WI": {
+   "total": 500,
+   "top": [
+    [
+     "Unite America",
+     300
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "UT": {
+   "total": 500,
+   "top": [
+    [
+     "Unite America",
+     300
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "DC": {
+   "total": 500,
+   "top": [
+    [
+     "Unite America",
+     300
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "CT": {
+   "total": 500,
+   "top": [
+    [
+     "Unite America",
+     300
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "AL": {
+   "total": 500,
+   "top": [
+    [
+     "Unite America",
+     300
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "LA": {
+   "total": 500,
+   "top": [
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Unite America Inc.",
+     200
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "KS": {
+   "total": 400,
+   "top": [
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "SC": {
+   "total": 400,
+   "top": [
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "AR": {
+   "total": 400,
+   "top": [
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "OK": {
+   "total": 400,
+   "top": [
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "KY": {
+   "total": 400,
+   "top": [
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "NV": {
+   "total": 400,
+   "top": [
+    [
+     "Unite America",
+     200
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "": {
+   "total": 1600,
+   "top": [
+    [
+     "Unite America",
+     1400
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "NH": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "MS": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "MT": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ]
+   ]
+  },
+  "NE": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "SD": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "WV": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "ND": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ]
+   ]
+  },
+  "IA": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "NM": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "RI": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "ID": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "HI": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America Institute Inc.",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ]
+   ]
+  },
+  "VI": {
+   "total": 100,
+   "top": [
+    [
+     "Unite America",
+     100
+    ]
+   ]
+  },
+  "ME": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "WY": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "VT": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "DE": {
+   "total": 300,
+   "top": [
+    [
+     "Unite America Inc.",
+     100
+    ],
+    [
+     "Unite America",
+     100
+    ],
+    [
+     "Unite America Institute Inc.",
+     100
+    ]
+   ]
+  },
+  "GU": {
+   "total": 100,
+   "top": [
+    [
+     "Unite America",
+     100
+    ]
+   ]
+  },
+  "PR": {
+   "total": 100,
+   "top": [
+    [
+     "Unite America",
+     100
+    ]
+   ]
+  },
+  "MP": {
+   "total": 100,
+   "top": [
+    [
+     "Unite America",
+     100
+    ]
+   ]
+  },
+  "AS": {
+   "total": 0,
+   "top": [
+    [
+     "Unite America",
+     0
+    ]
+   ]
+  }
+ },
+ "spendOpen": {
+  "SD": {
+   "total": 8900,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     8900
+    ]
+   ]
+  },
+  "NY": {
+   "total": 300,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     300
+    ]
+   ]
+  },
+  "MS": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "NC": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "SC": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "CO": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "MN": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "VA": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "OH": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "NE": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "WY": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "LA": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "ID": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "CA": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "NV": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "WI": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "WV": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "HI": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "RI": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "AL": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "FL": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "TX": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "MD": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "IL": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "KY": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "ME": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "AR": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "ND": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "IA": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "OR": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "NM": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "MT": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "WA": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "IN": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "MO": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "VT": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "DC": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "TN": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "AZ": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "GA": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "MI": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "CT": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "MA": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "KS": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "UT": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "NH": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "DE": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "AK": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "NJ": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "PA": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  },
+  "": {
+   "total": 100,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     100
+    ]
+   ]
+  },
+  "OK": {
+   "total": 200,
+   "top": [
+    [
+     "Open Primaries Education Fund",
+     200
+    ]
+   ]
+  }
+ },
+ "uncontested": {
+  "MA": {
+   "races": 1000,
+   "uncontested": 628,
+   "pct": 62.8
+  },
+  "GA": {
+   "races": 1177,
+   "uncontested": 656,
+   "pct": 55.7
+  },
+  "SC": {
+   "races": 714,
+   "uncontested": 396,
+   "pct": 55.5
+  },
+  "AR": {
+   "races": 605,
+   "uncontested": 301,
+   "pct": 49.8
+  },
+  "VT": {
+   "races": 319,
+   "uncontested": 159,
+   "pct": 49.8
+  },
+  "RI": {
+   "races": 565,
+   "uncontested": 273,
+   "pct": 48.3
+  },
+  "MS": {
+   "races": 347,
+   "uncontested": 167,
+   "pct": 48.1
+  },
+  "WY": {
+   "races": 378,
+   "uncontested": 179,
+   "pct": 47.4
+  },
+  "AL": {
+   "races": 420,
+   "uncontested": 183,
+   "pct": 43.6
+  },
+  "NM": {
+   "races": 434,
+   "uncontested": 184,
+   "pct": 42.4
+  },
+  "OK": {
+   "races": 628,
+   "uncontested": 260,
+   "pct": 41.4
+  },
+  "DE": {
+   "races": 269,
+   "uncontested": 109,
+   "pct": 40.5
+  },
+  "MO": {
+   "races": 900,
+   "uncontested": 342,
+   "pct": 38
+  },
+  "IL": {
+   "races": 769,
+   "uncontested": 288,
+   "pct": 37.5
+  },
+  "ID": {
+   "races": 175,
+   "uncontested": 63,
+   "pct": 36
+  },
+  "KS": {
+   "races": 709,
+   "uncontested": 251,
+   "pct": 35.4
+  },
+  "TN": {
+   "races": 580,
+   "uncontested": 203,
+   "pct": 35
+  },
+  "TX": {
+   "races": 843,
+   "uncontested": 294,
+   "pct": 34.9
+  },
+  "HI": {
+   "races": 334,
+   "uncontested": 109,
+   "pct": 32.6
+  },
+  "PA": {
+   "races": 1140,
+   "uncontested": 372,
+   "pct": 32.6
+  },
+  "ND": {
+   "races": 130,
+   "uncontested": 39,
+   "pct": 30
+  },
+  "FL": {
+   "races": 743,
+   "uncontested": 212,
+   "pct": 28.5
+  },
+  "IA": {
+   "races": 634,
+   "uncontested": 174,
+   "pct": 27.4
+  },
+  "IN": {
+   "races": 625,
+   "uncontested": 168,
+   "pct": 26.9
+  },
+  "MD": {
+   "races": 219,
+   "uncontested": 59,
+   "pct": 26.9
+  },
+  "SD": {
+   "races": 195,
+   "uncontested": 52,
+   "pct": 26.7
+  },
+  "KY": {
+   "races": 595,
+   "uncontested": 148,
+   "pct": 24.9
+  },
+  "WI": {
+   "races": 578,
+   "uncontested": 144,
+   "pct": 24.9
+  },
+  "MT": {
+   "races": 627,
+   "uncontested": 134,
+   "pct": 21.4
+  },
+  "UT": {
+   "races": 449,
+   "uncontested": 94,
+   "pct": 20.9
+  },
+  "AK": {
+   "races": 264,
+   "uncontested": 55,
+   "pct": 20.8
+  },
+  "AZ": {
+   "races": 150,
+   "uncontested": 30,
+   "pct": 20
+  },
+  "VA": {
+   "races": 480,
+   "uncontested": 96,
+   "pct": 20
+  },
+  "NV": {
+   "races": 264,
+   "uncontested": 51,
+   "pct": 19.3
+  },
+  "NC": {
+   "races": 850,
+   "uncontested": 157,
+   "pct": 18.5
+  },
+  "WV": {
+   "races": 305,
+   "uncontested": 47,
+   "pct": 15.4
+  },
+  "NH": {
+   "races": 640,
+   "uncontested": 98,
+   "pct": 15.3
+  },
+  "OH": {
+   "races": 578,
+   "uncontested": 80,
+   "pct": 13.8
+  },
+  "OR": {
+   "races": 381,
+   "uncontested": 52,
+   "pct": 13.6
+  },
+  "NE": {
+   "races": 124,
+   "uncontested": 16,
+   "pct": 12.9
+  },
+  "WA": {
+   "races": 127,
+   "uncontested": 15,
+   "pct": 11.8
+  },
+  "CT": {
+   "races": 944,
+   "uncontested": 107,
+   "pct": 11.3
+  },
+  "ME": {
+   "races": 930,
+   "uncontested": 99,
+   "pct": 10.6
+  },
+  "CO": {
+   "races": 413,
+   "uncontested": 35,
+   "pct": 8.5
+  },
+  "NY": {
+   "races": 1070,
+   "uncontested": 78,
+   "pct": 7.3
+  },
+  "NJ": {
+   "races": 82,
+   "uncontested": 4,
+   "pct": 4.9
+  },
+  "MN": {
+   "races": 873,
+   "uncontested": 41,
+   "pct": 4.7
+  },
+  "CA": {
+   "races": 500,
+   "uncontested": 16,
+   "pct": 3.2
+  },
+  "MI": {
+   "races": 665,
+   "uncontested": 2,
+   "pct": 0.3
+  }
+ }
+}
