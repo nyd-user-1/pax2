@@ -111,9 +111,9 @@ const NARRATIVE = {
       required: ["takeaway", "whatHappened", "scoreMeaning", "insufficient"],
       properties: {
         takeaway: { type: "string", description: "One or two sentences, the first thing the partner reads. Name the take in words, never by id." },
-        whatHappened: { type: "string" },
-        scoreMeaning: { type: "string", description: "What the number means and does not mean, with the components that drove it." },
-        insufficient: { type: "array", items: { type: "string" }, description: "Measurements that would settle open questions." },
+        whatHappened: { type: "string", description: "At most 70 words." },
+        scoreMeaning: { type: "string", description: "What the number means and does not mean, with the components that drove it. At most 70 words." },
+        insufficient: { type: "array", maxItems: 3, items: { type: "string" }, description: "Up to three measurements that would settle open questions, 20 words each." },
       },
     },
   },
@@ -142,7 +142,7 @@ const STEPS = {
       type: "object",
       required: ["nextSteps"],
       properties: {
-        nextSteps: { type: "array", minItems: 1, maxItems: 3, items: { type: "object", required: ["change", "prompted", "uncertain", "measure", "evidence"], properties: { change: { type: "string" }, prompted: { type: "string" }, uncertain: { type: "string" }, measure: { type: "string" }, evidence: { type: "array", items: { type: "string" } } } } },
+        nextSteps: { type: "array", minItems: 1, maxItems: 3, items: { type: "object", required: ["change", "prompted", "uncertain", "measure", "evidence"], properties: { change: { type: "string", description: "At most 25 words." }, prompted: { type: "string", description: "At most 25 words." }, uncertain: { type: "string", description: "At most 25 words." }, measure: { type: "string", description: "At most 25 words." }, evidence: { type: "array", items: { type: "string" } } } } },
       },
     },
   },
@@ -182,7 +182,7 @@ export async function read(take: TakeInfo, state: TakeState, ref: Reference | nu
     const block = r.output?.message?.content?.find((c) => "toolUse" in c && c.toolUse)
     return (block && "toolUse" in block ? block.toolUse?.input : null) as Record<string, unknown> | null
   }
-  const [a, b, c] = await Promise.all([ask(NARRATIVE, 900), ask(TOOL, 1500), ask(STEPS, 1200)])
+  const [a, b, c] = await Promise.all([ask(NARRATIVE, 1400), ask(TOOL, 1800), ask(STEPS, 1600)])
   if (!a || !b || !c) throw new Error("PAX returned no reading")
   const input = { ...a, ...b, ...c }
   // Nested arrays sometimes arrive as JSON text, at times with unescaped quotes inside; accept either.
