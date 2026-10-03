@@ -33,9 +33,9 @@ function span(start: string, end: string) {
 }
 
 /** The score, its components, and one complete trace from raw records to the number. */
-export function ScorePanel({ take, snapshot, score, reference }: { take: TakeInfo; snapshot: Snapshot; score: Score; reference: Reference }) {
+export function ScorePanel({ take, snapshot, score, reference, part }: { take: TakeInfo; snapshot: Snapshot; score: Score; reference: Reference; part: "summary" | "detail" }) {
   const raws = rawCounts(snapshot, take)
-  return (
+  return part === "summary" ? (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
@@ -91,6 +91,9 @@ export function ScorePanel({ take, snapshot, score, reference }: { take: TakeInf
         </div>
       )}
 
+    </div>
+  ) : (
+    <div className="flex flex-col gap-6">
       {score.components.length > 0 && (
         <details open className="group rounded-xl border">
           <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-pax-ink">

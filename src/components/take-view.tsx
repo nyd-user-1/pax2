@@ -3,24 +3,13 @@ import Link from "next/link"
 import type { SavedReading } from "@/app/actions"
 import { LoadButton } from "@/components/load-button"
 import { ReadingPanel } from "@/components/reading-panel"
+import { Fold } from "@/components/fold"
 import { ScorePanel } from "@/components/score-panel"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
 import { faceFor, featuresFor, scriptById, takeById, takeLabel } from "@/lib/catalog"
 import { evidenceIndex, type Reading } from "@/lib/pax"
 import { board, DATASETS, findings, forecasts, loads, steps, workspace } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
-
-function Fold({ title, children, open = true }: { title: string; children: React.ReactNode; open?: boolean }) {
-  return (
-    <details open={open} className="group surface">
-      <summary className="flex cursor-pointer list-none items-center justify-between px-5 py-4 font-semibold text-slate-900">
-        {title}
-        <span className="text-slate-400 transition-transform group-open:rotate-180">⌄</span>
-      </summary>
-      <div className="px-5 pb-5">{children}</div>
-    </details>
-  )
-}
 
 /** One take: the video, its number, PAX's read, and the detail a tap away. */
 export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
@@ -86,12 +75,12 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
           )}
 
           {ref && state.latest && (
-            <Fold title="Rating">
-              <ScorePanel take={take} snapshot={state.latest.snapshot} score={state.latest.score} reference={ref} />
+            <Fold title="Rating" preview={<ScorePanel part="summary" take={take} snapshot={state.latest.snapshot} score={state.latest.score} reference={ref} />}>
+              <ScorePanel part="detail" take={take} snapshot={state.latest.snapshot} score={state.latest.score} reference={ref} />
             </Fold>
           )}
-          <Fold title="Formula">{f ? <Observations f={f} /> : <p className="text-sm text-slate-500">The video review hasn&apos;t run on this take yet.</p>}</Fold>
-          <Fold title="Transcript">{take.lines && <ScriptTimeline lines={take.lines} duration={take.durationSec} />}</Fold>
+          <Fold title="Formula" preview={f ? <Observations part="summary" f={f} /> : <p className="text-sm text-slate-500">The video review hasn&apos;t run on this take yet.</p>}>{f?.pegasus?.result?.characteristics && <Observations part="detail" f={f} />}</Fold>
+          <Fold title="Transcript" preview={take.lines && <ScriptTimeline lines={take.lines} duration={take.durationSec} />} />
 
           <section className="surface p-5 md:p-6">
             <ReadingPanel

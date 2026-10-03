@@ -104,9 +104,20 @@ export function Loudness({ f }: { f: NonNullable<Features["audio"]> }) {
   )
 }
 
-export function Observations({ f }: { f: Features }) {
+export function Observations({ f, part }: { f: Features; part: "summary" | "detail" }) {
   const p = f.pegasus?.result
-  if (!p) return <p className="text-sm text-muted-foreground">The video review has not run on this take yet.</p>
+  if (!p) return part === "summary" ? <p className="text-sm text-muted-foreground">The video review has not run on this take yet.</p> : null
+  if (part === "detail")
+    return p.characteristics ? (
+      <dl className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+        {Object.entries(p.characteristics).map(([k, v]) => (
+          <div key={k} className="flex flex-col border-t py-1">
+            <dt className="text-muted-foreground">{k.replace(/_/g, " ")}</dt>
+            <dd className="text-foreground/90">{v}</dd>
+          </div>
+        ))}
+      </dl>
+    ) : null
   return (
     <div className="flex flex-col gap-3">
       {p.hook && (
@@ -125,16 +136,6 @@ export function Observations({ f }: { f: Features }) {
           </li>
         ))}
       </ul>
-      {p.characteristics && (
-        <dl className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
-          {Object.entries(p.characteristics).map(([k, v]) => (
-            <div key={k} className="flex flex-col border-t py-1">
-              <dt className="text-muted-foreground">{k.replace(/_/g, " ")}</dt>
-              <dd className="text-foreground/90">{v}</dd>
-            </div>
-          ))}
-        </dl>
-      )}
     </div>
   )
 }
