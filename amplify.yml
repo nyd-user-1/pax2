@@ -1,0 +1,20 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm install 22 && nvm use 22
+        - npm ci --no-audit --no-fund
+    build:
+      commands:
+        # The server reads AWS through the compute role; these only name the resources.
+        - printf 'PAX_REGION=us-east-1\nPAX_BUCKET=pax-638175140432\nPAX_LEDGER_TABLE=pax-ledger\n' > .env.production
+        - npx next build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+      - .next/cache/**/*
