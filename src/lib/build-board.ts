@@ -1,14 +1,14 @@
 // What the Build dashboard shows beyond data/build.json: where the data comes from, what each page runs on,
 // the limits the build works inside, and what each stretch of the build taught. Written by hand from the build.
 
-export type SourceRow = { name: string; publisher: string; kind: string; covers: string; runsOn: string; status: "Loaded" | "Stand-in" | "Not connected" }
+export type SourceRow = { name: string; href: string; publisher: string; kind: string; covers: string; runsOn: string; status: "Loaded" | "Stand-in" | "Not connected" }
 
 export const NOT_CONNECTED: SourceRow[] = [
-  { name: "Parallax's Ads Manager export", publisher: "Meta Ads Manager", kind: "Paid results", covers: "The partner's real flights: spend, impressions, plays, watch time, actions", runsOn: "Load Data", status: "Stand-in" },
-  { name: "Parallax's videos", publisher: "Parallax", kind: "Video", covers: "The partner's own takes, in place of the synthetic eleven", runsOn: "S3 · worker box", status: "Stand-in" },
-  { name: "Meta Ad Library", publisher: "Meta", kind: "Ad libraries", covers: "Every Question 3 ad on Facebook and Instagram", runsOn: "—", status: "Not connected" },
-  { name: "Meta Marketing API", publisher: "Meta", kind: "Paid results", covers: "Results pulled directly, without a CSV", runsOn: "—", status: "Not connected" },
-  { name: "TikTok Research API", publisher: "TikTok", kind: "Video", covers: "Reform campaigns' TikTok videos and counts", runsOn: "—", status: "Not connected" },
+  { name: "Parallax's Ads Manager export", href: "/evals", publisher: "Meta Ads Manager", kind: "Paid results", covers: "The partner's real flights: spend, impressions, plays, watch time, actions", runsOn: "Load Data", status: "Stand-in" },
+  { name: "Parallax's videos", href: "/pipeline", publisher: "Parallax", kind: "Video", covers: "The partner's own takes, in place of the synthetic eleven", runsOn: "S3 · worker box", status: "Stand-in" },
+  { name: "Meta Ad Library", href: "https://www.facebook.com/ads/library/api", publisher: "Meta", kind: "Ad libraries", covers: "Every Question 3 ad on Facebook and Instagram", runsOn: "—", status: "Not connected" },
+  { name: "Meta Marketing API", href: "https://developers.facebook.com/docs/marketing-api/insights", publisher: "Meta", kind: "Paid results", covers: "Results pulled directly, without a CSV", runsOn: "—", status: "Not connected" },
+  { name: "TikTok Research API", href: "https://developers.tiktok.com/products/research-api/", publisher: "TikTok", kind: "Video", covers: "Reform campaigns' TikTok videos and counts", runsOn: "—", status: "Not connected" },
 ]
 
 export type PageTile = {

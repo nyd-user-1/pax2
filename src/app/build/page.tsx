@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 import build from "../../../data/build.json"
 import libraryMeta from "../../../data/library-meta.json"
 import { BudgetAndLimits, InsightsCard, Volume } from "@/components/build/board"
@@ -52,7 +54,7 @@ export default async function BuildPage() {
   const perVideo = videos.reduce((s, v) => s + v.cost, 0) / Math.max(1, videos.length)
 
   const sources: SourceRow[] = [
-    ...(libraryMeta as unknown as { title: string; publisher: string; kind: string; summary: string }[]).map((d) => ({ name: d.title, publisher: d.publisher, kind: d.kind, covers: d.summary, runsOn: "S3", status: "Loaded" as const })),
+    ...(libraryMeta as unknown as { slug: string; title: string; publisher: string; kind: string; summary: string }[]).map((d) => ({ name: d.title, href: `/library/${d.slug}`, publisher: d.publisher, kind: d.kind, covers: d.summary, runsOn: "S3", status: "Loaded" as const })),
     ...NOT_CONNECTED,
   ]
 
@@ -96,24 +98,38 @@ export default async function BuildPage() {
         </OrderedBlock>
 
         <OrderedBlock id="library" label="Library">
-          <FoldCard title="Library" rows={sources.map(({ name, publisher, kind, covers, status }) => ({ name, publisher, kind, description: covers, status }))} name="library" tools={<RefreshButton />}>
-            <Table>
+          <FoldCard title="Library" rows={sources.map(({ name, href, publisher, kind, covers, status }) => ({ name, href, publisher, type: kind, description: covers, status }))} name="library" tools={<RefreshButton />}>
+            <Table className="table-fixed">
               <TableHeader className="sticky top-0 z-10 bg-white">
                 <TableRow className="bg-muted/60">
-                  <TableHead>Name</TableHead>
-                  <TableHead>Publisher</TableHead>
-                  <TableHead>Kind</TableHead>
-                  <TableHead className="w-[255px]">Description</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead className="w-[27%]">Name</TableHead>
+                  <TableHead className="w-[25%]">Publisher</TableHead>
+                  <TableHead className="w-[12%]">Type</TableHead>
+                  <TableHead className="w-[24%]">Description</TableHead>
+                  <TableHead className="w-[12%]">Status</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {sources.map((s) => (
                   <TableRow key={s.name}>
-                    <TableCell className="font-medium whitespace-nowrap">{s.name}</TableCell>
-                    <TableCell className="whitespace-nowrap text-muted-foreground">{s.publisher}</TableCell>
-                    <TableCell className="whitespace-nowrap">{s.kind}</TableCell>
-                    <TableCell className="w-[255px] max-w-[255px] truncate" title={s.covers}>
+                    <TableCell className="truncate font-medium" title={s.name}>
+                      {s.href.startsWith("http") ? (
+                        <a href={s.href} target="_blank" rel="noreferrer" className="text-pax-ink hover:text-pax-plum hover:underline">
+                          {s.name}
+                        </a>
+                      ) : (
+                        <Link href={s.href} className="text-pax-ink hover:text-pax-plum hover:underline">
+                          {s.name}
+                        </Link>
+                      )}
+                    </TableCell>
+                    <TableCell className="truncate text-muted-foreground" title={s.publisher}>
+                      {s.publisher}
+                    </TableCell>
+                    <TableCell className="truncate" title={s.kind}>
+                      {s.kind}
+                    </TableCell>
+                    <TableCell className="truncate" title={s.covers}>
                       {s.covers}
                     </TableCell>
                     <TableCell>

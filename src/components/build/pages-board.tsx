@@ -8,6 +8,7 @@ import { CardAnchor, CardTools, RefreshButton } from "@/components/dash/card-too
 import type { PageTile } from "@/lib/build-board"
 import { Card, CardAction, CardContent, CardHeader } from "@/ui/components/nova/card"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/ui/components/nova/dialog"
+import { BLOCK_HEIGHT } from "@/components/dash/fold-card"
 import { cn } from "@/ui/lib/utils"
 
 const DOT: Record<PageTile["state"], { dot: string; label: string }> = {
@@ -20,7 +21,7 @@ const DOT: Record<PageTile["state"], { dot: string; label: string }> = {
 export function PagesBoard({ pages }: { pages: PageTile[] }) {
   const [open, setOpen] = React.useState<PageTile | null>(null)
   return (
-    <Card className="gap-4">
+    <Card className={cn("gap-4", BLOCK_HEIGHT)}>
       <CardHeader>
         <CardAnchor>Pages</CardAnchor>
         <CardAction>
@@ -37,7 +38,7 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
           </CardTools>
         </CardAction>
       </CardHeader>
-      <CardContent>
+      <CardContent className="min-h-0 flex-1 overflow-y-auto [scrollbar-width:thin]">
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
           {pages.map((p) => (
             <button key={p.href} type="button" onClick={() => setOpen(p)} className="flex flex-col gap-1 rounded-xl border bg-card p-3 text-left transition-shadow hover:shadow-e1">

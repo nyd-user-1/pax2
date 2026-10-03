@@ -91,9 +91,9 @@ export function Volume({ spend, videos }: { spend: SpendItem[]; videos: VideoCos
 export function BudgetAndLimits({ spent, cap, facts, limits }: { spent: number; cap: number; facts: { label: string; value: string; note: string }[]; limits: Limit[] }) {
   const share = Math.round((spent / cap) * 100)
   return (
-    <Card className="py-0">
-      <div className="grid grid-cols-1 xl:grid-cols-2 [&>[data-slot=card]]:py-6">
-        <Card className="rounded-none border-0 bg-transparent shadow-none ring-0">
+    <Card className="py-0 xl:h-[419px] xl:overflow-hidden">
+      <div className="grid h-full grid-cols-1 xl:grid-cols-2 [&>[data-slot=card]]:py-6">
+        <Card className="gap-3 rounded-none border-0 bg-transparent shadow-none ring-0">
           <CardHeader>
             <CardAnchor>Budget</CardAnchor>
             <CardAction>
@@ -103,19 +103,19 @@ export function BudgetAndLimits({ spent, cap, facts, limits }: { spent: number; 
             </CardAction>
           </CardHeader>
           <CardContent>
-            <ChartContainer config={{ used: { label: "Used", color: "var(--chart-1)" } }} className="mx-auto aspect-square h-60">
-              <RadialBarChart data={[{ name: "used", value: share, fill: "var(--chart-1)" }]} startAngle={90} endAngle={90 - (share / 100) * 360} innerRadius={80} outerRadius={110}>
-                <PolarGrid gridType="circle" radialLines={false} stroke="none" className="first:fill-muted last:fill-background" polarRadius={[86, 74]} />
+            <ChartContainer config={{ used: { label: "Used", color: "var(--chart-1)" } }} className="mx-auto aspect-square h-40">
+              <RadialBarChart data={[{ name: "used", value: share, fill: "var(--chart-1)" }]} startAngle={90} endAngle={90 - (share / 100) * 360} innerRadius={54} outerRadius={74}>
+                <PolarGrid gridType="circle" radialLines={false} stroke="none" className="first:fill-muted last:fill-background" polarRadius={[58, 50]} />
                 <RadialBar dataKey="value" background cornerRadius={10} />
                 <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
                   <Label
                     content={({ viewBox }) =>
                       viewBox && "cx" in viewBox && "cy" in viewBox ? (
                         <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                          <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-4xl font-bold">
+                          <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-2xl font-bold">
                             {share}%
                           </tspan>
-                          <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground">
+                          <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 18} className="fill-muted-foreground text-xs">
                             of ${cap} used
                           </tspan>
                         </text>
@@ -125,11 +125,11 @@ export function BudgetAndLimits({ spent, cap, facts, limits }: { spent: number; 
                 </PolarRadiusAxis>
               </RadialBarChart>
             </ChartContainer>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="mt-3 grid grid-cols-2 gap-2">
               {facts.map((m) => (
-                <div key={m.label} className="rounded-lg border p-3">
+                <div key={m.label} className="rounded-lg border px-3 py-2">
                   <p className="text-xs text-muted-foreground">{m.label}</p>
-                  <p className="text-lg font-semibold">{m.value}</p>
+                  <p className="truncate font-semibold">{m.value}</p>
                   <p className="truncate text-xs text-muted-foreground">{m.note}</p>
                 </div>
               ))}
