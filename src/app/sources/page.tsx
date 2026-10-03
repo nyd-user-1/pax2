@@ -7,7 +7,7 @@ type S = { name: string; what: string; use: string; status: "loaded" | "action" 
 
 const STATUS: Record<S["status"], { label: string; cls: string }> = {
   loaded: { label: "In PAX", cls: "bg-observed/10 text-observed" },
-  action: { label: "Needs a person", cls: "bg-amber-100 text-amber-900" },
+  action: { label: "Needs a person", cls: "bg-pax-red-soft text-pax-red-deep" },
   later: { label: "Next version", cls: "bg-muted text-muted-foreground" },
 }
 
@@ -21,7 +21,7 @@ export default function SourcesPage() {
       </header>
       <div className="grid gap-3">
         {list.map((s) => (
-          <article key={s.name} className="grid gap-2 rounded-2xl border p-4 md:grid-cols-[1fr_1.2fr]">
+          <article key={s.name} className="grid gap-2 rounded-3xl border bg-white p-4 md:grid-cols-[1fr_1.2fr]">
             <div className="flex flex-col gap-1">
               <div className="flex items-start gap-2">
                 <a href={s.link} target="_blank" rel="noreferrer" className="font-medium text-pax-ink hover:underline">
@@ -34,7 +34,7 @@ export default function SourcesPage() {
             </div>
             <div className="flex flex-col gap-1 text-sm">
               <p>{s.use}</p>
-              {s.action && <p className="text-xs text-amber-900">{s.action}</p>}
+              {s.action && <p className="text-xs text-pax-red-deep">{s.action}</p>}
               {s.where && <p className="font-mono text-[11px] text-muted-foreground">{s.where}</p>}
             </div>
           </article>

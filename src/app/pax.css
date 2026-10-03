@@ -1,15 +1,20 @@
-/* PAX palette: Parallax's plum and lavender over the kit's neutrals. */
+/* PAX palette: Parallax's layout language in red, white and blue. The blues and reds are
+   GovBlock's forecast and simulator colors: blue #2563eb leads, navy #1e3a8a carries type,
+   red #dc2626 is the second accent. */
 :root {
-  --pax-ink: #2a1a4a;
-  --pax-plum: #4b2f86;
-  --pax-lavender: #ece6f7;
-  --pax-mist: #f7f5fb;
-  --pax-observed: #1f6f8b;
-  --pax-interpretation: #a15c07;
-  --pax-hypothesis: #6b3fb5;
-  --pax-red: #c8102e;
-  --primary: var(--pax-plum);
+  --pax-ink: #1e3a8a;
+  --pax-plum: #2563eb;
+  --pax-lavender: #dbeafe;
+  --pax-mist: #f4f7fe;
+  --pax-red: #dc2626;
+  --pax-red-deep: #991b1b;
+  --pax-red-soft: #fee2e2;
+  --pax-observed: #1e3a8a;
+  --pax-interpretation: #4b5563;
+  --pax-hypothesis: #dc2626;
+  --primary: #2563eb;
   --primary-foreground: #fff;
+  --ring: #2563eb;
 }
 
 @theme inline {
@@ -18,6 +23,9 @@
   --color-pax-plum: var(--pax-plum);
   --color-pax-lavender: var(--pax-lavender);
   --color-pax-mist: var(--pax-mist);
+  --color-pax-red: var(--pax-red);
+  --color-pax-red-deep: var(--pax-red-deep);
+  --color-pax-red-soft: var(--pax-red-soft);
   --color-observed: var(--pax-observed);
   --color-interpretation: var(--pax-interpretation);
   --color-hypothesis: var(--pax-hypothesis);
@@ -25,9 +33,19 @@
 
 .font-display {
   font-family: var(--font-serif), Georgia, serif;
-  letter-spacing: -0.01em;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 .tabular {
   font-variant-numeric: tabular-nums;
+}
+
+/* Parallax's buttons are pills. */
+[data-slot="button"] {
+  border-radius: 9999px;
+}
+
+body {
+  background: linear-gradient(180deg, #ffffff 0%, var(--pax-mist) 100%) fixed;
 }

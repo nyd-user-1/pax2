@@ -52,7 +52,7 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
 
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((s) => (
-          <Link key={s.slug} href={`/campaign?c=${s.slug}`} className={cn("flex flex-col gap-1 rounded-2xl border p-4 transition-colors hover:border-primary/40", s.slug === ch.slug && "border-primary bg-pax-mist")}>
+          <Link key={s.slug} href={`/campaign?c=${s.slug}`} className={cn("flex flex-col gap-1 rounded-3xl border bg-white p-4 transition-colors hover:border-primary/40", s.slug === ch.slug && "border-primary bg-pax-mist")}>
             <span className="font-medium text-pax-ink">{s.name}</span>
             <span className="text-xs text-muted-foreground">{s.place} · {s.n} shorts</span>
             <span className="tabular mt-2 text-sm">

@@ -24,10 +24,10 @@ export function Shell({ children }: { children: React.ReactNode }) {
   if (path.startsWith("/record")) return <div className="min-h-dvh bg-pax-mist">{children}</div>
   return (
     <div className="flex min-h-dvh">
-      <aside className="sticky top-0 hidden h-dvh w-56 shrink-0 flex-col border-r bg-pax-mist px-3 py-4 md:flex">
-        <Link href="/" className="mb-6 flex items-baseline gap-2 px-2">
-          <span className="font-display text-3xl text-pax-ink">PAX</span>
-          <span className="text-xs text-muted-foreground">Partner intelligence</span>
+      <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col border-r bg-white/80 px-4 py-6 backdrop-blur md:flex">
+        <Link href="/" className="mb-8 flex flex-col gap-1.5 px-2">
+          <span className="font-display text-3xl leading-none text-pax-ink">PAX</span>
+          <span className="flex h-1 w-12 overflow-hidden rounded-full"><span className="flex-1 bg-pax-plum" /><span className="flex-1 bg-white ring-1 ring-inset ring-border" /><span className="flex-1 bg-pax-red" /></span>
         </Link>
         <nav className="flex flex-col gap-0.5">
           {NAV.map(({ href, label, icon: Icon }) => (
@@ -35,8 +35,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
               key={href}
               href={href}
               className={cn(
-                "flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-pax-lavender hover:text-pax-ink",
-                active(href) && "bg-pax-lavender font-medium text-pax-ink",
+                "flex items-center gap-2.5 rounded-full px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-pax-mist hover:text-pax-ink",
+                active(href) && "bg-pax-lavender font-semibold text-pax-ink",
               )}
             >
               <Icon className="size-4" />

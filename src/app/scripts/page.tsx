@@ -38,7 +38,7 @@ export default async function ScriptsPage() {
       </header>
 
       <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-2xl border p-4">
+        <div className="rounded-3xl border bg-white p-4">
           <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">What polling says</h2>
           {context.polls.map((p) => (
             <p key={p.url} className="mt-2 text-sm">
@@ -50,7 +50,7 @@ export default async function ScriptsPage() {
           ))}
           <p className="mt-2 text-sm text-muted-foreground">{context.pollingNote}</p>
         </div>
-        <div className="rounded-2xl border p-4">
+        <div className="rounded-3xl border bg-white p-4">
           <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">What the other side says</h2>
           <p className="mt-2 text-sm">{context.opposition}</p>
           <a href={context.oppositionSource} className="mt-1 inline-block text-xs text-pax-plum underline" target="_blank" rel="noreferrer">
@@ -74,7 +74,7 @@ export default async function ScriptsPage() {
             .sort((a, b) => Math.abs(b.f!.diff) - Math.abs(a.f!.diff))
             .slice(0, 5)
           return (
-            <article key={s.id} id={s.id} className="grid gap-5 rounded-2xl border p-5 lg:grid-cols-[1.1fr_1fr]">
+            <article key={s.id} id={s.id} className="grid gap-5 rounded-3xl border bg-white p-5 lg:grid-cols-[1.1fr_1fr]">
               <div className="flex flex-col gap-2">
                 <h3 className="font-display text-2xl leading-snug text-pax-ink">{s.title}</h3>
                 <p className="text-xs text-muted-foreground">

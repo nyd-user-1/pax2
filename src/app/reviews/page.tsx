@@ -117,7 +117,7 @@ export default async function ReviewsPage() {
                   {e.status === "made" ? "Made" : e.status === "approved" ? "Approved, not yet made" : e.status === "revised" ? "Revised, not yet made" : "Saved for later"} · decided {new Date(e.at).toLocaleDateString()} against score {finding?.score.value?.toFixed(0) ?? "—"} ({e.formula}, {e.reference})
                 </span>
                 {e.measure && <span className="text-xs text-foreground/80">How to tell: {e.measure}</span>}
-                {e.status !== "made" && <span className="text-[11px] text-amber-800">A later score on this take updates what is known about it; it says nothing about the change until the change is made and measured.</span>}
+                {e.status !== "made" && <span className="text-[11px] text-pax-red-deep">A later score on this take updates what is known about it; it says nothing about the change until the change is made and measured.</span>}
               </Link>
             ))}
           </div>

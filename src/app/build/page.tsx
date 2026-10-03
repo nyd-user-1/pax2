@@ -9,7 +9,7 @@ export const metadata = { title: "Build" }
 type Item = { title: string; detail?: string; owner?: string }
 type Build = { updated: string; budget: { cap: number; spent: { item: string; usd: number }[] }; columns: { id: string; title: string; items: Item[] }[]; resources: { name: string; id: string }[] }
 
-const TONE: Record<string, string> = { done: "border-observed/30", running: "border-pax-plum/40", you: "border-amber-300", next: "border-border" }
+const TONE: Record<string, string> = { done: "border-observed/30", running: "border-pax-plum/40", you: "border-pax-red/40", next: "border-border" }
 
 export default async function BuildPage() {
   const b = build as Build
@@ -22,7 +22,7 @@ export default async function BuildPage() {
           <h1 className="font-display text-4xl text-pax-ink md:text-5xl">Build</h1>
           <p className="text-sm text-muted-foreground">Updated {b.updated}</p>
         </div>
-        <div className="rounded-2xl border p-4">
+        <div className="rounded-3xl border bg-white p-4">
           <p className="text-xs text-muted-foreground">AWS spend against the ${b.budget.cap} cap (estimated)</p>
           <p className="tabular font-display text-4xl text-pax-ink">${spent.toFixed(2)}</p>
           <div className="mt-2 h-1.5 w-56 rounded-full bg-muted">
@@ -75,7 +75,7 @@ export default async function BuildPage() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-2 rounded-2xl border p-4">
+      <section className="flex flex-col gap-2 rounded-3xl border bg-white p-4">
         <h2 className="font-medium text-pax-ink">Review workspace</h2>
         <p className="text-sm text-muted-foreground">
           This browser is reading workspace <span className="font-mono">{ws}</span>. A fresh one starts the loop from round 1 without touching any earlier record.

@@ -56,7 +56,7 @@ export default async function MethodPage() {
 
       <section className="grid gap-3 md:grid-cols-3">
         {COMPONENTS.map((c) => (
-          <div key={c.key} className="rounded-2xl border p-4">
+          <div key={c.key} className="rounded-3xl border bg-white p-4">
             <div className="flex items-baseline justify-between">
               <span className="font-display text-2xl text-pax-ink">{c.name}</span>
               <span className="text-xs text-muted-foreground">{(FORMULA_V1.weights[c.key] * 100).toFixed(0)}%</span>
@@ -175,7 +175,7 @@ export default async function MethodPage() {
 
 function Stat({ label, value, note }: { label: string; value: number | null; note: string }) {
   return (
-    <div className="rounded-2xl border p-4">
+    <div className="rounded-3xl border bg-white p-4">
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="tabular font-display text-4xl text-pax-ink">{value == null ? "—" : value.toFixed(2)}</p>
       <p className="text-xs text-muted-foreground">{note}</p>

@@ -26,7 +26,7 @@ export function SourceBadge({ source, className }: { source: Provenance; classNa
     <span
       className={cn(
         "inline-flex items-center rounded px-1.5 py-px text-[10px] font-medium uppercase tracking-wide",
-        source === "stand-in" && "bg-amber-100 text-amber-900",
+        source === "stand-in" && "bg-pax-red-soft text-pax-red-deep",
         source === "ai" && "bg-hypothesis/10 text-hypothesis",
         source === "platform" && "bg-observed/10 text-observed",
         (source === "derived" || source === "coded" || source === "library") && "bg-muted text-muted-foreground",
@@ -64,7 +64,7 @@ export function ScoreFigure({ value, low, high, status, size = "lg" }: { value: 
 
 export function StandInNote({ className }: { className?: string }) {
   return (
-    <p className={cn("rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-950", className)}>
+    <p className={cn("rounded-lg border border-pax-red/20 bg-pax-red-soft/50 px-3 py-2 text-xs leading-relaxed text-pax-red-deep", className)}>
       Stand-in records until Parallax&apos;s export arrives: the takes are synthetic readings of the library scripts and the paid results are generated in Meta&apos;s export format. Upload the real export on Reviews and every screen recalculates from it.
     </p>
   )

@@ -15,7 +15,7 @@ function Cell({ s }: { s?: TakeState }) {
     <Link href={`/v/${s.take.id}`} className="group flex h-full min-h-28 flex-col gap-2 rounded-xl border bg-card p-3 transition-colors hover:border-pax-plum/40 hover:bg-pax-mist">
       <div className="flex items-start justify-between gap-2">
         {sc ? <ScoreFigure value={sc.value} low={sc.low} high={sc.high} status={sc.status} size="sm" /> : <span className="text-sm text-muted-foreground">No results yet</span>}
-        {sc?.status === "limited" && <span className="rounded bg-amber-100 px-1.5 py-px text-[10px] font-medium text-amber-900">Limited evidence</span>}
+        {sc?.status === "limited" && <span className="rounded bg-pax-red-soft px-1.5 py-px text-[10px] font-medium text-pax-red-deep">Limited evidence</span>}
       </div>
       {sc && sc.status !== "unscorable" && <RangeBar value={sc.value} low={sc.low} high={sc.high} />}
       {sc?.status === "unscorable" && <p className="text-xs leading-snug text-muted-foreground">{sc.reasons[0]}</p>}
@@ -57,7 +57,7 @@ export default async function ArgumentsPage() {
       ) : (
         <section className="grid gap-4 md:grid-cols-3">
           {best && (
-            <div className="rounded-2xl border bg-card p-4">
+            <div className="rounded-3xl border bg-white p-4">
               <p className="text-xs text-muted-foreground">Highest so far</p>
               <Link href={`/v/${best.take.id}`} className="mt-1 block font-medium text-pax-ink hover:underline">
                 {SCRIPTS.find((s) => s.id === best.take.scriptId)!.title} — {takeLabel(best.take)}
@@ -68,7 +68,7 @@ export default async function ArgumentsPage() {
             </div>
           )}
           {widest && (
-            <div className="rounded-2xl border bg-card p-4">
+            <div className="rounded-3xl border bg-white p-4">
               <p className="text-xs text-muted-foreground">Least settled</p>
               <Link href={`/v/${widest.take.id}`} className="mt-1 block font-medium text-pax-ink hover:underline">
                 {SCRIPTS.find((s) => s.id === widest.take.scriptId)!.title} — {takeLabel(widest.take)}
@@ -76,7 +76,7 @@ export default async function ArgumentsPage() {
               <p className="mt-1 text-sm text-muted-foreground">Its range spans {(widest.latest!.score.high! - widest.latest!.score.low!).toFixed(0)} points; more delivery would narrow it before anything is concluded.</p>
             </div>
           )}
-          <div className="rounded-2xl border bg-card p-4">
+          <div className="rounded-3xl border bg-white p-4">
             <p className="text-xs text-muted-foreground">Results on file</p>
             <ul className="mt-1 flex flex-col gap-1 text-sm">
               {history.map((h) => (
@@ -122,7 +122,7 @@ export default async function ArgumentsPage() {
             {variants.map((v) => {
               const twin = takes.find((t) => t.take.scriptId === v.take.scriptId && t.take.voice === v.take.voice && t.take.captions && !t.take.cut)
               return (
-                <div key={v.take.id} className={cn("grid grid-cols-2 gap-3 rounded-2xl border p-3")}>
+                <div key={v.take.id} className={cn("grid grid-cols-2 gap-3 rounded-3xl border bg-white p-3")}>
                   <div className="col-span-2 text-sm">
                     <span className="font-medium text-pax-ink">{SCRIPTS.find((s) => s.id === v.take.scriptId)!.title}</span>
                     <span className="text-muted-foreground"> · {v.take.voice}: {v.take.cut ? "short cut vs. full length" : "no captions vs. captions"}</span>

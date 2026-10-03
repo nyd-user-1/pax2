@@ -1,13 +1,13 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google"
+import { Geist_Mono, Plus_Jakarta_Sans, Source_Serif_4 } from "next/font/google"
 
 import "@/ui/styles/globals.css"
 import "./pax.css"
 import { Shell } from "@/components/shell"
 
-const sans = Geist({ subsets: ["latin"], variable: "--font-sans" })
+const sans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans" })
 const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
-const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", variable: "--font-serif" })
+const serif = Source_Serif_4({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-serif" })
 
 export const metadata: Metadata = {
   title: { default: "PAX", template: "%s · PAX" },
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable} ${serif.variable}`}>
-      <body className="min-h-dvh bg-background font-sans text-foreground antialiased">
+      <body className="min-h-dvh font-sans text-foreground antialiased">
         <Shell>{children}</Shell>
       </body>
     </html>

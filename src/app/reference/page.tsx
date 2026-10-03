@@ -88,7 +88,7 @@ export default async function ReferencePage({ searchParams }: { searchParams: Pr
 
 function Big({ v, l }: { v: string; l: string }) {
   return (
-    <div className="rounded-2xl border p-4">
+    <div className="rounded-3xl border bg-white p-4">
       <p className="tabular font-display text-4xl text-pax-ink">{v}</p>
       <p className="text-xs text-muted-foreground">{l}</p>
     </div>

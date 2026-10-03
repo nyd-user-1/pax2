@@ -87,7 +87,7 @@ export function Loudness({ f }: { f: NonNullable<Features["audio"]> }) {
           const h = 3 + ((d - lo) / Math.max(1, hi - lo)) * 20
           const loud = f.loudestSec.includes(i)
           const quiet = f.quietestSec.includes(i)
-          return <rect key={i} x={i * w + w * 0.1} y={24 - h} width={w * 0.8} height={h} rx={0.4} className={cn(loud ? "fill-pax-plum" : quiet ? "fill-amber-500" : "fill-pax-plum/30")} />
+          return <rect key={i} x={i * w + w * 0.1} y={24 - h} width={w * 0.8} height={h} rx={0.4} className={cn(loud ? "fill-pax-plum" : quiet ? "fill-pax-red" : "fill-pax-plum/30")} />
         })}
         {f.pauses.map((p, i) => (
           <rect key={`p${i}`} x={(p.t / f.durationSec) * 100} y={0} width={0.4} height={3} className="fill-foreground/40" />
@@ -96,7 +96,7 @@ export function Loudness({ f }: { f: NonNullable<Features["audio"]> }) {
       </svg>
       <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
         <span className="flex items-center gap-1"><span className="size-2 rounded-sm bg-pax-plum" />loudest</span>
-        <span className="flex items-center gap-1"><span className="size-2 rounded-sm bg-amber-500" />quietest</span>
+        <span className="flex items-center gap-1"><span className="size-2 rounded-sm bg-pax-red" />quietest</span>
         <span>{f.pauses.length} pauses ≥ 0.3s</span>
         {f.pitchMedianHz && <span>pitch {f.pitchRangeHz?.[0]}–{f.pitchRangeHz?.[1]} Hz</span>}
       </div>
