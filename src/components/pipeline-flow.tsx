@@ -146,7 +146,7 @@ export function PipelineFlow({ d }: { d: FlowData }) {
           {/* What starts a run */}
           <ul data-node className="flex w-[280px] flex-col gap-3">
             <li>
-              <Group title="Rendered videos" count={d.videos.length} open headRef={(el) => (lefts.current[0] = el)}>
+              <Group title="Rendered videos" count={d.videos.length} headRef={(el) => (lefts.current[0] = el)}>
                 <Section title="Made by">
                   <p className="text-sm text-slate-800">The render job on the worker box: Polly voices over Mixkit footage</p>
                 </Section>
@@ -217,7 +217,7 @@ export function PipelineFlow({ d }: { d: FlowData }) {
           {/* Where results land */}
           <ul data-node className="flex w-[340px] flex-col gap-3">
             <li>
-              <Group title="Shows up in" count={d.steps.length} open width="w-[340px]" headRef={(el) => (rights.current[0] = el)}>
+              <Group title="Shows up in" count={d.steps.length} width="w-[340px]" headRef={(el) => (rights.current[0] = el)}>
                 <Section title="Version page">
                   {d.steps.map((s) => (
                     <FlowMap key={s.id} from={s.name} to={s.feeds} href={`/v/${d.example}`} />

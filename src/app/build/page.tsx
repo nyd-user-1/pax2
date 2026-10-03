@@ -8,7 +8,6 @@ import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { CardAnchor, CardTools, RefreshButton } from "@/components/dash/card-tools"
 import { FoldCard } from "@/components/dash/fold-card"
 import { TodoCard, type Todo } from "@/components/build/todo-card"
-import { FreshReview } from "@/components/fresh-review"
 import { LESSONS, NOT_CONNECTED, PAGES, type SourceRow } from "@/lib/build-board"
 import { FEATURES, TAKES } from "@/lib/catalog"
 import { rows } from "@/lib/pipeline"
@@ -202,9 +201,6 @@ export default async function BuildPage() {
               { label: "Worker box", sub: "stops itself after this many idle minutes", used: 0, limit: 30, unit: "minutes" },
             ]}
           />
-          <div className="mt-3 flex justify-end">
-            <FreshReview />
-          </div>
         </OrderedBlock>
 
         <OrderedBlock id="todo" label="To Do">

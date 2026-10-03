@@ -172,6 +172,10 @@
       "title": "Next",
       "items": [
         {
+          "title": "Revisit workspaces and \"Start a fresh review\"",
+          "detail": "Removed from /build on 2026-10-03. The button pointed this browser at a new, empty workspace; since empty workspaces now load both stand-in rounds, it no longer starts the loop from the top. Decide whether workspaces stay as plumbing only (for separate campaigns) and how a clean demo run is set up.\n\nThe exchange: Claude Code session a6314df4-8879-4936-8a67-b7368f9b797e, 2026-10-03 about 4:40 PM ET, starting at Brendan's question \"Start a fresh review -- what is this?\". Transcript: ~/.claude/projects/-Users-brendanstanton-Code-govblock/a6314df4-8879-4936-8a67-b7368f9b797e.jsonl"
+        },
+        {
           "title": "Drop Rekognition from the pipeline",
           "detail": "Rekognition is three-quarters of the analysis cost ($0.20 a minute). Pegasus already notes on-screen text; shot changes can come from ffmpeg scene detection on the box for free. Cuts a video from about $0.15 to about $0.04."
         },

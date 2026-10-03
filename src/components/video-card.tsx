@@ -40,7 +40,6 @@ export function VideoCard({ v, i = 0, size = "md" }: { v: VideoCardData; i?: num
           ) : (
             <span className="rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-slate-600">{v.status === "none" ? "No results" : "Not scored"}</span>
           )}
-          {v.status === "limited" && <span className="rounded-full bg-black/55 px-2 py-1 text-[10px] font-medium text-white backdrop-blur">Thin data</span>}
         </div>
         <span className="tabular absolute right-2.5 top-2.5 rounded-full bg-black/55 px-2 py-0.5 text-[11px] text-white backdrop-blur">{Math.round(v.seconds)}s</span>
         <span className="absolute inset-0 m-auto flex size-12 scale-90 items-center justify-center rounded-full bg-white/90 text-pax-ink opacity-0 shadow-e3 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100">

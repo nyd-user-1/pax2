@@ -3,6 +3,7 @@ import Link from "next/link"
 import type { SavedReading } from "@/app/actions"
 import { ReadingPanel } from "@/components/reading-panel"
 import { Fold } from "@/components/fold"
+import { ScoreInfo } from "@/components/ui-pax"
 import { LoadData } from "@/components/load-data"
 import { ScorePanel } from "@/components/score-panel"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
@@ -70,7 +71,7 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
           {!ref && <LoadData standIn="round-1" />}
 
           {ref && state.latest && (
-            <Fold title="Rating" preview={<ScorePanel part="summary" take={take} snapshot={state.latest.snapshot} score={state.latest.score} reference={ref} />}>
+            <Fold title="Resonance" info={<ScoreInfo />} preview={<ScorePanel part="summary" take={take} snapshot={state.latest.snapshot} score={state.latest.score} reference={ref} />}>
               <ScorePanel part="detail" take={take} snapshot={state.latest.snapshot} score={state.latest.score} reference={ref} />
             </Fold>
           )}

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Hourglass, Sparkles, Upload, Video } from "lucide-react"
+import { Hourglass, NotepadText, Sparkles, Upload, Video } from "lucide-react"
 
 import { FramingStrip } from "@/components/framing-strip"
 import { LoadData } from "@/components/load-data"
@@ -37,15 +37,15 @@ export default async function HomePage() {
       return [...last.values()].filter((e) => e.status === "approved" || e.status === "revised").map((e) => ({ t, e }))
     })
     for (const { t, e } of pending.slice(0, 1))
-      next.push({ key: `step-${e.stepId}`, icon: Sparkles, title: "An approved test is waiting to be made", body: `${e.change} — on ${scriptById(t.take.scriptId)!.short}, ${takeLabel(t.take)}.`, action: <Link href={`/v/${t.take.id}`} scroll={false} className="press inline-flex items-center gap-1.5 rounded-full bg-pax-ink px-4 py-2 text-sm font-semibold text-white">Report</Link> })
+      next.push({ key: `step-${e.stepId}`, icon: Sparkles, title: "An approved test is waiting to be made", body: `${e.change} — on ${scriptById(t.take.scriptId)!.short}, ${takeLabel(t.take)}.`, action: <Link href={`/v/${t.take.id}`} scroll={false} className="press inline-flex items-center gap-1.5 rounded-full bg-pax-ink px-4 py-2 text-sm font-semibold text-white"><NotepadText className="size-4" />Report</Link> })
     const leader = perTake.find((p) => p.t.take.id === scored[0]?.id)
     if (leader && !leader.fs.length)
-      next.push({ key: "read", icon: Sparkles, title: `Find out why “${scored[0].scriptShort}” is leading`, body: `${takeLabel(leader.t.take)} scores ${scored[0].score!.toFixed(0)}. PAX reads the results and the video, and proposes the next test.`, action: <Link href={`/v/${scored[0].id}`} scroll={false} className="press inline-flex items-center gap-1.5 rounded-full bg-pax-ink px-4 py-2 text-sm font-semibold text-white">Report</Link> })
+      next.push({ key: "read", icon: Sparkles, title: `Find out why “${scored[0].scriptShort}” is leading`, body: `${takeLabel(leader.t.take)} scores ${scored[0].score!.toFixed(0)}. PAX reads the results and the video, and proposes the next test.`, action: <Link href={`/v/${scored[0].id}`} scroll={false} className="press inline-flex items-center gap-1.5 rounded-full bg-pax-ink px-4 py-2 text-sm font-semibold text-white"><NotepadText className="size-4" />Report</Link> })
     if (!loaded.has("round-2"))
       next.push({ key: "load2", icon: Upload, title: "Round 2 results are ready", body: "Load them to see what held up, what changed, and how any calls came out.", action: <LoadData standIn="round-2" className="py-5" /> })
     const thin = cards.find((c) => c.status === "limited" || c.status === "unscorable")
     if (thin)
-      next.push({ key: "thin", icon: Hourglass, title: "One video needs more reach before it can be judged", body: `${thin.scriptShort}, ${thin.voice}: ${(thin.impressions ?? 0).toLocaleString()} impressions so far.`, action: <Link href={`/v/${thin.id}`} scroll={false} className="press inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-pax-ink">Report</Link> })
+      next.push({ key: "thin", icon: Hourglass, title: "One video needs more reach before it can be judged", body: `${thin.scriptShort}, ${thin.voice}: ${(thin.impressions ?? 0).toLocaleString()} impressions so far.`, action: <Link href={`/v/${thin.id}`} scroll={false} className="press inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-pax-ink"><NotepadText className="size-4" />Report</Link> })
     const means = SCRIPTS.map((s) => {
       const xs = scored.filter((c) => c.script === s.id).map((c) => c.score!)
       return { s, m: xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : -1 }

@@ -1,5 +1,5 @@
 /* PAX design tokens. One sans family; hierarchy from size, weight and space. Blue and red are
-   GovBlock's forecast colors and they carry meaning: blue = above the reference, red = below,
+   GovBlock's forecast colors and they carry meaning: green = above the reference, red = below,
    navy = actions and type. */
 :root:root {
   --pax-ink: #1e3a8a;
@@ -9,8 +9,8 @@
   --pax-red: #dc2626;
   --pax-red-deep: #991b1b;
   --pax-red-soft: #fee2e2;
-  --pax-above: #2563eb;
-  --pax-above-soft: #eff6ff;
+  --pax-above: #16a34a;
+  --pax-above-soft: #f0fdf4;
   --pax-below: #dc2626;
   --pax-below-soft: #fef2f2;
   --pax-observed: #1e3a8a;
