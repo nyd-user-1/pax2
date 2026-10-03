@@ -37,6 +37,7 @@ def save(df, name):
     df = clean(df)
     pq = f"{C}/{name}.parquet"
     csv = f"{C}/{name}.csv"
+    os.makedirs(os.path.dirname(pq), exist_ok=True)
     df.to_parquet(pq, index=False)
     df.to_csv(csv, index=False)
     s3.upload_file(pq, B, f"curated/{name}.parquet")
