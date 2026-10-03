@@ -53,9 +53,12 @@ def ass_time(ms):
     return f"{int(s // 3600)}:{int(s % 3600 // 60):02d}:{s % 60:05.2f}"
 
 
-def captions(words, end_ms, path):
+def captions(words, end_ms, path, voice, show):
     # Three to four words per caption, the way short-form captions run.
+    # The name line and the ballot label ride in the same file (this ffmpeg has libass, not drawtext).
     groups, cur = [], []
+    if not show:
+        words = []
     for w in words:
         cur.append(w)
         if len(cur) >= 4 or re.search(r"[.!?…,—]$", w["value"]):
@@ -69,12 +72,16 @@ def captions(words, end_ms, path):
         stop = groups[i + 1][0]["time"] if i + 1 < len(groups) else end_ms
         txt = " ".join(w["value"] for w in g).upper()
         ev.append(f"Dialogue: 0,{ass_time(start)},{ass_time(stop)},Cap,,0,0,0,,{txt}")
+    ev.append(f"Dialogue: 1,0:00:00.00,{ass_time(end_ms)},Name,,0,0,0,,{voice} · stand-in voice")
+    ev.append(f"Dialogue: 1,0:00:00.00,{ass_time(end_ms)},Label,,0,0,0,,QUESTION 3")
     head = """[Script Info]
 PlayResX: 1080
 PlayResY: 1920
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV
 Style: Cap,Inter,86,&H00FFFFFF,&H00000000,&H80000000,1,0,1,6,0,5,80,80,0
+Style: Name,Inter,44,&H26FFFFFF,&H00000000,&H00000000,0,0,1,0,0,1,80,80,220
+Style: Label,Inter,40,&H66FFFFFF,&H00000000,&H00000000,1,0,1,0,0,7,80,80,140
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
@@ -88,12 +95,9 @@ for t in TAKES:
     words = [m for m in marks if m["type"] == "word"]
     dur = float(subprocess.run(["ffprobe", "-v", "quiet", "-show_entries", "format=duration", "-of", "csv=p=0", mp3], capture_output=True, text=True).stdout.strip())
     end_ms = int(dur * 1000)
-    vf = [f"drawtext=fontfile={FONT}:text='{t['voice']} · stand-in voice':fontcolor=white@0.85:fontsize=44:x=80:y=h-260",
-          f"drawtext=fontfile={FONT}:text='Question 3':fontcolor=white@0.6:fontsize=40:x=80:y=140"]
-    if t["captions"]:
-        ass = f"{D}/{t['id']}.ass"
-        captions(words, end_ms, ass)
-        vf.insert(0, f"subtitles={ass}:fontsdir={D}")
+    ass = f"{D}/{t['id']}.ass"
+    captions(words, end_ms, ass, t["voice"], t["captions"])
+    vf = [f"subtitles={ass}:fontsdir={D}"]
     mp4 = f"{D}/{t['id']}.mp4"
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", f"color=c={t['bg']}:s=1080x1920:r=30", "-i", mp3, "-vf", ",".join(vf), "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "veryfast", "-c:a", "aac", "-shortest", mp4], check=True)
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", "1", "-i", mp4, "-frames:v", "1", "-vf", "scale=360:-1", f"{D}/{t['id']}.jpg"], check=True)
