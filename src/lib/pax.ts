@@ -40,9 +40,9 @@ export function evidenceIndex(take: TakeInfo, state: TakeState, ref: Reference |
   }
   take.lines?.forEach((l, i) => out.push({ ref: `line:${i}`, label: `Script line at ${l.t.toFixed(1)}s: “${l.text}”`, t: l.t }))
   const f = featuresFor(take.id)
-  f?.pegasus?.result?.observations?.forEach((o, i) => out.push({ ref: `seen:${i}`, label: `At ${o.t}s (AI-assessed): ${o.what}`, t: o.t }))
+  ;(Array.isArray(f?.pegasus?.result?.observations) ? f!.pegasus!.result!.observations! : []).forEach((o, i) => out.push({ ref: `seen:${i}`, label: `At ${o.t}s (AI-assessed): ${o.what}`, t: o.t }))
   if (f?.pegasus?.result?.hook) out.push({ ref: "seen:hook", label: `Opening at ${f.pegasus.result.hook.t}s (AI-assessed): ${f.pegasus.result.hook.text} — ${f.pegasus.result.hook.assessment}`, t: f.pegasus.result.hook.t })
-  f?.audio?.pauses?.forEach((p, i) => out.push({ ref: `pause:${i}`, label: `Pause of ${p.sec}s at ${p.t}s (measured)`, t: p.t }))
+  ;(Array.isArray(f?.audio?.pauses) ? f!.audio!.pauses : []).forEach((p, i) => out.push({ ref: `pause:${i}`, label: `Pause of ${p.sec}s at ${p.t}s (measured)`, t: p.t }))
   if (f?.audio?.loudestSec?.length) out.push({ ref: "audio:loudest", label: `Loudest seconds: ${f.audio.loudestSec.join(", ")} (measured)`, t: f.audio.loudestSec[0] })
   if (f?.audio?.quietestSec?.length) out.push({ ref: "audio:quietest", label: `Quietest seconds: ${f.audio.quietestSec.join(", ")} (measured)`, t: f.audio.quietestSec[0] })
   if (f?.transcript?.wpm) out.push({ ref: "pace", label: `Speaking pace ${f.transcript.wpm} words per minute (measured)` })
@@ -114,8 +114,31 @@ export async function read(take: TakeInfo, state: TakeState, ref: Reference | nu
     }),
   )
   const block = r.output?.message?.content?.find((c) => "toolUse" in c && c.toolUse)
-  const raw = (block && "toolUse" in block ? block.toolUse?.input : null) as Reading | null
-  if (!raw) throw new Error("PAX returned no reading")
+  const input = (block && "toolUse" in block ? block.toolUse?.input : null) as Record<string, unknown> | null
+  if (!input) throw new Error("PAX returned no reading")
+  // Nested arrays sometimes arrive as JSON text; accept either.
+  const arr = <T,>(x: unknown): T[] => {
+    if (Array.isArray(x)) return x as T[]
+    if (typeof x === "string") {
+      try {
+        const p = JSON.parse(x)
+        return Array.isArray(p) ? (p as T[]) : []
+      } catch {
+        return x.trim() ? ([x] as T[]) : []
+      }
+    }
+    return []
+  }
+  const withEv = <T extends { evidence?: unknown }>(xs: T[]) => xs.map((x) => ({ ...x, evidence: arr<string>(x.evidence) }))
+  const raw = {
+    takeaway: String(input.takeaway ?? ""),
+    whatHappened: String(input.whatHappened ?? ""),
+    scoreMeaning: String(input.scoreMeaning ?? ""),
+    findings: withEv(arr<Cited>(input.findings)),
+    nextSteps: withEv(arr<Proposal>(input.nextSteps)),
+    insufficient: arr<string>(input.insufficient),
+    priorChecks: withEv(arr<PriorCheck>(input.priorChecks)),
+  }
   // Remove any citation that does not exist; a finding left with none is dropped.
   const known = new Set(evidence.map((e) => e.ref))
   let dropped = 0
