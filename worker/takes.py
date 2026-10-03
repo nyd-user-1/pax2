@@ -40,10 +40,10 @@ def text_for(t):
 
 def synth(t, lines):
     text = " ".join(lines)
-    a = polly.synthesize_speech(Text=text, VoiceId=t["voice"], Engine="generative", OutputFormat="mp3")
+    a = polly.synthesize_speech(Text=text, VoiceId=t["voice"], Engine="neural", OutputFormat="mp3")
     mp3 = f"{D}/{t['id']}.mp3"
     open(mp3, "wb").write(a["AudioStream"].read())
-    m = polly.synthesize_speech(Text=text, VoiceId=t["voice"], Engine="generative", OutputFormat="json", SpeechMarkTypes=["word", "sentence"])
+    m = polly.synthesize_speech(Text=text, VoiceId=t["voice"], Engine="neural", OutputFormat="json", SpeechMarkTypes=["word", "sentence"])
     marks = [json.loads(l) for l in m["AudioStream"].read().decode().splitlines() if l.strip()]
     return mp3, marks
 
