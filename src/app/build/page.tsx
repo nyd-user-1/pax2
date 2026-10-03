@@ -48,7 +48,7 @@ export default async function BuildPage() {
   const spent = b.budget.spent.reduce((t, s) => t + s.usd, 0)
   const col = (id: string) => b.columns.find((c) => c.id === id)?.items ?? []
   const [done, you, next] = [col("done"), col("you"), col("next")]
-  const videos = rows(null).map((r) => ({ id: r.id, title: r.title, label: r.label, cost: r.cost }))
+  const videos = rows(null).map((r) => ({ id: r.id, title: r.title, label: r.label, cost: r.cost, poster: TAKES.find((t) => t.id === r.id)?.video?.poster }))
   const ran = runs(Object.fromEntries(videos.map((v) => [v.id, v.cost])))
   const perVideo = videos.reduce((s, v) => s + v.cost, 0) / Math.max(1, videos.length)
 

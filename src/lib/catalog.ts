@@ -9,7 +9,7 @@ import { METRICS } from "@/lib/types"
 // Until the partner's own videos arrive, every take is a synthetic reading of a library
 // script, and the interface says so wherever a take appears.
 
-type RawTake = { id: string; script: string; voice: string; captions: boolean; cut: boolean; durationSec: number; lines: { t: number; text: string }[]; words: { t: number; w: string }[]; wordCount: number }
+type RawTake = { id: string; script: string; voice: string; captions: boolean; cut: boolean; durationSec: number; lines: { t: number; text: string }[]; words: { t: number; w: string }[]; wordCount: number; footage?: string[] }
 
 export const CLAIM = library.claim
 export const SCRIPTS: Script[] = library.scripts.map((s) => {
@@ -20,12 +20,21 @@ export const scriptById = (id: string) => SCRIPTS.find((s) => s.id === id)
 
 export type TakeInfo = Take & { voice: string; captions: boolean; cut: boolean; synthetic: true; words: { t: number; w: string }[] }
 
+// Card posters: the original full-color Mixkit still of one clip from the video's own footage,
+// a different clip per voice so the cards differ. (The rendered frames came out grey.)
+const VOICE_CLIP: Record<string, number> = { Ruth: 1, Stephen: 2, Danielle: 3 }
+function posterOf(t: RawTake) {
+  const ids = (t.footage ?? []).map((f) => f.replace("mixkit:", ""))
+  const id = ids[(VOICE_CLIP[t.voice] ?? 0) % Math.max(1, ids.length)]
+  return id ? `https://assets.mixkit.co/videos/${id}/${id}-thumb-720-0.jpg` : `/api/video/${t.id}?poster=1`
+}
+
 export const TAKES: TakeInfo[] = (takesJson as unknown as RawTake[]).map((t) => ({
   id: t.id,
   scriptId: t.script,
   messenger: { label: t.voice, role: "Stand-in voice" },
   durationSec: t.durationSec,
-  video: { src: `/api/video/${t.id}`, poster: `/api/video/${t.id}?poster=1` },
+  video: { src: `/api/video/${t.id}`, poster: posterOf(t) },
   lines: t.lines,
   words: t.words,
   voice: t.voice,

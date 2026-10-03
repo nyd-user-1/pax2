@@ -14,7 +14,7 @@ import { cn } from "@/ui/lib/utils"
 // The interactive blocks of the Build dashboard, after GovBlock's Database page
 // (components/admin/pages/database.tsx): Volume with its ranked list, Budget beside Limits, Insights.
 
-export type VideoCost = { id: string; title: string; label: string; cost: number }
+export type VideoCost = { id: string; title: string; label: string; cost: number; poster?: string }
 export type SpendItem = { item: string; short: string; usd: number }
 
 const money = (n: number) => `$${n.toFixed(2)}`
@@ -65,7 +65,7 @@ export function Volume({ spend, videos }: { spend: SpendItem[]; videos: VideoCos
               <li key={v.id}>
                 <Link href={`/v/${v.id}`} scroll={false} className="flex items-center gap-3 rounded-lg px-1.5 py-1 hover:bg-muted">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={`/api/video/${v.id}?poster=1`} alt="" className="h-10 w-6 shrink-0 rounded bg-slate-200 object-cover" />
+                  <img src={v.poster} alt="" className="h-10 w-6 shrink-0 rounded bg-slate-200 object-cover" />
                   <span className="flex min-w-0 flex-1 flex-col gap-1">
                     <span className="flex items-baseline justify-between gap-2 text-sm">
                       <span className="truncate font-medium">

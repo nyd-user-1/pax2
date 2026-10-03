@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Check, Loader2, Minus, X } from "lucide-react"
 
 import { PipelineFlow } from "@/components/pipeline-flow"
+import { takeById } from "@/lib/catalog"
 import { currentBatch, rows, STEPS, type StepState } from "@/lib/pipeline"
 import { submissions, workspace } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
@@ -77,7 +78,7 @@ export default async function PipelinePage() {
                 <td>
                   <Link href={`/v/${r.id}`} scroll={false} className="group flex items-center gap-3">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={`/api/video/${r.id}?poster=1`} alt="" className="h-14 w-8 shrink-0 rounded-md bg-slate-200 object-cover" />
+                    <img src={takeById(r.id)?.video?.poster} alt="" className="h-14 w-8 shrink-0 rounded-md bg-slate-200 object-cover" />
                     <span className="flex flex-col">
                       <span className="font-medium text-slate-900 group-hover:text-pax-plum">{r.title}</span>
                       <span className="text-xs text-slate-500">

@@ -17,6 +17,7 @@ export function cardOf(t: TakeState): VideoCardData {
     high: s?.high ?? null,
     status: s ? s.status : "none",
     impressions: t.latest?.snapshot.metrics.impressions.value ?? null,
+    poster: t.take.video!.poster,
     published: t.history[0]?.snapshot.windowStart,
   }
 }
