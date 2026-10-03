@@ -69,20 +69,35 @@ Rules:
 - The takes are synthetic readings by stand-in voices until the partner's own videos arrive; do not comment on voice quality as if a person recorded it.
 - Plain words. No jargon like "posterior" or "logit". Numbers rounded.`
 
-const TOOL = {
-  name: "reading",
-  description: "Return the reading.",
+// Two small tools rather than one large one: with every field in one schema the model tends to
+// send the nested lists as JSON text, which breaks on quoted script lines. Both run at once.
+const NARRATIVE = {
+  name: "narrative",
+  description: "Return the narrative part of the reading.",
   inputSchema: {
     json: {
       type: "object",
-      required: ["takeaway", "whatHappened", "scoreMeaning", "findings", "nextSteps", "insufficient", "priorChecks"],
+      required: ["takeaway", "whatHappened", "scoreMeaning", "insufficient"],
       properties: {
-        takeaway: { type: "string", description: "One or two sentences, the first thing the partner reads." },
+        takeaway: { type: "string", description: "One or two sentences, the first thing the partner reads. Name the take in words, never by id." },
         whatHappened: { type: "string" },
         scoreMeaning: { type: "string", description: "What the number means and does not mean, with the components that drove it." },
-        findings: { type: "array", items: { type: "object", required: ["kind", "text", "evidence"], properties: { kind: { enum: ["observed", "interpretation", "hypothesis"] }, text: { type: "string" }, evidence: { type: "array", items: { type: "string" } } } } },
-        nextSteps: { type: "array", maxItems: 3, items: { type: "object", required: ["change", "prompted", "uncertain", "measure", "evidence"], properties: { change: { type: "string" }, prompted: { type: "string" }, uncertain: { type: "string" }, measure: { type: "string" }, evidence: { type: "array", items: { type: "string" } } } } },
         insufficient: { type: "array", items: { type: "string" }, description: "Measurements that would settle open questions." },
+      },
+    },
+  },
+}
+
+const TOOL = {
+  name: "evidence",
+  description: "Return the findings, next steps and checks of earlier findings, each citing evidence refs exactly as listed.",
+  inputSchema: {
+    json: {
+      type: "object",
+      required: ["findings", "nextSteps", "priorChecks"],
+      properties: {
+        findings:{ type: "array", items: { type: "object", required: ["kind", "text", "evidence"], properties: { kind: { enum: ["observed", "interpretation", "hypothesis"] }, text: { type: "string" }, evidence: { type: "array", items: { type: "string" } } } } },
+        nextSteps: { type: "array", maxItems: 3, items: { type: "object", required: ["change", "prompted", "uncertain", "measure", "evidence"], properties: { change: { type: "string" }, prompted: { type: "string" }, uncertain: { type: "string" }, measure: { type: "string" }, evidence: { type: "array", items: { type: "string" } } } } },
         priorChecks: { type: "array", items: { type: "object", required: ["finding", "status", "why", "evidence"], properties: { finding: { type: "string" }, status: { enum: ["supported", "challenged", "unresolved"] }, why: { type: "string" }, evidence: { type: "array", items: { type: "string" } } } } },
       },
     },
@@ -110,18 +125,22 @@ export async function read(take: TakeInfo, state: TakeState, ref: Reference | nu
     earlierFindings: prior,
     evidence: evidence.map((e) => `${e.ref} — ${e.label}`),
   }
-  const r = await client.send(
-    new ConverseCommand({
-      modelId: MODEL,
-      system: [{ text: SYSTEM }],
-      messages: [{ role: "user", content: [{ text: `Read this take for the partner.\n\n${JSON.stringify(context, null, 1)}` }] }],
-      toolConfig: { tools: [{ toolSpec: TOOL as never }], toolChoice: { tool: { name: "reading" } } },
-      inferenceConfig: { maxTokens: 2500, temperature: 0.2 },
-    }),
-  )
-  const block = r.output?.message?.content?.find((c) => "toolUse" in c && c.toolUse)
-  const input = (block && "toolUse" in block ? block.toolUse?.input : null) as Record<string, unknown> | null
-  if (!input) throw new Error("PAX returned no reading")
+  const ask = async (tool: typeof TOOL | typeof NARRATIVE, maxTokens: number) => {
+    const r = await client.send(
+      new ConverseCommand({
+        modelId: MODEL,
+        system: [{ text: SYSTEM }],
+        messages: [{ role: "user", content: [{ text: `Read this take for the partner.\n\n${JSON.stringify(context, null, 1)}` }] }],
+        toolConfig: { tools: [{ toolSpec: tool as never }], toolChoice: { tool: { name: tool.name } } },
+        inferenceConfig: { maxTokens, temperature: 0.2 },
+      }),
+    )
+    const block = r.output?.message?.content?.find((c) => "toolUse" in c && c.toolUse)
+    return (block && "toolUse" in block ? block.toolUse?.input : null) as Record<string, unknown> | null
+  }
+  const [a, b] = await Promise.all([ask(NARRATIVE, 1200), ask(TOOL, 2200)])
+  if (!a || !b) throw new Error("PAX returned no reading")
+  const input = { ...a, ...b }
   // Nested arrays sometimes arrive as JSON text; accept either.
   const arr = <T,>(x: unknown): T[] => {
     if (Array.isArray(x)) return x as T[]
