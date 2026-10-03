@@ -98,7 +98,6 @@ export function Loudness({ f }: { f: NonNullable<Features["audio"]> }) {
         <span className="flex items-center gap-1"><span className="size-2 rounded-sm bg-pax-plum" />loudest</span>
         <span className="flex items-center gap-1"><span className="size-2 rounded-sm bg-pax-red" />quietest</span>
         <span>{f.pauses.length} pauses ≥ 0.3s</span>
-        {f.pitchMedianHz && <span>pitch {f.pitchRangeHz?.[0]}–{f.pitchRangeHz?.[1]} Hz</span>}
       </div>
     </div>
   )

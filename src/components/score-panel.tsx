@@ -78,9 +78,6 @@ export function ScorePanel({ take, snapshot, score, reference, part }: { take: T
                       </span>
                     </div>
                     <RangeBar value={c.score} low={c.low} high={c.high} />
-                    <p className="text-xs text-muted-foreground">
-                      {meta.num} ÷ {meta.den} = {pct(c.rate, 2)}
-                    </p>
                   </>
                 ) : (
                   <p className="text-xs text-muted-foreground">Missing from the record.</p>

@@ -219,7 +219,7 @@ export function score(s: Snapshot, take: Take, ref: Reference, f: Formula = FORM
   const value = components.reduce((t, c) => t + (c.contribution ?? 0), 0)
   totals.sort((x, y) => x - y)
   const limited = (imp ?? 0) < f.limitedImpressions
-  if (limited) reasons.push(`Limited evidence: ${imp!.toLocaleString()} impressions. The range is wide and the score leans toward the reference average.`)
+  if (limited) reasons.push(`Evidence: ${imp!.toLocaleString()} impressions.`)
   return {
     snapshotId: s.id,
     formula: f.version,
