@@ -32,9 +32,14 @@ def start_transcribe(tid):
 
 def start_rek(tid):
     v = {"S3Object": {"Bucket": B, "Name": f"videos/{tid}.mp4"}}
-    seg = rk.start_segment_detection(Video=v, SegmentTypes=["SHOT", "TECHNICAL_CUE"])["JobId"]
-    txt = rk.start_text_detection(Video=v)["JobId"]
-    return seg, txt
+    for _ in range(60):
+        try:
+            seg = rk.start_segment_detection(Video=v, SegmentTypes=["SHOT", "TECHNICAL_CUE"])["JobId"]
+            txt = rk.start_text_detection(Video=v)["JobId"]
+            return seg, txt
+        except rk.exceptions.LimitExceededException:
+            time.sleep(15)
+    raise RuntimeError("Rekognition stayed at its open-job limit")
 
 
 def wait_transcribe(name):
@@ -136,18 +141,28 @@ def pegasus(tid):
         return {"ok": False, "raw": text[:4000]}
 
 
+def have(key):
+    try:
+        s3.head_object(Bucket=B, Key=key)
+        return True
+    except Exception:
+        return False
+
+
 ids = sys.argv[1:] or takes()
 jobs = {}
 for tid in ids:
-    jobs[tid] = {"tr": start_transcribe(tid), "rek": start_rek(tid)}
+    jobs[tid] = {"tr": None if have(f"transcribe/{tid}.json") else start_transcribe(tid)}
     print("started", tid, flush=True)
 for tid in ids:
+    # Rekognition allows 20 open jobs per account: start each take's two jobs only when its turn comes.
+    jobs[tid]["rek"] = start_rek(tid)
     feat = {"take": tid, "analyzedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     try:
         feat["audio"] = {"source": "derived", **audio_features(tid)}
     except Exception as e:
         feat["audio"] = {"error": repr(e)[:300]}
-    st = wait_transcribe(jobs[tid]["tr"])
+    st = wait_transcribe(jobs[tid]["tr"]) if jobs[tid]["tr"] else "COMPLETED"
     if st == "COMPLETED":
         t = json.loads(s3.get_object(Bucket=B, Key=f"transcribe/{tid}.json")["Body"].read())
         items = t["results"]["items"]
