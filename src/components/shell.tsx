@@ -34,9 +34,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
       key={href}
       href={href}
       className={cn(
-        "flex items-center gap-3 rounded-full px-3.5 outline-none transition-colors",
+        "flex items-center gap-3 rounded-full px-3.5 outline-none transition-[color,background-color,box-shadow]",
         small ? "py-1.5 text-[13px]" : "py-2.5 text-sm",
-        active(href) ? "bg-white font-semibold text-pax-ink shadow-e1" : "text-slate-500 hover:bg-white/70 hover:text-pax-ink",
+        active(href) ? "bg-white font-semibold text-pax-ink shadow-e1" : "text-slate-500 hover:bg-white/70 hover:text-pax-ink hover:shadow-e1",
       )}
     >
       <Icon className={small ? "size-3.5" : "size-[18px]"} strokeWidth={active(href) ? 2.25 : 1.75} />
