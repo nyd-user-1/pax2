@@ -1,0 +1,37 @@
+{
+  "polls": [
+    {
+      "pollster": "MassINC Polling Group",
+      "sponsor": "CommonWealth Beacon",
+      "reported": "2026-09-30",
+      "finding": "43% of Massachusetts voters plan to vote yes on Question 3; WBUR calls it a tight contest.",
+      "url": "https://www.wbur.org/news/2026/09/30/ballot-questions-gun-law-primaries",
+      "messageTests": false
+    }
+  ],
+  "pollingNote": "Published polling on Question 3 reports the topline only. No public poll found tests which argument for it works, so a script's framing cannot be chosen from polling; it has to be tested.",
+  "opposition": "Opponents argue a top-two primary can leave two candidates of the same party in November, favors self-funded candidates, and squeezes out third parties. Both major state parties and the AFL-CIO oppose it; supporters include officials of both parties and the NAACP.",
+  "oppositionSource": "https://www.wbur.org/news/2026/09/28/massachusetts-ballot-question-3-backers-supporters",
+  "consensus": {
+    "slug": "open-primaries",
+    "title": "Open primaries and Question 3",
+    "source": "Statements from GovBlock's open-primaries conversation, plus the central claim of each library script",
+    "statements": [
+      { "tid": 0, "text": "Primaries paid for by taxpayers should be open to every registered voter." },
+      { "tid": 1, "text": "A political party is a private association and should decide for itself who picks its nominees." },
+      { "tid": 2, "text": "Independent voters are shut out of the only election that is actually competitive where they live." },
+      { "tid": 3, "text": "Top-two primaries, where the two leading candidates advance regardless of party, produce better general elections." },
+      { "tid": 4, "text": "Opening primaries would not make elected officials any less partisan." },
+      { "tid": 5, "text": "The current system protects incumbents more than it protects parties." },
+      { "tid": 6, "text": "Nonpartisan primaries would help good candidates who do not fit either party." },
+      { "tid": 7, "text": "I would be more likely to vote in a primary if I did not have to register with a party." },
+      { "tid": 8, "text": "Whatever the rule is, it should apply to every party in the state equally." },
+      { "tid": 9, "text": "Most voters do not know their own state's primary rules, and that is the bigger problem." },
+      { "tid": 10, "text": "When most races have only one name on the ballot, voters do not really have a choice.", "script": "coin" },
+      { "tid": 11, "text": "Without competition there is no accountability.", "script": "calm" },
+      { "tid": 12, "text": "Politicians who do not have to compete do not have to listen.", "script": "listen" },
+      { "tid": 13, "text": "A top-two primary could leave two candidates of the same party on the November ballot, and that is a worse choice." },
+      { "tid": 14, "text": "All-party primaries favor candidates who can pay for their own campaigns." }
+    ]
+  }
+}
