@@ -6,7 +6,7 @@ const swatch = (c: string) => <span className="inline-block size-2.5 rounded-sm"
 
 /** Massachusetts House districts by how many names were on the 2022 general-election ballot. */
 export function UncontestedMap() {
-  const d = (ma as { districts: Record<string, number> }).districts
+  const d = (ma as unknown as { districts: Record<string, number> }).districts
   const values = Object.fromEntries(
     Object.entries(d).map(([name, n]) => [
       name,
@@ -41,7 +41,7 @@ const money = (n: number) => (n >= 1e6 ? `$${(n / 1e6).toFixed(1)}M` : n >= 1e3 
 
 /** Where reform advertisers bought Google political ads, by state. */
 export function ReformSpendMap() {
-  const s = (spend as { states: Record<string, { total: number; top: [string, number][] }> }).states
+  const s = (spend as unknown as { states: Record<string, { total: number; top: [string, number][] }> }).states
   const color = (t: number) => (t >= 1e6 ? "#1e3a8a" : t >= 1e5 ? "#2563eb" : t >= 1e4 ? "#60a5fa" : t >= 1e3 ? "#bfdbfe" : "#eff6ff")
   const tidy = (a: string) => a.replace(/ C\/O .*$/, "").replace(/, SPONSORED BY .*$/i, "").replace(/\b([A-Z]{2,})\b/g, (w) => (w.length > 3 ? w[0] + w.slice(1).toLowerCase() : w))
   const values = Object.fromEntries(Object.entries(s).map(([st, v]) => [st, { color: color(v.total), title: `${st} · ${money(v.total)}`, lines: v.top.map(([a, n]) => `${tidy(a)}: ${money(n)}`) }]))
