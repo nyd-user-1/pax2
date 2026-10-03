@@ -1,11 +1,11 @@
 import Link from "next/link"
-import { ArrowRight, Hourglass, Sparkles, Upload, Video } from "lucide-react"
+import { Hourglass, Sparkles, Upload, Video } from "lucide-react"
 
 import { FramingStrip } from "@/components/framing-strip"
 import { LoadButton } from "@/components/load-button"
 import { RecordScript } from "@/components/record/record-script"
+import { ScrollRow } from "@/components/scroll-row"
 import { ScoreInfo, SectionTitle } from "@/components/ui-pax"
-import { VideoCard } from "@/components/video-card"
 import { CLAIM, SCRIPTS, scriptById, takeLabel } from "@/lib/catalog"
 import { board, findings, loads, steps, workspace } from "@/lib/review"
 import { byScore, cardOf } from "@/lib/view"
@@ -82,27 +82,19 @@ export default async function HomePage() {
       )}
 
       {scored.length > 0 && (
-        <section className="flex flex-col gap-4">
-          <SectionTitle
-            title="Scored"
-            action={
-              <Link href="/videos" className="inline-flex items-center gap-1 text-sm font-medium text-pax-plum hover:underline">
-                See all <ArrowRight className="size-4" />
-              </Link>
-            }
-          />
-          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
-            {cards.slice(0, 5).map((c, i) => (
-              <VideoCard key={c.id} v={c} i={i} />
-            ))}
-          </div>
-          <p className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-            <span className="size-2.5 rounded-full bg-above" /> above average
-            <span className="ml-3 size-2.5 rounded-full bg-below" /> below average
-            <span className="ml-3 size-2.5 rounded-full border border-slate-300 bg-white" /> can&apos;t tell yet
-            <ScoreInfo className="ml-1" />
-          </p>
-        </section>
+        <ScrollRow
+          title="Scored"
+          href="/videos"
+          videos={cards}
+          legend={
+            <p className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+              <span className="size-2.5 rounded-full bg-above" /> above average
+              <span className="ml-3 size-2.5 rounded-full bg-below" /> below average
+              <span className="ml-3 size-2.5 rounded-full border border-slate-300 bg-white" /> can&apos;t tell yet
+              <ScoreInfo className="ml-1" />
+            </p>
+          }
+        />
       )}
 
       {scored.length > 0 && (
