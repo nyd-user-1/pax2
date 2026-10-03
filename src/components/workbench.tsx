@@ -94,7 +94,7 @@ export function Loudness({ f }: { f: NonNullable<Features["audio"]> }) {
         ))}
         <rect x={(now / f.durationSec) * 100} y={0} width={0.35} height={24} className="fill-foreground" />
       </svg>
-      <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
         <span className="flex items-center gap-1"><span className="size-2 rounded-sm bg-pax-plum" />loudest</span>
         <span className="flex items-center gap-1"><span className="size-2 rounded-sm bg-pax-red" />quietest</span>
         <span>{f.pauses.length} pauses ≥ 0.3s</span>
