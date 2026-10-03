@@ -36,7 +36,6 @@ export function LibraryBrowser({ cards }: { cards: Card[] }) {
           <Link key={c.slug} href={`/library/${c.slug}`} className="surface lift rise flex flex-col gap-3 p-5" style={{ ["--i" as string]: i }}>
             <div className="flex items-center justify-between gap-2">
               <span className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold" style={kindStyle(c.kind)}>{c.kind}</span>
-              <span className="text-[11px] text-slate-400">{c.license}</span>
             </div>
             <div>
               <p className="font-semibold leading-snug text-slate-900">{c.title}</p>

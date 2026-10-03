@@ -1,4 +1,5 @@
 import { fmt, pct, RangeBar, ScoreFigure, SourceBadge } from "@/components/bits"
+import { Term } from "@/components/term"
 import { METRIC_LABEL, type TakeInfo } from "@/lib/catalog"
 import { COMPONENTS, FORMULA_V1, logit, rawCounts, type Reference, type Score } from "@/lib/resonance"
 import { METRICS, type Snapshot } from "@/lib/types"
@@ -68,76 +69,69 @@ export function ScorePanel({ take, snapshot, score, reference }: { take: TakeInf
       {score.components.length > 0 && (
         <details className="group rounded-xl border">
           <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-pax-ink">
-            Trace this score from the raw records <span className="text-muted-foreground group-open:hidden">↓</span>
+            From the records to the score <span className="text-muted-foreground group-open:hidden">↓</span>
           </summary>
           <div className="overflow-x-auto px-4 pb-4">
-            <table className="tabular w-full min-w-[640px] text-xs">
-              <thead className="text-left text-muted-foreground">
-                <tr>
-                  <th className="py-1 pr-3 font-normal">Step</th>
+            <table className="tabular w-full text-sm">
+              <thead className="text-left text-xs text-slate-500">
+                <tr className="[&_th]:whitespace-nowrap [&_th]:py-2 [&_th]:pr-6 [&_th]:font-medium">
+                  <th />
                   {score.components.map((c) => (
-                    <th key={c.key} className="py-1 pr-3 font-normal">
-                      {COMPONENTS.find((x) => x.key === c.key)!.name}
+                    <th key={c.key}>
+                      <Term id={c.key}>{COMPONENTS.find((x) => x.key === c.key)!.name}</Term> <span className="font-normal text-slate-400">· {(c.weight * 100).toFixed(0)}%</span>
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="[&_td]:border-t [&_td]:py-1.5 [&_td]:pr-3">
+              <tbody className="[&_td]:whitespace-nowrap [&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2 [&_td]:pr-6">
                 <tr>
-                  <td>1. Counts from the record</td>
+                  <td className="text-slate-500"><Term id="counts" /></td>
                   {score.components.map((c) => (
-                    <td key={c.key}>{raws[c.key] ? `${fmt(raws[c.key]!.x, 1)} of ${fmt(raws[c.key]!.n)}` : "—"}</td>
+                    <td key={c.key}>{raws[c.key] ? <>{fmt(raws[c.key]!.x)} <span className="text-slate-400">/ {fmt(raws[c.key]!.n)}</span></> : "—"}</td>
                   ))}
                 </tr>
                 <tr>
-                  <td>2. Observed rate</td>
+                  <td className="text-slate-500"><Term id="rate" /></td>
                   {score.components.map((c) => (
-                    <td key={c.key}>{pct(c.rate, 3)}</td>
+                    <td key={c.key}>{pct(c.rate, 2)}</td>
                   ))}
                 </tr>
                 <tr>
-                  <td>3. Reference average (pooled, frozen)</td>
+                  <td className="text-slate-500"><Term id="reference-average" /></td>
                   {score.components.map((c) => (
-                    <td key={c.key}>{pct(reference.pooled[c.key], 3)}</td>
+                    <td key={c.key}>{pct(reference.pooled[c.key], 2)}</td>
                   ))}
                 </tr>
                 <tr>
-                  <td>4. Evidence-weighted rate: (count + k × average) ÷ (n + k)</td>
+                  <td className="text-slate-500"><Term id="weighted-rate" /></td>
                   {score.components.map((c) => (
-                    <td key={c.key}>
-                      {pct(c.shrunk, 3)} <span className="text-muted-foreground">k = {FORMULA_V1.priorStrength[c.key].toLocaleString()}</span>
-                    </td>
+                    <td key={c.key}>{pct(c.shrunk, 2)}</td>
                   ))}
                 </tr>
                 <tr>
-                  <td>5. Distance from the reference, in reference spreads</td>
+                  <td className="text-slate-500"><Term id="distance" /></td>
                   {score.components.map((c) => (
                     <td key={c.key}>{c.shrunk != null ? ((logit(c.shrunk) - reference.mean[c.key]) / reference.sd[c.key]).toFixed(2) : "—"}</td>
                   ))}
                 </tr>
                 <tr>
-                  <td>6. Component score: share of a normal curve below that distance × 100</td>
+                  <td className="text-slate-500"><Term id="component-score" /></td>
                   {score.components.map((c) => (
                     <td key={c.key}>{c.score?.toFixed(1)}</td>
                   ))}
                 </tr>
                 <tr>
-                  <td>7. × weight</td>
+                  <td className="text-slate-500"><Term id="weight" /></td>
                   {score.components.map((c) => (
-                    <td key={c.key}>
-                      {c.score?.toFixed(1)} × {(c.weight * 100).toFixed(0)}% = {c.contribution?.toFixed(1)}
-                    </td>
+                    <td key={c.key}>{c.contribution?.toFixed(1)}</td>
                   ))}
                 </tr>
-                <tr className="font-medium text-pax-ink">
-                  <td>8. Resonance = sum</td>
+                <tr className="font-semibold text-pax-ink">
+                  <td><Term id="resonance" /></td>
                   <td colSpan={3}>{score.value?.toFixed(1)}</td>
                 </tr>
               </tbody>
             </table>
-            <p className="mt-3 max-w-3xl text-xs leading-relaxed text-muted-foreground">
-              Steps 1–2 are platform counts. Steps 3–6 compare against the reference scale frozen when the first round loaded ({reference.n} flights). Step 4 is what keeps a small budget from producing an extreme score: a rate built on few impressions is pulled toward the average in proportion to how little evidence it has. The range comes from 400 draws of each rate consistent with its counts.
-            </p>
           </div>
         </details>
       )}
