@@ -6,7 +6,7 @@ import { UploadExport } from "@/components/upload-export"
 import { scriptById, takeLabel } from "@/lib/catalog"
 import type { Reading } from "@/lib/pax"
 import { COMPONENTS } from "@/lib/resonance"
-import { board, findings, forecasts, loads, steps, workspace } from "@/lib/review"
+import { board, findings, forecasts, loads, steps, submissions, workspace } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
 
 export const dynamic = "force-dynamic"
@@ -18,7 +18,7 @@ const SIDE: Record<Side, string> = { above: "above the reference average", below
 
 export default async function ReviewsPage() {
   const ws = await workspace()
-  const [{ ref, takes }, history] = await Promise.all([board(ws), loads(ws)])
+  const [{ ref, takes }, history, sent] = await Promise.all([board(ws), loads(ws), submissions(ws)])
   const perTake = await Promise.all(takes.map(async (t) => ({ t, fs: await findings(ws, t.take.id), ev: await steps(ws, t.take.id), calls: await forecasts(ws, t.take.id) })))
   const loaded = new Set(history.map((h) => h.dataset))
   const r2 = loaded.has("round-2")
@@ -75,6 +75,30 @@ export default async function ReviewsPage() {
           {r2 && <LoadButton dataset="round-2" label="Load round 2 again" variant="outline" />}
           <UploadExport />
         </div>
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="font-display text-2xl text-pax-ink">Sent by volunteers</h2>
+          <Link href="/record" className="text-sm text-primary underline">
+            Open the recording flow
+          </Link>
+        </div>
+        {sent.length === 0 ? (
+          <p className="text-sm text-muted-foreground">No videos sent yet.</p>
+        ) : (
+          <ul className="grid gap-2 md:grid-cols-2">
+            {sent.map((s) => (
+              <li key={s.sk} className="flex flex-col gap-1 rounded-xl border px-4 py-3 text-sm">
+                <span className="font-medium text-pax-ink">{s.title ?? "Uploaded video"}</span>
+                <span className="text-xs text-muted-foreground">
+                  {[s.name, s.role, s.town].filter(Boolean).join(" · ") || "No description"} · {s.seconds}s · sent {new Date(s.at).toLocaleString()}
+                </span>
+                <span className="w-fit rounded-full bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">{s.status}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <section className="flex flex-col gap-3">

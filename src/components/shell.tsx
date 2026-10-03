@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BookOpenCheck, Clapperboard, Database, FlaskConical, Hammer, LayoutGrid, NotebookPen, Sigma } from "lucide-react"
+import { BookOpenCheck, Clapperboard, Database, FlaskConical, Hammer, LayoutGrid, NotebookPen, Sigma, Video } from "lucide-react"
 
 import { cn } from "@/ui/lib/utils"
 
@@ -20,6 +20,8 @@ const NAV = [
 export function Shell({ children }: { children: React.ReactNode }) {
   const path = usePathname()
   const active = (href: string) => (href === "/" ? path === "/" || path.startsWith("/v/") : path.startsWith(href))
+  // The volunteer's recording flow is its own front door, without the partner's sidebar.
+  if (path.startsWith("/record")) return <div className="min-h-dvh bg-pax-mist">{children}</div>
   return (
     <div className="flex min-h-dvh">
       <aside className="sticky top-0 hidden h-dvh w-56 shrink-0 flex-col border-r bg-pax-mist px-3 py-4 md:flex">
@@ -42,7 +44,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
             </Link>
           ))}
         </nav>
-        <div className="mt-auto px-2 text-xs leading-relaxed text-muted-foreground">Massachusetts · Question 3 · open primaries</div>
+        <div className="mt-auto flex flex-col gap-3 px-2">
+          <Link href="/record" className="flex items-center justify-center gap-2 rounded-full bg-pax-ink px-3 py-2 text-sm font-medium text-white">
+            <Video className="size-4" /> Record a video
+          </Link>
+          <span className="text-xs leading-relaxed text-muted-foreground">Massachusetts · Question 3 · open primaries</span>
+        </div>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-20 flex items-center gap-2 border-b bg-background/90 px-4 py-2 backdrop-blur md:hidden">

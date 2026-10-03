@@ -139,3 +139,7 @@ export async function recordVote(ws: string, conversation: string, voter: string
   // One vote per person per statement; a changed mind is a new item, the latest counts.
   await putOnce({ pk: k(ws, `VOTE#${conversation}`), sk: `${voter}#${String(tid).padStart(3, "0")}#${at}`, at, voter, tid, vote })
 }
+
+export type Submission = Item & { at: string; status: string; key: string; title?: string; text?: string; name?: string; role?: string; town?: string; seconds: number; consent: boolean }
+/** Videos volunteers sent through the recording flow, newest first. */
+export const submissions = async (ws: string) => (await query<Submission>(k(ws, "SUBMIT"))).sort((a, b) => b.at.localeCompare(a.at))

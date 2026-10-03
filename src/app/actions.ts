@@ -84,3 +84,55 @@ export async function freshReview() {
   revalidatePath("/", "layout")
   return id
 }
+
+/** Write a volunteer's script from their own answers, on the framing that is scoring best so far. */
+export async function writeScript(input: { name: string; role: string; town: string; why: string; moment: string }) {
+  const { BedrockRuntimeClient, ConverseCommand } = await import("@aws-sdk/client-bedrock-runtime")
+  const { SCRIPTS } = await import("@/lib/catalog")
+  const ws = await workspace()
+  const { takes } = await board(ws)
+  const mean = (id: string) => {
+    const xs = takes.filter((t) => t.take.scriptId === id && t.latest?.score.value != null).map((t) => t.latest!.score.value!)
+    return xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null
+  }
+  const ranked = SCRIPTS.map((s) => ({ s, m: mean(s.id) })).sort((a, b) => (b.m ?? -1) - (a.m ?? -1))
+  const base = ranked[0].m != null ? ranked[0] : { s: SCRIPTS.find((s) => s.id === "calm")!, m: null }
+  const client = new BedrockRuntimeClient({ region: process.env.PAX_REGION ?? "us-east-1" })
+  const prompt = `Write a script a volunteer will read to a phone camera, 80 to 110 words, in the first person, in plain spoken English that sounds like this person, not like a campaign.
+Build it on this argument (keep its core claim and framing): "${base.s.title}" — ${base.s.framing}
+Reference text of that argument:
+${base.s.text}
+
+About the volunteer, in their words:
+- Name: ${input.name || "(not given)"}
+- Who they are: ${input.role || "(not given)"}${input.town ? `, ${input.town}` : ""}
+- Why this matters to them: ${input.why}
+- A moment they felt they had no real choice: ${input.moment || "(not given)"}
+
+Rules: open with one short line that would make someone stop scrolling; use one of their own details; keep any number only if it appears in the reference text; end with "Vote yes on Question 3." Return only the script, line breaks between sentences groups, no title.`
+  const r = await client.send(new ConverseCommand({ modelId: process.env.PAX_MODEL ?? "us.anthropic.claude-sonnet-4-6", messages: [{ role: "user", content: [{ text: prompt }] }], inferenceConfig: { maxTokens: 500, temperature: 0.6 } }))
+  const text = r.output?.message?.content?.map((c) => ("text" in c ? c.text : "")).join("").trim() ?? ""
+  return { text, basedOn: base.s.id, basedOnTitle: base.s.title, why: base.m != null ? `the framing scoring best so far (average Resonance ${base.m.toFixed(0)})` : "the framing with the strongest research prior, until paid results arrive" }
+}
+
+/** A short-lived upload link for one recording, straight to S3 (the app server never holds the video). */
+export async function uploadUrl(contentType: string) {
+  const { S3Client, PutObjectCommand } = await import("@aws-sdk/client-s3")
+  const { getSignedUrl } = await import("@aws-sdk/s3-request-presigner")
+  const ws = await workspace()
+  const ext = contentType.includes("mp4") ? "mp4" : contentType.includes("quicktime") ? "mov" : "webm"
+  const id = `sub-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`
+  const key = `uploads/${ws}/${id}.${ext}`
+  const s3 = new S3Client({ region: process.env.PAX_REGION ?? "us-east-1" })
+  const url = await getSignedUrl(s3, new PutObjectCommand({ Bucket: process.env.PAX_BUCKET ?? "pax-638175140432", Key: key, ContentType: contentType }), { expiresIn: 900 })
+  return { id, key, url }
+}
+
+/** Record a sent video with its script and the messenger's own description; PAX reviews it next. */
+export async function submitTake(input: { id: string; key: string; scriptId?: string; title?: string; text?: string; name?: string; role?: string; town?: string; seconds: number; consent: boolean }) {
+  const ws = await workspace()
+  const { putOnce, now } = await import("@/lib/ledger")
+  await putOnce({ pk: `${ws}#SUBMIT`, sk: input.id, at: now(), status: "awaiting review", ...input })
+  revalidatePath("/reviews")
+  return { ok: true }
+}
