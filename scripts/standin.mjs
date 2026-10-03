@@ -1,0 +1,58 @@
+// Stand-in paid results in Meta Ads Manager's export format, until the partner's own export arrives.
+// Deterministic (seeded), no effects planted: each take gets a random quality draw, each flight a
+// random budget, so budget and quality are independent by construction.
+// Round 1: flights Sep 20 – Oct 2, reported Oct 3. Round 2: the same flights through Oct 16,
+// plus the short cut of "listen" that launched Oct 6. Writes data/standin/round-{1,2}.csv.
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs"
+
+const takes = JSON.parse(readFileSync(new URL("../data/takes.json", import.meta.url)))
+let h = 2166136261
+const rnd = () => ((h = Math.imul(h ^ (h >>> 15), 2246822519) + 1013904223), ((h >>> 0) % 1e6) / 1e6)
+const norm = () => Math.sqrt(-2 * Math.log(rnd() || 1e-9)) * Math.cos(2 * Math.PI * rnd())
+const inv = (z) => 1 / (1 + Math.exp(-z))
+
+const COLS = ["Ad name", "Ad ID", "Reporting starts", "Reporting ends", "Placement", "Amount spent (USD)", "Impressions", "Reach", "3-second video plays", "ThruPlays", "Video plays at 25%", "Video plays at 50%", "Video plays at 75%", "Video plays at 100%", "Video average play time", "Post shares", "Post saves", "Post comments", "Post reactions", "Link clicks"]
+
+const quality = {}
+for (const t of takes) quality[t.id] = { hook: norm() * 0.35, hold: norm() * 0.3, act: norm() * 0.4, budget: 40 + Math.round(rnd() * 360), cpm: 6 + rnd() * 9 }
+
+function row(t, start, end, scale) {
+  const q = quality[t.id]
+  const spend = +(q.budget * scale).toFixed(2)
+  const impressions = Math.round((spend / q.cpm) * 1000)
+  const reach = Math.round(impressions / (1.15 + rnd() * 0.5))
+  const hook = inv(-1.1 + q.hook)
+  const plays = Math.round(impressions * hook)
+  const watchShare = inv(-0.5 + q.hold - t.durationSec / 120)
+  const avg = +(watchShare * t.durationSec).toFixed(1)
+  const surv = (p) => Math.round(plays * Math.pow(watchShare, p * 1.6))
+  const actRate = inv(-4.2 + q.act)
+  const acts = plays * actRate
+  return [t.title, `ad-${t.id}`, start, end, "Instagram Reels", spend, impressions, reach, plays, Math.round(plays * Math.min(1, (15 / t.durationSec) * watchShare * 1.4)), surv(0.25), surv(0.5), surv(0.75), surv(1), avg, Math.round(acts * 0.45), Math.round(acts * 0.25), Math.round(acts * 0.3), Math.round(plays * actRate * 2.2), Math.round(impressions * 0.004 * inv(q.act))]
+}
+
+const csv = (rows) => [COLS, ...rows].map((r) => r.map((c) => (typeof c === "string" && /[",]/.test(c) ? `"${c.replace(/"/g, '""')}"` : c)).join(",")).join("\n") + "\n"
+mkdirSync(new URL("../data/standin/", import.meta.url), { recursive: true })
+const late = new Set(["listen-stephen-short"])
+const r1 = takes.filter((t) => !late.has(t.id)).map((t) => row(t, "2026-09-20", "2026-10-02", 1))
+// Round 2 is cumulative: round 1 plus a second window (Oct 3 – 16) in which audiences have seen the ad
+// more often (a small, uniform drop in the hook) and each take's rates wander a little.
+function window2(t) {
+  const q = quality[t.id]
+  const keep = { ...q }
+  Object.assign(q, { hook: q.hook - 0.12 + norm() * 0.15, hold: q.hold + norm() * 0.12, act: q.act + norm() * 0.2 })
+  const r = row(t, "2026-10-03", "2026-10-16", 1.1)
+  Object.assign(q, keep)
+  return r
+}
+function add(a, b) {
+  const out = [...a]
+  out[3] = b[3]
+  for (let i = 5; i < COLS.length; i++) out[i] = i === 14 ? +((a[14] * a[8] + b[14] * b[8]) / (a[8] + b[8])).toFixed(1) : +(Number(a[i]) + Number(b[i])).toFixed(2)
+  return out
+}
+const r1ById = new Map(r1.map((r, i) => [takes.filter((t) => !late.has(t.id))[i].id, r]))
+const r2 = takes.map((t) => (late.has(t.id) ? row(t, "2026-10-06", "2026-10-16", 0.9) : add(r1ById.get(t.id), window2(t))))
+writeFileSync(new URL("../data/standin/round-1.csv", import.meta.url), csv(r1))
+writeFileSync(new URL("../data/standin/round-2.csv", import.meta.url), csv(r2))
+console.log(r1.length, r2.length)
