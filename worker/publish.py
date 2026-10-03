@@ -37,8 +37,14 @@ def takes():
 
 
 def features():
+    allf = {}
     for k in objs("features/"):
-        write(f"features/{k.split('/')[-1]}", load(k))
+        f = load(k)
+        # Word-level timings stay in S3; the app needs the transcript text and per-second series.
+        if isinstance(f.get("transcript"), dict):
+            f["transcript"]["words"] = [{"t": w["t"], "w": w["w"]} for w in f["transcript"].get("words", [])]
+        allf[f["take"]] = f
+    write("features.json", allf)
 
 
 def model():

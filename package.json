@@ -23,7 +23,9 @@
     "react-dom": "19.2.4",
     "recharts": "3.8.0",
     "tailwind-merge": "^3.6.0",
-    "zod": "^4.4.3"
+    "zod": "^4.4.3",
+    "@aws-sdk/s3-request-presigner": "^3.1129.0",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
