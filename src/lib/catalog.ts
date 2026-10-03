@@ -154,3 +154,12 @@ export function parseExport(text: string, dataset: string, asOf: string, source:
 }
 
 export const takeOfFlight = (flightId: string) => flightId.replace(/^fl-/, "")
+
+// Stand-in faces for the stand-in voices (Unsplash, free to use, hotlinked as Unsplash asks),
+// one per messenger so a voice keeps its face across takes. Replaced by real posters with real videos.
+const FACES: Record<string, string> = {
+  Ruth: "https://images.unsplash.com/photo-1758273706454-b85bc7796b5e",
+  Danielle: "https://images.unsplash.com/photo-1758874384555-de68b8035c24",
+  Stephen: "https://images.unsplash.com/photo-1758874574136-6506197be737",
+}
+export const faceFor = (voice: string, w = 480) => (FACES[voice] ? `${FACES[voice]}?w=${w}&h=${Math.round(w * 16 / 9)}&fit=crop&crop=faces&q=70` : undefined)

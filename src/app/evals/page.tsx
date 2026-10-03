@@ -4,7 +4,8 @@ import { StandInNote } from "@/components/bits"
 import { LoadButton } from "@/components/load-button"
 import { UploadExport } from "@/components/upload-export"
 import { SlopeChart } from "@/components/charts/slope"
-import { scriptById, takeLabel } from "@/lib/catalog"
+import { faceFor, scriptById, takeLabel } from "@/lib/catalog"
+import { SAMPLE_CALLS, SAMPLE_DECISIONS, SAMPLE_SENT } from "@/lib/sample"
 import { toneOf } from "@/lib/tone"
 import type { Reading } from "@/lib/pax"
 import { COMPONENTS } from "@/lib/resonance"
@@ -80,14 +81,23 @@ export default async function ReviewsPage() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="font-display text-xl text-slate-900">Sent by volunteers</h2>
-          <Link href="/record" className="text-sm text-primary underline">
-            Open the recording flow
-          </Link>
-        </div>
+        <SampleTitle title="Sent by volunteers" sample={sent.length === 0} />
         {sent.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No videos sent yet.</p>
+          <ul className="grid gap-3 md:grid-cols-2">
+            {SAMPLE_SENT.map((s, i) => (
+              <li key={i} className="surface flex items-center gap-4 px-4 py-3 text-sm">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={faceFor(["Ruth", "Stephen", "Danielle"][i % 3], 120)} alt="" className="h-14 w-10 shrink-0 rounded-lg object-cover" />
+                <span className="flex flex-1 flex-col gap-0.5">
+                  <span className="font-medium text-slate-900">{s.title}</span>
+                  <span className="text-xs text-slate-500">
+                    {s.name}, {s.role}, {s.town} · {s.seconds}s · {new Date(s.at).toLocaleDateString()}
+                  </span>
+                </span>
+                <span className={cn("rounded-full px-2.5 py-0.5 text-[11px] font-medium", s.status === "scored" ? "bg-above-soft text-above" : s.status === "running" ? "bg-pax-lavender text-pax-ink" : "bg-slate-100 text-slate-600")}>{s.status}</span>
+              </li>
+            ))}
+          </ul>
         ) : (
           <ul className="grid gap-2 md:grid-cols-2">
             {sent.map((s) => (
@@ -104,9 +114,24 @@ export default async function ReviewsPage() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <h2 className="font-display text-xl text-slate-900">What the partner carries into this review</h2>
+        <SampleTitle title="What the partner carries into this review" sample={carried.length === 0} />
         {carried.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No decisions yet. Open a take, ask PAX for a reading, and approve, revise or save a next test.</p>
+          <div className="grid gap-3 md:grid-cols-2">
+            {SAMPLE_DECISIONS.map((d) => {
+              const t = takes.find((x) => x.take.id === d.take)!
+              return (
+                <Link key={d.take} href={`/v/${d.take}`} scroll={false} className="surface lift flex flex-col gap-1.5 p-4">
+                  <span className="flex items-center justify-between gap-2 text-xs text-slate-500">
+                    {scriptById(t.take.scriptId)!.short} · {takeLabel(t.take)}
+                    <span className={cn("rounded-full px-2 py-0.5 text-[11px] font-semibold", d.status === "made" ? "bg-above text-white" : d.status === "approved" ? "bg-pax-ink text-white" : d.status === "revised" ? "bg-pax-lavender text-pax-ink" : "bg-slate-100 text-slate-600")}>{d.status}</span>
+                  </span>
+                  <span className="font-medium leading-snug text-slate-900">{d.change}</span>
+                  <span className="text-xs text-slate-500">How to tell: {d.measure}</span>
+                  <span className="text-[11px] text-slate-400">Decided {new Date(d.at).toLocaleDateString()} against a score of {d.score}</span>
+                </Link>
+              )
+            })}
+          </div>
         ) : (
           <div className="grid gap-3 md:grid-cols-2">
             {carried.map(({ t, e, finding }) => (
@@ -212,9 +237,27 @@ export default async function ReviewsPage() {
       )}
 
       <section className="flex flex-col gap-3">
-        <h2 className="font-display text-xl text-slate-900">Calls</h2>
+        <SampleTitle title="Calls" sample={resolved.length === 0} />
         {resolved.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No calls logged. On any take, “Call it” records a prediction before the next results load.</p>
+          <div className="flex flex-col gap-3">
+            <p className="text-sm text-slate-600">
+              Partner: <b>{SAMPLE_CALLS.filter((c) => c.right).length} of {SAMPLE_CALLS.length}</b> right. <span className="text-slate-400">The “no change” baseline: {SAMPLE_CALLS.filter((c) => c.actual === "same").length} of {SAMPLE_CALLS.length}.</span>
+            </p>
+            <ul className="flex flex-col gap-2">
+              {SAMPLE_CALLS.map((c) => {
+                const t = takes.find((x) => x.take.id === c.take)!
+                return (
+                  <li key={c.take} className="surface flex flex-wrap items-center gap-3 px-4 py-3 text-sm">
+                    <span className="rounded-full bg-pax-lavender px-2 py-0.5 text-[11px] font-medium text-pax-ink">Locked {new Date(c.at).toLocaleDateString()}</span>
+                    <span className="text-slate-700">
+                      {scriptById(t.take.scriptId)!.short} · {t.take.voice}: called <b>{c.predicted}</b> than {c.baseline}
+                    </span>
+                    <span className={cn("ml-auto font-semibold", c.right ? "text-above" : "text-below")}>{c.right ? "Right" : "Wrong"} · came in {c.actual}</span>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
         ) : (
           <>
             {resolved.some((r) => r.right != null) && (
@@ -239,6 +282,15 @@ export default async function ReviewsPage() {
       </section>
 
       <StandInNote />
+    </div>
+  )
+}
+
+function SampleTitle({ title, sample }: { title: string; sample: boolean }) {
+  return (
+    <div className="flex items-center gap-3">
+      <h2 className="font-display text-xl text-slate-900">{title}</h2>
+      {sample && <span className="rounded-full bg-pax-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax-red-deep">Sample data</span>}
     </div>
   )
 }

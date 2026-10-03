@@ -7,7 +7,7 @@ import { ScorePanel } from "@/components/score-panel"
 import { CountUp, ScoreInfo } from "@/components/ui-pax"
 import { TONE_LABEL, toneClasses, toneOf } from "@/lib/tone"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
-import { featuresFor, scriptById, takeById, takeLabel } from "@/lib/catalog"
+import { faceFor, featuresFor, scriptById, takeById, takeLabel } from "@/lib/catalog"
 import { evidenceIndex, type Reading } from "@/lib/pax"
 import { board, DATASETS, findings, forecasts, loads, steps, workspace } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
@@ -51,7 +51,7 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
     <SeekProvider>
       <div className={cn("grid gap-8", inDrawer ? "lg:grid-cols-[280px_1fr]" : "lg:grid-cols-[320px_1fr]")}>
         <aside className="flex flex-col gap-4 lg:sticky lg:top-0 lg:self-start">
-          <Player src={take.video!.src} poster={take.video!.poster} />
+          <Player src={take.video!.src} poster={faceFor(take.voice, 640) ?? take.video!.poster} />
           {f?.audio && !f.audio.error && (
             <div className="surface p-4">
               <Loudness f={f.audio} />

@@ -1,4 +1,4 @@
-import { scriptById } from "@/lib/catalog"
+import { faceFor, scriptById } from "@/lib/catalog"
 import type { TakeState } from "@/lib/review"
 import type { VideoCardData } from "@/components/video-card"
 
@@ -17,6 +17,8 @@ export function cardOf(t: TakeState): VideoCardData {
     high: s?.high ?? null,
     status: s ? s.status : "none",
     impressions: t.latest?.snapshot.metrics.impressions.value ?? null,
+    poster: faceFor(t.take.voice),
+    published: t.history[0]?.snapshot.windowStart,
   }
 }
 

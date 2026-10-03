@@ -19,6 +19,8 @@ export type VideoCardData = {
   high: number | null
   status: "scored" | "limited" | "unscorable" | "none"
   impressions: number | null
+  poster?: string
+  published?: string
 }
 
 /** A take as people expect a video: the frame first, the number on it. Opens in the drawer. */
@@ -28,7 +30,7 @@ export function VideoCard({ v, i = 0, size = "md" }: { v: VideoCardData; i?: num
     <Link href={`/v/${v.id}`} scroll={false} className="rise group flex flex-col gap-2.5" style={{ ["--i" as string]: i }}>
       <div className={cn("lift relative aspect-[9/16] overflow-hidden rounded-2xl bg-slate-900 shadow-e2", size === "lg" && "rounded-3xl")}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`/api/video/${v.id}?poster=1`} alt="" loading="lazy" className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+        <img src={v.poster ?? `/api/video/${v.id}?poster=1`} alt="" loading="lazy" className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/10" />
         <div className="absolute left-2.5 top-2.5 flex items-center gap-1.5">
           {v.score != null ? (

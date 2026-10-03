@@ -5,6 +5,7 @@ import { Stat2 } from "@/components/dash/stats"
 import { SectionTitle } from "@/components/ui-pax"
 import { SCRIPTS, scriptById, takeLabel } from "@/lib/catalog"
 import { board, findings, forecasts, loads, picks, steps, submissions, votes, workspace } from "@/lib/review"
+import { SAMPLE_ACTIVITY, SAMPLE_COUNTS, SAMPLE_FEED, SAMPLE_SENT } from "@/lib/sample"
 import { toneOf } from "@/lib/tone"
 
 export const dynamic = "force-dynamic"
@@ -75,29 +76,41 @@ export default async function DashboardPage() {
     .sort((a, b) => b.at.localeCompare(a.at))
     .slice(0, 8)
 
+  // Until the ledger has activity, show the page's full shape with sample data, labeled as such.
+  const demo = !readings.length && !sent.length && !decided.length
+  const show = demo
+    ? { sent: SAMPLE_SENT.length, sentNote: "Latest today", calls: `${SAMPLE_COUNTS.callsRight} of ${SAMPLE_COUNTS.callsTotal}`, activity: SAMPLE_ACTIVITY, readings: SAMPLE_COUNTS.readings, decisions: SAMPLE_COUNTS.decisions, votes: SAMPLE_COUNTS.votes, feed: SAMPLE_FEED }
+    : { sent: sent.length, sentNote: sent.length ? `Latest ${new Date(sent[0].at).toLocaleDateString()}` : "None yet", calls: resolved.length ? `${resolved.filter(Boolean).length} of ${resolved.length}` : "—", activity, readings: readings.length, decisions: decided.length, votes: voteRows.length, feed }
+  if (demo) {
+    funnel[0].n = SAMPLE_COUNTS.proposed
+    funnel[1].n = SAMPLE_COUNTS.approved
+    funnel[2].n = SAMPLE_COUNTS.made
+  }
+  const fmaxShown = Math.max(1, ...funnel.map((f) => f.n))
+
   return (
     <div className="flex flex-col gap-10">
-      <header className="rise flex flex-col gap-2">
+      <header className="rise flex flex-wrap items-center gap-3">
         <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Dashboard</h1>
-        <p className="text-slate-500">What has been made, read and decided across the campaign.</p>
+        {demo && <span className="rounded-full bg-pax-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax-red-deep">Sample data</span>}
       </header>
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Stat2 title="Videos in rotation" value={takes.length} footer={`${SCRIPTS.length} scripts · ${new Set(takes.map((t) => t.take.voice)).size} messengers`} />
-        <Stat2 title="Sent by volunteers" value={sent.length} footer={sent.length ? `Latest ${new Date(sent[0].at).toLocaleDateString()}` : "None yet"} />
+        <Stat2 title="Sent by volunteers" value={show.sent} footer={show.sentNote} />
         <Stat2 title="People reached" value={reach.toLocaleString()} footer={`$${Math.round(spend).toLocaleString()} spent across ${latest.length} flights`} />
-        <Stat2 title="Calls right" value={resolved.length ? `${resolved.filter(Boolean).length} of ${resolved.length}` : "—"} footer={resolved.length ? "Predictions locked before results" : "No calls resolved yet"} />
+        <Stat2 title="Calls right" value={show.calls} footer="Predictions locked before results" />
       </section>
 
       <section className="grid gap-4 lg:grid-cols-[2fr_1fr]">
         <Chart3
           title="Activity by day"
-          data={activity.length ? activity : [{ date: new Date().toISOString().slice(0, 10), item1: 0, item2: 0 }]}
+          data={show.activity.length ? show.activity : [{ date: new Date().toISOString().slice(0, 10), item1: 0, item2: 0 }]}
           labels={{ item1: "Readings and decisions", item2: "Volunteer input" }}
           figures={[
-            { label: "PAX readings", value: readings.length },
-            { label: "Decisions", value: decided.length },
-            { label: "Consensus votes", value: voteRows.length },
+            { label: "PAX readings", value: show.readings },
+            { label: "Decisions", value: show.decisions },
+            { label: "Consensus votes", value: show.votes },
           ]}
           fileName="pax-activity"
         />
@@ -114,7 +127,7 @@ export default async function DashboardPage() {
                 <span className="tabular font-semibold text-slate-900">{f.n}</span>
               </div>
               <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
-                <div className="grow h-full rounded-full bg-pax-ink" style={{ width: `${(f.n / fmax) * 100}%`, ["--i" as string]: i }} />
+                <div className="grow h-full rounded-full bg-pax-ink" style={{ width: `${(f.n / fmaxShown) * 100}%`, ["--i" as string]: i }} />
               </div>
             </div>
           ))}
@@ -124,9 +137,9 @@ export default async function DashboardPage() {
         </div>
         <div className="surface flex flex-col gap-3 p-6">
           <SectionTitle title="Latest" />
-          {feed.length ? (
+          {show.feed.length ? (
             <ol className="flex flex-col">
-              {feed.map((f, i) => (
+              {show.feed.map((f, i) => (
                 <li key={i} className="rise flex items-start gap-3 border-b border-slate-100 py-2.5 text-sm last:border-0" style={{ ["--i" as string]: i }}>
                   <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-pax-plum" />
                   <span className="flex-1 text-slate-700">{f.text}</span>

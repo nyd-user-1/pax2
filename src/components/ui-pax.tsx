@@ -11,10 +11,8 @@ import { cn } from "@/ui/lib/utils"
 /** A number that counts up the first time it appears. */
 export function CountUp({ value, decimals = 0, className }: { value: number; decimals?: number; className?: string }) {
   const [shown, setShown] = React.useState(value)
-  const done = React.useRef(false)
   React.useEffect(() => {
-    if (done.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-    done.current = true
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
     const start = performance.now()
     const dur = 700
     let raf = 0
@@ -25,7 +23,10 @@ export function CountUp({ value, decimals = 0, className }: { value: number; dec
     }
     setShown(0)
     raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      cancelAnimationFrame(raf)
+      setShown(value)
+    }
   }, [value])
   return <span className={cn("tabular", className)}>{shown.toFixed(decimals)}</span>
 }
