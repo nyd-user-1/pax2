@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, Check, Download, ExternalLink, Minus } from "lucide-react"
 
 import { bytes, count, datasetBySlug } from "@/lib/library"
+import { kindStyle, tagStyle } from "@/lib/swatches"
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const d = datasetBySlug((await params).slug)
@@ -24,13 +25,13 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
 
       <header className="rise flex flex-wrap items-start justify-between gap-6">
         <div className="flex max-w-3xl flex-col gap-2">
-          <span className="w-fit rounded-full bg-pax-lavender px-2.5 py-0.5 text-[11px] font-semibold text-pax-ink">{d.kind}</span>
+          <span className="w-fit rounded-full px-2.5 py-0.5 text-[11px] font-semibold" style={kindStyle(d.kind)}>{d.kind}</span>
           <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">{d.title}</h1>
           <p className="text-slate-500">{d.publisher}</p>
           <p className="text-lg leading-relaxed text-slate-700">{d.summary}</p>
           <div className="flex flex-wrap gap-1.5 pt-1">
             {d.tags.map((x) => (
-              <span key={x} className="rounded-full bg-white px-2.5 py-0.5 text-xs text-slate-600 shadow-e1">
+              <span key={x} className="rounded-full px-2.5 py-0.5 text-xs font-medium" style={tagStyle(x)}>
                 {x}
               </span>
             ))}

@@ -4,6 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { Search } from "lucide-react"
 
+import { kindStyle, tagStyle } from "@/lib/swatches"
 import { cn } from "@/ui/lib/utils"
 
 export type Card = { slug: string; title: string; publisher: string; summary: string; kind: string; tags: string[]; license: string; size: string; rows: string | null; used: number }
@@ -24,7 +25,7 @@ export function LibraryBrowser({ cards }: { cards: Card[] }) {
         </label>
         <div className="flex flex-wrap gap-2">
           {[null, ...kinds].map((k) => (
-            <button key={k ?? "all"} type="button" onClick={() => setKind(k)} className={cn("rounded-full px-3.5 py-1.5 text-sm transition-colors", kind === k ? "bg-pax-ink font-medium text-white" : "bg-white text-slate-600 shadow-e1 hover:text-pax-ink")}>
+            <button key={k ?? "all"} type="button" onClick={() => setKind(k)} style={k && kind === k ? kindStyle(k) : undefined} className={cn("rounded-full px-3.5 py-1.5 text-sm transition-colors", kind === k ? (k ? "font-medium shadow-e1" : "bg-pax-ink font-medium text-white") : "bg-white text-slate-600 shadow-e1 hover:text-pax-ink")}>
               {k ?? "All"}
             </button>
           ))}
@@ -34,7 +35,7 @@ export function LibraryBrowser({ cards }: { cards: Card[] }) {
         {shown.map((c, i) => (
           <Link key={c.slug} href={`/library/${c.slug}`} className="surface lift rise flex flex-col gap-3 p-5" style={{ ["--i" as string]: i }}>
             <div className="flex items-center justify-between gap-2">
-              <span className="rounded-full bg-pax-lavender px-2.5 py-0.5 text-[11px] font-semibold text-pax-ink">{c.kind}</span>
+              <span className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold" style={kindStyle(c.kind)}>{c.kind}</span>
               <span className="text-[11px] text-slate-400">{c.license}</span>
             </div>
             <div>
@@ -44,7 +45,7 @@ export function LibraryBrowser({ cards }: { cards: Card[] }) {
             <p className="line-clamp-3 flex-1 text-sm leading-relaxed text-slate-600">{c.summary}</p>
             <div className="flex flex-wrap gap-1.5">
               {c.tags.slice(0, 4).map((t) => (
-                <span key={t} className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-600">
+                <span key={t} className="rounded-full px-2 py-0.5 text-[11px] font-medium" style={tagStyle(t)}>
                   {t}
                 </span>
               ))}
