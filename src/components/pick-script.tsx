@@ -12,9 +12,9 @@ export function PickScript({ scriptId }: { scriptId: string }) {
   const [pending, start] = React.useTransition()
   if (!open)
     return (
-      <Button size="sm" variant="outline" onClick={() => setOpen(true)}>
-        Record this one next
-      </Button>
+      <button type="button" onClick={() => setOpen(true)} className="text-sm font-medium text-primary underline-offset-4 hover:underline">
+        Note why this one is next
+      </button>
     )
   return (
     <div className="flex w-full flex-col gap-2">

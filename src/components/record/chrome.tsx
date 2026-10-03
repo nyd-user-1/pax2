@@ -36,7 +36,7 @@ export function StepBar({ step, back }: { step: 1 | 2 | 3; back: { href: string;
 
 export function FlowPage({ title, lead, children, wide }: { title: string; lead?: string; children: React.ReactNode; wide?: boolean }) {
   return (
-    <div className={cn("mx-auto flex w-full flex-col gap-8 px-5 py-12", wide ? "max-w-4xl" : "max-w-3xl")}>
+    <div className={cn("mx-auto flex w-full flex-col gap-8 px-5 py-12", wide ? "max-w-6xl" : "max-w-3xl")}>
       <header className="flex flex-col gap-3">
         <h1 className="font-display text-4xl font-semibold leading-tight text-pax-ink md:text-5xl">{title}</h1>
         {lead && <p className="text-lg text-muted-foreground">{lead}</p>}

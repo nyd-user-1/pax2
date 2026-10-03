@@ -26,7 +26,7 @@ export default async function LibraryPage() {
     <>
       <StepBar step={1} back={{ href: "/record/start", label: "Start" }} />
       <FlowPage title="Choose a script" lead="Ready to use as they are, and yours to change once you pick one." wide>
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {cards.map((c) => (
             <LibraryCard key={c.id} s={c} />
           ))}

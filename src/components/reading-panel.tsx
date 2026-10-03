@@ -219,7 +219,7 @@ function CallIt({ takeId, calls, nextDataset, baseline, baselineSnapshot }: { ta
             <li key={c.at} className="flex flex-wrap items-baseline gap-2">
               <span className="rounded bg-pax-lavender px-1.5 text-[11px] font-medium text-pax-plum">Locked {new Date(c.at).toLocaleString()}</span>
               <span>
-                {c.by}: {c.predicted} than {c.baseline?.toFixed(0) ?? "—"} by {c.target.replace("-", " ")}
+                {c.by}: {c.predicted} than {c.baseline?.toFixed(0) ?? "—"} by {c.target === "round-1" ? "Round 1" : "Round 2"}
               </span>
               <span className="text-xs text-muted-foreground">“{c.reason}”</span>
             </li>

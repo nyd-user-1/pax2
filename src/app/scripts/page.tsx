@@ -6,6 +6,7 @@ import codes from "../../../data/generated/model/script-codes.json"
 import { SourceBadge } from "@/components/bits"
 import { ConsensusVote } from "@/components/consensus-vote"
 import { PickScript } from "@/components/pick-script"
+import { RecordScript } from "@/components/record/record-script"
 import { SCRIPTS } from "@/lib/catalog"
 import { tally } from "@/lib/consensus"
 import { board, picks, votes, workspace } from "@/lib/review"
@@ -34,7 +35,7 @@ export default async function ScriptsPage() {
       <header className="flex flex-col gap-2">
         <h1 className="font-display text-4xl text-pax-ink md:text-5xl">Before anyone records</h1>
         <p className="max-w-3xl text-sm text-muted-foreground">Which script is worth a volunteer&apos;s five minutes? Three checks before recording, and a record of what was chosen and why, so the next review can ask whether the choice held up.</p>
-        <Link href="/campaign" className="text-sm text-pax-plum underline">See what the Yes on 3 campaign is already posting</Link>
+        <Link href="/campaign" className="text-sm text-pax-plum underline">See what four reform campaigns are posting</Link>
       </header>
 
       <section className="grid gap-4 md:grid-cols-2">
@@ -82,7 +83,10 @@ export default async function ScriptsPage() {
                 </p>
                 <p className="whitespace-pre-line text-sm leading-relaxed text-foreground/85">{s.text}</p>
                 <p className="text-[11px] text-muted-foreground">{s.source}</p>
-                <PickScript scriptId={s.id} />
+                <div className="flex flex-wrap items-center gap-4 pt-2">
+                  <RecordScript id={s.id} title={s.title} text={s.text} />
+                  <PickScript scriptId={s.id} />
+                </div>
               </div>
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">

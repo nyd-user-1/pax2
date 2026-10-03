@@ -72,7 +72,7 @@ export function Editor({ research }: { research: Record<string, Research> }) {
               update({ text: e.target.value })
             }}
             placeholder="Say it the way you'd say it to a neighbor."
-            className="h-96 w-full resize-y bg-transparent p-7 text-lg leading-loose text-pax-ink outline-none"
+            className="h-80 w-full resize-y bg-transparent p-7 text-lg leading-relaxed text-pax-ink outline-none"
           />
           <div className="flex items-center justify-between border-t bg-pax-mist px-7 py-3 text-sm">
             <span className="text-muted-foreground">{words(text)} words</span>

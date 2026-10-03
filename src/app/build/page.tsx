@@ -31,8 +31,8 @@ export default async function BuildPage() {
         </div>
       </header>
 
-      <section className="grid gap-4 lg:grid-cols-4">
-        {b.columns.map((c) => (
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {b.columns.filter((c) => c.items.length).map((c) => (
           <div key={c.id} className={cn("flex flex-col gap-2 rounded-2xl border-2 p-4", TONE[c.id])}>
             <div className="flex items-baseline justify-between">
               <h2 className="font-medium text-pax-ink">{c.title}</h2>

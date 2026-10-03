@@ -29,13 +29,16 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <span className="font-display text-3xl leading-none text-pax-ink">PAX</span>
           <span className="flex h-1 w-12 overflow-hidden rounded-full"><span className="flex-1 bg-pax-plum" /><span className="flex-1 bg-white ring-1 ring-inset ring-border" /><span className="flex-1 bg-pax-red" /></span>
         </Link>
+        <Link href="/record" className="mb-6 flex items-center justify-center gap-2 rounded-full bg-pax-ink px-4 py-3 text-sm font-semibold text-white shadow-md transition-transform hover:-translate-y-0.5">
+          <Video className="size-4" /> Record a video
+        </Link>
         <nav className="flex flex-col gap-0.5">
           {NAV.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}
               href={href}
               className={cn(
-                "flex items-center gap-2.5 rounded-full px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-pax-mist hover:text-pax-ink",
+                "flex items-center gap-2.5 rounded-full px-3 py-2 text-sm text-muted-foreground outline-none transition-colors hover:bg-pax-mist hover:text-pax-ink",
                 active(href) && "bg-pax-lavender font-semibold text-pax-ink",
               )}
             >
@@ -44,16 +47,14 @@ export function Shell({ children }: { children: React.ReactNode }) {
             </Link>
           ))}
         </nav>
-        <div className="mt-auto flex flex-col gap-3 px-2">
-          <Link href="/record" className="flex items-center justify-center gap-2 rounded-full bg-pax-ink px-3 py-2 text-sm font-medium text-white">
-            <Video className="size-4" /> Record a video
-          </Link>
+        <div className="mt-auto px-2">
           <span className="text-xs leading-relaxed text-muted-foreground">Massachusetts · Question 3 · open primaries</span>
         </div>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-20 flex items-center gap-2 border-b bg-background/90 px-4 py-2 backdrop-blur md:hidden">
           <Link href="/" className="font-display text-2xl text-pax-ink">PAX</Link>
+          <Link href="/record" className="flex shrink-0 items-center gap-1 rounded-full bg-pax-ink px-3 py-1 text-xs font-semibold text-white"><Video className="size-3.5" /> Record</Link>
           <nav className="no-scrollbar flex gap-1 overflow-x-auto">
             {NAV.map(({ href, label }) => (
               <Link key={href} href={href} className={cn("whitespace-nowrap rounded-md px-2 py-1 text-xs", active(href) ? "bg-pax-lavender text-pax-ink" : "text-muted-foreground")}>

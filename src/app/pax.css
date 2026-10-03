@@ -1,7 +1,7 @@
 /* PAX palette: Parallax's layout language in red, white and blue. The blues and reds are
    GovBlock's forecast and simulator colors: blue #2563eb leads, navy #1e3a8a carries type,
    red #dc2626 is the second accent. */
-:root {
+:root:root {
   --pax-ink: #1e3a8a;
   --pax-plum: #2563eb;
   --pax-lavender: #dbeafe;
@@ -18,7 +18,6 @@
 }
 
 @theme inline {
-  --font-serif: var(--font-serif);
   --color-pax-ink: var(--pax-ink);
   --color-pax-plum: var(--pax-plum);
   --color-pax-lavender: var(--pax-lavender);
@@ -32,7 +31,7 @@
 }
 
 .font-display {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-pax-serif), Georgia, serif;
   font-weight: 600;
   letter-spacing: -0.015em;
 }

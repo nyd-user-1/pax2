@@ -27,8 +27,7 @@ function Forest({ features, max }: { features: Feature[]; max: number }) {
             <circle cx={x(f.diff)} cy={5} r={1.6} className={f.low > 0 || f.high < 0 ? "fill-pax-plum" : "fill-foreground/50"} />
           </svg>
           <span className="tabular text-right text-xs text-muted-foreground">
-            {f.diff >= 0 ? "+" : ""}
-            {f.diff.toFixed(2)} ({f.low.toFixed(1)} to {f.high.toFixed(1)})
+            {Math.abs(f.diff) < 0.005 ? "0.00" : `${f.diff > 0 ? "+" : ""}${f.diff.toFixed(2)}`} ({f.low.toFixed(1)} to {f.high.toFixed(1)})
           </span>
         </div>
       ))}
@@ -45,9 +44,9 @@ export default async function ReferencePage({ searchParams }: { searchParams: Pr
     <div className="flex flex-col gap-10">
       <header className="flex flex-col gap-2">
         <p className="text-xs font-medium uppercase tracking-wider text-pax-plum">What controlled tests say</p>
-        <h1 className="font-display text-4xl leading-tight text-pax-ink md:text-5xl">{out.ads} real campaign ads, each tested against a control group</h1>
+        <h1 className="font-display text-4xl leading-tight text-pax-ink md:text-5xl">617 real campaign ads, each tested against a control group</h1>
         <p className="max-w-3xl text-sm text-muted-foreground">
-          The Swayable archive: {out.studies} randomized experiments run by campaigns in 2018 and 2020, every ad hand-coded for style and substance. It is the closest public record of what Resonance would be if it measured persuasion, so PAX uses it as the reference for what a script&apos;s style is likely worth, and as the reminder of how little style alone predicts.
+          {`The Swayable archive: ${out.studies} randomized experiments run by campaigns in 2018 and 2020 (${out.ads} ads measured on ${(LABEL[o] ?? o).toLowerCase()}),`} every ad hand-coded for style and substance. It is the closest public record of what Resonance would be if it measured persuasion, so PAX uses it as the reference for what a script&apos;s style is likely worth, and as the reminder of how little style alone predicts.
         </p>
         <div className="flex gap-1">
           {Object.keys(M.outcomes).map((k) => (
@@ -62,7 +61,7 @@ export default async function ReferencePage({ searchParams }: { searchParams: Pr
         <Big v={`${out.meanEffect >= 0 ? "+" : ""}${out.meanEffect.toFixed(2)} pts`} l="The average ad's effect" />
         <Big v={`${out.tau.toFixed(2)} pts`} l="How much true effects vary from ad to ad" />
         <Big v={`${Math.round(out.shareAboveZero * 100)}%`} l="Ads whose measured effect was above zero" />
-        <Big v={out.prediction.outOfSampleR2.toFixed(2)} l="Share of the variation the coded features predict for a new study" />
+        <Big v={Math.abs(out.prediction.outOfSampleR2) < 0.005 ? "0.00" : out.prediction.outOfSampleR2.toFixed(2)} l="Share of the variation the coded features predict for a new study" />
       </section>
 
       <section className="flex max-w-3xl flex-col gap-2 text-sm leading-relaxed">

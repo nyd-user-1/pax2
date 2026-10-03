@@ -10,7 +10,8 @@ export type CardData = { id: string; title: string; framing: string; text: strin
 export function LibraryCard({ s }: { s: CardData }) {
   const router = useRouter()
   const { update } = useDraft()
-  const excerpt = s.text.replace(/\s+/g, " ").slice(0, 105).trimEnd() + "…"
+  const flat = s.text.replace(/\s+/g, " ")
+  const excerpt = flat.length > 110 ? flat.slice(0, flat.lastIndexOf(" ", 110)).replace(/[,.;:—–-]+$/, "") + "…" : flat
   return (
     <button
       type="button"
@@ -39,7 +40,7 @@ export function LibraryCard({ s }: { s: CardData }) {
       {s.notes.length > 0 && (
         <span className="flex flex-col gap-1 border-t pt-3">
           {s.notes.map((n) => (
-            <span key={n.label} className={n.tone === "good" ? "text-sm text-primary" : n.tone === "caution" ? "text-sm text-[var(--pax-red)]" : "text-sm text-muted-foreground"}>
+            <span key={n.label} className={n.tone === "good" ? "text-sm font-medium text-pax-ink" : n.tone === "caution" ? "text-sm font-medium text-pax-red-deep" : "text-sm text-muted-foreground"}>
               {n.label}
             </span>
           ))}

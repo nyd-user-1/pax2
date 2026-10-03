@@ -9,16 +9,16 @@ export default function RecordLanding() {
   return (
     <div className="flex flex-col">
       <section className="relative overflow-hidden bg-gradient-to-b from-pax-lavender to-pax-mist">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-[1.2fr_1fr] md:py-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-[1.4fr_1fr] md:py-24">
           <div className="flex flex-col gap-6">
             <Link href="/" className="font-display text-2xl text-pax-ink">PAX</Link>
             <span className="flex w-fit items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-sm text-pax-ink shadow-sm">
               <Clock className="size-4" /> About five minutes
             </span>
-            <h1 className="font-display text-5xl font-semibold leading-[1.05] text-pax-ink md:text-6xl">
+            <h1 className="font-display text-5xl font-bold leading-[1.05] text-pax-ink lg:text-[4.25rem]">
               Record your video.
               <br />
-              <span className="text-primary">We&apos;ll handle the rest.</span>
+              <span className="text-primary lg:whitespace-nowrap">We&apos;ll handle the rest.</span>
             </h1>
             <p className="max-w-md text-lg leading-relaxed text-muted-foreground">Choose what you want to say, then record here or upload a video you already made. The team takes it from there.</p>
             <Link href="/record/start" className="flex w-fit items-center gap-2 rounded-full bg-pax-ink px-7 py-4 text-base font-medium text-white shadow-lg transition-transform hover:-translate-y-0.5">

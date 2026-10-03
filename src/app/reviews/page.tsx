@@ -61,9 +61,9 @@ export default async function ReviewsPage() {
         <ol className="flex flex-col gap-2">
           {history.map((h) => (
             <li key={h.fileHash} className="flex flex-wrap items-baseline justify-between gap-2 rounded-xl border px-4 py-2 text-sm">
-              <span className="font-medium text-pax-ink">{h.dataset === "upload" ? "Uploaded export" : h.dataset.replace("-", " ")}</span>
-              <span className="text-muted-foreground">
-                {h.rows} rows · as of {h.asOf} · loaded {new Date(h.at).toLocaleString()} · fingerprint {h.fileHash}
+              <span className="font-medium text-pax-ink">{h.dataset === "upload" ? "Uploaded export" : h.dataset === "round-1" ? "Round 1" : "Round 2"}</span>
+              <span className="text-muted-foreground" title={`File fingerprint ${h.fileHash}`}>
+                {h.rows} ads · results as of {h.asOf} · loaded {new Date(h.at).toLocaleString()}
               </span>
             </li>
           ))}
@@ -144,7 +144,7 @@ export default async function ReviewsPage() {
                   <th>Reading</th>
                 </tr>
               </thead>
-              <tbody className="[&_td]:border-t [&_td]:py-2 [&_td]:pr-3">
+              <tbody className="[&_td]:border-t [&_td]:py-2 [&_td]:pr-3 [&_td]:align-top [&_td:nth-child(n+2):nth-child(-n+7)]:whitespace-nowrap">
                 {changes.map(({ t, a, b }) => {
                   const va = a.score.value
                   const vb = b.score.value
@@ -218,7 +218,7 @@ export default async function ReviewsPage() {
                   <span>
                     {takeLabel(t.take)}: {c.by} called <b>{c.predicted}</b> than {c.baseline?.toFixed(0)}
                   </span>
-                  {actual ? <span className={cn("font-medium", right ? "text-observed" : "text-destructive")}>{right ? "Right" : "Wrong"} — it came in {actual}</span> : <span className="text-muted-foreground">Awaiting {c.target.replace("-", " ")}</span>}
+                  {actual ? <span className={cn("font-medium", right ? "text-observed" : "text-destructive")}>{right ? "Right" : "Wrong"} — it came in {actual}</span> : <span className="text-muted-foreground">Awaiting {c.target === "round-1" ? "Round 1" : "Round 2"}</span>}
                 </li>
               ))}
             </ul>

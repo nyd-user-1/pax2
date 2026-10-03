@@ -56,7 +56,7 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
             <span className="font-medium text-pax-ink">{s.name}</span>
             <span className="text-xs text-muted-foreground">{s.place} · {s.n} shorts</span>
             <span className="tabular mt-2 text-sm">
-              <b className="font-display text-2xl font-normal text-pax-ink">{Math.round(s.medianPerDay).toLocaleString()}</b> views/day, median
+              <b className="font-display text-2xl font-normal text-pax-ink">{s.medianPerDay < 10 ? s.medianPerDay.toFixed(1) : Math.round(s.medianPerDay).toLocaleString()}</b> views/day, median
             </span>
             <span className="tabular text-xs text-muted-foreground">
               {Math.round(s.medianSec)}s median length · {(s.medianEngagement * 100).toFixed(1)}% likes + comments per view
@@ -75,7 +75,7 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
             </div>
             <p className="line-clamp-2 text-sm leading-snug text-pax-ink">{v.title.replace(/\s*#\w+/g, "").trim() || v.title}</p>
             <p className="tabular text-xs text-muted-foreground">
-              <span className="font-medium text-foreground">{Math.round(v.perDay).toLocaleString()}/day</span> · {v.views!.toLocaleString()} views · {v.published.slice(0, 10)}
+              <span className="font-medium text-foreground">{v.perDay < 10 ? v.perDay.toFixed(1) : Math.round(v.perDay).toLocaleString()}/day</span> · {v.views!.toLocaleString()} views · {v.published.slice(0, 10)}
             </p>
           </a>
         ))}

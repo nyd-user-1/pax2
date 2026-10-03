@@ -42,10 +42,14 @@ export default async function ArgumentsPage() {
     <div className="flex flex-col gap-8">
       <header className="flex flex-col gap-2">
         <p className="text-xs font-medium uppercase tracking-wider text-pax-plum">{CLAIM.ballot}</p>
-        <h1 className="font-display text-4xl leading-tight text-pax-ink md:text-5xl">{CLAIM.text}</h1>
-        <p className="max-w-3xl text-sm text-muted-foreground">
+        <h1 className="max-w-4xl text-balance font-display text-3xl leading-tight text-pax-ink md:text-4xl">{CLAIM.text}</h1>
+        <p className="max-w-3xl text-pretty text-muted-foreground">
           Every take is an experiment on the argument: the same claim, framed three ways, read by different messengers. Each cell is a take&apos;s Resonance under the frozen reference, with the range its evidence supports.
         </p>
+        <div className="mt-2 flex flex-wrap gap-3">
+          <Link href="/record/start" className="rounded-full bg-pax-ink px-6 py-3 text-sm font-semibold text-white shadow-md">Record a take</Link>
+          <Link href="/scripts" className="rounded-full border border-pax-ink/20 bg-white px-6 py-3 text-sm font-semibold text-pax-ink">Check a script first</Link>
+        </div>
       </header>
 
       {!ref ? (
@@ -81,8 +85,8 @@ export default async function ArgumentsPage() {
             <ul className="mt-1 flex flex-col gap-1 text-sm">
               {history.map((h) => (
                 <li key={h.fileHash} className="flex justify-between gap-2">
-                  <span className="text-pax-ink">{h.dataset === "upload" ? "Uploaded export" : h.dataset.replace("-", " ")}</span>
-                  <span className="text-muted-foreground">{h.rows} rows · as of {h.asOf}</span>
+                  <span className="text-pax-ink">{h.dataset === "upload" ? "Uploaded export" : h.dataset === "round-1" ? "Round 1" : "Round 2"}</span>
+                  <span className="text-muted-foreground">{h.rows} ads · as of {h.asOf}</span>
                 </li>
               ))}
             </ul>
