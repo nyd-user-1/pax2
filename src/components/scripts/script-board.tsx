@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { ArrowUpRight, Info, Sparkles } from "lucide-react"
+import { ArrowUpRight, Check, Info, Sparkles } from "lucide-react"
 
 import { PickScript } from "@/components/pick-script"
 import { RecordScript } from "@/components/record/record-script"
@@ -27,6 +27,7 @@ export type ScriptCardData = {
   prior: { expected: number; low: number; high: number; average: number } | null
   features: { label: string; share: number; diff: number; sign: "up" | "down" | "flat"; note?: string }[]
   leader: boolean
+  chosen: { at: string; reason: string } | null
 }
 
 const research = (p: ScriptCardData["prior"]) => (!p ? "No prior" : p.low > p.average ? "Above typical" : p.high < p.average ? "Below typical" : "Typical")
@@ -112,11 +113,14 @@ export function ScriptBoard({ scripts }: { scripts: ScriptCardData[] }) {
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="text-xs font-medium text-slate-500">{s.framing}</span>
-                {s.leader && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-pax-lavender px-2.5 py-0.5 text-xs font-semibold text-pax-plum">
-                    <Sparkles className="size-3" /> Best bet
-                  </span>
-                )}
+                <span className="flex items-center gap-1.5">
+                  {s.chosen && <span className="inline-flex items-center gap-1 rounded-full bg-above-soft px-2.5 py-0.5 text-xs font-semibold text-above"><Check className="size-3" /> Chosen</span>}
+                  {s.leader && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-pax-lavender px-2.5 py-0.5 text-xs font-semibold text-pax-plum">
+                      <Sparkles className="size-3" /> Best bet
+                    </span>
+                  )}
+                </span>
               </div>
               <h3 className="font-display text-2xl leading-tight text-slate-900">{s.title}</h3>
               <p className="text-[15px] leading-relaxed text-slate-600">“{s.opening}”</p>
@@ -194,8 +198,14 @@ export function ScriptBoard({ scripts }: { scripts: ScriptCardData[] }) {
               </section>
 
               <section className="flex flex-col gap-2 border-t border-slate-200 pt-5">
-                <h4 className="font-semibold text-slate-900">Choose it for the next round</h4>
-                <PickScript scriptId={open.id} />
+                <h4 className="font-semibold text-slate-900">{open.chosen ? "Chosen for the next round" : "Choose it for the next round"}</h4>
+                {open.chosen ? (
+                  <p className="text-sm text-slate-700">
+                    {new Date(open.chosen.at).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}: {open.chosen.reason}
+                  </p>
+                ) : (
+                  <PickScript scriptId={open.id} />
+                )}
               </section>
             </div>
           )}

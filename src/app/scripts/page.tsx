@@ -4,7 +4,7 @@ import { Plus } from "lucide-react"
 import context from "../../../data/context.json"
 import model from "../../../data/generated/model/reference-model.json"
 import codes from "../../../data/generated/model/script-codes.json"
-import { Fold } from "@/components/fold"
+import maps from "../../../data/generated/campaign-maps.json"
 import { UncontestedMap } from "@/components/map/maps"
 import { AgreeSection, type AgreeRow } from "@/components/scripts/agree-section"
 import { ScriptBoard, type ScriptCardData } from "@/components/scripts/script-board"
@@ -28,6 +28,7 @@ export default async function ScriptsPage() {
   const vc = new Map(RM.outcomes.votechoice.features.map((f) => [f.key, f]))
   const [{ takes }, chosen, rawVotes] = await Promise.all([board(ws), picks(ws), votes(ws, context.consensus.slug)])
   const statements = context.consensus.statements
+  const uncontested = (maps.uncontested as Record<string, { races: number; uncontested: number; pct: number }>).MA
   const t = tally(
     rawVotes.map((v) => ({ voter: v.voter, tid: v.tid, vote: v.vote, at: v.at })),
     statements.map((s) => s.tid),
@@ -65,6 +66,10 @@ export default async function ScriptsPage() {
       prior: c?.prior.votechoice ?? null,
       features,
       leader: false,
+      chosen: (() => {
+        const p = chosen.filter((x) => x.scriptId === s.id).sort((a, b) => b.at.localeCompare(a.at))[0]
+        return p ? { at: p.at, reason: p.reason } : null
+      })(),
     }
   })
   const lead = [...cards].filter((c) => c.average != null).sort((a, b) => b.average! - a.average!)[0]
@@ -103,36 +108,55 @@ export default async function ScriptsPage() {
 
       <AgreeSection rows={rows} slug={context.consensus.slug} statements={statements} voted={voted} voters={t.voters} groups={t.groups} source={context.consensus.source} />
 
-      <Fold
-        title="Context"
-        preview={<p className="text-sm text-slate-600">{context.polls[0]?.finding}</p>}
-      >
-        <div className="grid gap-5 md:grid-cols-2">
-          <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold text-slate-900">Polling</h3>
-            {context.polls.map((p) => (
-              <p key={p.url} className="text-sm text-slate-700">
-                {p.finding}{" "}
-                <a href={p.url} target="_blank" rel="noreferrer" className="text-pax-plum hover:underline">
-                  {p.pollster} for {p.sponsor}
-                </a>
-              </p>
-            ))}
-            <p className="text-sm text-slate-500">{context.pollingNote}</p>
-          </div>
-          <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold text-slate-900">The other side</h3>
-            <p className="text-sm text-slate-700">{context.opposition}</p>
-            <a href={context.oppositionSource} target="_blank" rel="noreferrer" className="text-sm text-pax-plum hover:underline">
-              WBUR, Sept. 28
+      <section className="flex flex-col gap-4">
+        <h2 className="font-display text-xl text-slate-900">Where Question 3 stands</h2>
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,2fr)]">
+          <div className="surface flex flex-col gap-2 p-5">
+            <span className="text-sm text-slate-500">Plan to vote yes</span>
+            <span className="tabular font-display text-5xl text-pax-ink">43%</span>
+            <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+              <div className="grow h-full rounded-full bg-pax-plum" style={{ width: "43%" }} />
+            </div>
+            <a href={context.polls[0]?.url} target="_blank" rel="noreferrer" className="mt-auto text-xs text-slate-500 hover:text-pax-plum">
+              MassINC for CommonWealth Beacon, Sept. 30
             </a>
           </div>
+          <div className="surface flex flex-col gap-2 p-5">
+            <span className="text-sm text-slate-500">Legislative races uncontested</span>
+            <span className="tabular font-display text-5xl text-below">{uncontested.pct}%</span>
+            <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+              <div className="grow h-full rounded-full bg-below" style={{ width: `${uncontested.pct}%` }} />
+            </div>
+            <span className="mt-auto text-xs text-slate-500">Massachusetts, 2014–2022 · most of any state</span>
+          </div>
+          <div className="surface grid gap-5 p-5 sm:grid-cols-2">
+            <div className="flex flex-col gap-3">
+              <span className="inline-flex w-fit items-center rounded-full bg-above-soft px-2.5 py-0.5 text-xs font-semibold text-above">For</span>
+              <ul className="flex flex-col gap-2 text-sm text-slate-700">
+                <li>Every voter gets a say in the primary, in any party or none</li>
+                <li>Candidates have to compete for every vote</li>
+                <li>Two real choices in November</li>
+              </ul>
+              <p className="mt-auto text-xs text-slate-500">Officials of both parties · NAACP</p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <span className="inline-flex w-fit items-center rounded-full bg-pax-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax-red-deep">Against</span>
+              <ul className="flex flex-col gap-2 text-sm text-slate-700">
+                <li>Can leave two candidates of the same party in November</li>
+                <li>Favors self-funded candidates</li>
+                <li>Squeezes out third parties</li>
+              </ul>
+              <a href={context.oppositionSource} target="_blank" rel="noreferrer" className="mt-auto text-xs text-slate-500 hover:text-pax-plum">
+                Both state parties · AFL-CIO · via WBUR
+              </a>
+            </div>
+          </div>
         </div>
-      </Fold>
+      </section>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="font-display text-xl text-slate-900">Choices made</h2>
-        {chosen.length ? (
+      {chosen.length > 0 && (
+        <section className="flex flex-col gap-4">
+          <h2 className="font-display text-xl text-slate-900">Choices made</h2>
           <ol className="relative flex flex-col gap-5 pl-6 before:absolute before:inset-y-2 before:left-[5px] before:w-px before:bg-slate-200">
             {chosen.map((p) => (
               <li key={p.sk} className="relative flex flex-col gap-1">
@@ -143,10 +167,8 @@ export default async function ScriptsPage() {
               </li>
             ))}
           </ol>
-        ) : (
-          <p className="text-sm text-slate-500">None yet. Open a script and choose it for the next round; the reason is kept here.</p>
-        )}
-      </section>
+        </section>
+      )}
     </div>
   )
 }
