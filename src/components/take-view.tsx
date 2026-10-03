@@ -1,12 +1,11 @@
 import Link from "next/link"
 
 import type { SavedReading } from "@/app/actions"
-import { LoadButton } from "@/components/load-button"
 import { ReadingPanel } from "@/components/reading-panel"
 import { Fold } from "@/components/fold"
 import { ScorePanel } from "@/components/score-panel"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
-import { faceFor, featuresFor, scriptById, takeById, takeLabel } from "@/lib/catalog"
+import { featuresFor, scriptById, takeById, takeLabel } from "@/lib/catalog"
 import { evidenceIndex, type Reading } from "@/lib/pax"
 import { board, DATASETS, findings, forecasts, loads, steps, workspace } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
@@ -36,7 +35,7 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
     <SeekProvider>
       <div className={cn("grid gap-8", inDrawer ? "lg:grid-cols-[280px_1fr]" : "lg:grid-cols-[320px_1fr]")}>
         <aside className="flex flex-col gap-4 lg:sticky lg:top-0 lg:self-start">
-          <Player src={take.video!.src} poster={faceFor(take.voice, 640) ?? take.video!.poster} />
+          <Player src={take.video!.src} poster={take.video!.poster} />
           {f?.audio && !f.audio.error && (
             <div className="surface p-4">
               <Loudness f={f.audio} />
@@ -64,13 +63,6 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
               {stat("Watched 3s+", (m.plays3s.value ?? 0).toLocaleString())}
               {stat("Avg.", `${m.avgWatchSec.value?.toFixed(1) ?? "—"}s`)}
               {stat("Spend", `$${m.spend.value?.toFixed(0) ?? "—"}`)}
-            </div>
-          )}
-
-          {!ref && (
-            <div className="surface flex flex-col gap-3 p-5">
-              <p className="text-slate-600">No paid results are loaded yet.</p>
-              <LoadButton dataset="round-1" label="Load round 1" />
             </div>
           )}
 

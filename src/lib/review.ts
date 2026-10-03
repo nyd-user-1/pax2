@@ -81,7 +81,12 @@ export type TakeState = { take: TakeInfo; history: { snapshot: Snapshot; score: 
 
 /** The board's state: every take with its scored history under the frozen reference. */
 export async function board(ws: string): Promise<{ ref: Reference | null; takes: TakeState[] }> {
-  const ref = await reference(ws)
+  let ref = await reference(ws)
+  // No page is ever empty: a workspace with no results starts from the stand-in rounds.
+  if (!ref) {
+    for (const d of DATASETS) await loadExport(ws, d.id, d.text, d.asOf, d.source)
+    ref = await reference(ws)
+  }
   const takes = await Promise.all(
     TAKES.map(async (take) => {
       const snaps = ref ? await snapshots(ws, take.id) : []
