@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-03 06:05 ET",
+  "updated": "2026-10-03 07:00 ET",
   "budget": {
     "cap": 10,
     "spent": [
@@ -77,6 +77,18 @@
         {
           "title": "Live on Amplify",
           "detail": "main.d2pererqaoeirm.amplifyapp.com behind the demo password; readings verified end to end in 15–16 seconds"
+        },
+        {
+          "title": "Record a video",
+          "detail": "Pick, Record, Send: four ways to start, the library with PAX notes, an editor with research checks, a personal script from three answers, a full-screen teleprompter, upload to S3, submissions on Reviews"
+        },
+        {
+          "title": "Four campaigns side by side",
+          "detail": "Shorts from Vote YES on 3, Courageous Colorado, Open Primaries and Unite America as video cards with channel medians"
+        },
+        {
+          "title": "Design pass",
+          "detail": "Parallax layout in red, white and blue from GovBlock forecast colors"
         }
       ]
     },
@@ -104,6 +116,10 @@
         {
           "title": "Ask Parallax the four questions",
           "detail": "What Resonance measures, how many labeled pieces, holdout accuracy, any control-group validation"
+        },
+        {
+          "title": "Review on the dev server",
+          "detail": "Not deployed: Amplify shows the earlier build. Say when to start a dev server."
         }
       ]
     },
@@ -130,6 +146,10 @@
         {
           "title": "Meta Ad Library pull for Question 3 advertisers",
           "detail": "After access is granted"
+        },
+        {
+          "title": "Analyze volunteer uploads",
+          "detail": "Sent videos land in s3://pax-638175140432/uploads/; run worker/analyze.py on them (convert webm to mp4 first)"
         }
       ]
     }
