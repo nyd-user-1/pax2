@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Hourglass, Sparkles, Upload, Video } from "lucide-react"
 
 import { FramingStrip } from "@/components/framing-strip"
-import { LoadButton } from "@/components/load-button"
+import { LoadData } from "@/components/load-data"
 import { RecordScript } from "@/components/record/record-script"
 import { ScrollRow } from "@/components/scroll-row"
 import { ScoreInfo, SectionTitle } from "@/components/ui-pax"
@@ -28,7 +28,7 @@ export default async function HomePage() {
   // What to do next, most useful first, at most three.
   const next: Next[] = []
   if (!ref) {
-    next.push({ key: "load1", icon: Upload, title: "Load the first round of results", body: "Scores appear the moment paid results are in. The first round also sets the average every later round is measured against.", action: <LoadButton dataset="round-1" label="Load round 1" /> })
+    next.push({ key: "load1", icon: Upload, title: "Load the first round of results", body: "Scores appear the moment paid results are in. The first round also sets the average every later round is measured against.", action: <LoadData standIn="round-1" className="py-5" /> })
   } else {
     const perTake = await Promise.all(takes.map(async (t) => ({ t, ev: await steps(ws, t.take.id), fs: await findings(ws, t.take.id) })))
     const pending = perTake.flatMap(({ t, ev }) => {
@@ -42,7 +42,7 @@ export default async function HomePage() {
     if (leader && !leader.fs.length)
       next.push({ key: "read", icon: Sparkles, title: `Find out why “${scored[0].scriptShort}” is leading`, body: `${takeLabel(leader.t.take)} scores ${scored[0].score!.toFixed(0)}. PAX reads the results and the video, and proposes the next test.`, action: <Link href={`/v/${scored[0].id}`} scroll={false} className="press inline-flex items-center gap-1.5 rounded-full bg-pax-ink px-4 py-2 text-sm font-semibold text-white">Report</Link> })
     if (!loaded.has("round-2"))
-      next.push({ key: "load2", icon: Upload, title: "Round 2 results are ready", body: "Load them to see what held up, what changed, and how any calls came out.", action: <LoadButton dataset="round-2" label="Load round 2" /> })
+      next.push({ key: "load2", icon: Upload, title: "Round 2 results are ready", body: "Load them to see what held up, what changed, and how any calls came out.", action: <LoadData standIn="round-2" className="py-5" /> })
     const thin = cards.find((c) => c.status === "limited" || c.status === "unscorable")
     if (thin)
       next.push({ key: "thin", icon: Hourglass, title: "One video needs more reach before it can be judged", body: `${thin.scriptShort}, ${thin.voice}: ${(thin.impressions ?? 0).toLocaleString()} impressions so far.`, action: <Link href={`/v/${thin.id}`} scroll={false} className="press inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-pax-ink">Report</Link> })

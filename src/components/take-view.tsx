@@ -3,6 +3,7 @@ import Link from "next/link"
 import type { SavedReading } from "@/app/actions"
 import { ReadingPanel } from "@/components/reading-panel"
 import { Fold } from "@/components/fold"
+import { LoadData } from "@/components/load-data"
 import { ScorePanel } from "@/components/score-panel"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
 import { featuresFor, scriptById, takeById, takeLabel } from "@/lib/catalog"
@@ -65,6 +66,8 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
               {stat("Spend", `$${m.spend.value?.toFixed(0) ?? "—"}`)}
             </div>
           )}
+
+          {!ref && <LoadData standIn="round-1" />}
 
           {ref && state.latest && (
             <Fold title="Rating" preview={<ScorePanel part="summary" take={take} snapshot={state.latest.snapshot} score={state.latest.score} reference={ref} />}>

@@ -1,5 +1,5 @@
 import { pct, StandInNote } from "@/components/bits"
-import { LoadButton } from "@/components/load-button"
+import { LoadData } from "@/components/load-data"
 import { WhatIf } from "@/components/what-if"
 import { scriptById, takeLabel } from "@/lib/catalog"
 import { COMPONENTS, FORMULA_V1, score, spearman, WEIGHT_PRESETS, type Formula } from "@/lib/resonance"
@@ -93,10 +93,7 @@ export default async function MethodPage() {
       </section>
 
       {!ref ? (
-        <section className="rounded-2xl border bg-pax-mist p-6">
-          <p className="mb-3 text-sm text-muted-foreground">The sensitivity checks and the what-if need results.</p>
-          <LoadButton dataset="round-1" label="Load round 1 results" />
-        </section>
+        <LoadData standIn="round-1" />
       ) : (
         <>
           <section className="flex flex-col gap-3">

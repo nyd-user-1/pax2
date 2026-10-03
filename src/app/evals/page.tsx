@@ -1,8 +1,7 @@
 import Link from "next/link"
 
 import { StandInNote } from "@/components/bits"
-import { LoadButton } from "@/components/load-button"
-import { UploadExport } from "@/components/upload-export"
+import { LoadData } from "@/components/load-data"
 import { SlopeChart } from "@/components/charts/slope"
 import { faceFor, scriptById, takeLabel } from "@/lib/catalog"
 import { SAMPLE_CALLS, SAMPLE_DECISIONS, SAMPLE_SENT } from "@/lib/sample"
@@ -72,12 +71,7 @@ export default async function ReviewsPage() {
           ))}
           {!history.length && <li className="text-sm text-muted-foreground">Nothing loaded yet.</li>}
         </ol>
-        <div className="flex flex-wrap gap-6">
-          {!loaded.has("round-1") ? <LoadButton dataset="round-1" label="Load round 1 results" /> : <LoadButton dataset="round-1" label="Load round 1 again" variant="outline" />}
-          {loaded.has("round-1") && !r2 && <LoadButton dataset="round-2" label="Load round 2 results" />}
-          {r2 && <LoadButton dataset="round-2" label="Load round 2 again" variant="outline" />}
-          <UploadExport />
-        </div>
+        <LoadData standIn={!loaded.has("round-1") ? "round-1" : !r2 ? "round-2" : undefined} />
       </section>
 
       <section className="flex flex-col gap-3">
