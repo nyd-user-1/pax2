@@ -1,7 +1,9 @@
 import Link from "next/link"
 import { Check, Loader2, Minus, X } from "lucide-react"
 
+import { PipelineFlow } from "@/components/pipeline-flow"
 import { currentBatch, rows, STEPS, type StepState } from "@/lib/pipeline"
+import { submissions, workspace } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
 
 export const dynamic = "force-dynamic"
@@ -19,7 +21,7 @@ function State({ s }: { s: StepState }) {
 
 /** Every video goes through four checks on the worker box before its version page fills in. */
 export default async function PipelinePage() {
-  const batch = await currentBatch()
+  const [batch, sent] = await Promise.all([currentBatch(), workspace().then(submissions)])
   const list = rows(batch)
   const total = list.reduce((s, r) => s + r.cost, 0)
   const last = list.map((r) => r.analyzedAt).filter(Boolean).sort().at(-1)
@@ -43,35 +45,18 @@ export default async function PipelinePage() {
         last && <p className="-mt-6 text-sm text-slate-500">Nothing running. Last run finished {new Date(last).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}.</p>
       )}
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {STEPS.map((s) => {
-          const done = list.filter((r) => r.cells[s.id].state === "done").length
-          const spent = list.reduce((a, r) => a + r.cells[s.id].cost, 0)
-          return (
-            <div key={s.id} className="surface flex flex-col gap-3 p-5">
-              <div className="flex items-center justify-between">
-                <span className="flex size-7 items-center justify-center rounded-full bg-pax-ink text-sm font-semibold text-white">{s.n}</span>
-                <span className="tabular text-xs text-slate-500">
-                  {done} of {list.length} done
-                </span>
-              </div>
-              <div>
-                <p className="font-semibold text-slate-900">{s.name}</p>
-                <p className="text-xs text-slate-500">{s.service}</p>
-              </div>
-              <p className="text-sm leading-relaxed text-slate-600">{s.makes}.</p>
-              <dl className="mt-auto grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 border-t border-slate-100 pt-3 text-xs">
-                <dt className="text-slate-400">Shows up in</dt>
-                <dd className="text-slate-700">{s.feeds}</dd>
-                <dt className="text-slate-400">Rate</dt>
-                <dd className="text-slate-700">{s.rate}</dd>
-                <dt className="text-slate-400">Spent</dt>
-                <dd className="tabular text-slate-700">{money(spent)}</dd>
-              </dl>
-            </div>
-          )
-        })}
-      </section>
+      <PipelineFlow
+        d={{
+          videos: list.map((r) => ({ id: r.id, title: r.title, label: r.label })),
+          uploads: sent.length,
+          lastRun: last ? new Date(last).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : null,
+          running: !!batch,
+          total: list.length,
+          spentTotal: money(total),
+          example: list[0]?.id ?? "",
+          steps: STEPS.map((s) => ({ ...s, done: list.filter((r) => r.cells[s.id].state === "done").length, spent: money(list.reduce((a, r) => a + r.cells[s.id].cost, 0)) })),
+        }}
+      />
 
       <section className="surface overflow-x-auto">
         <table className="tabular w-full min-w-[960px] text-sm">
