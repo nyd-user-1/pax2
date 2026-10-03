@@ -1,15 +1,36 @@
 {
-  "updated": "2026-10-03 06:10 ET",
+  "updated": "2026-10-03 06:05 ET",
   "budget": {
     "cap": 10,
     "spent": [
-      { "item": "Rekognition video (shots + on-screen text, 11 takes, one rerun)", "usd": 1.75 },
-      { "item": "Worker box t4g.large + 60 GB disk (self-stops when idle)", "usd": 0.25 },
-      { "item": "Transcribe (11 takes, about 6 minutes)", "usd": 0.15 },
-      { "item": "Bedrock: Pegasus video review, Claude script coding and readings", "usd": 0.2 },
-      { "item": "Athena over GovBlock's lake (ads, polls, elections)", "usd": 0.02 },
-      { "item": "Polly, S3, DynamoDB on demand", "usd": 0.05 },
-      { "item": "Amplify builds and hosting", "usd": 0.3 }
+      {
+        "item": "Rekognition video (shots + on-screen text, 11 takes, one rerun)",
+        "usd": 1.75
+      },
+      {
+        "item": "Worker box t4g.large + 60 GB disk (self-stops when idle)",
+        "usd": 0.25
+      },
+      {
+        "item": "Transcribe (11 takes, about 6 minutes)",
+        "usd": 0.15
+      },
+      {
+        "item": "Bedrock: Pegasus video review, Claude script coding and readings",
+        "usd": 0.2
+      },
+      {
+        "item": "Athena over GovBlock's lake (ads, polls, elections)",
+        "usd": 0.02
+      },
+      {
+        "item": "Polly, S3, DynamoDB on demand",
+        "usd": 0.05
+      },
+      {
+        "item": "Amplify builds and hosting",
+        "usd": 0.3
+      }
     ]
   },
   "columns": [
@@ -17,44 +38,122 @@
       "id": "done",
       "title": "Done",
       "items": [
-        { "title": "Reference datasets in S3", "detail": "Swayable archive, Coppock 2020, Upworthy, emotional-ads, Wesleyan codebook, CompDem Polis, Hewitt reproduction" },
-        { "title": "Reference model", "detail": "Per-feature persuasion differences from 617 tested ads; out-of-sample prediction ≈ 0, as the paper found" },
-        { "title": "Resonance 1", "detail": "Stop / Hold / Act, evidence-weighted, frozen reference, ranges, unscorable and limited flags, sensitivity, what-if" },
-        { "title": "Eleven synthetic takes", "detail": "Three library scripts × three stand-in voices, plus a no-captions and a short-cut variant" },
-        { "title": "Video analysis", "detail": "Transcribe word timings, Rekognition shots and on-screen text, Pegasus timestamped review, measured loudness, pitch and pauses" },
-        { "title": "Ledger", "detail": "DynamoDB, append-only: loads refuse duplicates, scores saved with formula and reference, decisions as events, forecasts locked before results" },
-        { "title": "PAX readings", "detail": "Claude on Bedrock; every claim cites a record or is removed; observed / interpretation / hypothesis kept apart" },
-        { "title": "Scripts desk", "detail": "Research prior per script, polling, consensus voting with groups, choice log, the campaign's own framings" }
+        {
+          "title": "Reference datasets in S3",
+          "detail": "Swayable archive, Coppock 2020, Upworthy, emotional-ads, Wesleyan codebook, CompDem Polis, Hewitt reproduction"
+        },
+        {
+          "title": "Reference model",
+          "detail": "Per-feature persuasion differences from 617 tested ads; out-of-sample prediction ≈ 0, as the paper found"
+        },
+        {
+          "title": "Resonance 1",
+          "detail": "Stop / Hold / Act, evidence-weighted, frozen reference, ranges, unscorable and limited flags, sensitivity, what-if"
+        },
+        {
+          "title": "Eleven synthetic takes",
+          "detail": "Three library scripts × three stand-in voices, plus a no-captions and a short-cut variant"
+        },
+        {
+          "title": "Video analysis",
+          "detail": "Transcribe word timings, Rekognition shots and on-screen text, Pegasus timestamped review, measured loudness, pitch and pauses"
+        },
+        {
+          "title": "Ledger",
+          "detail": "DynamoDB, append-only: loads refuse duplicates, scores saved with formula and reference, decisions as events, forecasts locked before results"
+        },
+        {
+          "title": "PAX readings",
+          "detail": "Claude on Bedrock; every claim cites a record or is removed; observed / interpretation / hypothesis kept apart"
+        },
+        {
+          "title": "Scripts desk",
+          "detail": "Research prior per script, polling, consensus voting with groups, choice log, the campaign's own framings"
+        },
+        {
+          "title": "Campaign videos",
+          "detail": "The 2026 Yes on 3 channel as video cards, by organic views per day"
+        },
+        {
+          "title": "Live on Amplify",
+          "detail": "main.d2pererqaoeirm.amplifyapp.com behind the demo password; readings verified end to end in 15–16 seconds"
+        }
       ]
     },
-    { "id": "running", "title": "Running", "items": [] },
+    {
+      "id": "running",
+      "title": "Running",
+      "items": []
+    },
     {
       "id": "you",
       "title": "Needs Brendan",
       "items": [
-        { "title": "Parallax's videos and Ads Manager export", "detail": "Upload the export on Reviews; drop videos in s3://pax-638175140432/videos/ and run worker/analyze.py" },
-        { "title": "The Question 3 campaign's shorts", "detail": "YouTube blocks downloads from AWS. Downloaded on a personal machine, they would replace the synthetic takes." },
-        { "title": "Meta Ad Library access", "detail": "A Meta developer account with ID verification unlocks every Question 3 ad on Facebook and Instagram" },
-        { "title": "Ask Parallax the four questions", "detail": "What Resonance measures, how many labeled pieces, holdout accuracy, any control-group validation" }
+        {
+          "title": "Parallax's videos and Ads Manager export",
+          "detail": "Upload the export on Reviews; drop videos in s3://pax-638175140432/videos/ and run worker/analyze.py"
+        },
+        {
+          "title": "The Question 3 campaign's shorts",
+          "detail": "YouTube blocks downloads from AWS. Downloaded on a personal machine, they would replace the synthetic takes."
+        },
+        {
+          "title": "Meta Ad Library access",
+          "detail": "A Meta developer account with ID verification unlocks every Question 3 ad on Facebook and Instagram"
+        },
+        {
+          "title": "Ask Parallax the four questions",
+          "detail": "What Resonance measures, how many labeled pieces, holdout accuracy, any control-group validation"
+        }
       ]
     },
     {
       "id": "next",
       "title": "Next",
       "items": [
-        { "title": "Upworthy hook prior on screen", "detail": "Score each script's opening line against 32,487 randomized headline tests" },
-        { "title": "Resonance 2, published beside 1", "detail": "Quartile retention curve as Hold; labeled as a new version, never in place of 1" },
-        { "title": "Step Functions for the video pipeline", "detail": "Today the box runs it; an S3 upload should trigger it" },
-        { "title": "Persuasion labels", "detail": "A small survey experiment on 10–20% of takes to measure whether Resonance tracks persuasion here" },
-        { "title": "Meta Ad Library pull for Question 3 advertisers", "detail": "After access is granted" }
+        {
+          "title": "Upworthy hook prior on screen",
+          "detail": "Score each script's opening line against 32,487 randomized headline tests"
+        },
+        {
+          "title": "Resonance 2, published beside 1",
+          "detail": "Quartile retention curve as Hold; labeled as a new version, never in place of 1"
+        },
+        {
+          "title": "Step Functions for the video pipeline",
+          "detail": "Today the box runs it; an S3 upload should trigger it"
+        },
+        {
+          "title": "Persuasion labels",
+          "detail": "A small survey experiment on 10–20% of takes to measure whether Resonance tracks persuasion here"
+        },
+        {
+          "title": "Meta Ad Library pull for Question 3 advertisers",
+          "detail": "After access is granted"
+        }
       ]
     }
   ],
   "resources": [
-    { "name": "Repository", "id": "github.com/nyd-user-1/pax" },
-    { "name": "Bucket", "id": "pax-638175140432" },
-    { "name": "Ledger table", "id": "pax-ledger" },
-    { "name": "Worker box", "id": "i-029959fd31bba9a75" },
-    { "name": "Worker role", "id": "pax-worker" }
+    {
+      "name": "Repository",
+      "id": "github.com/nyd-user-1/pax"
+    },
+    {
+      "name": "Bucket",
+      "id": "pax-638175140432"
+    },
+    {
+      "name": "Ledger table",
+      "id": "pax-ledger"
+    },
+    {
+      "name": "Worker box",
+      "id": "i-029959fd31bba9a75"
+    },
+    {
+      "name": "Worker role",
+      "id": "pax-worker"
+    }
   ]
 }
