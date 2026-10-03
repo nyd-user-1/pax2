@@ -1,0 +1,57 @@
+"use client"
+
+import * as React from "react"
+import { CheckIcon } from "lucide-react"
+
+import { CardTitle } from "@/ui/components/nova/card"
+import { cn } from "@/ui/lib/utils"
+
+// Two things every Admin card carries (Brendan, 2026-09-06): a title that
+// copies its own address when clicked — the page's URL with the card's
+// anchor — and the standard three-dot menu in the top right, with whatever
+// control the card already had sitting to its left.
+
+const slug = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")
+
+export function CardAnchor({ children, id, className }: { children: string; id?: string; className?: string }) {
+  const anchor = id ?? slug(children)
+  const [copied, setCopied] = React.useState(false)
+  const copy = () => {
+    void navigator.clipboard?.writeText(`${window.location.origin}${window.location.pathname}${window.location.search}#${anchor}`)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+  return (
+    <CardTitle id={anchor} className={cn("scroll-mt-20", className)}>
+      {/* hq's copy chip (app/ui/copy-code.tsx), as Brendan asked on 2026-09-07: a
+          rounded box that is plain at rest, violet on the muted ground on hover,
+          and green while the link is on the clipboard. */}
+      <button
+        type="button"
+        onClick={copy}
+        title="Copy link to this card"
+        className={cn(
+          "inline-flex cursor-pointer items-center gap-1.5 rounded px-1.5 py-0.5 text-left transition-colors select-none focus-visible:outline-1 focus-visible:outline-ring",
+          // Plain at rest; the violet and the muted ground on hover; green once copied (Brendan, 2026-09-07).
+          copied ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-300" : "text-foreground hover:bg-muted hover:text-violet-600 dark:hover:text-violet-300"
+        )}
+      >
+        {children}
+        {copied && <CheckIcon className="size-3.5 text-green-600" />}
+      </button>
+    </CardTitle>
+  )
+}
+
+/** The card's controls: whatever it had, then the standard menu. Goes inside CardAction. */
+export function CardTools({ children, className, views, view, onView }: { children?: React.ReactNode; className?: string; /** The views the card's slot can hold; the menu switches between them (2026-09-20). */ views?: readonly { value: string; label: string }[]; view?: string; onView?: (value: string) => void }) {
+  return (
+    <div className={cn("flex items-center gap-1", className)} data-views={views?.length ?? 0} data-view={view} onClick={() => onView?.(view ?? "")}>
+      {children}
+    </div>
+  )
+}

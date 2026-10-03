@@ -2,6 +2,7 @@ import Link from "next/link"
 
 import shorts from "../../../data/raw/yt-shorts.json"
 import { SourceBadge } from "@/components/bits"
+import { ReformSpendMap } from "@/components/map/maps"
 import { cn } from "@/ui/lib/utils"
 
 export const metadata = { title: "Campaign videos" }
@@ -65,6 +66,14 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
         ))}
       </section>
 
+      <section className="flex flex-col gap-3">
+        <h2 className="font-display text-xl text-slate-900">Where reform campaigns buy Google ads</h2>
+        <p className="max-w-3xl text-sm text-slate-500">Every open-primary and ranked-choice advertiser in Google's political ad library, by the states they targeted. Hover a state for who spent there.</p>
+        <ReformSpendMap />
+        <p className="text-xs text-slate-400">Google Political Ads Transparency, via GovBlock. The advertiser “VOTE YES ON 3” here is Nevada's Question 3.</p>
+      </section>
+
+      <h2 className="font-display text-xl text-slate-900">{ch.name} shorts</h2>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {videos.map((v) => (
           <a key={v.id} href={`https://www.youtube.com/shorts/${v.id}`} target="_blank" rel="noreferrer" className="group flex flex-col gap-2">

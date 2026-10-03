@@ -52,12 +52,16 @@ def model():
         write(f"model/{k.split('/')[-1]}", load(k))
 
 
+def library():
+    write("library.json", load("library/catalog.json"))
+
+
 def sections():
     for k in objs("sections/"):
         write(k, load(k))
 
 
-TABLE = {"takes": takes, "features": features, "model": model, "sections": sections}
+TABLE = {"takes": takes, "features": features, "model": model, "sections": sections, "library": library}
 subprocess.run(["git", "-C", REPO, "pull", "-q", "--rebase"], check=True)
 for s in sys.argv[1:]:
     TABLE[s]()

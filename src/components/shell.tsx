@@ -2,13 +2,14 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Clapperboard, FlaskConical, Hammer, Home, Library, NotebookPen, Plus, PlaySquare, Target } from "lucide-react"
+import { Clapperboard, FlaskConical, Hammer, Home, LayoutDashboard, Library, NotebookPen, Plus, PlaySquare, Target } from "lucide-react"
 
 import { cn } from "@/ui/lib/utils"
 
 // The partner's jobs first; the workings of the score and the build underneath.
 const NAV = [
   { href: "/", label: "Home", icon: Home },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/videos", label: "Videos", icon: PlaySquare },
   { href: "/scripts", label: "Scripts", icon: NotebookPen },
   { href: "/evals", label: "Evals", icon: Target },

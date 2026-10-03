@@ -3,7 +3,9 @@ import Link from "next/link"
 import { StandInNote } from "@/components/bits"
 import { LoadButton } from "@/components/load-button"
 import { UploadExport } from "@/components/upload-export"
+import { SlopeChart } from "@/components/charts/slope"
 import { scriptById, takeLabel } from "@/lib/catalog"
+import { toneOf } from "@/lib/tone"
 import type { Reading } from "@/lib/pax"
 import { COMPONENTS } from "@/lib/resonance"
 import { board, findings, forecasts, loads, steps, submissions, workspace } from "@/lib/review"
@@ -130,7 +132,16 @@ export default async function ReviewsPage() {
           <p className="max-w-3xl text-sm text-muted-foreground">
             Same formula ({"resonance-1"}), same reference ({ref?.id}). “The score changed” means the number moved. “The conclusion changed” means the take moved across the line: above, below, or not distinguishable from the reference average.
           </p>
-          <div className="overflow-x-auto">
+          <SlopeChart
+            rows={takes.map((t) => {
+              const a = t.history.find((h) => h.snapshot.dataset === "round-1")?.score
+              const b = t.history.find((h) => h.snapshot.dataset === "round-2")?.score
+              return { id: t.take.id, label: `${scriptById(t.take.scriptId)!.short} · ${takeLabel(t.take)}`, a: a?.value ?? null, b: b?.value ?? null, tone: toneOf(b?.low, b?.high) }
+            })}
+          />
+          <details className="surface group">
+            <summary className="cursor-pointer list-none px-5 py-4 font-semibold text-slate-900">Every take, component by component</summary>
+          <div className="overflow-x-auto px-5 pb-5">
             <table className="tabular w-full min-w-[760px] text-sm">
               <thead className="text-left text-xs text-muted-foreground">
                 <tr className="[&_th]:pb-2 [&_th]:pr-3 [&_th]:font-normal">
@@ -175,6 +186,7 @@ export default async function ReviewsPage() {
               </tbody>
             </table>
           </div>
+          </details>
           {takes.some((t) => t.history.length === 1 && t.history[0].snapshot.dataset === "round-2") && (
             <div className="rounded-xl border border-pax-plum/30 bg-pax-mist p-4 text-sm">
               <p className="font-medium text-pax-ink">New in this round</p>

@@ -7,6 +7,7 @@ import { SourceBadge } from "@/components/bits"
 import { ConsensusVote } from "@/components/consensus-vote"
 import { PickScript } from "@/components/pick-script"
 import { RecordScript } from "@/components/record/record-script"
+import { UncontestedMap } from "@/components/map/maps"
 import { SCRIPTS } from "@/lib/catalog"
 import { tally } from "@/lib/consensus"
 import { board, picks, votes, workspace } from "@/lib/review"
@@ -145,6 +146,13 @@ export default async function ScriptsPage() {
             </article>
           )
         })}
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="font-display text-xl text-slate-900">Where the argument is personal</h2>
+        <p className="max-w-3xl text-sm text-slate-500">In red districts, the 2022 ballot had one name for state representative. A volunteer from one of them can say it in the first person: my representative had no opponent.</p>
+        <UncontestedMap />
+        <p className="text-xs text-slate-400">Klarner State Legislative Election Returns, 2022 general, via GovBlock.</p>
       </section>
 
       <section className="grid gap-6 lg:grid-cols-[1fr_1fr]">
