@@ -1,0 +1,4312 @@
+[
+ {
+  "id": "calm-danielle",
+  "script": "calm",
+  "voice": "Danielle",
+  "bg": "#5a3b1f",
+  "captions": true,
+  "cut": false,
+  "durationSec": 31.2,
+  "lines": [
+   {
+    "t": 0.0,
+    "text": "More than half of Massachusetts races since 2014 have been completely uncontested. Think about that."
+   },
+   {
+    "t": 6.65,
+    "text": "When there's only one name on the ballot, there's no debate, no comparison, and no reason for anyone to earn your vote."
+   },
+   {
+    "t": 13.44,
+    "text": "Question 3 would put every candidate on one primary ballot, and the top finishers would move on to November. Every voter, in every party or none, gets a say."
+   },
+   {
+    "t": 23.16,
+    "text": "It's a simple change. More choices on the ballot, and representatives who have to answer to all of us."
+   },
+   {
+    "t": 29.42,
+    "text": "Vote yes on Question 3."
+   }
+  ],
+  "words": [
+   {
+    "t": 0.03,
+    "w": "More"
+   },
+   {
+    "t": 0.26,
+    "w": "than"
+   },
+   {
+    "t": 0.44,
+    "w": "half"
+   },
+   {
+    "t": 0.79,
+    "w": "of"
+   },
+   {
+    "t": 0.88,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 1.65,
+    "w": "races"
+   },
+   {
+    "t": 2.1,
+    "w": "since"
+   },
+   {
+    "t": 2.4,
+    "w": "2014"
+   },
+   {
+    "t": 3.19,
+    "w": "have"
+   },
+   {
+    "t": 3.36,
+    "w": "been"
+   },
+   {
+    "t": 3.52,
+    "w": "completely"
+   },
+   {
+    "t": 4.05,
+    "w": "uncontested"
+   },
+   {
+    "t": 5.38,
+    "w": "Think"
+   },
+   {
+    "t": 5.62,
+    "w": "about"
+   },
+   {
+    "t": 5.91,
+    "w": "that"
+   },
+   {
+    "t": 6.67,
+    "w": "When"
+   },
+   {
+    "t": 6.81,
+    "w": "there's"
+   },
+   {
+    "t": 7.05,
+    "w": "only"
+   },
+   {
+    "t": 7.29,
+    "w": "one"
+   },
+   {
+    "t": 7.58,
+    "w": "name"
+   },
+   {
+    "t": 7.85,
+    "w": "on"
+   },
+   {
+    "t": 7.99,
+    "w": "the"
+   },
+   {
+    "t": 8.06,
+    "w": "ballot"
+   },
+   {
+    "t": 8.67,
+    "w": "there's"
+   },
+   {
+    "t": 8.9,
+    "w": "no"
+   },
+   {
+    "t": 9.06,
+    "w": "debate"
+   },
+   {
+    "t": 9.7,
+    "w": "no"
+   },
+   {
+    "t": 9.87,
+    "w": "comparison"
+   },
+   {
+    "t": 10.79,
+    "w": "and"
+   },
+   {
+    "t": 10.95,
+    "w": "no"
+   },
+   {
+    "t": 11.12,
+    "w": "reason"
+   },
+   {
+    "t": 11.44,
+    "w": "for"
+   },
+   {
+    "t": 11.63,
+    "w": "anyone"
+   },
+   {
+    "t": 12.04,
+    "w": "to"
+   },
+   {
+    "t": 12.15,
+    "w": "earn"
+   },
+   {
+    "t": 12.37,
+    "w": "your"
+   },
+   {
+    "t": 12.54,
+    "w": "vote"
+   },
+   {
+    "t": 13.46,
+    "w": "Question"
+   },
+   {
+    "t": 13.93,
+    "w": "3"
+   },
+   {
+    "t": 14.2,
+    "w": "would"
+   },
+   {
+    "t": 14.37,
+    "w": "put"
+   },
+   {
+    "t": 14.6,
+    "w": "every"
+   },
+   {
+    "t": 14.84,
+    "w": "candidate"
+   },
+   {
+    "t": 15.31,
+    "w": "on"
+   },
+   {
+    "t": 15.49,
+    "w": "one"
+   },
+   {
+    "t": 15.7,
+    "w": "primary"
+   },
+   {
+    "t": 16.19,
+    "w": "ballot"
+   },
+   {
+    "t": 16.75,
+    "w": "and"
+   },
+   {
+    "t": 16.88,
+    "w": "the"
+   },
+   {
+    "t": 16.95,
+    "w": "top"
+   },
+   {
+    "t": 17.23,
+    "w": "finishers"
+   },
+   {
+    "t": 17.78,
+    "w": "would"
+   },
+   {
+    "t": 17.91,
+    "w": "move"
+   },
+   {
+    "t": 18.18,
+    "w": "on"
+   },
+   {
+    "t": 18.34,
+    "w": "to"
+   },
+   {
+    "t": 18.45,
+    "w": "November"
+   },
+   {
+    "t": 19.52,
+    "w": "Every"
+   },
+   {
+    "t": 19.78,
+    "w": "voter"
+   },
+   {
+    "t": 20.38,
+    "w": "in"
+   },
+   {
+    "t": 20.57,
+    "w": "every"
+   },
+   {
+    "t": 20.83,
+    "w": "party"
+   },
+   {
+    "t": 21.28,
+    "w": "or"
+   },
+   {
+    "t": 21.42,
+    "w": "none"
+   },
+   {
+    "t": 22.0,
+    "w": "gets"
+   },
+   {
+    "t": 22.22,
+    "w": "a"
+   },
+   {
+    "t": 22.27,
+    "w": "say"
+   },
+   {
+    "t": 23.19,
+    "w": "It's"
+   },
+   {
+    "t": 23.36,
+    "w": "a"
+   },
+   {
+    "t": 23.41,
+    "w": "simple"
+   },
+   {
+    "t": 23.77,
+    "w": "change"
+   },
+   {
+    "t": 24.89,
+    "w": "More"
+   },
+   {
+    "t": 25.11,
+    "w": "choices"
+   },
+   {
+    "t": 25.63,
+    "w": "on"
+   },
+   {
+    "t": 25.78,
+    "w": "the"
+   },
+   {
+    "t": 25.83,
+    "w": "ballot"
+   },
+   {
+    "t": 26.39,
+    "w": "and"
+   },
+   {
+    "t": 26.54,
+    "w": "representatives"
+   },
+   {
+    "t": 27.28,
+    "w": "who"
+   },
+   {
+    "t": 27.38,
+    "w": "have"
+   },
+   {
+    "t": 27.57,
+    "w": "to"
+   },
+   {
+    "t": 27.68,
+    "w": "answer"
+   },
+   {
+    "t": 28.05,
+    "w": "to"
+   },
+   {
+    "t": 28.18,
+    "w": "all"
+   },
+   {
+    "t": 28.42,
+    "w": "of"
+   },
+   {
+    "t": 28.54,
+    "w": "us"
+   },
+   {
+    "t": 29.45,
+    "w": "Vote"
+   },
+   {
+    "t": 29.73,
+    "w": "yes"
+   },
+   {
+    "t": 30.04,
+    "w": "on"
+   },
+   {
+    "t": 30.18,
+    "w": "Question"
+   },
+   {
+    "t": 30.67,
+    "w": "3"
+   }
+  ],
+  "wordCount": 90
+ },
+ {
+  "id": "calm-ruth",
+  "script": "calm",
+  "voice": "Ruth",
+  "bg": "#3b2a6b",
+  "captions": true,
+  "cut": false,
+  "durationSec": 32.02,
+  "lines": [
+   {
+    "t": 0.0,
+    "text": "More than half of Massachusetts races since 2014 have been completely uncontested. Think about that."
+   },
+   {
+    "t": 6.88,
+    "text": "When there's only one name on the ballot, there's no debate, no comparison, and no reason for anyone to earn your vote."
+   },
+   {
+    "t": 13.68,
+    "text": "Question 3 would put every candidate on one primary ballot, and the top finishers would move on to November. Every voter, in every party or none, gets a say."
+   },
+   {
+    "t": 23.64,
+    "text": "It's a simple change. More choices on the ballot, and representatives who have to answer to all of us."
+   },
+   {
+    "t": 30.09,
+    "text": "Vote yes on Question 3."
+   }
+  ],
+  "words": [
+   {
+    "t": 0.14,
+    "w": "More"
+   },
+   {
+    "t": 0.31,
+    "w": "than"
+   },
+   {
+    "t": 0.5,
+    "w": "half"
+   },
+   {
+    "t": 0.75,
+    "w": "of"
+   },
+   {
+    "t": 0.94,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 1.75,
+    "w": "races"
+   },
+   {
+    "t": 2.12,
+    "w": "since"
+   },
+   {
+    "t": 2.38,
+    "w": "2014"
+   },
+   {
+    "t": 3.19,
+    "w": "have"
+   },
+   {
+    "t": 3.38,
+    "w": "been"
+   },
+   {
+    "t": 3.58,
+    "w": "completely"
+   },
+   {
+    "t": 4.19,
+    "w": "uncontested"
+   },
+   {
+    "t": 5.59,
+    "w": "Think"
+   },
+   {
+    "t": 5.78,
+    "w": "about"
+   },
+   {
+    "t": 6.03,
+    "w": "that"
+   },
+   {
+    "t": 7.02,
+    "w": "When"
+   },
+   {
+    "t": 7.2,
+    "w": "there's"
+   },
+   {
+    "t": 7.38,
+    "w": "only"
+   },
+   {
+    "t": 7.63,
+    "w": "one"
+   },
+   {
+    "t": 7.95,
+    "w": "name"
+   },
+   {
+    "t": 8.2,
+    "w": "on"
+   },
+   {
+    "t": 8.32,
+    "w": "the"
+   },
+   {
+    "t": 8.45,
+    "w": "ballot"
+   },
+   {
+    "t": 9.01,
+    "w": "there's"
+   },
+   {
+    "t": 9.2,
+    "w": "no"
+   },
+   {
+    "t": 9.38,
+    "w": "debate"
+   },
+   {
+    "t": 10.01,
+    "w": "no"
+   },
+   {
+    "t": 10.2,
+    "w": "comparison"
+   },
+   {
+    "t": 11.07,
+    "w": "and"
+   },
+   {
+    "t": 11.3,
+    "w": "no"
+   },
+   {
+    "t": 11.45,
+    "w": "reason"
+   },
+   {
+    "t": 11.76,
+    "w": "for"
+   },
+   {
+    "t": 12.02,
+    "w": "anyone"
+   },
+   {
+    "t": 12.35,
+    "w": "to"
+   },
+   {
+    "t": 12.57,
+    "w": "earn"
+   },
+   {
+    "t": 12.7,
+    "w": "your"
+   },
+   {
+    "t": 12.87,
+    "w": "vote"
+   },
+   {
+    "t": 13.81,
+    "w": "Question"
+   },
+   {
+    "t": 14.24,
+    "w": "3"
+   },
+   {
+    "t": 14.62,
+    "w": "would"
+   },
+   {
+    "t": 14.74,
+    "w": "put"
+   },
+   {
+    "t": 14.99,
+    "w": "every"
+   },
+   {
+    "t": 15.3,
+    "w": "candidate"
+   },
+   {
+    "t": 15.8,
+    "w": "on"
+   },
+   {
+    "t": 15.95,
+    "w": "one"
+   },
+   {
+    "t": 16.19,
+    "w": "primary"
+   },
+   {
+    "t": 16.74,
+    "w": "ballot"
+   },
+   {
+    "t": 17.25,
+    "w": "and"
+   },
+   {
+    "t": 17.36,
+    "w": "the"
+   },
+   {
+    "t": 17.5,
+    "w": "top"
+   },
+   {
+    "t": 17.8,
+    "w": "finishers"
+   },
+   {
+    "t": 18.39,
+    "w": "would"
+   },
+   {
+    "t": 18.55,
+    "w": "move"
+   },
+   {
+    "t": 18.75,
+    "w": "on"
+   },
+   {
+    "t": 18.94,
+    "w": "to"
+   },
+   {
+    "t": 19.05,
+    "w": "November"
+   },
+   {
+    "t": 20.25,
+    "w": "Every"
+   },
+   {
+    "t": 20.56,
+    "w": "voter"
+   },
+   {
+    "t": 21.06,
+    "w": "in"
+   },
+   {
+    "t": 21.2,
+    "w": "every"
+   },
+   {
+    "t": 21.5,
+    "w": "party"
+   },
+   {
+    "t": 21.82,
+    "w": "or"
+   },
+   {
+    "t": 22.0,
+    "w": "none"
+   },
+   {
+    "t": 22.48,
+    "w": "gets"
+   },
+   {
+    "t": 22.7,
+    "w": "a"
+   },
+   {
+    "t": 22.84,
+    "w": "say"
+   },
+   {
+    "t": 23.77,
+    "w": "It's"
+   },
+   {
+    "t": 23.94,
+    "w": "a"
+   },
+   {
+    "t": 24.01,
+    "w": "simple"
+   },
+   {
+    "t": 24.39,
+    "w": "change"
+   },
+   {
+    "t": 25.5,
+    "w": "More"
+   },
+   {
+    "t": 25.74,
+    "w": "choices"
+   },
+   {
+    "t": 26.24,
+    "w": "on"
+   },
+   {
+    "t": 26.37,
+    "w": "the"
+   },
+   {
+    "t": 26.43,
+    "w": "ballot"
+   },
+   {
+    "t": 26.99,
+    "w": "and"
+   },
+   {
+    "t": 27.14,
+    "w": "representatives"
+   },
+   {
+    "t": 27.99,
+    "w": "who"
+   },
+   {
+    "t": 28.05,
+    "w": "have"
+   },
+   {
+    "t": 28.32,
+    "w": "to"
+   },
+   {
+    "t": 28.49,
+    "w": "answer"
+   },
+   {
+    "t": 28.86,
+    "w": "to"
+   },
+   {
+    "t": 29.0,
+    "w": "all"
+   },
+   {
+    "t": 29.18,
+    "w": "of"
+   },
+   {
+    "t": 29.37,
+    "w": "us"
+   },
+   {
+    "t": 30.27,
+    "w": "Vote"
+   },
+   {
+    "t": 30.5,
+    "w": "yes"
+   },
+   {
+    "t": 30.8,
+    "w": "on"
+   },
+   {
+    "t": 30.96,
+    "w": "Question"
+   },
+   {
+    "t": 31.52,
+    "w": "3"
+   }
+  ],
+  "wordCount": 90
+ },
+ {
+  "id": "calm-stephen",
+  "script": "calm",
+  "voice": "Stephen",
+  "bg": "#1f4e5f",
+  "captions": true,
+  "cut": false,
+  "durationSec": 29.86,
+  "lines": [
+   {
+    "t": 0.0,
+    "text": "More than half of Massachusetts races since 2014 have been completely uncontested. Think about that."
+   },
+   {
+    "t": 6.46,
+    "text": "When there's only one name on the ballot, there's no debate, no comparison, and no reason for anyone to earn your vote."
+   },
+   {
+    "t": 12.78,
+    "text": "Question 3 would put every candidate on one primary ballot, and the top finishers would move on to November. Every voter, in every party or none, gets a say."
+   },
+   {
+    "t": 22.0,
+    "text": "It's a simple change. More choices on the ballot, and representatives who have to answer to all of us."
+   },
+   {
+    "t": 28.09,
+    "text": "Vote yes on Question 3."
+   }
+  ],
+  "words": [
+   {
+    "t": 0.12,
+    "w": "More"
+   },
+   {
+    "t": 0.31,
+    "w": "than"
+   },
+   {
+    "t": 0.45,
+    "w": "half"
+   },
+   {
+    "t": 0.75,
+    "w": "of"
+   },
+   {
+    "t": 0.84,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 1.62,
+    "w": "races"
+   },
+   {
+    "t": 2.09,
+    "w": "since"
+   },
+   {
+    "t": 2.31,
+    "w": "2014"
+   },
+   {
+    "t": 3.06,
+    "w": "have"
+   },
+   {
+    "t": 3.19,
+    "w": "been"
+   },
+   {
+    "t": 3.38,
+    "w": "completely"
+   },
+   {
+    "t": 3.89,
+    "w": "uncontested"
+   },
+   {
+    "t": 5.19,
+    "w": "Think"
+   },
+   {
+    "t": 5.37,
+    "w": "about"
+   },
+   {
+    "t": 5.68,
+    "w": "that"
+   },
+   {
+    "t": 6.58,
+    "w": "When"
+   },
+   {
+    "t": 6.71,
+    "w": "there's"
+   },
+   {
+    "t": 6.96,
+    "w": "only"
+   },
+   {
+    "t": 7.17,
+    "w": "one"
+   },
+   {
+    "t": 7.4,
+    "w": "name"
+   },
+   {
+    "t": 7.66,
+    "w": "on"
+   },
+   {
+    "t": 7.72,
+    "w": "the"
+   },
+   {
+    "t": 7.83,
+    "w": "ballot"
+   },
+   {
+    "t": 8.34,
+    "w": "there's"
+   },
+   {
+    "t": 8.59,
+    "w": "no"
+   },
+   {
+    "t": 8.72,
+    "w": "debate"
+   },
+   {
+    "t": 9.25,
+    "w": "no"
+   },
+   {
+    "t": 9.52,
+    "w": "comparison"
+   },
+   {
+    "t": 10.37,
+    "w": "and"
+   },
+   {
+    "t": 10.5,
+    "w": "no"
+   },
+   {
+    "t": 10.71,
+    "w": "reason"
+   },
+   {
+    "t": 11.02,
+    "w": "for"
+   },
+   {
+    "t": 11.22,
+    "w": "anyone"
+   },
+   {
+    "t": 11.54,
+    "w": "to"
+   },
+   {
+    "t": 11.72,
+    "w": "earn"
+   },
+   {
+    "t": 11.86,
+    "w": "your"
+   },
+   {
+    "t": 11.96,
+    "w": "vote"
+   },
+   {
+    "t": 12.9,
+    "w": "Question"
+   },
+   {
+    "t": 13.34,
+    "w": "3"
+   },
+   {
+    "t": 13.59,
+    "w": "would"
+   },
+   {
+    "t": 13.71,
+    "w": "put"
+   },
+   {
+    "t": 13.91,
+    "w": "every"
+   },
+   {
+    "t": 14.15,
+    "w": "candidate"
+   },
+   {
+    "t": 14.62,
+    "w": "on"
+   },
+   {
+    "t": 14.71,
+    "w": "one"
+   },
+   {
+    "t": 14.96,
+    "w": "primary"
+   },
+   {
+    "t": 15.41,
+    "w": "ballot"
+   },
+   {
+    "t": 15.91,
+    "w": "and"
+   },
+   {
+    "t": 16.03,
+    "w": "the"
+   },
+   {
+    "t": 16.15,
+    "w": "top"
+   },
+   {
+    "t": 16.36,
+    "w": "finishers"
+   },
+   {
+    "t": 16.9,
+    "w": "would"
+   },
+   {
+    "t": 17.03,
+    "w": "move"
+   },
+   {
+    "t": 17.28,
+    "w": "on"
+   },
+   {
+    "t": 17.46,
+    "w": "to"
+   },
+   {
+    "t": 17.54,
+    "w": "November"
+   },
+   {
+    "t": 18.71,
+    "w": "Every"
+   },
+   {
+    "t": 18.89,
+    "w": "voter"
+   },
+   {
+    "t": 19.52,
+    "w": "in"
+   },
+   {
+    "t": 19.64,
+    "w": "every"
+   },
+   {
+    "t": 19.89,
+    "w": "party"
+   },
+   {
+    "t": 20.23,
+    "w": "or"
+   },
+   {
+    "t": 20.37,
+    "w": "none"
+   },
+   {
+    "t": 20.8,
+    "w": "gets"
+   },
+   {
+    "t": 21.08,
+    "w": "a"
+   },
+   {
+    "t": 21.16,
+    "w": "say"
+   },
+   {
+    "t": 22.14,
+    "w": "It's"
+   },
+   {
+    "t": 22.25,
+    "w": "a"
+   },
+   {
+    "t": 22.38,
+    "w": "simple"
+   },
+   {
+    "t": 22.75,
+    "w": "change"
+   },
+   {
+    "t": 23.82,
+    "w": "More"
+   },
+   {
+    "t": 24.0,
+    "w": "choices"
+   },
+   {
+    "t": 24.44,
+    "w": "on"
+   },
+   {
+    "t": 24.58,
+    "w": "the"
+   },
+   {
+    "t": 24.69,
+    "w": "ballot"
+   },
+   {
+    "t": 25.18,
+    "w": "and"
+   },
+   {
+    "t": 25.37,
+    "w": "representatives"
+   },
+   {
+    "t": 26.08,
+    "w": "who"
+   },
+   {
+    "t": 26.2,
+    "w": "have"
+   },
+   {
+    "t": 26.44,
+    "w": "to"
+   },
+   {
+    "t": 26.58,
+    "w": "answer"
+   },
+   {
+    "t": 26.82,
+    "w": "to"
+   },
+   {
+    "t": 27.0,
+    "w": "all"
+   },
+   {
+    "t": 27.19,
+    "w": "of"
+   },
+   {
+    "t": 27.37,
+    "w": "us"
+   },
+   {
+    "t": 28.22,
+    "w": "Vote"
+   },
+   {
+    "t": 28.42,
+    "w": "yes"
+   },
+   {
+    "t": 28.65,
+    "w": "on"
+   },
+   {
+    "t": 28.9,
+    "w": "Question"
+   },
+   {
+    "t": 29.29,
+    "w": "3"
+   }
+  ],
+  "wordCount": 90
+ },
+ {
+  "id": "coin-danielle",
+  "script": "coin",
+  "voice": "Danielle",
+  "bg": "#5a3b1f",
+  "captions": true,
+  "cut": false,
+  "durationSec": 39.22,
+  "lines": [
+   {
+    "t": 0.0,
+    "text": "Flip a coin. That's your odds of your state legislative race actually being contested in Massachusetts."
+   },
+   {
+    "t": 6.58,
+    "text": "Since 2014, 51% of races in this state — more than half — have had just ONE name on the ballot. No opponent. No debate. No choice. Massachusetts ranks dead last in the country for electoral competitiveness."
+   },
+   {
+    "t": 22.26,
+    "text": "That's not democracy, that's your leaders being chosen for you."
+   },
+   {
+    "t": 25.93,
+    "text": "And it's not because good candidates don't exist — it's because the system makes it nearly impossible for a challenger to even get on the ballot in the first place. So voters show up… to rubber-stamp a decision that was already made for them."
+   }
+  ],
+  "words": [
+   {
+    "t": 0.03,
+    "w": "Flip"
+   },
+   {
+    "t": 0.29,
+    "w": "a"
+   },
+   {
+    "t": 0.35,
+    "w": "coin"
+   },
+   {
+    "t": 1.38,
+    "w": "That's"
+   },
+   {
+    "t": 1.63,
+    "w": "your"
+   },
+   {
+    "t": 1.78,
+    "w": "odds"
+   },
+   {
+    "t": 2.08,
+    "w": "of"
+   },
+   {
+    "t": 2.19,
+    "w": "your"
+   },
+   {
+    "t": 2.32,
+    "w": "state"
+   },
+   {
+    "t": 2.69,
+    "w": "legislative"
+   },
+   {
+    "t": 3.32,
+    "w": "race"
+   },
+   {
+    "t": 3.64,
+    "w": "actually"
+   },
+   {
+    "t": 4.07,
+    "w": "being"
+   },
+   {
+    "t": 4.34,
+    "w": "contested"
+   },
+   {
+    "t": 4.94,
+    "w": "in"
+   },
+   {
+    "t": 5.11,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 6.61,
+    "w": "Since"
+   },
+   {
+    "t": 6.93,
+    "w": "2014"
+   },
+   {
+    "t": 8.02,
+    "w": "51%"
+   },
+   {
+    "t": 9.01,
+    "w": "of"
+   },
+   {
+    "t": 9.13,
+    "w": "races"
+   },
+   {
+    "t": 9.59,
+    "w": "in"
+   },
+   {
+    "t": 9.69,
+    "w": "this"
+   },
+   {
+    "t": 9.85,
+    "w": "state"
+   },
+   {
+    "t": 10.37,
+    "w": "more"
+   },
+   {
+    "t": 10.54,
+    "w": "than"
+   },
+   {
+    "t": 10.72,
+    "w": "half"
+   },
+   {
+    "t": 11.34,
+    "w": "have"
+   },
+   {
+    "t": 11.5,
+    "w": "had"
+   },
+   {
+    "t": 11.77,
+    "w": "just"
+   },
+   {
+    "t": 12.04,
+    "w": "ONE"
+   },
+   {
+    "t": 12.26,
+    "w": "name"
+   },
+   {
+    "t": 12.52,
+    "w": "on"
+   },
+   {
+    "t": 12.66,
+    "w": "the"
+   },
+   {
+    "t": 12.73,
+    "w": "ballot"
+   },
+   {
+    "t": 13.65,
+    "w": "No"
+   },
+   {
+    "t": 13.87,
+    "w": "opponent"
+   },
+   {
+    "t": 14.85,
+    "w": "No"
+   },
+   {
+    "t": 15.07,
+    "w": "debate"
+   },
+   {
+    "t": 16.1,
+    "w": "No"
+   },
+   {
+    "t": 16.34,
+    "w": "choice"
+   },
+   {
+    "t": 17.47,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 18.32,
+    "w": "ranks"
+   },
+   {
+    "t": 18.68,
+    "w": "dead"
+   },
+   {
+    "t": 18.99,
+    "w": "last"
+   },
+   {
+    "t": 19.36,
+    "w": "in"
+   },
+   {
+    "t": 19.49,
+    "w": "the"
+   },
+   {
+    "t": 19.57,
+    "w": "country"
+   },
+   {
+    "t": 20.05,
+    "w": "for"
+   },
+   {
+    "t": 20.27,
+    "w": "electoral"
+   },
+   {
+    "t": 20.77,
+    "w": "competitiveness"
+   },
+   {
+    "t": 22.29,
+    "w": "That's"
+   },
+   {
+    "t": 22.56,
+    "w": "not"
+   },
+   {
+    "t": 22.77,
+    "w": "democracy"
+   },
+   {
+    "t": 23.66,
+    "w": "that's"
+   },
+   {
+    "t": 23.89,
+    "w": "your"
+   },
+   {
+    "t": 24.0,
+    "w": "leaders"
+   },
+   {
+    "t": 24.39,
+    "w": "being"
+   },
+   {
+    "t": 24.61,
+    "w": "chosen"
+   },
+   {
+    "t": 25.01,
+    "w": "for"
+   },
+   {
+    "t": 25.16,
+    "w": "you"
+   },
+   {
+    "t": 25.95,
+    "w": "And"
+   },
+   {
+    "t": 26.08,
+    "w": "it's"
+   },
+   {
+    "t": 26.27,
+    "w": "not"
+   },
+   {
+    "t": 26.49,
+    "w": "because"
+   },
+   {
+    "t": 26.86,
+    "w": "good"
+   },
+   {
+    "t": 27.04,
+    "w": "candidates"
+   },
+   {
+    "t": 27.59,
+    "w": "don't"
+   },
+   {
+    "t": 27.78,
+    "w": "exist"
+   },
+   {
+    "t": 28.5,
+    "w": "it's"
+   },
+   {
+    "t": 28.7,
+    "w": "because"
+   },
+   {
+    "t": 29.02,
+    "w": "the"
+   },
+   {
+    "t": 29.1,
+    "w": "system"
+   },
+   {
+    "t": 29.53,
+    "w": "makes"
+   },
+   {
+    "t": 29.83,
+    "w": "it"
+   },
+   {
+    "t": 29.94,
+    "w": "nearly"
+   },
+   {
+    "t": 30.28,
+    "w": "impossible"
+   },
+   {
+    "t": 30.91,
+    "w": "for"
+   },
+   {
+    "t": 31.14,
+    "w": "a"
+   },
+   {
+    "t": 31.18,
+    "w": "challenger"
+   },
+   {
+    "t": 31.73,
+    "w": "to"
+   },
+   {
+    "t": 31.86,
+    "w": "even"
+   },
+   {
+    "t": 32.27,
+    "w": "get"
+   },
+   {
+    "t": 32.41,
+    "w": "on"
+   },
+   {
+    "t": 32.58,
+    "w": "the"
+   },
+   {
+    "t": 32.64,
+    "w": "ballot"
+   },
+   {
+    "t": 33.03,
+    "w": "in"
+   },
+   {
+    "t": 33.13,
+    "w": "the"
+   },
+   {
+    "t": 33.2,
+    "w": "first"
+   },
+   {
+    "t": 33.6,
+    "w": "place"
+   },
+   {
+    "t": 34.59,
+    "w": "So"
+   },
+   {
+    "t": 34.82,
+    "w": "voters"
+   },
+   {
+    "t": 35.23,
+    "w": "show"
+   },
+   {
+    "t": 35.53,
+    "w": "up"
+   },
+   {
+    "t": 36.25,
+    "w": "to"
+   },
+   {
+    "t": 36.39,
+    "w": "rubber-stamp"
+   },
+   {
+    "t": 37.01,
+    "w": "a"
+   },
+   {
+    "t": 37.08,
+    "w": "decision"
+   },
+   {
+    "t": 37.62,
+    "w": "that"
+   },
+   {
+    "t": 37.79,
+    "w": "was"
+   },
+   {
+    "t": 37.95,
+    "w": "already"
+   },
+   {
+    "t": 38.35,
+    "w": "made"
+   },
+   {
+    "t": 38.61,
+    "w": "for"
+   },
+   {
+    "t": 38.76,
+    "w": "them"
+   }
+  ],
+  "wordCount": 104
+ },
+ {
+  "id": "coin-ruth",
+  "script": "coin",
+  "voice": "Ruth",
+  "bg": "#3b2a6b",
+  "captions": true,
+  "cut": false,
+  "durationSec": 39.6,
+  "lines": [
+   {
+    "t": 0.0,
+    "text": "Flip a coin. That's your odds of your state legislative race actually being contested in Massachusetts."
+   },
+   {
+    "t": 6.63,
+    "text": "Since 2014, 51% of races in this state — more than half — have had just ONE name on the ballot. No opponent. No debate. No choice. Massachusetts ranks dead last in the country for electoral competitiveness."
+   },
+   {
+    "t": 22.29,
+    "text": "That's not democracy, that's your leaders being chosen for you."
+   },
+   {
+    "t": 26.14,
+    "text": "And it's not because good candidates don't exist — it's because the system makes it nearly impossible for a challenger to even get on the ballot in the first place. So voters show up… to rubber-stamp a decision that was already made for them."
+   }
+  ],
+  "words": [
+   {
+    "t": 0.14,
+    "w": "Flip"
+   },
+   {
+    "t": 0.38,
+    "w": "a"
+   },
+   {
+    "t": 0.5,
+    "w": "coin"
+   },
+   {
+    "t": 1.55,
+    "w": "That's"
+   },
+   {
+    "t": 1.74,
+    "w": "your"
+   },
+   {
+    "t": 1.93,
+    "w": "odds"
+   },
+   {
+    "t": 2.18,
+    "w": "of"
+   },
+   {
+    "t": 2.31,
+    "w": "your"
+   },
+   {
+    "t": 2.43,
+    "w": "state"
+   },
+   {
+    "t": 2.81,
+    "w": "legislative"
+   },
+   {
+    "t": 3.49,
+    "w": "race"
+   },
+   {
+    "t": 3.83,
+    "w": "actually"
+   },
+   {
+    "t": 4.3,
+    "w": "being"
+   },
+   {
+    "t": 4.55,
+    "w": "contested"
+   },
+   {
+    "t": 5.18,
+    "w": "in"
+   },
+   {
+    "t": 5.32,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 6.82,
+    "w": "Since"
+   },
+   {
+    "t": 7.08,
+    "w": "2014"
+   },
+   {
+    "t": 8.12,
+    "w": "51%"
+   },
+   {
+    "t": 9.13,
+    "w": "of"
+   },
+   {
+    "t": 9.27,
+    "w": "races"
+   },
+   {
+    "t": 9.63,
+    "w": "in"
+   },
+   {
+    "t": 9.76,
+    "w": "this"
+   },
+   {
+    "t": 9.92,
+    "w": "state"
+   },
+   {
+    "t": 10.52,
+    "w": "more"
+   },
+   {
+    "t": 10.67,
+    "w": "than"
+   },
+   {
+    "t": 10.88,
+    "w": "half"
+   },
+   {
+    "t": 11.38,
+    "w": "have"
+   },
+   {
+    "t": 11.57,
+    "w": "had"
+   },
+   {
+    "t": 11.71,
+    "w": "just"
+   },
+   {
+    "t": 12.01,
+    "w": "ONE"
+   },
+   {
+    "t": 12.26,
+    "w": "name"
+   },
+   {
+    "t": 12.51,
+    "w": "on"
+   },
+   {
+    "t": 12.57,
+    "w": "the"
+   },
+   {
+    "t": 12.7,
+    "w": "ballot"
+   },
+   {
+    "t": 13.8,
+    "w": "No"
+   },
+   {
+    "t": 13.99,
+    "w": "opponent"
+   },
+   {
+    "t": 15.26,
+    "w": "No"
+   },
+   {
+    "t": 15.45,
+    "w": "debate"
+   },
+   {
+    "t": 16.6,
+    "w": "No"
+   },
+   {
+    "t": 16.79,
+    "w": "choice"
+   },
+   {
+    "t": 17.88,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 18.74,
+    "w": "ranks"
+   },
+   {
+    "t": 19.05,
+    "w": "dead"
+   },
+   {
+    "t": 19.3,
+    "w": "last"
+   },
+   {
+    "t": 19.62,
+    "w": "in"
+   },
+   {
+    "t": 19.68,
+    "w": "the"
+   },
+   {
+    "t": 19.83,
+    "w": "country"
+   },
+   {
+    "t": 20.24,
+    "w": "for"
+   },
+   {
+    "t": 20.38,
+    "w": "electoral"
+   },
+   {
+    "t": 20.87,
+    "w": "competitiveness"
+   },
+   {
+    "t": 22.47,
+    "w": "That's"
+   },
+   {
+    "t": 22.73,
+    "w": "not"
+   },
+   {
+    "t": 22.91,
+    "w": "democracy"
+   },
+   {
+    "t": 23.85,
+    "w": "that's"
+   },
+   {
+    "t": 24.1,
+    "w": "your"
+   },
+   {
+    "t": 24.22,
+    "w": "leaders"
+   },
+   {
+    "t": 24.56,
+    "w": "being"
+   },
+   {
+    "t": 24.85,
+    "w": "chosen"
+   },
+   {
+    "t": 25.29,
+    "w": "for"
+   },
+   {
+    "t": 25.41,
+    "w": "you"
+   },
+   {
+    "t": 26.33,
+    "w": "And"
+   },
+   {
+    "t": 26.39,
+    "w": "it's"
+   },
+   {
+    "t": 26.59,
+    "w": "not"
+   },
+   {
+    "t": 26.83,
+    "w": "because"
+   },
+   {
+    "t": 27.18,
+    "w": "good"
+   },
+   {
+    "t": 27.39,
+    "w": "candidates"
+   },
+   {
+    "t": 27.99,
+    "w": "don't"
+   },
+   {
+    "t": 28.23,
+    "w": "exist"
+   },
+   {
+    "t": 28.89,
+    "w": "it's"
+   },
+   {
+    "t": 29.09,
+    "w": "because"
+   },
+   {
+    "t": 29.43,
+    "w": "the"
+   },
+   {
+    "t": 29.58,
+    "w": "system"
+   },
+   {
+    "t": 30.02,
+    "w": "makes"
+   },
+   {
+    "t": 30.2,
+    "w": "it"
+   },
+   {
+    "t": 30.39,
+    "w": "nearly"
+   },
+   {
+    "t": 30.7,
+    "w": "impossible"
+   },
+   {
+    "t": 31.38,
+    "w": "for"
+   },
+   {
+    "t": 31.52,
+    "w": "a"
+   },
+   {
+    "t": 31.6,
+    "w": "challenger"
+   },
+   {
+    "t": 32.16,
+    "w": "to"
+   },
+   {
+    "t": 32.34,
+    "w": "even"
+   },
+   {
+    "t": 32.58,
+    "w": "get"
+   },
+   {
+    "t": 32.77,
+    "w": "on"
+   },
+   {
+    "t": 32.83,
+    "w": "the"
+   },
+   {
+    "t": 32.93,
+    "w": "ballot"
+   },
+   {
+    "t": 33.33,
+    "w": "in"
+   },
+   {
+    "t": 33.45,
+    "w": "the"
+   },
+   {
+    "t": 33.53,
+    "w": "first"
+   },
+   {
+    "t": 33.83,
+    "w": "place"
+   },
+   {
+    "t": 34.92,
+    "w": "So"
+   },
+   {
+    "t": 35.09,
+    "w": "voters"
+   },
+   {
+    "t": 35.56,
+    "w": "show"
+   },
+   {
+    "t": 35.87,
+    "w": "up"
+   },
+   {
+    "t": 36.73,
+    "w": "to"
+   },
+   {
+    "t": 36.84,
+    "w": "rubber-stamp"
+   },
+   {
+    "t": 37.48,
+    "w": "a"
+   },
+   {
+    "t": 37.6,
+    "w": "decision"
+   },
+   {
+    "t": 38.1,
+    "w": "that"
+   },
+   {
+    "t": 38.24,
+    "w": "was"
+   },
+   {
+    "t": 38.41,
+    "w": "already"
+   },
+   {
+    "t": 38.81,
+    "w": "made"
+   },
+   {
+    "t": 39.04,
+    "w": "for"
+   },
+   {
+    "t": 39.17,
+    "w": "them"
+   }
+  ],
+  "wordCount": 104
+ },
+ {
+  "id": "coin-ruth-nocaps",
+  "script": "coin",
+  "voice": "Ruth",
+  "bg": "#3b2a6b",
+  "captions": false,
+  "cut": false,
+  "durationSec": 39.6,
+  "lines": [
+   {
+    "t": 0.0,
+    "text": "Flip a coin. That's your odds of your state legislative race actually being contested in Massachusetts."
+   },
+   {
+    "t": 6.63,
+    "text": "Since 2014, 51% of races in this state — more than half — have had just ONE name on the ballot. No opponent. No debate. No choice. Massachusetts ranks dead last in the country for electoral competitiveness."
+   },
+   {
+    "t": 22.29,
+    "text": "That's not democracy, that's your leaders being chosen for you."
+   },
+   {
+    "t": 26.14,
+    "text": "And it's not because good candidates don't exist — it's because the system makes it nearly impossible for a challenger to even get on the ballot in the first place. So voters show up… to rubber-stamp a decision that was already made for them."
+   }
+  ],
+  "words": [
+   {
+    "t": 0.14,
+    "w": "Flip"
+   },
+   {
+    "t": 0.38,
+    "w": "a"
+   },
+   {
+    "t": 0.5,
+    "w": "coin"
+   },
+   {
+    "t": 1.55,
+    "w": "That's"
+   },
+   {
+    "t": 1.74,
+    "w": "your"
+   },
+   {
+    "t": 1.93,
+    "w": "odds"
+   },
+   {
+    "t": 2.18,
+    "w": "of"
+   },
+   {
+    "t": 2.31,
+    "w": "your"
+   },
+   {
+    "t": 2.43,
+    "w": "state"
+   },
+   {
+    "t": 2.81,
+    "w": "legislative"
+   },
+   {
+    "t": 3.49,
+    "w": "race"
+   },
+   {
+    "t": 3.83,
+    "w": "actually"
+   },
+   {
+    "t": 4.3,
+    "w": "being"
+   },
+   {
+    "t": 4.55,
+    "w": "contested"
+   },
+   {
+    "t": 5.18,
+    "w": "in"
+   },
+   {
+    "t": 5.32,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 6.82,
+    "w": "Since"
+   },
+   {
+    "t": 7.08,
+    "w": "2014"
+   },
+   {
+    "t": 8.12,
+    "w": "51%"
+   },
+   {
+    "t": 9.13,
+    "w": "of"
+   },
+   {
+    "t": 9.27,
+    "w": "races"
+   },
+   {
+    "t": 9.63,
+    "w": "in"
+   },
+   {
+    "t": 9.76,
+    "w": "this"
+   },
+   {
+    "t": 9.92,
+    "w": "state"
+   },
+   {
+    "t": 10.52,
+    "w": "more"
+   },
+   {
+    "t": 10.67,
+    "w": "than"
+   },
+   {
+    "t": 10.88,
+    "w": "half"
+   },
+   {
+    "t": 11.38,
+    "w": "have"
+   },
+   {
+    "t": 11.57,
+    "w": "had"
+   },
+   {
+    "t": 11.71,
+    "w": "just"
+   },
+   {
+    "t": 12.01,
+    "w": "ONE"
+   },
+   {
+    "t": 12.26,
+    "w": "name"
+   },
+   {
+    "t": 12.51,
+    "w": "on"
+   },
+   {
+    "t": 12.57,
+    "w": "the"
+   },
+   {
+    "t": 12.7,
+    "w": "ballot"
+   },
+   {
+    "t": 13.8,
+    "w": "No"
+   },
+   {
+    "t": 13.99,
+    "w": "opponent"
+   },
+   {
+    "t": 15.26,
+    "w": "No"
+   },
+   {
+    "t": 15.45,
+    "w": "debate"
+   },
+   {
+    "t": 16.6,
+    "w": "No"
+   },
+   {
+    "t": 16.79,
+    "w": "choice"
+   },
+   {
+    "t": 17.88,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 18.74,
+    "w": "ranks"
+   },
+   {
+    "t": 19.05,
+    "w": "dead"
+   },
+   {
+    "t": 19.3,
+    "w": "last"
+   },
+   {
+    "t": 19.62,
+    "w": "in"
+   },
+   {
+    "t": 19.68,
+    "w": "the"
+   },
+   {
+    "t": 19.83,
+    "w": "country"
+   },
+   {
+    "t": 20.24,
+    "w": "for"
+   },
+   {
+    "t": 20.38,
+    "w": "electoral"
+   },
+   {
+    "t": 20.87,
+    "w": "competitiveness"
+   },
+   {
+    "t": 22.47,
+    "w": "That's"
+   },
+   {
+    "t": 22.73,
+    "w": "not"
+   },
+   {
+    "t": 22.91,
+    "w": "democracy"
+   },
+   {
+    "t": 23.85,
+    "w": "that's"
+   },
+   {
+    "t": 24.1,
+    "w": "your"
+   },
+   {
+    "t": 24.22,
+    "w": "leaders"
+   },
+   {
+    "t": 24.56,
+    "w": "being"
+   },
+   {
+    "t": 24.85,
+    "w": "chosen"
+   },
+   {
+    "t": 25.29,
+    "w": "for"
+   },
+   {
+    "t": 25.41,
+    "w": "you"
+   },
+   {
+    "t": 26.33,
+    "w": "And"
+   },
+   {
+    "t": 26.39,
+    "w": "it's"
+   },
+   {
+    "t": 26.59,
+    "w": "not"
+   },
+   {
+    "t": 26.83,
+    "w": "because"
+   },
+   {
+    "t": 27.18,
+    "w": "good"
+   },
+   {
+    "t": 27.39,
+    "w": "candidates"
+   },
+   {
+    "t": 27.99,
+    "w": "don't"
+   },
+   {
+    "t": 28.23,
+    "w": "exist"
+   },
+   {
+    "t": 28.89,
+    "w": "it's"
+   },
+   {
+    "t": 29.09,
+    "w": "because"
+   },
+   {
+    "t": 29.43,
+    "w": "the"
+   },
+   {
+    "t": 29.58,
+    "w": "system"
+   },
+   {
+    "t": 30.02,
+    "w": "makes"
+   },
+   {
+    "t": 30.2,
+    "w": "it"
+   },
+   {
+    "t": 30.39,
+    "w": "nearly"
+   },
+   {
+    "t": 30.7,
+    "w": "impossible"
+   },
+   {
+    "t": 31.38,
+    "w": "for"
+   },
+   {
+    "t": 31.52,
+    "w": "a"
+   },
+   {
+    "t": 31.6,
+    "w": "challenger"
+   },
+   {
+    "t": 32.16,
+    "w": "to"
+   },
+   {
+    "t": 32.34,
+    "w": "even"
+   },
+   {
+    "t": 32.58,
+    "w": "get"
+   },
+   {
+    "t": 32.77,
+    "w": "on"
+   },
+   {
+    "t": 32.83,
+    "w": "the"
+   },
+   {
+    "t": 32.93,
+    "w": "ballot"
+   },
+   {
+    "t": 33.33,
+    "w": "in"
+   },
+   {
+    "t": 33.45,
+    "w": "the"
+   },
+   {
+    "t": 33.53,
+    "w": "first"
+   },
+   {
+    "t": 33.83,
+    "w": "place"
+   },
+   {
+    "t": 34.92,
+    "w": "So"
+   },
+   {
+    "t": 35.09,
+    "w": "voters"
+   },
+   {
+    "t": 35.56,
+    "w": "show"
+   },
+   {
+    "t": 35.87,
+    "w": "up"
+   },
+   {
+    "t": 36.73,
+    "w": "to"
+   },
+   {
+    "t": 36.84,
+    "w": "rubber-stamp"
+   },
+   {
+    "t": 37.48,
+    "w": "a"
+   },
+   {
+    "t": 37.6,
+    "w": "decision"
+   },
+   {
+    "t": 38.1,
+    "w": "that"
+   },
+   {
+    "t": 38.24,
+    "w": "was"
+   },
+   {
+    "t": 38.41,
+    "w": "already"
+   },
+   {
+    "t": 38.81,
+    "w": "made"
+   },
+   {
+    "t": 39.04,
+    "w": "for"
+   },
+   {
+    "t": 39.17,
+    "w": "them"
+   }
+  ],
+  "wordCount": 104
+ },
+ {
+  "id": "coin-stephen",
+  "script": "coin",
+  "voice": "Stephen",
+  "bg": "#1f4e5f",
+  "captions": true,
+  "cut": false,
+  "durationSec": 37.15,
+  "lines": [
+   {
+    "t": 0.0,
+    "text": "Flip a coin. That's your odds of your state legislative race actually being contested in Massachusetts."
+   },
+   {
+    "t": 6.24,
+    "text": "Since 2014, 51% of races in this state — more than half — have had just ONE name on the ballot. No opponent. No debate. No choice. Massachusetts ranks dead last in the country for electoral competitiveness."
+   },
+   {
+    "t": 20.87,
+    "text": "That's not democracy, that's your leaders being chosen for you."
+   },
+   {
+    "t": 24.58,
+    "text": "And it's not because good candidates don't exist — it's because the system makes it nearly impossible for a challenger to even get on the ballot in the first place. So voters show up… to rubber-stamp a decision that was already made for them."
+   }
+  ],
+  "words": [
+   {
+    "t": 0.14,
+    "w": "Flip"
+   },
+   {
+    "t": 0.38,
+    "w": "a"
+   },
+   {
+    "t": 0.45,
+    "w": "coin"
+   },
+   {
+    "t": 1.5,
+    "w": "That's"
+   },
+   {
+    "t": 1.69,
+    "w": "your"
+   },
+   {
+    "t": 1.88,
+    "w": "odds"
+   },
+   {
+    "t": 2.09,
+    "w": "of"
+   },
+   {
+    "t": 2.19,
+    "w": "your"
+   },
+   {
+    "t": 2.32,
+    "w": "state"
+   },
+   {
+    "t": 2.63,
+    "w": "legislative"
+   },
+   {
+    "t": 3.25,
+    "w": "race"
+   },
+   {
+    "t": 3.64,
+    "w": "actually"
+   },
+   {
+    "t": 3.94,
+    "w": "being"
+   },
+   {
+    "t": 4.25,
+    "w": "contested"
+   },
+   {
+    "t": 4.77,
+    "w": "in"
+   },
+   {
+    "t": 4.88,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 6.42,
+    "w": "Since"
+   },
+   {
+    "t": 6.61,
+    "w": "2014"
+   },
+   {
+    "t": 7.7,
+    "w": "51%"
+   },
+   {
+    "t": 8.47,
+    "w": "of"
+   },
+   {
+    "t": 8.56,
+    "w": "races"
+   },
+   {
+    "t": 8.98,
+    "w": "in"
+   },
+   {
+    "t": 9.06,
+    "w": "this"
+   },
+   {
+    "t": 9.23,
+    "w": "state"
+   },
+   {
+    "t": 9.72,
+    "w": "more"
+   },
+   {
+    "t": 9.91,
+    "w": "than"
+   },
+   {
+    "t": 10.06,
+    "w": "half"
+   },
+   {
+    "t": 10.52,
+    "w": "have"
+   },
+   {
+    "t": 10.73,
+    "w": "had"
+   },
+   {
+    "t": 10.95,
+    "w": "just"
+   },
+   {
+    "t": 11.17,
+    "w": "ONE"
+   },
+   {
+    "t": 11.38,
+    "w": "name"
+   },
+   {
+    "t": 11.61,
+    "w": "on"
+   },
+   {
+    "t": 11.7,
+    "w": "the"
+   },
+   {
+    "t": 11.8,
+    "w": "ballot"
+   },
+   {
+    "t": 12.79,
+    "w": "No"
+   },
+   {
+    "t": 12.96,
+    "w": "opponent"
+   },
+   {
+    "t": 14.11,
+    "w": "No"
+   },
+   {
+    "t": 14.28,
+    "w": "debate"
+   },
+   {
+    "t": 15.35,
+    "w": "No"
+   },
+   {
+    "t": 15.53,
+    "w": "choice"
+   },
+   {
+    "t": 16.66,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 17.45,
+    "w": "ranks"
+   },
+   {
+    "t": 17.77,
+    "w": "dead"
+   },
+   {
+    "t": 18.0,
+    "w": "last"
+   },
+   {
+    "t": 18.33,
+    "w": "in"
+   },
+   {
+    "t": 18.39,
+    "w": "the"
+   },
+   {
+    "t": 18.54,
+    "w": "country"
+   },
+   {
+    "t": 18.91,
+    "w": "for"
+   },
+   {
+    "t": 19.08,
+    "w": "electoral"
+   },
+   {
+    "t": 19.52,
+    "w": "competitiveness"
+   },
+   {
+    "t": 21.0,
+    "w": "That's"
+   },
+   {
+    "t": 21.25,
+    "w": "not"
+   },
+   {
+    "t": 21.43,
+    "w": "democracy"
+   },
+   {
+    "t": 22.31,
+    "w": "that's"
+   },
+   {
+    "t": 22.5,
+    "w": "your"
+   },
+   {
+    "t": 22.71,
+    "w": "leaders"
+   },
+   {
+    "t": 23.06,
+    "w": "being"
+   },
+   {
+    "t": 23.32,
+    "w": "chosen"
+   },
+   {
+    "t": 23.7,
+    "w": "for"
+   },
+   {
+    "t": 23.93,
+    "w": "you"
+   },
+   {
+    "t": 24.71,
+    "w": "And"
+   },
+   {
+    "t": 24.83,
+    "w": "it's"
+   },
+   {
+    "t": 25.03,
+    "w": "not"
+   },
+   {
+    "t": 25.2,
+    "w": "because"
+   },
+   {
+    "t": 25.58,
+    "w": "good"
+   },
+   {
+    "t": 25.73,
+    "w": "candidates"
+   },
+   {
+    "t": 26.29,
+    "w": "don't"
+   },
+   {
+    "t": 26.45,
+    "w": "exist"
+   },
+   {
+    "t": 27.11,
+    "w": "it's"
+   },
+   {
+    "t": 27.21,
+    "w": "because"
+   },
+   {
+    "t": 27.58,
+    "w": "the"
+   },
+   {
+    "t": 27.7,
+    "w": "system"
+   },
+   {
+    "t": 28.08,
+    "w": "makes"
+   },
+   {
+    "t": 28.33,
+    "w": "it"
+   },
+   {
+    "t": 28.46,
+    "w": "nearly"
+   },
+   {
+    "t": 28.77,
+    "w": "impossible"
+   },
+   {
+    "t": 29.38,
+    "w": "for"
+   },
+   {
+    "t": 29.52,
+    "w": "a"
+   },
+   {
+    "t": 29.61,
+    "w": "challenger"
+   },
+   {
+    "t": 30.04,
+    "w": "to"
+   },
+   {
+    "t": 30.2,
+    "w": "even"
+   },
+   {
+    "t": 30.45,
+    "w": "get"
+   },
+   {
+    "t": 30.65,
+    "w": "on"
+   },
+   {
+    "t": 30.73,
+    "w": "the"
+   },
+   {
+    "t": 30.83,
+    "w": "ballot"
+   },
+   {
+    "t": 31.18,
+    "w": "in"
+   },
+   {
+    "t": 31.21,
+    "w": "the"
+   },
+   {
+    "t": 31.34,
+    "w": "first"
+   },
+   {
+    "t": 31.64,
+    "w": "place"
+   },
+   {
+    "t": 32.72,
+    "w": "So"
+   },
+   {
+    "t": 32.84,
+    "w": "voters"
+   },
+   {
+    "t": 33.24,
+    "w": "show"
+   },
+   {
+    "t": 33.57,
+    "w": "up"
+   },
+   {
+    "t": 34.34,
+    "w": "to"
+   },
+   {
+    "t": 34.45,
+    "w": "rubber-stamp"
+   },
+   {
+    "t": 35.08,
+    "w": "a"
+   },
+   {
+    "t": 35.14,
+    "w": "decision"
+   },
+   {
+    "t": 35.64,
+    "w": "that"
+   },
+   {
+    "t": 35.79,
+    "w": "was"
+   },
+   {
+    "t": 35.96,
+    "w": "already"
+   },
+   {
+    "t": 36.33,
+    "w": "made"
+   },
+   {
+    "t": 36.52,
+    "w": "for"
+   },
+   {
+    "t": 36.7,
+    "w": "them"
+   }
+  ],
+  "wordCount": 104
+ },
+ {
+  "id": "listen-danielle",
+  "script": "listen",
+  "voice": "Danielle",
+  "bg": "#5a3b1f",
+  "captions": true,
+  "cut": false,
+  "durationSec": 32.69,
+  "lines": [
+   {
+    "t": 0.0,
+    "text": "In most Massachusetts races, there's no competition — one candidate, one party, no choice."
+   },
+   {
+    "t": 6.68,
+    "text": "Why does that matter? Think about the only coffee shop in town. If nobody else can open across the street, the prices go up and the service goes down. Nobody has to try."
+   },
+   {
+    "t": 18.05,
+    "text": "Politics works the same way. When politicians don't have to compete, they don't have to listen."
+   },
+   {
+    "t": 23.97,
+    "text": "Question 3 opens the door. All candidates, one primary, and the best two move on. That's how you get representatives who actually listen."
+   }
+  ],
+  "words": [
+   {
+    "t": 0.03,
+    "w": "In"
+   },
+   {
+    "t": 0.19,
+    "w": "most"
+   },
+   {
+    "t": 0.49,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 1.3,
+    "w": "races"
+   },
+   {
+    "t": 2.04,
+    "w": "there's"
+   },
+   {
+    "t": 2.26,
+    "w": "no"
+   },
+   {
+    "t": 2.45,
+    "w": "competition"
+   },
+   {
+    "t": 3.44,
+    "w": "one"
+   },
+   {
+    "t": 3.69,
+    "w": "candidate"
+   },
+   {
+    "t": 4.47,
+    "w": "one"
+   },
+   {
+    "t": 4.7,
+    "w": "party"
+   },
+   {
+    "t": 5.34,
+    "w": "no"
+   },
+   {
+    "t": 5.59,
+    "w": "choice"
+   },
+   {
+    "t": 6.71,
+    "w": "Why"
+   },
+   {
+    "t": 6.88,
+    "w": "does"
+   },
+   {
+    "t": 7.04,
+    "w": "that"
+   },
+   {
+    "t": 7.24,
+    "w": "matter"
+   },
+   {
+    "t": 8.17,
+    "w": "Think"
+   },
+   {
+    "t": 8.44,
+    "w": "about"
+   },
+   {
+    "t": 8.7,
+    "w": "the"
+   },
+   {
+    "t": 8.85,
+    "w": "only"
+   },
+   {
+    "t": 9.12,
+    "w": "coffee"
+   },
+   {
+    "t": 9.52,
+    "w": "shop"
+   },
+   {
+    "t": 9.88,
+    "w": "in"
+   },
+   {
+    "t": 10.01,
+    "w": "town"
+   },
+   {
+    "t": 10.98,
+    "w": "If"
+   },
+   {
+    "t": 11.14,
+    "w": "nobody"
+   },
+   {
+    "t": 11.65,
+    "w": "else"
+   },
+   {
+    "t": 11.98,
+    "w": "can"
+   },
+   {
+    "t": 12.18,
+    "w": "open"
+   },
+   {
+    "t": 12.45,
+    "w": "across"
+   },
+   {
+    "t": 12.84,
+    "w": "the"
+   },
+   {
+    "t": 12.93,
+    "w": "street"
+   },
+   {
+    "t": 13.49,
+    "w": "the"
+   },
+   {
+    "t": 13.55,
+    "w": "prices"
+   },
+   {
+    "t": 14.06,
+    "w": "go"
+   },
+   {
+    "t": 14.29,
+    "w": "up"
+   },
+   {
+    "t": 14.48,
+    "w": "and"
+   },
+   {
+    "t": 14.6,
+    "w": "the"
+   },
+   {
+    "t": 14.66,
+    "w": "service"
+   },
+   {
+    "t": 15.12,
+    "w": "goes"
+   },
+   {
+    "t": 15.4,
+    "w": "down"
+   },
+   {
+    "t": 16.34,
+    "w": "Nobody"
+   },
+   {
+    "t": 16.78,
+    "w": "has"
+   },
+   {
+    "t": 17.02,
+    "w": "to"
+   },
+   {
+    "t": 17.11,
+    "w": "try"
+   },
+   {
+    "t": 18.07,
+    "w": "Politics"
+   },
+   {
+    "t": 18.68,
+    "w": "works"
+   },
+   {
+    "t": 18.98,
+    "w": "the"
+   },
+   {
+    "t": 19.06,
+    "w": "same"
+   },
+   {
+    "t": 19.39,
+    "w": "way"
+   },
+   {
+    "t": 20.23,
+    "w": "When"
+   },
+   {
+    "t": 20.39,
+    "w": "politicians"
+   },
+   {
+    "t": 21.14,
+    "w": "don't"
+   },
+   {
+    "t": 21.37,
+    "w": "have"
+   },
+   {
+    "t": 21.55,
+    "w": "to"
+   },
+   {
+    "t": 21.64,
+    "w": "compete"
+   },
+   {
+    "t": 22.39,
+    "w": "they"
+   },
+   {
+    "t": 22.52,
+    "w": "don't"
+   },
+   {
+    "t": 22.75,
+    "w": "have"
+   },
+   {
+    "t": 22.94,
+    "w": "to"
+   },
+   {
+    "t": 23.05,
+    "w": "listen"
+   },
+   {
+    "t": 24.0,
+    "w": "Question"
+   },
+   {
+    "t": 24.46,
+    "w": "3"
+   },
+   {
+    "t": 24.71,
+    "w": "opens"
+   },
+   {
+    "t": 25.12,
+    "w": "the"
+   },
+   {
+    "t": 25.2,
+    "w": "door"
+   },
+   {
+    "t": 26.09,
+    "w": "All"
+   },
+   {
+    "t": 26.27,
+    "w": "candidates"
+   },
+   {
+    "t": 27.15,
+    "w": "one"
+   },
+   {
+    "t": 27.35,
+    "w": "primary"
+   },
+   {
+    "t": 28.18,
+    "w": "and"
+   },
+   {
+    "t": 28.32,
+    "w": "the"
+   },
+   {
+    "t": 28.38,
+    "w": "best"
+   },
+   {
+    "t": 28.68,
+    "w": "two"
+   },
+   {
+    "t": 28.84,
+    "w": "move"
+   },
+   {
+    "t": 29.1,
+    "w": "on"
+   },
+   {
+    "t": 29.96,
+    "w": "That's"
+   },
+   {
+    "t": 30.22,
+    "w": "how"
+   },
+   {
+    "t": 30.36,
+    "w": "you"
+   },
+   {
+    "t": 30.52,
+    "w": "get"
+   },
+   {
+    "t": 30.7,
+    "w": "representatives"
+   },
+   {
+    "t": 31.47,
+    "w": "who"
+   },
+   {
+    "t": 31.61,
+    "w": "actually"
+   },
+   {
+    "t": 32.06,
+    "w": "listen"
+   }
+  ],
+  "wordCount": 85
+ },
+ {
+  "id": "listen-ruth",
+  "script": "listen",
+  "voice": "Ruth",
+  "bg": "#3b2a6b",
+  "captions": true,
+  "cut": false,
+  "durationSec": 32.86,
+  "lines": [
+   {
+    "t": 0.0,
+    "text": "In most Massachusetts races, there's no competition — one candidate, one party, no choice."
+   },
+   {
+    "t": 6.21,
+    "text": "Why does that matter? Think about the only coffee shop in town. If nobody else can open across the street, the prices go up and the service goes down. Nobody has to try."
+   },
+   {
+    "t": 17.7,
+    "text": "Politics works the same way. When politicians don't have to compete, they don't have to listen."
+   },
+   {
+    "t": 23.82,
+    "text": "Question 3 opens the door. All candidates, one primary, and the best two move on. That's how you get representatives who actually listen."
+   }
+  ],
+  "words": [
+   {
+    "t": 0.19,
+    "w": "In"
+   },
+   {
+    "t": 0.3,
+    "w": "most"
+   },
+   {
+    "t": 0.56,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 1.38,
+    "w": "races"
+   },
+   {
+    "t": 2.0,
+    "w": "there's"
+   },
+   {
+    "t": 2.23,
+    "w": "no"
+   },
+   {
+    "t": 2.39,
+    "w": "competition"
+   },
+   {
+    "t": 3.31,
+    "w": "one"
+   },
+   {
+    "t": 3.58,
+    "w": "candidate"
+   },
+   {
+    "t": 4.25,
+    "w": "one"
+   },
+   {
+    "t": 4.5,
+    "w": "party"
+   },
+   {
+    "t": 5.08,
+    "w": "no"
+   },
+   {
+    "t": 5.26,
+    "w": "choice"
+   },
+   {
+    "t": 6.39,
+    "w": "Why"
+   },
+   {
+    "t": 6.52,
+    "w": "does"
+   },
+   {
+    "t": 6.71,
+    "w": "that"
+   },
+   {
+    "t": 6.92,
+    "w": "matter"
+   },
+   {
+    "t": 8.01,
+    "w": "Think"
+   },
+   {
+    "t": 8.2,
+    "w": "about"
+   },
+   {
+    "t": 8.45,
+    "w": "the"
+   },
+   {
+    "t": 8.57,
+    "w": "only"
+   },
+   {
+    "t": 8.86,
+    "w": "coffee"
+   },
+   {
+    "t": 9.29,
+    "w": "shop"
+   },
+   {
+    "t": 9.59,
+    "w": "in"
+   },
+   {
+    "t": 9.7,
+    "w": "town"
+   },
+   {
+    "t": 10.8,
+    "w": "If"
+   },
+   {
+    "t": 10.93,
+    "w": "nobody"
+   },
+   {
+    "t": 11.3,
+    "w": "else"
+   },
+   {
+    "t": 11.55,
+    "w": "can"
+   },
+   {
+    "t": 11.75,
+    "w": "open"
+   },
+   {
+    "t": 11.99,
+    "w": "across"
+   },
+   {
+    "t": 12.38,
+    "w": "the"
+   },
+   {
+    "t": 12.49,
+    "w": "street"
+   },
+   {
+    "t": 13.08,
+    "w": "the"
+   },
+   {
+    "t": 13.25,
+    "w": "prices"
+   },
+   {
+    "t": 13.68,
+    "w": "go"
+   },
+   {
+    "t": 13.93,
+    "w": "up"
+   },
+   {
+    "t": 14.1,
+    "w": "and"
+   },
+   {
+    "t": 14.19,
+    "w": "the"
+   },
+   {
+    "t": 14.34,
+    "w": "service"
+   },
+   {
+    "t": 14.74,
+    "w": "goes"
+   },
+   {
+    "t": 14.99,
+    "w": "down"
+   },
+   {
+    "t": 15.98,
+    "w": "Nobody"
+   },
+   {
+    "t": 16.36,
+    "w": "has"
+   },
+   {
+    "t": 16.63,
+    "w": "to"
+   },
+   {
+    "t": 16.8,
+    "w": "try"
+   },
+   {
+    "t": 17.84,
+    "w": "Politics"
+   },
+   {
+    "t": 18.41,
+    "w": "works"
+   },
+   {
+    "t": 18.7,
+    "w": "the"
+   },
+   {
+    "t": 18.84,
+    "w": "same"
+   },
+   {
+    "t": 19.16,
+    "w": "way"
+   },
+   {
+    "t": 20.04,
+    "w": "When"
+   },
+   {
+    "t": 20.22,
+    "w": "politicians"
+   },
+   {
+    "t": 20.97,
+    "w": "don't"
+   },
+   {
+    "t": 21.22,
+    "w": "have"
+   },
+   {
+    "t": 21.47,
+    "w": "to"
+   },
+   {
+    "t": 21.53,
+    "w": "compete"
+   },
+   {
+    "t": 22.18,
+    "w": "they"
+   },
+   {
+    "t": 22.34,
+    "w": "don't"
+   },
+   {
+    "t": 22.54,
+    "w": "have"
+   },
+   {
+    "t": 22.79,
+    "w": "to"
+   },
+   {
+    "t": 22.97,
+    "w": "listen"
+   },
+   {
+    "t": 23.96,
+    "w": "Question"
+   },
+   {
+    "t": 24.39,
+    "w": "3"
+   },
+   {
+    "t": 24.76,
+    "w": "opens"
+   },
+   {
+    "t": 25.07,
+    "w": "the"
+   },
+   {
+    "t": 25.26,
+    "w": "door"
+   },
+   {
+    "t": 26.2,
+    "w": "All"
+   },
+   {
+    "t": 26.38,
+    "w": "candidates"
+   },
+   {
+    "t": 27.2,
+    "w": "one"
+   },
+   {
+    "t": 27.44,
+    "w": "primary"
+   },
+   {
+    "t": 28.19,
+    "w": "and"
+   },
+   {
+    "t": 28.29,
+    "w": "the"
+   },
+   {
+    "t": 28.38,
+    "w": "best"
+   },
+   {
+    "t": 28.7,
+    "w": "two"
+   },
+   {
+    "t": 28.85,
+    "w": "move"
+   },
+   {
+    "t": 29.19,
+    "w": "on"
+   },
+   {
+    "t": 30.02,
+    "w": "That's"
+   },
+   {
+    "t": 30.28,
+    "w": "how"
+   },
+   {
+    "t": 30.47,
+    "w": "you"
+   },
+   {
+    "t": 30.58,
+    "w": "get"
+   },
+   {
+    "t": 30.77,
+    "w": "representatives"
+   },
+   {
+    "t": 31.58,
+    "w": "who"
+   },
+   {
+    "t": 31.8,
+    "w": "actually"
+   },
+   {
+    "t": 32.26,
+    "w": "listen"
+   }
+  ],
+  "wordCount": 85
+ },
+ {
+  "id": "listen-stephen",
+  "script": "listen",
+  "voice": "Stephen",
+  "bg": "#1f4e5f",
+  "captions": true,
+  "cut": false,
+  "durationSec": 30.89,
+  "lines": [
+   {
+    "t": 0.0,
+    "text": "In most Massachusetts races, there's no competition — one candidate, one party, no choice."
+   },
+   {
+    "t": 6.0,
+    "text": "Why does that matter? Think about the only coffee shop in town. If nobody else can open across the street, the prices go up and the service goes down. Nobody has to try."
+   },
+   {
+    "t": 16.65,
+    "text": "Politics works the same way. When politicians don't have to compete, they don't have to listen."
+   },
+   {
+    "t": 22.37,
+    "text": "Question 3 opens the door. All candidates, one primary, and the best two move on. That's how you get representatives who actually listen."
+   }
+  ],
+  "words": [
+   {
+    "t": 0.14,
+    "w": "In"
+   },
+   {
+    "t": 0.25,
+    "w": "most"
+   },
+   {
+    "t": 0.5,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 1.25,
+    "w": "races"
+   },
+   {
+    "t": 1.88,
+    "w": "there's"
+   },
+   {
+    "t": 2.12,
+    "w": "no"
+   },
+   {
+    "t": 2.31,
+    "w": "competition"
+   },
+   {
+    "t": 3.19,
+    "w": "one"
+   },
+   {
+    "t": 3.44,
+    "w": "candidate"
+   },
+   {
+    "t": 4.04,
+    "w": "one"
+   },
+   {
+    "t": 4.31,
+    "w": "party"
+   },
+   {
+    "t": 4.81,
+    "w": "no"
+   },
+   {
+    "t": 5.08,
+    "w": "choice"
+   },
+   {
+    "t": 6.14,
+    "w": "Why"
+   },
+   {
+    "t": 6.3,
+    "w": "does"
+   },
+   {
+    "t": 6.46,
+    "w": "that"
+   },
+   {
+    "t": 6.63,
+    "w": "matter"
+   },
+   {
+    "t": 7.6,
+    "w": "Think"
+   },
+   {
+    "t": 7.77,
+    "w": "about"
+   },
+   {
+    "t": 8.04,
+    "w": "the"
+   },
+   {
+    "t": 8.17,
+    "w": "only"
+   },
+   {
+    "t": 8.4,
+    "w": "coffee"
+   },
+   {
+    "t": 8.77,
+    "w": "shop"
+   },
+   {
+    "t": 9.09,
+    "w": "in"
+   },
+   {
+    "t": 9.22,
+    "w": "town"
+   },
+   {
+    "t": 10.28,
+    "w": "If"
+   },
+   {
+    "t": 10.39,
+    "w": "nobody"
+   },
+   {
+    "t": 10.71,
+    "w": "else"
+   },
+   {
+    "t": 11.0,
+    "w": "can"
+   },
+   {
+    "t": 11.15,
+    "w": "open"
+   },
+   {
+    "t": 11.4,
+    "w": "across"
+   },
+   {
+    "t": 11.71,
+    "w": "the"
+   },
+   {
+    "t": 11.85,
+    "w": "street"
+   },
+   {
+    "t": 12.35,
+    "w": "the"
+   },
+   {
+    "t": 12.48,
+    "w": "prices"
+   },
+   {
+    "t": 12.9,
+    "w": "go"
+   },
+   {
+    "t": 13.15,
+    "w": "up"
+   },
+   {
+    "t": 13.28,
+    "w": "and"
+   },
+   {
+    "t": 13.37,
+    "w": "the"
+   },
+   {
+    "t": 13.48,
+    "w": "service"
+   },
+   {
+    "t": 13.81,
+    "w": "goes"
+   },
+   {
+    "t": 14.09,
+    "w": "down"
+   },
+   {
+    "t": 15.06,
+    "w": "Nobody"
+   },
+   {
+    "t": 15.42,
+    "w": "has"
+   },
+   {
+    "t": 15.63,
+    "w": "to"
+   },
+   {
+    "t": 15.76,
+    "w": "try"
+   },
+   {
+    "t": 16.77,
+    "w": "Politics"
+   },
+   {
+    "t": 17.27,
+    "w": "works"
+   },
+   {
+    "t": 17.59,
+    "w": "the"
+   },
+   {
+    "t": 17.71,
+    "w": "same"
+   },
+   {
+    "t": 18.02,
+    "w": "way"
+   },
+   {
+    "t": 18.91,
+    "w": "When"
+   },
+   {
+    "t": 19.09,
+    "w": "politicians"
+   },
+   {
+    "t": 19.78,
+    "w": "don't"
+   },
+   {
+    "t": 20.03,
+    "w": "have"
+   },
+   {
+    "t": 20.22,
+    "w": "to"
+   },
+   {
+    "t": 20.34,
+    "w": "compete"
+   },
+   {
+    "t": 20.82,
+    "w": "they"
+   },
+   {
+    "t": 21.0,
+    "w": "don't"
+   },
+   {
+    "t": 21.17,
+    "w": "have"
+   },
+   {
+    "t": 21.41,
+    "w": "to"
+   },
+   {
+    "t": 21.47,
+    "w": "listen"
+   },
+   {
+    "t": 22.5,
+    "w": "Question"
+   },
+   {
+    "t": 22.93,
+    "w": "3"
+   },
+   {
+    "t": 23.12,
+    "w": "opens"
+   },
+   {
+    "t": 23.5,
+    "w": "the"
+   },
+   {
+    "t": 23.62,
+    "w": "door"
+   },
+   {
+    "t": 24.63,
+    "w": "All"
+   },
+   {
+    "t": 24.75,
+    "w": "candidates"
+   },
+   {
+    "t": 25.5,
+    "w": "one"
+   },
+   {
+    "t": 25.75,
+    "w": "primary"
+   },
+   {
+    "t": 26.4,
+    "w": "and"
+   },
+   {
+    "t": 26.58,
+    "w": "the"
+   },
+   {
+    "t": 26.7,
+    "w": "best"
+   },
+   {
+    "t": 26.95,
+    "w": "two"
+   },
+   {
+    "t": 27.08,
+    "w": "move"
+   },
+   {
+    "t": 27.5,
+    "w": "on"
+   },
+   {
+    "t": 28.3,
+    "w": "That's"
+   },
+   {
+    "t": 28.55,
+    "w": "how"
+   },
+   {
+    "t": 28.75,
+    "w": "you"
+   },
+   {
+    "t": 28.86,
+    "w": "get"
+   },
+   {
+    "t": 29.05,
+    "w": "representatives"
+   },
+   {
+    "t": 29.8,
+    "w": "who"
+   },
+   {
+    "t": 30.01,
+    "w": "actually"
+   },
+   {
+    "t": 30.31,
+    "w": "listen"
+   }
+  ],
+  "wordCount": 85
+ },
+ {
+  "id": "listen-stephen-short",
+  "script": "listen",
+  "voice": "Stephen",
+  "bg": "#1f4e5f",
+  "captions": true,
+  "cut": true,
+  "durationSec": 20.26,
+  "lines": [
+   {
+    "t": 0.0,
+    "text": "In most Massachusetts races, there's no competition — one candidate, one party, no choice."
+   },
+   {
+    "t": 6.0,
+    "text": "Politics works the same way. When politicians don't have to compete, they don't have to listen."
+   },
+   {
+    "t": 11.73,
+    "text": "Question 3 opens the door. All candidates, one primary, and the best two move on. That's how you get representatives who actually listen."
+   }
+  ],
+  "words": [
+   {
+    "t": 0.14,
+    "w": "In"
+   },
+   {
+    "t": 0.25,
+    "w": "most"
+   },
+   {
+    "t": 0.5,
+    "w": "Massachusetts"
+   },
+   {
+    "t": 1.25,
+    "w": "races"
+   },
+   {
+    "t": 1.88,
+    "w": "there's"
+   },
+   {
+    "t": 2.12,
+    "w": "no"
+   },
+   {
+    "t": 2.31,
+    "w": "competition"
+   },
+   {
+    "t": 3.19,
+    "w": "one"
+   },
+   {
+    "t": 3.44,
+    "w": "candidate"
+   },
+   {
+    "t": 4.04,
+    "w": "one"
+   },
+   {
+    "t": 4.31,
+    "w": "party"
+   },
+   {
+    "t": 4.81,
+    "w": "no"
+   },
+   {
+    "t": 5.08,
+    "w": "choice"
+   },
+   {
+    "t": 6.13,
+    "w": "Politics"
+   },
+   {
+    "t": 6.63,
+    "w": "works"
+   },
+   {
+    "t": 6.94,
+    "w": "the"
+   },
+   {
+    "t": 7.07,
+    "w": "same"
+   },
+   {
+    "t": 7.38,
+    "w": "way"
+   },
+   {
+    "t": 8.26,
+    "w": "When"
+   },
+   {
+    "t": 8.45,
+    "w": "politicians"
+   },
+   {
+    "t": 9.13,
+    "w": "don't"
+   },
+   {
+    "t": 9.38,
+    "w": "have"
+   },
+   {
+    "t": 9.57,
+    "w": "to"
+   },
+   {
+    "t": 9.7,
+    "w": "compete"
+   },
+   {
+    "t": 10.17,
+    "w": "they"
+   },
+   {
+    "t": 10.36,
+    "w": "don't"
+   },
+   {
+    "t": 10.52,
+    "w": "have"
+   },
+   {
+    "t": 10.76,
+    "w": "to"
+   },
+   {
+    "t": 10.82,
+    "w": "listen"
+   },
+   {
+    "t": 11.85,
+    "w": "Question"
+   },
+   {
+    "t": 12.29,
+    "w": "3"
+   },
+   {
+    "t": 12.48,
+    "w": "opens"
+   },
+   {
+    "t": 12.85,
+    "w": "the"
+   },
+   {
+    "t": 12.98,
+    "w": "door"
+   },
+   {
+    "t": 13.98,
+    "w": "All"
+   },
+   {
+    "t": 14.11,
+    "w": "candidates"
+   },
+   {
+    "t": 14.86,
+    "w": "one"
+   },
+   {
+    "t": 15.11,
+    "w": "primary"
+   },
+   {
+    "t": 15.76,
+    "w": "and"
+   },
+   {
+    "t": 15.93,
+    "w": "the"
+   },
+   {
+    "t": 16.06,
+    "w": "best"
+   },
+   {
+    "t": 16.31,
+    "w": "two"
+   },
+   {
+    "t": 16.43,
+    "w": "move"
+   },
+   {
+    "t": 16.86,
+    "w": "on"
+   },
+   {
+    "t": 17.65,
+    "w": "That's"
+   },
+   {
+    "t": 17.9,
+    "w": "how"
+   },
+   {
+    "t": 18.1,
+    "w": "you"
+   },
+   {
+    "t": 18.21,
+    "w": "get"
+   },
+   {
+    "t": 18.4,
+    "w": "representatives"
+   },
+   {
+    "t": 19.15,
+    "w": "who"
+   },
+   {
+    "t": 19.36,
+    "w": "actually"
+   },
+   {
+    "t": 19.66,
+    "w": "listen"
+   }
+  ],
+  "wordCount": 52
+ }
+]
