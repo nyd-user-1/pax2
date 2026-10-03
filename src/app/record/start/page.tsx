@@ -31,7 +31,7 @@ export default function StartPage() {
             </div>
           </div>
           {OPTIONS.map(({ href, icon: Icon, title, body }) => (
-            <Link key={href} href={href} className="group flex items-center gap-5 rounded-3xl border bg-white p-6 transition-colors hover:border-primary/40">
+            <Link key={href} href={href} className="lift group flex items-center gap-5 surface p-6">
               <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-pax-mist">
                 <Icon className="size-5 text-pax-ink" />
               </span>

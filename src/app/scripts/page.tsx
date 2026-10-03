@@ -33,13 +33,13 @@ export default async function ScriptsPage() {
   return (
     <div className="flex flex-col gap-10">
       <header className="flex flex-col gap-2">
-        <h1 className="font-display text-4xl text-pax-ink md:text-5xl">Before anyone records</h1>
+        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Before anyone records</h1>
         <p className="max-w-3xl text-sm text-muted-foreground">Which script is worth a volunteer&apos;s five minutes? Three checks before recording, and a record of what was chosen and why, so the next review can ask whether the choice held up.</p>
-        <Link href="/campaign" className="text-sm text-pax-plum underline">See what four reform campaigns are posting</Link>
+        <Link href="/campaigns" className="text-sm text-pax-plum underline">See what four reform campaigns are posting</Link>
       </header>
 
       <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-3xl border bg-white p-4">
+        <div className="surface p-4">
           <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">What polling says</h2>
           {context.polls.map((p) => (
             <p key={p.url} className="mt-2 text-sm">
@@ -51,7 +51,7 @@ export default async function ScriptsPage() {
           ))}
           <p className="mt-2 text-sm text-muted-foreground">{context.pollingNote}</p>
         </div>
-        <div className="rounded-3xl border bg-white p-4">
+        <div className="surface p-4">
           <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">What the other side says</h2>
           <p className="mt-2 text-sm">{context.opposition}</p>
           <a href={context.oppositionSource} className="mt-1 inline-block text-xs text-pax-plum underline" target="_blank" rel="noreferrer">
@@ -61,7 +61,7 @@ export default async function ScriptsPage() {
       </section>
 
       <section className="flex flex-col gap-4">
-        <h2 className="font-display text-2xl text-pax-ink">The library</h2>
+        <h2 className="font-display text-xl text-slate-900">The library</h2>
         {SCRIPTS.map((s) => {
           const c = C.scripts[s.id]
           const prior = c?.prior.votechoice
@@ -75,7 +75,7 @@ export default async function ScriptsPage() {
             .sort((a, b) => Math.abs(b.f!.diff) - Math.abs(a.f!.diff))
             .slice(0, 5)
           return (
-            <article key={s.id} id={s.id} className="grid gap-5 rounded-3xl border bg-white p-5 lg:grid-cols-[1.1fr_1fr]">
+            <article key={s.id} id={s.id} className="grid gap-5 surface p-5 lg:grid-cols-[1.1fr_1fr]">
               <div className="flex flex-col gap-2">
                 <h3 className="font-display text-2xl leading-snug text-pax-ink">{s.title}</h3>
                 <p className="text-xs text-muted-foreground">
@@ -113,7 +113,7 @@ export default async function ScriptsPage() {
                       </li>
                     ))}
                   </ul>
-                  <Link href="/reference" className="text-[11px] text-pax-plum underline">
+                  <Link href="/scoring?tab=research" className="text-[11px] text-pax-plum underline">
                     What the archive found, feature by feature
                   </Link>
                 </div>
@@ -149,14 +149,14 @@ export default async function ScriptsPage() {
 
       <section className="grid gap-6 lg:grid-cols-[1fr_1fr]">
         <div className="flex flex-col gap-3">
-          <h2 className="font-display text-2xl text-pax-ink">Ask the people who will see it</h2>
+          <h2 className="font-display text-xl text-slate-900">Ask the people who will see it</h2>
           <p className="text-sm text-muted-foreground">
             Volunteers, partners, anyone in the room: judge each statement. Groups form from the votes, and the statements every group agrees with are the safest ground for a script. {context.consensus.source}.
           </p>
           <ConsensusVote slug={context.consensus.slug} statements={statements} voted={voted} />
         </div>
         <div className="flex flex-col gap-3">
-          <h2 className="font-display text-2xl text-pax-ink">Where people agree</h2>
+          <h2 className="font-display text-xl text-slate-900">Where people agree</h2>
           <p className="text-xs text-muted-foreground">
             {t.voters} {t.voters === 1 ? "person" : "people"} · {t.groups > 1 ? `${t.groups} groups found from the votes` : "groups form from four people up"}
           </p>
@@ -179,7 +179,7 @@ export default async function ScriptsPage() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <h2 className="font-display text-2xl text-pax-ink">Choices on record</h2>
+        <h2 className="font-display text-xl text-slate-900">Choices on record</h2>
         {chosen.length ? (
           <ol className="flex flex-col gap-1.5">
             {chosen.map((p) => (

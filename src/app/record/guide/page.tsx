@@ -15,7 +15,7 @@ export default function GuidePage() {
       <FlowPage title="The volunteer guide" lead="Five minutes, a phone, and your own words. Here's everything that helps.">
         <div className="flex flex-col gap-4">
           {SECTIONS.map((s) => (
-            <section key={s.t} className="rounded-3xl border bg-white p-6">
+            <section key={s.t} className="surface p-6">
               <h2 className="mb-3 text-lg font-semibold text-pax-ink">{s.t}</h2>
               <ul className="flex list-disc flex-col gap-2 pl-5 text-muted-foreground">
                 {s.items.map((i) => (

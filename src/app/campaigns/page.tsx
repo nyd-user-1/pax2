@@ -44,7 +44,7 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
   return (
     <div className="flex flex-col gap-8">
       <header className="flex flex-col gap-3">
-        <h1 className="font-display text-4xl text-pax-ink md:text-5xl">What reform campaigns are posting</h1>
+        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">What reform campaigns are posting</h1>
         <p className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
           The latest shorts from four channels, ordered by organic views per day since posting · public YouTube counts as of {asOf} <SourceBadge source="platform" />
         </p>
@@ -52,7 +52,7 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
 
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((s) => (
-          <Link key={s.slug} href={`/campaign?c=${s.slug}`} className={cn("flex flex-col gap-1 rounded-3xl border bg-white p-4 transition-colors hover:border-primary/40", s.slug === ch.slug && "border-primary bg-pax-mist")}>
+          <Link key={s.slug} href={`/campaign?c=${s.slug}`} className={cn("flex flex-col gap-1 surface p-4 transition-colors hover:border-primary/40", s.slug === ch.slug && "border-primary bg-pax-mist")}>
             <span className="font-medium text-pax-ink">{s.name}</span>
             <span className="text-xs text-muted-foreground">{s.place} · {s.n} shorts</span>
             <span className="tabular mt-2 text-sm">
@@ -68,7 +68,7 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {videos.map((v) => (
           <a key={v.id} href={`https://www.youtube.com/shorts/${v.id}`} target="_blank" rel="noreferrer" className="group flex flex-col gap-2">
-            <div className="relative aspect-[9/16] overflow-hidden rounded-xl bg-muted">
+            <div className="lift relative aspect-[9/16] overflow-hidden rounded-2xl bg-slate-900 shadow-e2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" loading="lazy" className="absolute inset-0 size-full object-cover transition-transform group-hover:scale-[1.03]" />
               <span className="tabular absolute bottom-2 right-2 rounded bg-black/70 px-1.5 py-0.5 text-[11px] text-white">{v.sec}s</span>

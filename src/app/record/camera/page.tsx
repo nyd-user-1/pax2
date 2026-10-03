@@ -53,7 +53,7 @@ export default function CameraPage() {
       <>
         <StepBar step={3} back={{ href: "/record", label: "Home" }} />
         <FlowPage title="Sent. Thank you." lead="The team has your video. PAX reviews it next: what is said and when, what is on screen, and how it compares with the takes already running.">
-          <div className="flex flex-col gap-4 rounded-3xl border bg-white p-7">
+          <div className="flex flex-col gap-4 surface p-7">
             <CheckCircle2 className="size-10 text-primary" />
             <p className="text-muted-foreground">If it runs as an ad, its results come back to the partner&apos;s Arguments board with a score and a reading, and the next script is chosen with it in mind.</p>
             <div className="flex flex-wrap gap-4">
@@ -73,7 +73,7 @@ export default function CameraPage() {
           <div className="grid gap-6 md:grid-cols-[280px_1fr]">
             <video src={clip.url} controls playsInline className="aspect-[9/16] w-full rounded-3xl bg-black object-cover shadow-xl" />
             <div className="flex flex-col gap-4">
-              <div className="rounded-3xl border bg-white p-6 text-sm">
+              <div className="surface p-6 text-sm">
                 <p className="font-medium text-pax-ink">{draft.title ?? "Your video"}</p>
                 <p className="text-muted-foreground">
                   {Math.round(clip.seconds)} seconds · {clip.source === "recorded" ? "recorded here" : "uploaded"}
@@ -111,7 +111,7 @@ export default function CameraPage() {
       <StepBar step={2} back={{ href: "/record/script", label: "Script" }} />
       <FlowPage title="Ready when you are." lead="Your script will scroll on screen while you record. Don't worry about getting it perfect — you can always try again.">
         <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-5 rounded-3xl border bg-white p-6 shadow-sm">
+          <div className="flex flex-col gap-5 surface p-6 shadow-sm">
             <div className="flex items-center gap-4">
               <span className="flex size-12 items-center justify-center rounded-full bg-pax-mist">
                 <Video className="size-5 text-pax-ink" />

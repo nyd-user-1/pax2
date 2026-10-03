@@ -19,10 +19,10 @@ export default async function BuildPage() {
     <div className="flex flex-col gap-8">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-display text-4xl text-pax-ink md:text-5xl">Build</h1>
+          <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Build</h1>
           <p className="text-sm text-muted-foreground">Updated {b.updated}</p>
         </div>
-        <div className="rounded-3xl border bg-white p-4">
+        <div className="surface p-4">
           <p className="text-xs text-muted-foreground">AWS spend against the ${b.budget.cap} cap (estimated)</p>
           <p className="tabular font-display text-4xl text-pax-ink">${spent.toFixed(2)}</p>
           <div className="mt-2 h-1.5 w-56 rounded-full bg-muted">
@@ -52,7 +52,7 @@ export default async function BuildPage() {
 
       <section className="grid gap-6 md:grid-cols-2">
         <div className="flex flex-col gap-2">
-          <h2 className="font-display text-2xl text-pax-ink">Spend</h2>
+          <h2 className="font-display text-xl text-slate-900">Spend</h2>
           <ul className="tabular flex flex-col text-sm">
             {b.budget.spent.map((s) => (
               <li key={s.item} className="flex justify-between border-t py-1.5">
@@ -63,7 +63,7 @@ export default async function BuildPage() {
           </ul>
         </div>
         <div className="flex flex-col gap-2">
-          <h2 className="font-display text-2xl text-pax-ink">Resources</h2>
+          <h2 className="font-display text-xl text-slate-900">Resources</h2>
           <ul className="flex flex-col text-sm">
             {b.resources.map((r) => (
               <li key={r.name} className="flex justify-between gap-3 border-t py-1.5">
@@ -75,7 +75,7 @@ export default async function BuildPage() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-2 rounded-3xl border bg-white p-4">
+      <section className="flex flex-col gap-2 surface p-4">
         <h2 className="font-medium text-pax-ink">Review workspace</h2>
         <p className="text-sm text-muted-foreground">
           This browser is reading workspace <span className="font-mono">{ws}</span>. A fresh one starts the loop from round 1 without touching any earlier record.

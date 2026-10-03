@@ -1,20 +1,27 @@
-/* PAX palette: Parallax's layout language in red, white and blue. The blues and reds are
-   GovBlock's forecast and simulator colors: blue #2563eb leads, navy #1e3a8a carries type,
-   red #dc2626 is the second accent. */
+/* PAX design tokens. One sans family; hierarchy from size, weight and space. Blue and red are
+   GovBlock's forecast colors and they carry meaning: blue = above the reference, red = below,
+   navy = actions and type. */
 :root:root {
   --pax-ink: #1e3a8a;
   --pax-plum: #2563eb;
   --pax-lavender: #dbeafe;
-  --pax-mist: #f4f7fe;
+  --pax-mist: #f5f7fb;
   --pax-red: #dc2626;
   --pax-red-deep: #991b1b;
   --pax-red-soft: #fee2e2;
+  --pax-above: #2563eb;
+  --pax-above-soft: #eff6ff;
+  --pax-below: #dc2626;
+  --pax-below-soft: #fef2f2;
   --pax-observed: #1e3a8a;
   --pax-interpretation: #4b5563;
   --pax-hypothesis: #dc2626;
-  --primary: #2563eb;
+  --primary: #1e3a8a;
   --primary-foreground: #fff;
   --ring: #2563eb;
+  --pax-shadow-1: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 1px rgb(15 23 42 / 0.03);
+  --pax-shadow-2: 0 4px 14px -4px rgb(15 23 42 / 0.1), 0 2px 4px -2px rgb(15 23 42 / 0.06);
+  --pax-shadow-3: 0 18px 40px -12px rgb(15 23 42 / 0.22), 0 6px 12px -6px rgb(15 23 42 / 0.1);
 }
 
 @theme inline {
@@ -25,26 +32,101 @@
   --color-pax-red: var(--pax-red);
   --color-pax-red-deep: var(--pax-red-deep);
   --color-pax-red-soft: var(--pax-red-soft);
+  --color-above: var(--pax-above);
+  --color-above-soft: var(--pax-above-soft);
+  --color-below: var(--pax-below);
+  --color-below-soft: var(--pax-below-soft);
   --color-observed: var(--pax-observed);
   --color-interpretation: var(--pax-interpretation);
   --color-hypothesis: var(--pax-hypothesis);
+  --shadow-e1: var(--pax-shadow-1);
+  --shadow-e2: var(--pax-shadow-2);
+  --shadow-e3: var(--pax-shadow-3);
 }
 
+/* Headings: the body family at heavier weight and tighter tracking. */
 .font-display {
-  font-family: var(--font-pax-serif), Georgia, serif;
-  font-weight: 600;
-  letter-spacing: -0.015em;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 650;
+  letter-spacing: -0.025em;
 }
 
 .tabular {
   font-variant-numeric: tabular-nums;
 }
 
-/* Parallax's buttons are pills. */
 [data-slot="button"] {
   border-radius: 9999px;
 }
 
 body {
-  background: linear-gradient(180deg, #ffffff 0%, var(--pax-mist) 100%) fixed;
+  background: var(--pax-mist);
+}
+
+/* A raised surface, and the lift it gives when it can be opened. */
+.surface {
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: var(--pax-shadow-1);
+  outline: 1px solid rgb(15 23 42 / 0.06);
+}
+.lift {
+  transition:
+    transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 200ms ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--pax-shadow-3);
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+/* Entrance: content rises in, staggered by --i. */
+@keyframes pax-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: pax-rise 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+@keyframes pax-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+.grow {
+  transform-origin: left;
+  animation: pax-grow 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 45ms + 150ms);
+}
+
+@keyframes pax-dot-in {
+  from {
+    left: 50%;
+    opacity: 0;
+  }
+}
+.dot-in {
+  animation: pax-dot-in 800ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 60ms + 200ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .grow,
+  .dot-in,
+  .lift {
+    animation: none !important;
+    transition: none !important;
+  }
 }

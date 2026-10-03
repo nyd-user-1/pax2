@@ -1,0 +1,153 @@
+import Link from "next/link"
+
+import type { SavedReading } from "@/app/actions"
+import { LoadButton } from "@/components/load-button"
+import { ReadingPanel } from "@/components/reading-panel"
+import { ScorePanel } from "@/components/score-panel"
+import { CountUp, ScoreInfo } from "@/components/ui-pax"
+import { TONE_LABEL, toneClasses, toneOf } from "@/lib/tone"
+import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
+import { featuresFor, scriptById, takeById, takeLabel } from "@/lib/catalog"
+import { evidenceIndex, type Reading } from "@/lib/pax"
+import { board, DATASETS, findings, forecasts, loads, steps, workspace } from "@/lib/review"
+import { cn } from "@/ui/lib/utils"
+
+function Fold({ title, children, open = false }: { title: string; children: React.ReactNode; open?: boolean }) {
+  return (
+    <details open={open} className="group surface">
+      <summary className="flex cursor-pointer list-none items-center justify-between px-5 py-4 font-semibold text-slate-900">
+        {title}
+        <span className="text-slate-400 transition-transform group-open:rotate-180">⌄</span>
+      </summary>
+      <div className="px-5 pb-5">{children}</div>
+    </details>
+  )
+}
+
+/** One take: the video, its number, PAX's read, and the detail a tap away. */
+export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
+  const take = takeById(id)!
+  const ws = await workspace()
+  const script = scriptById(take.scriptId)!
+  const [{ ref, takes }, fs, ev, calls, history] = await Promise.all([board(ws), findings(ws, id), steps(ws, id), forecasts(ws, id), loads(ws)])
+  const state = takes.find((t) => t.take.id === id)!
+  const f = featuresFor(id)
+  const last = fs.at(-1)
+  const initial: SavedReading | null = last ? { at: last.at, reading: last.finding as Reading, model: last.model, snapshotId: last.snapshotId, formula: last.formula, reference: last.reference, scoreValue: last.score.value } : null
+  const loaded = new Set(history.map((h) => h.dataset))
+  const nextDataset = DATASETS.find((d) => !loaded.has(d.id))?.id ?? null
+  const s = state.latest?.score
+  const m = state.latest?.snapshot.metrics
+  const tone = toneOf(s?.low, s?.high)
+  const siblings = takes.filter((t) => t.take.scriptId === take.scriptId && t.take.id !== id)
+  const stat = (label: string, v: string) => (
+    <div className="flex flex-col">
+      <span className="tabular text-lg font-semibold text-slate-900">{v}</span>
+      <span className="text-xs text-slate-500">{label}</span>
+    </div>
+  )
+
+  return (
+    <SeekProvider>
+      <div className={cn("grid gap-8", inDrawer ? "lg:grid-cols-[280px_1fr]" : "lg:grid-cols-[320px_1fr]")}>
+        <aside className="flex flex-col gap-4 lg:sticky lg:top-0 lg:self-start">
+          <Player src={take.video!.src} poster={take.video!.poster} />
+          {f?.audio && !f.audio.error && (
+            <div className="surface p-4">
+              <Loudness f={f.audio} />
+            </div>
+          )}
+          {siblings.length > 0 && (
+            <div className="surface flex flex-col gap-1 p-4">
+              <p className="pb-1 text-xs font-medium text-slate-500">Same script, other takes</p>
+              {siblings.map((x) => (
+                <Link key={x.take.id} href={`/v/${x.take.id}`} scroll={false} replace={inDrawer} className="flex items-center justify-between rounded-lg px-2 py-1.5 text-sm hover:bg-slate-50">
+                  <span>{takeLabel(x.take)}</span>
+                  <span className="tabular font-semibold text-slate-700">{x.latest?.score.value?.toFixed(0) ?? "—"}</span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </aside>
+
+        <div className="flex min-w-0 flex-col gap-6">
+          <header className="flex flex-wrap items-start justify-between gap-4">
+            <div className="flex flex-col gap-1">
+              <h1 className="font-display text-2xl text-slate-900 md:text-[28px]">{script.short}</h1>
+              <p className="text-slate-500">
+                {takeLabel(take)} · {Math.round(take.durationSec)} seconds · <span className="text-slate-400">stand-in take</span>
+              </p>
+            </div>
+            {s?.value != null ? (
+              <div className="flex items-center gap-3">
+                <div className="text-right">
+                  <span className={cn("inline-flex items-baseline rounded-2xl px-4 py-2 text-4xl font-bold shadow-e2", toneClasses[tone])}>
+                    <CountUp value={s.value} />
+                  </span>
+                  <p className="tabular mt-1 text-xs text-slate-500">
+                    {TONE_LABEL[tone]} · range {s.low!.toFixed(0)}–{s.high!.toFixed(0)}
+                  </p>
+                </div>
+                <ScoreInfo />
+              </div>
+            ) : (
+              <span className="rounded-2xl bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-600">{s ? "Not scored yet" : "No results yet"}</span>
+            )}
+          </header>
+
+          {m && (
+            <div className="surface grid grid-cols-2 gap-4 p-5 sm:grid-cols-4">
+              {stat("people reached", (m.reach.value ?? 0).toLocaleString())}
+              {stat("watched 3+ seconds", (m.plays3s.value ?? 0).toLocaleString())}
+              {stat("average watch", `${m.avgWatchSec.value?.toFixed(1) ?? "—"}s`)}
+              {stat("spent", `$${m.spend.value?.toFixed(0) ?? "—"}`)}
+            </div>
+          )}
+
+          {!ref && (
+            <div className="surface flex flex-col gap-3 p-5">
+              <p className="text-slate-600">No paid results are loaded yet.</p>
+              <LoadButton dataset="round-1" label="Load round 1" />
+            </div>
+          )}
+
+          <section className="surface p-5 md:p-6">
+            <ReadingPanel
+              takeId={id}
+              evidence={evidenceIndex(take, state, ref, takes)}
+              initial={initial}
+              events={ev.map((e) => ({ at: e.at, stepId: e.stepId, status: e.status, change: e.change, note: e.note, findingAt: e.findingAt }))}
+              calls={calls.map((c) => ({ at: c.at, by: c.by, target: c.target, predicted: c.predicted, component: c.component, reason: c.reason, baseline: c.baseline }))}
+              canRead={!!(ref && state.latest)}
+              nextDataset={nextDataset}
+              baseline={state.latest?.score.value ?? null}
+              baselineSnapshot={state.latest?.snapshot.id ?? ""}
+            />
+          </section>
+
+          {ref && state.latest && (
+            <Fold title="How the score was built">
+              <ScorePanel take={take} snapshot={state.latest.snapshot} score={state.latest.score} reference={ref} />
+            </Fold>
+          )}
+          <Fold title="What is said, and when">{take.lines && <ScriptTimeline lines={take.lines} duration={take.durationSec} />}</Fold>
+          <Fold title="What is on screen">{f ? <Observations f={f} /> : <p className="text-sm text-slate-500">The video review hasn&apos;t run on this take yet.</p>}</Fold>
+          {state.history.length > 1 && (
+            <Fold title="Every round, same scale">
+              <div className="flex flex-col gap-1 text-sm">
+                {state.history.map((h) => (
+                  <div key={h.snapshot.id} className="tabular flex justify-between gap-2 border-b border-slate-100 py-1.5 last:border-0">
+                    <span>{h.snapshot.dataset === "round-1" ? "Round 1" : h.snapshot.dataset === "round-2" ? "Round 2" : "Upload"} · through {h.snapshot.windowEnd}</span>
+                    <span>
+                      {h.score.value?.toFixed(0) ?? "Not scored"} {h.score.low != null && <span className="text-slate-400">({h.score.low.toFixed(0)}–{h.score.high!.toFixed(0)})</span>}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </Fold>
+          )}
+        </div>
+      </div>
+    </SeekProvider>
+  )
+}

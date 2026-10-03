@@ -16,12 +16,12 @@ export default function SourcesPage() {
   return (
     <div className="flex flex-col gap-8">
       <header className="flex flex-col gap-2">
-        <h1 className="font-display text-4xl text-pax-ink md:text-5xl">Sources</h1>
+        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Sources</h1>
         <p className="max-w-3xl text-sm text-muted-foreground">Every dataset behind PAX, what it can and cannot say, and where it sits.</p>
       </header>
       <div className="grid gap-3">
         {list.map((s) => (
-          <article key={s.name} className="grid gap-2 rounded-3xl border bg-white p-4 md:grid-cols-[1fr_1.2fr]">
+          <article key={s.name} className="grid gap-2 surface p-4 md:grid-cols-[1fr_1.2fr]">
             <div className="flex flex-col gap-1">
               <div className="flex items-start gap-2">
                 <a href={s.link} target="_blank" rel="noreferrer" className="font-medium text-pax-ink hover:underline">

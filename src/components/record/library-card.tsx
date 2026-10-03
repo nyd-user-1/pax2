@@ -19,7 +19,7 @@ export function LibraryCard({ s }: { s: CardData }) {
         update({ mode: "library", scriptId: s.id, title: s.title, text: s.text })
         router.push("/record/script")
       }}
-      className="group flex flex-col gap-4 rounded-3xl border bg-white p-6 text-left transition-colors hover:border-primary/40"
+      className="lift group flex flex-col gap-4 surface p-6 text-left"
     >
       <span className="flex items-start justify-between gap-3">
         <span className="text-lg font-semibold leading-snug text-pax-ink">{s.title}</span>

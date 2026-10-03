@@ -64,7 +64,7 @@ export function Editor({ research }: { research: Record<string, Research> }) {
   return (
     <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
       <div className="flex flex-col gap-6">
-        <div className="overflow-hidden rounded-3xl border bg-white shadow-sm">
+        <div className="overflow-hidden surface shadow-sm">
           <textarea
             value={text}
             onChange={(e) => {
@@ -90,7 +90,7 @@ export function Editor({ research }: { research: Record<string, Research> }) {
           </Link>
         </div>
       </div>
-      <aside className="flex h-fit flex-col gap-3 rounded-3xl border bg-white p-6">
+      <aside className="flex h-fit flex-col gap-3 surface p-6">
         <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Before you record</p>
         {cs.map((c) => (
           <div key={c.title} className="flex gap-3">

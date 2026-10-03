@@ -14,7 +14,7 @@ type RawTake = { id: string; script: string; voice: string; captions: boolean; c
 export const CLAIM = library.claim
 export const SCRIPTS: Script[] = library.scripts.map((s) => {
   const words = s.text.split(/\s+/).filter(Boolean).length
-  return { id: s.id, claimId: library.claim.id, title: s.title, framing: s.framing, text: s.text, words, seconds: Math.round((words / 130) * 60), source: s.source }
+  return { id: s.id, claimId: library.claim.id, title: s.title, short: (s as { short?: string }).short ?? s.title, framing: s.framing, text: s.text, words, seconds: Math.round((words / 130) * 60), source: s.source }
 })
 export const scriptById = (id: string) => SCRIPTS.find((s) => s.id === id)
 

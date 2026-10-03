@@ -10,7 +10,7 @@ import { board, findings, forecasts, loads, steps, submissions, workspace } from
 import { cn } from "@/ui/lib/utils"
 
 export const dynamic = "force-dynamic"
-export const metadata = { title: "Reviews" }
+export const metadata = { title: "Evals" }
 
 type Side = "above" | "below" | "unclear"
 const side = (low: number, high: number): Side => (low > 50 ? "above" : high < 50 ? "below" : "unclear")
@@ -52,15 +52,15 @@ export default async function ReviewsPage() {
   return (
     <div className="flex flex-col gap-10">
       <header className="flex flex-col gap-2">
-        <h1 className="font-display text-4xl text-pax-ink md:text-5xl">Reviews</h1>
-        <p className="max-w-3xl text-sm text-muted-foreground">Each round of results is scored with the same formula on the same frozen scale. What the partner decided last time comes forward, and the new evidence is read against it.</p>
+        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Evals</h1>
+        <p className="max-w-3xl text-sm text-muted-foreground">Every test the partner approved, every call made before results came in, and what each new round of results changed.</p>
       </header>
 
       <section className="flex flex-col gap-3">
-        <h2 className="font-display text-2xl text-pax-ink">Results on file</h2>
+        <h2 className="font-display text-xl text-slate-900">Results on file</h2>
         <ol className="flex flex-col gap-2">
           {history.map((h) => (
-            <li key={h.fileHash} className="flex flex-wrap items-baseline justify-between gap-2 rounded-xl border px-4 py-2 text-sm">
+            <li key={h.fileHash} className="flex flex-wrap items-baseline justify-between gap-2 surface px-4 py-2 text-sm">
               <span className="font-medium text-pax-ink">{h.dataset === "upload" ? "Uploaded export" : h.dataset === "round-1" ? "Round 1" : "Round 2"}</span>
               <span className="text-muted-foreground" title={`File fingerprint ${h.fileHash}`}>
                 {h.rows} ads · results as of {h.asOf} · loaded {new Date(h.at).toLocaleString()}
@@ -79,7 +79,7 @@ export default async function ReviewsPage() {
 
       <section className="flex flex-col gap-3">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="font-display text-2xl text-pax-ink">Sent by volunteers</h2>
+          <h2 className="font-display text-xl text-slate-900">Sent by volunteers</h2>
           <Link href="/record" className="text-sm text-primary underline">
             Open the recording flow
           </Link>
@@ -102,13 +102,13 @@ export default async function ReviewsPage() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <h2 className="font-display text-2xl text-pax-ink">What the partner carries into this review</h2>
+        <h2 className="font-display text-xl text-slate-900">What the partner carries into this review</h2>
         {carried.length === 0 ? (
           <p className="text-sm text-muted-foreground">No decisions yet. Open a take, ask PAX for a reading, and approve, revise or save a next test.</p>
         ) : (
           <div className="grid gap-3 md:grid-cols-2">
             {carried.map(({ t, e, finding }) => (
-              <Link key={e.stepId} href={`/v/${t.take.id}`} className="flex flex-col gap-1 rounded-xl border p-4 hover:bg-pax-mist">
+              <Link key={e.stepId} href={`/v/${t.take.id}`} className="flex flex-col gap-1 surface p-4 hover:bg-pax-mist">
                 <span className="text-xs text-muted-foreground">
                   {scriptById(t.take.scriptId)!.title} — {takeLabel(t.take)}
                 </span>
@@ -126,7 +126,7 @@ export default async function ReviewsPage() {
 
       {r2 && (
         <section className="flex flex-col gap-3">
-          <h2 className="font-display text-2xl text-pax-ink">What changed with the later results</h2>
+          <h2 className="font-display text-xl text-slate-900">What changed with the later results</h2>
           <p className="max-w-3xl text-sm text-muted-foreground">
             Same formula ({"resonance-1"}), same reference ({ref?.id}). “The score changed” means the number moved. “The conclusion changed” means the take moved across the line: above, below, or not distinguishable from the reference average.
           </p>
@@ -200,7 +200,7 @@ export default async function ReviewsPage() {
       )}
 
       <section className="flex flex-col gap-3">
-        <h2 className="font-display text-2xl text-pax-ink">Calls</h2>
+        <h2 className="font-display text-xl text-slate-900">Calls</h2>
         {resolved.length === 0 ? (
           <p className="text-sm text-muted-foreground">No calls logged. On any take, “Call it” records a prediction before the next results load.</p>
         ) : (
@@ -213,7 +213,7 @@ export default async function ReviewsPage() {
             )}
             <ul className="flex flex-col gap-2">
               {resolved.map(({ t, c, actual, right }) => (
-                <li key={c.at} className="flex flex-wrap items-baseline gap-2 rounded-xl border px-4 py-2 text-sm">
+                <li key={c.at} className="flex flex-wrap items-baseline gap-2 surface px-4 py-2 text-sm">
                   <span className="rounded bg-pax-lavender px-1.5 text-[11px] font-medium text-pax-plum">Locked {new Date(c.at).toLocaleString()}</span>
                   <span>
                     {takeLabel(t.take)}: {c.by} called <b>{c.predicted}</b> than {c.baseline?.toFixed(0)}

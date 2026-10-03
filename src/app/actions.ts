@@ -54,14 +54,14 @@ export async function decide(input: { takeId: string; stepId: string; status: "a
   const ws = await workspace()
   await recordStep(ws, input.takeId, { stepId: input.stepId, status: input.status, change: input.change, note: input.note, prompted: input.prompted, uncertain: input.uncertain, measure: input.measure, snapshotId: input.snapshotId, formula: FORMULA_V1.version, reference: input.reference, findingAt: input.findingAt })
   revalidatePath(`/v/${input.takeId}`)
-  revalidatePath("/reviews")
+  revalidatePath("/evals")
 }
 
 export async function callIt(input: { takeId: string; by: string; target: string; predicted: "higher" | "lower" | "same"; component: string; reason: string; baseline: number | null; baselineSnapshot: string }) {
   const ws = await workspace()
   const r = await recordForecast(ws, input.takeId, input)
   revalidatePath(`/v/${input.takeId}`)
-  revalidatePath("/reviews")
+  revalidatePath("/evals")
   return r
 }
 
@@ -133,6 +133,6 @@ export async function submitTake(input: { id: string; key: string; scriptId?: st
   const ws = await workspace()
   const { putOnce, now } = await import("@/lib/ledger")
   await putOnce({ pk: `${ws}#SUBMIT`, sk: input.id, at: now(), status: "awaiting review", ...input })
-  revalidatePath("/reviews")
+  revalidatePath("/evals")
   return { ok: true }
 }

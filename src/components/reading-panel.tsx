@@ -188,7 +188,7 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
           )}
 
           <div className="flex flex-col gap-3">
-            <h3 className="font-display text-2xl text-pax-ink">Next test</h3>
+            <h3 className="font-display text-xl text-slate-900">Next test</h3>
             {r.nextSteps.map((p, i) => (
               <StepCard key={i} p={p} i={i} takeId={takeId} saved={saved!} events={events} />
             ))}
@@ -208,9 +208,9 @@ function CallIt({ takeId, calls, nextDataset, baseline, baselineSnapshot }: { ta
   const [msg, setMsg] = React.useState<string | null>(null)
   const [pending, start] = React.useTransition()
   return (
-    <div className="flex flex-col gap-3 rounded-3xl border bg-white p-4">
+    <div className="flex flex-col gap-3 surface p-4">
       <div>
-        <h3 className="font-display text-2xl text-pax-ink">Call it</h3>
+        <h3 className="font-display text-xl text-slate-900">Call it</h3>
         <p className="text-sm text-muted-foreground">Before the next results arrive, write down which way this take&apos;s score will move. The call is locked with a timestamp, and the next review shows who was right, so predictions build a track record instead of a slogan.</p>
       </div>
       {calls.length > 0 && (

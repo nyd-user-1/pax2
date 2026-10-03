@@ -17,6 +17,7 @@ export type Script = {
   id: string
   claimId: string
   title: string
+  short: string
   /** The library card's own description of the framing. */
   framing: string
   text: string

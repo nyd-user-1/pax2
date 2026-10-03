@@ -37,7 +37,7 @@ export function ScorePanel({ take, snapshot, score, reference }: { take: TakeInf
           {score.components.map((c) => {
             const meta = COMPONENTS.find((x) => x.key === c.key)!
             return (
-              <div key={c.key} className="flex flex-col gap-2 rounded-xl border p-3">
+              <div key={c.key} className="flex flex-col gap-2 surface p-3">
                 <div className="flex items-baseline justify-between">
                   <span className="font-medium text-pax-ink">{meta.name}</span>
                   <span className="tabular text-xs text-muted-foreground">weight {(c.weight * 100).toFixed(0)}%</span>

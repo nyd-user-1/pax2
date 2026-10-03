@@ -1,146 +1,120 @@
 import Link from "next/link"
+import { ArrowRight, Hourglass, Sparkles, Upload, Video } from "lucide-react"
 
-import { RangeBar, ScoreFigure, StandInNote, fmt } from "@/components/bits"
+import { FramingStrip } from "@/components/framing-strip"
 import { LoadButton } from "@/components/load-button"
-import { CLAIM, MESSENGERS, SCRIPTS, takeLabel } from "@/lib/catalog"
-import { board, loads, workspace, type TakeState } from "@/lib/review"
-import { cn } from "@/ui/lib/utils"
+import { RecordScript } from "@/components/record/record-script"
+import { ScoreInfo, SectionTitle } from "@/components/ui-pax"
+import { VideoCard } from "@/components/video-card"
+import { CLAIM, SCRIPTS, scriptById, takeLabel } from "@/lib/catalog"
+import { board, findings, loads, steps, workspace } from "@/lib/review"
+import { byScore, cardOf } from "@/lib/view"
 
 export const dynamic = "force-dynamic"
+export const metadata = { title: "Home" }
 
-function Cell({ s }: { s?: TakeState }) {
-  if (!s) return <div className="flex h-full min-h-28 items-center justify-center rounded-xl border border-dashed text-xs text-muted-foreground">Not recorded</div>
-  const sc = s.latest?.score
-  return (
-    <Link href={`/v/${s.take.id}`} className="group flex h-full min-h-28 flex-col gap-2 rounded-xl border bg-card p-3 transition-colors hover:border-pax-plum/40 hover:bg-pax-mist">
-      <div className="flex items-start justify-between gap-2">
-        {sc ? <ScoreFigure value={sc.value} low={sc.low} high={sc.high} status={sc.status} size="sm" /> : <span className="text-sm text-muted-foreground">No results yet</span>}
-        {sc?.status === "limited" && <span className="rounded bg-pax-red-soft px-1.5 py-px text-[10px] font-medium text-pax-red-deep">Limited evidence</span>}
-      </div>
-      {sc && sc.status !== "unscorable" && <RangeBar value={sc.value} low={sc.low} high={sc.high} />}
-      {sc?.status === "unscorable" && <p className="text-xs leading-snug text-muted-foreground">{sc.reasons[0]}</p>}
-      <div className="mt-auto flex items-center justify-between text-[11px] text-muted-foreground">
-        <span>{fmt(s.latest?.snapshot.metrics.impressions.value)} impressions</span>
-        <span className="opacity-0 transition-opacity group-hover:opacity-100">Open →</span>
-      </div>
-    </Link>
-  )
-}
+type Next = { key: string; icon: typeof Video; title: string; body: string; action: React.ReactNode }
 
-export default async function ArgumentsPage() {
+export default async function HomePage() {
   const ws = await workspace()
   const [{ ref, takes }, history] = await Promise.all([board(ws), loads(ws)])
-  const main = (scriptId: string, voice: string) => takes.find((t) => t.take.scriptId === scriptId && t.take.voice === voice && t.take.captions && !t.take.cut)
-  const variants = takes.filter((t) => !t.take.captions || t.take.cut)
-  const scored = takes.filter((t) => t.latest && t.latest.score.value != null)
-  const best = [...scored].sort((a, b) => b.latest!.score.value! - a.latest!.score.value!)[0]
-  const widest = [...scored].sort((a, b) => b.latest!.score.high! - b.latest!.score.low! - (a.latest!.score.high! - a.latest!.score.low!))[0]
-  const unscored = takes.filter((t) => t.latest?.score.status === "unscorable")
   const loaded = new Set(history.map((h) => h.dataset))
+  const cards = takes.map(cardOf).sort(byScore)
+  const scored = cards.filter((c) => c.score != null)
+  const latest = history.at(-1)
+
+  // What to do next, most useful first, at most three.
+  const next: Next[] = []
+  if (!ref) {
+    next.push({ key: "load1", icon: Upload, title: "Load the first round of results", body: "Scores appear the moment paid results are in. The first round also sets the average every later round is measured against.", action: <LoadButton dataset="round-1" label="Load round 1" /> })
+  } else {
+    const perTake = await Promise.all(takes.map(async (t) => ({ t, ev: await steps(ws, t.take.id), fs: await findings(ws, t.take.id) })))
+    const pending = perTake.flatMap(({ t, ev }) => {
+      const last = new Map<string, (typeof ev)[number]>()
+      for (const e of ev.sort((a, b) => a.at.localeCompare(b.at))) last.set(e.stepId, e)
+      return [...last.values()].filter((e) => e.status === "approved" || e.status === "revised").map((e) => ({ t, e }))
+    })
+    for (const { t, e } of pending.slice(0, 1))
+      next.push({ key: `step-${e.stepId}`, icon: Sparkles, title: "An approved test is waiting to be made", body: `${e.change} — on ${scriptById(t.take.scriptId)!.short}, ${takeLabel(t.take)}.`, action: <Link href={`/v/${t.take.id}`} scroll={false} className="press inline-flex items-center gap-1.5 rounded-full bg-pax-ink px-4 py-2 text-sm font-semibold text-white">Open it <ArrowRight className="size-4" /></Link> })
+    const leader = perTake.find((p) => p.t.take.id === scored[0]?.id)
+    if (leader && !leader.fs.length)
+      next.push({ key: "read", icon: Sparkles, title: `Find out why “${scored[0].scriptShort}” is leading`, body: `${takeLabel(leader.t.take)} scores ${scored[0].score!.toFixed(0)}. PAX reads the results and the video, and proposes the next test.`, action: <Link href={`/v/${scored[0].id}`} scroll={false} className="press inline-flex items-center gap-1.5 rounded-full bg-pax-ink px-4 py-2 text-sm font-semibold text-white">Get the reading <ArrowRight className="size-4" /></Link> })
+    if (!loaded.has("round-2"))
+      next.push({ key: "load2", icon: Upload, title: "Round 2 results are ready", body: "Load them to see what held up, what changed, and how any calls came out.", action: <LoadButton dataset="round-2" label="Load round 2" /> })
+    const thin = cards.find((c) => c.status === "limited" || c.status === "unscorable")
+    if (thin)
+      next.push({ key: "thin", icon: Hourglass, title: "One video needs more reach before it can be judged", body: `${thin.scriptShort}, ${thin.voice}: ${(thin.impressions ?? 0).toLocaleString()} impressions so far.`, action: <Link href={`/v/${thin.id}`} scroll={false} className="press inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-pax-ink">See it <ArrowRight className="size-4" /></Link> })
+    const means = SCRIPTS.map((s) => {
+      const xs = scored.filter((c) => c.script === s.id).map((c) => c.score!)
+      return { s, m: xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : -1 }
+    }).sort((a, b) => b.m - a.m)
+    if (means[0].m > 0)
+      next.push({ key: "record", icon: Video, title: `Record “${means[0].s.short}” with a new voice`, body: `It has the highest average so far (${means[0].m.toFixed(0)}). A new messenger tests whether the words or the voice are doing the work.`, action: <RecordScript id={means[0].s.id} title={means[0].s.title} text={means[0].s.text} /> })
+  }
 
   return (
-    <div className="flex flex-col gap-8">
-      <header className="flex flex-col gap-2">
-        <p className="text-xs font-medium uppercase tracking-wider text-pax-plum">{CLAIM.ballot}</p>
-        <h1 className="max-w-4xl text-balance font-display text-3xl leading-tight text-pax-ink md:text-4xl">{CLAIM.text}</h1>
-        <p className="max-w-3xl text-pretty text-muted-foreground">
-          Every take is an experiment on the argument: the same claim, framed three ways, read by different messengers. Each cell is a take&apos;s Resonance under the frozen reference, with the range its evidence supports.
-        </p>
-        <div className="mt-2 flex flex-wrap gap-3">
-          <Link href="/record/start" className="rounded-full bg-pax-ink px-6 py-3 text-sm font-semibold text-white shadow-md">Record a take</Link>
-          <Link href="/scripts" className="rounded-full border border-pax-ink/20 bg-white px-6 py-3 text-sm font-semibold text-pax-ink">Check a script first</Link>
+    <div className="flex flex-col gap-12">
+      <header className="rise flex flex-wrap items-end justify-between gap-6">
+        <div className="flex flex-col gap-2">
+          <p className="text-sm font-medium text-slate-500">{CLAIM.ballot}</p>
+          <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">{latest ? `${latest.dataset === "round-2" ? "Round 2" : latest.dataset === "round-1" ? "Round 1" : "New"} results are in` : "Welcome to PAX"}</h1>
+          <p className="max-w-xl text-slate-500">{latest ? `${scored.length} videos scored · results as of ${new Date(latest.asOf + "T12:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric" })}` : "See which version of the argument is landing, with whom, and what to record next."}</p>
         </div>
+        <Link href="/record" className="press inline-flex items-center gap-2 rounded-full bg-pax-ink px-6 py-3.5 text-sm font-semibold text-white shadow-e2 transition-shadow hover:shadow-e3">
+          <Video className="size-4" /> Record a video
+        </Link>
       </header>
 
-      {!ref ? (
-        <section className="flex flex-col gap-3 rounded-2xl border bg-pax-mist p-6">
-          <h2 className="font-display text-2xl text-pax-ink">Start with the first round of paid results</h2>
-          <p className="max-w-2xl text-sm text-muted-foreground">Loading them builds the reference scale from this round and freezes it. Every later round is scored on the same scale, so a change in a score is a change in performance, not in the yardstick.</p>
-          <LoadButton dataset="round-1" label="Load round 1 results" />
-        </section>
-      ) : (
-        <section className="grid gap-4 md:grid-cols-3">
-          {best && (
-            <div className="rounded-3xl border bg-white p-4">
-              <p className="text-xs text-muted-foreground">Highest so far</p>
-              <Link href={`/v/${best.take.id}`} className="mt-1 block font-medium text-pax-ink hover:underline">
-                {SCRIPTS.find((s) => s.id === best.take.scriptId)!.title} — {takeLabel(best.take)}
-              </Link>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Resonance {best.latest!.score.value!.toFixed(0)}, range {best.latest!.score.low!.toFixed(0)}–{best.latest!.score.high!.toFixed(0)}
-              </p>
-            </div>
-          )}
-          {widest && (
-            <div className="rounded-3xl border bg-white p-4">
-              <p className="text-xs text-muted-foreground">Least settled</p>
-              <Link href={`/v/${widest.take.id}`} className="mt-1 block font-medium text-pax-ink hover:underline">
-                {SCRIPTS.find((s) => s.id === widest.take.scriptId)!.title} — {takeLabel(widest.take)}
-              </Link>
-              <p className="mt-1 text-sm text-muted-foreground">Its range spans {(widest.latest!.score.high! - widest.latest!.score.low!).toFixed(0)} points; more delivery would narrow it before anything is concluded.</p>
-            </div>
-          )}
-          <div className="rounded-3xl border bg-white p-4">
-            <p className="text-xs text-muted-foreground">Results on file</p>
-            <ul className="mt-1 flex flex-col gap-1 text-sm">
-              {history.map((h) => (
-                <li key={h.fileHash} className="flex justify-between gap-2">
-                  <span className="text-pax-ink">{h.dataset === "upload" ? "Uploaded export" : h.dataset === "round-1" ? "Round 1" : "Round 2"}</span>
-                  <span className="text-muted-foreground">{h.rows} ads · as of {h.asOf}</span>
-                </li>
-              ))}
-            </ul>
-            {!loaded.has("round-2") && <p className="mt-2 text-xs text-muted-foreground">Round 2 loads on Reviews, after the partner has recorded a decision.</p>}
-            {unscored.length > 0 && <p className="mt-2 text-xs text-muted-foreground">{unscored.length} take not scored: too little delivery.</p>}
+      {next.length > 0 && (
+        <section className="flex flex-col gap-4">
+          <SectionTitle title="Next up" />
+          <div className="grid gap-4 md:grid-cols-3">
+            {next.slice(0, 3).map((n, i) => (
+              <div key={n.key} className="surface rise flex flex-col gap-3 p-5" style={{ ["--i" as string]: i }}>
+                <span className="flex size-9 items-center justify-center rounded-full bg-pax-lavender text-pax-ink">
+                  <n.icon className="size-4" />
+                </span>
+                <p className="font-semibold leading-snug text-slate-900">{n.title}</p>
+                <p className="flex-1 text-sm leading-relaxed text-slate-500">{n.body}</p>
+                <div>{n.action}</div>
+              </div>
+            ))}
           </div>
         </section>
       )}
 
-      <section className="overflow-x-auto">
-        <div className="grid min-w-[720px] gap-3" style={{ gridTemplateColumns: `minmax(220px, 1.3fr) repeat(${MESSENGERS.length}, minmax(150px, 1fr))` }}>
-          <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Framing (script)</div>
-          {MESSENGERS.map((m) => (
-            <div key={m} className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              {m} <span className="normal-case tracking-normal opacity-70">· stand-in voice</span>
-            </div>
-          ))}
-          {SCRIPTS.map((s) => (
-            <div key={s.id} className="contents">
-              <Link href={`/scripts#${s.id}`} className="flex flex-col gap-1 rounded-xl p-2 hover:bg-pax-mist">
-                <span className="font-medium leading-snug text-pax-ink">{s.title}</span>
-                <span className="text-xs text-muted-foreground">{s.framing}</span>
+      {scored.length > 0 && (
+        <section className="flex flex-col gap-4">
+          <SectionTitle
+            title="Your videos"
+            action={
+              <Link href="/videos" className="inline-flex items-center gap-1 text-sm font-medium text-pax-plum hover:underline">
+                See all {cards.length} <ArrowRight className="size-4" />
               </Link>
-              {MESSENGERS.map((m) => (
-                <Cell key={m} s={main(s.id, m)} />
-              ))}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {variants.length > 0 && (
-        <section className="flex flex-col gap-3">
-          <h2 className="font-display text-2xl text-pax-ink">Production variants</h2>
-          <p className="max-w-3xl text-sm text-muted-foreground">The same words and voice with one execution change, so the comparison isolates that change.</p>
-          <div className="grid gap-3 md:grid-cols-2">
-            {variants.map((v) => {
-              const twin = takes.find((t) => t.take.scriptId === v.take.scriptId && t.take.voice === v.take.voice && t.take.captions && !t.take.cut)
-              return (
-                <div key={v.take.id} className={cn("grid grid-cols-2 gap-3 rounded-3xl border bg-white p-3")}>
-                  <div className="col-span-2 text-sm">
-                    <span className="font-medium text-pax-ink">{SCRIPTS.find((s) => s.id === v.take.scriptId)!.title}</span>
-                    <span className="text-muted-foreground"> · {v.take.voice}: {v.take.cut ? "short cut vs. full length" : "no captions vs. captions"}</span>
-                  </div>
-                  <Cell s={v} />
-                  <Cell s={twin} />
-                </div>
-              )
-            })}
+            }
+          />
+          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+            {cards.slice(0, 5).map((c, i) => (
+              <VideoCard key={c.id} v={c} i={i} />
+            ))}
           </div>
+          <p className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+            <span className="size-2.5 rounded-full bg-above" /> above average
+            <span className="ml-3 size-2.5 rounded-full bg-below" /> below average
+            <span className="ml-3 size-2.5 rounded-full border border-slate-300 bg-white" /> can&apos;t tell yet
+            <ScoreInfo className="ml-1" />
+          </p>
         </section>
       )}
 
-      <StandInNote />
+      {scored.length > 0 && (
+        <section className="flex flex-col gap-4">
+          <SectionTitle title="Which framing is working" />
+          <FramingStrip scripts={SCRIPTS} videos={cards} />
+        </section>
+      )}
+
+      <p className="text-xs text-slate-400">Stand-in videos and results until Parallax&apos;s own arrive.</p>
     </div>
   )
 }

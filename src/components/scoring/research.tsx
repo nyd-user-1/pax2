@@ -44,13 +44,13 @@ export default async function ReferencePage({ searchParams }: { searchParams: Pr
     <div className="flex flex-col gap-10">
       <header className="flex flex-col gap-2">
         <p className="text-xs font-medium uppercase tracking-wider text-pax-plum">What controlled tests say</p>
-        <h1 className="font-display text-4xl leading-tight text-pax-ink md:text-5xl">617 real campaign ads, each tested against a control group</h1>
+        <h1 className="font-display text-3xl leading-tight text-slate-900 md:text-[34px]">617 real campaign ads, each tested against a control group</h1>
         <p className="max-w-3xl text-sm text-muted-foreground">
           {`The Swayable archive: ${out.studies} randomized experiments run by campaigns in 2018 and 2020 (${out.ads} ads measured on ${(LABEL[o] ?? o).toLowerCase()}),`} every ad hand-coded for style and substance. It is the closest public record of what Resonance would be if it measured persuasion, so PAX uses it as the reference for what a script&apos;s style is likely worth, and as the reminder of how little style alone predicts.
         </p>
         <div className="flex gap-1">
           {Object.keys(M.outcomes).map((k) => (
-            <Link key={k} href={`/reference?o=${k}`} className={cn("rounded-full px-3 py-1 text-xs", k === o ? "bg-pax-plum text-white" : "bg-muted text-muted-foreground hover:bg-pax-lavender")}>
+            <Link key={k} href={`/scoring?tab=research&o=${k}`} className={cn("rounded-full px-3 py-1 text-xs", k === o ? "bg-pax-plum text-white" : "bg-muted text-muted-foreground hover:bg-pax-lavender")}>
               {LABEL[k] ?? k}
             </Link>
           ))}
@@ -73,7 +73,7 @@ export default async function ReferencePage({ searchParams }: { searchParams: Pr
 
       <section className="flex flex-col gap-3">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="font-display text-2xl text-pax-ink">What each coded feature was worth</h2>
+          <h2 className="font-display text-xl text-slate-900">What each coded feature was worth</h2>
           <span className="text-xs text-muted-foreground">Points of {LABEL[o]?.toLowerCase()}, ads with the feature vs. without · 95% interval · highlighted: what a volunteer testimonial varies</span>
         </div>
         <Forest features={sorted} max={max} />
@@ -87,7 +87,7 @@ export default async function ReferencePage({ searchParams }: { searchParams: Pr
 
 function Big({ v, l }: { v: string; l: string }) {
   return (
-    <div className="rounded-3xl border bg-white p-4">
+    <div className="surface p-4">
       <p className="tabular font-display text-4xl text-pax-ink">{v}</p>
       <p className="text-xs text-muted-foreground">{l}</p>
     </div>

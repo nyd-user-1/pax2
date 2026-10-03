@@ -47,7 +47,7 @@ export default async function MethodPage() {
   return (
     <div className="flex flex-col gap-10">
       <header className="flex flex-col gap-2">
-        <h1 className="font-display text-4xl text-pax-ink md:text-5xl">Resonance 1</h1>
+        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Resonance 1</h1>
         <p className="max-w-3xl text-lg leading-relaxed text-foreground/85">
           How well a paid video earned and kept the attention of the people it was shown to, and how often they did something with it, compared with a frozen reference set. 50 is the reference average. Higher means more of each, per person reached, not more people reached.
         </p>
@@ -56,9 +56,9 @@ export default async function MethodPage() {
 
       <section className="grid gap-3 md:grid-cols-3">
         {COMPONENTS.map((c) => (
-          <div key={c.key} className="rounded-3xl border bg-white p-4">
+          <div key={c.key} className="surface p-4">
             <div className="flex items-baseline justify-between">
-              <span className="font-display text-2xl text-pax-ink">{c.name}</span>
+              <span className="font-display text-xl text-slate-900">{c.name}</span>
               <span className="text-xs text-muted-foreground">{(FORMULA_V1.weights[c.key] * 100).toFixed(0)}%</span>
             </div>
             <p className="mt-1 text-sm">{c.question}</p>
@@ -71,10 +71,10 @@ export default async function MethodPage() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <h2 className="font-display text-2xl text-pax-ink">Chosen, or learned</h2>
+        <h2 className="font-display text-xl text-slate-900">Chosen, or learned</h2>
         <div className="grid gap-2 md:grid-cols-2">
           {CHOICES.map((c) => (
-            <div key={c.what} className="flex gap-3 rounded-xl border p-3">
+            <div key={c.what} className="flex gap-3 surface p-3">
               <span className={cn("h-fit shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", c.kind === "design" ? "bg-pax-lavender text-pax-plum" : "bg-observed/10 text-observed")}>{c.kind === "design" ? "Design choice" : "From the data"}</span>
               <div>
                 <p className="text-sm font-medium text-pax-ink">{c.what}</p>
@@ -100,12 +100,12 @@ export default async function MethodPage() {
       ) : (
         <>
           <section className="flex flex-col gap-3">
-            <h2 className="font-display text-2xl text-pax-ink">Change an input</h2>
+            <h2 className="font-display text-xl text-slate-900">Change an input</h2>
             <WhatIf options={scored.map((t) => ({ label: `${scriptById(t.take.scriptId)!.title.slice(0, 40)} — ${takeLabel(t.take)}`, take: t.take, snapshot: t.latest!.snapshot }))} reference={ref} />
           </section>
 
           <section className="flex flex-col gap-3">
-            <h2 className="font-display text-2xl text-pax-ink">Do reasonable changes to the assumptions change the assessment?</h2>
+            <h2 className="font-display text-xl text-slate-900">Do reasonable changes to the assumptions change the assessment?</h2>
             <div className="overflow-x-auto">
               <table className="tabular w-full min-w-[820px] text-sm">
                 <thead className="text-left text-xs text-muted-foreground">
@@ -145,7 +145,7 @@ export default async function MethodPage() {
           </section>
 
           <section className="flex flex-col gap-3">
-            <h2 className="font-display text-2xl text-pax-ink">What it adds beyond one number</h2>
+            <h2 className="font-display text-xl text-slate-900">What it adds beyond one number</h2>
             <div className="grid gap-3 md:grid-cols-3">
               <Stat label="Resonance vs. spend" value={spearman(base, grid.map((g) => g.spend))} note="Near zero: budget does not buy a score." />
               <Stat label="3-second plays vs. spend" value={spearman(grid.map((g) => g.plays), grid.map((g) => g.spend))} note="A raw count mostly measures budget." />
@@ -154,7 +154,7 @@ export default async function MethodPage() {
           </section>
 
           <section className="flex flex-col gap-2">
-            <h2 className="font-display text-2xl text-pax-ink">Reference scale ref-1</h2>
+            <h2 className="font-display text-xl text-slate-900">Reference scale ref-1</h2>
             <p className="text-sm text-muted-foreground">
               Built {new Date(ref.createdAt).toLocaleString()} from {ref.n} flights in {ref.dataset}. Frozen: later rounds are scored against these numbers, and a revised formula would be published as Resonance 2 beside this one, never in its place.
             </p>
@@ -175,7 +175,7 @@ export default async function MethodPage() {
 
 function Stat({ label, value, note }: { label: string; value: number | null; note: string }) {
   return (
-    <div className="rounded-3xl border bg-white p-4">
+    <div className="surface p-4">
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="tabular font-display text-4xl text-pax-ink">{value == null ? "—" : value.toFixed(2)}</p>
       <p className="text-xs text-muted-foreground">{note}</p>

@@ -29,7 +29,7 @@ export default function PersonalPage() {
       <StepBar step={1} back={{ href: "/record/start", label: "Start" }} />
       <FlowPage title="Tell us a little about you." lead="Three short answers. PAX writes a script that sounds like you, and you can change every word.">
         <form
-          className="flex flex-col gap-5 rounded-3xl border bg-white p-7 shadow-sm"
+          className="flex flex-col gap-5 surface p-7 shadow-sm"
           onSubmit={(e) => {
             e.preventDefault()
             start(async () => {
