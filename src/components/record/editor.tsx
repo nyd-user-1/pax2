@@ -22,7 +22,7 @@ function checks(text: string, research: Record<string, Research>): CheckResult[]
     {
       ok: fw > 0 && fw <= 12,
       title: fw ? `Opening line: ${fw} words` : "No opening line yet",
-      detail: `The first line is what Stop measures: whether the scroll stops. “${first.slice(0, 80)}${first.length > 80 ? "…" : ""}”`,
+      detail: `The first line is what Engage measures: whether the scroll stops. “${first.slice(0, 80)}${first.length > 80 ? "…" : ""}”`,
     },
     {
       ok: /\bvote (yes|for)\b|\byes on (question )?3\b/.test(lower),

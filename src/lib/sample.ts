@@ -35,8 +35,8 @@ export const SAMPLE_FEED = [
 ]
 
 export const SAMPLE_DECISIONS = [
-  { take: "listen-stephen", status: "made", change: "Cut to 20 seconds: keep the opening, the payoff line and the ask", measure: "Hold on the short cut vs. the full take, same budget", at: day(9), score: 50 },
-  { take: "coin-ruth", status: "approved", change: "Open on the number: “51% of races had one name on the ballot”", measure: "Stop rate on the new opening vs. the coin flip, same audience", at: day(4), score: 56 },
+  { take: "listen-stephen", status: "made", change: "Cut to 20 seconds: keep the opening, the payoff line and the ask", measure: "Interest on the short cut vs. the full take, same budget", at: day(9), score: 50 },
+  { take: "coin-ruth", status: "approved", change: "Open on the number: “51% of races had one name on the ballot”", measure: "Engage rate on the new opening vs. the coin flip, same audience", at: day(4), score: 56 },
   { take: "calm-danielle", status: "revised", change: "Same script read by a volunteer from an uncontested district", measure: "Act rate and comments mentioning the district", at: day(3), score: 44 },
   { take: "coin-danielle", status: "saved", change: "Burned-in captions in the first two seconds", measure: "3-second plays per impression, captions on vs. off", at: day(2), score: 39 },
 ]

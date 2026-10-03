@@ -10,8 +10,8 @@ export const dynamic = "force-dynamic"
 export const metadata = { title: "Method" }
 
 const CHOICES: { what: string; kind: "design" | "data"; detail: string }[] = [
-  { what: "Three components: Stop, Hold, Act", kind: "design", detail: "Attention earned at the open, attention kept given the length, and something done with it. Each is a rate a partner can check against Ads Manager." },
-  { what: "Weights 25 / 40 / 35", kind: "design", detail: "Hold carries most because it is the hardest to buy; Act next because it is the closest platform signal to intent. Tested below against three alternatives." },
+  { what: "Three components: Engage, Interest, Act", kind: "design", detail: "Attention earned at the open, attention kept given the length, and something done with it. Each is a rate a partner can check against Ads Manager." },
+  { what: "Weights 25 / 40 / 35", kind: "design", detail: "Interest carries most because it is the hardest to buy; Act next because it is the closest platform signal to intent. Tested below against three alternatives." },
   { what: "Evidence weight k (2,000 / 300 / 800)", kind: "design", detail: "How many impressions, viewers or plays the reference average is worth. A take with far more evidence than k is scored on its own rate; one with less leans toward the average." },
   { what: "Minimum 1,000 impressions; limited below 15,000", kind: "design", detail: "Below the minimum a take is not scored; between the two it is scored and flagged." },
   { what: "Reference averages and spreads", kind: "data", detail: "Learned from the first round of results, then frozen as ref-1. Later rounds are scored against it." },

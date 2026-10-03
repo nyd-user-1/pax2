@@ -53,8 +53,8 @@ export type Reference = {
 }
 
 export const COMPONENTS: { key: ComponentKey; name: string; question: string; num: string; den: string }[] = [
-  { key: "stop", name: "Stop", question: "Did the opening stop the scroll?", num: "3-second plays", den: "impressions" },
-  { key: "hold", name: "Hold", question: "Did people watch 50% or more?", num: "average watch time", den: "video length" },
+  { key: "stop", name: "Engage", question: "Did the opening stop the scroll?", num: "3-second plays", den: "impressions" },
+  { key: "hold", name: "Interest", question: "Did people watch 50% or more?", num: "average watch time", den: "video length" },
   { key: "act", name: "Act", question: "Did viewers do something?", num: "shares + saves + comments", den: "3-second plays" },
 ]
 
