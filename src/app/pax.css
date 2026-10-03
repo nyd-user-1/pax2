@@ -1,0 +1,32 @@
+/* PAX palette: Parallax's plum and lavender over the kit's neutrals. */
+:root {
+  --pax-ink: #2a1a4a;
+  --pax-plum: #4b2f86;
+  --pax-lavender: #ece6f7;
+  --pax-mist: #f7f5fb;
+  --pax-observed: #1f6f8b;
+  --pax-interpretation: #a15c07;
+  --pax-hypothesis: #6b3fb5;
+  --primary: var(--pax-plum);
+  --primary-foreground: #fff;
+}
+
+@theme inline {
+  --font-serif: var(--font-serif);
+  --color-pax-ink: var(--pax-ink);
+  --color-pax-plum: var(--pax-plum);
+  --color-pax-lavender: var(--pax-lavender);
+  --color-pax-mist: var(--pax-mist);
+  --color-observed: var(--pax-observed);
+  --color-interpretation: var(--pax-interpretation);
+  --color-hypothesis: var(--pax-hypothesis);
+}
+
+.font-display {
+  font-family: var(--font-serif), Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
