@@ -2,13 +2,14 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BookOpenCheck, Database, FlaskConical, Hammer, LayoutGrid, NotebookPen, Sigma } from "lucide-react"
+import { BookOpenCheck, Clapperboard, Database, FlaskConical, Hammer, LayoutGrid, NotebookPen, Sigma } from "lucide-react"
 
 import { cn } from "@/ui/lib/utils"
 
 const NAV = [
   { href: "/", label: "Arguments", icon: LayoutGrid },
   { href: "/scripts", label: "Scripts", icon: NotebookPen },
+  { href: "/campaign", label: "Campaign videos", icon: Clapperboard },
   { href: "/reviews", label: "Reviews", icon: BookOpenCheck },
   { href: "/method", label: "Method", icon: Sigma },
   { href: "/reference", label: "Reference model", icon: FlaskConical },

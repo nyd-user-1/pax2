@@ -3,7 +3,6 @@ import Link from "next/link"
 import context from "../../../data/context.json"
 import model from "../../../data/generated/model/reference-model.json"
 import codes from "../../../data/generated/model/script-codes.json"
-import youtube from "../../../data/raw/yt-videos.json"
 import { SourceBadge } from "@/components/bits"
 import { ConsensusVote } from "@/components/consensus-vote"
 import { PickScript } from "@/components/pick-script"
@@ -17,12 +16,6 @@ export const metadata = { title: "Scripts" }
 
 type Codes = { scripts: Record<string, { codes: Record<string, number>; notes: Record<string, string>; prior: Record<string, { expected: number; low: number; high: number; average: number }> }> }
 type Model = { featureLabels: Record<string, string>; outcomes: Record<string, { features: { key: string; diff: number; low: number; high: number }[] }> }
-type Yt = { videos: { id: string; channel: string; title: string; published: string; duration: string; views: number | null; likes: number | null; comments: number | null }[] }
-
-const secs = (iso: string) => {
-  const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/)
-  return m ? +(m[1] ?? 0) * 3600 + +(m[2] ?? 0) * 60 + +(m[3] ?? 0) : 0
-}
 
 export default async function ScriptsPage() {
   const ws = await workspace()
@@ -35,16 +28,13 @@ export default async function ScriptsPage() {
   const voted: Record<string, number[]> = {}
   for (const v of rawVotes) (voted[v.voter] ??= []).push(v.tid)
   const ranked = [...t.results].filter((r) => r.votes > 0).sort((a, b) => b.bridge - a.bridge)
-  const field = (youtube as unknown as Yt).videos
-    .filter((v) => /yes on 3/i.test(v.channel) && secs(v.duration) <= 120 && v.views != null)
-    .map((v) => ({ ...v, days: Math.max(1, (Date.parse("2026-10-03") - Date.parse(v.published)) / 864e5) }))
-    .sort((a, b) => b.views! / b.days - a.views! / a.days)
 
   return (
     <div className="flex flex-col gap-10">
       <header className="flex flex-col gap-2">
         <h1 className="font-display text-4xl text-pax-ink md:text-5xl">Before anyone records</h1>
         <p className="max-w-3xl text-sm text-muted-foreground">Which script is worth a volunteer&apos;s five minutes? Three checks before recording, and a record of what was chosen and why, so the next review can ask whether the choice held up.</p>
+        <Link href="/campaign" className="text-sm text-pax-plum underline">See what the Yes on 3 campaign is already posting</Link>
       </header>
 
       <section className="grid gap-4 md:grid-cols-2">
@@ -201,34 +191,6 @@ export default async function ScriptsPage() {
         )}
       </section>
 
-      <section className="flex flex-col gap-3">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="font-display text-2xl text-pax-ink">The framings the campaign is running</h2>
-          <span className="flex items-center gap-2 text-xs text-muted-foreground">
-            Public counts from the Vote YES on 3 channels, YouTube, Oct 3 <SourceBadge source="platform" />
-          </span>
-        </div>
-        <p className="max-w-3xl text-xs text-muted-foreground">Organic views per day since posting. Not paid results and not comparable to Resonance; a view of which arguments are already in the field.</p>
-        <div className="overflow-x-auto">
-          <table className="tabular w-full min-w-[640px] text-sm">
-            <tbody className="[&_td]:border-t [&_td]:py-1.5 [&_td]:pr-3">
-              {field.slice(0, 15).map((v) => (
-                <tr key={v.id}>
-                  <td className="max-w-md">
-                    <a href={`https://www.youtube.com/watch?v=${v.id}`} target="_blank" rel="noreferrer" className="hover:underline">
-                      {v.title}
-                    </a>
-                  </td>
-                  <td className="text-xs text-muted-foreground">{v.published.slice(0, 10)}</td>
-                  <td className="text-xs text-muted-foreground">{secs(v.duration)}s</td>
-                  <td className="text-right">{Math.round(v.views! / v.days).toLocaleString()}/day</td>
-                  <td className="text-right text-xs text-muted-foreground">{v.views!.toLocaleString()} views</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
     </div>
   )
 }
