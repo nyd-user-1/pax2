@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "Every advocacy video as a tested argument: a score that shows its math, evidence you can inspect, and the next test to run.",
 }
 
-export default function RootLayout({ children, drawer }: { children: React.ReactNode; drawer: React.ReactNode }) {
+export default function RootLayout({ children, drawer }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body className="min-h-dvh font-sans text-foreground antialiased">
