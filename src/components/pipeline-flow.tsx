@@ -24,7 +24,7 @@ export type FlowData = {
 // that opens or closes.
 
 function Count({ n, on }: { n: number | string; on: boolean }) {
-  return <span className={cn("ml-1 flex h-[18px] min-w-[18px] items-center justify-center rounded px-1 text-xs", on ? "bg-slate-500 text-white" : "bg-slate-200 text-slate-500")}>{n}</span>
+  return <span className={cn("ml-1 flex h-[18px] min-w-[18px] items-center justify-center rounded px-1 text-xs", on ? "bg-pax-lavender text-pax-plum" : "bg-slate-100 text-slate-500")}>{n}</span>
 }
 
 function Section({ title, children, href }: { title?: string; children: React.ReactNode; href?: string }) {
@@ -140,7 +140,7 @@ export function PipelineFlow({ d }: { d: FlowData }) {
   }, [draw])
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[#fafafa]">
+    <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white">
       <div className={cn("overflow-x-auto px-4 py-12 transition-[max-height] duration-300 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden", tall ? "max-h-[2000px]" : "max-h-[420px]")}>
         <div ref={box} className="relative mx-auto flex w-max items-start gap-16">
           {/* What starts a run */}
