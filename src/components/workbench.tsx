@@ -117,24 +117,26 @@ export function Observations({ f, part }: { f: Features; part: "summary" | "deta
         ))}
       </dl>
     ) : null
+  const entries = [...(p.hook ? [{ t: p.hook.t, label: "Opening", text: p.hook.assessment }] : []), ...(p.observations ?? []).map((o) => ({ t: o.t, label: null, text: o.what }))]
+  return <Timeline entries={entries} />
+}
+
+/** Changelog-style: one vertical line, a dot per moment, the timestamp above its note. */
+function Timeline({ entries }: { entries: { t: number; label: string | null; text: string }[] }) {
+  const { now } = useSeek()
+  const at = entries.reduce((k, e, i) => (now >= e.t ? i : k), -1)
   return (
-    <div className="flex flex-col gap-3">
-      {p.hook && (
-        <div className="flex gap-2 rounded-lg bg-pax-mist px-3 py-2 text-sm">
-          <At t={p.hook.t} />
-          <span>
-            <span className="font-medium text-pax-ink">Opening:</span> {p.hook.assessment}
-          </span>
-        </div>
-      )}
-      <ul className="flex flex-col gap-1.5">
-        {p.observations?.map((o, i) => (
-          <li key={i} className="flex gap-2 text-sm">
-            <At t={o.t} />
-            <span className="text-foreground/85">{o.what}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ol className="relative flex flex-col gap-5 pl-6 before:absolute before:inset-y-2 before:left-[5px] before:w-px before:bg-slate-200">
+      {entries.map((e, i) => (
+        <li key={i} className="relative flex flex-col gap-1">
+          <span className={cn("absolute -left-6 top-1.5 size-[11px] rounded-full border-2 bg-white transition-colors", i === at && now > 0 ? "border-pax-plum bg-pax-plum" : e.label ? "border-pax-ink" : "border-slate-300")} />
+          <div className="flex items-center gap-2">
+            <At t={e.t} />
+            {e.label && <span className="text-xs font-semibold text-pax-ink">{e.label}</span>}
+          </div>
+          <p className="text-sm leading-relaxed text-foreground/85">{e.text}</p>
+        </li>
+      ))}
+    </ol>
   )
 }
