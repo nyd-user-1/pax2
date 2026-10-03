@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Check, Loader2, Pencil, Bookmark, Hammer, Sparkles } from "lucide-react"
+import { Check, Loader2, Pencil, Bookmark, Hammer } from "lucide-react"
 
 import { callIt, decide, requestReading, type SavedReading } from "@/app/actions"
 import { KindChip } from "@/components/bits"
@@ -107,24 +107,25 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
   const [error, setError] = React.useState<string | null>(null)
   const index = React.useMemo(() => new Map(evidence.map((e) => [e.ref, e])), [evidence])
   const r: Reading | undefined = saved?.reading
+  const assess = (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button disabled={!canRead || pending} onClick={() => start(async () => {
+        setError(null)
+        try {
+          setSaved(await requestReading(takeId))
+        } catch (e) {
+          setError((e as Error).message)
+        }
+      })}>
+        {pending && <Loader2 className="size-4 animate-spin" />}
+        Assessment
+      </Button>
+      {saved && <span className="text-xs text-muted-foreground">Saved {new Date(saved.at).toLocaleString()} · results as of {saved.snapshotId.split("~").pop()}</span>}
+      {error && <span className="text-xs text-destructive">{error}</span>}
+    </div>
+  )
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center gap-3">
-        <Button disabled={!canRead || pending} onClick={() => start(async () => {
-          setError(null)
-          try {
-            setSaved(await requestReading(takeId))
-          } catch (e) {
-            setError((e as Error).message)
-          }
-        })}>
-          {pending ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
-          {saved ? "Read the latest results again" : "Ask PAX for a reading"}
-        </Button>
-        {saved && <span className="text-xs text-muted-foreground">Saved {new Date(saved.at).toLocaleString()} · {saved.formula} · {saved.reference} · results as of {saved.snapshotId.split("~").pop()}</span>}
-        {!canRead && <span className="text-xs text-muted-foreground">Load results first.</span>}
-        {error && <span className="text-xs text-destructive">{error}</span>}
-      </div>
 
       {r && (
         <>
@@ -196,13 +197,13 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
         </>
       )}
 
-      <CallIt takeId={takeId} calls={calls} nextDataset={nextDataset} baseline={baseline} baselineSnapshot={baselineSnapshot} />
+      <CallIt action={assess} takeId={takeId} calls={calls} nextDataset={nextDataset} baseline={baseline} baselineSnapshot={baselineSnapshot} />
     </div>
   )
 }
 
 /** Step 6: before the next results load, the partner and PAX each call it. Locked once logged. */
-function CallIt({ takeId, calls, nextDataset, baseline, baselineSnapshot }: { takeId: string; calls: Call[]; nextDataset: string | null; baseline: number | null; baselineSnapshot: string }) {
+function CallIt({ action, takeId, calls, nextDataset, baseline, baselineSnapshot }: { action: React.ReactNode; takeId: string; calls: Call[]; nextDataset: string | null; baseline: number | null; baselineSnapshot: string }) {
   const [predicted, setPredicted] = React.useState<"higher" | "lower" | "same">("higher")
   const [reason, setReason] = React.useState("")
   const [msg, setMsg] = React.useState<string | null>(null)
@@ -248,6 +249,7 @@ function CallIt({ takeId, calls, nextDataset, baseline, baselineSnapshot }: { ta
       ) : (
         <p className="text-xs text-muted-foreground">Every round on file is already loaded; calls open again when a new round is expected.</p>
       )}
+      {action}
     </div>
   )
 }

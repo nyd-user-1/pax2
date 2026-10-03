@@ -1,8 +1,36 @@
 import { fmt, pct, RangeBar, ScoreFigure, SourceBadge } from "@/components/bits"
 import { Term } from "@/components/term"
-import { METRIC_LABEL, type TakeInfo } from "@/lib/catalog"
-import { COMPONENTS, FORMULA_V1, logit, rawCounts, type Reference, type Score } from "@/lib/resonance"
-import { METRICS, type Snapshot } from "@/lib/types"
+import type { TakeInfo } from "@/lib/catalog"
+import { COMPONENTS, logit, rawCounts, type Reference, type Score } from "@/lib/resonance"
+import type { MetricKey, Snapshot } from "@/lib/types"
+
+const ROWS: [string, MetricKey][] = [
+  ["Spend", "spend"],
+  ["Impressions", "impressions"],
+  ["Reach", "reach"],
+  ["3s plays", "plays3s"],
+  ["ThruPlays", "thruplays"],
+  ["25% play", "p25"],
+  ["50% play", "p50"],
+  ["75% play", "p75"],
+  ["100% play", "p100"],
+  ["Avg. Time", "avgWatchSec"],
+  ["Shares", "shares"],
+  ["Saves", "saves"],
+  ["Comments", "comments"],
+  ["Reactions", "reactions"],
+  ["Clicks", "linkClicks"],
+  ["CTA", "linkClicks"],
+]
+
+/** "October 6-10, 2026", or across months "September 28-October 3, 2026". */
+function span(start: string, end: string) {
+  const a = new Date(`${start}T12:00:00Z`)
+  const b = new Date(`${end}T12:00:00Z`)
+  const month = (d: Date) => d.toLocaleString("en-US", { month: "long", timeZone: "UTC" })
+  const right = month(a) === month(b) ? `${b.getUTCDate()}` : `${month(b)} ${b.getUTCDate()}`
+  return `${month(a)} ${a.getUTCDate()}-${right}, ${b.getUTCFullYear()}`
+}
 
 /** The score, its components, and one complete trace from raw records to the number. */
 export function ScorePanel({ take, snapshot, score, reference }: { take: TakeInfo; snapshot: Snapshot; score: Score; reference: Reference }) {
@@ -11,9 +39,6 @@ export function ScorePanel({ take, snapshot, score, reference }: { take: TakeInf
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-xs text-muted-foreground">
-            Resonance · {FORMULA_V1.label} · reference {reference.id}
-          </p>
           <ScoreFigure value={score.value} low={score.low} high={score.high} status={score.status} />
         </div>
         <div className="min-w-56 flex-1">
@@ -41,7 +66,7 @@ export function ScorePanel({ take, snapshot, score, reference }: { take: TakeInf
               <div key={c.key} className="flex flex-col gap-2 surface p-3">
                 <div className="flex items-baseline justify-between">
                   <span className="font-medium text-pax-ink">{meta.name}</span>
-                  <span className="tabular text-xs text-muted-foreground">weight {(c.weight * 100).toFixed(0)}%</span>
+                  <Term id={c.key} label={false} />
                 </div>
                 <p className="text-xs text-muted-foreground">{meta.question}</p>
                 {c.score != null ? (
@@ -67,9 +92,9 @@ export function ScorePanel({ take, snapshot, score, reference }: { take: TakeInf
       )}
 
       {score.components.length > 0 && (
-        <details className="group rounded-xl border">
+        <details open className="group rounded-xl border">
           <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-pax-ink">
-            From the records to the score <span className="text-muted-foreground group-open:hidden">↓</span>
+            KPIs <span className="text-muted-foreground group-open:hidden">↓</span>
           </summary>
           <div className="overflow-x-auto px-4 pb-4">
             <table className="tabular w-full text-sm">
@@ -136,14 +161,12 @@ export function ScorePanel({ take, snapshot, score, reference }: { take: TakeInf
         </details>
       )}
 
-      <details className="group rounded-xl border">
-        <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-pax-ink">
-          Source records · {snapshot.dataset}, {snapshot.windowStart} to {snapshot.windowEnd} <span className="text-muted-foreground group-open:hidden">↓</span>
-        </summary>
+      <details open className="group rounded-xl border">
+        <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-pax-ink">{span(snapshot.windowStart, snapshot.windowEnd)}</summary>
         <div className="grid gap-x-6 px-4 pb-4 text-xs sm:grid-cols-2">
-          {METRICS.map((m) => (
-            <div key={m} className="flex items-center justify-between gap-2 border-t py-1.5">
-              <span className="text-muted-foreground">{METRIC_LABEL[m]}</span>
+          {ROWS.map(([label, m]) => (
+            <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
+              <span className="text-muted-foreground">{label}</span>
               <span className="tabular flex items-center gap-2">
                 {fmt(snapshot.metrics[m].value, m === "avgWatchSec" || m === "spend" ? 1 : 0)}
                 <SourceBadge source={snapshot.metrics[m].source} />
@@ -152,11 +175,10 @@ export function ScorePanel({ take, snapshot, score, reference }: { take: TakeInf
           ))}
           <div className="col-span-full mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
             <Cond label="Spend" v={score.conditions.spend != null ? `$${fmt(score.conditions.spend, 2)}` : "—"} />
-            <Cond label="Cost per 1,000 impressions" v={score.conditions.cpm != null ? `$${fmt(score.conditions.cpm, 2)}` : "—"} />
-            <Cond label="Cost per 3-second play" v={score.conditions.costPerPlay != null ? `$${fmt(score.conditions.costPerPlay, 3)}` : "—"} />
-            <Cond label="Times each person saw it" v={fmt(score.conditions.frequency, 2)} />
+            <Cond label="Impressions (1k)" v={score.conditions.cpm != null ? `$${fmt(score.conditions.cpm, 2)}` : "—"} />
+            <Cond label="3s play" v={score.conditions.costPerPlay != null ? `$${fmt(score.conditions.costPerPlay, 3)}` : "—"} />
+            <Cond label="Per Person" v={fmt(score.conditions.frequency, 2)} />
           </div>
-          <p className="col-span-full mt-2 text-muted-foreground">Delivery conditions sit beside the score, never inside it.</p>
         </div>
       </details>
     </div>

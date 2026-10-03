@@ -4,15 +4,13 @@ import type { SavedReading } from "@/app/actions"
 import { LoadButton } from "@/components/load-button"
 import { ReadingPanel } from "@/components/reading-panel"
 import { ScorePanel } from "@/components/score-panel"
-import { CountUp, ScoreInfo } from "@/components/ui-pax"
-import { TONE_LABEL, toneClasses, toneOf } from "@/lib/tone"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
 import { faceFor, featuresFor, scriptById, takeById, takeLabel } from "@/lib/catalog"
 import { evidenceIndex, type Reading } from "@/lib/pax"
 import { board, DATASETS, findings, forecasts, loads, steps, workspace } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
 
-function Fold({ title, children, open = false }: { title: string; children: React.ReactNode; open?: boolean }) {
+function Fold({ title, children, open = true }: { title: string; children: React.ReactNode; open?: boolean }) {
   return (
     <details open={open} className="group surface">
       <summary className="flex cursor-pointer list-none items-center justify-between px-5 py-4 font-semibold text-slate-900">
@@ -36,9 +34,7 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
   const initial: SavedReading | null = last ? { at: last.at, reading: last.finding as Reading, model: last.model, snapshotId: last.snapshotId, formula: last.formula, reference: last.reference, scoreValue: last.score.value } : null
   const loaded = new Set(history.map((h) => h.dataset))
   const nextDataset = DATASETS.find((d) => !loaded.has(d.id))?.id ?? null
-  const s = state.latest?.score
   const m = state.latest?.snapshot.metrics
-  const tone = toneOf(s?.low, s?.high)
   const siblings = takes.filter((t) => t.take.scriptId === take.scriptId && t.take.id !== id)
   const stat = (label: string, v: string) => (
     <div className="flex flex-col">
@@ -59,7 +55,7 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
           )}
           {siblings.length > 0 && (
             <div className="surface flex flex-col gap-1 p-4">
-              <p className="pb-1 text-xs font-medium text-slate-500">Same script, other takes</p>
+              <p className="pb-1 text-xs font-medium text-slate-500">Comps</p>
               {siblings.map((x) => (
                 <Link key={x.take.id} href={`/v/${x.take.id}`} scroll={false} replace={inDrawer} className="flex items-center justify-between rounded-lg px-2 py-1.5 text-sm hover:bg-slate-50">
                   <span>{takeLabel(x.take)}</span>
@@ -71,36 +67,14 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
         </aside>
 
         <div className="flex min-w-0 flex-col gap-6">
-          <header className="flex flex-wrap items-start justify-between gap-4">
-            <div className="flex flex-col gap-1">
-              <h1 className="font-display text-2xl text-slate-900 md:text-[28px]">{script.short}</h1>
-              <p className="text-slate-500">
-                {takeLabel(take)} · {Math.round(take.durationSec)} seconds · <span className="text-slate-400">stand-in take</span>
-              </p>
-            </div>
-            {s?.value != null ? (
-              <div className="flex items-center gap-3">
-                <div className="text-right">
-                  <span className={cn("inline-flex items-baseline rounded-2xl px-4 py-2 text-4xl font-bold shadow-e2", toneClasses[tone])}>
-                    <CountUp value={s.value} />
-                  </span>
-                  <p className="tabular mt-1 text-xs text-slate-500">
-                    {TONE_LABEL[tone]} · range {s.low!.toFixed(0)}–{s.high!.toFixed(0)}
-                  </p>
-                </div>
-                <ScoreInfo />
-              </div>
-            ) : (
-              <span className="rounded-2xl bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-600">{s ? "Not scored yet" : "No results yet"}</span>
-            )}
-          </header>
+          {!inDrawer && <h1 className="font-display text-2xl text-slate-900 md:text-[28px]">{script.short}</h1>}
 
           {m && (
             <div className="surface grid grid-cols-2 gap-4 p-5 sm:grid-cols-4">
-              {stat("people reached", (m.reach.value ?? 0).toLocaleString())}
-              {stat("watched 3+ seconds", (m.plays3s.value ?? 0).toLocaleString())}
-              {stat("average watch", `${m.avgWatchSec.value?.toFixed(1) ?? "—"}s`)}
-              {stat("spent", `$${m.spend.value?.toFixed(0) ?? "—"}`)}
+              {stat("Reach", (m.reach.value ?? 0).toLocaleString())}
+              {stat("Watched 3s+", (m.plays3s.value ?? 0).toLocaleString())}
+              {stat("Avg.", `${m.avgWatchSec.value?.toFixed(1) ?? "—"}s`)}
+              {stat("Spend", `$${m.spend.value?.toFixed(0) ?? "—"}`)}
             </div>
           )}
 
@@ -110,6 +84,14 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
               <LoadButton dataset="round-1" label="Load round 1" />
             </div>
           )}
+
+          {ref && state.latest && (
+            <Fold title="Rating">
+              <ScorePanel take={take} snapshot={state.latest.snapshot} score={state.latest.score} reference={ref} />
+            </Fold>
+          )}
+          <Fold title="Formula">{f ? <Observations f={f} /> : <p className="text-sm text-slate-500">The video review hasn&apos;t run on this take yet.</p>}</Fold>
+          <Fold title="Transcript">{take.lines && <ScriptTimeline lines={take.lines} duration={take.durationSec} />}</Fold>
 
           <section className="surface p-5 md:p-6">
             <ReadingPanel
@@ -125,13 +107,6 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
             />
           </section>
 
-          {ref && state.latest && (
-            <Fold title="How the score was built">
-              <ScorePanel take={take} snapshot={state.latest.snapshot} score={state.latest.score} reference={ref} />
-            </Fold>
-          )}
-          <Fold title="What is said, and when">{take.lines && <ScriptTimeline lines={take.lines} duration={take.durationSec} />}</Fold>
-          <Fold title="What is on screen">{f ? <Observations f={f} /> : <p className="text-sm text-slate-500">The video review hasn&apos;t run on this take yet.</p>}</Fold>
           {state.history.length > 1 && (
             <Fold title="Every round, same scale">
               <div className="flex flex-col gap-1 text-sm">

@@ -75,8 +75,8 @@ export function Loudness({ f }: { f: NonNullable<Features["audio"]> }) {
   const w = 100 / xs.length
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex items-center justify-between text-[11px] text-muted-foreground">
-        <span>Loudness by second</span>
+      <div className="mb-2 flex items-center justify-between text-[11px] text-muted-foreground">
+        <span>dB</span>
         <SourceBadge source="derived" />
       </div>
       <svg viewBox="0 0 100 24" preserveAspectRatio="none" className="h-12 w-full cursor-pointer" onClick={(e) => {
@@ -109,10 +109,6 @@ export function Observations({ f }: { f: Features }) {
   if (!p) return <p className="text-sm text-muted-foreground">The video review has not run on this take yet.</p>
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex items-center justify-between gap-2">
-        <p className="text-sm text-foreground/90">{p.summary}</p>
-        <SourceBadge source="ai" />
-      </div>
       {p.hook && (
         <div className="flex gap-2 rounded-lg bg-pax-mist px-3 py-2 text-sm">
           <At t={p.hook.t} />

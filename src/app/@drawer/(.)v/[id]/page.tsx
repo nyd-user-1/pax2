@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 
 import { TakeDrawer } from "@/components/take-drawer"
 import { TakeView } from "@/components/take-view"
-import { scriptById, takeById, takeLabel } from "@/lib/catalog"
+import { scriptById, takeById } from "@/lib/catalog"
 
 export const dynamic = "force-dynamic"
 
@@ -12,7 +12,7 @@ export default async function TakeInDrawer({ params }: { params: Promise<{ id: s
   const take = takeById(id)
   if (!take) notFound()
   return (
-    <TakeDrawer title={`${scriptById(take.scriptId)!.short} · ${takeLabel(take)}`}>
+    <TakeDrawer title={scriptById(take.scriptId)!.short}>
       <TakeView id={id} inDrawer />
     </TakeDrawer>
   )
