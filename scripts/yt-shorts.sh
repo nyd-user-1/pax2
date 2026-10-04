@@ -5,7 +5,7 @@ set -e
 cd "$(dirname "$0")/.."
 K=$(grep -E '^YOUTUBE_API_KEY=' ../livingston/.env.local | cut -d= -f2- | tr -d '"')
 TMP=$(mktemp -d)
-for ch in UC-rKSUWdEqPmP-UM7yV6Ssw UCpSEnGNa8pO-llnwBDDa6Tg UCdr9X0FtE_GnXk_JwWYUx3g UC3HvCnPvYMIwh15fJxrEcKA; do
+for ch in UC-rKSUWdEqPmP-UM7yV6Ssw UCpSEnGNa8pO-llnwBDDa6Tg UCdr9X0FtE_GnXk_JwWYUx3g UC3HvCnPvYMIwh15fJxrEcKA UCb8R3tlbcYaE5J5-HUBf7mw; do
   ids=$(curl -s "https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=UUSH${ch:2}&key=$K" | jq -r '[.items[]?.contentDetails.videoId] | join(",")')
   [ -z "$ids" ] && { echo "$ch: no shorts playlist"; continue; }
   curl -s "https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=$ids&key=$K" \

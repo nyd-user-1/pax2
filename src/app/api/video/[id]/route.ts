@@ -9,7 +9,8 @@ const BUCKET = process.env.PAX_BUCKET ?? "pax-638175140432"
 // The videos stay private in S3; the player gets a short-lived signed link.
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  if (!takeById(id)) return new Response("Not found", { status: 404 })
+  // Campaign shorts live beside the takes as videos/yt-<youtube id>.mp4.
+  if (!takeById(id) && !/^yt-[\w-]{11}$/.test(id)) return new Response("Not found", { status: 404 })
   const poster = new URL(req.url).searchParams.has("poster")
   const url = await getSignedUrl(s3, new GetObjectCommand({ Bucket: BUCKET, Key: `videos/${id}.${poster ? "jpg" : "mp4"}` }), { expiresIn: 3600 })
   return Response.redirect(url, 302)

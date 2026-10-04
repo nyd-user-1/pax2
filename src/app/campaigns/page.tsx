@@ -3,29 +3,16 @@ import { ArrowUpRight } from "lucide-react"
 
 import shorts from "../../../data/raw/yt-shorts.json"
 import { CampaignMap } from "@/components/map/campaign-map"
+import { FEATURES } from "@/lib/catalog"
+import { CHANNELS, median, secs } from "@/lib/channels"
 import { cn } from "@/ui/lib/utils"
 
 export const metadata = { title: "Campaign videos" }
 
 type Yt = { fetchedAt: string; videos: { id: string; channelId: string; channel: string; title: string; published: string; duration: string; views: number | null; likes: number | null; comments: number | null }[] }
 
-// Each channel's shorts playlist, the latest ~30. The 2026 Question 3 channel only; a second
-// "Yes on 3" channel belongs to 2024's rideshare-union question and is left out.
-const CHANNELS = [
-  { id: "UC-rKSUWdEqPmP-UM7yV6Ssw", slug: "yes-on-3", name: "Vote YES on 3", place: "Massachusetts · all-party primaries", code: "MA" },
-  { id: "UCpSEnGNa8pO-llnwBDDa6Tg", slug: "courageous-colorado", name: "Courageous Colorado", place: "Colorado", code: "CO" },
-  { id: "UCdr9X0FtE_GnXk_JwWYUx3g", slug: "open-primaries", name: "Open Primaries", place: "National", code: "US" },
-  { id: "UC3HvCnPvYMIwh15fJxrEcKA", slug: "unite-america", name: "Unite America", place: "National", code: "US" },
-]
-
-const secs = (iso: string) => {
-  const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/)
-  return m ? +(m[1] ?? 0) * 3600 + +(m[2] ?? 0) * 60 + +(m[3] ?? 0) : 0
-}
-const median = (xs: number[]) => {
-  const s = [...xs].sort((a, b) => a - b)
-  return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : 0
-}
+// Each channel's shorts playlist, the latest ~30-50 (lib/channels). The 2026 Question 3
+// channel only; a second "Yes on 3" channel belongs to 2024's rideshare-union question.
 
 export default async function CampaignPage({ searchParams }: { searchParams: Promise<{ c?: string }> }) {
   const { c = "yes-on-3" } = await searchParams
@@ -48,11 +35,12 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
         <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Analysis</h1>
       </header>
 
-      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
         {stats.map((s) => (
-          <Link key={s.slug} href={`/campaigns?c=${s.slug}`} scroll={false} className={cn("lift surface flex flex-col gap-1 p-5", s.slug === ch.slug && "ring-2 ring-pax-plum")}>
+          <Link key={s.slug} href={`/campaigns?c=${s.slug}`} scroll={false} className={cn("lift surface flex flex-col gap-1 border p-5", s.slug === ch.slug ? "border-pax-plum" : "border-transparent")}>
             <span className="text-lg font-medium text-pax-ink">{s.name}</span>
-            <span className="text-sm text-slate-500">{s.code}</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`/flags/${s.code}.png`} alt={s.code} className="h-3.5 w-auto self-start rounded-[2px]" />
             <span className="tabular mt-2 text-sm">
               <b className="font-display text-2xl font-normal text-pax-ink">{s.medianPerDay < 10 ? s.medianPerDay.toFixed(1) : Math.round(s.medianPerDay).toLocaleString()}</b> views/day, median
             </span>
@@ -70,23 +58,36 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
 
       <h2 className="font-display text-xl text-slate-900">YouTube Shorts</h2>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {videos.map((v) => (
-          <a key={v.id} href={`https://www.youtube.com/shorts/${v.id}`} target="_blank" rel="noreferrer" className="group flex flex-col gap-2">
-            <div className="lift relative aspect-[9/16] overflow-hidden rounded-2xl bg-slate-900 shadow-e2">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" loading="lazy" className="absolute inset-0 size-full object-cover transition-transform group-hover:scale-[1.03]" />
-              <span className="tabular absolute bottom-2 right-2 rounded bg-black/70 px-1.5 py-0.5 text-[11px] text-white">{v.sec}s</span>
-              <span className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-200 group-hover:bg-black/25">
-                <span className="tabular flex translate-y-1 items-center gap-1 rounded-full bg-white/95 px-3.5 py-1.5 text-base font-semibold text-slate-900 opacity-0 shadow-e3 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
-                  {v.views!.toLocaleString()}
-                  <ArrowUpRight className="size-4 text-pax-red" strokeWidth={2.5} />
+        {videos.map((v) => {
+          // Analyzed shorts open PAX's own panel; the rest still go to YouTube.
+          const analyzed = `yt-${v.id}` in FEATURES
+          const card = (
+            <>
+              <div className="lift relative aspect-[9/16] overflow-hidden rounded-2xl bg-slate-900 shadow-e2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" loading="lazy" className="absolute inset-0 size-full object-cover transition-transform group-hover:scale-[1.03]" />
+                <span className="tabular absolute bottom-2 right-2 rounded bg-black/70 px-1.5 py-0.5 text-[11px] text-white">{v.sec}s</span>
+                <span className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-200 group-hover:bg-black/25">
+                  <span className="tabular flex translate-y-1 items-center gap-1 rounded-full bg-white/95 px-3.5 py-1.5 text-base font-semibold text-slate-900 opacity-0 shadow-e3 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+                    {v.views!.toLocaleString()}
+                    {!analyzed && <ArrowUpRight className="size-4 text-pax-red" strokeWidth={2.5} />}
+                  </span>
                 </span>
-              </span>
-            </div>
-            <p className="line-clamp-2 text-sm leading-snug text-pax-ink">{v.title.replace(/\s*#\w+/g, "").trim() || v.title}</p>
-            <p className="tabular text-xs text-slate-500">{v.published.slice(0, 10)}</p>
-          </a>
-        ))}
+              </div>
+              <p className="line-clamp-2 text-sm leading-snug text-pax-ink">{v.title.replace(/\s*#\w+/g, "").trim() || v.title}</p>
+              <p className="tabular text-xs text-slate-500">{v.published.slice(0, 10)}</p>
+            </>
+          )
+          return analyzed ? (
+            <Link key={v.id} href={`/v/yt-${v.id}`} scroll={false} className="group flex flex-col gap-2">
+              {card}
+            </Link>
+          ) : (
+            <a key={v.id} href={`https://www.youtube.com/shorts/${v.id}`} target="_blank" rel="noreferrer" className="group flex flex-col gap-2">
+              {card}
+            </a>
+          )
+        })}
       </div>
     </div>
   )
