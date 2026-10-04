@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Check, PenLine, Plus, X } from "lucide-react"
+import { PenLine, Video } from "lucide-react"
 
 import ma from "../../../data/generated/ma-house-2022.json"
 import maps from "../../../data/generated/campaign-maps.json"
@@ -79,22 +79,25 @@ export default async function ScriptsPage() {
         <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Scripts</h1>
         <div className="flex items-center gap-2">
           <Link href="/record/personal" className="press inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-pax-ink shadow-e1">
-            <PenLine className="size-4" /> Write your own
+            <PenLine className="size-4" /> New
           </Link>
           <Link href="/record" className="press inline-flex items-center gap-2 rounded-full bg-pax-ink px-5 py-2.5 text-sm font-semibold text-white shadow-e2">
-            <Plus className="size-4" /> Record
+            <Video className="size-4" /> Record
           </Link>
         </div>
       </header>
 
-      <ScriptReader scripts={scripts} />
+      <ScriptReader
+        scripts={scripts}
+        pro={["More candidates run when two always advance", "Every voter, in any party or none, picks from the full field", "Candidates have to answer to a majority"]}
+        con={["Can leave two candidates of one party in November", "Favors self-funded candidates", "Squeezes out third parties"]}
+        national={{ support: polling.national.support, byParty: polling.national.byParty, arguments: polling.national.arguments, source: `Emerson · ${polling.national.field}`, url: polling.national.url }}
+      />
 
       <section className="flex flex-col gap-5">
-        <h2 className="font-display text-xl text-slate-900">Question 3 today</h2>
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+        <h2 className="font-display text-xl text-slate-900">Top-Two Primary Elections Initiative (2026)</h2>
           <div className="surface flex flex-col gap-5 p-6">
-            <div className="flex items-baseline justify-between gap-3">
-              <span className="text-sm font-semibold text-slate-900">If the vote were today</span>
+            <div>
               <Source href={q.url}>
                 {q.pollster} · {q.sample} · {q.field} · {q.moe}
               </Source>
@@ -126,40 +129,6 @@ export default async function ScriptsPage() {
             </div>
           </div>
 
-          <div className="surface flex flex-col gap-4 p-6">
-            <span className="text-sm font-semibold text-slate-900">The arguments</span>
-            <ul className="flex flex-col gap-2.5">
-              {["More candidates run when two always advance", "Every voter, in any party or none, picks from the full field", "Candidates have to answer to a majority"].map((a) => (
-                <li key={a} className="flex items-start gap-2.5 text-sm text-slate-700">
-                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-above-soft text-above">
-                    <Check className="size-3" />
-                  </span>
-                  {a}
-                </li>
-              ))}
-              {["Can leave two candidates of one party in November", "Favors self-funded candidates", "Squeezes out third parties"].map((a) => (
-                <li key={a} className="flex items-start gap-2.5 text-sm text-slate-700">
-                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-pax-red-soft text-below">
-                    <X className="size-3" />
-                  </span>
-                  {a}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-auto flex flex-wrap gap-1.5 border-t border-slate-100 pt-4">
-              {["Officials of both parties", "NAACP"].map((x) => (
-                <span key={x} className="rounded-full bg-above-soft px-2.5 py-1 text-xs font-medium text-above">
-                  {x}
-                </span>
-              ))}
-              {["Both state parties", "AFL-CIO"].map((x) => (
-                <span key={x} className="rounded-full bg-pax-red-soft px-2.5 py-1 text-xs font-medium text-pax-red-deep">
-                  {x}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
       </section>
 
       <section className="flex flex-col gap-5">
@@ -232,7 +201,7 @@ export default async function ScriptsPage() {
           <div className="surface flex flex-col gap-4 p-6">
             <div className="flex items-baseline gap-2">
               <span className="tabular font-display text-5xl text-below">{oneName.length}</span>
-              <span className="text-sm text-slate-600">of {districts.length} House districts had one name on the 2022 ballot</span>
+              <span className="text-sm text-slate-600">uncontested districts</span>
             </div>
             <div className="flex max-h-72 flex-wrap content-start gap-1.5 overflow-y-auto [scrollbar-width:thin]">
               {oneName.map((d) => (
@@ -242,7 +211,7 @@ export default async function ScriptsPage() {
               ))}
             </div>
             <Link href="/record" className="press mt-auto inline-flex w-fit items-center gap-2 rounded-full bg-pax-ink px-5 py-2.5 text-sm font-semibold text-white shadow-e1">
-              <Plus className="size-4" /> Record from one of them
+              <Video className="size-4" /> Record
             </Link>
           </div>
         </div>
