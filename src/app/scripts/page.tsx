@@ -65,12 +65,7 @@ export default async function ScriptsPage() {
   return (
     <div className="flex flex-col gap-10">
       <header className="rise flex flex-wrap items-end justify-between gap-4 md:pt-9">
-        <div className="flex max-w-2xl flex-col gap-3">
-          <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Scripts</h1>
-          <p className="leading-relaxed text-slate-600">
-            Pick the argument that sounds like you, see why every line is there, and record it. In the {RM.outcomes.votechoice.ads} ads tested against control groups, only two choices reliably moved votes — an ordinary person talking plainly, and asking for the vote outright — and every script here is built on both.
-          </p>
-        </div>
+        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Scripts</h1>
         <div className="flex items-center gap-2">
           <Link href="/record/personal" className="press inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-pax-ink shadow-e1">
             <PenLine className="size-4" /> New

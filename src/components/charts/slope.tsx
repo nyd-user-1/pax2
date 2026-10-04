@@ -62,7 +62,7 @@ export function SlopeChart({ rows, left = "Round 1", right = "Round 2" }: { rows
       <div className="mt-2 flex min-h-6 flex-wrap items-center justify-between gap-2 text-sm">
         {hover ? (
           <Link href={`/v/${hover}`} scroll={false} className="font-medium text-pax-ink hover:underline">
-            {rows.find((r) => r.id === hover)?.label} →
+            {rows.find((r) => r.id === hover)?.label}
           </Link>
         ) : (
           <span className="text-slate-500">Hover a line to see the take; the scale and the average never move.</span>

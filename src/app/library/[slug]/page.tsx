@@ -2,6 +2,8 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Check, Download, ExternalLink, Minus } from "lucide-react"
 
+import upworthyTop from "../../../../data/generated/upworthy-top.json"
+import { UpworthyTop, type UpworthyData } from "@/components/library/upworthy-top"
 import { bytes, count, datasetBySlug } from "@/lib/library"
 import { kindStyle, tagStyle } from "@/lib/swatches"
 
@@ -71,6 +73,13 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
           )}
         </div>
       </section>
+
+      {d.slug === "upworthy-archive" && (
+        <section className="flex flex-col gap-3">
+          <h2 className="font-display text-xl text-slate-900">The top 500 headlines</h2>
+          <UpworthyTop data={upworthyTop as UpworthyData} />
+        </section>
+      )}
 
       {table && (
         <section className="flex flex-col gap-3">
@@ -152,7 +161,7 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
               <p className="font-semibold text-slate-900">Used in PAX</p>
               {d.usedIn.map((u) => (
                 <Link key={u.href + u.label} href={u.href} className="text-sm font-medium text-pax-plum hover:underline">
-                  {u.label} →
+                  {u.label}
                 </Link>
               ))}
             </div>

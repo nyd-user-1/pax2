@@ -132,7 +132,7 @@ export default async function DashboardPage() {
             </div>
           ))}
           <Link href="/evals" className="text-sm font-medium text-pax-plum hover:underline">
-            Open Evals →
+            Open Evals
           </Link>
         </div>
         <div className="surface flex flex-col gap-3 p-6">

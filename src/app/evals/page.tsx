@@ -197,7 +197,7 @@ export default async function ReviewsPage() {
                         return <td key={c.key}>{ca != null && cb != null ? `${cb - ca >= 0 ? "+" : ""}${(cb - ca).toFixed(0)}` : "—"}</td>
                       })}
                       <td className="text-xs">
-                        {sa == null && sb ? `First score: ${SIDE[sb]}` : conclusion ? <span className="font-medium text-pax-plum">Conclusion changed: {SIDE[sa!]} → {SIDE[sb!]}</span> : sb ? `Score changed, conclusion holds: ${SIDE[sb]}` : "Still not scorable"}
+                        {sa == null && sb ? `First score: ${SIDE[sb]}` : conclusion ? <span className="font-medium text-pax-plum">Conclusion changed: {SIDE[sa!]} to {SIDE[sb!]}</span> : sb ? `Score changed, conclusion holds: ${SIDE[sb]}` : "Still not scorable"}
                       </td>
                     </tr>
                   )

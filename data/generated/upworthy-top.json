@@ -1,0 +1,3606 @@
+{
+ "built": "2026-10-04",
+ "source": "upworthy-archive-confirmatory-packages-03.12.2020.csv",
+ "method": "Headlines pooled across image variants within a test, 1000+ impressions, ranked by clicks per impression; a text tested more than once appears once, at its best.",
+ "counts": {
+  "packages": 105551,
+  "headlines": 48629,
+  "top": 500,
+  "tests": 12256,
+  "winners": 12271,
+  "losers": 40754
+ },
+ "ctr": {
+  "top": 7.29,
+  "all": 1.41
+ },
+ "words": {
+  "top": 15,
+  "all": 15
+ },
+ "swing": 1.9,
+ "patterns": [
+  {
+   "key": "digit",
+   "label": "Carries a number",
+   "top": 15.4,
+   "all": 17.3,
+   "won": 19.1,
+   "lost": 17.2
+  },
+  {
+   "key": "this",
+   "label": "Starts with “This” or “These”",
+   "top": 5.2,
+   "all": 5.9,
+   "won": 6.8,
+   "lost": 5.8
+  },
+  {
+   "key": "question",
+   "label": "Asks a question",
+   "top": 8,
+   "all": 17.6,
+   "won": 14.2,
+   "lost": 18.2
+  },
+  {
+   "key": "you",
+   "label": "Says “you” or “your”",
+   "top": 21.2,
+   "all": 25.2,
+   "won": 25.3,
+   "lost": 25.3
+  },
+  {
+   "key": "quote",
+   "label": "Quotes someone",
+   "top": 1.6,
+   "all": 1.2,
+   "won": 1.2,
+   "lost": 1.2
+  },
+  {
+   "key": "caps",
+   "label": "Shouts a word in capitals",
+   "top": 4.2,
+   "all": 5.8,
+   "won": 5.1,
+   "lost": 6
+  },
+  {
+   "key": "whatwhyhow",
+   "label": "Starts with “What”, “Why” or “How”",
+   "top": 2.8,
+   "all": 8,
+   "won": 6.3,
+   "lost": 8.3
+  },
+  {
+   "key": "watch",
+   "label": "Says “watch”, “see” or “listen”",
+   "top": 17.4,
+   "all": 6.9,
+   "won": 8.2,
+   "lost": 6.7
+  },
+  {
+   "key": "ellipsis",
+   "label": "Trails off or breaks midline",
+   "top": 3.6,
+   "all": 4.9,
+   "won": 4.6,
+   "lost": 4.9
+  },
+  {
+   "key": "firstperson",
+   "label": "First person: “I” or “my”",
+   "top": 12.4,
+   "all": 12.4,
+   "won": 14,
+   "lost": 12
+  }
+ ],
+ "rows": [
+  {
+   "h": "Her Dad Thinks Being Gay Was Her Choice. The Words She Said Back? Couldn't Have Chosen Them Better.",
+   "i": 11167,
+   "c": 1680,
+   "r": 15.04,
+   "w": true
+  },
+  {
+   "h": "A Boy Makes Anti-Muslim Comments In Front Of An American Soldier. The Soldiers Reply = Priceless.",
+   "i": 2713,
+   "c": 404,
+   "r": 14.89,
+   "w": true
+  },
+  {
+   "h": "Some Geek Boys Called These Geek Girls 'Fake.' They Certainly Won't Be Making That Mistake Again.",
+   "i": 2111,
+   "c": 299,
+   "r": 14.16,
+   "w": true
+  },
+  {
+   "h": "A Celebrity Couple Are Hounded By Paparazzi As They Walk Down The Street. They Respond Wonderfully.",
+   "i": 1717,
+   "c": 240,
+   "r": 13.98,
+   "w": false
+  },
+  {
+   "h": "Some Rude Geek Boys Called These Geek Girls 'Fake.' They Won't Make That Mistake Again.",
+   "i": 2064,
+   "c": 273,
+   "r": 13.23,
+   "w": false
+  },
+  {
+   "h": "Dustin Hoffman Breaks Down Crying Trying To Explain Something That Every Woman Sadly Already Knows",
+   "i": 2649,
+   "c": 347,
+   "r": 13.1,
+   "w": true
+  },
+  {
+   "h": "Some Geek Boys Called These Geek Girls 'Fake.' They Won't Make That Mistake Again.",
+   "i": 2244,
+   "c": 293,
+   "r": 13.06,
+   "w": false
+  },
+  {
+   "h": "A Boy Makes Racist Comments In Front Of An American Soldier. Bad Idea, Dude.",
+   "i": 2991,
+   "c": 390,
+   "r": 13.04,
+   "w": false
+  },
+  {
+   "h": "A Boy Makes Anti-Muslim Comments In Front Of An American Soldier. The Soldiers Reply: Priceless.",
+   "i": 11253,
+   "c": 1462,
+   "r": 12.99,
+   "w": true
+  },
+  {
+   "h": "A Celebrity Couple Are Hounded By Paparazzi As They Walk Down The Street. Their Response Is Superb.",
+   "i": 11230,
+   "c": 1436,
+   "r": 12.79,
+   "w": true
+  },
+  {
+   "h": "A Boy Is Racist In Front Of An American Soldier. Yeah, So He Doesn't Let Him Get Away With It.",
+   "i": 2887,
+   "c": 369,
+   "r": 12.78,
+   "w": false
+  },
+  {
+   "h": "Lorde Found A Photoshopped Photo Of Herself And Decided To Tweet The Untouched Real One Next To It",
+   "i": 19281,
+   "c": 2439,
+   "r": 12.65,
+   "w": true
+  },
+  {
+   "h": "Dustin Hoffman Breaks Down Crying Explaining Something That Every Woman Sadly Already Experienced",
+   "i": 10929,
+   "c": 1379,
+   "r": 12.62,
+   "w": true
+  },
+  {
+   "h": "Anyone Could Make This Mistake. The Fact It Happens All The Time Is Frightening.",
+   "i": 2847,
+   "c": 357,
+   "r": 12.54,
+   "w": true
+  },
+  {
+   "h": "An Awful Tabloid Decided To Review Her Lady Parts Instead Of Her Music. So She Responded Awesomely.",
+   "i": 2516,
+   "c": 312,
+   "r": 12.4,
+   "w": true
+  },
+  {
+   "h": "Anyone Could Make This Mistake. The Fact It Happens On Average Every 10 Days Is Frightening",
+   "i": 2766,
+   "c": 338,
+   "r": 12.22,
+   "w": false
+  },
+  {
+   "h": "It's Rare That The Daily Show Slips Out Of Satire And Into Anger. This Is One Of Those Times.",
+   "i": 2712,
+   "c": 328,
+   "r": 12.09,
+   "w": true
+  },
+  {
+   "h": "Anyone Can Become Distracted And Make This Mistake. The Fact It Happens All the Time is Frightening",
+   "i": 2810,
+   "c": 338,
+   "r": 12.03,
+   "w": false
+  },
+  {
+   "h": "Some Rude Geek Boys Called These Geek Girls 'Fake.' They Won't Make That Stupid Mistake Again.",
+   "i": 2414,
+   "c": 290,
+   "r": 12.01,
+   "w": false
+  },
+  {
+   "h": "Dustin Hoffman Breaks Down Crying Explaining Something That Every Woman Sadly Learned The Hard Way",
+   "i": 2781,
+   "c": 334,
+   "r": 12.01,
+   "w": false
+  },
+  {
+   "h": "Dustin Hoffman Breaks Down Crying Trying To Explain Something That All Woman Sadly Already Realized",
+   "i": 2778,
+   "c": 329,
+   "r": 11.84,
+   "w": false
+  },
+  {
+   "h": "A Famous Actress Called 'Cut' On This Awful Scene. A Scene Millions Of Women Recognize.",
+   "i": 2915,
+   "c": 337,
+   "r": 11.56,
+   "w": true
+  },
+  {
+   "h": "A Boy Makes Anti-Muslim Comments In Front Of An American Soldier. Bad Idea, Dude.",
+   "i": 2806,
+   "c": 322,
+   "r": 11.48,
+   "w": false
+  },
+  {
+   "h": "Matt Damon Asked A Cheery 13-Year-Old What She'll Do With Her Free Time. Her Answer Devastated Him.",
+   "i": 4678,
+   "c": 534,
+   "r": 11.42,
+   "w": true
+  },
+  {
+   "h": "Some Geek Boys Called These Geek Girls 'Fake.' They Won't Make That Stupid Mistake Again.",
+   "i": 2391,
+   "c": 271,
+   "r": 11.33,
+   "w": false
+  },
+  {
+   "h": "The Most Honest And Heartbreaking Reason To Leave Your Front Door Unlocked I've Ever Heard",
+   "i": 2923,
+   "c": 330,
+   "r": 11.29,
+   "w": true
+  },
+  {
+   "h": "Keira Knightley Called 'Cut' On This Scene. Watch, As It's A Scene Millions Of Women Recognize.",
+   "i": 2537,
+   "c": 281,
+   "r": 11.08,
+   "w": false
+  },
+  {
+   "h": "Anyone Could Make This Mistake. The Fact It Happens All The Time Is Scary.",
+   "i": 2911,
+   "c": 318,
+   "r": 10.92,
+   "w": false
+  },
+  {
+   "h": "Here Is What It Looks Like When Girls Get Sick Of Being Called 'Fake'",
+   "i": 2776,
+   "c": 299,
+   "r": 10.77,
+   "w": true
+  },
+  {
+   "h": "An Awful Tabloid Wrote A Insipid Article About This Amazing Rockstar's Body So She Responded Appropriately",
+   "i": 2952,
+   "c": 314,
+   "r": 10.64,
+   "w": false
+  },
+  {
+   "h": "A Famous Actor Breaks Down Crying Trying To Explain Something That Every Woman Already Knows",
+   "i": 2620,
+   "c": 275,
+   "r": 10.5,
+   "w": false
+  },
+  {
+   "h": "A Famous Actress Called 'Cut' In This Terrifying Scene. A Scene Millions Of Women Recognize.",
+   "i": 2604,
+   "c": 271,
+   "r": 10.41,
+   "w": false
+  },
+  {
+   "h": "See Why We Have An Absolutely Ridiculous Standard Of Beauty In Just 37 Seconds",
+   "i": 10100,
+   "c": 1047,
+   "r": 10.37,
+   "w": true
+  },
+  {
+   "h": "The Rawest And Most Heartbreaking Reason To Leave Your Front Door Unlocked You've Ever Heard",
+   "i": 2488,
+   "c": 257,
+   "r": 10.33,
+   "w": false
+  },
+  {
+   "h": "We Love This British Actor. We Love Him Even More After He Held Up These Bits Of Paper.",
+   "i": 2831,
+   "c": 286,
+   "r": 10.1,
+   "w": true
+  },
+  {
+   "h": "A Famous Actress Called 'Cut' On This Scene. Watch, As It's A Scene Millions Of Women Recognize.",
+   "i": 2856,
+   "c": 287,
+   "r": 10.05,
+   "w": false
+  },
+  {
+   "h": "Miley Cyrus Points Out Something Wrong With America — And She's Absolutely Right",
+   "i": 7002,
+   "c": 701,
+   "r": 10.01,
+   "w": true
+  },
+  {
+   "h": "Here's The Best Anti-Photoshop Protest You Won't See On The Cover Of A Magazine",
+   "i": 2807,
+   "c": 280,
+   "r": 9.98,
+   "w": true
+  },
+  {
+   "h": "Ever Considered What Guys Look For In Girls? Forget It. Think About What A 17-Year Old Says Instead.",
+   "i": 1194,
+   "c": 119,
+   "r": 9.97,
+   "w": true
+  },
+  {
+   "h": "Here's The Best Anti-Photoshop Protest That I Have Ever Seen",
+   "i": 2770,
+   "c": 276,
+   "r": 9.96,
+   "w": false
+  },
+  {
+   "h": "If You've Ever Wondered What Happens To Kids After They're Rescued from Sex Trafficking, Watch This",
+   "i": 3288,
+   "c": 327,
+   "r": 9.95,
+   "w": true
+  },
+  {
+   "h": "Dustin Hoffman Breaks Down Crying Trying To Explain Something That Every Woman Already Knows",
+   "i": 11049,
+   "c": 1096,
+   "r": 9.92,
+   "w": true
+  },
+  {
+   "h": "What A Cheery 13-Year-Old Girl Said To Matt Damon Devastated Him",
+   "i": 8074,
+   "c": 799,
+   "r": 9.9,
+   "w": true
+  },
+  {
+   "h": "If You Still Don't Think We Need Feminism, You Should See The Signs These Girls Were Bullied For",
+   "i": 2952,
+   "c": 291,
+   "r": 9.86,
+   "w": true
+  },
+  {
+   "h": "The Rawest And Most Heartbreaking Reason To Leave Your Front Door Unlocked We've Ever Heard",
+   "i": 2560,
+   "c": 252,
+   "r": 9.84,
+   "w": false
+  },
+  {
+   "h": "Miley Cyrus Points Out Something That's SO Wrong With America — And It's Absolutely Spot On",
+   "i": 6819,
+   "c": 671,
+   "r": 9.84,
+   "w": false
+  },
+  {
+   "h": "If You Still Don't Think We Need Feminism, You Should Know These Girls Were Bullied For These Signs",
+   "i": 2883,
+   "c": 281,
+   "r": 9.75,
+   "w": false
+  },
+  {
+   "h": "Enjoy Two Minutes Of Our Messed Up Standards, Created By The Beauty Industry. Here it Comes.",
+   "i": 3308,
+   "c": 322,
+   "r": 9.73,
+   "w": true
+  },
+  {
+   "h": "Here's The Best Anti-Photoshop Protest That Has Been Made... Like... Ever.",
+   "i": 2699,
+   "c": 260,
+   "r": 9.63,
+   "w": false
+  },
+  {
+   "h": "Why The Police Drove Past Her Instead Of Helping Her (Like She Asked Them To) Is Dumbfounding",
+   "i": 2649,
+   "c": 255,
+   "r": 9.63,
+   "w": true
+  },
+  {
+   "h": "A Celebrity Couple Are Hounded By Paparazzi As They Walk Down A Street. They Respond With Two Cards.",
+   "i": 2729,
+   "c": 262,
+   "r": 9.6,
+   "w": false
+  },
+  {
+   "h": "An Amazing Thing Happened When An Indian American Comedian Got Sick Of Jokes About His Race",
+   "i": 5378,
+   "c": 512,
+   "r": 9.52,
+   "w": false
+  },
+  {
+   "h": "A Pastor Asks His Politician Why He Supports Gay Marriage. I Don't Think He Was Expecting That Reply",
+   "i": 2743,
+   "c": 260,
+   "r": 9.48,
+   "w": true
+  },
+  {
+   "h": "Dustin Hoffman Breaks Down In Tears Trying To Explain Something That Every Woman Already Knows",
+   "i": 2873,
+   "c": 272,
+   "r": 9.47,
+   "w": false
+  },
+  {
+   "h": "A Celebrity Couple Are Hounded By Paparazzi And Decide To Respond In A Wonderful Way.",
+   "i": 2850,
+   "c": 269,
+   "r": 9.44,
+   "w": false
+  },
+  {
+   "h": "A Girl Is Hit By A Car And Is Dying. The Response She's Met With Is A Shrug And \"Not My Problem.\"",
+   "i": 3627,
+   "c": 342,
+   "r": 9.43,
+   "w": true
+  },
+  {
+   "h": "Here Is The Best Anti-Photoshop Protest That I Have Ever Seen",
+   "i": 2699,
+   "c": 254,
+   "r": 9.41,
+   "w": true
+  },
+  {
+   "h": "A Cheery Exchange Between 13-Year-Old Girl And Matt Damon Left Him Devastated",
+   "i": 2087,
+   "c": 196,
+   "r": 9.39,
+   "w": false
+  },
+  {
+   "h": "A Perspective On George Zimmerman That Every Person Should Hear",
+   "i": 2950,
+   "c": 275,
+   "r": 9.32,
+   "w": true
+  },
+  {
+   "h": "The Most Anti-Gay Airline In The Entire World Has A New Safety Video",
+   "i": 2861,
+   "c": 264,
+   "r": 9.23,
+   "w": true
+  },
+  {
+   "h": "Wait For It. Here It Comes. Two Minutes Of Our Messed Up Standards, Created By The Beauty Industry.",
+   "i": 3407,
+   "c": 314,
+   "r": 9.22,
+   "w": true
+  },
+  {
+   "h": "A Young Girl Is Hit By A Car And Is Dying. The Response She's Met With Is: \"It's Not My Problem.\"",
+   "i": 3540,
+   "c": 326,
+   "r": 9.21,
+   "w": false
+  },
+  {
+   "h": "That A+ Moment When A Comedian Calls Out Racist, Outdated Jokes During A Roast",
+   "i": 5618,
+   "c": 514,
+   "r": 9.15,
+   "w": true
+  },
+  {
+   "h": "A Hilarious Stand Up Routine About How Commercials For Black People Actually Sound",
+   "i": 2699,
+   "c": 246,
+   "r": 9.11,
+   "w": true
+  },
+  {
+   "h": "Matt Damon Asked A Cheery 13-Year-Old What She'll Do With Her Free Time. Her Answer Gave Him Pause.",
+   "i": 4635,
+   "c": 420,
+   "r": 9.06,
+   "w": false
+  },
+  {
+   "h": "That A+ Moment When A Comedian Calls Out Outdated Racist And Gay Jokes During A Roast",
+   "i": 2886,
+   "c": 261,
+   "r": 9.04,
+   "w": true
+  },
+  {
+   "h": "It Only Took Rachel Maddow 48 Seconds To Tear Down An Anti-Gay Zealot's Flawed Ideas On Marriage",
+   "i": 3113,
+   "c": 281,
+   "r": 9.03,
+   "w": false
+  },
+  {
+   "h": "The Most Honest And Heartbreaking Reason To Leave Your Front Door Unlocked You've Ever Heard",
+   "i": 2826,
+   "c": 255,
+   "r": 9.02,
+   "w": false
+  },
+  {
+   "h": "Two Minutes Of Our Messed Up Standards, Created By The Beauty Industry. Wait For It. Here It Comes.",
+   "i": 3305,
+   "c": 298,
+   "r": 9.02,
+   "w": false
+  },
+  {
+   "h": "This Comedian Just Pointed Out What Dudes Never Think Of When Asking A Woman Out",
+   "i": 10975,
+   "c": 989,
+   "r": 9.01,
+   "w": true
+  },
+  {
+   "h": "Two Minutes Of Our Messed Up Standards, Created By The Beauty Industry.",
+   "i": 3486,
+   "c": 314,
+   "r": 9.01,
+   "w": false
+  },
+  {
+   "h": "If You Didn't Love Bill Nye Before You See This, You'll Love Him After (Or You're A Cold Robot)",
+   "i": 2247,
+   "c": 202,
+   "r": 8.99,
+   "w": true
+  },
+  {
+   "h": "Enjoy 2 Minutes Of Our Messed-Up Standards, Created By The Beauty Industry. Here it Comes.",
+   "i": 3429,
+   "c": 307,
+   "r": 8.95,
+   "w": true
+  },
+  {
+   "h": "A Famous Actor Dies And Leaves Behind This Important Message I’d Never Seen Before Now",
+   "i": 2998,
+   "c": 268,
+   "r": 8.94,
+   "w": true
+  },
+  {
+   "h": "A Pop Star Points Out Something Wrong With America — And She's Absolutely Right",
+   "i": 7025,
+   "c": 627,
+   "r": 8.93,
+   "w": false
+  },
+  {
+   "h": "The Daily Show Rarely Get This Mad, But When They Do, They Do It Perfectly",
+   "i": 3498,
+   "c": 311,
+   "r": 8.89,
+   "w": false
+  },
+  {
+   "h": "It Only Took Rachel Maddow 48 Seconds To Shut Down An Anti-Gay Zealot's Flawed Ideas On Marriage",
+   "i": 3884,
+   "c": 344,
+   "r": 8.86,
+   "w": false
+  },
+  {
+   "h": "The Daily Show Rarely Gets This Mad, But When They Do, They Do It Perfectly",
+   "i": 2993,
+   "c": 265,
+   "r": 8.85,
+   "w": false
+  },
+  {
+   "h": "Who Doesn't Like To Watch Half-naked Girls Dancing? These Guys, After They See Why It's Happening",
+   "i": 2547,
+   "c": 225,
+   "r": 8.83,
+   "w": true
+  },
+  {
+   "h": "When This Guy Explains Why Women Won't Date Him, You May Roll Your Eyes. But 2 Minutes In...",
+   "i": 10639,
+   "c": 939,
+   "r": 8.83,
+   "w": true
+  },
+  {
+   "h": "The Best Protest Against Photoshopping Perfection That I Have Ever Seen",
+   "i": 11050,
+   "c": 975,
+   "r": 8.82,
+   "w": true
+  },
+  {
+   "h": "A Muslim Scholar Wrote A Book About Jesus. Watch A Confused Newscaster's Brain Explode.",
+   "i": 1273,
+   "c": 112,
+   "r": 8.8,
+   "w": false
+  },
+  {
+   "h": "A Journalist Was Asked By Her Network To Cover Paris Hilton. She Did This Instead.",
+   "i": 2865,
+   "c": 252,
+   "r": 8.8,
+   "w": true
+  },
+  {
+   "h": "Liam Neeson Is Waking Us Up To The Painful Truth About Our Children That We Can't See",
+   "i": 1232,
+   "c": 108,
+   "r": 8.77,
+   "w": false
+  },
+  {
+   "h": "A Muslim Scholar Wrote A Book About Jesus. Watch A Confused Newscaster's Brain Shut Down.",
+   "i": 1245,
+   "c": 109,
+   "r": 8.76,
+   "w": true
+  },
+  {
+   "h": "If You Really Don't Think We Need Feminism, You Should Know These Girls Were Bullied For These Signs",
+   "i": 2826,
+   "c": 246,
+   "r": 8.7,
+   "w": false
+  },
+  {
+   "h": "In Case You Missed It, Here's What You May Not Realize About The Whole Trayvon Martin Thing",
+   "i": 2181,
+   "c": 189,
+   "r": 8.67,
+   "w": true
+  },
+  {
+   "h": "Why It Shouldn't Be Difficult To Write Believable Female Characters",
+   "i": 11183,
+   "c": 966,
+   "r": 8.64,
+   "w": true
+  },
+  {
+   "h": "When This Guy Explains Why Women Won't Sleep With Him, You May Roll Your Eyes. But 2 Minutes In...",
+   "i": 10677,
+   "c": 917,
+   "r": 8.59,
+   "w": true
+  },
+  {
+   "h": "The Fact That These Ads Are Fake Is Hilarious. That Everyone Thought They Are Real Is Disconcerting.",
+   "i": 10833,
+   "c": 929,
+   "r": 8.58,
+   "w": true
+  },
+  {
+   "h": "If There's Any Doubt That We're Bombarded With Outrageous Messages About Women, This Should Erase It",
+   "i": 3511,
+   "c": 301,
+   "r": 8.57,
+   "w": false
+  },
+  {
+   "h": "It Only Took Rachel Maddow 48 Seconds To Tear Down An Anti-Gay Zealot's Outdated Ideas On Marriage",
+   "i": 2713,
+   "c": 232,
+   "r": 8.55,
+   "w": true
+  },
+  {
+   "h": "If A 'Nice Guy' Says These Two Words To You And Means Them, You Should Revoke His Nice Guy Card",
+   "i": 2587,
+   "c": 221,
+   "r": 8.54,
+   "w": true
+  },
+  {
+   "h": "You May Not See The Painful Truth About Our Children Liam Neeson Is Waking Us Up To",
+   "i": 1059,
+   "c": 90,
+   "r": 8.5,
+   "w": false
+  },
+  {
+   "h": "Think Seeing A Little Male Nudity On TV Is Too Explicit? Then ... It's Time To Hear The Hard Truth.",
+   "i": 13415,
+   "c": 1139,
+   "r": 8.49,
+   "w": true
+  },
+  {
+   "h": "Listen To A Soldier Shut Up A Boy Being Anti-Muslim. Humanity Is Really Rather Great.",
+   "i": 2689,
+   "c": 228,
+   "r": 8.48,
+   "w": false
+  },
+  {
+   "h": "An Open Letter From A White Girl To A Bunch Of Other White People",
+   "i": 3173,
+   "c": 269,
+   "r": 8.48,
+   "w": false
+  },
+  {
+   "h": "Watch A Religious Man Eloquently Explain What Everyone Missed About The Trayvon Martin Case",
+   "i": 2712,
+   "c": 229,
+   "r": 8.44,
+   "w": true
+  },
+  {
+   "h": "Watch A Retired Teacher Destroy What's Left Of A Politician's Mayoral Campaign In Under 2 Minutes",
+   "i": 1446,
+   "c": 122,
+   "r": 8.44,
+   "w": false
+  },
+  {
+   "h": "This Comedian Just Pointed Out What Dudes Never Think Of When Asking A Woman Out.",
+   "i": 10881,
+   "c": 918,
+   "r": 8.44,
+   "w": true
+  },
+  {
+   "h": "If I Ever Hear An Anti-Muslim Comment, I Will Repeat The Words Of This Soldier",
+   "i": 2898,
+   "c": 243,
+   "r": 8.39,
+   "w": false
+  },
+  {
+   "h": "A Perspective On Trayvon Martin That Every Person Should Hear",
+   "i": 2613,
+   "c": 218,
+   "r": 8.34,
+   "w": false
+  },
+  {
+   "h": "Hugh Jackman Gives Us A Much-Needed History Lesson And A Wake-Up Call",
+   "i": 5228,
+   "c": 436,
+   "r": 8.34,
+   "w": true
+  },
+  {
+   "h": "Watch A Dude Say Something To All Women That All Dudes Should Really Hear",
+   "i": 2863,
+   "c": 238,
+   "r": 8.31,
+   "w": true
+  },
+  {
+   "h": "That Awesome Moment When A Comedian Calls Out Racist, Outdated Jokes During A Roast",
+   "i": 2659,
+   "c": 220,
+   "r": 8.27,
+   "w": false
+  },
+  {
+   "h": "Watch A Talk Show Host Get Remarkably Profound. Seriously, Just Watch Him For 3 Minutes.",
+   "i": 2130,
+   "c": 176,
+   "r": 8.26,
+   "w": false
+  },
+  {
+   "h": "Watch A Religious Man Eloquently Explain What Everyone Missed About The George Zimmerman Case",
+   "i": 2511,
+   "c": 207,
+   "r": 8.24,
+   "w": false
+  },
+  {
+   "h": "You May Think This Guy Talking About Women Is A Jerk. But By The End, You'll Want To Hug HIm.",
+   "i": 2686,
+   "c": 221,
+   "r": 8.23,
+   "w": false
+  },
+  {
+   "h": "The Most Anti-Gay Airline In The Entire World Has A New Scumtacular Safety Video",
+   "i": 2614,
+   "c": 215,
+   "r": 8.22,
+   "w": false
+  },
+  {
+   "h": "When This Guy Explains Why Women Won't Sleep With Him, You May Roll Your Eyes. But Then He Says...",
+   "i": 2850,
+   "c": 234,
+   "r": 8.21,
+   "w": false
+  },
+  {
+   "h": "When You Look At It This Way, It Makes Sense That We Have Trouble Ignoring Silly Beauty 'Standards'",
+   "i": 3632,
+   "c": 297,
+   "r": 8.18,
+   "w": false
+  },
+  {
+   "h": "Hugh Jackman Starts To Teach Us History, But Ends Up Giving Us A Wake-Up Call",
+   "i": 5182,
+   "c": 423,
+   "r": 8.16,
+   "w": false
+  },
+  {
+   "h": "This Teacher Made A Video About His Star Student Trying To Get Into College. She's Not Getting In.",
+   "i": 3419,
+   "c": 278,
+   "r": 8.13,
+   "w": true
+  },
+  {
+   "h": "A Young Girl Is Hit By A Car And Is Dying. Instead Of Saving Her, They Say \"It's Not My Problem.\"",
+   "i": 3290,
+   "c": 267,
+   "r": 8.12,
+   "w": false
+  },
+  {
+   "h": "That A+ Moment When A Comedian Calls Out Lame, Outdated Racist And Gay Jokes During A Roast",
+   "i": 2493,
+   "c": 202,
+   "r": 8.1,
+   "w": false
+  },
+  {
+   "h": "Watch A Retired Teacher Shatter What's Left Of A Sexting Politician's Mayoral Campaign In 2 Minutes",
+   "i": 2743,
+   "c": 222,
+   "r": 8.09,
+   "w": true
+  },
+  {
+   "h": "A Bunch Of Bullies Thought It Would Be Funny To Pummel This Kid. They Aren't Laughing Now.",
+   "i": 2696,
+   "c": 218,
+   "r": 8.09,
+   "w": true
+  },
+  {
+   "h": "The Most Anti-Gay Airline In The History Of The World Has A New Safety Video",
+   "i": 2625,
+   "c": 211,
+   "r": 8.04,
+   "w": false
+  },
+  {
+   "h": "When You Sexualize Men And Women Equally, It’s Amazing How Much Fun You Can Have",
+   "i": 2448,
+   "c": 196,
+   "r": 8.01,
+   "w": true
+  },
+  {
+   "h": "What Happens When A Diehard Homophobe Meets Neil Patrick Harris?",
+   "i": 2737,
+   "c": 219,
+   "r": 8,
+   "w": true
+  },
+  {
+   "h": "If A 'Nice Guy' Says These Two Words To You And Means Them, Revoke His Nice Guy Card",
+   "i": 2656,
+   "c": 212,
+   "r": 7.98,
+   "w": true
+  },
+  {
+   "h": "Watch A Talk Show Host Get Amazingly Profound. Seriously, Just Watch HIm For 3 Minutes.",
+   "i": 6874,
+   "c": 548,
+   "r": 7.97,
+   "w": false
+  },
+  {
+   "h": "Can You Believe Some Condescending Geek Guys Think These Brilliant Geek Girls Aren't 'Real'?",
+   "i": 2114,
+   "c": 168,
+   "r": 7.95,
+   "w": true
+  },
+  {
+   "h": "A French Film Showing Men What Being A Woman Feels Like — Kinda Nails It",
+   "i": 2594,
+   "c": 206,
+   "r": 7.94,
+   "w": true
+  },
+  {
+   "h": "Watch A Hilarious Stand Up Routine About How Radio Commercials (For Black People) Actually Sound",
+   "i": 2717,
+   "c": 215,
+   "r": 7.91,
+   "w": false
+  },
+  {
+   "h": "These Models Thought They Were Shooting A Sexy Commercial, But Then It Got Awkward And Impossible",
+   "i": 11108,
+   "c": 875,
+   "r": 7.88,
+   "w": true
+  },
+  {
+   "h": "Enjoy A Few Minutes Of Messed-Up Messages, Created And Shared By The Beauty Industry. Here it Comes.",
+   "i": 3498,
+   "c": 275,
+   "r": 7.86,
+   "w": false
+  },
+  {
+   "h": "Watch A Famous Actor Realize What Society Does To Women And Then Lose It",
+   "i": 2748,
+   "c": 216,
+   "r": 7.86,
+   "w": false
+  },
+  {
+   "h": "In Case You Missed It, Here's What You Don't Realize About The Whole Trayvon Martin Thing",
+   "i": 2164,
+   "c": 170,
+   "r": 7.86,
+   "w": false
+  },
+  {
+   "h": "Super Bowl Season Has A Dirty Little Secret, And This Congressman Just Exposed It",
+   "i": 2053,
+   "c": 161,
+   "r": 7.84,
+   "w": true
+  },
+  {
+   "h": "Watch A Retired Teacher Shatter What's Left Of A Politician's Mayoral Campaign In Under 2 Minutes",
+   "i": 1877,
+   "c": 147,
+   "r": 7.83,
+   "w": false
+  },
+  {
+   "h": "Super Bowl Weekend Has A Dirty Little Secret, And This Republican Congressman Just Exposed It",
+   "i": 1973,
+   "c": 154,
+   "r": 7.81,
+   "w": false
+  },
+  {
+   "h": "It Only Took Rachel Maddow 48 Seconds To Tear Down An Anti-Gay Zealot's Flawed Ideas About Marriage",
+   "i": 3485,
+   "c": 272,
+   "r": 7.8,
+   "w": false
+  },
+  {
+   "h": "Hugh Jackman Gives Us A History Lesson And A Wake-Up Call",
+   "i": 2712,
+   "c": 210,
+   "r": 7.74,
+   "w": true
+  },
+  {
+   "h": "If You Still Don't Think We Need Feminism, You Should Know These Girls Were Bullied For Their Signs",
+   "i": 2609,
+   "c": 202,
+   "r": 7.74,
+   "w": false
+  },
+  {
+   "h": "Check Out Why Samuel L Jackson Just Yelled At A Store Full Of Angry Parents",
+   "i": 13539,
+   "c": 1047,
+   "r": 7.73,
+   "w": true
+  },
+  {
+   "h": "When This Guy Explains Why Women Won't Go Out With Him, You May Roll Your Eyes. But 2 Minutes In...",
+   "i": 2697,
+   "c": 208,
+   "r": 7.71,
+   "w": false
+  },
+  {
+   "h": "A Great French Short Film Depicting How Men Would Feel If They Were Subjected To Sexism",
+   "i": 2701,
+   "c": 208,
+   "r": 7.7,
+   "w": false
+  },
+  {
+   "h": "A Starlet Points Out Something That's SO Wrong With America — And She's Absolutely Right",
+   "i": 6914,
+   "c": 532,
+   "r": 7.69,
+   "w": false
+  },
+  {
+   "h": "Reality Check! Any Woman Who Feels She's Not Good Enough Might Understand Why After Watching This.",
+   "i": 2446,
+   "c": 187,
+   "r": 7.65,
+   "w": false
+  },
+  {
+   "h": "If We Legalize Weed In America, We'll Have To Deal With A Lot More Of These People",
+   "i": 11407,
+   "c": 871,
+   "r": 7.64,
+   "w": true
+  },
+  {
+   "h": "Super Bowl Season Has A Dirty Little Secret, And This Texas Representative Just Exposed It",
+   "i": 11149,
+   "c": 851,
+   "r": 7.63,
+   "w": true
+  },
+  {
+   "h": "Think Trayvon's Record Said Something About His Character?  Well, Get A Load Of This.",
+   "i": 2165,
+   "c": 165,
+   "r": 7.62,
+   "w": true
+  },
+  {
+   "h": "A Boy Came Out As Gay On Facebook. His Mother Found Out And Decided To Write Him This Letter.",
+   "i": 12253,
+   "c": 933,
+   "r": 7.61,
+   "w": true
+  },
+  {
+   "h": "Some Couples You Just Don't Mess With. Especially Not Right Before Their 20th Wedding Anniversary.",
+   "i": 3479,
+   "c": 264,
+   "r": 7.59,
+   "w": true
+  },
+  {
+   "h": "These Celebrities Didn't Want Paparazzi Attention, But They Did Something To Make The Most Of It",
+   "i": 1729,
+   "c": 131,
+   "r": 7.58,
+   "w": false
+  },
+  {
+   "h": "A Dude Trying To Ban Abortions Is Asked A Question He Never Considered. It's So Obvious It Hurts.",
+   "i": 13994,
+   "c": 1058,
+   "r": 7.56,
+   "w": true
+  },
+  {
+   "h": "Watch A Guy Say Something To All Women That All Guys Should Really Hear",
+   "i": 2926,
+   "c": 221,
+   "r": 7.55,
+   "w": false
+  },
+  {
+   "h": "Probably Shouldn't Tell A Couple They Can't Stay Married Right Before Their 20th Wedding Anniversary",
+   "i": 3647,
+   "c": 275,
+   "r": 7.54,
+   "w": false
+  },
+  {
+   "h": "These Moms Think They’re Tough.  Wait Till They Find Out What Their Kid’s Really Think Of Them.",
+   "i": 2123,
+   "c": 159,
+   "r": 7.49,
+   "w": true
+  },
+  {
+   "h": "Watch A Dude Say Something To All Women That All Dudes Should Really Listen To",
+   "i": 2552,
+   "c": 191,
+   "r": 7.48,
+   "w": false
+  },
+  {
+   "h": "In Case You Missed It, Here's What Many Americans Don't Get About The Whole Trayvon Martin Thing",
+   "i": 2356,
+   "c": 176,
+   "r": 7.47,
+   "w": false
+  },
+  {
+   "h": "Matt Damon Asked A 13-Year-Old What She'll Do With Her Free Time. Her Answer Gave Him Perspective.",
+   "i": 4648,
+   "c": 347,
+   "r": 7.47,
+   "w": false
+  },
+  {
+   "h": "This Is What It Looks Like When The King Of The Nerds Gives Your Infant Daughter A Pep Talk",
+   "i": 5282,
+   "c": 394,
+   "r": 7.46,
+   "w": true
+  },
+  {
+   "h": "A Journalist Went Near Mount Rushmore To Take Some Photos. What He Found Changed His Life Forever.",
+   "i": 10837,
+   "c": 808,
+   "r": 7.46,
+   "w": true
+  },
+  {
+   "h": "I Doubt His Parents Thought Sending Their Gay Kid To A Christian School Would Have These Results",
+   "i": 2658,
+   "c": 198,
+   "r": 7.45,
+   "w": true
+  },
+  {
+   "h": "A Muslim Scholar Wrote A Book About Jesus. Watch A Confused Newscaster's Brain Overload.",
+   "i": 1423,
+   "c": 106,
+   "r": 7.45,
+   "w": false
+  },
+  {
+   "h": "The Most Heartbreaking Reason To Leave Your Front Door Unlocked I've Ever Heard",
+   "i": 2272,
+   "c": 169,
+   "r": 7.44,
+   "w": true
+  },
+  {
+   "h": "Do You See What's Not Quite Right With These H&M Posters?",
+   "i": 10137,
+   "c": 752,
+   "r": 7.42,
+   "w": true
+  },
+  {
+   "h": "It Only Took Rachel Maddow 48 Seconds To Debunk An Anti-Gay Zealot's Flawed Ideas On Marriage",
+   "i": 4031,
+   "c": 299,
+   "r": 7.42,
+   "w": false
+  },
+  {
+   "h": "Watch A Talk Show Host Get Surprisingly Profound. Seriously, Just Watch Him For 3 Minutes.",
+   "i": 2104,
+   "c": 156,
+   "r": 7.41,
+   "w": false
+  },
+  {
+   "h": "It's Just Another Beauty Ad Calling Out All The Other Beauty Ads For Creating Absurd Expectations",
+   "i": 3630,
+   "c": 269,
+   "r": 7.41,
+   "w": false
+  },
+  {
+   "h": "Bette Midler Didn’t Know This Was Going To Be Caught On Tape. That Makes This Even More Amazing.",
+   "i": 11445,
+   "c": 846,
+   "r": 7.39,
+   "w": true
+  },
+  {
+   "h": "It Only Took Rachel Maddow 48 Seconds To Tear Down An Anti-Gay Zealot's Horrible Ideas On Marriage",
+   "i": 3378,
+   "c": 249,
+   "r": 7.37,
+   "w": false
+  },
+  {
+   "h": "Within 6 Seconds You Won’t Like Him. By The Time He Laughs, You’ll Hate Him.",
+   "i": 6608,
+   "c": 487,
+   "r": 7.37,
+   "w": false
+  },
+  {
+   "h": "Watch A Hilarious Stand Up Routine About How Radio Commercials For Black People Really Sound",
+   "i": 2715,
+   "c": 200,
+   "r": 7.37,
+   "w": false
+  },
+  {
+   "h": "When I Saw That This Was A List Of Things Made In China, I Didn't Expect To Be So Shocked",
+   "i": 10809,
+   "c": 795,
+   "r": 7.35,
+   "w": true
+  },
+  {
+   "h": "Hard To Believe The Woman At The End Of This Video Is The Same Woman As At The Beginning",
+   "i": 10432,
+   "c": 767,
+   "r": 7.35,
+   "w": true
+  },
+  {
+   "h": "Watch This Family Sweetly, And Lovingly Totally Destroy One Of The Worst Stereotypes Of Christians",
+   "i": 14788,
+   "c": 1083,
+   "r": 7.32,
+   "w": true
+  },
+  {
+   "h": "Within 3 Seconds You Won’t Like Him. By 5 Seconds You’ll Hate Him.",
+   "i": 6813,
+   "c": 498,
+   "r": 7.31,
+   "w": true
+  },
+  {
+   "h": "Dear White People: You Need To Do Something About Some Of Your Scarier White People",
+   "i": 1943,
+   "c": 142,
+   "r": 7.31,
+   "w": false
+  },
+  {
+   "h": "Look How This British Sherlock Actor Sends A Blunt, Bold Message To His Government",
+   "i": 2562,
+   "c": 187,
+   "r": 7.3,
+   "w": false
+  },
+  {
+   "h": "Watch And Learn: How To Roll Down Your Window And Deliver A Fantastic Response To An A**hole",
+   "i": 5524,
+   "c": 403,
+   "r": 7.3,
+   "w": true
+  },
+  {
+   "h": "Watch This Guy Totally Misspell Father At A Spelling Bee For A Totally Beautiful Reason",
+   "i": 2633,
+   "c": 192,
+   "r": 7.29,
+   "w": true
+  },
+  {
+   "h": "A Famous Actress Called 'Cut' On This Scene. Watch, As It's A Scene Millions Of Women Recognise.",
+   "i": 10909,
+   "c": 795,
+   "r": 7.29,
+   "w": true
+  },
+  {
+   "h": "If You Have To Tell Your Kids This Stuff, Then You Probably Aren't A White Person",
+   "i": 11510,
+   "c": 837,
+   "r": 7.27,
+   "w": true
+  },
+  {
+   "h": "Dear White People: Could You Please Do Something About Your Scarier White People?",
+   "i": 2685,
+   "c": 195,
+   "r": 7.26,
+   "w": true
+  },
+  {
+   "h": "Watch A Man Of Faith Eloquently Explain What Everyone Missed About The Trayvon Martin Case",
+   "i": 2951,
+   "c": 214,
+   "r": 7.25,
+   "w": false
+  },
+  {
+   "h": "What This Guy Did Back In The Day Was Shameful. How He Decided To Make Amends Is Gut-Wrenching.",
+   "i": 11477,
+   "c": 832,
+   "r": 7.25,
+   "w": true
+  },
+  {
+   "h": "You've Never Heard Of This Woman And She's Basically The Most Important Person In Movie History",
+   "i": 2665,
+   "c": 193,
+   "r": 7.24,
+   "w": true
+  },
+  {
+   "h": "The Music Is Catchy. But The Series Of Ads Telling Women What They Should Look Like Is Disturbing.",
+   "i": 3529,
+   "c": 255,
+   "r": 7.23,
+   "w": false
+  },
+  {
+   "h": "The NFL Would Never Let This Super Bowl Ad Air, So We're Gonna Show You It. Enough Is Enough.",
+   "i": 1931,
+   "c": 139,
+   "r": 7.2,
+   "w": false
+  },
+  {
+   "h": "The Government Has A Sexy Little Music Video They'd Prefer You Don't Watch. EVER.",
+   "i": 2732,
+   "c": 196,
+   "r": 7.17,
+   "w": true
+  },
+  {
+   "h": "When I Think Of All The Men Who Profited From Her Being Forgotten, I'm Not Surprised She Was",
+   "i": 2581,
+   "c": 185,
+   "r": 7.17,
+   "w": false
+  },
+  {
+   "h": "In Case You Missed It, Here's What You Don't Get About The Whole Trayvon Martin Thing",
+   "i": 2247,
+   "c": 161,
+   "r": 7.17,
+   "w": false
+  },
+  {
+   "h": "These Kids Finally Say What They Really Think About Mom.  And Her Reaction? Priceless.",
+   "i": 1915,
+   "c": 137,
+   "r": 7.15,
+   "w": false
+  },
+  {
+   "h": "The NFL Would Never Let This Super Bowl Ad Air, So We're Gonna Show You It. Because Racism.",
+   "i": 1944,
+   "c": 139,
+   "r": 7.15,
+   "w": true
+  },
+  {
+   "h": "The Most Anti-Gay Airline In The Entire World Has A New Jerktacular Safety Video",
+   "i": 2812,
+   "c": 201,
+   "r": 7.15,
+   "w": false
+  },
+  {
+   "h": "I Hate When Rock Stars Complain About Their Fans. But Not When They Do It Like This.",
+   "i": 2954,
+   "c": 211,
+   "r": 7.14,
+   "w": true
+  },
+  {
+   "h": "A Boy Came Out On Facebook. His Mother Found Out And Decides To Leave A Letter.",
+   "i": 3112,
+   "c": 222,
+   "r": 7.13,
+   "w": true
+  },
+  {
+   "h": "A Celebrity Translates The One Question Reporters Won't Stop Asking Her. She's Right — They're Rude.",
+   "i": 20305,
+   "c": 1448,
+   "r": 7.13,
+   "w": true
+  },
+  {
+   "h": "I Wasn't Expecting To Get Emotional When This Sitcom Star Started Talking About His Fame",
+   "i": 2813,
+   "c": 200,
+   "r": 7.11,
+   "w": true
+  },
+  {
+   "h": "A Teacher Tries To Avoid Drama But A Jerky Question Sets Him Off",
+   "i": 11035,
+   "c": 781,
+   "r": 7.08,
+   "w": true
+  },
+  {
+   "h": "Basically The Best Protest Against Photoshopping Perfection Ever",
+   "i": 2742,
+   "c": 194,
+   "r": 7.08,
+   "w": false
+  },
+  {
+   "h": "I'm Really Tired Of Being Scared Of White People",
+   "i": 1853,
+   "c": 131,
+   "r": 7.07,
+   "w": false
+  },
+  {
+   "h": "The NFL Would Never Let This Super Bowl Ad Air, So We're Gonna Show You It. It's Important.",
+   "i": 2009,
+   "c": 142,
+   "r": 7.07,
+   "w": false
+  },
+  {
+   "h": "It's Kind Of Weird That A Beauty Company Is Showing Me How Messed Up Beauty Ads Are, Right?",
+   "i": 3385,
+   "c": 239,
+   "r": 7.06,
+   "w": false
+  },
+  {
+   "h": "Within 6 Seconds You Won’t Like Him. By The Time He Laughs, You’ll Despise Him.",
+   "i": 6429,
+   "c": 453,
+   "r": 7.05,
+   "w": false
+  },
+  {
+   "h": "Matt Damon Asked A Cheery 13-Year-Old What She'll Do With Her Free Time. Her Answer Gave Me Pause.",
+   "i": 4632,
+   "c": 326,
+   "r": 7.04,
+   "w": false
+  },
+  {
+   "h": "Watch A Talk Show Host Get Ridiculously Profound. Seriously, Just Watch HIm For 3 Minutes.",
+   "i": 10841,
+   "c": 761,
+   "r": 7.02,
+   "w": true
+  },
+  {
+   "h": "At 5 P.M., A Girl Got Sick. By 7 P.M., She Was Dead. Her Killer Is Now Being Cleaned Up.",
+   "i": 2815,
+   "c": 197,
+   "r": 7,
+   "w": true
+  },
+  {
+   "h": "Watch A Talk Show Host Get Extraordinarily Profound. Seriously, Just Watch Him For 3 Minutes.",
+   "i": 2116,
+   "c": 148,
+   "r": 6.99,
+   "w": false
+  },
+  {
+   "h": "Oprah Tries To Tell An Atheist What To Think. The Atheist Responds Like A Christian. Or Any Human.",
+   "i": 3405,
+   "c": 238,
+   "r": 6.99,
+   "w": true
+  },
+  {
+   "h": "A 14-Year-Old Explains Food Labeling In Language Even Condescending Middle Aged TV Hosts Should Get",
+   "i": 5397,
+   "c": 377,
+   "r": 6.99,
+   "w": true
+  },
+  {
+   "h": "A Straight Reporter Says \"I'd Be Offended By You If I Were Gay.\" This Actor's Response? Epic.",
+   "i": 9587,
+   "c": 669,
+   "r": 6.98,
+   "w": true
+  },
+  {
+   "h": "A 14-Year-Old Explains Food Labeling In Language Even Condescending TV Hosts Should Get",
+   "i": 5504,
+   "c": 384,
+   "r": 6.98,
+   "w": false
+  },
+  {
+   "h": "What Happens When A Hilarious Homophobe Meets Neil Patrick Harris?",
+   "i": 2782,
+   "c": 194,
+   "r": 6.97,
+   "w": false
+  },
+  {
+   "h": "The Most Beautiful Case Of Obsessive Compulsive Disorder I've Ever Seen",
+   "i": 2042,
+   "c": 142,
+   "r": 6.95,
+   "w": false
+  },
+  {
+   "h": "And The Winner For 'Biggest Hint That Hollywood Is Twisted' Is...",
+   "i": 3296,
+   "c": 229,
+   "r": 6.95,
+   "w": true
+  },
+  {
+   "h": "A Skeevy Tabloid 'Reviewed' This Rockstar's Chest, So She Wrote Them A Hilarious Smackdown In Return",
+   "i": 2679,
+   "c": 186,
+   "r": 6.94,
+   "w": false
+  },
+  {
+   "h": "We're All Aware Of This Problem, But What We Don't Know Is How We Can Help. Well, Here's A Way.",
+   "i": 3414,
+   "c": 237,
+   "r": 6.94,
+   "w": false
+  },
+  {
+   "h": "A Man Slams A Bigoted Question Down So Hard He Brings Down The House",
+   "i": 11253,
+   "c": 781,
+   "r": 6.94,
+   "w": true
+  },
+  {
+   "h": "A Dutch Guy Is Disgusted By America, But He Has A Hell Of A Point",
+   "i": 22400,
+   "c": 1553,
+   "r": 6.93,
+   "w": true
+  },
+  {
+   "h": "Beyonce Makes Her Interviewer Uncomfortable In The Best Way. He Handles It Like A Champ.",
+   "i": 2813,
+   "c": 195,
+   "r": 6.93,
+   "w": true
+  },
+  {
+   "h": "This Is Probably The Funniest, Most Effective Way To Deal With People Who Ignore Science Facts Ever",
+   "i": 10785,
+   "c": 745,
+   "r": 6.91,
+   "w": true
+  },
+  {
+   "h": "Alyssa Milano Made A Sex Tape And It's Really Important That You Watch It. I'm Not Joking.",
+   "i": 2338,
+   "c": 161,
+   "r": 6.89,
+   "w": true
+  },
+  {
+   "h": "This Guy May Start Off Sounding Rude When He Talks About Women But You'll Want To Hug Him By The End",
+   "i": 2557,
+   "c": 176,
+   "r": 6.88,
+   "w": false
+  },
+  {
+   "h": "Stephen Fry's Bone-Crushing Final Remark In A Debate Against The Catholic Church",
+   "i": 10819,
+   "c": 744,
+   "r": 6.88,
+   "w": true
+  },
+  {
+   "h": "Watch Oprah Get Confused When An Amazing Woman Talks About How She Doesn't Believe In God",
+   "i": 2356,
+   "c": 162,
+   "r": 6.88,
+   "w": false
+  },
+  {
+   "h": "It's Annoying When Rock Stars Complain About Their Fans. But Not When They Do It Like This.",
+   "i": 2823,
+   "c": 194,
+   "r": 6.87,
+   "w": false
+  },
+  {
+   "h": "Dustin Hoffman Breaks Down While Trying To Explain Why He Thinks About Women The Way He Does",
+   "i": 2832,
+   "c": 194,
+   "r": 6.85,
+   "w": false
+  },
+  {
+   "h": "Watch A Dude Say Something To All Women That All Actually Nice Dudes Should Really Hear",
+   "i": 2761,
+   "c": 189,
+   "r": 6.85,
+   "w": false
+  },
+  {
+   "h": "Jennifer Lawrence Summarizes Everything That’s Wrong With Our Culture Today In 1 Sentence",
+   "i": 2778,
+   "c": 190,
+   "r": 6.84,
+   "w": true
+  },
+  {
+   "h": "This Comedian Is So Funny You Wont Realize You Heard Something Meaningful Until She Takes Her Bow",
+   "i": 11161,
+   "c": 763,
+   "r": 6.84,
+   "w": true
+  },
+  {
+   "h": "Stephen Fry Drops A Whale Of A Final Remark On The Catholic Church During A Debate",
+   "i": 2620,
+   "c": 179,
+   "r": 6.83,
+   "w": true
+  },
+  {
+   "h": "Stephen Fry Confesses Into a Webcam What He Really Feels About Being Gay",
+   "i": 10896,
+   "c": 743,
+   "r": 6.82,
+   "w": true
+  },
+  {
+   "h": "Super Bowl Season Has A Dirty Little Secret, And This Republican Congressman Just Exposed It",
+   "i": 3228,
+   "c": 220,
+   "r": 6.82,
+   "w": true
+  },
+  {
+   "h": "Dear White People: You Are An Embarrassment To The Rest Of The White People",
+   "i": 2424,
+   "c": 165,
+   "r": 6.81,
+   "w": true
+  },
+  {
+   "h": "The Beer/Marijuana Commercial That Is Making Adults Everywhere Rethink Their Position",
+   "i": 2411,
+   "c": 164,
+   "r": 6.8,
+   "w": true
+  },
+  {
+   "h": "Within 6 Seconds You Won’t Like Him. By 8 Seconds You’ll Hate Him.",
+   "i": 6951,
+   "c": 472,
+   "r": 6.79,
+   "w": false
+  },
+  {
+   "h": "This Sexting Politician Doesn't Know When To Call It Quits. So This Teacher Decided To Teach Him.",
+   "i": 1741,
+   "c": 118,
+   "r": 6.78,
+   "w": false
+  },
+  {
+   "h": "If You Want To Know What It's Like To Be Born A Woman, Ask Dustin Hoffman. Just Try Not To Cry.",
+   "i": 2691,
+   "c": 182,
+   "r": 6.76,
+   "w": false
+  },
+  {
+   "h": "They Thought They Were Sending Their Kids To Paradise. The Reality Was Something Totally Horrifying.",
+   "i": 2859,
+   "c": 193,
+   "r": 6.75,
+   "w": false
+  },
+  {
+   "h": "Within 5 Seconds You Won’t Like Him. By The Time He Laughs, You’ll Hate Him.",
+   "i": 6978,
+   "c": 471,
+   "r": 6.75,
+   "w": true
+  },
+  {
+   "h": "Don't Think Looks Can Be Deceiving? Take A Peek At This Guy.",
+   "i": 10884,
+   "c": 734,
+   "r": 6.74,
+   "w": true
+  },
+  {
+   "h": "Dear White People: You Need To Do Something About Some Of Your Angrier White People",
+   "i": 2804,
+   "c": 189,
+   "r": 6.74,
+   "w": false
+  },
+  {
+   "h": "Watch This Guy Misspell Father At A Spelling Bee For A Beautiful Reason",
+   "i": 11297,
+   "c": 761,
+   "r": 6.74,
+   "w": true
+  },
+  {
+   "h": "His First 4 Sentences Are Interesting. The 5th Blew My Mind. And Made Me A Little Sick.",
+   "i": 12670,
+   "c": 852,
+   "r": 6.72,
+   "w": false
+  },
+  {
+   "h": "She Was Going To Introduce The President Of The United States. Instead, She Got A Standing Ovation.",
+   "i": 13699,
+   "c": 921,
+   "r": 6.72,
+   "w": true
+  },
+  {
+   "h": "As A Man, I Loathe That We Could Demean Women This Way.",
+   "i": 2652,
+   "c": 178,
+   "r": 6.71,
+   "w": true
+  },
+  {
+   "h": "The Hilarious Reaction These Teens Give To Robin Thicke's Blurred Lines' ​Is Just Perfect",
+   "i": 2653,
+   "c": 178,
+   "r": 6.71,
+   "w": true
+  },
+  {
+   "h": "Many People Still Can’t See The Injustice Here. The Daily Show Can Change That.",
+   "i": 2775,
+   "c": 186,
+   "r": 6.7,
+   "w": false
+  },
+  {
+   "h": "His First 4 Sentences Are Interesting. The 5th Blew My Mind & Made Me Throw Up In My Mouth A Little.",
+   "i": 3208,
+   "c": 215,
+   "r": 6.7,
+   "w": true
+  },
+  {
+   "h": "The Priceless Look On That Pastor's Face When A Politican Tears His Anti-Gay View Apart On Live Air",
+   "i": 2896,
+   "c": 194,
+   "r": 6.7,
+   "w": false
+  },
+  {
+   "h": "A Journalist Was Asked By Her Network To Cover Paris Hilton. Her response was epic.",
+   "i": 3107,
+   "c": 208,
+   "r": 6.69,
+   "w": false
+  },
+  {
+   "h": "The Perfect Reply A Girl Can Give To The Question: \"What's Your Favorite Position?\"",
+   "i": 14866,
+   "c": 995,
+   "r": 6.69,
+   "w": true
+  },
+  {
+   "h": "Meet The Fox News Doctor Who Could Not Have Possibly Passed Sex Ed",
+   "i": 2796,
+   "c": 187,
+   "r": 6.69,
+   "w": true
+  },
+  {
+   "h": "Watch A Preacher Eloquently Explain What Everyone Missed About The Trayvon Martin Case",
+   "i": 2845,
+   "c": 190,
+   "r": 6.68,
+   "w": true
+  },
+  {
+   "h": "He May Not Tell The Best Celebrity Jokes, But This Comedian's Spot-On With His Seriously Scary Rant",
+   "i": 3639,
+   "c": 243,
+   "r": 6.68,
+   "w": true
+  },
+  {
+   "h": "In Case You Missed It, Here's What You Don't Get About The Whole Trayvon Martin Trial",
+   "i": 1977,
+   "c": 132,
+   "r": 6.68,
+   "w": false
+  },
+  {
+   "h": "Within 3 Seconds You Won’t Like Him. By The Time He Laughs, You’ll Hate Him.",
+   "i": 6508,
+   "c": 433,
+   "r": 6.65,
+   "w": false
+  },
+  {
+   "h": "I Wasn't Expecting To Get Emotional When This Star From A '90s Sitcom Started Talking About His Fame",
+   "i": 2436,
+   "c": 162,
+   "r": 6.65,
+   "w": false
+  },
+  {
+   "h": "Half Of Us Are Victims Of This Illegal Act After College. It's Really Not OK.",
+   "i": 10742,
+   "c": 713,
+   "r": 6.64,
+   "w": true
+  },
+  {
+   "h": "Ever Heard About What Happens In The Red Light District In Amsterdam? Probably Not This Version",
+   "i": 2973,
+   "c": 197,
+   "r": 6.63,
+   "w": false
+  },
+  {
+   "h": "There's Something Absolutely Wrong With What We Do To Boys Before They Grow Into Men",
+   "i": 3502,
+   "c": 232,
+   "r": 6.62,
+   "w": true
+  },
+  {
+   "h": "Women Get Tired Of Hearing This Term. Good Thing This Guy Apologized For Using It.",
+   "i": 2838,
+   "c": 188,
+   "r": 6.62,
+   "w": false
+  },
+  {
+   "h": "Watch Stephen Fry's Bone-Crushing Final Remark In A Debate Against The Catholic Church",
+   "i": 2663,
+   "c": 176,
+   "r": 6.61,
+   "w": false
+  },
+  {
+   "h": "Ashton Kutcher Just Told A Bunch Of Teenagers How To Be Sexy, In The Bestest Way",
+   "i": 2241,
+   "c": 148,
+   "r": 6.6,
+   "w": true
+  },
+  {
+   "h": "A Journalist Was Asked By Her Network To Cover Paris Hilton. She declined. Epically.",
+   "i": 2728,
+   "c": 180,
+   "r": 6.6,
+   "w": false
+  },
+  {
+   "h": "Want An Honest Look At How Motherhood Changes Women's Bodies? Here You Go!",
+   "i": 5291,
+   "c": 349,
+   "r": 6.6,
+   "w": true
+  },
+  {
+   "h": "A Powerful French Video Shows What Sexism Against Men Would Look Like",
+   "i": 3065,
+   "c": 202,
+   "r": 6.59,
+   "w": false
+  },
+  {
+   "h": "If A Girl Has To Pass A Test To Hang Out With You, YOU'RE The Problem",
+   "i": 3010,
+   "c": 198,
+   "r": 6.58,
+   "w": false
+  },
+  {
+   "h": "If A 'Nice Guy' Says These Two Words To You And Means Them, Then Maybe It's Time To Change His Title",
+   "i": 2707,
+   "c": 178,
+   "r": 6.58,
+   "w": false
+  },
+  {
+   "h": "Here’s A Clip Of This Glee Star You Probably HAVEN’T Seen. And It May Be His Most Important One.",
+   "i": 2602,
+   "c": 171,
+   "r": 6.57,
+   "w": false
+  },
+  {
+   "h": "It Only Took Rachel Maddow 48 Seconds To Tear Down An Anti-Gay Zealot's Tired Ideas On Marriage",
+   "i": 4507,
+   "c": 296,
+   "r": 6.57,
+   "w": false
+  },
+  {
+   "h": "He Was Asked An Arrogant Question. His Great Answer Shows The Problem With How The U.S. Functions.",
+   "i": 3457,
+   "c": 227,
+   "r": 6.57,
+   "w": true
+  },
+  {
+   "h": "Ashton Kutcher Just Told A Bunch Of Teenagers How To Be Sexy, In The Best Way Ever",
+   "i": 2666,
+   "c": 175,
+   "r": 6.56,
+   "w": false
+  },
+  {
+   "h": "There Are People In The World Who Do Really Bad Things, But There Are Also Those Who Do Amazing Ones",
+   "i": 3413,
+   "c": 224,
+   "r": 6.56,
+   "w": false
+  },
+  {
+   "h": "A Cautionary Tale To Any Tabloid Newspaper Who Thinks Picking On A Women's Body Is A Good Idea",
+   "i": 2697,
+   "c": 177,
+   "r": 6.56,
+   "w": false
+  },
+  {
+   "h": "His First 4 Sentences Are Interesting. The 5th Blew My Mind And Made Me A Little Sick To My Stomach.",
+   "i": 3003,
+   "c": 197,
+   "r": 6.56,
+   "w": true
+  },
+  {
+   "h": "One Teen Says A Brilliant Goodbye To All The Names He Was Called In School",
+   "i": 3583,
+   "c": 235,
+   "r": 6.56,
+   "w": true
+  },
+  {
+   "h": "She Wants To Look Like Her Mom. What That Means Might Make You Wince.",
+   "i": 10237,
+   "c": 671,
+   "r": 6.55,
+   "w": true
+  },
+  {
+   "h": "This Teacher Made A Video About His Star Student Trying To Get Into College. They Won't Accept Her.",
+   "i": 3388,
+   "c": 222,
+   "r": 6.55,
+   "w": false
+  },
+  {
+   "h": "If A Male Filmmaker Was Asked This Idiotic Question, He Would Presume The Reporter Was On Drugs",
+   "i": 2291,
+   "c": 150,
+   "r": 6.55,
+   "w": true
+  },
+  {
+   "h": "At 5 P.M., A Man's Daughter Got Sick. By 7 P.M., She Was Dead. Her Killer Is Now Being Cleaned Up.",
+   "i": 2659,
+   "c": 174,
+   "r": 6.54,
+   "w": false
+  },
+  {
+   "h": "I Thought Sherlock Couldn't Be Any Cooler. Then He Went And Sent A Bold Message To His Government.",
+   "i": 2402,
+   "c": 157,
+   "r": 6.54,
+   "w": false
+  },
+  {
+   "h": "Ashton Kutcher Just Told A Bunch Of Teenagers How To Be Sexy, In The Smartest Way Ever",
+   "i": 3184,
+   "c": 208,
+   "r": 6.53,
+   "w": false
+  },
+  {
+   "h": "His Jokes Will Wake The Part Of You That Used To Make Friends Without Mark Zuckerberg's Help",
+   "i": 11211,
+   "c": 732,
+   "r": 6.53,
+   "w": true
+  },
+  {
+   "h": "Watch A Retired Teacher Singlehandedly Put The Final Nail In A Politician's Sexting Coffin",
+   "i": 1701,
+   "c": 111,
+   "r": 6.53,
+   "w": false
+  },
+  {
+   "h": "When This Actor Got Super Famous Overnight, He Discovered Just How Vapid Celebrity Culture Is",
+   "i": 2014,
+   "c": 131,
+   "r": 6.5,
+   "w": true
+  },
+  {
+   "h": "A Photographer Set Out To Capture Pictures Of Moms' Bodies. The Results Are Stunning. And Real.",
+   "i": 5750,
+   "c": 374,
+   "r": 6.5,
+   "w": false
+  },
+  {
+   "h": "Ashton Kutcher Just Told A Bunch Of Teenagers How To Be Sexy, In The Sexiest Way Ever",
+   "i": 2922,
+   "c": 190,
+   "r": 6.5,
+   "w": true
+  },
+  {
+   "h": "Some College Kids Figured Out How To Cut Energy Companies Out Of Our Lives. They Are Not Amused.",
+   "i": 11476,
+   "c": 746,
+   "r": 6.5,
+   "w": true
+  },
+  {
+   "h": "A Late Night Comedian Makes An Amusing Point About The Fairness Of Men Paying For Date Night",
+   "i": 11261,
+   "c": 732,
+   "r": 6.5,
+   "w": true
+  },
+  {
+   "h": "Dear White People: You Need To Do Something About Your Scarier White People",
+   "i": 2895,
+   "c": 188,
+   "r": 6.49,
+   "w": true
+  },
+  {
+   "h": "A French Film Perfectly Shows A World Where Men Are Subjected To Sexism",
+   "i": 2590,
+   "c": 168,
+   "r": 6.49,
+   "w": false
+  },
+  {
+   "h": "A Journalist Stands Up To Her Network After Being Asked To Cover Paris Hilton. Incredible.",
+   "i": 2917,
+   "c": 189,
+   "r": 6.48,
+   "w": false
+  },
+  {
+   "h": "Watch A Religious Man Eloquently Explain What Most Of Us Missed About The Trayvon Martin Case",
+   "i": 2842,
+   "c": 184,
+   "r": 6.47,
+   "w": false
+  },
+  {
+   "h": "Super Bowl Season Has A Dirty Little Secret, And This Congressman Wants To Do Something About It",
+   "i": 3306,
+   "c": 214,
+   "r": 6.47,
+   "w": false
+  },
+  {
+   "h": "See The Teacher’s Resignation Video That 280,000 People Have Already Watched",
+   "i": 2242,
+   "c": 145,
+   "r": 6.47,
+   "w": true
+  },
+  {
+   "h": "You Know Those Models With Unrealistic Bodies? Ellen Had One On Her Show. Yep, Totally Impossible.",
+   "i": 7321,
+   "c": 473,
+   "r": 6.46,
+   "w": true
+  },
+  {
+   "h": "Stop What You're Doing And Watch The Most Meaningful Candid Interview Of The Decade",
+   "i": 1966,
+   "c": 127,
+   "r": 6.46,
+   "w": true
+  },
+  {
+   "h": "After I Saw This, I Put Down My Phone And Didn’t Pick It Up For The Rest Of The Day",
+   "i": 3118,
+   "c": 201,
+   "r": 6.45,
+   "w": true
+  },
+  {
+   "h": "The Best Challenge Against Photoshopping Perfection That I Have Ever Seen",
+   "i": 2747,
+   "c": 177,
+   "r": 6.44,
+   "w": false
+  },
+  {
+   "h": "Within 4 Seconds You Won’t Like Him. By The Time He Laughs, You’ll Hate Him.",
+   "i": 6524,
+   "c": 420,
+   "r": 6.44,
+   "w": false
+  },
+  {
+   "h": "Super Bowl Weekend Has A Dirty Little Secret, And This Congressman Just Exposed It",
+   "i": 1896,
+   "c": 122,
+   "r": 6.43,
+   "w": false
+  },
+  {
+   "h": "The Next Time A Guy Does Something Nice For You And Expects Something In Return Show Him This Video",
+   "i": 2799,
+   "c": 180,
+   "r": 6.43,
+   "w": false
+  },
+  {
+   "h": "Ashton Kutcher Just Told A Bunch Of Teenagers How To Be Sexy, In The Smartest Way",
+   "i": 2430,
+   "c": 156,
+   "r": 6.42,
+   "w": false
+  },
+  {
+   "h": "I Don’t Care How Nice Your Couch Is. Please Don’t Do This Torturous Thing To Your Cat.",
+   "i": 1496,
+   "c": 96,
+   "r": 6.42,
+   "w": false
+  },
+  {
+   "h": "I Can't Believe This History Maker Was Forgotten, But Then I Remember She Was A Woman In The 1800s",
+   "i": 2775,
+   "c": 178,
+   "r": 6.41,
+   "w": false
+  },
+  {
+   "h": "Watch A Preacher Succinctly Explain What Everyone Missed About The Trayvon Martin Case",
+   "i": 10824,
+   "c": 694,
+   "r": 6.41,
+   "w": true
+  },
+  {
+   "h": "This Commercial Isn't Real, But It's Brutally Honest",
+   "i": 11059,
+   "c": 709,
+   "r": 6.41,
+   "w": true
+  },
+  {
+   "h": "I Think You'll Love These Teen's Reaction To Robin Thicke's \"Blurred Lines' As Much As I Do",
+   "i": 2855,
+   "c": 183,
+   "r": 6.41,
+   "w": false
+  },
+  {
+   "h": "One Easy Thing All White People Could Do That Would Make The World A Better Place",
+   "i": 10750,
+   "c": 689,
+   "r": 6.41,
+   "w": true
+  },
+  {
+   "h": "Ashton Kutcher Just Told A Bunch Of Teenagers How To Be Sexy, In The Best Way",
+   "i": 10977,
+   "c": 703,
+   "r": 6.4,
+   "w": true
+  },
+  {
+   "h": "Next Time You Bully Someone, You Better Hope They're Not Related To Him",
+   "i": 4482,
+   "c": 287,
+   "r": 6.4,
+   "w": true
+  },
+  {
+   "h": "Wolverine Gives Us A History Lesson And A Wake-Up Call",
+   "i": 2672,
+   "c": 171,
+   "r": 6.4,
+   "w": false
+  },
+  {
+   "h": "When America's Sweetheart Asks Us To Stop Using This Word, Should We Listen?",
+   "i": 13929,
+   "c": 891,
+   "r": 6.4,
+   "w": true
+  },
+  {
+   "h": "If You Think Race Isn’t An Issue Anymore, Boy Have I Got An Infographic For You",
+   "i": 10980,
+   "c": 702,
+   "r": 6.39,
+   "w": true
+  },
+  {
+   "h": "EXPERIMENT: Stick A Gay Person And An Anti-Gay Straight Person In A Room And Ask Them To Hug",
+   "i": 1959,
+   "c": 125,
+   "r": 6.38,
+   "w": true
+  },
+  {
+   "h": "Moms, If You Feel Like You Should Look A Certain Way, I Want You To See These Pictures",
+   "i": 5503,
+   "c": 351,
+   "r": 6.38,
+   "w": false
+  },
+  {
+   "h": "No One Applauds This Woman Because They're Too Creeped Out At Themselves To Put Their Hands Together",
+   "i": 3528,
+   "c": 225,
+   "r": 6.38,
+   "w": true
+  },
+  {
+   "h": "A Gorgeous Waitress Gets Harassed By Some Jerk. Watch What Happens Next.",
+   "i": 2824,
+   "c": 180,
+   "r": 6.37,
+   "w": true
+  },
+  {
+   "h": "A Hilarious And Beautiful Song About All The Crazy Sh*t Women Do To Look Good",
+   "i": 2764,
+   "c": 176,
+   "r": 6.37,
+   "w": true
+  },
+  {
+   "h": "A 13-Year-Old Gets Plastic Surgery To Fix What's Wrong With Her. Society Is What's Wrong With Her.",
+   "i": 3141,
+   "c": 200,
+   "r": 6.37,
+   "w": true
+  },
+  {
+   "h": "WINNER: The Most Depressingly Dumb Book Cover of 2013!",
+   "i": 2780,
+   "c": 177,
+   "r": 6.37,
+   "w": true
+  },
+  {
+   "h": "These Moms Think They’re Tough.  Wait Till They Find Out What Their Kids Really Think Of Them.",
+   "i": 7959,
+   "c": 506,
+   "r": 6.36,
+   "w": false
+  },
+  {
+   "h": "Women Get Tired Of Hearing This Term. Good Thing This Dude Apologized For Using It.",
+   "i": 2722,
+   "c": 173,
+   "r": 6.36,
+   "w": true
+  },
+  {
+   "h": "Hugh Jackman Gives Us A Wake-Up Call Disguised As A History Lesson",
+   "i": 2804,
+   "c": 178,
+   "r": 6.35,
+   "w": false
+  },
+  {
+   "h": "They Tried To Make This Popstar Dress And Sing A Certain Way. She Refused, And Said These Words.",
+   "i": 2795,
+   "c": 177,
+   "r": 6.33,
+   "w": true
+  },
+  {
+   "h": "What If You Stick A Gay Person And An Anti-Gay Straight Person In A Room And Tell Them To Hug?",
+   "i": 2069,
+   "c": 131,
+   "r": 6.33,
+   "w": false
+  },
+  {
+   "h": "Watch What Chandler From Friends Says When A Dude Says His Drug Addiction Is His Choice",
+   "i": 4305,
+   "c": 272,
+   "r": 6.32,
+   "w": true
+  },
+  {
+   "h": "7 Cowardly Words From A Totally Sexist Stranger Sparked This Courageous Response",
+   "i": 2472,
+   "c": 156,
+   "r": 6.31,
+   "w": true
+  },
+  {
+   "h": "Half Of Us Did This Illegal Act After We Graduated College",
+   "i": 2667,
+   "c": 168,
+   "r": 6.3,
+   "w": false
+  },
+  {
+   "h": "Disney Slimmed Down An Iconic Figure And Here’s Why That Was A Really Awful Thing To Do",
+   "i": 2461,
+   "c": 155,
+   "r": 6.3,
+   "w": true
+  },
+  {
+   "h": "A Comedian's Disgusting Joke About Dunkin' Dounts Becomes An Actual Menu Item",
+   "i": 11010,
+   "c": 693,
+   "r": 6.29,
+   "w": true
+  },
+  {
+   "h": "Jon Stewart Delivers One Of The Best Interviews In Recent Memory",
+   "i": 8219,
+   "c": 517,
+   "r": 6.29,
+   "w": true
+  },
+  {
+   "h": "A World Where Men Are Subjected To The Same Kind Of Sexism As Women? Done.",
+   "i": 2974,
+   "c": 187,
+   "r": 6.29,
+   "w": false
+  },
+  {
+   "h": "By Looking At Her, You May Not Know What She's Hiding Underneath",
+   "i": 13653,
+   "c": 857,
+   "r": 6.28,
+   "w": true
+  },
+  {
+   "h": "People Should Know About This Awful Thing We Do, And Most Of Us Are Simply Unaware.",
+   "i": 3621,
+   "c": 227,
+   "r": 6.27,
+   "w": true
+  },
+  {
+   "h": "Dear White People: Could You Please Do Something About Your Ragier White People?",
+   "i": 2618,
+   "c": 164,
+   "r": 6.26,
+   "w": false
+  },
+  {
+   "h": "Desmond Tutu Delivers One Kick-Ass Line Against Anyone Advocating For A Homophobic God",
+   "i": 2722,
+   "c": 170,
+   "r": 6.25,
+   "w": true
+  },
+  {
+   "h": "Do You Spot What's Not Quite Right With These Fashion Posters?",
+   "i": 3333,
+   "c": 208,
+   "r": 6.24,
+   "w": true
+  },
+  {
+   "h": "Understanding The Ugly Side Of Sexual Objectification",
+   "i": 3320,
+   "c": 207,
+   "r": 6.23,
+   "w": true
+  },
+  {
+   "h": "A French Film Showing Men What Being A Woman Feels Like Kinda Nails It",
+   "i": 15126,
+   "c": 943,
+   "r": 6.23,
+   "w": true
+  },
+  {
+   "h": "A Muslim Scholar Wrote A Book About Jesus. Watch A Confused Newscaster's Brain Break.",
+   "i": 1187,
+   "c": 74,
+   "r": 6.23,
+   "w": false
+  },
+  {
+   "h": "The One Relationship In Your Life That Might Be Hurting All Your Other Relationships",
+   "i": 2872,
+   "c": 179,
+   "r": 6.23,
+   "w": false
+  },
+  {
+   "h": "Usually Tampon Ads Give Me Cramps And A Headache. This One Makes Me Smile.",
+   "i": 10937,
+   "c": 681,
+   "r": 6.23,
+   "w": true
+  },
+  {
+   "h": "​There Aint No Blurred Lines With These Teens Views On Robin Thicke's Controversial Song",
+   "i": 2940,
+   "c": 183,
+   "r": 6.22,
+   "w": false
+  },
+  {
+   "h": "Watch A Religious Man Succinctly Explain What Everyone Missed About The Trayvon Martin Case",
+   "i": 2574,
+   "c": 160,
+   "r": 6.22,
+   "w": false
+  },
+  {
+   "h": "His First 4 Sentences Are Interesting. The 5th Blew My Mind. And Made Me A Little Vomity.",
+   "i": 3399,
+   "c": 211,
+   "r": 6.21,
+   "w": false
+  },
+  {
+   "h": "Hey Bros: Check Out What This Bro Did When He Found A Drunk Girl Passed Out On HIs Bro Couch",
+   "i": 3001,
+   "c": 186,
+   "r": 6.2,
+   "w": true
+  },
+  {
+   "h": "I Would Never Work At This Place. Oh Wait. Um... Yup, My Bad! I Would TOTALLY Work At This Place.",
+   "i": 10913,
+   "c": 676,
+   "r": 6.19,
+   "w": true
+  },
+  {
+   "h": "This Is The Most Depressing Version Of Google Maps I’ve Ever Seen",
+   "i": 2845,
+   "c": 176,
+   "r": 6.19,
+   "w": true
+  },
+  {
+   "h": "The Daily Show Want To Rename Florida. I Think Their Name Rings Far, Far Truer.",
+   "i": 2700,
+   "c": 167,
+   "r": 6.19,
+   "w": false
+  },
+  {
+   "h": "Watch These Straight People Answer A Question Gay People Have Been Asked For Years",
+   "i": 3638,
+   "c": 225,
+   "r": 6.18,
+   "w": false
+  },
+  {
+   "h": "Watch This Elevator Video To The Very End. I’m Glad I Did.",
+   "i": 11303,
+   "c": 697,
+   "r": 6.17,
+   "w": true
+  },
+  {
+   "h": "What Stevie Wonder Did For Trayvon Just Made My Heart Skip A Beat",
+   "i": 11539,
+   "c": 711,
+   "r": 6.16,
+   "w": true
+  },
+  {
+   "h": "See How A Bunch Of Students Got Vaginas Banned At Their University",
+   "i": 13538,
+   "c": 834,
+   "r": 6.16,
+   "w": true
+  },
+  {
+   "h": "Behold The Funniest, Most Effective Way To Deal With People Who Ignore Science Ever",
+   "i": 2598,
+   "c": 160,
+   "r": 6.16,
+   "w": true
+  },
+  {
+   "h": "Watch This Incredible Young Woman Render Jon Stewart Speechless",
+   "i": 6173,
+   "c": 380,
+   "r": 6.16,
+   "w": true
+  },
+  {
+   "h": "A Geek Mom Asked A Celebrity Nerd To Give Her Baby Geek Some Wisdom. Set Phasers To Heartwarming.",
+   "i": 2649,
+   "c": 163,
+   "r": 6.15,
+   "w": true
+  },
+  {
+   "h": "Here's An F-Word That's Okay To Say Around Children, But Really Hard To Explain To Them",
+   "i": 11269,
+   "c": 693,
+   "r": 6.15,
+   "w": true
+  },
+  {
+   "h": "He's Counting Down From 21, And By The Time He Reaches 15 My Stomach Is In Knots",
+   "i": 2114,
+   "c": 130,
+   "r": 6.15,
+   "w": false
+  },
+  {
+   "h": "Half Of Us Did This Illegal Act After We Graduated College. It's Not Okay.",
+   "i": 8069,
+   "c": 495,
+   "r": 6.13,
+   "w": true
+  },
+  {
+   "h": "As A Man, I’m Disgusted That We Could Demean Women This Way. Disgusted.",
+   "i": 2772,
+   "c": 170,
+   "r": 6.13,
+   "w": false
+  },
+  {
+   "h": "Ever Hear About The Lady That Spilled Coffee On Herself And Got Mcdonalds To Pay Her $3 Million?",
+   "i": 2740,
+   "c": 168,
+   "r": 6.13,
+   "w": true
+  },
+  {
+   "h": "It's Heartbreaking To See How People React To The First Half Of His Test Compared To The Second",
+   "i": 3295,
+   "c": 202,
+   "r": 6.13,
+   "w": true
+  },
+  {
+   "h": "A Guy Hits On A Woman At A Bus Stop, And Rejection Never Sounded So Sweet",
+   "i": 11028,
+   "c": 676,
+   "r": 6.13,
+   "w": true
+  },
+  {
+   "h": "A Straight Guy Says \"I'd Be Offended By You If I Were Gay.\" Just Listen To This Actor's Response.",
+   "i": 3413,
+   "c": 209,
+   "r": 6.12,
+   "w": true
+  },
+  {
+   "h": "At 5 P.M., A Daughter Got Sick. By 7 P.M., She Was Dead. Her Killer Is Now Being Cleaned Up.",
+   "i": 2942,
+   "c": 180,
+   "r": 6.12,
+   "w": false
+  },
+  {
+   "h": "A Retired Teacher Asks Anthony Weiner The Question We All Wish He'd Answer. Accountability Ensues.",
+   "i": 1422,
+   "c": 87,
+   "r": 6.12,
+   "w": false
+  },
+  {
+   "h": "Holy Crap, This List Of Stuff Now Made In China Is A Bit Terrifying",
+   "i": 2731,
+   "c": 167,
+   "r": 6.11,
+   "w": false
+  },
+  {
+   "h": "You've Probably Already Seen The Ending, But You'll Never Guess How It Ends",
+   "i": 2522,
+   "c": 154,
+   "r": 6.11,
+   "w": true
+  },
+  {
+   "h": "Watch What Matthew Perry Says When A Dude Says His Drug Addiction Is His Choice",
+   "i": 4439,
+   "c": 271,
+   "r": 6.1,
+   "w": false
+  },
+  {
+   "h": "Watch That Pastor's Face When His Prime Minister Responds To His Anti-Gay Marriage Point Live On Air",
+   "i": 2934,
+   "c": 179,
+   "r": 6.1,
+   "w": false
+  },
+  {
+   "h": "Dear White People: Could You Please Do Something About Some Of Your Scarier White People?",
+   "i": 2378,
+   "c": 145,
+   "r": 6.1,
+   "w": false
+  },
+  {
+   "h": "What If You Stick A Gay Person And An Anti-Gay Straight Person In A Room And Ask Them To Hug?",
+   "i": 8090,
+   "c": 493,
+   "r": 6.09,
+   "w": true
+  },
+  {
+   "h": "The Video That Accurately Describes A World Where Men Are Abused And Discriminated Against",
+   "i": 2580,
+   "c": 157,
+   "r": 6.09,
+   "w": false
+  },
+  {
+   "h": "An Open Letter To All Dudes Who Have Ever Had A Drunk Girl Passed Out On Their Couch",
+   "i": 2728,
+   "c": 166,
+   "r": 6.09,
+   "w": false
+  },
+  {
+   "h": "Can You See What's Not Quite Right With These H&M Posters?",
+   "i": 13276,
+   "c": 806,
+   "r": 6.07,
+   "w": true
+  },
+  {
+   "h": "Liam Neeson Is Waking Us Up To The Painful Truth About Many Children That We Can't See",
+   "i": 5553,
+   "c": 337,
+   "r": 6.07,
+   "w": false
+  },
+  {
+   "h": "Watch A Jerktacular U.S. Immigration Officer Deport A Lady He Probably Shouldn't Be Deporting. EVER.",
+   "i": 4933,
+   "c": 299,
+   "r": 6.06,
+   "w": true
+  },
+  {
+   "h": "Dear White People: Could You Please Do Something About Your Angrier White People?",
+   "i": 2808,
+   "c": 170,
+   "r": 6.05,
+   "w": false
+  },
+  {
+   "h": "This Is What It Looks Like When The King Of The Of Nerds Gives Your Infant Daughter A Pep Talk",
+   "i": 5190,
+   "c": 314,
+   "r": 6.05,
+   "w": true
+  },
+  {
+   "h": "In Just 37 Seconds, I Suddenly Understood The Issues I've Struggled With For Years",
+   "i": 2630,
+   "c": 159,
+   "r": 6.05,
+   "w": false
+  },
+  {
+   "h": "This Country Killed A 16-Year-Old American Boy And Wouldn't Explain Why. Guess Which One.",
+   "i": 2747,
+   "c": 166,
+   "r": 6.04,
+   "w": true
+  },
+  {
+   "h": "Humans Are Horrible. You'll Probably Agree When You See The Same Thing I Did.",
+   "i": 3260,
+   "c": 197,
+   "r": 6.04,
+   "w": true
+  },
+  {
+   "h": "Watch This Guy Misspell Father At A Spelling Bee – For A Totally Beautiful Reason",
+   "i": 2052,
+   "c": 124,
+   "r": 6.04,
+   "w": false
+  },
+  {
+   "h": "Some Cable News Anchors Decided To Pick A Fight With Elizabeth Warren. They Forgot To Bring Facts.",
+   "i": 2898,
+   "c": 175,
+   "r": 6.04,
+   "w": true
+  },
+  {
+   "h": "Excuse Me While I Point Out Something About This Jim Carrey Clip Everyone Is Talking About",
+   "i": 3647,
+   "c": 220,
+   "r": 6.03,
+   "w": true
+  },
+  {
+   "h": "John Green's First 4 Sentences Are Interesting. The 5th Blew My Mind. And Made Me A Little Sick.",
+   "i": 3400,
+   "c": 205,
+   "r": 6.03,
+   "w": false
+  },
+  {
+   "h": "A Girl Is Hit By A Car And Is Dying. So Why Would Someone Shrug And Say \"It's Not My Problem\"?",
+   "i": 3733,
+   "c": 225,
+   "r": 6.03,
+   "w": false
+  },
+  {
+   "h": "Meet The Fox News Doctor Who Probably Definitely Failed Sex Ed",
+   "i": 2672,
+   "c": 161,
+   "r": 6.03,
+   "w": false
+  },
+  {
+   "h": "A Little Girl's Moment Of Courage Captured On Camera Is The Reason We Need To Look After Each Other",
+   "i": 2791,
+   "c": 168,
+   "r": 6.02,
+   "w": true
+  },
+  {
+   "h": "AHHH! Jon Stewart Reports On A Story I Thought Was Reserved For Horror Movie Plots.",
+   "i": 2843,
+   "c": 171,
+   "r": 6.01,
+   "w": true
+  },
+  {
+   "h": "I Wasn't Expecting To Get Emotional When This Seinfeld Star Started Talking About His Fame",
+   "i": 2860,
+   "c": 172,
+   "r": 6.01,
+   "w": false
+  },
+  {
+   "h": "Oscar Winner Lupita Nyong’o's Speech On Beauty That Left An Entire Audience Speechless",
+   "i": 12083,
+   "c": 726,
+   "r": 6.01,
+   "w": true
+  },
+  {
+   "h": "The Fact That These Are Fake Is Hilarious. The Fact We Thought They Were Real Is Disturbing.",
+   "i": 2380,
+   "c": 143,
+   "r": 6.01,
+   "w": false
+  },
+  {
+   "h": "The NFL Would Never Let This Super Bowl Ad Air, So We're Gonna Show You It. Because Racism Is Real.",
+   "i": 3746,
+   "c": 225,
+   "r": 6.01,
+   "w": false
+  },
+  {
+   "h": "These racist idiots spray-painted a swastika on the dumbest/best location possible.",
+   "i": 1983,
+   "c": 119,
+   "r": 6,
+   "w": true
+  },
+  {
+   "h": "A Man Falls Down And Cries For Help, Twice. The Second Time, My Jaw Drops.",
+   "i": 2100,
+   "c": 126,
+   "r": 6,
+   "w": true
+  },
+  {
+   "h": "Bad News For People Who Hate Obama: You May've Been Cheering For Him This Whole Time",
+   "i": 10738,
+   "c": 644,
+   "r": 6,
+   "w": true
+  },
+  {
+   "h": "Most People Have Heard About An Awful Thing That Can Happen To Kids. But How Do We Help?",
+   "i": 3371,
+   "c": 202,
+   "r": 5.99,
+   "w": false
+  },
+  {
+   "h": "This Is What It Looks Like When Supreme Commander Of Nerds Gives Your Infant Daughter A Pep Talk",
+   "i": 2904,
+   "c": 174,
+   "r": 5.99,
+   "w": false
+  },
+  {
+   "h": "This Parks And Rec Star Totally Got The Last Word When She Was Disrespected At A Red Light",
+   "i": 5359,
+   "c": 321,
+   "r": 5.99,
+   "w": false
+  },
+  {
+   "h": "Watch The Moment Russell Brand Rips Into A Big, Famous Sponsor With A Terrible Past",
+   "i": 2773,
+   "c": 166,
+   "r": 5.99,
+   "w": true
+  },
+  {
+   "h": "There's racism buried in these 5 seemingly harmless questions. Can you see it?",
+   "i": 1437,
+   "c": 86,
+   "r": 5.98,
+   "w": true
+  },
+  {
+   "h": "The Government Has A Sexy Little Music Video They'd Prefer You Didn't Watch",
+   "i": 10964,
+   "c": 656,
+   "r": 5.98,
+   "w": true
+  },
+  {
+   "h": "Watch A Gut-Wrenching Moment A Father Sees His Son For the First Time After He Is Thought To Be Dead",
+   "i": 2760,
+   "c": 165,
+   "r": 5.98,
+   "w": true
+  },
+  {
+   "h": "The Shortest PSA On How To Handle Drunk Girls Passed Out On Your Couch, EVER",
+   "i": 2660,
+   "c": 159,
+   "r": 5.98,
+   "w": false
+  },
+  {
+   "h": "This Comedian Is So Funny You Won't Realize You Heard Something Meaningful Until She Takes Her Bow",
+   "i": 11566,
+   "c": 691,
+   "r": 5.97,
+   "w": true
+  },
+  {
+   "h": "I Never Thought I'd Want To High Five A Teacher For Yelling At A Student, But I Was Wrong",
+   "i": 6463,
+   "c": 386,
+   "r": 5.97,
+   "w": true
+  },
+  {
+   "h": "Stephen Colbert's Scathing, Hilarious Response To McDonald's McMinimum Wage Budget",
+   "i": 10666,
+   "c": 637,
+   "r": 5.97,
+   "w": true
+  },
+  {
+   "h": "One Of The Evilest Boys In Fiction Talks About How Awful Celebrity Culture Is",
+   "i": 2060,
+   "c": 123,
+   "r": 5.97,
+   "w": false
+  },
+  {
+   "h": "The NSA Has A Sexy Little Music Video They'd Prefer You Didn't Watch",
+   "i": 2497,
+   "c": 149,
+   "r": 5.97,
+   "w": false
+  },
+  {
+   "h": "These idiots spray painted a swastika on the dumbest location possible.",
+   "i": 14254,
+   "c": 849,
+   "r": 5.96,
+   "w": true
+  },
+  {
+   "h": "Anthony Weiner Doesn't Know When To Call It Quits. So This Teacher Decided To Teach Him.",
+   "i": 1276,
+   "c": 76,
+   "r": 5.96,
+   "w": false
+  },
+  {
+   "h": "Here's What One Woman Thinks Is The Worst Thing We Do To Girls. Many Women Will Agree With Her.",
+   "i": 2469,
+   "c": 147,
+   "r": 5.95,
+   "w": true
+  },
+  {
+   "h": "2 People Described The Same Person To A Forensic Artist And This Is What Happened",
+   "i": 2688,
+   "c": 160,
+   "r": 5.95,
+   "w": true
+  },
+  {
+   "h": "Desmond Tutu Sums Up The Fight Against A 'Homophobic God' In One Kick-Ass Line",
+   "i": 2723,
+   "c": 162,
+   "r": 5.95,
+   "w": false
+  },
+  {
+   "h": "Ashton Kutcher Just Told A Bunch Of Teenagers How To Be Sexy, In The Smartest, Sexiest Way Ever",
+   "i": 2791,
+   "c": 166,
+   "r": 5.95,
+   "w": false
+  },
+  {
+   "h": "The Next Time Someone Says Sexism Isn't Real, Show Them These Shocking Role Reversal Images",
+   "i": 25846,
+   "c": 1537,
+   "r": 5.95,
+   "w": true
+  },
+  {
+   "h": "A Photoshopped Model With A Completely Unrealistic Body Appears On 'Ellen' To Clear Up The Confusion",
+   "i": 4140,
+   "c": 246,
+   "r": 5.94,
+   "w": false
+  },
+  {
+   "h": "Most Of These People Do The Right Thing, But The Guys At The End? I Wish I Could Yell At Them.",
+   "i": 14122,
+   "c": 839,
+   "r": 5.94,
+   "w": true
+  },
+  {
+   "h": "Subway Car Prank Teaches A Little Lesson On Not Being So Quick To Judge People",
+   "i": 14264,
+   "c": 847,
+   "r": 5.94,
+   "w": true
+  },
+  {
+   "h": "Be Honest, Ladies. This Song Sounds A Lot Like Your Inner Monologue When Getting Dressed Up, Right?",
+   "i": 3084,
+   "c": 183,
+   "r": 5.93,
+   "w": false
+  },
+  {
+   "h": "This Is What It Looks Like When The King Of The Geeks Gives Your Infant Daughter A Pep Talk",
+   "i": 2983,
+   "c": 177,
+   "r": 5.93,
+   "w": false
+  },
+  {
+   "h": "What The Hell Do People Believe In If They Don't Believe In God? This Guy Has One Heck Of An Answer.",
+   "i": 2193,
+   "c": 130,
+   "r": 5.93,
+   "w": true
+  },
+  {
+   "h": "A Woman Is One Of The Most Important People In Movie History And You've Never Even Heard Of Her",
+   "i": 2615,
+   "c": 155,
+   "r": 5.93,
+   "w": false
+  },
+  {
+   "h": "A 12-Year-Old Egyptian Boy Flabbergasts An Interviewer. They Weren't Expecting A Political Genius.",
+   "i": 11406,
+   "c": 676,
+   "r": 5.93,
+   "w": true
+  },
+  {
+   "h": "When Both Sides Of The Marijuana Debate Use Actual Facts, Things Get Very Interesting",
+   "i": 10908,
+   "c": 646,
+   "r": 5.92,
+   "w": true
+  },
+  {
+   "h": "A Dude Trying To Ban Abortions Is Asked A Question He Never Considered.",
+   "i": 7231,
+   "c": 428,
+   "r": 5.92,
+   "w": false
+  },
+  {
+   "h": "An Actor Who Got Super Famous Overnight Has Some Profound Thoughts On Celebrity Worship",
+   "i": 2012,
+   "c": 119,
+   "r": 5.91,
+   "w": false
+  },
+  {
+   "h": "Every Night This Dad Falls Asleep In Front Of The TV. There's A Beautiful Reason Why.",
+   "i": 2758,
+   "c": 163,
+   "r": 5.91,
+   "w": true
+  },
+  {
+   "h": "7 Cowardly Words From A Totally Sexist Jerk Sparked This Courageous Response",
+   "i": 2606,
+   "c": 154,
+   "r": 5.91,
+   "w": false
+  },
+  {
+   "h": "A 14-Year-Old Explains Food Labeling In Language Even Condescending Shmucks Should Get",
+   "i": 2755,
+   "c": 162,
+   "r": 5.88,
+   "w": false
+  },
+  {
+   "h": "If A Dude Filmmaker Was Asked This Idiotic Question, He Would Presume The Reporter Was Drunk",
+   "i": 3438,
+   "c": 202,
+   "r": 5.88,
+   "w": false
+  },
+  {
+   "h": "You've Never Heard Of This Woman, And She's Basically The Most Important Person In Movie History",
+   "i": 5567,
+   "c": 327,
+   "r": 5.87,
+   "w": true
+  },
+  {
+   "h": "Watch These Teens Call Out The Controversy Surrounding That 'Blurred Lines' Song",
+   "i": 2759,
+   "c": 162,
+   "r": 5.87,
+   "w": false
+  },
+  {
+   "h": "If A Dude Filmmaker Was Asked This Ridiculous Question, He Would Presume The Reporter Was Drunk",
+   "i": 3509,
+   "c": 206,
+   "r": 5.87,
+   "w": true
+  },
+  {
+   "h": "This Is What Happens When Old Sexist Men Try To Take Away Women's Rights In The Dark Of Night",
+   "i": 10870,
+   "c": 638,
+   "r": 5.87,
+   "w": true
+  },
+  {
+   "h": "After 13 People Were Murdered In DC On Monday, Their Trauma Doctor Said Exactly What Was On Her Mind",
+   "i": 4574,
+   "c": 268,
+   "r": 5.86,
+   "w": true
+  },
+  {
+   "h": "The Conflict In Syria Explained In About 2 Minutes",
+   "i": 3056,
+   "c": 179,
+   "r": 5.86,
+   "w": true
+  },
+  {
+   "h": "You'd Never Have Expected Comedians To Take On Such A Horrible Topic In Such A Great Way",
+   "i": 11067,
+   "c": 648,
+   "r": 5.86,
+   "w": true
+  },
+  {
+   "h": "The Huge Lie That Is Repeated By Those Doing Extremely Well In Our Country",
+   "i": 7140,
+   "c": 418,
+   "r": 5.85,
+   "w": true
+  },
+  {
+   "h": "At This Spelling Bee, They Could Not Have Asked Him To Spell A More Difficult Word",
+   "i": 2614,
+   "c": 153,
+   "r": 5.85,
+   "w": false
+  },
+  {
+   "h": "Dear White People: Do Something About Your Scarier White People, Please?",
+   "i": 2857,
+   "c": 167,
+   "r": 5.85,
+   "w": false
+  },
+  {
+   "h": "What Killed 30,000 Children In 3 Months Has These Celebrities Saying The F-Word",
+   "i": 5425,
+   "c": 317,
+   "r": 5.84,
+   "w": false
+  },
+  {
+   "h": "She Gets Plastic Surgery To Fix What's Wrong With Her. Society Is What's Wrong. Also, She's 13.",
+   "i": 3132,
+   "c": 183,
+   "r": 5.84,
+   "w": false
+  },
+  {
+   "h": "Half Of Us Did This Illegal Act After We Graduated College. It's Really Not Okay.",
+   "i": 2569,
+   "c": 150,
+   "r": 5.84,
+   "w": true
+  },
+  {
+   "h": "Stop Whatever You're Doing And Watch The Most Meaningful Interview Of The Decade",
+   "i": 1851,
+   "c": 108,
+   "r": 5.83,
+   "w": false
+  },
+  {
+   "h": "Retired Teacher Asks Sexting Politician The Question We All Wish He'd Answer. Accountability Ensues.",
+   "i": 1834,
+   "c": 107,
+   "r": 5.83,
+   "w": false
+  },
+  {
+   "h": "They Were Married 19 Years When Oregon Cancelled Their Vows. They're Fighting Back, The Right Way.",
+   "i": 3738,
+   "c": 218,
+   "r": 5.83,
+   "w": false
+  },
+  {
+   "h": "I Think Many Women Will Agree With What This Woman Says Is The Worst Thing We Do To Girls",
+   "i": 2967,
+   "c": 173,
+   "r": 5.83,
+   "w": false
+  },
+  {
+   "h": "Super Bowl Season Has A Dirty Little Secret, And This Congressman Is Standing Up To Fight It",
+   "i": 3190,
+   "c": 186,
+   "r": 5.83,
+   "w": false
+  },
+  {
+   "h": "Half Of Us Perform This Illegal Act After We Graduate College. It's Really Not Okay.",
+   "i": 10980,
+   "c": 640,
+   "r": 5.83,
+   "w": true
+  },
+  {
+   "h": "Some Facts About Porn That Will Make You Feel Better About Your Sexy Time",
+   "i": 10417,
+   "c": 607,
+   "r": 5.83,
+   "w": true
+  },
+  {
+   "h": "Congressman Responds Like Real Human Person Would After Getting An Absurd Letter From His Coworkers",
+   "i": 10878,
+   "c": 633,
+   "r": 5.82,
+   "w": true
+  },
+  {
+   "h": "They Tried To Make This Popstar Dress And Sing A Certain Way. She Refused, And Sends This Message.",
+   "i": 2768,
+   "c": 161,
+   "r": 5.82,
+   "w": false
+  },
+  {
+   "h": "A Funny Spoof On How One Huge Corporation's Been Fooling Us This Whole Time",
+   "i": 10953,
+   "c": 637,
+   "r": 5.82,
+   "w": true
+  },
+  {
+   "h": "Fox News Spends 6 Minutes Describing Why Mr. Rogers Was An 'Evil Evil Man'",
+   "i": 3044,
+   "c": 177,
+   "r": 5.81,
+   "w": true
+  },
+  {
+   "h": "A Mom Had Plans To Raise Her Boy Into A Man. But That Didn't Quite Work Out.",
+   "i": 10923,
+   "c": 634,
+   "r": 5.8,
+   "w": true
+  },
+  {
+   "h": "First The Women In This Clothing Store Were Offended. Then They Realized Who Was Being Offensive.",
+   "i": 11132,
+   "c": 646,
+   "r": 5.8,
+   "w": true
+  },
+  {
+   "h": "What Happens When An Old Woman Says NO To How Fashion Orders Her To Be?",
+   "i": 13969,
+   "c": 810,
+   "r": 5.8,
+   "w": true
+  },
+  {
+   "h": "They Tried To Make This Popstar Dress And Sing A Certain Way. She Refused And Had This To Say.",
+   "i": 2831,
+   "c": 164,
+   "r": 5.79,
+   "w": false
+  },
+  {
+   "h": "Sherlock Star Makes It Known That He's Pissed At the British Government",
+   "i": 2883,
+   "c": 167,
+   "r": 5.79,
+   "w": false
+  },
+  {
+   "h": "That One Time A Country Killed A 16-Year-Old American Boy And Wouldn't Say Why. Guess Which One.",
+   "i": 2659,
+   "c": 154,
+   "r": 5.79,
+   "w": false
+  },
+  {
+   "h": "A 14-Year-Old Explains Food Labeling In Language Even A Condescending Mansplainer Should Get",
+   "i": 2763,
+   "c": 160,
+   "r": 5.79,
+   "w": false
+  },
+  {
+   "h": "The Three Haunting Images That Illustrate What Is Killing People In The Middle Of the Night",
+   "i": 8551,
+   "c": 495,
+   "r": 5.79,
+   "w": true
+  },
+  {
+   "h": "Calling Girls This Word May Seem Harmless — But Why Are Boys Never Called It?",
+   "i": 16194,
+   "c": 937,
+   "r": 5.79,
+   "w": true
+  },
+  {
+   "h": "Sorry, I Can't Hear Your 'Fake Geek Girl' Accusations Over The Sound Of This Nerdtastic Music Video",
+   "i": 2647,
+   "c": 153,
+   "r": 5.78,
+   "w": false
+  },
+  {
+   "h": "I've Never Winced At A Child Playing Dress-Up Before, But Then This Ad Is About Much More Than That",
+   "i": 2474,
+   "c": 143,
+   "r": 5.78,
+   "w": false
+  },
+  {
+   "h": "He Would Brag To His Fellow Soldiers About His Girlfriend All The Time. There Was Just 1 Problem.",
+   "i": 4172,
+   "c": 241,
+   "r": 5.78,
+   "w": true
+  },
+  {
+   "h": "Star Into Her Eyes — Now Watch One Year In An Abusive Relationship Happen In One MInute",
+   "i": 2995,
+   "c": 173,
+   "r": 5.78,
+   "w": true
+  },
+  {
+   "h": "Watch An Actor Come Out Of The Closet AND Pick A Fight With A Homophobic President The Same Time",
+   "i": 2599,
+   "c": 150,
+   "r": 5.77,
+   "w": true
+  },
+  {
+   "h": "MUST WATCH: The Video CNBC Is Trying To Stop The Entire Internet From Seeing",
+   "i": 2825,
+   "c": 163,
+   "r": 5.77,
+   "w": true
+  },
+  {
+   "h": "If A Male Filmmaker Was Asked This Idiotic Question, He Would Presume The Reporter Was Drunk",
+   "i": 3453,
+   "c": 199,
+   "r": 5.76,
+   "w": true
+  },
+  {
+   "h": "A Comedian's Take On The Miley Cyrus Debacle Completely Changed What I Thought Of It",
+   "i": 27886,
+   "c": 1604,
+   "r": 5.75,
+   "w": true
+  },
+  {
+   "h": "Humans Are Absolutely Terrible. You May Agree When You See The Same Thing I Just Did.",
+   "i": 3374,
+   "c": 194,
+   "r": 5.75,
+   "w": false
+  },
+  {
+   "h": "L. Ron Hubbard's Great-Grandson Spills The Inside Dirt On How Scientology Works. Whoa.",
+   "i": 20360,
+   "c": 1170,
+   "r": 5.75,
+   "w": true
+  },
+  {
+   "h": "A Catalog That Believes Reality Can Sell Clothes Better Than Photoshop",
+   "i": 5186,
+   "c": 298,
+   "r": 5.75,
+   "w": true
+  },
+  {
+   "h": "A Woman Wore A Hidden Camera To Show How Many Times In A Day She Gets Harassed. Argh.",
+   "i": 2593,
+   "c": 149,
+   "r": 5.75,
+   "w": true
+  },
+  {
+   "h": "What Bullies Did To This Kid Was Horrible. What He Did To Respond Was Beautiful.",
+   "i": 2715,
+   "c": 156,
+   "r": 5.75,
+   "w": false
+  },
+  {
+   "h": "Watch A Smart Guy Stump A Religious Bigot With Her Own Religion",
+   "i": 2768,
+   "c": 159,
+   "r": 5.74,
+   "w": true
+  },
+  {
+   "h": "One Of The Best Comebacks I've Ever Heard Was Made In A Single Word",
+   "i": 5608,
+   "c": 322,
+   "r": 5.74,
+   "w": true
+  },
+  {
+   "h": "He Would Brag To His Fellow Soldiers About His Girlfriend 24/7. There Was Just 1 Small Problem.",
+   "i": 4058,
+   "c": 233,
+   "r": 5.74,
+   "w": false
+  },
+  {
+   "h": "CNBC Hosts Decide To Teach Senator Warren How Regulations Work. Probably Shouldn't Have Done That.",
+   "i": 2754,
+   "c": 158,
+   "r": 5.74,
+   "w": true
+  },
+  {
+   "h": "Watch This Remarkable Young Woman Render Jon Stewart Speechless",
+   "i": 6977,
+   "c": 400,
+   "r": 5.73,
+   "w": false
+  },
+  {
+   "h": "Wow... Watch This Young Woman Render Jon Stewart Speechless.",
+   "i": 6951,
+   "c": 398,
+   "r": 5.73,
+   "w": false
+  },
+  {
+   "h": "Ever Wonder Why People 100 Years Ago Died So Much Younger? It's These 14 Reasons.",
+   "i": 3074,
+   "c": 176,
+   "r": 5.73,
+   "w": true
+  },
+  {
+   "h": "Dear White People: Could You Please Do Something About Your More Ragetacular White People?",
+   "i": 2779,
+   "c": 159,
+   "r": 5.72,
+   "w": false
+  },
+  {
+   "h": "A Country Killed A 16-Year-Old American Boy And Wouldn't Explain Why. Guess Which One.",
+   "i": 3591,
+   "c": 205,
+   "r": 5.71,
+   "w": true
+  },
+  {
+   "h": "The Fact That These Are Fake Is Hilarious. The Fact We Thought They Were Real Is Horrifying.",
+   "i": 2470,
+   "c": 141,
+   "r": 5.71,
+   "w": false
+  },
+  {
+   "h": "EXPOSED: Congressman Reveals The Super Bowl's Dirty Little Secret. And His Plan To Take Action.",
+   "i": 1929,
+   "c": 110,
+   "r": 5.7,
+   "w": false
+  },
+  {
+   "h": "CNBC Hosts Decide To Teach Senator Warren How Regulation Works. Probably Shouldn't Have Done That.",
+   "i": 2543,
+   "c": 145,
+   "r": 5.7,
+   "w": true
+  },
+  {
+   "h": "Why I've Got Nothing To Prove When Certain Condescending Dudes Call Me A 'Fake Geek Girl'",
+   "i": 2158,
+   "c": 123,
+   "r": 5.7,
+   "w": false
+  },
+  {
+   "h": "Fox News' Smear Campaign Crosses The Line That No Human Being Should Ever Cross",
+   "i": 3057,
+   "c": 174,
+   "r": 5.69,
+   "w": false
+  },
+  {
+   "h": "The Entire Life Experience Caught On Film In Under 3 Minutes. Incredible.",
+   "i": 2584,
+   "c": 147,
+   "r": 5.69,
+   "w": true
+  },
+  {
+   "h": "This Kid Was Bullied A LOT. He Could Have Told His Teacher Or His Principal. He Had Bigger Plans.",
+   "i": 11528,
+   "c": 655,
+   "r": 5.68,
+   "w": true
+  },
+  {
+   "h": "There's Something Seriously Wrong With What Were Doing To Boys Before They Become Men",
+   "i": 3626,
+   "c": 206,
+   "r": 5.68,
+   "w": false
+  },
+  {
+   "h": "After 12 People Were Murdered In DC On Monday, Their Trauma Doctor Said Exactly What Was On Her Mind",
+   "i": 13308,
+   "c": 756,
+   "r": 5.68,
+   "w": true
+  },
+  {
+   "h": "A Debate Between An Atheist And A Christian Has Quite A Surprising Result",
+   "i": 21688,
+   "c": 1232,
+   "r": 5.68,
+   "w": true
+  },
+  {
+   "h": "Watch a jerktacular U.S. immigration officer deport a lady he probably shouldn't be deporting",
+   "i": 4883,
+   "c": 277,
+   "r": 5.67,
+   "w": false
+  },
+  {
+   "h": "Remember These Incredible Facts The Next Time You Sleep In On A Saturday",
+   "i": 11141,
+   "c": 632,
+   "r": 5.67,
+   "w": true
+  },
+  {
+   "h": "A Woman Shouts Sexist Abuse To Men — See How They Respond",
+   "i": 2259,
+   "c": 128,
+   "r": 5.67,
+   "w": true
+  },
+  {
+   "h": "Watch A Gay Actor Come Out Of The Closet AND Pick A Fight With A Homophobic President The Same Time",
+   "i": 2613,
+   "c": 148,
+   "r": 5.66,
+   "w": false
+  },
+  {
+   "h": "Do You See What's Not Quite Right With These Fashion Adverts?",
+   "i": 3267,
+   "c": 185,
+   "r": 5.66,
+   "w": false
+  },
+  {
+   "h": "You'll Want To See Why This Teen Can't Distinguish Corporate Farmers From Drug Dealers",
+   "i": 2724,
+   "c": 154,
+   "r": 5.65,
+   "w": true
+  },
+  {
+   "h": "He'll Cut Off Your Head, But He Won't Tolerate Vapid Celebrity Culture",
+   "i": 2105,
+   "c": 119,
+   "r": 5.65,
+   "w": false
+  }
+ ]
+}

@@ -51,11 +51,11 @@ function SourceLink({ source }: { source: { label: string; href: string } }) {
   const cls = "w-fit text-xs font-medium text-pax-plum hover:underline"
   return source.href.startsWith("http") ? (
     <a href={source.href} target="_blank" rel="noreferrer" className={cls}>
-      {source.label} →
+      {source.label}
     </a>
   ) : (
     <Link href={source.href} className={cls}>
-      {source.label} →
+      {source.label}
     </Link>
   )
 }
@@ -193,7 +193,7 @@ export function ScriptCatalog({ scripts, opposition, settle }: { scripts: Catalo
               </ul>
             )}
             <Link href="/scoring?tab=research" className="w-fit text-xs font-medium text-pax-plum hover:underline">
-              What controlled tests found →
+              What controlled tests found
             </Link>
           </div>
 
@@ -229,7 +229,7 @@ export function ScriptCatalog({ scripts, opposition, settle }: { scripts: Catalo
           <span className="text-sm font-semibold text-slate-900">What you’ll hear back</span>
           <p className="text-xs leading-relaxed text-slate-500">{opposition.note}</p>
           <a href={opposition.href} target="_blank" rel="noreferrer" className="mt-1 w-fit text-xs font-medium text-pax-plum hover:underline">
-            Who’s for and against (WBUR) →
+            Who’s for and against (WBUR)
           </a>
         </div>
         <ul className="grid flex-1 gap-3 sm:grid-cols-3">
