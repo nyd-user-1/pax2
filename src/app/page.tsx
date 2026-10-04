@@ -100,7 +100,7 @@ export default async function HomePage() {
       {scored.length > 0 && (
         <section className="flex flex-col gap-4">
           <SectionTitle title="Framing" />
-          <FramingStrip scripts={SCRIPTS} videos={cards} />
+          <FramingStrip scripts={SCRIPTS.filter((s) => cards.some((c) => c.script === s.id))} videos={cards} />
         </section>
       )}
 

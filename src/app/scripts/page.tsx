@@ -1,39 +1,47 @@
 import Link from "next/link"
 import { PenLine, Video } from "lucide-react"
 
+import polling from "../../../data/polling.json"
 import codes from "../../../data/generated/model/script-codes.json"
 import model from "../../../data/generated/model/reference-model.json"
-import { ScriptReader, type ReaderScript } from "@/components/scripts/script-reader"
+import { ScriptCatalog, type CatalogScript } from "@/components/scripts/script-catalog"
 import { SCRIPTS } from "@/lib/catalog"
-import { board, picks, workspace } from "@/lib/review"
+import { board, workspace } from "@/lib/review"
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Scripts" }
 
 type Codes = { scripts: Record<string, { codes: Record<string, number>; notes: Record<string, string>; prior: Record<string, { expected: number; low: number; high: number; average: number }> }> }
-type Model = { featureLabels: Record<string, string>; outcomes: Record<string, { features: { key: string; diff: number; low: number; high: number }[] }> }
+type Model = { featureLabels: Record<string, string>; outcomes: Record<string, { ads: number; features: { key: string; label?: string; diff: number; low: number; high: number }[] }> }
 
 const mean = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null)
 
-/** The script to record next, and what decides it: the race, how the idea has fared at the ballot, where it hits home. */
+/** The catalog a volunteer picks from: every script with the reason for every line, and the evidence behind each reason. */
 export default async function ScriptsPage() {
   const ws = await workspace()
   const C = codes as unknown as Codes
   const RM = model as unknown as Model
   const vc = new Map(RM.outcomes.votechoice.features.map((f) => [f.key, f]))
-  const [{ takes }, chosen] = await Promise.all([board(ws), picks(ws)])
+  const { takes } = await board(ws)
 
-  const scripts: ReaderScript[] = SCRIPTS.map((s) => {
+  const research = (key: string, outcome: "votechoice" | "favorability") => {
+    const o = RM.outcomes[outcome]
+    const f = o?.features.find((x) => x.key === key)
+    return f ? { label: RM.featureLabels[key] ?? f.label ?? key, diff: f.diff, low: f.low, high: f.high, ads: o.ads, outcome } : null
+  }
+
+  const scripts: CatalogScript[] = SCRIPTS.map((s) => {
     const c = C.scripts[s.id]
     const mine = takes.filter((x) => x.take.scriptId === s.id && x.take.captions && !x.take.cut)
     const timed = mine[0]?.take.lines ?? []
     const paras = s.text.split("\n").filter((l) => l.trim())
     const scored = mine.filter((x) => x.latest?.score.value != null)
-    const pick = chosen.filter((x) => x.scriptId === s.id).sort((a, b) => b.at.localeCompare(a.at))[0]
     return {
       id: s.id,
       title: s.title,
+      approach: s.approach,
       framing: s.framing,
+      provenance: s.source,
       text: s.text,
       lines: paras.map((text, i) => ({ text, t: timed[i]?.t ?? null })),
       words: s.words,
@@ -49,16 +57,20 @@ export default async function ScriptsPage() {
         .filter((x) => x.f)
         .sort((a, b) => Math.abs(b.f!.diff) - Math.abs(a.f!.diff))
         .slice(0, 5)
-        .map(({ k, f }) => ({ label: RM.featureLabels[k], sign: (f!.low > 0 ? "up" : f!.high < 0 ? "down" : "flat") as "up" | "down" | "flat", note: c.notes[k] })),
-      chosen: pick ? { at: pick.at, reason: pick.reason } : null,
+        .map(({ k, f }) => ({ label: RM.featureLabels[k], diff: f!.diff, sign: (f!.low > 0 ? "up" : f!.high < 0 ? "down" : "flat") as "up" | "down" | "flat", note: c.notes[k] })),
+      why: s.why.map((w) => ({ line: w.line, note: w.note, research: w.research ? research(w.research, w.outcome ?? "votechoice") : null, source: w.source ?? null })),
     }
   })
 
-
   return (
-    <div className="flex flex-col gap-14">
+    <div className="flex flex-col gap-10">
       <header className="rise flex flex-wrap items-end justify-between gap-4 md:pt-9">
-        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Scripts</h1>
+        <div className="flex max-w-2xl flex-col gap-3">
+          <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Scripts</h1>
+          <p className="leading-relaxed text-slate-600">
+            Pick the argument that sounds like you, see why every line is there, and record it. In the {RM.outcomes.votechoice.ads} ads tested against control groups, only two choices reliably moved votes — an ordinary person talking plainly, and asking for the vote outright — and every script here is built on both.
+          </p>
+        </div>
         <div className="flex items-center gap-2">
           <Link href="/record/personal" className="press inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-pax-ink shadow-e1">
             <PenLine className="size-4" /> New
@@ -69,10 +81,14 @@ export default async function ScriptsPage() {
         </div>
       </header>
 
-      <ScriptReader
+      <ScriptCatalog
         scripts={scripts}
-        pro={["More candidates run when two always advance", "Every voter, in any party or none, picks from the full field", "Candidates have to answer to a majority"]}
-        con={["Can leave two candidates of one party in November", "Favors self-funded candidates", "Squeezes out third parties"]}
+        opposition={{
+          items: ["A top-two primary can leave two candidates of the same party in November", "Favors candidates who can fund their own campaigns", "Squeezes out third parties"],
+          note: "Both state parties and the AFL-CIO oppose Question 3; supporters include officials of both parties and the NAACP.",
+          href: "https://www.wbur.org/news/2026/09/28/massachusetts-ballot-question-3-backers-supporters",
+        }}
+        settle={`No public poll tests which of these arguments wins — the only topline is ${polling.q3.yes}–${polling.q3.no} with ${polling.q3.undecided}% undecided. Recording them is how it gets settled.`}
       />
     </div>
   )

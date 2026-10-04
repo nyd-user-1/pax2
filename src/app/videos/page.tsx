@@ -14,7 +14,7 @@ export default async function VideosPage() {
       <header className="rise flex flex-col gap-2">
         <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Videos</h1>
       </header>
-      <VideoGrid videos={cards} scripts={SCRIPTS.map((s) => ({ id: s.id, short: s.short }))} />
+      <VideoGrid videos={cards} scripts={SCRIPTS.filter((s) => cards.some((c) => c.script === s.id)).map((s) => ({ id: s.id, short: s.short }))} />
     </div>
   )
 }

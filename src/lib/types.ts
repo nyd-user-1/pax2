@@ -13,6 +13,17 @@ export type Provenance =
 
 export type Claim = { id: string; text: string; ballot?: string }
 
+/** Why a line reads the way it does: the reason, and the evidence behind the reason. */
+export type ScriptWhy = {
+  /** Index of the script line the note sits on (text split by newline). */
+  line: number
+  note: string
+  /** Feature key in the reference model, resolved to its measured effect at render. */
+  research?: string
+  outcome?: "votechoice" | "favorability"
+  source?: { label: string; href: string }
+}
+
 export type Script = {
   id: string
   claimId: string
@@ -20,10 +31,13 @@ export type Script = {
   short: string
   /** The library card's own description of the framing. */
   framing: string
+  /** The angle in two or three words, for the catalog chip. */
+  approach: string
   text: string
   words: number
   seconds: number
   source: string
+  why: ScriptWhy[]
 }
 
 export type Messenger = { label: string; role?: string; town?: string }

@@ -2,7 +2,7 @@ import library from "../../data/library.json"
 import takesJson from "../../data/generated/takes.json"
 import featuresJson from "../../data/generated/features.json"
 
-import type { Measure, MetricKey, Provenance, Script, Snapshot, Take } from "@/lib/types"
+import type { Measure, MetricKey, Provenance, Script, ScriptWhy, Snapshot, Take } from "@/lib/types"
 import { METRICS } from "@/lib/types"
 
 // The catalog: what was recorded (scripts, takes) and what the box found in each take.
@@ -14,7 +14,8 @@ type RawTake = { id: string; script: string; voice: string; captions: boolean; c
 export const CLAIM = library.claim
 export const SCRIPTS: Script[] = library.scripts.map((s) => {
   const words = s.text.split(/\s+/).filter(Boolean).length
-  return { id: s.id, claimId: library.claim.id, title: s.title, short: (s as { short?: string }).short ?? s.title, framing: s.framing, text: s.text, words, seconds: Math.round((words / 130) * 60), source: s.source }
+  const x = s as { short?: string; approach?: string; why?: ScriptWhy[] }
+  return { id: s.id, claimId: library.claim.id, title: s.title, short: x.short ?? s.title, framing: s.framing, approach: x.approach ?? "", text: s.text, words, seconds: Math.round((words / 130) * 60), source: s.source, why: x.why ?? [] }
 })
 export const scriptById = (id: string) => SCRIPTS.find((s) => s.id === id)
 

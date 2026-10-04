@@ -96,7 +96,7 @@ export default async function DashboardPage() {
       </header>
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Stat2 title="Videos in rotation" value={takes.length} footer={`${SCRIPTS.length} scripts · ${new Set(takes.map((t) => t.take.voice)).size} messengers`} />
+        <Stat2 title="Videos in rotation" value={takes.length} footer={`${new Set(takes.map((t) => t.take.scriptId)).size} scripts · ${new Set(takes.map((t) => t.take.voice)).size} messengers`} />
         <Stat2 title="Sent by volunteers" value={show.sent} footer={show.sentNote} />
         <Stat2 title="People reached" value={reach.toLocaleString()} footer={`$${Math.round(spend).toLocaleString()} spent across ${latest.length} flights`} />
         <Stat2 title="Calls right" value={show.calls} footer="Predictions locked before results" />
@@ -156,7 +156,7 @@ export default async function DashboardPage() {
       <section className="flex flex-col gap-4">
         <SectionTitle title="Scores by script" />
         <div className="surface grid gap-5 p-6 md:grid-cols-3">
-          {SCRIPTS.map((s) => {
+          {SCRIPTS.filter((s) => takes.some((t) => t.take.scriptId === s.id)).map((s) => {
             const xs = takes.filter((t) => t.take.scriptId === s.id && t.latest?.score.value != null)
             return (
               <div key={s.id} className="flex flex-col gap-2">
