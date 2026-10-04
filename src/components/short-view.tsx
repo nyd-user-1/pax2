@@ -1,40 +1,51 @@
+import Link from "next/link"
+
 import shorts from "../../data/raw/yt-shorts.json"
+import { RangeBar } from "@/components/bits"
 import { Fold } from "@/components/fold"
-import { Loudness, Observations, Player, SeekProvider } from "@/components/workbench"
-import { featuresFor } from "@/lib/catalog"
-import { channelById, median, secs } from "@/lib/channels"
+import { ReadingPanel } from "@/components/reading-panel"
+import { Term } from "@/components/term"
+import { ScoreInfo } from "@/components/ui-pax"
+import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
+import { featuresFor, type Features } from "@/lib/catalog"
+import { channelById, secs } from "@/lib/channels"
+import { COMPONENTS } from "@/lib/resonance"
 import { cn } from "@/ui/lib/utils"
 
 type Yt = { fetchedAt: string; videos: { id: string; channelId: string; channel: string; title: string; published: string; duration: string; views: number | null; likes: number | null; comments: number | null }[] }
 
-/** A campaign short: the video, its public counts against the channel's own median, and what the box found. */
+const DASH = "-"
+
+const KPI_ROWS = ["Counts", "Rate", "Ref. avg", "Weighted", "Distance", "Score", "Weight"]
+const KPI_TERMS: Record<string, string> = { Counts: "counts", Rate: "rate", "Ref. avg": "reference-average", Weighted: "weighted-rate", Distance: "distance", Score: "component-score", Weight: "weight" }
+const WINDOW_ROWS = ["Spend", "Impressions", "Reach", "3s plays", "ThruPlays", "25% play", "50% play", "75% play", "100% play", "Avg. Time", "Shares", "Saves", "Comments", "Reactions", "Clicks", "CTA"]
+
+/** Timed sentence lines from the transcript's word timings. */
+function transcriptLines(f: Features | undefined) {
+  const t = f?.transcript
+  if (!t || t.error || !t.text) return null
+  const words = t.words ?? []
+  const sentences = (t.text.match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g) ?? [t.text]).map((s) => s.trim()).filter(Boolean)
+  let wi = 0
+  return sentences.map((text) => {
+    const line = { t: words[wi]?.t ?? 0, text }
+    wi += text.split(/\s+/).length
+    return line
+  })
+}
+
+/** A campaign short in the take panel's exact shape; counts PAX does not hold read as a dash. */
 export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
   const ytId = id.replace(/^yt-/, "")
   const data = shorts as unknown as Yt
   const v = data.videos.find((x) => x.id === ytId)
   const f = featuresFor(id)
   const ch = v ? channelById(v.channelId) : undefined
-  const asOf = data.fetchedAt.slice(0, 10)
-  const days = v ? Math.max(1, (Date.parse(asOf) - Date.parse(v.published)) / 864e5) : 1
-  const perDay = v?.views != null ? v.views / days : null
-  const channelMedian = v
-    ? median(
-        data.videos
-          .filter((x) => x.channelId === v.channelId && x.views != null)
-          .map((x) => x.views! / Math.max(1, (Date.parse(asOf) - Date.parse(x.published)) / 864e5)),
-      )
-    : null
-  // Organic, 0-100: views/day over the channel's own median, ranked among every tracked short.
-  // Normalizing by channel strips channel size; the percentile places the video, 50 = middle.
-  const perDayOf = (x: { views: number | null; published: string }) => x.views! / Math.max(1, (Date.parse(asOf) - Date.parse(x.published)) / 864e5)
-  const chMedians = new Map(
-    [...new Set(data.videos.map((x) => x.channelId))].map((cid) => [cid, median(data.videos.filter((x) => x.channelId === cid && x.views != null).map(perDayOf))]),
-  )
-  const ratios = data.videos
-    .filter((x) => x.views != null && (chMedians.get(x.channelId) ?? 0) > 0)
-    .map((x) => perDayOf(x) / chMedians.get(x.channelId)!)
-  const mine = perDay != null && channelMedian ? perDay / channelMedian : null
-  const organic = mine != null && ratios.length ? Math.round((100 * (ratios.filter((r) => r < mine).length + 0.5 * ratios.filter((r) => r === mine).length)) / ratios.length) : null
+  const lines = transcriptLines(f)
+  const duration = f?.audio?.durationSec ?? (v ? secs(v.duration) : 0)
+  const siblings = v
+    ? data.videos.filter((x) => x.channelId === v.channelId && x.id !== ytId && featuresFor(`yt-${x.id}`)).slice(0, 3)
+    : []
   const stat = (label: string, value: string) => (
     <div className="flex flex-col">
       <span className="tabular text-lg font-semibold text-slate-900">{value}</span>
@@ -49,7 +60,6 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
           {f ? (
             <Player src={`/api/video/${id}`} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} />
           ) : (
-            // Not analyzed yet: the video itself plays here via YouTube's embed.
             <div className="aspect-[9/16] overflow-hidden rounded-2xl bg-slate-900 shadow-e2">
               <iframe
                 src={`https://www.youtube.com/embed/${ytId}`}
@@ -60,9 +70,25 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
               />
             </div>
           )}
-          {f?.audio && !f.audio.error && (
+          {f?.audio && !f.audio.error ? (
             <div className="surface p-4">
               <Loudness f={f.audio} />
+            </div>
+          ) : (
+            <div className="surface flex items-center justify-between p-4 text-xs text-slate-500">
+              <span>dB</span>
+              <span className="tabular">{DASH}</span>
+            </div>
+          )}
+          {siblings.length > 0 && (
+            <div className="surface flex flex-col gap-1 p-4">
+              <p className="pb-1 text-xs font-medium text-slate-500">Comps</p>
+              {siblings.map((x) => (
+                <Link key={x.id} href={`/v/yt-${x.id}`} scroll={false} replace={inDrawer} className="flex items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-slate-50">
+                  <span className="line-clamp-1">{x.title.replace(/\s*#\w+/g, "").trim() || x.title}</span>
+                  <span className="tabular shrink-0 font-semibold text-slate-700">{DASH}</span>
+                </Link>
+              ))}
             </div>
           )}
         </aside>
@@ -70,50 +96,119 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
         <div className="flex min-w-0 flex-col gap-6">
           {!inDrawer && <h1 className="font-display text-2xl leading-tight text-slate-900 md:text-[28px]">{v?.title ?? id}</h1>}
           {inDrawer && v && <p className="font-display text-lg leading-snug text-slate-900">{v.title}</p>}
-          {v && (
-            <div className="surface grid grid-cols-2 gap-4 p-5 sm:grid-cols-4">
-              {stat("Views", (v.views ?? 0).toLocaleString())}
-              {stat("Likes", (v.likes ?? 0).toLocaleString())}
-              {stat("Comments", (v.comments ?? 0).toLocaleString())}
-              {stat("Views/day", perDay != null ? (perDay < 10 ? perDay.toFixed(1) : Math.round(perDay).toLocaleString()) : "—")}
-            </div>
-          )}
-          {v && (
-            <p className="tabular -mt-3 text-xs text-slate-500">
-              {ch?.name ?? v.channel} · published {v.published.slice(0, 10)} · {secs(v.duration)}s · public counts as of {asOf}
-              {channelMedian != null && ` · channel median ${channelMedian < 10 ? channelMedian.toFixed(1) : Math.round(channelMedian).toLocaleString()} views/day`}
-            </p>
-          )}
 
-          {organic != null && mine != null && (
-            <div className="surface flex flex-wrap items-center gap-x-5 gap-y-1 p-5">
-              <span className="tabular font-display text-3xl text-pax-ink">{organic}</span>
-              <div className="flex min-w-0 flex-col">
-                <span className="text-sm font-semibold text-slate-900">Organic, 0 to 100</span>
-                <span className="tabular text-xs text-slate-500">
-                  Views/day at {mine < 10 ? mine.toFixed(1) : Math.round(mine)}× this channel&apos;s median, ranked among the {ratios.length} tracked shorts; 50 = the middle. Paid Resonance needs impressions, which YouTube doesn&apos;t publish.
-                </span>
+          <div className="surface grid grid-cols-2 gap-4 p-5 sm:grid-cols-4">
+            {stat("Reach", DASH)}
+            {stat("Watched 3s+", DASH)}
+            {stat("Avg.", DASH)}
+            {stat("Spend", DASH)}
+          </div>
+
+          <Fold
+            title="Resonance"
+            info={<ScoreInfo />}
+            preview={
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-wrap items-end justify-between gap-4">
+                  <div className="tabular flex items-baseline gap-2">
+                    <span className="font-display text-4xl text-pax-ink">{DASH}</span>
+                    <span className="text-xs text-muted-foreground">{DASH}</span>
+                  </div>
+                  <div className="min-w-56 flex-1">
+                    <RangeBar value={null} low={null} high={null} />
+                    <div className="mt-1 flex justify-between text-[10px] text-muted-foreground">
+                      <span>0</span>
+                      <span>50 = reference average</span>
+                      <span>100</span>
+                    </div>
+                  </div>
+                </div>
+                <ul className="flex flex-col gap-1 rounded-lg bg-muted/60 px-3 py-2 text-xs text-muted-foreground">
+                  <li>Evidence: {DASH}</li>
+                </ul>
+                <div className="grid gap-3 md:grid-cols-3">
+                  {COMPONENTS.map((meta) => (
+                    <div key={meta.key} className="surface flex flex-col gap-2 p-3">
+                      <div className="flex items-baseline justify-between">
+                        <span className="font-medium text-pax-ink">{meta.name}</span>
+                        <Term id={meta.key} label={false} />
+                      </div>
+                      <p className="text-xs text-muted-foreground">{meta.question}</p>
+                      <div className="tabular flex items-baseline gap-1.5">
+                        <span className="font-display text-3xl text-pax-ink">{DASH}</span>
+                        <span className="text-xs text-muted-foreground">{DASH}</span>
+                      </div>
+                      <RangeBar value={null} low={null} high={null} />
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            }
+          >
+            <div className="flex flex-col gap-6">
+              <details open className="group rounded-xl border">
+                <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-pax-ink">KPIs</summary>
+                <div className="overflow-x-auto px-4 pb-4">
+                  <table className="tabular w-full text-sm">
+                    <thead className="text-left text-xs text-slate-500">
+                      <tr className="[&_th]:whitespace-nowrap [&_th]:py-2 [&_th]:pr-6 [&_th]:font-medium">
+                        <th />
+                        {COMPONENTS.map((meta, i) => (
+                          <th key={meta.key}>
+                            <Term id={meta.key}>{meta.name}</Term> <span className="font-normal text-slate-400">· {[25, 40, 35][i]}%</span>
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="[&_td]:whitespace-nowrap [&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2 [&_td]:pr-6">
+                      {KPI_ROWS.map((label) => (
+                        <tr key={label}>
+                          <td className="text-slate-500"><Term id={KPI_TERMS[label]} /></td>
+                          {COMPONENTS.map((meta) => (
+                            <td key={meta.key}>{DASH}</td>
+                          ))}
+                        </tr>
+                      ))}
+                      <tr className="font-semibold text-pax-ink">
+                        <td><Term id="resonance" /></td>
+                        <td colSpan={3}>{DASH}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </details>
 
-          <Fold title="Formula" preview={f ? <Observations part="summary" f={f} /> : <p className="text-sm text-slate-500">The video review hasn&apos;t run on this short yet.</p>}>
+              <details open className="group rounded-xl border">
+                <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-pax-ink">{DASH}</summary>
+                <div className="grid gap-x-6 px-4 pb-4 text-xs sm:grid-cols-2">
+                  {WINDOW_ROWS.map((label) => (
+                    <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
+                      <span className="text-muted-foreground">{label}</span>
+                      <span className="tabular">{DASH}</span>
+                    </div>
+                  ))}
+                  <div className="col-span-full mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                    {["Spend", "Impressions (1k)", "3s play", "Per Person"].map((label) => (
+                      <div key={label} className="rounded-lg bg-muted/50 px-2 py-1.5">
+                        <div className="text-[10px] text-muted-foreground">{label}</div>
+                        <div className="tabular text-sm text-pax-ink">{DASH}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </details>
+            </div>
+          </Fold>
+
+          <Fold title="Formula" preview={f ? <Observations part="summary" f={f} /> : <p className="tabular text-sm text-slate-500">{DASH}</p>}>
             {f?.pegasus?.result?.characteristics && <Observations part="detail" f={f} />}
           </Fold>
 
-          <Fold
-            title="Transcript"
-            preview={
-              f?.transcript && !f.transcript.error ? (
-                <div className="flex flex-col gap-2">
-                  <p className="text-[15px] leading-relaxed text-slate-800">{f.transcript.text}</p>
-                  {f.transcript.wpm != null && <p className="tabular text-xs text-slate-500">{f.transcript.wpm} words per minute</p>}
-                </div>
-              ) : (
-                <p className="text-sm text-slate-500">No transcript yet.</p>
-              )
-            }
-          />
+          <Fold title="Transcript" preview={lines ? <ScriptTimeline lines={lines} duration={duration} /> : <p className="tabular text-sm text-slate-500">{DASH}</p>} />
+
+          <section className="surface p-5 md:p-6">
+            <ReadingPanel takeId={id} evidence={[]} initial={null} events={[]} calls={[]} canRead={false} nextDataset={null} baseline={null} baselineSnapshot="" />
+          </section>
         </div>
       </div>
     </SeekProvider>
