@@ -14,7 +14,7 @@ if (!lifelongDir || !last90Dir) {
 }
 
 const UNIVERSE =
-  /unite america|voter freedom|open primar|fairvote|fair vote|ranked[ -]?choice|instant[ -]runoff|courageous|healthy democracy|voter choice|better elections|honest elections|final[ -]?(four|five)|all[ -]party|top[ -](two|four|five)|nonpartisan primar|ballots without barriers|political innovation|representus/i
+  /unite america|voter freedom|open primar|fairvote|fair vote|ranked[ -]?choice|instant[ -]runoff|courageous|healthy democracy|voter choice|better elections|honest elections|final[ -]?(four|five)|all[ -]party|top[ -](two|four|five)|nonpartisan primar|ballots without barriers|political innovation|representus|voters first|make elections fair|make all votes count|defend alaska|alaskans for better|montanans for election reform|veterans for all voters|election reform|better ballot|rank (the|my) vote|independent voting|independentvoting|more choice|save democracy|primary problem/i
 
 function parseCsv(text) {
   const rows = []
@@ -93,8 +93,10 @@ const result = {
   advertisers,
 }
 writeFileSync("data/raw/meta-reform-spend.json", JSON.stringify(result, null, 1))
-console.log(advertisers.length, "reform advertisers")
-for (const a of advertisers.slice(0, 25)) {
+const lifeTotal = advertisers.reduce((s, a) => s + (typeof a.lifelong?.usd === "number" ? a.lifelong.usd : 0), 0)
+const d90Total = advertisers.reduce((s, a) => s + (typeof a.last90?.usd === "number" ? a.last90.usd : 0), 0)
+console.log(advertisers.length, "reform advertisers | lifetime total $" + lifeTotal.toLocaleString(), "| last-90 total $" + d90Total.toLocaleString())
+for (const a of advertisers.filter((x) => typeof x.lifelong?.usd === "number" && x.lifelong.usd >= 5000)) {
   const states = Object.entries(a.states)
     .filter(([, v]) => typeof v.lifelong === "number")
     .sort((x, y) => y[1].lifelong - x[1].lifelong)
