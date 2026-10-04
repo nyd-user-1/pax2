@@ -5,12 +5,12 @@
   "coin": {
    "codes": {
     "technique_plain_folks": 0.6,
-    "technique_pos_testimonial": 0.0,
-    "technique_neg_testimonial": 0.0,
+    "technique_pos_testimonial": 0,
+    "technique_neg_testimonial": 0,
     "messenger_every_people": 0.8,
-    "messenger_politician": 0.0,
-    "messenger_celebrity": 0.0,
-    "messenger_veteran": 0.0,
+    "messenger_politician": 0,
+    "messenger_celebrity": 0,
+    "messenger_veteran": 0,
     "narration_personal_story": 0.1,
     "narration_explain_facts": 0.9,
     "narration_advocate_opinions": 0.9,
@@ -21,16 +21,16 @@
     "emotion_enthusiasm": 0.2,
     "emotion_fear": 0.4,
     "emotion_hope_pride": 0.1,
-    "emotion_humor": 0.0,
+    "emotion_humor": 0,
     "emotion_somber": 0.6,
     "tone_positive": 0.1,
     "tone_negative": 0.8,
     "tone_contrast": 0.7,
-    "explicit_vote_for": 0.0,
+    "explicit_vote_for": 0,
     "production_value_high": 0.05,
     "style_amateur": 0.9,
     "style_text_on_screen": 0.85,
-    "style_animation": 0.0,
+    "style_animation": 0,
     "how_scripted": 0.85
    },
    "notes": {
@@ -75,9 +75,9 @@
     "technique_pos_testimonial": 0.1,
     "technique_neg_testimonial": 0.1,
     "messenger_every_people": 0.85,
-    "messenger_politician": 0.0,
-    "messenger_celebrity": 0.0,
-    "messenger_veteran": 0.0,
+    "messenger_politician": 0,
+    "messenger_celebrity": 0,
+    "messenger_veteran": 0,
     "narration_personal_story": 0.1,
     "narration_explain_facts": 0.8,
     "narration_advocate_opinions": 0.9,
@@ -88,7 +88,7 @@
     "emotion_enthusiasm": 0.55,
     "emotion_fear": 0.2,
     "emotion_hope_pride": 0.5,
-    "emotion_humor": 0.0,
+    "emotion_humor": 0,
     "emotion_somber": 0.35,
     "tone_positive": 0.6,
     "tone_negative": 0.45,
@@ -97,7 +97,7 @@
     "production_value_high": 0.05,
     "style_amateur": 0.9,
     "style_text_on_screen": 0.85,
-    "style_animation": 0.0,
+    "style_animation": 0,
     "how_scripted": 0.85
    },
    "notes": {
@@ -142,9 +142,9 @@
     "technique_pos_testimonial": 0.1,
     "technique_neg_testimonial": 0.1,
     "messenger_every_people": 0.85,
-    "messenger_politician": 0.0,
-    "messenger_celebrity": 0.0,
-    "messenger_veteran": 0.0,
+    "messenger_politician": 0,
+    "messenger_celebrity": 0,
+    "messenger_veteran": 0,
     "narration_personal_story": 0.1,
     "narration_explain_facts": 0.8,
     "narration_advocate_opinions": 0.9,
@@ -164,7 +164,7 @@
     "production_value_high": 0.05,
     "style_amateur": 0.9,
     "style_text_on_screen": 0.85,
-    "style_animation": 0.0,
+    "style_animation": 0,
     "how_scripted": 0.85
    },
    "notes": {
@@ -200,6 +200,272 @@
      "expected": 1.71,
      "low": -0.45,
      "high": 3.88,
+     "average": 1.405
+    }
+   }
+  },
+  "majority": {
+   "codes": {
+    "technique_plain_folks": 0.6,
+    "technique_pos_testimonial": 0.2,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.8,
+    "messenger_politician": 0,
+    "messenger_celebrity": 0,
+    "messenger_veteran": 0,
+    "narration_personal_story": 0.05,
+    "narration_explain_facts": 0.9,
+    "narration_advocate_opinions": 0.85,
+    "policy_facts": 0.9,
+    "fact_cite_yes": 0.7,
+    "fact_new_yes": 0.75,
+    "emotion_anger": 0.2,
+    "emotion_enthusiasm": 0.5,
+    "emotion_fear": 0.15,
+    "emotion_hope_pride": 0.45,
+    "emotion_humor": 0,
+    "emotion_somber": 0.3,
+    "tone_positive": 0.6,
+    "tone_negative": 0.35,
+    "tone_contrast": 0.75,
+    "explicit_vote_for": 0.95,
+    "production_value_high": 0.05,
+    "style_amateur": 0.9,
+    "style_text_on_screen": 0.85,
+    "style_animation": 0,
+    "how_scripted": 0.9
+   },
+   "notes": {
+    "technique_plain_folks": "Volunteer speaker with no credentials signals ordinary-citizen appeal",
+    "messenger_every_people": "Described as a volunteer reading to a phone camera, not an authority figure",
+    "narration_explain_facts": "Script is built around poll numbers and Massachusetts ballot statistics",
+    "narration_advocate_opinions": "Explicitly argues candidates should have to win a majority and urges a yes vote",
+    "policy_facts": "Cites specific electoral mechanics of Question 3 and state legislative race data",
+    "fact_cite_yes": "References a named national poll with a specific month and year",
+    "fact_new_yes": "Two-thirds of MA legislative races had one name on November ballot is a non-obvious local statistic",
+    "tone_contrast": "Directly contrasts current one-candidate races with the proposed open-primary fix",
+    "explicit_vote_for": "Ends with a direct call to action: Vote yes on Question 3",
+    "style_amateur": "Specified as a volunteer filming on a phone camera",
+    "style_text_on_screen": "Captions are specified as part of the video format",
+    "how_scripted": "Script is tightly written with structured arguments; delivery will likely sound read"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.98,
+     "low": -1.16,
+     "high": 3.12,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 1.14,
+     "low": -0.41,
+     "high": 2.69,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.66,
+     "low": -0.51,
+     "high": 3.82,
+     "average": 1.405
+    }
+   }
+  },
+  "noparty": {
+   "codes": {
+    "technique_plain_folks": 0.75,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.85,
+    "messenger_politician": 0,
+    "messenger_celebrity": 0,
+    "messenger_veteran": 0,
+    "narration_personal_story": 0.1,
+    "narration_explain_facts": 0.9,
+    "narration_advocate_opinions": 0.85,
+    "policy_facts": 0.9,
+    "fact_cite_yes": 0.2,
+    "fact_new_yes": 0.7,
+    "emotion_anger": 0.15,
+    "emotion_enthusiasm": 0.45,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.4,
+    "emotion_humor": 0.1,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.65,
+    "tone_negative": 0.25,
+    "tone_contrast": 0.7,
+    "explicit_vote_for": 0.95,
+    "production_value_high": 0.05,
+    "style_amateur": 0.95,
+    "style_text_on_screen": 0.9,
+    "style_animation": 0,
+    "how_scripted": 0.9
+   },
+   "notes": {
+    "technique_plain_folks": "Volunteer speaker and 'two-thirds of us' framing positions messenger as an ordinary Massachusetts resident",
+    "messenger_every_people": "Described as a volunteer reading to a phone camera, no credentials or title implied",
+    "narration_explain_facts": "Core of the script is walking through voter registration statistics and how the primary system works",
+    "narration_advocate_opinions": "Explicitly argues the election system should serve unenrolled voters and closes with a vote ask",
+    "policy_facts": "Describes current primary structure and what Question 3 would change in concrete terms",
+    "fact_new_yes": "The specific breakdown — 24% Dem, 8% GOP, two-thirds unenrolled — is likely unfamiliar to many viewers",
+    "tone_positive": "Framing centers on inclusion and fixing the system rather than attacking opponents",
+    "tone_contrast": "Directly contrasts current party-sorted primary with the proposed unified ballot",
+    "explicit_vote_for": "Closes with a direct 'Vote yes on 3'",
+    "style_amateur": "Script specifies volunteer reading to a phone camera",
+    "style_text_on_screen": "Script specifies captions are present",
+    "how_scripted": "Tight, polished prose with rhetorical structure reads clearly as a prepared script"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.05,
+     "low": -1.09,
+     "high": 3.19,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 1.32,
+     "low": -0.23,
+     "high": 2.87,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.87,
+     "low": -0.3,
+     "high": 4.04,
+     "average": 1.405
+    }
+   }
+  },
+  "district": {
+   "codes": {
+    "technique_plain_folks": 0.85,
+    "technique_pos_testimonial": 0.3,
+    "technique_neg_testimonial": 0.2,
+    "messenger_every_people": 0.92,
+    "messenger_politician": 0,
+    "messenger_celebrity": 0,
+    "messenger_veteran": 0,
+    "narration_personal_story": 0.78,
+    "narration_explain_facts": 0.88,
+    "narration_advocate_opinions": 0.82,
+    "policy_facts": 0.9,
+    "fact_cite_yes": 0.25,
+    "fact_new_yes": 0.72,
+    "emotion_anger": 0.35,
+    "emotion_enthusiasm": 0.45,
+    "emotion_fear": 0.2,
+    "emotion_hope_pride": 0.4,
+    "emotion_humor": 0.05,
+    "emotion_somber": 0.42,
+    "tone_positive": 0.55,
+    "tone_negative": 0.38,
+    "tone_contrast": 0.65,
+    "explicit_vote_for": 0.95,
+    "production_value_high": 0.02,
+    "style_amateur": 0.93,
+    "style_text_on_screen": 0.88,
+    "style_animation": 0,
+    "how_scripted": 0.82
+   },
+   "notes": {
+    "technique_plain_folks": "Volunteer speaker frames themselves as an ordinary constituent with the same experience as viewers",
+    "messenger_every_people": "Explicitly a volunteer reading to a phone camera, no credentials or authority claimed",
+    "narration_personal_story": "Speaker says 'mine was one of them' and describes their own district's uncontested race",
+    "narration_explain_facts": "Provides specific 2022 Massachusetts House district statistics to build the case",
+    "narration_advocate_opinions": "Argues that uncontested seats are a problem and that Question 3 is the solution",
+    "policy_facts": "Describes the specific mechanics of Question 3 — unified primary, top finishers to November",
+    "fact_new_yes": "The 106-of-160 uncontested districts statistic is specific and likely unfamiliar to most viewers",
+    "tone_positive": "Closes with an empowering call to action and a constructive solution framing",
+    "tone_contrast": "Contrasts the broken status quo of uncontested races with what Question 3 would change",
+    "explicit_vote_for": "Ends with a direct 'Vote yes on Question 3'",
+    "style_amateur": "Script specifies volunteer reading to a phone camera",
+    "style_text_on_screen": "Script specifies captions are present",
+    "how_scripted": "Delivered from a written script with precise statistics and structured argument"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.23,
+     "low": -0.9,
+     "high": 3.37,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 1.37,
+     "low": -0.18,
+     "high": 2.92,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.83,
+     "low": -0.33,
+     "high": 4,
+     "average": 1.405
+    }
+   }
+  },
+  "already": {
+   "codes": {
+    "technique_plain_folks": 0.7,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.8,
+    "messenger_politician": 0,
+    "messenger_celebrity": 0,
+    "messenger_veteran": 0,
+    "narration_personal_story": 0.1,
+    "narration_explain_facts": 0.9,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.9,
+    "fact_cite_yes": 0.6,
+    "fact_new_yes": 0.7,
+    "emotion_anger": 0.1,
+    "emotion_enthusiasm": 0.5,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.4,
+    "emotion_humor": 0,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.7,
+    "tone_negative": 0.3,
+    "tone_contrast": 0.8,
+    "explicit_vote_for": 0.95,
+    "production_value_high": 0.05,
+    "style_amateur": 0.95,
+    "style_text_on_screen": 0.85,
+    "style_animation": 0,
+    "how_scripted": 0.9
+   },
+   "notes": {
+    "technique_plain_folks": "Volunteer delivery and conversational framing position speaker as an ordinary citizen making a common-sense case",
+    "messenger_every_people": "Explicitly a volunteer reading to a phone camera, no credentials or authority signaled",
+    "narration_explain_facts": "Core of the script is walking through factual claims about current MA ballot conditions and WA/CA precedents",
+    "narration_advocate_opinions": "Script builds to a clear normative conclusion and a vote ask",
+    "policy_facts": "Cites specific states, years, and a statistic about MA legislative races",
+    "fact_cite_yes": "Washington 2008 and California 2012 are named as verifiable references, though no formal source graphic is shown",
+    "fact_new_yes": "The two-thirds single-candidate statistic about MA legislative races is likely unfamiliar to most viewers",
+    "tone_positive": "Closes on an affirmative framing and a yes vote ask",
+    "tone_contrast": "Explicitly contrasts the objection against the rebuttal, and contrasts current MA situation with WA/CA",
+    "explicit_vote_for": "Ends with a direct 'Vote yes on Question 3'",
+    "style_amateur": "Script specifies volunteer reading to a phone camera",
+    "style_text_on_screen": "Script specifies captions are present",
+    "how_scripted": "Tight rhetorical structure and written cadence will read as scripted even in casual delivery"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.97,
+     "low": -1.17,
+     "high": 3.11,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 1.22,
+     "low": -0.33,
+     "high": 2.77,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.79,
+     "low": -0.37,
+     "high": 3.96,
      "average": 1.405
     }
    }

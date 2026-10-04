@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-03 3:00 PM ET",
+  "updated": "2026-10-04 1:00 AM ET",
   "budget": {
     "cap": 10,
     "spent": [
@@ -42,6 +42,10 @@
       {
         "item": "Worker box, re-render and re-analysis (about 1.5 hours)",
         "usd": 0.1
+      },
+      {
+        "item": "Bedrock: coding the four new scripts for research priors",
+        "usd": 0.01
       }
     ]
   },
@@ -151,19 +155,19 @@
         },
         {
           "title": "Parallax's videos and Ads Manager export",
-          "detail": "Upload the export on Reviews; drop videos in s3://pax-638175140432/videos/ and run worker/analyze.py"
+          "detail": "Not available from Parallax yet (2026-10-04). When they arrive: upload the export on Reviews; drop videos in s3://pax-638175140432/videos/ and run worker/analyze.py"
         },
         {
           "title": "The Question 3 campaign's shorts",
-          "detail": "YouTube blocks downloads from AWS. Downloaded on a personal machine, they would replace the synthetic takes."
+          "detail": "YouTube blocks downloads from AWS; downloading on the Mac is free. Analysis without Rekognition is about $0.04 a video."
         },
         {
           "title": "Meta Ad Library access",
-          "detail": "A Meta developer account with ID verification unlocks every Question 3 ad on Facebook and Instagram"
+          "detail": "Brendan is setting it up (2026-10-04): confirm identity at facebook.com/ID, then a developer account at developers.facebook.com; the deliverable is an access token for the ads_archive endpoint"
         },
         {
           "title": "Ask Parallax the four questions",
-          "detail": "What Resonance measures, how many labeled pieces, holdout accuracy, any control-group validation"
+          "detail": "Asked; Parallax has no answers yet (2026-10-04). The questions stand: what Resonance measures, how many labeled pieces, holdout accuracy, any control-group validation"
         }
       ]
     },
@@ -186,6 +190,10 @@
         {
           "title": "Organic score from YouTube views",
           "detail": "Views, likes and comments per day against the channel median, for the campaigns' public shorts. Resonance as built needs impressions; this is its organic counterpart."
+        },
+        {
+          "title": "Four campaigns' top shorts through Pegasus",
+          "detail": "Top 5 shorts by views per day from Yes on 3, Courageous Colorado, Open Primaries and Unite America — about 20 videos. Downloads are free on the Mac (YouTube blocks AWS); analysis without Rekognition is about $0.04 a video, so about $1 all in. Awaiting Brendan's go."
         },
         {
           "title": "Upworthy hook prior on screen",
