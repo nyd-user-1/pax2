@@ -1,0 +1,49 @@
+{
+  "q3": {
+    "pollster": "MassINC Polling Group",
+    "sponsor": "CommonWealth Beacon",
+    "field": "Sept. 14–22, 2026",
+    "sample": "800 likely voters",
+    "moe": "±4",
+    "yes": 43,
+    "no": 36,
+    "undecided": 20,
+    "refused": 1,
+    "url": "https://commonwealthbeacon.org/wp-content/uploads/2026/09/Topline-2026-09-CWB-Ballot-Questions.pdf"
+  },
+  "enrollment": {
+    "asOf": "Aug. 2026",
+    "registered": 4920486,
+    "unenrolled": 66.6,
+    "democrat": 24.5,
+    "republican": 8.0,
+    "source": "Secretary of the Commonwealth, via the Boston Globe",
+    "url": "https://www.bostonglobe.com/2026/08/27/metro/massachusetts-voter-registration-independents-parties/"
+  },
+  "national": {
+    "pollster": "RealClear Opinion Research / Emerson",
+    "sponsor": "Unite America",
+    "field": "Jan. 9–11, 2026",
+    "sample": "1,500 registered voters",
+    "moe": "±2.4",
+    "support": 71,
+    "oppose": 20,
+    "byParty": { "Democrats": 79, "Independents": 70, "Republicans": 65 },
+    "arguments": [
+      { "text": "Open primaries would produce better candidates who appeal to a majority of voters, not just their base", "agree": 73 },
+      { "text": "Open primaries would help produce a Congress that better represents the people", "agree": 72 }
+    ],
+    "url": "https://uniteamerica.org/articles/new-poll-as-midterms-loom-voters-back-open-primaries-to-make-congress-work-better"
+  },
+  "votes": [
+    { "state": "Washington", "measure": "Initiative 872, top-two", "year": 2004, "yes": 59.85, "url": "https://en.wikipedia.org/wiki/2004_Washington_Initiative_872" },
+    { "state": "California", "measure": "Proposition 14, top-two", "year": 2010, "yes": 53.73, "url": "https://en.wikipedia.org/wiki/2010_California_Proposition_14" },
+    { "state": "Alaska", "measure": "Ballot Measure 2, top-four", "year": 2020, "yes": 50.5, "url": "https://news.ballotpedia.org/2020/11/18/voters-approve-alaska-ballot-measure-2-which-adopts-top-four-primaries-ranked-choice-general-elections/" },
+    { "state": "Nevada", "measure": "Question 3, top-five (first vote)", "year": 2022, "yes": 52.9, "url": "https://thisisreno.com/2022/11/question-3-election-reform-proposal-ekes-out-victory-will-return-in-2024/" },
+    { "state": "Montana", "measure": "CI-126, top-four", "year": 2024, "yes": 48.2, "url": "https://dailymontanan.com/?p=27638" },
+    { "state": "Colorado", "measure": "Proposition 131, all-candidate", "year": 2024, "yes": 46.47, "url": "https://en.wikipedia.org/wiki/2024_Colorado_Proposition_131" },
+    { "state": "Nevada", "measure": "Question 3, top-five (second vote)", "year": 2024, "yes": 45.5, "url": "https://nevadacurrent.com/2024/11/05/nevada-voters-reject-open-primaries-ranked-choice/" },
+    { "state": "South Dakota", "measure": "Amendment H, top-two", "year": 2024, "yes": 34.39, "url": "https://en.wikipedia.org/wiki/2024_South_Dakota_Amendment_H" },
+    { "state": "Idaho", "measure": "Proposition 1, top-four", "year": 2024, "yes": 30.38, "url": "https://en.wikipedia.org/wiki/2024_Idaho_Proposition_1" }
+  ]
+}
