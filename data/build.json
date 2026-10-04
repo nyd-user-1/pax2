@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-04 1:00 AM ET",
+  "updated": "2026-10-04 5:00 AM ET",
   "budget": {
     "cap": 10,
     "spent": [
@@ -50,6 +50,10 @@
       {
         "item": "Organic batch: 40 campaign shorts (Pegasus, Transcribe, box; no Rekognition)",
         "usd": 1.9
+      },
+      {
+        "item": "Bedrock: coding the 39 shorts on the Swayable features",
+        "usd": 0.05
       }
     ]
   },
@@ -149,6 +153,10 @@
         {
           "title": "Meta Ad Library Report in the lake",
           "detail": "US lifelong and last-90-days ZIPs at s3://govblock-lake-638175140432/meta-ad-library-report/2026-10-01/, verified byte-exact. The reform universe trimmed into data/raw/meta-reform-spend.json: $3.5M advancing reform since Oct 2019, $428K opposing, led by RepresentUs, the state Voters First committees and the Honest Elections side."
+        },
+        {
+          "title": "Shorts coded and patterned",
+          "detail": "The 39 transcribed shorts coded on the Swayable features (organic-codes), and the top half of the set compared against the bottom half on the Organic scale (organic-patterns): slower pace, anger, a cited source, everyday messengers and statement openings sit with the travelers; question openings sit with the laggards. Thirty-nine videos — pattern-reading, not proof."
         }
       ]
     },

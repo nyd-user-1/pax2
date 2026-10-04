@@ -1,0 +1,2480 @@
+{
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "source": "ai",
+ "note": "Real campaign shorts coded from transcript + Pegasus characteristics",
+ "scripts": {
+  "yt-5LHXjjQW0ug": {
+   "error": "no transcript"
+  },
+  "yt-mV0zO4WIWWc": {
+   "codes": {
+    "technique_plain_folks": 0.3,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.6,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.0,
+    "narration_explain_facts": 0.95,
+    "narration_advocate_opinions": 0.4,
+    "policy_facts": 0.85,
+    "fact_cite_yes": 0.05,
+    "fact_new_yes": 0.55,
+    "emotion_anger": 0.0,
+    "emotion_enthusiasm": 0.2,
+    "emotion_fear": 0.0,
+    "emotion_hope_pride": 0.15,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.1,
+    "tone_positive": 0.55,
+    "tone_negative": 0.05,
+    "tone_contrast": 0.4,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.45,
+    "style_amateur": 0.2,
+    "style_text_on_screen": 0.85,
+    "style_animation": 0.0,
+    "how_scripted": 0.85
+   },
+   "notes": {
+    "messenger_every_people": "Woman in plain attire presents as an everyday explainer, not a notable figure",
+    "narration_explain_facts": "Entire video is structured as a factual explainer about primary election types",
+    "policy_facts": "Describes specific rules about closed and open primaries across states",
+    "fact_new_yes": "Many viewers likely unfamiliar with distinctions between open and closed primaries",
+    "tone_positive": "Closes on a positive framing about open primaries giving voters greatest choice",
+    "style_text_on_screen": "Captions and content-related text overlays confirmed present",
+    "how_scripted": "Delivery is clearly rehearsed or read; structured and precise language throughout"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.98,
+     "low": -1.15,
+     "high": 3.12,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.66,
+     "low": -0.89,
+     "high": 2.21,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.11,
+     "low": -1.06,
+     "high": 3.27,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-1pGOts7Th3o": {
+   "codes": {
+    "technique_plain_folks": 0.8,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.85,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.1,
+    "narration_explain_facts": 0.9,
+    "narration_advocate_opinions": 0.8,
+    "policy_facts": 0.85,
+    "fact_cite_yes": 0.4,
+    "fact_new_yes": 0.7,
+    "emotion_anger": 0.2,
+    "emotion_enthusiasm": 0.5,
+    "emotion_fear": 0.3,
+    "emotion_hope_pride": 0.3,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.6,
+    "tone_negative": 0.3,
+    "tone_contrast": 0.5,
+    "explicit_vote_for": 0.3,
+    "production_value_high": 0.3,
+    "style_amateur": 0.65,
+    "style_text_on_screen": 0.95,
+    "style_animation": 0.0,
+    "how_scripted": 0.75
+   },
+   "notes": {
+    "technique_plain_folks": "Young woman speaking casually to camera presents as an ordinary person, not an authority figure",
+    "messenger_every_people": "Appears to be a regular young woman with no indicated credentials or celebrity status",
+    "narration_explain_facts": "Core of the video is explaining how primaries work and independent voter statistics",
+    "narration_advocate_opinions": "Argues that primaries are more important than general elections and urges independents to participate",
+    "policy_facts": "Cites specific statistics about independent voter percentages and explains primary voting rules in Colorado",
+    "fact_new_yes": "Many viewers likely unaware that independents can vote in Colorado primaries or the 50%+ independent stat",
+    "tone_positive": "Ends with an empowering call to action and constructive framing about participation",
+    "style_amateur": "Indoor bookshelf setting, single camera, no professional lighting or production crew evident",
+    "style_text_on_screen": "Captions and text overlays summarizing key points are explicitly noted",
+    "how_scripted": "Delivery is clear and structured with logical flow suggesting a prepared script"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.19,
+     "low": -0.95,
+     "high": 3.33,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 1.0,
+     "low": -0.55,
+     "high": 2.55,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.48,
+     "low": -0.68,
+     "high": 3.65,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-THihu1i6k8Q": {
+   "codes": {
+    "technique_plain_folks": 0.7,
+    "technique_pos_testimonial": 0.2,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.75,
+    "messenger_politician": 0.1,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.1,
+    "narration_explain_facts": 0.55,
+    "narration_advocate_opinions": 0.85,
+    "policy_facts": 0.7,
+    "fact_cite_yes": 0.05,
+    "fact_new_yes": 0.45,
+    "emotion_anger": 0.3,
+    "emotion_enthusiasm": 0.45,
+    "emotion_fear": 0.15,
+    "emotion_hope_pride": 0.4,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.35,
+    "tone_positive": 0.5,
+    "tone_negative": 0.45,
+    "tone_contrast": 0.6,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.3,
+    "style_amateur": 0.55,
+    "style_text_on_screen": 0.85,
+    "style_animation": 0.0,
+    "how_scripted": 0.3
+   },
+   "notes": {
+    "technique_plain_folks": "Two ordinary-seeming people in a casual indoor setting discussing everyday frustrations with the system",
+    "messenger_every_people": "No indicators of celebrity or official status; presenters appear to be regular citizens",
+    "narration_explain_facts": "Mentions specific reform proposals like ranked choice voting and open primaries as informational content",
+    "narration_advocate_opinions": "Strongly pushes a viewpoint that the two-party system is rigged against ordinary Americans and advocates specific reforms",
+    "policy_facts": "References concrete policy proposals: campaign finance reform, open primaries, ranked choice voting, election timing changes",
+    "tone_contrast": "Frames current two-party structure as harmful versus proposed reforms as beneficial",
+    "style_amateur": "Indoor setting with plant background, limited visual variety, conversational format suggests low-budget production",
+    "style_text_on_screen": "Reviewer confirms captions and text overlays are present throughout"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.86,
+     "low": -1.28,
+     "high": 3.0,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.74,
+     "low": -0.81,
+     "high": 2.29,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.19,
+     "low": -0.98,
+     "high": 3.35,
+     "average": 1.405
+    }
+   }
+  },
+  "yt--qVSHn5_8ws": {
+   "codes": {
+    "technique_plain_folks": 0.55,
+    "technique_pos_testimonial": 0.75,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.3,
+    "messenger_politician": 0.65,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.2,
+    "narration_explain_facts": 0.7,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.7,
+    "fact_cite_yes": 0.1,
+    "fact_new_yes": 0.4,
+    "emotion_anger": 0.2,
+    "emotion_enthusiasm": 0.5,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.4,
+    "emotion_humor": 0.15,
+    "emotion_somber": 0.3,
+    "tone_positive": 0.6,
+    "tone_negative": 0.35,
+    "tone_contrast": 0.55,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.45,
+    "style_amateur": 0.3,
+    "style_text_on_screen": 0.85,
+    "style_animation": 0.0,
+    "how_scripted": 0.55
+   },
+   "notes": {
+    "technique_plain_folks": "Former party insider presents himself in conversational, relatable terms despite political background",
+    "technique_pos_testimonial": "Speaker endorses open primaries from personal political experience as a Republican chairman",
+    "messenger_politician": "Dick Waddams identifies himself as a former Republican state chairman with campaign involvement",
+    "narration_explain_facts": "Explains how current caucus and semi-open primary systems work versus open primaries",
+    "narration_advocate_opinions": "Strongly advocates for open primary reform throughout the entire video",
+    "policy_facts": "Describes specific electoral policy structures including precinct caucuses and semi-open primaries",
+    "tone_positive": "Frames open primaries as a solution and improvement for democratic access",
+    "tone_contrast": "Contrasts current closed/semi-open system with proposed open primary system",
+    "style_text_on_screen": "Reviewer confirms captions and text overlays are present throughout the video",
+    "how_scripted": "Delivery is relatively polished and structured for a short advocacy piece despite conversational framing"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.97,
+     "low": -1.17,
+     "high": 3.11,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.62,
+     "low": -0.94,
+     "high": 2.17,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.13,
+     "low": -1.04,
+     "high": 3.3,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-PXJ6-Itlmt4": {
+   "codes": {
+    "technique_plain_folks": 0.55,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.2,
+    "messenger_every_people": 0.5,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.05,
+    "narration_explain_facts": 0.7,
+    "narration_advocate_opinions": 0.85,
+    "policy_facts": 0.75,
+    "fact_cite_yes": 0.3,
+    "fact_new_yes": 0.5,
+    "emotion_anger": 0.45,
+    "emotion_enthusiasm": 0.55,
+    "emotion_fear": 0.35,
+    "emotion_hope_pride": 0.6,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.55,
+    "tone_negative": 0.5,
+    "tone_contrast": 0.7,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.45,
+    "style_amateur": 0.3,
+    "style_text_on_screen": 0.9,
+    "style_animation": 0.1,
+    "how_scripted": 0.8
+   },
+   "notes": {
+    "narration_explain_facts": "Describes spending in Alaska and explains what RCV/open primaries do",
+    "narration_advocate_opinions": "Explicitly argues party leaders oppose RCV to protect their power and calls viewers to join a movement",
+    "policy_facts": "References specific policy mechanisms \u2014 ranked choice voting and open primaries \u2014 and ongoing spending to defeat them",
+    "emotion_enthusiasm": "Closing call to join a movement of Coloradans carries an upbeat, rallying tone",
+    "emotion_hope_pride": "Frames movement as empowering voters and building cross-partisan coalition",
+    "tone_positive": "Ends on an empowering, inclusive call to action for open democracy",
+    "tone_contrast": "Explicitly contrasts powerful elites (Trump, Musk, party leaders) against ordinary voters",
+    "style_text_on_screen": "Reviewer confirms captions and text overlays throughout",
+    "how_scripted": "Tight rhetorical structure with a clear setup-question-answer-CTA arc sounds fully scripted",
+    "technique_plain_folks": "Positions the speaker and movement as representing ordinary Coloradans against powerful elites"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.97,
+     "low": -1.16,
+     "high": 3.11,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.72,
+     "low": -0.83,
+     "high": 2.27,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.24,
+     "low": -0.93,
+     "high": 3.4,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-bsXOK-004zY": {
+   "codes": {
+    "technique_plain_folks": 0.2,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.2,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.05,
+    "narration_explain_facts": 0.95,
+    "narration_advocate_opinions": 0.7,
+    "policy_facts": 0.85,
+    "fact_cite_yes": 0.1,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.3,
+    "emotion_enthusiasm": 0.4,
+    "emotion_fear": 0.2,
+    "emotion_hope_pride": 0.1,
+    "emotion_humor": 0.2,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.3,
+    "tone_negative": 0.4,
+    "tone_contrast": 0.65,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.3,
+    "style_amateur": 0.5,
+    "style_text_on_screen": 0.55,
+    "style_animation": 0.2,
+    "how_scripted": 0.75
+   },
+   "notes": {
+    "narration_explain_facts": "Primary purpose is explaining how Alaska's RCV and open primary system works step by step",
+    "narration_advocate_opinions": "Frames Musk's involvement suspiciously and argues the system matters for candidate viability and party influence",
+    "policy_facts": "Describes specific policy mechanics of top-4 primary and ranked choice general election",
+    "fact_new_yes": "Details of Alaska's 2020 voting system changes are likely unfamiliar to most viewers",
+    "tone_contrast": "Contrasts supporters vs. critics of RCV and frames Musk/mega donors against the existing system",
+    "style_text_on_screen": "Reviewer notes absent but transcript complexity suggests on-screen text likely used to illustrate RCV steps",
+    "how_scripted": "Narration is clearly written and delivered from a script with structured explanations"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.9,
+     "low": -1.24,
+     "high": 3.04,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.55,
+     "low": -1.0,
+     "high": 2.1,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.16,
+     "low": -1.01,
+     "high": 3.33,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-5chyFN44kzk": {
+   "codes": {
+    "technique_plain_folks": 0.1,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.1,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.0,
+    "narration_explain_facts": 0.95,
+    "narration_advocate_opinions": 0.3,
+    "policy_facts": 0.4,
+    "fact_cite_yes": 0.9,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.05,
+    "emotion_enthusiasm": 0.2,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.05,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.1,
+    "tone_negative": 0.2,
+    "tone_contrast": 0.55,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.7,
+    "style_amateur": 0.05,
+    "style_text_on_screen": 0.95,
+    "style_animation": 0.1,
+    "how_scripted": 0.75
+   },
+   "notes": {
+    "narration_explain_facts": "Entire segment is a data-driven explainer on party identification trends",
+    "fact_cite_yes": "Explicitly cites a brand new CNN poll as the source",
+    "fact_new_yes": "47% independent identification framed as a 10-year high, likely new to many viewers",
+    "tone_contrast": "Directly compares Republican vs. Democratic party identification trends",
+    "production_value_high": "Getty Images branding, split-screen graphics, data overlays suggest professional production",
+    "style_text_on_screen": "Reviewer notes confirm various text overlays with data and statistics",
+    "how_scripted": "Delivery is polished and data-dense, consistent with a scripted news segment"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.79,
+     "low": -1.35,
+     "high": 2.93,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.36,
+     "low": -1.19,
+     "high": 1.91,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 0.75,
+     "low": -1.41,
+     "high": 2.92,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-A6e7pPUVabo": {
+   "codes": {
+    "technique_plain_folks": 0.6,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.7,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.05,
+    "narration_explain_facts": 0.95,
+    "narration_advocate_opinions": 0.75,
+    "policy_facts": 0.9,
+    "fact_cite_yes": 0.3,
+    "fact_new_yes": 0.65,
+    "emotion_anger": 0.45,
+    "emotion_enthusiasm": 0.2,
+    "emotion_fear": 0.4,
+    "emotion_hope_pride": 0.1,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.5,
+    "tone_positive": 0.2,
+    "tone_negative": 0.55,
+    "tone_contrast": 0.7,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.35,
+    "style_amateur": 0.45,
+    "style_text_on_screen": 0.95,
+    "style_animation": 0.6,
+    "how_scripted": 0.75
+   },
+   "notes": {
+    "technique_plain_folks": "Woman speaks casually and directly to camera as an ordinary explainer, not an expert or authority figure.",
+    "messenger_every_people": "Single everyday woman delivers the message with no credentials or title shown.",
+    "narration_explain_facts": "Bulk of the video is a step-by-step factual explanation of Alaska's ranked choice voting system.",
+    "narration_advocate_opinions": "Closing rhetorical question frames wealthy donor influence as a threat to voter power, advocating a viewpoint.",
+    "policy_facts": "Describes specific electoral policy mechanics including open primaries, top-four advancement, and RCV elimination rounds.",
+    "fact_new_yes": "Details of Alaska's specific hybrid open-primary plus RCV system are likely unfamiliar to most viewers.",
+    "emotion_somber": "Rising music intensity and closing rhetorical question create a serious, concerned tone.",
+    "tone_negative": "Closing question implies concern about wealthy donors overriding voters, casting a negative shadow.",
+    "tone_contrast": "Explicitly presents supporters vs. critics of the system and frames voters vs. wealthy donors.",
+    "style_text_on_screen": "Reviewer confirms captions and dynamic text overlays appear throughout to emphasize key points.",
+    "style_animation": "Reviewer notes mix of animations alongside text overlays to explain voting concepts.",
+    "how_scripted": "Delivery is smooth and information-dense in a way consistent with a prepared script."
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.14,
+     "low": -1.0,
+     "high": 3.28,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.58,
+     "low": -0.97,
+     "high": 2.13,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.07,
+     "low": -1.1,
+     "high": 3.23,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-brKvhJMqDT0": {
+   "codes": {
+    "technique_plain_folks": 0.8,
+    "technique_pos_testimonial": 0.5,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.85,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.3,
+    "narration_explain_facts": 0.4,
+    "narration_advocate_opinions": 0.8,
+    "policy_facts": 0.2,
+    "fact_cite_yes": 0.0,
+    "fact_new_yes": 0.2,
+    "emotion_anger": 0.1,
+    "emotion_enthusiasm": 0.55,
+    "emotion_fear": 0.0,
+    "emotion_hope_pride": 0.65,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.75,
+    "tone_negative": 0.2,
+    "tone_contrast": 0.3,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.55,
+    "style_amateur": 0.3,
+    "style_text_on_screen": 0.9,
+    "style_animation": 0.0,
+    "how_scripted": 0.6
+   },
+   "notes": {
+    "technique_plain_folks": "Dave Murphy presents himself as an ordinary citizen from Grand Junction, not an elite figure",
+    "messenger_every_people": "Dave Murphy is introduced as a regular community member with no special title or celebrity status",
+    "narration_advocate_opinions": "Explicitly promotes values like rejecting extremism, collaboration, compromise, and civility",
+    "emotion_enthusiasm": "Tone conveys genuine civic motivation and a call to action around shared values",
+    "emotion_hope_pride": "Message centers on pulling people together and promoting good government, conveying optimism",
+    "tone_positive": "Overall framing is constructive and forward-looking, emphasizing unity and collaboration",
+    "style_text_on_screen": "Reviewer confirms captions and text overlays with key phrases are present throughout",
+    "production_value_high": "Outdoor scenic shots and clear transitions suggest deliberate production beyond amateur level",
+    "how_scripted": "Delivery is relatively smooth and organized, suggesting at least partial scripting or rehearsal"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.81,
+     "low": -1.33,
+     "high": 2.95,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.7,
+     "low": -0.85,
+     "high": 2.25,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.16,
+     "low": -1.0,
+     "high": 3.33,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-u98EznmnpGg": {
+   "codes": {
+    "technique_plain_folks": 0.4,
+    "technique_pos_testimonial": 0.7,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.4,
+    "messenger_politician": 0.5,
+    "messenger_celebrity": 0.1,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.1,
+    "narration_explain_facts": 0.2,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.3,
+    "fact_cite_yes": 0.1,
+    "fact_new_yes": 0.1,
+    "emotion_anger": 0.1,
+    "emotion_enthusiasm": 0.6,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.5,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.1,
+    "tone_positive": 0.8,
+    "tone_negative": 0.2,
+    "tone_contrast": 0.5,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.4,
+    "style_amateur": 0.1,
+    "style_text_on_screen": 0.7,
+    "style_animation": 0.0,
+    "how_scripted": 0.6
+   },
+   "notes": {
+    "technique_pos_testimonial": "Speaker personally endorses open primaries with 'I believe' framing",
+    "narration_advocate_opinions": "Entire statement is opinion-based advocacy for open primaries policy",
+    "emotion_enthusiasm": "Repeated 'I believe' and positive framing conveys conviction and energy",
+    "emotion_hope_pride": "Language around participation and debate carries optimistic civic tone",
+    "tone_positive": "Framing centers on promoting, encouraging, and expanding rather than attacking",
+    "tone_contrast": "Implicit contrast drawn between participation vs. suppression, more vs. less debate",
+    "style_text_on_screen": "OpenPrimaries.org URL visible at bottom of screen",
+    "how_scripted": "Structured parallel phrasing suggests prepared remarks, though 'um' adds slight spontaneity"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.6,
+     "low": -1.54,
+     "high": 2.74,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.43,
+     "low": -1.12,
+     "high": 1.98,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 0.86,
+     "low": -1.31,
+     "high": 3.02,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-H0m1eql9Uqk": {
+   "codes": {
+    "technique_plain_folks": 0.75,
+    "technique_pos_testimonial": 0.55,
+    "technique_neg_testimonial": 0.3,
+    "messenger_every_people": 0.8,
+    "messenger_politician": 0.1,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.7,
+    "narration_explain_facts": 0.6,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.7,
+    "fact_cite_yes": 0.3,
+    "fact_new_yes": 0.4,
+    "emotion_anger": 0.65,
+    "emotion_enthusiasm": 0.5,
+    "emotion_fear": 0.2,
+    "emotion_hope_pride": 0.4,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.3,
+    "tone_positive": 0.4,
+    "tone_negative": 0.55,
+    "tone_contrast": 0.6,
+    "explicit_vote_for": 0.1,
+    "production_value_high": 0.45,
+    "style_amateur": 0.35,
+    "style_text_on_screen": 0.95,
+    "style_animation": 0.0,
+    "how_scripted": 0.45
+   },
+   "notes": {
+    "technique_plain_folks": "Speaker presents as an ordinary independent voter frustrated by party pressure.",
+    "technique_pos_testimonial": "Speaker personally endorses open primaries as the right policy for NYC.",
+    "messenger_every_people": "Jeff Aron appears as a regular citizen activist, not an official or celebrity.",
+    "narration_personal_story": "Speaker recounts personal experience of receiving calls pressuring him to switch registration.",
+    "narration_explain_facts": "Cites that 85% of US cities already use open primaries as factual grounding.",
+    "narration_advocate_opinions": "Explicitly argues open primaries are needed and that party pressure tactics are 'immoral and creepy.'",
+    "policy_facts": "References the 85% of cities statistic and describes current NYC primary rules as the policy target.",
+    "emotion_anger": "Speaker uses words like 'immoral,' 'creepy,' and 'resented' expressing clear frustration.",
+    "tone_negative": "Frames current system and party tactics negatively before pivoting to a call for change.",
+    "tone_contrast": "Contrasts NYC's closed primary system against the 85% of cities that allow open voting.",
+    "style_text_on_screen": "Reviewer notes clear and prominent text overlays throughout the video."
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.16,
+     "low": -0.97,
+     "high": 3.3,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.8,
+     "low": -0.75,
+     "high": 2.35,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.18,
+     "low": -0.99,
+     "high": 3.35,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-M97WyXecL_A": {
+   "codes": {
+    "technique_plain_folks": 0.95,
+    "technique_pos_testimonial": 0.75,
+    "technique_neg_testimonial": 0.55,
+    "messenger_every_people": 0.97,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.1,
+    "narration_explain_facts": 0.85,
+    "narration_advocate_opinions": 0.95,
+    "policy_facts": 0.9,
+    "fact_cite_yes": 0.2,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.8,
+    "emotion_enthusiasm": 0.75,
+    "emotion_fear": 0.2,
+    "emotion_hope_pride": 0.55,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.4,
+    "tone_negative": 0.75,
+    "tone_contrast": 0.6,
+    "explicit_vote_for": 0.2,
+    "production_value_high": 0.35,
+    "style_amateur": 0.55,
+    "style_text_on_screen": 0.95,
+    "style_animation": 0.0,
+    "how_scripted": 0.2
+   },
+   "notes": {
+    "technique_plain_folks": "Ordinary NYC residents speaking casually on streets and indoors, classic plain-folks framing",
+    "technique_pos_testimonial": "Multiple speakers affirm that independents should have the right to vote",
+    "technique_neg_testimonial": "Several speakers call the current policy 'ridiculous,' 'BS,' and 'not fair'",
+    "messenger_every_people": "Diverse everyday New Yorkers are the sole messengers throughout",
+    "narration_explain_facts": "Specific statistics about 20%, 1 million voters, and 50% youth independents are stated",
+    "narration_advocate_opinions": "Speakers consistently advocate for opening primaries to independent voters",
+    "policy_facts": "Concrete figures about NYC voter registration and primary exclusion rules are presented",
+    "fact_new_yes": "The specific statistic that 50% of NYC independents are young people is likely unfamiliar to most viewers",
+    "emotion_anger": "Repeated expressions like 'ridiculous,' 'BS,' 'not fair,' and 'crazy' convey clear frustration and anger",
+    "emotion_enthusiasm": "Final speaker energetically rallies New Yorkers to express themselves and step up",
+    "emotion_hope_pride": "Closing appeal invokes NYC identity and collective empowerment",
+    "tone_negative": "Primary framing is that the current system is exclusionary and unjust",
+    "tone_contrast": "Implicitly contrasts the unfair status quo with the desired inclusive system",
+    "style_amateur": "Quick cuts between candid street-style interviews suggest a grassroots, non-broadcast production",
+    "style_text_on_screen": "Text overlays explicitly cited in reviewer notes highlight key facts and voting rights messaging"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.3,
+     "low": -0.84,
+     "high": 3.44,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.98,
+     "low": -0.57,
+     "high": 2.53,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.39,
+     "low": -0.77,
+     "high": 3.56,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-hlvVHixBwzc": {
+   "codes": {
+    "technique_plain_folks": 0.3,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.7,
+    "messenger_every_people": 0.3,
+    "messenger_politician": 0.6,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.1,
+    "narration_explain_facts": 0.8,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.9,
+    "fact_cite_yes": 0.5,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.7,
+    "emotion_enthusiasm": 0.4,
+    "emotion_fear": 0.3,
+    "emotion_hope_pride": 0.3,
+    "emotion_humor": 0.1,
+    "emotion_somber": 0.4,
+    "tone_positive": 0.2,
+    "tone_negative": 0.8,
+    "tone_contrast": 0.7,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.4,
+    "style_amateur": 0.4,
+    "style_text_on_screen": 0.9,
+    "style_animation": 0.0,
+    "how_scripted": 0.7
+   },
+   "notes": {
+    "technique_neg_testimonial": "Lander's own testimony is used against him as a negative example.",
+    "messenger_politician": "Comptroller Brad Lander is featured prominently speaking on screen.",
+    "narration_explain_facts": "Multiple statistics cited: 1 million voters barred, 54% people of color, 85% of US cities.",
+    "narration_advocate_opinions": "Explicitly argues for open primaries and challenges Lander's position.",
+    "policy_facts": "Specific policy claims about primary funding, voter exclusion, and open primary prevalence.",
+    "fact_new_yes": "Stat that 85% of US cities have open primaries is likely unfamiliar to most viewers.",
+    "emotion_anger": "Rhetorical challenge 'When did progressives become so conservative?' signals indignation.",
+    "tone_negative": "Framing centers on attacking Lander's position and the broken status quo.",
+    "tone_contrast": "Contrasts progressive ideals with Lander's conservative defense of exclusionary primaries.",
+    "style_text_on_screen": "Reviewer confirms captions and text overlays with key questions and calls to action.",
+    "how_scripted": "Narration is tightly structured with statistics and rhetorical questions, clearly written."
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.23,
+     "low": -0.91,
+     "high": 3.37,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.76,
+     "low": -0.79,
+     "high": 2.31,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.25,
+     "low": -0.92,
+     "high": 3.41,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-JP8SHaVl674": {
+   "codes": {
+    "technique_plain_folks": 0.4,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.3,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.05,
+    "narration_explain_facts": 0.85,
+    "narration_advocate_opinions": 0.95,
+    "policy_facts": 0.8,
+    "fact_cite_yes": 0.7,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.45,
+    "emotion_enthusiasm": 0.55,
+    "emotion_fear": 0.35,
+    "emotion_hope_pride": 0.3,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.3,
+    "tone_positive": 0.3,
+    "tone_negative": 0.55,
+    "tone_contrast": 0.75,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.25,
+    "style_amateur": 0.6,
+    "style_text_on_screen": 0.8,
+    "style_animation": 0.0,
+    "how_scripted": 0.35
+   },
+   "notes": {
+    "narration_explain_facts": "Speaker walks through state-level examples and systemic patterns around primaries and gerrymandering",
+    "narration_advocate_opinions": "Core message is a clear opinion-driven argument for open primaries and re-educating voters",
+    "policy_facts": "References closed primaries, gerrymandering, and specific states with independent voter statistics",
+    "fact_cite_yes": "Explicitly cites a Washington Post editorial as the source for claims made",
+    "fact_new_yes": "Framing of Democrats as also suppressing independent voters is likely unfamiliar to many viewers",
+    "emotion_enthusiasm": "Speaker becomes increasingly animated when urging action on primary participation",
+    "tone_negative": "Criticizes both parties for locking down the system and suppressing voter participation",
+    "tone_contrast": "Directly contrasts Republican vs. Democrat narratives and round-one vs. round-two competition dynamics",
+    "style_amateur": "Single static shot in a home-like setting with no production crew or professional framing",
+    "style_text_on_screen": "Captions and text overlays are present throughout to highlight key points"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.74,
+     "low": -1.4,
+     "high": 2.88,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.51,
+     "low": -1.04,
+     "high": 2.06,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.04,
+     "low": -1.13,
+     "high": 3.2,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-k36hkFq7_EI": {
+   "codes": {
+    "technique_plain_folks": 0.55,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.2,
+    "messenger_politician": 0.7,
+    "messenger_celebrity": 0.1,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.35,
+    "narration_explain_facts": 0.2,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.3,
+    "fact_cite_yes": 0.0,
+    "fact_new_yes": 0.2,
+    "emotion_anger": 0.75,
+    "emotion_enthusiasm": 0.6,
+    "emotion_fear": 0.2,
+    "emotion_hope_pride": 0.45,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.3,
+    "tone_positive": 0.35,
+    "tone_negative": 0.55,
+    "tone_contrast": 0.6,
+    "explicit_vote_for": 0.1,
+    "production_value_high": 0.2,
+    "style_amateur": 0.6,
+    "style_text_on_screen": 0.0,
+    "style_animation": 0.0,
+    "how_scripted": 0.3
+   },
+   "notes": {
+    "technique_plain_folks": "Speaker positions himself as an outsider fighting the establishment, aligning with ordinary voters",
+    "messenger_politician": "DEAN sign and political framing strongly suggest a candidate or political figure speaking",
+    "narration_advocate_opinions": "Entire speech is opinion-driven, criticizing the two-party system and advocating reform",
+    "emotion_anger": "Explicit frustration with duopoly, 'I won't stand for it' and 'shush up' convey clear anger",
+    "emotion_enthusiasm": "Energetic delivery and rallying language toward supporters signals enthusiasm",
+    "tone_negative": "Criticism of duopoly, corruption, and demeaning voters sets a predominantly negative framing",
+    "tone_contrast": "Draws clear contrast between the two parties protecting power and his reform-oriented mission",
+    "style_amateur": "Static shot, no music, no text overlays, minimal production suggests informal or low-budget recording"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.96,
+     "low": -1.18,
+     "high": 3.1,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 1.1,
+     "low": -0.45,
+     "high": 2.65,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.58,
+     "low": -0.58,
+     "high": 3.75,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-BkJG9M60CzA": {
+   "codes": {
+    "technique_plain_folks": 0.6,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.5,
+    "messenger_politician": 0.1,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.05,
+    "narration_explain_facts": 0.85,
+    "narration_advocate_opinions": 0.8,
+    "policy_facts": 0.8,
+    "fact_cite_yes": 0.1,
+    "fact_new_yes": 0.5,
+    "emotion_anger": 0.1,
+    "emotion_enthusiasm": 0.45,
+    "emotion_fear": 0.05,
+    "emotion_hope_pride": 0.3,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.1,
+    "tone_positive": 0.55,
+    "tone_negative": 0.2,
+    "tone_contrast": 0.65,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.3,
+    "style_amateur": 0.45,
+    "style_text_on_screen": 0.55,
+    "style_animation": 0.0,
+    "how_scripted": 0.25
+   },
+   "notes": {
+    "technique_plain_folks": "Speaker in baseball cap with casual delivery presents as an ordinary citizen advocate",
+    "narration_explain_facts": "Bulk of the video is a clear explanation of how partisan vs. open primaries work",
+    "narration_advocate_opinions": "Speaker explicitly argues open primaries are better and explains why they matter",
+    "policy_facts": "Describes specific electoral policy mechanics \u2014 partisan primaries, open primaries, runoff structure",
+    "tone_positive": "Framing around expanding voter access and inclusion carries a constructive, positive tone",
+    "tone_contrast": "Directly contrasts partisan primary system with proposed open primary system throughout",
+    "style_text_on_screen": "OpenPrimaries.org URL displayed on screen throughout the video"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.87,
+     "low": -1.27,
+     "high": 3.01,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.8,
+     "low": -0.75,
+     "high": 2.35,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.35,
+     "low": -0.82,
+     "high": 3.51,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-bmf2GjzfgZA": {
+   "codes": {
+    "technique_plain_folks": 0.75,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.05,
+    "messenger_every_people": 0.8,
+    "messenger_politician": 0.05,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.05,
+    "narration_explain_facts": 0.85,
+    "narration_advocate_opinions": 0.7,
+    "policy_facts": 0.75,
+    "fact_cite_yes": 0.1,
+    "fact_new_yes": 0.55,
+    "emotion_anger": 0.05,
+    "emotion_enthusiasm": 0.2,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.1,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.15,
+    "tone_positive": 0.45,
+    "tone_negative": 0.2,
+    "tone_contrast": 0.65,
+    "explicit_vote_for": 0.1,
+    "production_value_high": 0.15,
+    "style_amateur": 0.7,
+    "style_text_on_screen": 0.6,
+    "style_animation": 0.0,
+    "how_scripted": 0.15
+   },
+   "notes": {
+    "technique_plain_folks": "Man in baseball cap and casual checkered shirt presents as an ordinary person",
+    "messenger_every_people": "No indicators of celebrity, politician, or expert status; appears to be a regular person",
+    "narration_explain_facts": "Bulk of the transcript is an explanation of how top-two vs. partisan primaries affect independent voters",
+    "narration_advocate_opinions": "Implicitly advocates for top-two system as better for independent voters",
+    "policy_facts": "Describes mechanics of open partisan primaries and top-two systems and their effects",
+    "fact_new_yes": "The specific dilution mechanism for independent voters in open partisan primaries is a relatively niche point",
+    "tone_contrast": "Explicitly contrasts top-two system with open partisan primary system",
+    "style_amateur": "Indoor window setting, single static shot, casual dress, no production polish",
+    "style_text_on_screen": "OpenPrimaries.org URL displayed at bottom of screen"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.97,
+     "low": -1.17,
+     "high": 3.11,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.95,
+     "low": -0.6,
+     "high": 2.5,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.45,
+     "low": -0.72,
+     "high": 3.61,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-qC7KwJRE8j8": {
+   "codes": {
+    "technique_plain_folks": 0.6,
+    "technique_pos_testimonial": 0.7,
+    "technique_neg_testimonial": 0.3,
+    "messenger_every_people": 0.5,
+    "messenger_politician": 0.2,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.8,
+    "narration_explain_facts": 0.5,
+    "narration_advocate_opinions": 0.6,
+    "policy_facts": 0.5,
+    "fact_cite_yes": 0.2,
+    "fact_new_yes": 0.5,
+    "emotion_anger": 0.2,
+    "emotion_enthusiasm": 0.4,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.4,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.1,
+    "tone_positive": 0.6,
+    "tone_negative": 0.3,
+    "tone_contrast": 0.6,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.4,
+    "style_amateur": 0.5,
+    "style_text_on_screen": 0.7,
+    "style_animation": 0.0,
+    "how_scripted": 0.2
+   },
+   "notes": {
+    "technique_plain_folks": "Speaker recounts a casual lunch meeting, framing himself as an ordinary advocate",
+    "technique_pos_testimonial": "Relays a congressman's positive account of open primaries leading to his electoral win",
+    "messenger_every_people": "Speaker appears to be a regular citizen advocate rather than a notable public figure",
+    "narration_personal_story": "Tells a first-person anecdote about a lunch meeting and the congressman's experience",
+    "narration_advocate_opinions": "Implicitly argues open primaries produce better, more inclusive representation",
+    "tone_positive": "Story ends on a winning note, framing open primaries as a success",
+    "tone_contrast": "Contrasts the old incumbent's exclusionary approach with the new candidate's inclusive strategy",
+    "style_text_on_screen": "OpenPrimaries.org displayed on screen throughout"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.95,
+     "low": -1.19,
+     "high": 3.09,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.72,
+     "low": -0.84,
+     "high": 2.27,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.16,
+     "low": -1.01,
+     "high": 3.32,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-8yCwABY3MTs": {
+   "codes": {
+    "technique_plain_folks": 0.85,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.2,
+    "messenger_every_people": 0.9,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.55,
+    "narration_explain_facts": 0.7,
+    "narration_advocate_opinions": 0.85,
+    "policy_facts": 0.65,
+    "fact_cite_yes": 0.2,
+    "fact_new_yes": 0.45,
+    "emotion_anger": 0.3,
+    "emotion_enthusiasm": 0.2,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.2,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.35,
+    "tone_positive": 0.3,
+    "tone_negative": 0.55,
+    "tone_contrast": 0.6,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.1,
+    "style_amateur": 0.8,
+    "style_text_on_screen": 0.0,
+    "style_animation": 0.0,
+    "how_scripted": 0.15
+   },
+   "notes": {
+    "technique_plain_folks": "Ordinary man speaking casually about personal tax grievance",
+    "messenger_every_people": "Appears to be a regular citizen, no indicators of status or fame",
+    "narration_personal_story": "Frames issue through personal experience of paying taxes",
+    "narration_explain_facts": "Cites approximate share of independents in Delaware to support point",
+    "narration_advocate_opinions": "Clearly argues that independents deserve a voice in primaries",
+    "policy_facts": "References primary election funding and voter eligibility rules",
+    "tone_negative": "Frames current system as unfair to independent voters",
+    "tone_contrast": "Contrasts taxpaying independents against party-exclusive primary system",
+    "style_amateur": "Outdoor single-shot, no music, no captions, minimal production"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.22,
+     "low": -0.92,
+     "high": 3.36,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 1.09,
+     "low": -0.46,
+     "high": 2.64,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.7,
+     "low": -0.47,
+     "high": 3.86,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-Eg8mPYYr9OU": {
+   "codes": {
+    "technique_plain_folks": 0.5,
+    "technique_pos_testimonial": 0.6,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.4,
+    "messenger_politician": 0.2,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.2,
+    "narration_explain_facts": 0.8,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.8,
+    "fact_cite_yes": 0.3,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.1,
+    "emotion_enthusiasm": 0.7,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.6,
+    "emotion_humor": 0.2,
+    "emotion_somber": 0.1,
+    "tone_positive": 0.8,
+    "tone_negative": 0.2,
+    "tone_contrast": 0.5,
+    "explicit_vote_for": 0.4,
+    "production_value_high": 0.8,
+    "style_amateur": 0.0,
+    "style_text_on_screen": 0.9,
+    "style_animation": 0.2,
+    "how_scripted": 0.5
+   },
+   "notes": {
+    "technique_pos_testimonial": "Murkowski re-election cited as a positive example of reform working",
+    "narration_explain_facts": "Explains specific mechanics of primary reform, state counts, and congressional impact",
+    "narration_advocate_opinions": "Strongly advocates for electoral reform throughout as the solution to political dysfunction",
+    "policy_facts": "Specific claims about 10 states, 20 senators, 100 representatives and reform outcomes",
+    "fact_new_yes": "Specific threshold claim that only 10 states needed for meaningful congressional change is likely unfamiliar",
+    "emotion_enthusiasm": "Speaker and framing convey excitement and optimism about reform possibilities",
+    "emotion_hope_pride": "Closes with hopeful vision of more candidates and voter excitement",
+    "tone_positive": "Overall framing is solution-oriented and optimistic about fixing politics",
+    "production_value_high": "TED stage setting, text overlays, maps, tables, and varied visuals indicate professional production",
+    "style_text_on_screen": "Reviewer notes confirm text overlays with statistics and reform concepts throughout"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.01,
+     "low": -1.13,
+     "high": 3.15,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.7,
+     "low": -0.85,
+     "high": 2.25,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.15,
+     "low": -1.02,
+     "high": 3.31,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-A8fnhDBLfnQ": {
+   "codes": {
+    "technique_plain_folks": 0.2,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.3,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.05,
+    "narration_explain_facts": 0.75,
+    "narration_advocate_opinions": 0.95,
+    "policy_facts": 0.7,
+    "fact_cite_yes": 0.65,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.45,
+    "emotion_enthusiasm": 0.2,
+    "emotion_fear": 0.45,
+    "emotion_hope_pride": 0.05,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.55,
+    "tone_positive": 0.05,
+    "tone_negative": 0.8,
+    "tone_contrast": 0.4,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.6,
+    "style_amateur": 0.1,
+    "style_text_on_screen": 0.9,
+    "style_animation": 0.0,
+    "how_scripted": 0.45
+   },
+   "notes": {
+    "narration_explain_facts": "Cites Dario Amodei's statement and explains structural dynamics of congressional elections",
+    "narration_advocate_opinions": "Strongly argues Congress is not incentivized to solve problems like AI regulation",
+    "policy_facts": "References specific claim about 90% of seats decided before general election and AI displacing knowledge work",
+    "fact_cite_yes": "Explicitly attributes the 50% AI claim to Anthropic CEO Dario Amodei by name",
+    "fact_new_yes": "The 50% knowledge work displacement statistic and 90% foregone seats figure are likely unfamiliar to most viewers",
+    "emotion_somber": "Tone is serious and critical, lamenting congressional dysfunction without optimism",
+    "tone_negative": "Framing is consistently critical of Congress's failure to act on major issues",
+    "production_value_high": "Studio-like indoor setting with captions, text overlays, and visual variety suggests professional production",
+    "style_text_on_screen": "Captions and topic-related text overlays are explicitly noted as present throughout"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.85,
+     "low": -1.29,
+     "high": 2.99,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.29,
+     "low": -1.26,
+     "high": 1.84,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 0.59,
+     "low": -1.58,
+     "high": 2.75,
+     "average": 1.405
+    }
+   }
+  },
+  "yt--50yfo3yqNg": {
+   "codes": {
+    "technique_plain_folks": 0.4,
+    "technique_pos_testimonial": 0.2,
+    "technique_neg_testimonial": 0.3,
+    "messenger_every_people": 0.1,
+    "messenger_politician": 0.5,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.1,
+    "narration_personal_story": 0.2,
+    "narration_explain_facts": 0.9,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.9,
+    "fact_cite_yes": 0.3,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.6,
+    "emotion_enthusiasm": 0.3,
+    "emotion_fear": 0.5,
+    "emotion_hope_pride": 0.2,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.5,
+    "tone_positive": 0.1,
+    "tone_negative": 0.8,
+    "tone_contrast": 0.6,
+    "explicit_vote_for": 0.1,
+    "production_value_high": 0.6,
+    "style_amateur": 0.1,
+    "style_text_on_screen": 0.9,
+    "style_animation": 0.0,
+    "how_scripted": 0.7
+   },
+   "notes": {
+    "narration_explain_facts": "Anchor walks through how closed primaries work and their effects with specific statistics",
+    "narration_advocate_opinions": "Explicitly calls closed primaries 'insane' and argues they hurt the country",
+    "policy_facts": "Cites specific figures like 'over half the states,' '18% of Americans vote in primaries'",
+    "fact_new_yes": "The 18% primary electorate statistic and 'vote no hope yes' dynamic are likely unfamiliar to many viewers",
+    "emotion_anger": "Speaker uses charged language like 'insane,' 'not welcome,' and 'really, really hurting our country'",
+    "tone_negative": "Framing is predominantly critical of closed primaries and their corrosive effects",
+    "tone_contrast": "Contrasts independent voters' exclusion against ideals of democracy and 250 years of independence",
+    "production_value_high": "Studio setting with Capitol backdrop, captions, and text overlays suggest professional production",
+    "style_text_on_screen": "Reviewer confirms captions and key-point text overlays are present throughout",
+    "how_scripted": "Delivery is polished and structured, consistent with prepared remarks or teleprompter use"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.23,
+     "low": -0.9,
+     "high": 3.37,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.8,
+     "low": -0.75,
+     "high": 2.35,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.16,
+     "low": -1.01,
+     "high": 3.33,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-rUYw1phm3NM": {
+   "codes": {
+    "technique_plain_folks": 0.2,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.1,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.0,
+    "narration_explain_facts": 0.9,
+    "narration_advocate_opinions": 0.95,
+    "policy_facts": 0.95,
+    "fact_cite_yes": 0.2,
+    "fact_new_yes": 0.75,
+    "emotion_anger": 0.55,
+    "emotion_enthusiasm": 0.3,
+    "emotion_fear": 0.5,
+    "emotion_hope_pride": 0.45,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.6,
+    "tone_positive": 0.4,
+    "tone_negative": 0.55,
+    "tone_contrast": 0.8,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.5,
+    "style_amateur": 0.1,
+    "style_text_on_screen": 0.6,
+    "style_animation": 0.2,
+    "how_scripted": 0.9
+   },
+   "notes": {
+    "narration_explain_facts": "Core structure is presenting electoral statistics and systemic facts about primaries",
+    "narration_advocate_opinions": "Explicitly argues open primaries are the solution and current system is broken",
+    "policy_facts": "Specific claims about House races, independent voter exclusion, and primary structure",
+    "fact_new_yes": "Statistics like 10% electing 90% of House and 16.5M barred independents are likely unfamiliar to most viewers",
+    "emotion_anger": "Framing of 'shocking,' 'abysmal,' and voter exclusion invites indignation",
+    "emotion_somber": "Serious, alarmed tone throughout about democratic dysfunction",
+    "tone_contrast": "Explicitly contrasts broken current system with open primary solution",
+    "tone_negative": "Majority of content frames current system as failing democracy",
+    "style_text_on_screen": "Statistics and key figures likely displayed as on-screen text given data-heavy content",
+    "how_scripted": "Tightly written with precise statistics and rhetorical structure throughout"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.98,
+     "low": -1.16,
+     "high": 3.12,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.65,
+     "low": -0.9,
+     "high": 2.2,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.16,
+     "low": -1.0,
+     "high": 3.33,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-HveOZAlfKog": {
+   "codes": {
+    "technique_plain_folks": 0.3,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.4,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.05,
+    "narration_explain_facts": 0.9,
+    "narration_advocate_opinions": 0.85,
+    "policy_facts": 0.8,
+    "fact_cite_yes": 0.2,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.15,
+    "emotion_enthusiasm": 0.4,
+    "emotion_fear": 0.2,
+    "emotion_hope_pride": 0.1,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.3,
+    "tone_positive": 0.2,
+    "tone_negative": 0.35,
+    "tone_contrast": 0.75,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.45,
+    "style_amateur": 0.35,
+    "style_text_on_screen": 0.55,
+    "style_animation": 0.0,
+    "how_scripted": 0.35
+   },
+   "notes": {
+    "narration_explain_facts": "Speaker walks through primary turnout numbers, specific race outcomes, and structural electoral rules in detail.",
+    "narration_advocate_opinions": "Speaker explicitly frames low primary participation as 'the primary problem' and advocates for Alaska-style open primaries.",
+    "policy_facts": "References specific turnout figures (17%), named candidates, runoff mechanics, and Alaska's primary system as policy contrast.",
+    "fact_new_yes": "Alaska-style primary comparison and specific 17% turnout figure likely unfamiliar to average viewer.",
+    "tone_contrast": "Directly contrasts Democratic and Republican primary outcomes, and Texas vs. Alaska electoral systems.",
+    "style_text_on_screen": "Campaign signs for Crockett and Tallarico visible on screen as text overlays."
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.87,
+     "low": -1.27,
+     "high": 3.0,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.65,
+     "low": -0.9,
+     "high": 2.2,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.11,
+     "low": -1.06,
+     "high": 3.27,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-hMOu1Ex6df4": {
+   "codes": {
+    "technique_plain_folks": 0.7,
+    "technique_pos_testimonial": 0.3,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.75,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.2,
+    "narration_explain_facts": 0.85,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.8,
+    "fact_cite_yes": 0.8,
+    "fact_new_yes": 0.65,
+    "emotion_anger": 0.3,
+    "emotion_enthusiasm": 0.5,
+    "emotion_fear": 0.2,
+    "emotion_hope_pride": 0.4,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.35,
+    "tone_positive": 0.55,
+    "tone_negative": 0.45,
+    "tone_contrast": 0.7,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.8,
+    "style_amateur": 0.05,
+    "style_text_on_screen": 0.9,
+    "style_animation": 0.3,
+    "how_scripted": 0.45
+   },
+   "notes": {
+    "technique_plain_folks": "Speaker presents as an ordinary concerned citizen sharing a discovery, not an authority figure",
+    "messenger_every_people": "No indicators of celebrity, politician, or official status; appears to be a regular person",
+    "narration_explain_facts": "Core of the message is walking through electoral statistics and structural mechanics",
+    "narration_advocate_opinions": "Explicitly argues for election reform as a solution to political instability",
+    "policy_facts": "Discusses primary election structure and its effects on candidate selection and governance",
+    "fact_cite_yes": "Explicitly names Unite America as the source of the 90%/10% statistic",
+    "fact_new_yes": "The specific framing that 10% of voters decide 90% of House races is likely unfamiliar to most viewers",
+    "tone_positive": "Ends on a constructive, solution-oriented note about election reform",
+    "tone_contrast": "Explicitly contrasts Democratic and Republican pendulum swings to illustrate dysfunction",
+    "production_value_high": "Indoor studio, professional lighting, synchronized captions, dynamic text overlays indicate professional production",
+    "style_text_on_screen": "Reviewer notes dynamic overlays showing statistics and key phrases throughout"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.2,
+     "low": -0.94,
+     "high": 3.34,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.62,
+     "low": -0.93,
+     "high": 2.17,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.06,
+     "low": -1.11,
+     "high": 3.22,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-HJXSyLxPoco": {
+   "codes": {
+    "technique_plain_folks": 0.9,
+    "technique_pos_testimonial": 0.85,
+    "technique_neg_testimonial": 0.2,
+    "messenger_every_people": 0.95,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.4,
+    "narration_explain_facts": 0.9,
+    "narration_advocate_opinions": 0.95,
+    "policy_facts": 0.95,
+    "fact_cite_yes": 0.6,
+    "fact_new_yes": 0.7,
+    "emotion_anger": 0.2,
+    "emotion_enthusiasm": 0.8,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.85,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.1,
+    "tone_positive": 0.9,
+    "tone_negative": 0.2,
+    "tone_contrast": 0.75,
+    "explicit_vote_for": 0.1,
+    "production_value_high": 0.4,
+    "style_amateur": 0.5,
+    "style_text_on_screen": 0.95,
+    "style_animation": 0.0,
+    "how_scripted": 0.85
+   },
+   "notes": {
+    "technique_plain_folks": "Claire introduces herself as an everyday Alaskan voter, not an official or expert",
+    "technique_pos_testimonial": "Claire endorses Alaska's ranked-choice/top-four primary system positively throughout",
+    "messenger_every_people": "Claire is presented as an ordinary citizen from Alaska with no stated credentials",
+    "narration_explain_facts": "Provides specific turnout statistics and explains how the top-four primary system works",
+    "narration_advocate_opinions": "Strongly advocates that Alaska's election system produces better leaders and governance",
+    "policy_facts": "Cites 37% primary turnout, national average of 21%, and describes the top-four primary mechanics",
+    "fact_cite_yes": "References 2024 Alaska primary turnout figure of 37% as third highest nationally, implying a data source",
+    "fact_new_yes": "Specific Alaska turnout statistics and top-four primary details are likely unfamiliar to most viewers",
+    "emotion_enthusiasm": "Claire's delivery and framing of Alaska's system as 'revolutionary' conveys clear enthusiasm",
+    "emotion_hope_pride": "Strong pride in Alaska's independent approach and optimism about electoral reform outcomes",
+    "tone_positive": "Overall framing celebrates Alaska's system and its results",
+    "tone_contrast": "Explicitly contrasts Alaska's open primary with partisan primaries elsewhere in the country",
+    "style_text_on_screen": "Reviewer confirms captions and text overlays present throughout",
+    "how_scripted": "Delivery is polished and information-dense, consistent with a prepared script"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.24,
+     "low": -0.89,
+     "high": 3.38,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.83,
+     "low": -0.72,
+     "high": 2.38,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.48,
+     "low": -0.68,
+     "high": 3.65,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-G41UEg-RnGc": {
+   "codes": {
+    "technique_plain_folks": 0.3,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.3,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.0,
+    "narration_explain_facts": 0.85,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.8,
+    "fact_cite_yes": 0.2,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.2,
+    "emotion_enthusiasm": 0.4,
+    "emotion_fear": 0.35,
+    "emotion_hope_pride": 0.45,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.3,
+    "tone_positive": 0.35,
+    "tone_negative": 0.4,
+    "tone_contrast": 0.75,
+    "explicit_vote_for": 0.55,
+    "production_value_high": 0.65,
+    "style_amateur": 0.1,
+    "style_text_on_screen": 0.95,
+    "style_animation": 0.7,
+    "how_scripted": 0.3
+   },
+   "notes": {
+    "narration_explain_facts": "Speaker walks through how primaries work state by state with specific examples",
+    "narration_advocate_opinions": "Clearly argues primaries are broken and independents should serve as a conscience for America",
+    "policy_facts": "References specific states with open primaries and the 90% stat about congressional races decided in primaries",
+    "fact_new_yes": "The 90% figure and state-by-state primary structure may be unfamiliar to many viewers",
+    "tone_contrast": "Explicitly contrasts partisan primary voters vs. independents, and left vs. right extremes",
+    "explicit_vote_for": "Ends with a call to action referencing primaries and independent voters speaking out",
+    "production_value_high": "Studio setting with suit-wearing presenter and animated graphics suggests professional production",
+    "style_text_on_screen": "Reviewer notes prominent text overlays throughout",
+    "style_animation": "Mix of live-action and illustrated/animated graphics noted by reviewer"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.69,
+     "low": -1.45,
+     "high": 2.83,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.57,
+     "low": -0.98,
+     "high": 2.12,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 0.93,
+     "low": -1.24,
+     "high": 3.1,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-In8GcKNNTFI": {
+   "codes": {
+    "technique_plain_folks": 0.3,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.2,
+    "messenger_politician": 0.4,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.05,
+    "narration_explain_facts": 0.85,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.85,
+    "fact_cite_yes": 0.2,
+    "fact_new_yes": 0.35,
+    "emotion_anger": 0.45,
+    "emotion_enthusiasm": 0.2,
+    "emotion_fear": 0.5,
+    "emotion_hope_pride": 0.2,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.6,
+    "tone_positive": 0.15,
+    "tone_negative": 0.7,
+    "tone_contrast": 0.75,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.7,
+    "style_amateur": 0.1,
+    "style_text_on_screen": 0.95,
+    "style_animation": 0.0,
+    "how_scripted": 0.55
+   },
+   "notes": {
+    "narration_explain_facts": "Speaker lays out constitutional structure of war powers and historical erosion of congressional authority",
+    "narration_advocate_opinions": "Clearly argues Congress must reclaim war powers and accountability from the executive branch",
+    "policy_facts": "References Article One, war declaration authority, and two-year electoral accountability of Congress",
+    "emotion_somber": "Deliberate pace, subtle music, and serious framing of democratic erosion create a somber mood",
+    "tone_negative": "Frames current situation as a dangerous concentration of power and democratic failure",
+    "tone_contrast": "Explicitly contrasts Congress's constitutional role with the executive's accumulated power",
+    "production_value_high": "Studio setting, captions, text overlays, archival footage, and background music indicate professional production",
+    "style_text_on_screen": "Reviewer confirms multiple text overlays reinforcing key messages throughout",
+    "how_scripted": "Delivery is measured and structured, suggesting at least partial scripting or talking points"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.97,
+     "low": -1.16,
+     "high": 3.11,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.68,
+     "low": -0.87,
+     "high": 2.23,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.02,
+     "low": -1.14,
+     "high": 3.19,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-BGkoL176bcI": {
+   "codes": {
+    "technique_plain_folks": 0.3,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.2,
+    "messenger_politician": 0.2,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.4,
+    "narration_explain_facts": 0.85,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.8,
+    "fact_cite_yes": 0.1,
+    "fact_new_yes": 0.55,
+    "emotion_anger": 0.2,
+    "emotion_enthusiasm": 0.6,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.4,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.6,
+    "tone_negative": 0.3,
+    "tone_contrast": 0.55,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.4,
+    "style_amateur": 0.3,
+    "style_text_on_screen": 0.2,
+    "style_animation": 0.0,
+    "how_scripted": 0.55
+   },
+   "notes": {
+    "narration_explain_facts": "Speaker walks through history of primaries and explains how the current system works and when it was created",
+    "narration_advocate_opinions": "Speaker explicitly advocates for replacing closed primaries and plurality voting as a personal mission",
+    "policy_facts": "Describes specific policy changes: open primaries and majority-winner rules at the state level",
+    "fact_new_yes": "Historical framing that primaries were invented ~100 years ago and not in the Constitution may be new to many viewers",
+    "emotion_enthusiasm": "Speaker conveys clear passion and optimism about solving the primary problem through Unite America",
+    "tone_positive": "Framed as a solvable problem with an actionable solution, forward-looking and constructive",
+    "tone_contrast": "Contrasts old smoke-filled rooms, current broken primaries, and the proposed new system",
+    "how_scripted": "Delivery is polished and organized with clear talking points, suggesting prepared remarks"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.96,
+     "low": -1.18,
+     "high": 3.1,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.78,
+     "low": -0.77,
+     "high": 2.33,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.36,
+     "low": -0.8,
+     "high": 3.53,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-zuq_oPyuRnY": {
+   "codes": {
+    "technique_plain_folks": 0.85,
+    "technique_pos_testimonial": 0.7,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.75,
+    "messenger_politician": 0.2,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.4,
+    "narration_explain_facts": 0.75,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.8,
+    "fact_cite_yes": 0.3,
+    "fact_new_yes": 0.5,
+    "emotion_anger": 0.2,
+    "emotion_enthusiasm": 0.65,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.6,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.1,
+    "tone_positive": 0.8,
+    "tone_negative": 0.2,
+    "tone_contrast": 0.45,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.35,
+    "style_amateur": 0.3,
+    "style_text_on_screen": 0.95,
+    "style_animation": 0.0,
+    "how_scripted": 0.8
+   },
+   "notes": {
+    "technique_plain_folks": "Speaker opens with 'if you're like me' and presents herself as an ordinary concerned citizen",
+    "technique_pos_testimonial": "Former congressional staffer endorsing the Ranked Choice Voting Act by name",
+    "messenger_every_people": "Presented as a relatable individual despite insider background",
+    "narration_explain_facts": "Describes what the bill would do and its scope across House and Senate elections",
+    "narration_advocate_opinions": "Explicitly argues RCV will reduce toxic politics and improve Congress",
+    "policy_facts": "References a specific bill and its application to all US House and Senate elections",
+    "emotion_enthusiasm": "Upbeat framing around making elections and Congress better",
+    "emotion_hope_pride": "Forward-looking promise of a Congress that works better for all",
+    "tone_positive": "Overall message is solution-oriented and optimistic about reform",
+    "style_text_on_screen": "Captions and text overlays promoting the Ranked Choice Voting Act are present",
+    "how_scripted": "Delivery is polished and message is tightly structured for a 30-second spot"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.12,
+     "low": -1.02,
+     "high": 3.26,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.69,
+     "low": -0.86,
+     "high": 2.24,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.24,
+     "low": -0.92,
+     "high": 3.41,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-7c6mMrC9RB0": {
+   "codes": {
+    "technique_plain_folks": 0.3,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.5,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.0,
+    "narration_explain_facts": 0.95,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.95,
+    "fact_cite_yes": 0.8,
+    "fact_new_yes": 0.75,
+    "emotion_anger": 0.2,
+    "emotion_enthusiasm": 0.3,
+    "emotion_fear": 0.2,
+    "emotion_hope_pride": 0.3,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.5,
+    "tone_negative": 0.4,
+    "tone_contrast": 0.7,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.3,
+    "style_amateur": 0.6,
+    "style_text_on_screen": 0.9,
+    "style_animation": 0.0,
+    "how_scripted": 0.85
+   },
+   "notes": {
+    "narration_explain_facts": "Bulk of video walks through vote percentages, candidate withdrawals, and historical primary data in detail",
+    "narration_advocate_opinions": "Explicitly argues current voting system is flawed and advocates for ranked choice voting as the solution",
+    "policy_facts": "Presents specific electoral statistics and policy mechanism of ranked choice voting throughout",
+    "fact_cite_yes": "References fairvote.org at end and cites specific election results from 2022 and 2020 Wisconsin primaries",
+    "fact_new_yes": "Specific stats about withdrawn candidates and their vote share are unlikely to be widely known",
+    "tone_contrast": "Contrasts broken choose-one system with ranked choice voting solution throughout",
+    "style_amateur": "White wall background and single woman in striped top suggests low-budget, informal production",
+    "style_text_on_screen": "Reviewer confirms text overlays with election results and key information present",
+    "how_scripted": "Detailed statistics and structured argument delivered in clearly prepared, scripted manner"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.9,
+     "low": -1.24,
+     "high": 3.04,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.47,
+     "low": -1.08,
+     "high": 2.02,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.09,
+     "low": -1.08,
+     "high": 3.26,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-t5Kn1BqYRLs": {
+   "codes": {
+    "technique_plain_folks": 0.95,
+    "technique_pos_testimonial": 0.95,
+    "technique_neg_testimonial": 0.05,
+    "messenger_every_people": 0.95,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.85,
+    "narration_explain_facts": 0.6,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.5,
+    "fact_cite_yes": 0.05,
+    "fact_new_yes": 0.4,
+    "emotion_anger": 0.05,
+    "emotion_enthusiasm": 0.8,
+    "emotion_fear": 0.05,
+    "emotion_hope_pride": 0.6,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.05,
+    "tone_positive": 0.95,
+    "tone_negative": 0.1,
+    "tone_contrast": 0.4,
+    "explicit_vote_for": 0.2,
+    "production_value_high": 0.55,
+    "style_amateur": 0.4,
+    "style_text_on_screen": 0.9,
+    "style_animation": 0.0,
+    "how_scripted": 0.3
+   },
+   "notes": {
+    "technique_plain_folks": "Multiple named everyday Maine voters speaking directly to camera about personal voting experience",
+    "technique_pos_testimonial": "Multiple speakers enthusiastically endorse ranked choice voting from personal experience",
+    "messenger_every_people": "Diverse ordinary voters from Maine serve as sole messengers throughout",
+    "narration_personal_story": "Speakers reference specific personal voting experiences including the governor's race",
+    "narration_explain_facts": "Speakers describe how ranked choice voting works mechanically in accessible terms",
+    "narration_advocate_opinions": "Speakers consistently express opinions that ranked choice voting is better and should be supported",
+    "emotion_enthusiasm": "Speakers use positive, upbeat language expressing genuine appreciation for the system",
+    "emotion_hope_pride": "Speakers express pride in Maine's system and hope that votes matter more",
+    "tone_positive": "Overwhelmingly positive framing throughout with no significant negative attacks",
+    "production_value_high": "Outdoor multi-location shoot with diverse subjects, captions, and text overlays suggests organized production",
+    "style_text_on_screen": "Reviewer confirms text overlays summarizing key points are present throughout"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.02,
+     "low": -1.12,
+     "high": 3.16,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.82,
+     "low": -0.73,
+     "high": 2.37,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.25,
+     "low": -0.92,
+     "high": 3.41,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-ig2rJIRDEKo": {
+   "codes": {
+    "technique_plain_folks": 0.2,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.3,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.0,
+    "narration_explain_facts": 0.9,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.8,
+    "fact_cite_yes": 0.5,
+    "fact_new_yes": 0.8,
+    "emotion_anger": 0.1,
+    "emotion_enthusiasm": 0.4,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.3,
+    "emotion_humor": 0.7,
+    "emotion_somber": 0.0,
+    "tone_positive": 0.6,
+    "tone_negative": 0.3,
+    "tone_contrast": 0.7,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.4,
+    "style_amateur": 0.3,
+    "style_text_on_screen": 0.9,
+    "style_animation": 0.2,
+    "how_scripted": 0.85
+   },
+   "notes": {
+    "narration_explain_facts": "Bulk of video explains the Nebraska Senate race mechanics in detail",
+    "narration_advocate_opinions": "Explicitly advocates for ranked choice voting as a solution",
+    "policy_facts": "Describes ranked choice voting policy mechanics and its benefits",
+    "fact_new_yes": "The specific Nebraska multi-party plant scenario is likely unfamiliar to most viewers",
+    "emotion_humor": "Opens with absurdist joke about a dog playing basketball and a plant running for Senate",
+    "tone_positive": "Ends on a constructive, solution-oriented note promoting ranked choice voting",
+    "tone_contrast": "Contrasts the current chaotic spoiler dynamic with the ranked choice voting alternative",
+    "style_text_on_screen": "Reviewer confirms informative text overlays and captions throughout",
+    "how_scripted": "Delivery is clearly scripted with precise policy language and structured argument"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.93,
+     "low": -1.21,
+     "high": 3.07,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.25,
+     "low": -1.3,
+     "high": 1.8,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 0.97,
+     "low": -1.19,
+     "high": 3.14,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-k3lsCHemLwY": {
+   "codes": {
+    "technique_plain_folks": 0.2,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.3,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.1,
+    "narration_explain_facts": 0.95,
+    "narration_advocate_opinions": 0.85,
+    "policy_facts": 0.9,
+    "fact_cite_yes": 0.7,
+    "fact_new_yes": 0.75,
+    "emotion_anger": 0.3,
+    "emotion_enthusiasm": 0.55,
+    "emotion_fear": 0.2,
+    "emotion_hope_pride": 0.4,
+    "emotion_humor": 0.5,
+    "emotion_somber": 0.1,
+    "tone_positive": 0.6,
+    "tone_negative": 0.4,
+    "tone_contrast": 0.75,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.3,
+    "style_amateur": 0.5,
+    "style_text_on_screen": 0.5,
+    "style_animation": 0.1,
+    "how_scripted": 0.8
+   },
+   "notes": {
+    "narration_explain_facts": "Primary mode is explaining how ranked choice voting works and the Dan Sullivan name situation with factual detail",
+    "narration_advocate_opinions": "Clearly advocates for ranked choice voting as superior to plurality systems and frames partisan tricks negatively",
+    "policy_facts": "Explains RCV mechanics, spoiler effect, Florida ghost candidate case, and Alaska election rules",
+    "fact_cite_yes": "References FairVote.org at the end and cites specific Florida 2020 case with vote counts",
+    "fact_new_yes": "Florida ghost candidate story and specific Alaska Dan Sullivan name confusion are likely unfamiliar to most viewers",
+    "tone_contrast": "Contrasts partisan trickery in other states with Alaska's RCV system throughout",
+    "tone_positive": "Ultimately frames RCV as empowering voters and producing legitimate majority winners",
+    "emotion_enthusiasm": "Narrator's tone is energetic and engaged when explaining RCV benefits",
+    "how_scripted": "Detailed statistics, structured argument, and FairVote.org callout indicate scripted delivery"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.03,
+     "low": -1.11,
+     "high": 3.16,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.48,
+     "low": -1.07,
+     "high": 2.03,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.23,
+     "low": -0.94,
+     "high": 3.39,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-7uNrejRqmqs": {
+   "codes": {
+    "technique_plain_folks": 0.2,
+    "technique_pos_testimonial": 0.0,
+    "technique_neg_testimonial": 0.0,
+    "messenger_every_people": 0.4,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.0,
+    "narration_explain_facts": 0.95,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.95,
+    "fact_cite_yes": 0.3,
+    "fact_new_yes": 0.7,
+    "emotion_anger": 0.1,
+    "emotion_enthusiasm": 0.4,
+    "emotion_fear": 0.3,
+    "emotion_hope_pride": 0.3,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.55,
+    "tone_negative": 0.3,
+    "tone_contrast": 0.75,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.3,
+    "style_amateur": 0.5,
+    "style_text_on_screen": 0.95,
+    "style_animation": 0.3,
+    "how_scripted": 0.9
+   },
+   "notes": {
+    "narration_explain_facts": "Video is primarily an explainer about how top-two primaries work and how RCV would change outcomes.",
+    "narration_advocate_opinions": "Clearly advocates for ranked choice voting as a solution to the described problem.",
+    "policy_facts": "Discusses specific electoral mechanics, polling data, and policy alternatives like Alaska's model.",
+    "fact_new_yes": "The specific dynamic of 12 Democrats splitting the vote and the Alaska top-4 model are likely unfamiliar to most viewers.",
+    "tone_positive": "Ends on a constructive, solution-oriented note promoting RCV as an improvement.",
+    "tone_contrast": "Explicitly contrasts current top-two system's flaws with RCV's proposed benefits.",
+    "style_text_on_screen": "Reviewer confirms text overlays with key points highlighted throughout.",
+    "how_scripted": "Delivery is clearly scripted with precise policy language and structured argumentation."
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.77,
+     "low": -1.37,
+     "high": 2.9,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.37,
+     "low": -1.18,
+     "high": 1.92,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 0.97,
+     "low": -1.19,
+     "high": 3.14,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-XPxE92IaJC8": {
+   "codes": {
+    "technique_plain_folks": 0.5,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.3,
+    "messenger_politician": 0.1,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.2,
+    "narration_explain_facts": 0.9,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.8,
+    "fact_cite_yes": 0.6,
+    "fact_new_yes": 0.7,
+    "emotion_anger": 0.2,
+    "emotion_enthusiasm": 0.5,
+    "emotion_fear": 0.3,
+    "emotion_hope_pride": 0.4,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.3,
+    "tone_positive": 0.5,
+    "tone_negative": 0.3,
+    "tone_contrast": 0.5,
+    "explicit_vote_for": 0.1,
+    "production_value_high": 0.4,
+    "style_amateur": 0.2,
+    "style_text_on_screen": 0.5,
+    "style_animation": 0.3,
+    "how_scripted": 0.85
+   },
+   "notes": {
+    "narration_explain_facts": "Bulk of the video explains facts about data centers, local governance, and representation systems",
+    "narration_advocate_opinions": "Clearly advocates for proportional representation and structural electoral reforms",
+    "policy_facts": "Discusses specific policy issues: noise regulations, diesel generators, zoning, proportional representation",
+    "fact_cite_yes": "Explicitly references a Politico article as a source at the start",
+    "fact_new_yes": "Proportional representation connection to local data center governance is likely unfamiliar to most viewers",
+    "how_scripted": "Narration is clearly written and read, with structured argumentation throughout"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.07,
+     "low": -1.07,
+     "high": 3.21,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.66,
+     "low": -0.89,
+     "high": 2.21,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.26,
+     "low": -0.91,
+     "high": 3.43,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-HRDlnl8f35s": {
+   "codes": {
+    "technique_plain_folks": 0.2,
+    "technique_pos_testimonial": 0.1,
+    "technique_neg_testimonial": 0.2,
+    "messenger_every_people": 0.3,
+    "messenger_politician": 0.1,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.1,
+    "narration_explain_facts": 0.95,
+    "narration_advocate_opinions": 0.85,
+    "policy_facts": 0.9,
+    "fact_cite_yes": 0.6,
+    "fact_new_yes": 0.7,
+    "emotion_anger": 0.2,
+    "emotion_enthusiasm": 0.4,
+    "emotion_fear": 0.3,
+    "emotion_hope_pride": 0.5,
+    "emotion_humor": 0.2,
+    "emotion_somber": 0.3,
+    "tone_positive": 0.5,
+    "tone_negative": 0.5,
+    "tone_contrast": 0.8,
+    "explicit_vote_for": 0.0,
+    "production_value_high": 0.4,
+    "style_amateur": 0.5,
+    "style_text_on_screen": 0.95,
+    "style_animation": 0.7,
+    "how_scripted": 0.85
+   },
+   "notes": {
+    "narration_explain_facts": "Bulk of the video systematically explains how the spoiler effect works with real examples",
+    "narration_advocate_opinions": "Clearly advocates for ranked choice voting as the solution to the spoiler problem",
+    "policy_facts": "Describes specific electoral mechanics, RCV policy, and real political events as evidence",
+    "fact_cite_yes": "References named individuals and specific events (Duggan, RFK Jr., Jay Sekulow, Jill Stein) that serve as sourced examples",
+    "fact_new_yes": "Details about Trump lawyer helping Jill Stein get on ballot and RFK urging Libertarian dropout are likely unfamiliar to many viewers",
+    "tone_contrast": "Contrasts current broken spoiler-prone system with the proposed ranked choice voting solution",
+    "style_text_on_screen": "Reviewer notes captions and text overlays are used throughout to highlight key points",
+    "style_animation": "Reviewer notes animated graphics are combined with live-action shots",
+    "how_scripted": "Delivery is clearly prepared and structured, walking through a logical argument with specific examples"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.84,
+     "low": -1.3,
+     "high": 2.98,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.22,
+     "low": -1.33,
+     "high": 1.77,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 0.94,
+     "low": -1.23,
+     "high": 3.1,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-4HJT8ZzXvRE": {
+   "codes": {
+    "technique_plain_folks": 0.3,
+    "technique_pos_testimonial": 0.2,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.3,
+    "messenger_politician": 0.0,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.05,
+    "narration_explain_facts": 0.95,
+    "narration_advocate_opinions": 0.85,
+    "policy_facts": 0.9,
+    "fact_cite_yes": 0.4,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.3,
+    "emotion_enthusiasm": 0.6,
+    "emotion_fear": 0.1,
+    "emotion_hope_pride": 0.5,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.1,
+    "tone_positive": 0.75,
+    "tone_negative": 0.2,
+    "tone_contrast": 0.45,
+    "explicit_vote_for": 0.1,
+    "production_value_high": 0.5,
+    "style_amateur": 0.1,
+    "style_text_on_screen": 0.6,
+    "style_animation": 0.45,
+    "how_scripted": 0.9
+   },
+   "notes": {
+    "narration_explain_facts": "Bulk of the video walks through how RCV works with specific factual claims about costs, adoption numbers, and legislation",
+    "narration_advocate_opinions": "Clearly promotes the Voter Choice Act and RCV as beneficial policy, ending with a call to action",
+    "policy_facts": "Cites ~50 jurisdictions, grant matching funds covering up to half costs, runoff savings \u2014 all policy-specific claims",
+    "fact_new_yes": "Details about the Voter Choice Act grant program and cost-saving mechanism are likely unfamiliar to most viewers",
+    "emotion_enthusiasm": "Upbeat framing of RCV as a 'simple change with a big impact' and positive polling results conveys enthusiasm",
+    "tone_positive": "Primarily frames RCV and the bill in constructive, solution-oriented terms throughout",
+    "style_text_on_screen": "Explanatory advocacy videos of this type typically use on-screen text to reinforce key stats and steps",
+    "how_scripted": "Narration is clearly written and delivered as a polished script with no conversational deviation"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 0.94,
+     "low": -1.2,
+     "high": 3.08,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.52,
+     "low": -1.03,
+     "high": 2.07,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.13,
+     "low": -1.03,
+     "high": 3.3,
+     "average": 1.405
+    }
+   }
+  },
+  "yt-4PJaJvXVCvE": {
+   "codes": {
+    "technique_plain_folks": 0.7,
+    "technique_pos_testimonial": 0.8,
+    "technique_neg_testimonial": 0.1,
+    "messenger_every_people": 0.6,
+    "messenger_politician": 0.5,
+    "messenger_celebrity": 0.0,
+    "messenger_veteran": 0.0,
+    "narration_personal_story": 0.3,
+    "narration_explain_facts": 0.9,
+    "narration_advocate_opinions": 0.9,
+    "policy_facts": 0.9,
+    "fact_cite_yes": 0.2,
+    "fact_new_yes": 0.6,
+    "emotion_anger": 0.1,
+    "emotion_enthusiasm": 0.6,
+    "emotion_fear": 0.2,
+    "emotion_hope_pride": 0.6,
+    "emotion_humor": 0.0,
+    "emotion_somber": 0.2,
+    "tone_positive": 0.7,
+    "tone_negative": 0.2,
+    "tone_contrast": 0.6,
+    "explicit_vote_for": 0.3,
+    "production_value_high": 0.4,
+    "style_amateur": 0.4,
+    "style_text_on_screen": 0.5,
+    "style_animation": 0.2,
+    "how_scripted": 0.5
+   },
+   "notes": {
+    "technique_plain_folks": "Speaker uses casual, conversational language and relatable frustration with legislative dysfunction",
+    "technique_pos_testimonial": "Speaker testifies in 'expert fashion' that the legislature has been more functional since reform",
+    "messenger_every_people": "Speaker comes across as a civic participant rather than a prominent official",
+    "messenger_politician": "Speaker references legislative experience suggesting possible elected or political role",
+    "narration_explain_facts": "Detailed explanation of how top-four primary and ranked choice voting mechanics work",
+    "narration_advocate_opinions": "Explicitly advocates for defeating the repeal and keeping the reformed system",
+    "policy_facts": "Describes specific electoral policy mechanics and historical outcomes under old and new systems",
+    "fact_new_yes": "Details of Alaska's specific two-cycle legislative deadlock under old system may be unfamiliar to most viewers",
+    "emotion_enthusiasm": "Speaker expresses genuine optimism that reform has improved governance and hope to move forward",
+    "emotion_hope_pride": "Closing appeal frames defeating repeal as path to solving state problems together",
+    "tone_positive": "Overall framing celebrates reform's success and expresses hope for the future",
+    "tone_contrast": "Explicitly contrasts old dysfunctional system with improved post-reform legislature"
+   },
+   "prior": {
+    "favorability": {
+     "expected": 1.23,
+     "low": -0.91,
+     "high": 3.37,
+     "average": 1.383
+    },
+    "votechoice": {
+     "expected": 0.96,
+     "low": -0.59,
+     "high": 2.51,
+     "average": 1.054
+    },
+    "votechoice_dichotomized": {
+     "expected": 1.49,
+     "low": -0.68,
+     "high": 3.66,
+     "average": 1.405
+    }
+   }
+  }
+ }
+}

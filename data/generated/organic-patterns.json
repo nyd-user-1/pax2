@@ -1,0 +1,512 @@
+{
+ "built": "2026-10-04",
+ "method": "Forty top shorts from five reform channels; split at the set's own median Organic score, since every pick already beats its channel. Codes from transcript + video review, threshold 0.5.",
+ "counts": {
+  "above": 20,
+  "below": 19
+ },
+ "means": {
+  "wpm": {
+   "above": 171,
+   "below": 189.1
+  },
+  "durationSec": {
+   "above": 82.6,
+   "below": 66.3
+  },
+  "votechoicePrior": {
+   "above": 0.7,
+   "below": 0.6
+  }
+ },
+ "patterns": [
+  {
+   "key": "explicit_vote_for",
+   "label": "Asks for something outright",
+   "above": 0,
+   "below": 5
+  },
+  {
+   "key": "narration_personal_story",
+   "label": "Personal story",
+   "above": 15,
+   "below": 5
+  },
+  {
+   "key": "technique_plain_folks",
+   "label": "Plain-folks delivery",
+   "above": 55,
+   "below": 47
+  },
+  {
+   "key": "messenger_every_people",
+   "label": "Everyday messenger",
+   "above": 55,
+   "below": 37
+  },
+  {
+   "key": "messenger_politician",
+   "label": "Politician on screen",
+   "above": 20,
+   "below": 11
+  },
+  {
+   "key": "narration_explain_facts",
+   "label": "Explains facts",
+   "above": 85,
+   "below": 100
+  },
+  {
+   "key": "fact_new_yes",
+   "label": "Offers an unfamiliar fact",
+   "above": 70,
+   "below": 84
+  },
+  {
+   "key": "fact_cite_yes",
+   "label": "Cites a source",
+   "above": 40,
+   "below": 16
+  },
+  {
+   "key": "emotion_anger",
+   "label": "Anger",
+   "above": 25,
+   "below": 5
+  },
+  {
+   "key": "emotion_humor",
+   "label": "Humor",
+   "above": 5,
+   "below": 5
+  },
+  {
+   "key": "tone_negative",
+   "label": "Negative tone",
+   "above": 40,
+   "below": 26
+  },
+  {
+   "key": "tone_contrast",
+   "label": "Contrast",
+   "above": 80,
+   "below": 89
+  },
+  {
+   "key": "style_text_on_screen",
+   "label": "Text on screen",
+   "above": 90,
+   "below": 95
+  },
+  {
+   "key": "how_scripted",
+   "label": "Sounds scripted",
+   "above": 65,
+   "below": 63
+  },
+  {
+   "key": "production_value_high",
+   "label": "High production value",
+   "above": 30,
+   "below": 26
+  },
+  {
+   "key": "question_hook",
+   "label": "Opens with a question",
+   "above": 15,
+   "below": 32
+  }
+ ],
+ "rows": [
+  {
+   "id": "yt-8yCwABY3MTs",
+   "channel": "Open Primaries",
+   "title": "DE independent Jamie Kegerise picketing outside his polling place on Primary Day",
+   "organic": 100,
+   "prior": 1.09,
+   "question": false,
+   "wpm": 140.2,
+   "durationSec": 30.29
+  },
+  {
+   "id": "yt-JP8SHaVl674",
+   "channel": "Open Primaries",
+   "title": "Open Primaries President breaks down the Washington Post’s latest piece on out primaries",
+   "organic": 99,
+   "prior": 0.51,
+   "question": false,
+   "wpm": 157.8,
+   "durationSec": 167.06
+  },
+  {
+   "id": "yt-hMOu1Ex6df4",
+   "channel": "Unite America",
+   "title": "Nearly 90% Decided",
+   "organic": 99,
+   "prior": 0.62,
+   "question": false,
+   "wpm": 207,
+   "durationSec": 32.97
+  },
+  {
+   "id": "yt-H0m1eql9Uqk",
+   "channel": "Open Primaries",
+   "title": "Just Join A Party To Vote",
+   "organic": 96,
+   "prior": 0.8,
+   "question": false,
+   "wpm": 148.9,
+   "durationSec": 56.26
+  },
+  {
+   "id": "yt-M97WyXecL_A",
+   "channel": "Open Primaries",
+   "title": "young voters shut out of system in NYC",
+   "organic": 95,
+   "prior": 0.98,
+   "question": false,
+   "wpm": 190.7,
+   "durationSec": 58.19
+  },
+  {
+   "id": "yt-u98EznmnpGg",
+   "channel": "Open Primaries",
+   "title": "More debate, not less",
+   "organic": 95,
+   "prior": 0.43,
+   "question": false,
+   "wpm": 151.3,
+   "durationSec": 11.4
+  },
+  {
+   "id": "yt-hlvVHixBwzc",
+   "channel": "Open Primaries",
+   "title": "1.1+ Million Voters Shut Out",
+   "organic": 94,
+   "prior": 0.76,
+   "question": false,
+   "wpm": 165.4,
+   "durationSec": 90.49
+  },
+  {
+   "id": "yt-rUYw1phm3NM",
+   "channel": "Unite America",
+   "title": "2026 Primary Results (Nick Troiano): Least Competitive of Our Lifetimes",
+   "organic": 92,
+   "prior": 0.65,
+   "question": false,
+   "wpm": 167.1,
+   "durationSec": 94.23
+  },
+  {
+   "id": "yt-zuq_oPyuRnY",
+   "channel": "FairVote",
+   "title": "Make Congress Work Better with the Ranked Choice Voting Act",
+   "organic": 92,
+   "prior": 0.69,
+   "question": false,
+   "wpm": 179.6,
+   "durationSec": 30.12
+  },
+  {
+   "id": "yt-k3lsCHemLwY",
+   "channel": "FairVote",
+   "title": "Alaska’s “Dan Sullivans” and Ranked Choice Voting",
+   "organic": 91,
+   "prior": 0.48,
+   "question": false,
+   "wpm": 174.3,
+   "durationSec": 144.28
+  },
+  {
+   "id": "yt-brKvhJMqDT0",
+   "channel": "Courageous Colorado",
+   "title": "Meet Restore the Balance!",
+   "organic": 90,
+   "prior": 0.7,
+   "question": false,
+   "wpm": 149.4,
+   "durationSec": 41.34
+  },
+  {
+   "id": "yt-7c6mMrC9RB0",
+   "channel": "FairVote",
+   "title": "Wisconsin Picked Its Nominees for Governor. 68,000 Votes Never Counted",
+   "organic": 90,
+   "prior": 0.47,
+   "question": false,
+   "wpm": 177.8,
+   "durationSec": 175.4
+  },
+  {
+   "id": "yt-5chyFN44kzk",
+   "channel": "Courageous Colorado",
+   "title": "Should Colorado Primaries Reflect Our Unaffiliated Voters?",
+   "organic": 88,
+   "prior": 0.36,
+   "question": false,
+   "wpm": 144.7,
+   "durationSec": 95.68
+  },
+  {
+   "id": "yt-1pGOts7Th3o",
+   "channel": "Courageous Colorado",
+   "title": "50% of Coloradans Identify as Independent",
+   "organic": 87,
+   "prior": 1,
+   "question": true,
+   "wpm": 215.6,
+   "durationSec": 47.74
+  },
+  {
+   "id": "yt-4PJaJvXVCvE",
+   "channel": "FairVote",
+   "title": "Alaska’s Election Reform Worked. Why Are Some Trying to Repeal It?",
+   "organic": 85,
+   "prior": 0.96,
+   "question": false,
+   "wpm": 158.2,
+   "durationSec": 132.52
+  },
+  {
+   "id": "yt-k36hkFq7_EI",
+   "channel": "Open Primaries",
+   "title": "The 2 party system",
+   "organic": 84,
+   "prior": 1.1,
+   "question": false,
+   "wpm": 173.2,
+   "durationSec": 43.21
+  },
+  {
+   "id": "yt-HRDlnl8f35s",
+   "channel": "FairVote",
+   "title": "Why Don’t More Independents Run for Office?",
+   "organic": 83,
+   "prior": 0.22,
+   "question": true,
+   "wpm": 185.9,
+   "durationSec": 128.26
+  },
+  {
+   "id": "yt-t5Kn1BqYRLs",
+   "channel": "FairVote",
+   "title": "Maine Voters Talk About Ranked Choice Voting",
+   "organic": 81,
+   "prior": 0.82,
+   "question": false,
+   "wpm": 170.9,
+   "durationSec": 116.76
+  },
+  {
+   "id": "yt-HJXSyLxPoco",
+   "channel": "Unite America",
+   "title": "Alaska's Better Way to Vote",
+   "organic": 80,
+   "prior": 0.83,
+   "question": false,
+   "wpm": 173.4,
+   "durationSec": 68.1
+  },
+  {
+   "id": "yt-4HJT8ZzXvRE",
+   "channel": "FairVote",
+   "title": "How We Can Fix Our Broken Elections",
+   "organic": 80,
+   "prior": 0.52,
+   "question": true,
+   "wpm": 189,
+   "durationSec": 87.62
+  },
+  {
+   "id": "yt-mV0zO4WIWWc",
+   "channel": "Courageous Colorado",
+   "title": "What are Open Primaries?",
+   "organic": 78,
+   "prior": 0.66,
+   "question": false,
+   "wpm": 207.9,
+   "durationSec": 44.33
+  },
+  {
+   "id": "yt-THihu1i6k8Q",
+   "channel": "Courageous Colorado",
+   "title": "Are Elections Rigged?",
+   "organic": 75,
+   "prior": 0.74,
+   "question": true,
+   "wpm": 187.6,
+   "durationSec": 45.21
+  },
+  {
+   "id": "yt-ig2rJIRDEKo",
+   "channel": "FairVote",
+   "title": "Can a Plant Run for Senate? Welcome to Nebraska",
+   "organic": 75,
+   "prior": 0.25,
+   "question": true,
+   "wpm": 205.8,
+   "durationSec": 91.41
+  },
+  {
+   "id": "yt--qVSHn5_8ws",
+   "channel": "Courageous Colorado",
+   "title": "Our Political Process is in Bad Shape",
+   "organic": 72,
+   "prior": 0.62,
+   "question": false,
+   "wpm": 185.9,
+   "durationSec": 40.52
+  },
+  {
+   "id": "yt-BkJG9M60CzA",
+   "channel": "Open Primaries",
+   "title": "Open Primaries",
+   "organic": 71,
+   "prior": 0.8,
+   "question": false,
+   "wpm": 163.1,
+   "durationSec": 51.25
+  },
+  {
+   "id": "yt-bmf2GjzfgZA",
+   "channel": "Open Primaries",
+   "title": "Independent voters have tough choices",
+   "organic": 69,
+   "prior": 0.95,
+   "question": false,
+   "wpm": 163.2,
+   "durationSec": 49.02
+  },
+  {
+   "id": "yt-qC7KwJRE8j8",
+   "channel": "Open Primaries",
+   "title": "In action",
+   "organic": 68,
+   "prior": 0.72,
+   "question": false,
+   "wpm": 162.6,
+   "durationSec": 39.31
+  },
+  {
+   "id": "yt-7uNrejRqmqs",
+   "channel": "FairVote",
+   "title": "How Democrats Could Be Locked Out of California Governor’s Race",
+   "organic": 68,
+   "prior": 0.37,
+   "question": false,
+   "wpm": 197.5,
+   "durationSec": 101.4
+  },
+  {
+   "id": "yt-BGkoL176bcI",
+   "channel": "Unite America",
+   "title": "The Biggest Solvable Problem in Politics",
+   "organic": 67,
+   "prior": 0.78,
+   "question": false,
+   "wpm": 154.3,
+   "durationSec": 75.84
+  },
+  {
+   "id": "yt-XPxE92IaJC8",
+   "channel": "FairVote",
+   "title": "The Hidden Representation Crisis Behind AI’s Growth",
+   "organic": 63,
+   "prior": 0.66,
+   "question": true,
+   "wpm": 181,
+   "durationSec": 150.88
+  },
+  {
+   "id": "yt-Eg8mPYYr9OU",
+   "channel": "Unite America",
+   "title": "Fix American Politics",
+   "organic": 62,
+   "prior": 0.7,
+   "question": true,
+   "wpm": 188.8,
+   "durationSec": 81.36
+  },
+  {
+   "id": "yt--50yfo3yqNg",
+   "channel": "Unite America",
+   "title": "Closed Primaries Cause Gridlock",
+   "organic": 61,
+   "prior": 0.8,
+   "question": false,
+   "wpm": 211.2,
+   "durationSec": 54.85
+  },
+  {
+   "id": "yt-bsXOK-004zY",
+   "channel": "Courageous Colorado",
+   "title": "Billionaires Benefit from Closed Political Systems",
+   "organic": 60,
+   "prior": 0.55,
+   "question": false,
+   "wpm": 180.3,
+   "durationSec": 74.43
+  },
+  {
+   "id": "yt-G41UEg-RnGc",
+   "channel": "Unite America",
+   "title": "Beware of Partisan Primaries",
+   "organic": 59,
+   "prior": 0.57,
+   "question": true,
+   "wpm": 235.5,
+   "durationSec": 33.81
+  },
+  {
+   "id": "yt-PXJ6-Itlmt4",
+   "channel": "Courageous Colorado",
+   "title": "What do Donald Trump, Elon Musk, and some leaders of the Democratic party have in common?",
+   "organic": 58,
+   "prior": 0.72,
+   "question": true,
+   "wpm": 217.8,
+   "durationSec": 30.25
+  },
+  {
+   "id": "yt-A6e7pPUVabo",
+   "channel": "Courageous Colorado",
+   "title": "Who Gets the Final Say?",
+   "organic": 53,
+   "prior": 0.58,
+   "question": false,
+   "wpm": 200.9,
+   "durationSec": 83.73
+  },
+  {
+   "id": "yt-A8fnhDBLfnQ",
+   "channel": "Unite America",
+   "title": "Who's In Charge?",
+   "organic": 52,
+   "prior": 0.29,
+   "question": false,
+   "wpm": 189.2,
+   "durationSec": 70.53
+  },
+  {
+   "id": "yt-HveOZAlfKog",
+   "channel": "Unite America",
+   "title": "The Primary Issue",
+   "organic": 42,
+   "prior": 0.65,
+   "question": false,
+   "wpm": 160.9,
+   "durationSec": 83.75
+  },
+  {
+   "id": "yt-In8GcKNNTFI",
+   "channel": "Unite America",
+   "title": "Who Declares War?",
+   "organic": 35,
+   "prior": 0.68,
+   "question": false,
+   "wpm": 198.5,
+   "durationSec": 57.15
+  }
+ ]
+}
