@@ -3,8 +3,8 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, Check, Download, ExternalLink, Minus } from "lucide-react"
 
 import upworthyTop from "../../../../data/generated/upworthy-top.json"
-import { UpworthyTop, type UpworthyData } from "@/components/library/upworthy-top"
-import { bytes, count, datasetBySlug } from "@/lib/library"
+import { UpworthyLessons, UpworthyTable, type UpworthyData } from "@/components/library/upworthy-top"
+import { bytes, count, datasetBySlug, type Dataset, type Table } from "@/lib/library"
 import { kindStyle, tagStyle } from "@/lib/swatches"
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -18,12 +18,52 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
   const { t } = await searchParams
   const tables = d.tables.filter((x) => !x.error)
   const table = tables.find((x) => x.name === t) ?? tables[0]
-  const cols = table ? Object.keys(table.sample[0] ?? {}) : []
+
+  // The Upworthy page is its own reading room, to Brendan's layout: title and tags,
+  // the top 500 under a search box, the lessons under the archive's one-line banner,
+  // then schema and raw preview.
+  if (d.slug === "upworthy-archive") {
+    return (
+      <div className="flex flex-col gap-8">
+        <BackLink />
+        <header className="rise flex flex-col gap-3">
+          <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Headline experiments</h1>
+          <Chips d={d} />
+        </header>
+
+        <UpworthyTable data={upworthyTop as UpworthyData} />
+
+        <section className="flex flex-col gap-3">
+          <h2 className="font-display text-xl text-slate-900">32K headline and image tests with click outcomes (2013–2015).</h2>
+          <UpworthyLessons data={upworthyTop as UpworthyData} />
+        </section>
+
+        {table && (
+          <section className="flex flex-col gap-3">
+            <h2 className="font-display text-xl text-slate-900">Schema</h2>
+            <div className="surface flex flex-col gap-2 p-5">
+              <p className="text-sm font-semibold text-slate-900">{table.columnCount} columns</p>
+              <SchemaGrid table={table} />
+            </div>
+          </section>
+        )}
+
+        {table && (
+          <section className="flex flex-col gap-3">
+            <h2 className="font-display text-xl text-slate-900">Preview</h2>
+            <PreviewTable table={table} />
+          </section>
+        )}
+
+        <FilesSection d={d} />
+        <TailSections d={d} />
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-8">
-      <Link href="/library" className="inline-flex w-fit items-center gap-1.5 text-sm text-slate-500 hover:text-pax-ink">
-        <ArrowLeft className="size-4" /> Library
-      </Link>
+      <BackLink />
 
       <header className="rise flex flex-wrap items-start justify-between gap-6">
         <div className="flex max-w-3xl flex-col gap-2">
@@ -74,13 +114,6 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
         </div>
       </section>
 
-      {d.slug === "upworthy-archive" && (
-        <section className="flex flex-col gap-3">
-          <h2 className="font-display text-xl text-slate-900">The top 500 headlines</h2>
-          <UpworthyTop data={upworthyTop as UpworthyData} />
-        </section>
-      )}
-
       {table && (
         <section className="flex flex-col gap-3">
           <div className="flex flex-wrap items-center gap-2">
@@ -91,90 +124,135 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
               </Link>
             ))}
           </div>
-          <div className="surface overflow-x-auto">
-            <table className="tabular w-full text-xs">
-              <thead className="bg-slate-50 text-left text-slate-500">
-                <tr>
-                  {cols.map((c) => (
-                    <th key={c} className="whitespace-nowrap px-3 py-2 font-medium">
-                      {c}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {table.sample.map((r, i) => (
-                  <tr key={i} className="border-t border-slate-100">
-                    {cols.map((c) => (
-                      <td key={c} className="max-w-56 truncate whitespace-nowrap px-3 py-2 text-slate-700">
-                        {r[c] == null ? <span className="text-slate-300">—</span> : String(r[c])}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <PreviewTable table={table} />
           <details className="surface">
             <summary className="cursor-pointer list-none px-5 py-3 text-sm font-semibold text-slate-900">
               Schema · {table.columnCount} columns
             </summary>
-            <div className="grid gap-x-6 px-5 pb-4 text-xs sm:grid-cols-2 lg:grid-cols-3">
-              {table.columns.map((c) => (
-                <div key={c.name} className="flex justify-between border-b border-slate-100 py-1.5">
-                  <span className="truncate text-slate-700">{c.name}</span>
-                  <span className="text-slate-400">{c.type}</span>
-                </div>
-              ))}
+            <div className="px-5 pb-4">
+              <SchemaGrid table={table} />
             </div>
           </details>
         </section>
       )}
 
-      {(d.files.length > 0 || d.local) && (
-        <section className="flex flex-col gap-3">
-          <h2 className="font-display text-xl text-slate-900">Files</h2>
-          <div className="surface divide-y divide-slate-100">
-            {d.local && (
-              <a href={`/api/library/file?local=${encodeURIComponent(d.local)}`} className="flex items-center justify-between px-5 py-3 text-sm hover:bg-slate-50">
-                <span className="font-mono text-xs text-slate-700">{d.local.split("/").pop()}</span>
-                <Download className="size-4 text-slate-400" />
-              </a>
-            )}
-            {d.files.slice(0, 15).map((f) => (
-              <a key={f.key} href={`/api/library/file?key=${encodeURIComponent(f.key)}`} className="flex items-center justify-between gap-4 px-5 py-3 text-sm hover:bg-slate-50">
-                <span className="truncate font-mono text-xs text-slate-700">{f.key.split("/").slice(-2).join("/")}</span>
-                <span className="flex shrink-0 items-center gap-3 text-xs text-slate-400">
-                  {bytes(f.bytes)} <Download className="size-4" />
-                </span>
-              </a>
-            ))}
-            {d.fileCount > 15 && <p className="px-5 py-3 text-xs text-slate-400">and {d.fileCount - 15} more</p>}
-          </div>
-        </section>
-      )}
-
-      {(d.usedIn.length > 0 || d.cite) && (
-        <section className="grid gap-4 md:grid-cols-2">
-          {d.usedIn.length > 0 && (
-            <div className="surface flex flex-col gap-2 p-5">
-              <p className="font-semibold text-slate-900">Used in PAX</p>
-              {d.usedIn.map((u) => (
-                <Link key={u.href + u.label} href={u.href} className="text-sm font-medium text-pax-plum hover:underline">
-                  {u.label}
-                </Link>
-              ))}
-            </div>
-          )}
-          {d.cite && (
-            <div className="surface flex flex-col gap-2 p-5">
-              <p className="font-semibold text-slate-900">Cite</p>
-              <p className="text-sm leading-relaxed text-slate-600">{d.cite}</p>
-            </div>
-          )}
-        </section>
-      )}
+      <FilesSection d={d} />
+      <TailSections d={d} />
     </div>
+  )
+}
+
+function BackLink() {
+  return (
+    <Link href="/library" className="inline-flex w-fit items-center gap-1.5 text-sm text-slate-500 hover:text-pax-ink">
+      <ArrowLeft className="size-4" /> Library
+    </Link>
+  )
+}
+
+function Chips({ d }: { d: Dataset }) {
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      <span className="w-fit rounded-full px-2.5 py-0.5 text-[11px] font-semibold" style={kindStyle(d.kind)}>{d.kind}</span>
+      {d.tags.map((x) => (
+        <span key={x} className="rounded-full px-2.5 py-0.5 text-xs font-medium" style={tagStyle(x)}>
+          {x}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+function SchemaGrid({ table }: { table: Table }) {
+  return (
+    <div className="grid gap-x-6 text-xs sm:grid-cols-2 lg:grid-cols-3">
+      {table.columns.map((c) => (
+        <div key={c.name} className="flex justify-between border-b border-slate-100 py-1.5">
+          <span className="truncate text-slate-700">{c.name}</span>
+          <span className="text-slate-400">{c.type}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function PreviewTable({ table }: { table: Table }) {
+  const cols = Object.keys(table.sample[0] ?? {})
+  return (
+    <div className="surface overflow-x-auto">
+      <table className="tabular w-full text-xs">
+        <thead className="bg-slate-50 text-left text-slate-500">
+          <tr>
+            {cols.map((c) => (
+              <th key={c} className="whitespace-nowrap px-3 py-2 font-medium">
+                {c}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {table.sample.map((r, i) => (
+            <tr key={i} className="border-t border-slate-100">
+              {cols.map((c) => (
+                <td key={c} className="max-w-56 truncate whitespace-nowrap px-3 py-2 text-slate-700">
+                  {r[c] == null ? <span className="text-slate-300">—</span> : String(r[c])}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+function FilesSection({ d }: { d: Dataset }) {
+  if (!d.files.length && !d.local) return null
+  return (
+    <section className="flex flex-col gap-3">
+      <h2 className="font-display text-xl text-slate-900">Files</h2>
+      <div className="surface divide-y divide-slate-100">
+        {d.local && (
+          <a href={`/api/library/file?local=${encodeURIComponent(d.local)}`} className="flex items-center justify-between px-5 py-3 text-sm hover:bg-slate-50">
+            <span className="font-mono text-xs text-slate-700">{d.local.split("/").pop()}</span>
+            <Download className="size-4 text-slate-400" />
+          </a>
+        )}
+        {d.files.slice(0, 15).map((f) => (
+          <a key={f.key} href={`/api/library/file?key=${encodeURIComponent(f.key)}`} className="flex items-center justify-between gap-4 px-5 py-3 text-sm hover:bg-slate-50">
+            <span className="truncate font-mono text-xs text-slate-700">{f.key.split("/").slice(-2).join("/")}</span>
+            <span className="flex shrink-0 items-center gap-3 text-xs text-slate-400">
+              {bytes(f.bytes)} <Download className="size-4" />
+            </span>
+          </a>
+        ))}
+        {d.fileCount > 15 && <p className="px-5 py-3 text-xs text-slate-400">and {d.fileCount - 15} more</p>}
+      </div>
+    </section>
+  )
+}
+
+function TailSections({ d }: { d: Dataset }) {
+  if (!d.usedIn.length && !d.cite) return null
+  return (
+    <section className="grid gap-4 md:grid-cols-2">
+      {d.usedIn.length > 0 && (
+        <div className="surface flex flex-col gap-2 p-5">
+          <p className="font-semibold text-slate-900">Used in PAX</p>
+          {d.usedIn.map((u) => (
+            <Link key={u.href + u.label} href={u.href} className="text-sm font-medium text-pax-plum hover:underline">
+              {u.label}
+            </Link>
+          ))}
+        </div>
+      )}
+      {d.cite && (
+        <div className="surface flex flex-col gap-2 p-5">
+          <p className="font-semibold text-slate-900">Cite</p>
+          <p className="text-sm leading-relaxed text-slate-600">{d.cite}</p>
+        </div>
+      )}
+    </section>
   )
 }
 

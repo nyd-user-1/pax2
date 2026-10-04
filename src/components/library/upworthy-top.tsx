@@ -18,9 +18,9 @@ export type UpworthyData = {
 
 type SortKey = "rank" | "h" | "i" | "c" | "r"
 
-export function UpworthyTop({ data }: { data: UpworthyData }) {
+export function UpworthyTable({ data }: { data: UpworthyData }) {
   const [q, setQ] = React.useState("")
-  const [sort, setSort] = React.useState<{ k: SortKey; d: 1 | -1 }>({ k: "rank", d: 1 })
+  const [sort, setSort] = React.useState<{ k: SortKey; d: 1 | -1 }>({ k: "i", d: -1 })
   const ranked = React.useMemo(() => data.rows.map((r, i) => ({ ...r, rank: i + 1 })), [data.rows])
   const shown = React.useMemo(() => {
     const needle = q.trim().toLowerCase()
@@ -40,29 +40,12 @@ export function UpworthyTop({ data }: { data: UpworthyData }) {
     </th>
   )
 
-  const p = (key: string) => data.patterns.find((x) => x.key === key)
-  const lessons = [
-    `The words are worth testing: across the ${data.counts.tests.toLocaleString()} stories tried with two or more headlines, the best wording drew ${data.swing}× the clicks of the worst at the median — same story, same day, same audience.`,
-    p("question") && p("whatwhyhow") && `State, don't ask: questions sit in ${p("question")!.won}% of winning headlines and ${p("question")!.lost}% of losing ones, and “What”, “Why” or “How” openers skew the same way (${p("whatwhyhow")!.won}% against ${p("whatwhyhow")!.lost}%).`,
-    p("watch") && `Name the act of viewing: “watch”, “see” or “listen” appears in ${p("watch")!.won}% of winners against ${p("watch")!.lost}% of losers, and in ${p("watch")!.top}% of the top 500 against ${p("watch")!.all}% of the archive. For a video, the opening line promises what's about to be seen.`,
-    p("caps") && `Shouting loses: a word in ALL CAPS sits in ${p("caps")!.won}% of winners against ${p("caps")!.lost}% of losers.`,
-    p("firstperson") && `First person edges ahead: “I” or “my” in ${p("firstperson")!.won}% of winners against ${p("firstperson")!.lost}% of losers — a person telling their own story.`,
-    p("digit") && `A number helps a little: ${p("digit")!.won}% of winners carry one, against ${p("digit")!.lost}% of losers.`,
-    p("you") && `“You” is not the lever: it appears in ${p("you")!.won}% of winners and ${p("you")!.lost}% of losers alike — what the line promises matters, not who it addresses.`,
-    `Length teaches nothing here: the archive held headlines near ${data.words.all} words, so it cannot say whether shorter wins.`,
-  ].filter((x): x is string => typeof x === "string")
-
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center gap-3">
-        <label className="flex min-w-56 max-w-sm flex-1 items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm shadow-e1 focus-within:ring-2 focus-within:ring-pax-plum/40">
-          <Search className="size-4 shrink-0 text-slate-400" />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search the 500 headlines" className="w-full bg-transparent outline-none placeholder:text-slate-400" />
-        </label>
-        <span className="tabular ml-auto text-xs text-slate-400">
-          {shown.length} of {data.rows.length}
-        </span>
-      </div>
+      <label className="flex w-full items-center gap-2.5 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-e1 focus-within:ring-2 focus-within:ring-pax-plum/40">
+        <Search className="size-4 shrink-0 text-slate-400" />
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search the 500 headlines" className="w-full bg-transparent outline-none placeholder:text-slate-400" />
+      </label>
 
       <div className="surface max-h-[512px] overflow-auto">
         <table className="w-full text-sm">
@@ -79,12 +62,12 @@ export function UpworthyTop({ data }: { data: UpworthyData }) {
           <tbody className="tabular">
             {shown.map((r) => (
               <tr key={r.rank} className="border-t border-slate-100">
-                <td className="px-3 py-2 text-xs text-slate-400">{r.rank}</td>
-                <td className="min-w-72 px-3 py-2 leading-snug text-slate-800">{r.h}</td>
-                <td className="whitespace-nowrap px-3 py-2 text-right text-slate-600">{r.i.toLocaleString()}</td>
-                <td className="whitespace-nowrap px-3 py-2 text-right text-slate-600">{r.c.toLocaleString()}</td>
-                <td className="whitespace-nowrap px-3 py-2 text-right font-semibold text-slate-900">{r.r.toFixed(1)}%</td>
-                <td className="px-3 py-2">{r.w ? <Check className="size-4 text-above" /> : null}</td>
+                <td className="px-3 py-2.5 text-xs text-slate-400">{r.rank}</td>
+                <td className="min-w-72 px-3 py-2.5 leading-snug text-slate-800">{r.h}</td>
+                <td className="whitespace-nowrap px-3 py-2.5 text-right text-slate-600">{r.i.toLocaleString()}</td>
+                <td className="whitespace-nowrap px-3 py-2.5 text-right text-slate-600">{r.c.toLocaleString()}</td>
+                <td className="whitespace-nowrap px-3 py-2.5 text-right font-semibold text-slate-900">{r.r.toFixed(1)}%</td>
+                <td className="px-3 py-2.5">{r.w ? <Check className="size-4 text-above" /> : null}</td>
               </tr>
             ))}
             {shown.length === 0 && (
@@ -97,19 +80,33 @@ export function UpworthyTop({ data }: { data: UpworthyData }) {
           </tbody>
         </table>
       </div>
-      <p className="text-xs leading-relaxed text-slate-400">{data.method}</p>
+    </div>
+  )
+}
 
-      <div className="surface mt-2 flex flex-col gap-3 p-5 md:p-6">
-        <p className="font-semibold text-slate-900">How to write one</p>
-        <ul className="flex flex-col gap-2.5">
-          {lessons.map((x) => (
-            <li key={x} className="flex gap-2.5 text-sm leading-relaxed text-slate-700">
-              <span className="mt-[7px] size-1.5 shrink-0 rounded-full bg-pax-plum" />
-              <span>{x}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+export function UpworthyLessons({ data }: { data: UpworthyData }) {
+  const p = (key: string) => data.patterns.find((x) => x.key === key)
+  const lessons = [
+    `The words are worth testing: across the ${data.counts.tests.toLocaleString()} stories tried with two or more headlines, the best wording drew ${data.swing}× the clicks of the worst at the median — same story, same day, same audience.`,
+    p("question") && p("whatwhyhow") && `State, don't ask: questions sit in ${p("question")!.won}% of winning headlines and ${p("question")!.lost}% of losing ones, and “What”, “Why” or “How” openers skew the same way (${p("whatwhyhow")!.won}% against ${p("whatwhyhow")!.lost}%).`,
+    p("watch") && `Name the act of viewing: “watch”, “see” or “listen” appears in ${p("watch")!.won}% of winners against ${p("watch")!.lost}% of losers, and in ${p("watch")!.top}% of the top 500 against ${p("watch")!.all}% of the archive. For a video, the opening line promises what's about to be seen.`,
+    p("caps") && `Shouting loses: a word in ALL CAPS sits in ${p("caps")!.won}% of winners against ${p("caps")!.lost}% of losers.`,
+    p("firstperson") && `First person edges ahead: “I” or “my” in ${p("firstperson")!.won}% of winners against ${p("firstperson")!.lost}% of losers — a person telling their own story.`,
+    p("digit") && `A number helps a little: ${p("digit")!.won}% of winners carry one, against ${p("digit")!.lost}% of losers.`,
+    p("you") && `“You” is not the lever: it appears in ${p("you")!.won}% of winners and ${p("you")!.lost}% of losers alike — what the line promises matters, not who it addresses.`,
+    `Length teaches nothing here: the archive held headlines near ${data.words.all} words, so it cannot say whether shorter wins.`,
+  ].filter((x): x is string => typeof x === "string")
+
+  return (
+    <div className="surface flex flex-col gap-3 p-5 md:p-6">
+      <ul className="flex flex-col gap-2.5">
+        {lessons.map((x) => (
+          <li key={x} className="flex gap-2.5 text-sm leading-relaxed text-slate-700">
+            <span className="mt-[7px] size-1.5 shrink-0 rounded-full bg-pax-plum" />
+            <span>{x}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
