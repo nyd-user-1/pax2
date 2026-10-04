@@ -1,0 +1,9455 @@
+{
+ "built": "2026-10-04",
+ "source": "Meta Ad Library Report, United States, downloaded 2026-10-04 (report date 2026-10-01): lifelong (since Oct 2019) and last 90 days",
+ "note": "Page name or funding disclaimer matching the election-reform universe; spend cells are USD totals, '≤100' kept verbatim",
+ "advertisers": [
+  {
+   "pageId": "518194348194441",
+   "pageName": "RepresentUs",
+   "disclaimer": "RepresentUs",
+   "lifelong": {
+    "usd": 1025834,
+    "ads": 4923
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": 6576
+    },
+    "Alaska": {
+     "lifelong": 8005
+    },
+    "Arizona": {
+     "lifelong": 48693
+    },
+    "Arkansas": {
+     "lifelong": 31707
+    },
+    "California": {
+     "lifelong": 55565
+    },
+    "Colorado": {
+     "lifelong": 23731
+    },
+    "Connecticut": {
+     "lifelong": 29977
+    },
+    "Delaware": {
+     "lifelong": 1667
+    },
+    "Florida": {
+     "lifelong": 44204
+    },
+    "Georgia": {
+     "lifelong": 43702
+    },
+    "Hawaii": {
+     "lifelong": 1870
+    },
+    "Idaho": {
+     "lifelong": 3428
+    },
+    "Illinois": {
+     "lifelong": 17965
+    },
+    "Indiana": {
+     "lifelong": 11586
+    },
+    "Iowa": {
+     "lifelong": 5372
+    },
+    "Kansas": {
+     "lifelong": 5733
+    },
+    "Kentucky": {
+     "lifelong": 8224
+    },
+    "Louisiana": {
+     "lifelong": 6378
+    },
+    "Maine": {
+     "lifelong": 9234
+    },
+    "Maryland": {
+     "lifelong": 8949
+    },
+    "Massachusetts": {
+     "lifelong": 16328
+    },
+    "Michigan": {
+     "lifelong": 20763
+    },
+    "Minnesota": {
+     "lifelong": 34755
+    },
+    "Mississippi": {
+     "lifelong": 3906
+    },
+    "Missouri": {
+     "lifelong": 59079
+    },
+    "Montana": {
+     "lifelong": 2314
+    },
+    "Nebraska": {
+     "lifelong": 3264
+    },
+    "Nevada": {
+     "lifelong": 6431
+    },
+    "New Hampshire": {
+     "lifelong": 2792
+    },
+    "New Jersey": {
+     "lifelong": 11238
+    },
+    "New Mexico": {
+     "lifelong": 4481
+    },
+    "New York": {
+     "lifelong": 33357
+    },
+    "North Carolina": {
+     "lifelong": 99372
+    },
+    "North Dakota": {
+     "lifelong": 8018
+    },
+    "Ohio": {
+     "lifelong": 20113
+    },
+    "Oklahoma": {
+     "lifelong": 10209
+    },
+    "Oregon": {
+     "lifelong": 36208
+    },
+    "Pennsylvania": {
+     "lifelong": 30561
+    },
+    "Puerto Rico": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": 2116
+    },
+    "South Carolina": {
+     "lifelong": 7322
+    },
+    "South Dakota": {
+     "lifelong": 1361
+    },
+    "Tennessee": {
+     "lifelong": 10477
+    },
+    "Texas": {
+     "lifelong": 32699
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": 25490
+    },
+    "Vermont": {
+     "lifelong": 1658
+    },
+    "Virginia": {
+     "lifelong": 43945
+    },
+    "Washington, District of Columbia": {
+     "lifelong": 2713
+    },
+    "Washington": {
+     "lifelong": 22146
+    },
+    "West Virginia": {
+     "lifelong": 14513
+    },
+    "Wisconsin": {
+     "lifelong": 84208
+    },
+    "Wyoming": {
+     "lifelong": 1377
+    }
+   }
+  },
+  {
+   "pageId": "105641344285593",
+   "pageName": "The Honest Elections Project",
+   "disclaimer": "The Honest Elections Project",
+   "lifelong": {
+    "usd": 290026,
+    "ads": 643
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": 21355
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": 1043
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": 11106
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": 173
+    },
+    "Georgia": {
+     "lifelong": 34862
+    },
+    "Guam": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": 11206
+    },
+    "Kentucky": {
+     "lifelong": 109
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": 9381
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": 9077
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": 12110
+    },
+    "New York": {
+     "lifelong": 467
+    },
+    "North Carolina": {
+     "lifelong": 40599
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Northern Mariana Islands": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": 13177
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": 26716
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Puerto Rico": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": 76100
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": 7755
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": 14090
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "308506536540046",
+   "pageName": "Alaskans for Better Elections",
+   "disclaimer": "Alaskans for Better Elections",
+   "lifelong": {
+    "usd": 249591,
+    "ads": 683
+   },
+   "last90": {
+    "usd": 3499,
+    "ads": 1
+   },
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": 248771,
+     "last90": 3499
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "111581113532778",
+   "pageName": "Voter Choice Massachusetts",
+   "disclaimer": "Ranked Choice Voting 2020 Committee",
+   "lifelong": {
+    "usd": 206923,
+    "ads": 815
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": 288
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": 205286
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "70373038195",
+   "pageName": "FairVote Minnesota",
+   "disclaimer": "Fairvote Minnesota",
+   "lifelong": {
+    "usd": 145327,
+    "ads": 861
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": 145227
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "764583800068667",
+   "pageName": "Courageous Colorado",
+   "disclaimer": "Courageous Colorado",
+   "lifelong": {
+    "usd": 113469,
+    "ads": 148
+   },
+   "last90": {
+    "usd": 33319,
+    "ads": 114
+   },
+   "states": {
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": 113458,
+     "last90": 33319
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "188369927702009",
+   "pageName": "Honest Elections Project Fund",
+   "disclaimer": "Honest Elections Project Fund",
+   "lifelong": {
+    "usd": 96807,
+    "ads": 294
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": 1165
+    },
+    "Alaska": {
+     "lifelong": 341
+    },
+    "Arizona": {
+     "lifelong": 15269
+    },
+    "Arkansas": {
+     "lifelong": 1304
+    },
+    "Delaware": {
+     "lifelong": 1692
+    },
+    "Florida": {
+     "lifelong": 5805
+    },
+    "Idaho": {
+     "lifelong": 4352
+    },
+    "Indiana": {
+     "lifelong": 1290
+    },
+    "Iowa": {
+     "lifelong": 1053
+    },
+    "Kentucky": {
+     "lifelong": 1729
+    },
+    "Louisiana": {
+     "lifelong": 794
+    },
+    "Montana": {
+     "lifelong": 2483
+    },
+    "Nebraska": {
+     "lifelong": 2820
+    },
+    "North Dakota": {
+     "lifelong": 115
+    },
+    "Ohio": {
+     "lifelong": 4111
+    },
+    "Oklahoma": {
+     "lifelong": 1568
+    },
+    "South Carolina": {
+     "lifelong": 1472
+    },
+    "South Dakota": {
+     "lifelong": 1362
+    },
+    "Tennessee": {
+     "lifelong": 1790
+    },
+    "Texas": {
+     "lifelong": 42597
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": 1220
+    },
+    "Vermont": {
+     "lifelong": 818
+    },
+    "West Virginia": {
+     "lifelong": 358
+    },
+    "Wyoming": {
+     "lifelong": 1296
+    }
+   }
+  },
+  {
+   "pageId": "536505076482383",
+   "pageName": "Open Primaries",
+   "disclaimer": "OPEN PRIMARIES INC.",
+   "lifelong": {
+    "usd": 44189,
+    "ads": 487
+   },
+   "last90": {
+    "usd": 4883,
+    "ads": 65
+   },
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Arizona": {
+     "lifelong": 286,
+     "last90": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": 116
+    },
+    "California": {
+     "lifelong": 491,
+     "last90": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": 257,
+     "last90": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Florida": {
+     "lifelong": 6409,
+     "last90": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Idaho": {
+     "lifelong": 823,
+     "last90": "≤100"
+    },
+    "Illinois": {
+     "lifelong": 359,
+     "last90": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": 225,
+     "last90": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": 381,
+     "last90": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Maryland": {
+     "lifelong": 1189,
+     "last90": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Michigan": {
+     "lifelong": 103,
+     "last90": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Missouri": {
+     "lifelong": 6806,
+     "last90": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": 103,
+     "last90": "≤100"
+    },
+    "Nevada": {
+     "lifelong": 461,
+     "last90": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": 117,
+     "last90": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": 8980,
+     "last90": "≤100"
+    },
+    "New York": {
+     "lifelong": 8560,
+     "last90": 4796
+    },
+    "North Carolina": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Ohio": {
+     "lifelong": 131,
+     "last90": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": 1343,
+     "last90": "≤100"
+    },
+    "Oregon": {
+     "lifelong": 3264,
+     "last90": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": 587,
+     "last90": "≤100"
+    },
+    "Puerto Rico": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": 283,
+     "last90": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": 512,
+     "last90": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": 565,
+     "last90": "≤100"
+    },
+    "Texas": {
+     "lifelong": 246,
+     "last90": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Virginia": {
+     "lifelong": 367,
+     "last90": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Washington": {
+     "lifelong": 158,
+     "last90": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "111751643532470",
+   "pageName": "Rank The Vote NYC",
+   "disclaimer": "Committee for Ranked Choice Voting NYC",
+   "lifelong": {
+    "usd": 40029,
+    "ads": 51
+   },
+   "last90": null,
+   "states": {
+    "New York": {
+     "lifelong": 40029
+    }
+   }
+  },
+  {
+   "pageId": "214002058736436",
+   "pageName": "Unite America",
+   "disclaimer": "UNITE AMERICA",
+   "lifelong": {
+    "usd": 39713,
+    "ads": 690
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": 590
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": 999
+    },
+    "Arkansas": {
+     "lifelong": 407
+    },
+    "California": {
+     "lifelong": 3732
+    },
+    "Colorado": {
+     "lifelong": 837
+    },
+    "Connecticut": {
+     "lifelong": 452
+    },
+    "Delaware": {
+     "lifelong": 150
+    },
+    "Florida": {
+     "lifelong": 2542
+    },
+    "Georgia": {
+     "lifelong": 1312
+    },
+    "Hawaii": {
+     "lifelong": 156
+    },
+    "Idaho": {
+     "lifelong": 224
+    },
+    "Illinois": {
+     "lifelong": 1360
+    },
+    "Indiana": {
+     "lifelong": 822
+    },
+    "Iowa": {
+     "lifelong": 326
+    },
+    "Kansas": {
+     "lifelong": 364
+    },
+    "Kentucky": {
+     "lifelong": 557
+    },
+    "Louisiana": {
+     "lifelong": 774
+    },
+    "Maine": {
+     "lifelong": 162
+    },
+    "Maryland": {
+     "lifelong": 1029
+    },
+    "Massachusetts": {
+     "lifelong": 805
+    },
+    "Michigan": {
+     "lifelong": 1350
+    },
+    "Minnesota": {
+     "lifelong": 506
+    },
+    "Mississippi": {
+     "lifelong": 331
+    },
+    "Missouri": {
+     "lifelong": 818
+    },
+    "Montana": {
+     "lifelong": 150
+    },
+    "Nebraska": {
+     "lifelong": 241
+    },
+    "Nevada": {
+     "lifelong": 374
+    },
+    "New Hampshire": {
+     "lifelong": 138
+    },
+    "New Jersey": {
+     "lifelong": 1090
+    },
+    "New Mexico": {
+     "lifelong": 238
+    },
+    "New York": {
+     "lifelong": 2694
+    },
+    "North Carolina": {
+     "lifelong": 1149
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": 1516
+    },
+    "Oklahoma": {
+     "lifelong": 505
+    },
+    "Oregon": {
+     "lifelong": 568
+    },
+    "Pennsylvania": {
+     "lifelong": 1640
+    },
+    "Rhode Island": {
+     "lifelong": 124
+    },
+    "South Carolina": {
+     "lifelong": 529
+    },
+    "South Dakota": {
+     "lifelong": 107
+    },
+    "Tennessee": {
+     "lifelong": 823
+    },
+    "Texas": {
+     "lifelong": 2768
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": 278
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": 1906
+    },
+    "Washington, District of Columbia": {
+     "lifelong": 278
+    },
+    "Washington": {
+     "lifelong": 886
+    },
+    "West Virginia": {
+     "lifelong": 237
+    },
+    "Wisconsin": {
+     "lifelong": 531
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "1255211724349834",
+   "pageName": "Voter Freedom",
+   "disclaimer": "Unite America Institute Inc",
+   "lifelong": {
+    "usd": 35477,
+    "ads": 119
+   },
+   "last90": {
+    "usd": 35477,
+    "ads": 119
+   },
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Arizona": {
+     "lifelong": 174,
+     "last90": 174
+    },
+    "Arkansas": {
+     "lifelong": 1291,
+     "last90": 1291
+    },
+    "California": {
+     "lifelong": 586,
+     "last90": 586
+    },
+    "Colorado": {
+     "lifelong": 6101,
+     "last90": 6101
+    },
+    "Connecticut": {
+     "lifelong": 113,
+     "last90": 113
+    },
+    "Delaware": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Florida": {
+     "lifelong": 271,
+     "last90": 271
+    },
+    "Georgia": {
+     "lifelong": 107,
+     "last90": 107
+    },
+    "Hawaii": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Idaho": {
+     "lifelong": 102,
+     "last90": 102
+    },
+    "Illinois": {
+     "lifelong": 171,
+     "last90": 171
+    },
+    "Indiana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Iowa": {
+     "lifelong": 105,
+     "last90": 105
+    },
+    "Kansas": {
+     "lifelong": 148,
+     "last90": 148
+    },
+    "Kentucky": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Maine": {
+     "lifelong": 1081,
+     "last90": 1081
+    },
+    "Maryland": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": 4644,
+     "last90": 4644
+    },
+    "Michigan": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Missouri": {
+     "lifelong": 2757,
+     "last90": 2757
+    },
+    "Montana": {
+     "lifelong": 576,
+     "last90": 576
+    },
+    "Nebraska": {
+     "lifelong": 2572,
+     "last90": 2572
+    },
+    "Nevada": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": 114,
+     "last90": 114
+    },
+    "New Jersey": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New York": {
+     "lifelong": 232,
+     "last90": 232
+    },
+    "North Carolina": {
+     "lifelong": 131,
+     "last90": 131
+    },
+    "North Dakota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Ohio": {
+     "lifelong": 102,
+     "last90": 102
+    },
+    "Oklahoma": {
+     "lifelong": 4254,
+     "last90": 4254
+    },
+    "Oregon": {
+     "lifelong": 4529,
+     "last90": 4529
+    },
+    "Pennsylvania": {
+     "lifelong": 123,
+     "last90": 123
+    },
+    "Rhode Island": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": 109,
+     "last90": 109
+    },
+    "Texas": {
+     "lifelong": 448,
+     "last90": 448
+    },
+    "Unknown": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Utah": {
+     "lifelong": 2726,
+     "last90": 2726
+    },
+    "Vermont": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Virginia": {
+     "lifelong": 108,
+     "last90": 108
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Washington": {
+     "lifelong": 246,
+     "last90": 246
+    },
+    "West Virginia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": 295,
+     "last90": 295
+    }
+   }
+  },
+  {
+   "pageId": "100535415151530",
+   "pageName": "Oregon Ranked Choice Voting",
+   "disclaimer": "Oregon Ranked Choice Voting Advocates",
+   "lifelong": {
+    "usd": 35317,
+    "ads": 901
+   },
+   "last90": null,
+   "states": {
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": 1230
+    },
+    "Colorado": {
+     "lifelong": 188
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": 32746
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": 1042
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "1231649936695510",
+   "pageName": "Honest Elections Project Action",
+   "disclaimer": "Honest Elections Project Action",
+   "lifelong": {
+    "usd": 35264,
+    "ads": 81
+   },
+   "last90": {
+    "usd": 35017,
+    "ads": 81
+   },
+   "states": {
+    "California": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Georgia": {
+     "lifelong": 3499,
+     "last90": 3499
+    },
+    "Kentucky": {
+     "lifelong": 149,
+     "last90": 149
+    },
+    "Michigan": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Nevada": {
+     "lifelong": 7715,
+     "last90": 7715
+    },
+    "Ohio": {
+     "lifelong": 8844,
+     "last90": 8844
+    },
+    "Texas": {
+     "lifelong": 7719,
+     "last90": 7472
+    },
+    "Unknown": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": 7253,
+     "last90": 7253
+    }
+   }
+  },
+  {
+   "pageId": "238152576529077",
+   "pageName": "South Dakota Open Primaries",
+   "disclaimer": "South Dakota Open Primaries",
+   "lifelong": {
+    "usd": 30771,
+    "ads": 185
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": 30606
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "108317971850183",
+   "pageName": "Protect Wisconsin Elections",
+   "disclaimer": "RepresentUs",
+   "lifelong": {
+    "usd": 18896,
+    "ads": 67
+   },
+   "last90": null,
+   "states": {
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": 18853
+    }
+   }
+  },
+  {
+   "pageId": "105133759244147",
+   "pageName": "Idahoans for Open Primaries",
+   "disclaimer": "Idahoans for Open Primaries",
+   "lifelong": {
+    "usd": 17198,
+    "ads": 9
+   },
+   "last90": null,
+   "states": {
+    "Idaho": {
+     "lifelong": 17198
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "106459017782497",
+   "pageName": "The Institute for Political Innovation",
+   "disclaimer": "INSTITUTE FOR POLITICAL INNOVATION",
+   "lifelong": {
+    "usd": 16847,
+    "ads": 20
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": 109
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": 410
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": 1605
+    },
+    "Colorado": {
+     "lifelong": 450
+    },
+    "Connecticut": {
+     "lifelong": 225
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": 1004
+    },
+    "Georgia": {
+     "lifelong": 358
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": 1500
+    },
+    "Indiana": {
+     "lifelong": 377
+    },
+    "Iowa": {
+     "lifelong": 223
+    },
+    "Kansas": {
+     "lifelong": 165
+    },
+    "Kentucky": {
+     "lifelong": 181
+    },
+    "Louisiana": {
+     "lifelong": 121
+    },
+    "Maine": {
+     "lifelong": 110
+    },
+    "Maryland": {
+     "lifelong": 253
+    },
+    "Massachusetts": {
+     "lifelong": 360
+    },
+    "Michigan": {
+     "lifelong": 772
+    },
+    "Minnesota": {
+     "lifelong": 689
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": 406
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": 109
+    },
+    "Nevada": {
+     "lifelong": 108
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": 392
+    },
+    "New Mexico": {
+     "lifelong": 146
+    },
+    "New York": {
+     "lifelong": 1123
+    },
+    "North Carolina": {
+     "lifelong": 347
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": 785
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": 246
+    },
+    "Pennsylvania": {
+     "lifelong": 666
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": 123
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": 163
+    },
+    "Texas": {
+     "lifelong": 759
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": 282
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": 481
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": 716
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "107791628572477",
+   "pageName": "FairVote Action",
+   "disclaimer": "FAIRVOTE ACTION",
+   "lifelong": {
+    "usd": 14867,
+    "ads": 80
+   },
+   "last90": {
+    "usd": 4423,
+    "ads": 15
+   },
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "California": {
+     "lifelong": 5215,
+     "last90": 266
+    },
+    "Colorado": {
+     "lifelong": 1015,
+     "last90": 138
+    },
+    "Connecticut": {
+     "lifelong": 312,
+     "last90": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Florida": {
+     "lifelong": 494,
+     "last90": 240
+    },
+    "Georgia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Illinois": {
+     "lifelong": 406,
+     "last90": 220
+    },
+    "Indiana": {
+     "lifelong": 211,
+     "last90": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Maryland": {
+     "lifelong": 616,
+     "last90": 153
+    },
+    "Massachusetts": {
+     "lifelong": 177,
+     "last90": "≤100"
+    },
+    "Michigan": {
+     "lifelong": 923,
+     "last90": 212
+    },
+    "Minnesota": {
+     "lifelong": 301,
+     "last90": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": 135,
+     "last90": 108
+    },
+    "New Mexico": {
+     "lifelong": 235,
+     "last90": "≤100"
+    },
+    "New York": {
+     "lifelong": 1209,
+     "last90": 1087
+    },
+    "North Carolina": {
+     "lifelong": 147,
+     "last90": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Ohio": {
+     "lifelong": 291,
+     "last90": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Oregon": {
+     "lifelong": 164,
+     "last90": 142
+    },
+    "Pennsylvania": {
+     "lifelong": 190,
+     "last90": 138
+    },
+    "Rhode Island": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Texas": {
+     "lifelong": 353,
+     "last90": 106
+    },
+    "Unknown": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Virginia": {
+     "lifelong": 1097,
+     "last90": 197
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Washington": {
+     "lifelong": 291,
+     "last90": 247
+    },
+    "West Virginia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "1484724105163169",
+   "pageName": "Courageous Conservatives PAC",
+   "disclaimer": "COURAGEOUS CONSERVATIVES PAC",
+   "lifelong": {
+    "usd": 14434,
+    "ads": 15
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": 13933
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": 139
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "737775476094100",
+   "pageName": "Vote YES on 3: All-Party Primaries",
+   "disclaimer": "Coalition for Healthy Democracy",
+   "lifelong": {
+    "usd": 14342,
+    "ads": 48
+   },
+   "last90": {
+    "usd": 10788,
+    "ads": 39
+   },
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": 14015,
+     "last90": 10546
+    },
+    "Michigan": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "102406998270920",
+   "pageName": "Count Every Hero",
+   "disclaimer": "RepresentUs",
+   "lifelong": {
+    "usd": 14065,
+    "ads": 38
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": 278
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": 260
+    },
+    "Arkansas": {
+     "lifelong": 148
+    },
+    "California": {
+     "lifelong": 1247
+    },
+    "Colorado": {
+     "lifelong": 261
+    },
+    "Connecticut": {
+     "lifelong": 165
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": 975
+    },
+    "Georgia": {
+     "lifelong": 477
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": 531
+    },
+    "Indiana": {
+     "lifelong": 341
+    },
+    "Iowa": {
+     "lifelong": 179
+    },
+    "Kansas": {
+     "lifelong": 172
+    },
+    "Kentucky": {
+     "lifelong": 219
+    },
+    "Louisiana": {
+     "lifelong": 190
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": 287
+    },
+    "Massachusetts": {
+     "lifelong": 249
+    },
+    "Michigan": {
+     "lifelong": 379
+    },
+    "Minnesota": {
+     "lifelong": 230
+    },
+    "Mississippi": {
+     "lifelong": 143
+    },
+    "Missouri": {
+     "lifelong": 298
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": 107
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": 319
+    },
+    "New Mexico": {
+     "lifelong": 123
+    },
+    "New York": {
+     "lifelong": 907
+    },
+    "North Carolina": {
+     "lifelong": 466
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": 578
+    },
+    "Oklahoma": {
+     "lifelong": 189
+    },
+    "Oregon": {
+     "lifelong": 162
+    },
+    "Pennsylvania": {
+     "lifelong": 480
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": 237
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": 341
+    },
+    "Texas": {
+     "lifelong": 1062
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": 484
+    },
+    "Washington, District of Columbia": {
+     "lifelong": 153
+    },
+    "Washington": {
+     "lifelong": 281
+    },
+    "West Virginia": {
+     "lifelong": 112
+    },
+    "Wisconsin": {
+     "lifelong": 228
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "115116896929884",
+   "pageName": "Florida Open Primaries",
+   "disclaimer": "Florida Open Primaries",
+   "lifelong": {
+    "usd": 13915,
+    "ads": 43
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": 13915
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "1860879184025087",
+   "pageName": "Open Primaries Maine",
+   "disclaimer": "Open Primaries Maine",
+   "lifelong": {
+    "usd": 10409,
+    "ads": 46
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": 10408
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "122448994949041",
+   "pageName": "FairVote Illinois",
+   "disclaimer": "FairVote Illinois",
+   "lifelong": {
+    "usd": 10370,
+    "ads": 188
+   },
+   "last90": {
+    "usd": 275,
+    "ads": 1
+   },
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": 10137,
+     "last90": 272
+    },
+    "Indiana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Puerto Rico": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "939482079414615",
+   "pageName": "The Committee for Ranked Choice Voting",
+   "disclaimer": "The Committee for Ranked Choice Voting 2020",
+   "lifelong": {
+    "usd": 8974,
+    "ads": 8
+   },
+   "last90": null,
+   "states": {
+    "Maine": {
+     "lifelong": 8974
+    }
+   }
+  },
+  {
+   "pageId": "764583800068667",
+   "pageName": "Courageous Colorado",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": 6778,
+    "ads": 3
+   },
+   "last90": null,
+   "states": {
+    "Colorado": {
+     "lifelong": 6778
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "293179290694862",
+   "pageName": "FairVote",
+   "disclaimer": "FairVote",
+   "lifelong": {
+    "usd": 6061,
+    "ads": 55
+   },
+   "last90": {
+    "usd": 282,
+    "ads": 3
+   },
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Alaska": {
+     "lifelong": 275,
+     "last90": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "California": {
+     "lifelong": 157,
+     "last90": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Georgia": {
+     "lifelong": 150,
+     "last90": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": 140,
+     "last90": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Maryland": {
+     "lifelong": 141,
+     "last90": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": 2112,
+     "last90": "≤100"
+    },
+    "Michigan": {
+     "lifelong": 183,
+     "last90": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": 118,
+     "last90": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": 218,
+     "last90": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New York": {
+     "lifelong": 563,
+     "last90": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": 157,
+     "last90": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": 239,
+     "last90": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": 160,
+     "last90": 145
+    },
+    "South Dakota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Texas": {
+     "lifelong": 104,
+     "last90": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Virginia": {
+     "lifelong": 209,
+     "last90": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": 126,
+     "last90": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": 102,
+     "last90": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "100191695153162",
+   "pageName": "No 2 Ranked Choice Voting - MA",
+   "disclaimer": "No Ranked Choice Voting Committee",
+   "lifelong": {
+    "usd": 5435,
+    "ads": 7
+   },
+   "last90": null,
+   "states": {
+    "Massachusetts": {
+     "lifelong": 5435
+    }
+   }
+  },
+  {
+   "pageId": "156878802610",
+   "pageName": "Voter Choice Arizona",
+   "disclaimer": "Voter Choice Arizona",
+   "lifelong": {
+    "usd": 5052,
+    "ads": 64
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": 4396
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "843123048877826",
+   "pageName": "Ballots Without Barriers",
+   "disclaimer": "Voter Choice Foundation Inc",
+   "lifelong": {
+    "usd": 4765,
+    "ads": 18
+   },
+   "last90": {
+    "usd": 324,
+    "ads": 6
+   },
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Montana": {
+     "lifelong": 251,
+     "last90": 250
+    },
+    "Nebraska": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": 2770,
+     "last90": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": 1434,
+     "last90": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "252754215358501",
+   "pageName": "Utah Ranked Choice Voting",
+   "disclaimer": "UTAH RANKED CHOICE VOTING",
+   "lifelong": {
+    "usd": 4404,
+    "ads": 32
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": 4401
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "70373038195",
+   "pageName": "FairVote Minnesota",
+   "disclaimer": "FairVote Minnesota",
+   "lifelong": {
+    "usd": 3918,
+    "ads": 12
+   },
+   "last90": null,
+   "states": {
+    "Minnesota": {
+     "lifelong": 3918
+    }
+   }
+  },
+  {
+   "pageId": "1882034058749467",
+   "pageName": "FairVote Washington",
+   "disclaimer": "FAIRVOTE WASHINGTON",
+   "lifelong": {
+    "usd": 3888,
+    "ads": 38
+   },
+   "last90": null,
+   "states": {
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": 3881
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "105598621202179",
+   "pageName": "Open Primaries Arkansas",
+   "disclaimer": "Open Primaries Arkansas",
+   "lifelong": {
+    "usd": 3630,
+    "ads": 23
+   },
+   "last90": null,
+   "states": {
+    "Arkansas": {
+     "lifelong": 3630
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "115116896929884",
+   "pageName": "Florida Open Primaries",
+   "disclaimer": "Bryan Casey Whelan",
+   "lifelong": {
+    "usd": 2128,
+    "ads": 4
+   },
+   "last90": null,
+   "states": {
+    "Florida": {
+     "lifelong": 2128
+    }
+   }
+  },
+  {
+   "pageId": "108831445176115",
+   "pageName": "Protect Pennsylvania Elections",
+   "disclaimer": "RepresentUs",
+   "lifelong": {
+    "usd": 2102,
+    "ads": 14
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": 132
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": 161
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": 105
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": 153
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": 133
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "252754215358501",
+   "pageName": "Utah Ranked Choice Voting",
+   "disclaimer": "Utah Ranked Choice Voting",
+   "lifelong": {
+    "usd": 1800,
+    "ads": 55
+   },
+   "last90": null,
+   "states": {
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": 1800
+    }
+   }
+  },
+  {
+   "pageId": "105282371194134",
+   "pageName": "Oregon Open Primaries",
+   "disclaimer": "Oregon Open Primaries",
+   "lifelong": {
+    "usd": 1302,
+    "ads": 7
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": 1296
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "373971400069627",
+   "pageName": "Voter Choice NJ",
+   "disclaimer": "Voter Choice NJ",
+   "lifelong": {
+    "usd": 1254,
+    "ads": 31
+   },
+   "last90": null,
+   "states": {
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": 1240
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "536505076482383",
+   "pageName": "Open Primaries",
+   "disclaimer": "Open Primaries Inc.",
+   "lifelong": {
+    "usd": 1201,
+    "ads": 11
+   },
+   "last90": null,
+   "states": {
+    "Florida": {
+     "lifelong": 1201
+    }
+   }
+  },
+  {
+   "pageId": "233116802464",
+   "pageName": "Independent Voter",
+   "disclaimer": "San Diegans for Ranked Choice Voting",
+   "lifelong": {
+    "usd": 1150,
+    "ads": 12
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": 1093
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "111581113532778",
+   "pageName": "Voter Choice Massachusetts",
+   "disclaimer": "Voter Choice Education Fund, Inc.",
+   "lifelong": {
+    "usd": 1114,
+    "ads": 19
+   },
+   "last90": {
+    "usd": 463,
+    "ads": 11
+   },
+   "states": {
+    "Connecticut": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": 1103,
+     "last90": 452
+    },
+    "New Hampshire": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "491085311394017",
+   "pageName": "Ranked Choice Voting Montana",
+   "disclaimer": "Eric Brennyn Buhler",
+   "lifelong": {
+    "usd": 1074,
+    "ads": 10
+   },
+   "last90": null,
+   "states": {
+    "Montana": {
+     "lifelong": 1074
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "518194348194441",
+   "pageName": "RepresentUs",
+   "disclaimer": "Represent.Us Education Fund",
+   "lifelong": {
+    "usd": 997,
+    "ads": 8
+   },
+   "last90": null,
+   "states": {
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": 777
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "107754671017507",
+   "pageName": "Missourians for Ranked Choice Voting",
+   "disclaimer": "Missourians for Ranked Choice Voting",
+   "lifelong": {
+    "usd": 962,
+    "ads": 21
+   },
+   "last90": null,
+   "states": {
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": 888
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "107604678550406",
+   "pageName": "Courageous Conversations about our Schools",
+   "disclaimer": "Futernick Consulting LLC",
+   "lifelong": {
+    "usd": 954,
+    "ads": 13
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": 318
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": 220
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "425977393935380",
+   "pageName": "FairVote Illinois Action",
+   "disclaimer": "FairVote Illinois Action",
+   "lifelong": {
+    "usd": 945,
+    "ads": 12
+   },
+   "last90": null,
+   "states": {
+    "Illinois": {
+     "lifelong": 944
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "108234178337319",
+   "pageName": "Better Elections Missouri",
+   "disclaimer": "Better Elections Missouri",
+   "lifelong": {
+    "usd": 897,
+    "ads": 10
+   },
+   "last90": null,
+   "states": {
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": 884
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "104793889216006",
+   "pageName": "Top Four on April 4",
+   "disclaimer": "Top Four on April 4",
+   "lifelong": {
+    "usd": 800,
+    "ads": 10
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": 776
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "110963464578121",
+   "pageName": "Veterans for All Voters",
+   "disclaimer": "Veterans for Political Innovation",
+   "lifelong": {
+    "usd": 790,
+    "ads": 3
+   },
+   "last90": null,
+   "states": {
+    "Iowa": {
+     "lifelong": 239
+    },
+    "Nebraska": {
+     "lifelong": 551
+    }
+   }
+  },
+  {
+   "pageId": "160771693777163",
+   "pageName": "Yes to Repeal Ranked-Choice Voting",
+   "disclaimer": "YES 2 REPEAL RCV in Minnetonka Committee",
+   "lifelong": {
+    "usd": 727,
+    "ads": 8
+   },
+   "last90": null,
+   "states": {
+    "Minnesota": {
+     "lifelong": 727
+    }
+   }
+  },
+  {
+   "pageId": "789210380953132",
+   "pageName": "Ranked Choice Voting for Longmont",
+   "disclaimer": "RCV for Longmont",
+   "lifelong": {
+    "usd": 530,
+    "ads": 3
+   },
+   "last90": {
+    "usd": 236,
+    "ads": 1
+   },
+   "states": {
+    "Colorado": {
+     "lifelong": 530,
+     "last90": 236
+    },
+    "Unknown": {
+     "lifelong": "≤100",
+     "last90": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "102596429250182",
+   "pageName": "RCV for Evanston",
+   "disclaimer": "YES FOR RANKED CHOICE VOTING",
+   "lifelong": {
+    "usd": 501,
+    "ads": 12
+   },
+   "last90": null,
+   "states": {
+    "Illinois": {
+     "lifelong": 501
+    }
+   }
+  },
+  {
+   "pageId": "373971400069627",
+   "pageName": "Voter Choice NJ",
+   "disclaimer": "Herbert L Tarbous",
+   "lifelong": {
+    "usd": 484,
+    "ads": 13
+   },
+   "last90": null,
+   "states": {
+    "New Jersey": {
+     "lifelong": 484
+    }
+   }
+  },
+  {
+   "pageId": "123195642413599",
+   "pageName": "Instant Runoff Voting for Texas",
+   "disclaimer": "Ranked Choice Voting for Texas",
+   "lifelong": {
+    "usd": 430,
+    "ads": 9
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": 407
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "106911614836243",
+   "pageName": "Wyoming Instant Runoff",
+   "disclaimer": "TAKE BACK OUR REPUBLIC",
+   "lifelong": {
+    "usd": 395,
+    "ads": 5
+   },
+   "last90": null,
+   "states": {
+    "Colorado": {
+     "lifelong": 138
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": 257
+    }
+   }
+  },
+  {
+   "pageId": "140454019993132",
+   "pageName": "NH Ranked Choice Voting",
+   "disclaimer": "NH Ranked Choice Voting",
+   "lifelong": {
+    "usd": 371,
+    "ads": 39
+   },
+   "last90": null,
+   "states": {
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": 363
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "491085311394017",
+   "pageName": "Ranked Choice Voting Montana",
+   "disclaimer": "RCV Montana",
+   "lifelong": {
+    "usd": 342,
+    "ads": 2
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": 293
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "115116896929884",
+   "pageName": "Florida Open Primaries",
+   "disclaimer": "OPEN PRIMARIES INC.",
+   "lifelong": {
+    "usd": 305,
+    "ads": 2
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": 286
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "342530995784241",
+   "pageName": "Florida Fair And Open Primaries",
+   "disclaimer": "Steven Lee Hough",
+   "lifelong": {
+    "usd": 300,
+    "ads": 4
+   },
+   "last90": null,
+   "states": {
+    "Florida": {
+     "lifelong": 300
+    }
+   }
+  },
+  {
+   "pageId": "111657344992993",
+   "pageName": "Final Five Voting NYC",
+   "disclaimer": "New Yorkers for Competitive Elections",
+   "lifelong": {
+    "usd": 293,
+    "ads": 8
+   },
+   "last90": null,
+   "states": {
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": 288
+    }
+   }
+  },
+  {
+   "pageId": "216758908484098",
+   "pageName": "Los Angeles Voters For Instant Runoff Elections",
+   "disclaimer": "David Holtzman",
+   "lifelong": {
+    "usd": 231,
+    "ads": 9
+   },
+   "last90": null,
+   "states": {
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": 154
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "1270844509440078",
+   "pageName": "Voter Choice Irvine",
+   "disclaimer": "Voter Choice Irvine",
+   "lifelong": {
+    "usd": 229,
+    "ads": 1
+   },
+   "last90": {
+    "usd": 229,
+    "ads": 1
+   },
+   "states": {
+    "California": {
+     "lifelong": 229,
+     "last90": 229
+    }
+   }
+  },
+  {
+   "pageId": "438960626639375",
+   "pageName": "Ranked Choice NY",
+   "disclaimer": "Ranked Choice NY",
+   "lifelong": {
+    "usd": 219,
+    "ads": 12
+   },
+   "last90": null,
+   "states": {
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": 214
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "214002058736436",
+   "pageName": "Unite America",
+   "disclaimer": "Unite America.",
+   "lifelong": {
+    "usd": 210,
+    "ads": 26
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "832922840395001",
+   "pageName": "Listen Courageously",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": 196,
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "105469817518928",
+   "pageName": "Easthampton Voters for Ranked Choice Voting",
+   "disclaimer": "Easthampton Voters for Ranked Choice Voting",
+   "lifelong": {
+    "usd": 162,
+    "ads": 6
+   },
+   "last90": null,
+   "states": {
+    "Massachusetts": {
+     "lifelong": 162
+    }
+   }
+  },
+  {
+   "pageId": "140454019993132",
+   "pageName": "NH Ranked Choice Voting",
+   "disclaimer": "Scott D Lawrence",
+   "lifelong": {
+    "usd": 149,
+    "ads": 4
+   },
+   "last90": null,
+   "states": {
+    "New Hampshire": {
+     "lifelong": 149
+    }
+   }
+  },
+  {
+   "pageId": "234368357595",
+   "pageName": "Courageous Women Association",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": 130,
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "California": {
+     "lifelong": 130
+    }
+   }
+  },
+  {
+   "pageId": "308506536540046",
+   "pageName": "Alaskans for Better Elections",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": 112,
+    "ads": 2
+   },
+   "last90": null,
+   "states": {
+    "Alaska": {
+     "lifelong": 112
+    }
+   }
+  },
+  {
+   "pageId": "104267101660036",
+   "pageName": "Better Elections Idaho",
+   "disclaimer": "Teresa S Marie Fangamou",
+   "lifelong": {
+    "usd": 102,
+    "ads": 6
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "342530995784241",
+   "pageName": "Florida Fair And Open Primaries",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Florida": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "252754215358501",
+   "pageName": "Utah Ranked Choice Voting",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "342530995784241",
+   "pageName": "Florida Fair And Open Primaries",
+   "disclaimer": "Florida Fair and Open Primaries, Inc.",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 3
+   },
+   "last90": null,
+   "states": {
+    "Florida": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "111581113532778",
+   "pageName": "Voter Choice Massachusetts",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 2
+   },
+   "last90": null,
+   "states": {
+    "Massachusetts": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "614564825600577",
+   "pageName": "The Courageous Brand",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "219242305249228",
+   "pageName": "Ranked Choice Voting Sarasota",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 3
+   },
+   "last90": null,
+   "states": {
+    "Florida": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "156878802610",
+   "pageName": "Voter Choice Arizona",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 3
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "100642421557509",
+   "pageName": "Ranked Choice Chattanooga",
+   "disclaimer": "James Patrick Farmer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "1301532606622099",
+   "pageName": "Ranked Choice Voting Resource Center",
+   "disclaimer": "ELECTION ADMINISTRATION RESOURCE CENTER",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "470744296641092",
+   "pageName": "Courageous Fire LLC",
+   "disclaimer": "Courageous Fire",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 4
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "70373038195",
+   "pageName": "FairVote Minnesota",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 7
+   },
+   "last90": null,
+   "states": {
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "203461276681982",
+   "pageName": "Ranked Choice Voting",
+   "disclaimer": "A Concerned American Citizen for Ranked Choice Voting",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "New York": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "214002058736436",
+   "pageName": "Unite America",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 5
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "363285174224708",
+   "pageName": "Ranked Choice Voting Rochester",
+   "disclaimer": "Ranked Choice Voting Rochester",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 2
+   },
+   "last90": null,
+   "states": {
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "404492036074648",
+   "pageName": "Courageously Phew",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "111403010296348",
+   "pageName": "Courageously Human",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 2
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "104651267691895",
+   "pageName": "Courageous Creations",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Texas": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "103350809468716",
+   "pageName": "Courageous Careless",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 3
+   },
+   "last90": null,
+   "states": {
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "238152576529077",
+   "pageName": "South Dakota Open Primaries",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "South Dakota": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "2433254280236375",
+   "pageName": "Courageous Gathering",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Oregon": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "373971400069627",
+   "pageName": "Voter Choice NJ",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 2
+   },
+   "last90": null,
+   "states": {
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "219242305249228",
+   "pageName": "Ranked Choice Voting Sarasota",
+   "disclaimer": "Graham Elliot Kukla",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Florida": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "104374968155249",
+   "pageName": "Forging Courageous Leadership",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "106434924427038",
+   "pageName": "RepresentUs Pulaski County",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 2
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "140454019993132",
+   "pageName": "NH Ranked Choice Voting",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "New Hampshire": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "939455529245241",
+   "pageName": "courageouscommunicators",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Unknown": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "123195642413599",
+   "pageName": "Instant Runoff Voting for Texas",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Texas": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "104914418286754",
+   "pageName": "Be Courageous for Life",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "105403539099084",
+   "pageName": "Courageous and Free Inc.",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "107604678550406",
+   "pageName": "Courageous Conversations about our Schools",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "North Dakota": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "105226937998982",
+   "pageName": "Courageous Convictions",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Illinois": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "103120531160672",
+   "pageName": "Terrell’s Top Five",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Hawaii": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "Rhode Island": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington, District of Columbia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "West Virginia": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "109395685033611",
+   "pageName": "Center for Political Innovation Media Department",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Alaska": {
+     "lifelong": "≤100"
+    },
+    "Arizona": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "California": {
+     "lifelong": "≤100"
+    },
+    "Colorado": {
+     "lifelong": "≤100"
+    },
+    "Connecticut": {
+     "lifelong": "≤100"
+    },
+    "Delaware": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Georgia": {
+     "lifelong": "≤100"
+    },
+    "Idaho": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Kansas": {
+     "lifelong": "≤100"
+    },
+    "Kentucky": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Massachusetts": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Minnesota": {
+     "lifelong": "≤100"
+    },
+    "Mississippi": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nebraska": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New Mexico": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "South Dakota": {
+     "lifelong": "≤100"
+    },
+    "Tennessee": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Utah": {
+     "lifelong": "≤100"
+    },
+    "Vermont": {
+     "lifelong": "≤100"
+    },
+    "Virginia": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    },
+    "Wyoming": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "142294772531941",
+   "pageName": "Healthy Democracy",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Washington": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "311434342847537",
+   "pageName": "RepresentUs - Utah",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Utah": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "100264691929157",
+   "pageName": "Ranked Choice Louisiana",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 3
+   },
+   "last90": null,
+   "states": {
+    "Louisiana": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "101570588615872",
+   "pageName": "A Courageous Voice",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Alabama": {
+     "lifelong": "≤100"
+    },
+    "Arkansas": {
+     "lifelong": "≤100"
+    },
+    "Florida": {
+     "lifelong": "≤100"
+    },
+    "Illinois": {
+     "lifelong": "≤100"
+    },
+    "Indiana": {
+     "lifelong": "≤100"
+    },
+    "Iowa": {
+     "lifelong": "≤100"
+    },
+    "Louisiana": {
+     "lifelong": "≤100"
+    },
+    "Maine": {
+     "lifelong": "≤100"
+    },
+    "Maryland": {
+     "lifelong": "≤100"
+    },
+    "Michigan": {
+     "lifelong": "≤100"
+    },
+    "Missouri": {
+     "lifelong": "≤100"
+    },
+    "Montana": {
+     "lifelong": "≤100"
+    },
+    "Nevada": {
+     "lifelong": "≤100"
+    },
+    "New Hampshire": {
+     "lifelong": "≤100"
+    },
+    "New Jersey": {
+     "lifelong": "≤100"
+    },
+    "New York": {
+     "lifelong": "≤100"
+    },
+    "North Carolina": {
+     "lifelong": "≤100"
+    },
+    "Ohio": {
+     "lifelong": "≤100"
+    },
+    "Oklahoma": {
+     "lifelong": "≤100"
+    },
+    "Oregon": {
+     "lifelong": "≤100"
+    },
+    "Pennsylvania": {
+     "lifelong": "≤100"
+    },
+    "South Carolina": {
+     "lifelong": "≤100"
+    },
+    "Texas": {
+     "lifelong": "≤100"
+    },
+    "Wisconsin": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "1995046620754805",
+   "pageName": "Courageous Christianity",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Texas": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "111737898502932",
+   "pageName": "FairVote Illinois - Decatur Chapter",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Illinois": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "1882034058749467",
+   "pageName": "FairVote Washington",
+   "disclaimer": "FairVote Washington Foundation",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 2
+   },
+   "last90": null,
+   "states": {
+    "Washington": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "122448994949041",
+   "pageName": "FairVote Illinois",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Illinois": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "2100197936931053",
+   "pageName": "My Courageous Girls",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {
+    "Oregon": {
+     "lifelong": "≤100"
+    }
+   }
+  },
+  {
+   "pageId": "345898781932894",
+   "pageName": "courageous.adventurer",
+   "disclaimer": "These ads ran without a disclaimer",
+   "lifelong": {
+    "usd": "≤100",
+    "ads": 1
+   },
+   "last90": null,
+   "states": {}
+  }
+ ]
+}
