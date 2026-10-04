@@ -28,8 +28,6 @@ export type ReaderScript = {
 const ts = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`
 
 /** Scripts read as scripts: one at a time, timed line by line, with what is known about each beside it. */
-export type National = { support: number; byParty: Record<string, number>; arguments: { text: string; agree: number }[]; source: string; url: string }
-
 function Points({ title, items, tone }: { title: string; items: string[]; tone: "pro" | "con" }) {
   return (
     <div className="surface flex flex-col gap-4 p-6">
@@ -48,7 +46,7 @@ function Points({ title, items, tone }: { title: string; items: string[]; tone: 
   )
 }
 
-export function ScriptReader({ scripts, pro, con, national }: { scripts: ReaderScript[]; pro: string[]; con: string[]; national: National }) {
+export function ScriptReader({ scripts, pro, con }: { scripts: ReaderScript[]; pro: string[]; con: string[] }) {
   const [id, setId] = React.useState(scripts[0]?.id)
   const s = scripts.find((x) => x.id === id) ?? scripts[0]
   if (!s) return null
@@ -132,34 +130,6 @@ export function ScriptReader({ scripts, pro, con, national }: { scripts: ReaderS
           </div>
           <Points title="Pro" items={pro} tone="pro" />
           <Points title="Con" items={con} tone="con" />
-          <div className="surface flex flex-col gap-4 p-6">
-            <div className="flex flex-col gap-1">
-              <span className="tabular font-display text-5xl text-above">{national.support}%</span>
-              <span className="text-sm text-slate-600">back open primaries</span>
-            </div>
-            <ul className="flex flex-col gap-2">
-              {Object.entries(national.byParty).map(([p, n]) => (
-                <li key={p} className="grid grid-cols-[6.5rem_minmax(0,1fr)_2.5rem] items-center gap-3 text-sm">
-                  <span className="text-slate-600">{p}</span>
-                  <div className="h-2 overflow-hidden rounded-full bg-slate-100">
-                    <div className="h-full rounded-full bg-above" style={{ width: `${n}%` }} />
-                  </div>
-                  <span className="tabular text-right font-semibold text-slate-800">{n}%</span>
-                </li>
-              ))}
-            </ul>
-            <ul className="flex flex-col gap-2 border-t border-slate-100 pt-4">
-              {national.arguments.map((a) => (
-                <li key={a.text} className="flex items-start justify-between gap-3 text-sm">
-                  <span className="text-slate-700">{a.text}</span>
-                  <span className="tabular shrink-0 font-semibold text-slate-900">{a.agree}%</span>
-                </li>
-              ))}
-            </ul>
-            <a href={national.url} target="_blank" rel="noreferrer" className="text-xs text-slate-400 hover:text-pax-plum">
-              {national.source}
-            </a>
-          </div>
         </aside>
       </div>
     </div>

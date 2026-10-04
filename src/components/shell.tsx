@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BookA, Clapperboard, FlaskConical, Hammer, Home, LayoutDashboard, Library, NotebookPen, Plus, PlaySquare, Target, Workflow } from "lucide-react"
+import { BookA, ChartColumn, Clapperboard, FlaskConical, Hammer, Home, LayoutDashboard, Library, NotebookPen, Plus, PlaySquare, Target, Workflow } from "lucide-react"
 
 import { Wordmark } from "@/components/wordmark"
 import { cn } from "@/ui/lib/utils"
@@ -13,6 +13,7 @@ const NAV = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/videos", label: "Videos", icon: PlaySquare },
   { href: "/scripts", label: "Scripts", icon: NotebookPen },
+  { href: "/polling", label: "Polling", icon: ChartColumn },
   { href: "/evals", label: "Evals", icon: Target },
   { href: "/campaigns", label: "Campaigns", icon: Clapperboard },
 ]
