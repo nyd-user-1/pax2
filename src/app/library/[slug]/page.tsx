@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, Check, Download, ExternalLink, Minus } from "lucide-react"
 
 import upworthyTop from "../../../../data/generated/upworthy-top.json"
+import { PaxTable } from "@/components/pax-table"
 import { UpworthyLessons, UpworthyTable, type UpworthyData } from "@/components/library/upworthy-top"
 import { bytes, count, datasetBySlug, type Dataset, type Table } from "@/lib/library"
 import { kindStyle, tagStyle } from "@/lib/swatches"
@@ -179,7 +180,7 @@ function SchemaGrid({ table }: { table: Table }) {
 function PreviewTable({ table }: { table: Table }) {
   const cols = Object.keys(table.sample[0] ?? {})
   return (
-    <div className="surface overflow-x-auto">
+    <PaxTable label="rows" maxH="max-h-[60vh]">
       <table className="tabular w-full text-xs">
         <thead className="bg-slate-50 text-left text-slate-500">
           <tr>
@@ -202,7 +203,7 @@ function PreviewTable({ table }: { table: Table }) {
           ))}
         </tbody>
       </table>
-    </div>
+    </PaxTable>
   )
 }
 

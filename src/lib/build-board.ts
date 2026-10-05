@@ -26,7 +26,7 @@ export type PageTile = {
 
 export const PAGES: PageTile[] = [
   {
-    href: "/",
+    href: "/scored",
     name: "Home",
     data: "Stand-in results and videos",
     state: "stand-in",

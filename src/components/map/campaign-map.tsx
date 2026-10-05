@@ -25,7 +25,7 @@ const spendValues = (s: Spend): Record<string, Value> =>
 const SPEND_NOTE = "Google Political Ads Transparency via GovBlock: lifetime spend by state, reported in $100 steps."
 
 const MODES: Mode[] = [
-  { id: "all", label: "Google ads: every reform group", values: spendValues(maps.spendAll as unknown as Spend), legend: BLUES, note: `${SPEND_NOTE} “Vote YES on 3” in Google's data is Nevada's Question 3, not Massachusetts'.` },
+  { id: "all", label: "Google ads", values: spendValues(maps.spendAll as unknown as Spend), legend: BLUES },
   { id: "unite", label: "Google ads: Unite America", values: spendValues(maps.spendUnite as unknown as Spend), legend: BLUES, note: `${SPEND_NOTE} Unite America's three advertiser accounts combined.` },
   { id: "open", label: "Google ads: Open Primaries", values: spendValues(maps.spendOpen as unknown as Spend), legend: BLUES, note: SPEND_NOTE },
   {
@@ -77,7 +77,7 @@ export function CampaignMap() {
           </div>
         }
       />
-      <p className="text-xs text-slate-400">{mode.note}</p>
+      {mode.note && <p className="text-xs text-slate-400">{mode.note}</p>}
     </section>
   )
 }

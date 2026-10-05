@@ -5,6 +5,7 @@ import { PipelineFlow } from "@/components/pipeline-flow"
 import { takeById } from "@/lib/catalog"
 import { currentBatch, rows, STEPS, type StepState } from "@/lib/pipeline"
 import { submissions, workspace } from "@/lib/review"
+import { PaxTable } from "@/components/pax-table"
 import { cn } from "@/ui/lib/utils"
 
 export const dynamic = "force-dynamic"
@@ -31,7 +32,6 @@ export default async function PipelinePage() {
   return (
     <div className="flex flex-col gap-10">
       <header className="rise flex flex-col gap-2">
-        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Pipeline</h1>
         <p className="max-w-2xl text-slate-600">Every video goes through four checks before its version page fills in: what is said, what is shown, what an AI reviewer notices, and how it sounds.</p>
       </header>
 
@@ -59,7 +59,7 @@ export default async function PipelinePage() {
         }}
       />
 
-      <section className="surface overflow-x-auto">
+      <PaxTable label="videos">
         <table className="tabular w-full min-w-[960px] text-sm">
           <thead className="text-left text-xs text-slate-500">
             <tr className="border-b border-slate-100 [&_th]:px-4 [&_th]:py-3 [&_th]:font-medium">
@@ -111,7 +111,7 @@ export default async function PipelinePage() {
             </tr>
           </tfoot>
         </table>
-      </section>
+      </PaxTable>
       <p className="-mt-6 text-xs text-slate-400">Costs are estimates at AWS list prices, from each video&apos;s length.</p>
     </div>
   )

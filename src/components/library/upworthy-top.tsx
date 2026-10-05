@@ -1,8 +1,9 @@
 "use client"
 
 import * as React from "react"
-import { Check, ChevronDown, ChevronUp, Search } from "lucide-react"
+import { Check, ChevronDown, ChevronUp } from "lucide-react"
 
+import { PaxTable } from "@/components/pax-table"
 import { cn } from "@/ui/lib/utils"
 
 export type UpworthyData = {
@@ -32,7 +33,7 @@ export function UpworthyTable({ data }: { data: UpworthyData }) {
 
   const flip = (k: SortKey, firstDesc: boolean) => setSort((s) => (s.k === k ? { k, d: (s.d * -1) as 1 | -1 } : { k, d: firstDesc ? -1 : 1 }))
   const Th = ({ k, label, firstDesc = true, className }: { k: SortKey; label: string; firstDesc?: boolean; className?: string }) => (
-    <th className={cn("sticky top-0 z-10 whitespace-nowrap bg-slate-50 px-3 py-2 font-medium", className)}>
+    <th className={cn("whitespace-nowrap bg-slate-50 px-3 py-2 font-medium", className)}>
       <button type="button" onClick={() => flip(k, firstDesc)} className="inline-flex items-center gap-1 hover:text-pax-ink">
         {label}
         {sort.k === k && (sort.d === 1 ? <ChevronUp className="size-3" /> : <ChevronDown className="size-3" />)}
@@ -42,12 +43,7 @@ export function UpworthyTable({ data }: { data: UpworthyData }) {
 
   return (
     <div className="flex flex-col gap-3">
-      <label className="flex w-full items-center gap-2.5 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-e1 focus-within:ring-2 focus-within:ring-pax-plum/40">
-        <Search className="size-4 shrink-0 text-slate-400" />
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search the 500 headlines" className="w-full bg-transparent outline-none placeholder:text-slate-400" />
-      </label>
-
-      <div className="surface max-h-[512px] overflow-auto">
+      <PaxTable label="headlines" value={q} onChange={setQ} maxH="max-h-[512px]">
         <table className="w-full text-sm">
           <thead className="text-left text-xs text-slate-500">
             <tr>
@@ -56,7 +52,7 @@ export function UpworthyTable({ data }: { data: UpworthyData }) {
               <Th k="i" label="Impressions" className="text-right" />
               <Th k="c" label="Clicks" className="text-right" />
               <Th k="r" label="Click rate" className="text-right" />
-              <th className="sticky top-0 z-10 whitespace-nowrap bg-slate-50 px-3 py-2 font-medium">Won its test</th>
+              <th className="whitespace-nowrap bg-slate-50 px-3 py-2 font-medium">Won its test</th>
             </tr>
           </thead>
           <tbody className="tabular">
@@ -79,7 +75,7 @@ export function UpworthyTable({ data }: { data: UpworthyData }) {
             )}
           </tbody>
         </table>
-      </div>
+      </PaxTable>
     </div>
   )
 }

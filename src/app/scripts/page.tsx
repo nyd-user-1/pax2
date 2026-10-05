@@ -64,8 +64,7 @@ export default async function ScriptsPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <header className="rise flex flex-wrap items-end justify-between gap-4 md:pt-9">
-        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Scripts</h1>
+      <header className="rise flex flex-wrap items-center justify-end gap-4">
         <div className="flex items-center gap-2">
           <Link href="/record/personal" className="press inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-pax-ink shadow-e1">
             <PenLine className="size-4" /> New

@@ -55,12 +55,14 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
 
   return (
     <SeekProvider>
-      <div className={cn("grid gap-8", inDrawer ? "lg:grid-cols-[280px_1fr]" : "lg:grid-cols-[320px_1fr]")}>
-        <aside className="flex flex-col gap-4 lg:sticky lg:top-0 lg:self-start">
+      <div className={cn("grid gap-8", inDrawer ? "@xl:grid-cols-[280px_1fr]" : "@4xl:grid-cols-[320px_1fr]")}>
+        <aside className={cn("flex flex-col gap-4", inDrawer ? "@xl:sticky @xl:top-0 @xl:self-start" : "@4xl:sticky @4xl:top-0 @4xl:self-start")}>
           {f ? (
-            <Player src={`/api/video/${id}`} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} />
+            <div className={cn("relative aspect-video overflow-hidden rounded-2xl bg-black shadow-e2", inDrawer ? "@xl:aspect-auto @xl:overflow-visible @xl:rounded-none @xl:bg-transparent @xl:shadow-none" : "@4xl:aspect-auto @4xl:overflow-visible @4xl:rounded-none @4xl:bg-transparent @4xl:shadow-none")}>
+              <Player src={`/api/video/${id}`} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} className={cn("absolute inset-0 h-full w-full max-w-none rounded-none object-contain", inDrawer ? "@xl:static @xl:h-auto @xl:w-full @xl:max-w-[300px] @xl:rounded-2xl @xl:object-cover" : "@4xl:static @4xl:h-auto @4xl:w-full @4xl:max-w-[300px] @4xl:rounded-2xl @4xl:object-cover")} />
+            </div>
           ) : (
-            <div className="aspect-[9/16] overflow-hidden rounded-2xl bg-slate-900 shadow-e2">
+            <div className={cn("aspect-video overflow-hidden rounded-2xl bg-slate-900 shadow-e2", inDrawer ? "@xl:aspect-[9/16]" : "@4xl:aspect-[9/16]")}>
               <iframe
                 src={`https://www.youtube.com/embed/${ytId}`}
                 title={v?.title ?? "YouTube short"}
@@ -97,7 +99,7 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
           {!inDrawer && <h1 className="font-display text-2xl leading-tight text-slate-900 md:text-[28px]">{v?.title ?? id}</h1>}
           {inDrawer && v && <p className="font-display text-lg leading-snug text-slate-900">{v.title}</p>}
 
-          <div className="surface grid grid-cols-2 gap-4 p-5 sm:grid-cols-4">
+          <div className="surface grid grid-cols-2 gap-4 p-5 @lg:grid-cols-4">
             {stat("Reach", DASH)}
             {stat("Watched 3s+", DASH)}
             {stat("Avg.", DASH)}
@@ -126,7 +128,7 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
                 <ul className="flex flex-col gap-1 rounded-lg bg-muted/60 px-3 py-2 text-xs text-muted-foreground">
                   <li>Evidence: {DASH}</li>
                 </ul>
-                <div className="grid gap-3 md:grid-cols-3">
+                <div className="grid gap-3 @2xl:grid-cols-3">
                   {COMPONENTS.map((meta) => (
                     <div key={meta.key} className="surface flex flex-col gap-2 p-3">
                       <div className="flex items-baseline justify-between">
@@ -180,14 +182,14 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
 
               <details open className="group rounded-xl border">
                 <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-pax-ink">{DASH}</summary>
-                <div className="grid gap-x-6 px-4 pb-4 text-xs sm:grid-cols-2">
+                <div className="grid gap-x-6 px-4 pb-4 text-xs @md:grid-cols-2">
                   {WINDOW_ROWS.map((label) => (
                     <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
                       <span className="text-muted-foreground">{label}</span>
                       <span className="tabular">{DASH}</span>
                     </div>
                   ))}
-                  <div className="col-span-full mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  <div className="col-span-full mt-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
                     {["Spend", "Impressions (1k)", "3s play", "Per Person"].map((label) => (
                       <div key={label} className="rounded-lg bg-muted/50 px-2 py-1.5">
                         <div className="text-[10px] text-muted-foreground">{label}</div>

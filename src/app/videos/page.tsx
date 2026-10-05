@@ -11,9 +11,6 @@ export default async function VideosPage() {
   const cards = takes.map(cardOf)
   return (
     <div className="flex flex-col gap-8">
-      <header className="rise flex flex-col gap-2">
-        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Videos</h1>
-      </header>
       <VideoGrid videos={cards} scripts={SCRIPTS.filter((s) => cards.some((c) => c.script === s.id)).map((s) => ({ id: s.id, short: s.short }))} />
     </div>
   )

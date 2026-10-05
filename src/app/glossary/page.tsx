@@ -6,9 +6,6 @@ export default function GlossaryPage() {
   const groups = [...new Set(GLOSSARY.map((t) => t.group))]
   return (
     <div className="flex flex-col gap-10">
-      <header className="rise">
-        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Glossary</h1>
-      </header>
       {groups.map((g) => (
         <section key={g} className="flex flex-col gap-3">
           <h2 className="font-display text-xl text-slate-900">{g}</h2>

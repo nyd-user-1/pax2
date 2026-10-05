@@ -53,7 +53,7 @@ export function VideoGrid({ videos, scripts }: { videos: VideoCardData[]; script
           </button>
         ))}
         <DropdownMenu>
-          <DropdownMenuTrigger className="ml-auto inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-sm text-slate-700 shadow-e1 outline-none transition-shadow hover:shadow-e2 data-[popup-open]:shadow-e2">
+          <DropdownMenuTrigger className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-sm text-slate-700 shadow-e1 outline-none transition-shadow hover:shadow-e2 data-[popup-open]:shadow-e2">
             <ArrowUpDown className="size-3.5 text-slate-400" />
             {SORTS.find((s) => s.id === sort)!.label}
             <ChevronDown className="size-3.5 text-slate-400" />

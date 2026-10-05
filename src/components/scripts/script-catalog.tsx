@@ -247,7 +247,7 @@ export function ScriptCatalog({ scripts, opposition, settle }: { scripts: Catalo
       <div className="surface flex flex-wrap items-center justify-between gap-4 p-6">
         <p className="max-w-2xl text-sm leading-relaxed text-slate-600">{settle}</p>
         <Link href="/record" className="press inline-flex shrink-0 items-center gap-2 rounded-full bg-pax-ink px-5 py-2.5 text-sm font-semibold text-white shadow-e2">
-          <Video className="size-4" /> Record a video
+          <Video className="size-4" /> Record
         </Link>
       </div>
     </div>

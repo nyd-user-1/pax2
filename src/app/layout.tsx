@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Geist_Mono, Plus_Jakarta_Sans } from "next/font/google"
 
 import "@/ui/styles/globals.css"
+import { DevInspector } from "@/components/dev/inspector"
 import { Shell } from "@/components/shell"
 
 const sans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans" })
@@ -17,6 +18,7 @@ export default function RootLayout({ children, drawer }: LayoutProps<"/">) {
     <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body className="min-h-dvh font-sans text-foreground antialiased">
         <Shell drawer={drawer}>{children}</Shell>
+        {process.env.NODE_ENV === "development" && <DevInspector />}
       </body>
     </html>
   )

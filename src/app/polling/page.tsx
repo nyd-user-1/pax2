@@ -27,10 +27,6 @@ export default function PollingPage() {
 
   return (
     <div className="flex flex-col gap-14">
-      <header className="rise md:pt-9">
-        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Polling</h1>
-      </header>
-
       <section className="flex flex-col gap-5">
         <h2 className="font-display text-xl text-slate-900">Top-Two Primary Elections Initiative (2026)</h2>
           <div className="surface flex flex-col gap-5 p-6">

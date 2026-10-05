@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import { StandInNote } from "@/components/bits"
+import { PaxTable } from "@/components/pax-table"
 import { LoadData } from "@/components/load-data"
 import { SlopeChart } from "@/components/charts/slope"
 import { faceFor, scriptById, takeLabel } from "@/lib/catalog"
@@ -54,7 +55,6 @@ export default async function ReviewsPage() {
   return (
     <div className="flex flex-col gap-10">
       <header className="flex flex-col gap-2">
-        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Evals</h1>
         <p className="max-w-3xl text-sm text-muted-foreground">Every test the partner approved, every call made before results came in, and what each new round of results changed.</p>
       </header>
 
@@ -160,7 +160,7 @@ export default async function ReviewsPage() {
           />
           <details className="surface group">
             <summary className="cursor-pointer list-none px-5 py-4 font-semibold text-slate-900">Every take, component by component</summary>
-          <div className="overflow-x-auto px-5 pb-5">
+          <PaxTable label="takes" className="mx-5 mb-5" maxH="max-h-[60vh]">
             <table className="tabular w-full min-w-[760px] text-sm">
               <thead className="text-left text-xs text-muted-foreground">
                 <tr className="[&_th]:pb-2 [&_th]:pr-3 [&_th]:font-normal">
@@ -204,7 +204,7 @@ export default async function ReviewsPage() {
                 })}
               </tbody>
             </table>
-          </div>
+          </PaxTable>
           </details>
           {takes.some((t) => t.history.length === 1 && t.history[0].snapshot.dataset === "round-2") && (
             <div className="rounded-xl border border-pax-plum/30 bg-pax-mist p-4 text-sm">

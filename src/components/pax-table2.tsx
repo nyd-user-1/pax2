@@ -1,0 +1,45 @@
+"use client"
+
+import * as React from "react"
+import { Search } from "lucide-react"
+
+import { cn } from "@/ui/lib/utils"
+
+/** PaxTable2 — the in-card standard: the search sits in the card's own header
+ *  row right after the title, the column header row pins, and the card's rows
+ *  and tiles filter in place as you type. Wrap the whole card; drop
+ *  <PaxSearch /> after the h2. Matching runs over `tbody tr` plus anything
+ *  tagged data-find. */
+const Ctx = React.createContext<{ q: string; setQ: (v: string) => void }>({ q: "", setQ: () => {} })
+
+export function PaxTable2({ children }: { children: React.ReactNode }) {
+  const [q, setQ] = React.useState("")
+  const ref = React.useRef<HTMLDivElement>(null)
+  // Runs after every render so freshly-streamed rows respect the live query.
+  React.useEffect(() => {
+    const root = ref.current
+    if (!root) return
+    const needle = q.trim().toLowerCase()
+    for (const el of root.querySelectorAll<HTMLElement>("tbody tr, [data-find]")) {
+      el.style.display = !needle || (el.textContent ?? "").toLowerCase().includes(needle) ? "" : "none"
+    }
+  })
+  const value = React.useMemo(() => ({ q, setQ }), [q])
+  return (
+    <Ctx.Provider value={value}>
+      <div ref={ref} className="contents">
+        {children}
+      </div>
+    </Ctx.Provider>
+  )
+}
+
+export function PaxSearch({ placeholder = "Search…", className }: { placeholder?: string; className?: string }) {
+  const { q, setQ } = React.useContext(Ctx)
+  return (
+    <label className={cn("ml-1 flex h-7 w-44 items-center gap-1.5 rounded-full bg-slate-100/80 px-2.5 transition-colors focus-within:bg-slate-100", className)}>
+      <Search className="size-3.5 shrink-0 text-slate-400" />
+      <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={placeholder} aria-label={placeholder} className="min-w-0 flex-1 bg-transparent text-[13px] text-slate-900 outline-none placeholder:text-slate-400" />
+    </label>
+  )
+}

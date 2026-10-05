@@ -5,6 +5,7 @@ import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
 import { CardAnchor, CardTools, RefreshButton } from "@/components/dash/card-tools"
+import { PaxSearch, PaxTable2 } from "@/components/pax-table2"
 import type { PageTile } from "@/lib/build-board"
 import { Card, CardAction, CardContent, CardHeader } from "@/ui/components/nova/card"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/ui/components/nova/dialog"
@@ -21,9 +22,13 @@ const DOT: Record<PageTile["state"], { dot: string; label: string }> = {
 export function PagesBoard({ pages }: { pages: PageTile[] }) {
   const [open, setOpen] = React.useState<PageTile | null>(null)
   return (
+    <PaxTable2>
     <Card className={cn("gap-4", BLOCK_HEIGHT)}>
       <CardHeader>
-        <CardAnchor>Pages</CardAnchor>
+        <div className="flex items-center gap-1">
+          <CardAnchor>Pages</CardAnchor>
+          <PaxSearch placeholder="Search pages…" />
+        </div>
         <CardAction>
           <CardTools rows={pages.map(({ href, name, state, data }) => ({ name, href, state, data }))} name="pages">
             <div className="mr-2 hidden flex-wrap gap-3 text-xs text-muted-foreground lg:flex">
@@ -41,7 +46,7 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
       <CardContent className="min-h-0 flex-1 overflow-y-auto [scrollbar-width:thin]">
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
           {pages.map((p) => (
-            <button key={p.href} type="button" onClick={() => setOpen(p)} className="flex flex-col gap-1 rounded-xl border bg-card p-3 text-left transition-shadow hover:shadow-e1">
+            <button key={p.href} data-find type="button" onClick={() => setOpen(p)} className="flex flex-col gap-1 rounded-xl border bg-card p-3 text-left transition-shadow hover:shadow-e1">
               <span className="flex items-center justify-between gap-2">
                 <span className="font-medium">{p.name}</span>
                 <span title={DOT[p.state].label} className={cn("size-2.5 shrink-0 rounded-full", DOT[p.state].dot)} />
@@ -120,5 +125,6 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
         </DialogContent>
       </Dialog>
     </Card>
+    </PaxTable2>
   )
 }

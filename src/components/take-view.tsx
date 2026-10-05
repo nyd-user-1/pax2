@@ -35,9 +35,11 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
 
   return (
     <SeekProvider>
-      <div className={cn("grid gap-8", inDrawer ? "lg:grid-cols-[280px_1fr]" : "lg:grid-cols-[320px_1fr]")}>
-        <aside className="flex flex-col gap-4 lg:sticky lg:top-0 lg:self-start">
-          <Player src={take.video!.src} poster={take.video!.poster} />
+      <div className={cn("grid gap-8", inDrawer ? "@xl:grid-cols-[280px_1fr]" : "@4xl:grid-cols-[320px_1fr]")}>
+        <aside className={cn("flex flex-col gap-4", inDrawer ? "@xl:sticky @xl:top-0 @xl:self-start" : "@4xl:sticky @4xl:top-0 @4xl:self-start")}>
+          <div className={cn("relative aspect-video overflow-hidden rounded-2xl bg-black shadow-e2", inDrawer ? "@xl:aspect-auto @xl:overflow-visible @xl:rounded-none @xl:bg-transparent @xl:shadow-none" : "@4xl:aspect-auto @4xl:overflow-visible @4xl:rounded-none @4xl:bg-transparent @4xl:shadow-none")}>
+            <Player src={take.video!.src} poster={take.video!.poster} className={cn("absolute inset-0 h-full w-full max-w-none rounded-none object-contain", inDrawer ? "@xl:static @xl:h-auto @xl:w-full @xl:max-w-[300px] @xl:rounded-2xl @xl:object-cover" : "@4xl:static @4xl:h-auto @4xl:w-full @4xl:max-w-[300px] @4xl:rounded-2xl @4xl:object-cover")} />
+          </div>
           {f?.audio && !f.audio.error && (
             <div className="surface p-4">
               <Loudness f={f.audio} />
@@ -60,7 +62,7 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
           {!inDrawer && <h1 className="font-display text-2xl text-slate-900 md:text-[28px]">{script.short}</h1>}
 
           {m && (
-            <div className="surface grid grid-cols-2 gap-4 p-5 sm:grid-cols-4">
+            <div className="surface grid grid-cols-2 gap-4 p-5 @lg:grid-cols-4">
               {stat("Reach", (m.reach.value ?? 0).toLocaleString())}
               {stat("Watched 3s+", (m.plays3s.value ?? 0).toLocaleString())}
               {stat("Avg.", `${m.avgWatchSec.value?.toFixed(1) ?? "—"}s`)}

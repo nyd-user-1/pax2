@@ -7,6 +7,7 @@ import { Bar, BarChart, CartesianGrid, Label, PolarGrid, PolarRadiusAxis, Radial
 
 import type { Lesson, Limit } from "@/lib/build-board"
 import { CardAnchor, CardTools, RefreshButton } from "@/components/dash/card-tools"
+import { PaxSearch, PaxTable2 } from "@/components/pax-table2"
 import { Card, CardAction, CardContent, CardHeader } from "@/ui/components/nova/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/components/nova/chart"
 import { cn } from "@/ui/lib/utils"
@@ -175,7 +176,7 @@ const OUTCOME: Record<Lesson["outcome"], string> = { clean: "border-pax-plum bg-
 function LessonRow({ l }: { l: Lesson }) {
   const [open, setOpen] = React.useState(false)
   return (
-    <div className="rounded-md border bg-card">
+    <div data-find className="rounded-md border bg-card">
       <button type="button" onClick={() => setOpen(!open)} className="flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left">
         <span title={l.outcome} className={cn("size-4 shrink-0 rounded-[3px] border", OUTCOME[l.outcome])} />
         <ChevronRight className={cn("size-3.5 shrink-0 text-muted-foreground transition-transform", open && "rotate-90")} />
@@ -199,9 +200,13 @@ function LessonRow({ l }: { l: Lesson }) {
 
 export function InsightsCard({ lessons }: { lessons: Lesson[] }) {
   return (
+    <PaxTable2>
     <Card className="gap-4">
       <CardHeader>
-        <CardAnchor>Insights</CardAnchor>
+        <div className="flex items-center gap-1">
+          <CardAnchor>Insights</CardAnchor>
+          <PaxSearch placeholder="Search insights…" />
+        </div>
         <CardAction>
           <CardTools rows={lessons.map((l) => ({ title: l.title, when: l.when, outcome: l.outcome, headline: l.headline, lessons: l.lessons.join(" | ") }))} name="insights" />
         </CardAction>
@@ -212,5 +217,6 @@ export function InsightsCard({ lessons }: { lessons: Lesson[] }) {
         ))}
       </CardContent>
     </Card>
+    </PaxTable2>
   )
 }

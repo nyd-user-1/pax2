@@ -91,7 +91,6 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col gap-10">
       <header className="rise flex flex-wrap items-center gap-3">
-        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Dashboard</h1>
         {demo && <span className="rounded-full bg-pax-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax-red-deep">Sample data</span>}
       </header>
 

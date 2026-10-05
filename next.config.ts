@@ -2,6 +2,16 @@ import type { NextConfig } from "next"
 
 const config: NextConfig = {
   devIndicators: false,
+  // The inspector is development-only, and the guard inside it is not what
+  // keeps it out of the build: aliasing the import to an empty stub is what
+  // actually excludes it (verified in 44b — its strings survived into two
+  // production chunks on a guard alone).
+  turbopack: {
+    resolveAlias:
+      process.env.NODE_ENV === "development"
+        ? {}
+        : { "@/components/dev/inspector": "./src/components/dev/inspector.stub.tsx" },
+  },
   async redirects() {
     return [
       { source: "/reviews", destination: "/evals", permanent: false },

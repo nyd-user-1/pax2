@@ -11,7 +11,7 @@ import { cn } from "@/ui/lib/utils"
 export const BLOCK_HEIGHT = "h-[419px]"
 
 /** A card that opens and closes from the chevron at its right; open, it is BLOCK_HEIGHT tall and its body scrolls inside. */
-export function FoldCard({ title, children, tools, rows, name, defaultOpen = true }: { title: string; children: React.ReactNode; tools?: React.ReactNode; rows?: readonly Record<string, unknown>[]; name?: string; defaultOpen?: boolean }) {
+export function FoldCard({ title, children, tools, search, rows, name, defaultOpen = true }: { title: string; children: React.ReactNode; tools?: React.ReactNode; search?: React.ReactNode; rows?: readonly Record<string, unknown>[]; name?: string; defaultOpen?: boolean }) {
   const [open, setOpen] = React.useState(defaultOpen)
   return (
     <Card className={cn("gap-4", open && BLOCK_HEIGHT)}>
@@ -19,6 +19,7 @@ export function FoldCard({ title, children, tools, rows, name, defaultOpen = tru
         <div className="flex items-center gap-1">
           <CardAnchor>{title}</CardAnchor>
           {tools}
+          {search}
         </div>
         <CardAction>
           <CardTools rows={rows} name={name ?? title.toLowerCase()} collapsed={!open} onCollapse={() => setOpen(!open)}>
@@ -28,7 +29,7 @@ export function FoldCard({ title, children, tools, rows, name, defaultOpen = tru
           </CardTools>
         </CardAction>
       </CardHeader>
-      {open && <CardContent className="min-h-0 flex-1 overflow-y-auto [scrollbar-width:thin]">{children}</CardContent>}
+      {open && <CardContent className="min-h-0 flex-1 overflow-y-auto [scrollbar-width:thin] [&_[data-slot=table-container]]:overflow-visible [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10 [&_thead]:bg-card">{children}</CardContent>}
     </Card>
   )
 }

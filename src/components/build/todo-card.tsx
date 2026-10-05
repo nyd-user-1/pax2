@@ -4,6 +4,7 @@ import * as React from "react"
 import { Check, ChevronRight, Copy } from "lucide-react"
 
 import { FoldCard } from "@/components/dash/fold-card"
+import { PaxSearch, PaxTable2 } from "@/components/pax-table2"
 import { cn } from "@/ui/lib/utils"
 
 export type Todo = { title: string; detail?: string; who: "Brendan" | null; done?: boolean }
@@ -15,7 +16,7 @@ function Row({ t, n }: { t: Todo; n: number }) {
   const [open, setOpen] = React.useState(false)
   const [copied, setCopied] = React.useState(false)
   return (
-    <div className="rounded-md border bg-card">
+    <div data-find className="rounded-md border bg-card">
       <button type="button" onClick={() => setOpen(!open)} className="flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left">
         <span title={t.done ? "done" : t.who ? "Brendan" : "open"} className={cn("size-4 shrink-0 rounded-[3px] border", t.done ? "border-pax-plum bg-pax-lavender" : t.who ? "border-pax-red bg-pax-red-soft" : "border-slate-300")} />
         <ChevronRight className={cn("size-3.5 shrink-0 text-muted-foreground transition-transform", open && "rotate-90")} />
@@ -46,12 +47,14 @@ function Row({ t, n }: { t: Todo; n: number }) {
 
 export function TodoCard({ items }: { items: Todo[] }) {
   return (
-    <FoldCard title="To Do" rows={items.map((t) => ({ title: t.title, status: t.done ? "done" : t.who ? "Brendan" : "open", detail: t.detail ?? "" }))} name="to-do">
+    <PaxTable2>
+    <FoldCard title="To Do" rows={items.map((t) => ({ title: t.title, status: t.done ? "done" : t.who ? "Brendan" : "open", detail: t.detail ?? "" }))} name="to-do" search={<PaxSearch placeholder="Search to-dos…" />}>
       <div className="flex flex-col gap-2">
         {items.map((t, i) => (
           <Row key={t.title} t={t} n={i + 1} />
         ))}
       </div>
     </FoldCard>
+    </PaxTable2>
   )
 }

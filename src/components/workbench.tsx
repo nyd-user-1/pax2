@@ -41,8 +41,8 @@ export function At({ t, children, className }: { t: number; children?: React.Rea
   )
 }
 
-export function Player({ src, poster }: { src: string; poster?: string }) {
-  return <video id="pax-video" src={src} poster={poster} controls playsInline preload="metadata" className="aspect-[9/16] w-full max-w-[300px] rounded-2xl bg-black object-cover shadow-lg" />
+export function Player({ src, poster, className }: { src: string; poster?: string; className?: string }) {
+  return <video id="pax-video" src={src} poster={poster} controls playsInline preload="metadata" className={cn("aspect-[9/16] w-full max-w-[300px] rounded-2xl bg-black object-cover shadow-lg", className)} />
 }
 
 export function ScriptTimeline({ lines, duration }: { lines: { t: number; text: string }[]; duration: number }) {

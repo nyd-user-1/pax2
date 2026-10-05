@@ -1,70 +1,65 @@
 import Link from "next/link"
-import { ArrowRight, Clock, PencilLine, Send, Smile, Video } from "lucide-react"
+import { ArrowRight, Clock } from "lucide-react"
 
-import { HelpLine } from "@/components/record/chrome"
-import { Wordmark } from "@/components/wordmark"
+import features from "../../../data/generated/features.json"
+import shorts from "../../../data/raw/yt-shorts.json"
+import { Feed, type FeedVideo } from "@/components/record/feed"
+import { LandingHeader } from "@/components/record/landing-header"
+import { PhoneMock } from "@/components/record/phone-mock"
+import { ScrollCue } from "@/components/record/scroll-cue"
 
 export const metadata = { title: "Record a video" }
 
+// The phone plays a real short: FairVote's best-travelled video.
+const FAIRVOTE = "UCb8R3tlbcYaE5J5-HUBf7mw"
+
+type RawVideo = { id: string; channelId: string; channel: string; views?: number; duration: string; published: string; title: string; description?: string }
+
+const timerOf = (iso: string) => {
+  const m = /PT(?:(\d+)M)?(?:(\d+)S)?/.exec(iso)
+  return `${(m?.[1] ?? "0").padStart(2, "0")}:${(m?.[2] ?? "0").padStart(2, "0")}`
+}
+
 export default function RecordLanding() {
+  const all = (shorts as unknown as { videos: RawVideo[] }).videos
+  const top = all.filter((v) => v.channelId === FAIRVOTE).sort((a, b) => (b.views ?? 0) - (a.views ?? 0))[0]
+  const feed: FeedVideo[] = all
+    .map((v) => ({
+      id: v.id,
+      title: v.title.replace(/\s*#\w+/g, "").trim() || v.title,
+      channel: v.channel,
+      views: v.views ?? 0,
+      published: v.published,
+      duration: v.duration,
+      description: (v.description ?? "").split("\n")[0].replace(/\s*#\w+/g, "").trim(),
+      playable: `yt-${v.id}` in (features as Record<string, unknown>),
+    }))
+    .sort((a, b) => b.views - a.views)
   return (
-    <div className="flex flex-col">
-      <section className="relative overflow-hidden bg-gradient-to-b from-pax-lavender to-pax-mist">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-[1.4fr_1fr] md:py-24">
+    <div className="bg-pax-mist">
+      <LandingHeader />
+      <section className="relative -mt-16 flex min-h-dvh flex-col justify-center bg-gradient-to-b from-pax-lavender to-pax-mist pt-16">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 pb-10 md:grid-cols-[1.4fr_1fr]">
           <div className="flex flex-col gap-6">
-            <Link href="/" aria-label="Home"><Wordmark size={26} /></Link>
             <span className="flex w-fit items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-sm text-pax-ink shadow-sm">
-              <Clock className="size-4" /> About five minutes
+              <Clock className="size-4" /> Breakthrough
             </span>
             <h1 className="font-display text-5xl font-bold leading-[1.05] text-pax-ink lg:text-[4.25rem]">
-              Record your video.
+              Voice.
               <br />
-              <span className="text-primary lg:whitespace-nowrap">We&apos;ll handle the rest.</span>
+              Amplified.
             </h1>
-            <p className="max-w-md text-lg leading-relaxed text-muted-foreground">Choose what you want to say, then record here or upload a video you already made. The team takes it from there.</p>
+            <p className="max-w-md text-lg leading-relaxed text-muted-foreground">We help you choose what to say, how to say it and share it. Because your voice is the difference.</p>
             <Link href="/record/start" className="flex w-fit items-center gap-2 rounded-full bg-pax-ink px-7 py-4 text-base font-medium text-white shadow-lg transition-transform hover:-translate-y-0.5">
-              Let&apos;s get started <ArrowRight className="size-4" />
+              Let&apos;s go <ArrowRight className="size-4" />
             </Link>
-            <p className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Smile className="size-4" /> No production skills needed. <span className="text-pax-ink">Just be yourself.</span>
-            </p>
+            <p className="text-sm text-muted-foreground">Powered by Resonant Amplification &copy;</p>
           </div>
-          <div className="mx-auto w-64 rotate-[4deg] rounded-[2.5rem] border-[10px] border-pax-ink bg-pax-ink shadow-2xl md:w-72">
-            <div className="relative flex aspect-[9/19] flex-col justify-end overflow-hidden rounded-[1.8rem] bg-gradient-to-b from-primary/60 via-pax-ink/80 to-pax-ink p-5 text-center">
-              <span className="absolute left-1/2 top-3 h-5 w-20 -translate-x-1/2 rounded-full bg-black/80" />
-              <span className="absolute left-1/2 top-12 -translate-x-1/2 font-mono text-xs text-white/80">00:00</span>
-              <p className="font-display text-xl font-semibold uppercase leading-tight text-white">
-                When politicians don&apos;t have to compete, <span className="text-[var(--pax-red)]">they don&apos;t have to listen.</span>
-              </p>
-              <span className="mx-auto mt-6 size-14 rounded-full border-4 border-white/90 bg-[var(--pax-red)]" />
-              <span className="mt-3 text-[10px] font-medium tracking-widest text-white/80">VIDEO</span>
-            </div>
-          </div>
+          <PhoneMock videoId={`yt-${top.id}`} timer={timerOf(top.duration)} />
         </div>
+        <ScrollCue />
       </section>
-
-      <section className="mx-auto flex w-full max-w-5xl flex-col items-center gap-12 px-6 py-20">
-        <h2 className="font-display text-4xl font-semibold text-pax-ink">
-          It really is that <span className="text-primary">simple.</span>
-        </h2>
-        <ol className="grid w-full gap-10 sm:grid-cols-3">
-          {[
-            { icon: PencilLine, t: "Pick", d: "Choose what you want to say." },
-            { icon: Video, t: "Record", d: "Record here, or upload." },
-            { icon: Send, t: "Send", d: "The team takes care of the rest." },
-          ].map(({ icon: Icon, t, d }, i) => (
-            <li key={t} className="flex flex-col items-center gap-3 text-center">
-              <span className="relative flex size-20 items-center justify-center rounded-full bg-white shadow-md">
-                <Icon className="size-7 text-pax-ink" />
-                <span className="absolute -left-1 -top-1 flex size-7 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white">{i + 1}</span>
-              </span>
-              <span className="text-lg font-semibold text-pax-ink">{t}</span>
-              <span className="text-muted-foreground">{d}</span>
-            </li>
-          ))}
-        </ol>
-        <HelpLine />
-      </section>
+      <Feed videos={feed} />
     </div>
   )
 }

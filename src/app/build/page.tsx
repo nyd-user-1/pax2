@@ -7,6 +7,7 @@ import { PagesBoard } from "@/components/build/pages-board"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { CardAnchor, CardTools, RefreshButton } from "@/components/dash/card-tools"
 import { FoldCard } from "@/components/dash/fold-card"
+import { PaxSearch, PaxTable2 } from "@/components/pax-table2"
 import { TodoCard, type Todo } from "@/components/build/todo-card"
 import { LESSONS, NOT_CONNECTED, PAGES, type SourceRow } from "@/lib/build-board"
 import { FEATURES, TAKES } from "@/lib/catalog"
@@ -73,7 +74,6 @@ export default async function BuildPage() {
   return (
     <div className="flex flex-col">
       <header className="mb-5 flex flex-col gap-1">
-        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Build</h1>
         <p className="text-sm text-muted-foreground">Updated {b.updated}</p>
       </header>
 
@@ -97,7 +97,8 @@ export default async function BuildPage() {
         </OrderedBlock>
 
         <OrderedBlock id="library" label="Library">
-          <FoldCard title="Library" rows={sources.map(({ name, href, publisher, kind, covers, status }) => ({ name, href, publisher, type: kind, description: covers, status }))} name="library" tools={<RefreshButton />}>
+          <PaxTable2>
+          <FoldCard title="Library" rows={sources.map(({ name, href, publisher, kind, covers, status }) => ({ name, href, publisher, type: kind, description: covers, status }))} name="library" tools={<RefreshButton />} search={<PaxSearch placeholder="Search sources…" />}>
             <Table className="table-fixed">
               <TableHeader className="sticky top-0 z-10 bg-white">
                 <TableRow className="bg-muted/60">
@@ -141,6 +142,7 @@ export default async function BuildPage() {
               </TableBody>
             </Table>
           </FoldCard>
+          </PaxTable2>
         </OrderedBlock>
 
         <OrderedBlock id="runs" label="Runs">
