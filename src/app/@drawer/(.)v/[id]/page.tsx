@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 
 import shorts from "../../../../../data/raw/yt-shorts.json"
 import { ShortView } from "@/components/short-view"
-import { TakeDrawer } from "@/components/take-drawer"
+import { TakePanel } from "@/components/take-panel"
 import { TakeView } from "@/components/take-view"
 import { scriptById, takeById } from "@/lib/catalog"
 import { channelById } from "@/lib/channels"
@@ -15,16 +15,16 @@ export default async function TakeInDrawer({ params }: { params: Promise<{ id: s
   if (id.startsWith("yt-")) {
     const v = (shorts as unknown as { videos: { id: string; channelId: string; channel: string }[] }).videos.find((x) => x.id === id.replace(/^yt-/, ""))
     return (
-      <TakeDrawer title={v ? (channelById(v.channelId)?.name ?? v.channel) : "Campaign short"}>
+      <TakePanel title={v ? (channelById(v.channelId)?.name ?? v.channel) : "Campaign short"}>
         <ShortView id={id} inDrawer />
-      </TakeDrawer>
+      </TakePanel>
     )
   }
   const take = takeById(id)
   if (!take) notFound()
   return (
-    <TakeDrawer title={scriptById(take.scriptId)!.short}>
+    <TakePanel title={scriptById(take.scriptId)!.short}>
       <TakeView id={id} inDrawer />
-    </TakeDrawer>
+    </TakePanel>
   )
 }
