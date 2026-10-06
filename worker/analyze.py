@@ -125,8 +125,10 @@ Return JSON only, no prose, with this shape:
  "hook": {"t": number, "text": str, "assessment": str},
  "observations": [{"t": number, "end": number, "what": str}],
  "characteristics": {"setting": str, "on_screen_people": str, "captions": str, "text_overlays": str, "music": str, "pace": str, "call_to_action": str, "visual_variety": str},
+ "delivery": {"vocal_tone": [str], "energy": "low"|"medium"|"high", "energy_arc": str, "facial_affect_on_hook": str, "direct_address": bool, "sarcasm_or_irony": {"present": bool, "cue": str}},
+ "semantics": {"frame": "personal-story"|"explainer"|"call-out"|"news-reaction"|"stat-led"|"testimonial"|"montage", "first_person": bool, "question_led": bool, "core_claim": str},
  "accessibility": [str]}
-Rules: describe only what is visible or audible, with times in seconds. Do not guess anyone's race, ethnicity, age or gender. Keep each field under 30 words."""
+Rules: describe only what is visible or audible, with times in seconds. Do not guess anyone's race, ethnicity, age or gender. Delivery labels describe the performance, never the person; when the speaker is off-screen or the tone is ambiguous, write "unclear" rather than guessing. vocal_tone uses 1-3 words like urgent, conversational, earnest, deadpan, upbeat, angry, wry. Keep each field under 30 words."""
 
 
 def pegasus(tid):

@@ -1,0 +1,689 @@
+{
+ "built": "2026-10-05",
+ "method": "v0 delivery and semantic coding, derived by Claude Fable 5 from signals already captured per video: transcript text and word timing, measured loudness, pitch and pauses, and the video model's prior observations. Replaced natively as the upgraded Pegasus prompt re-runs; fields mirror the pipeline's delivery/semantics schema.",
+ "videos": {
+  "yt--50yfo3yqNg": {
+   "energy": "high",
+   "vocalTone": [
+    "newsy",
+    "indignant"
+   ],
+   "mode": "to-camera",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "211 wpm, anchor to camera, WWII-vet escalation in text"
+  },
+  "yt--qVSHn5_8ws": {
+   "energy": "medium",
+   "vocalTone": [
+    "earnest",
+    "measured"
+   ],
+   "mode": "to-camera",
+   "frame": "testimonial",
+   "firstPerson": true,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "credentialed self-introduction, steady 186 wpm, b-roll cutaways"
+  },
+  "yt-1pGOts7Th3o": {
+   "energy": "high",
+   "vocalTone": [
+    "upbeat",
+    "conversational"
+   ],
+   "mode": "to-camera",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": true,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "216 wpm, 'Did you know' opening, stat overlays"
+  },
+  "yt-4HJT8ZzXvRE": {
+   "energy": "medium",
+   "vocalTone": [
+    "earnest",
+    "polished"
+   ],
+   "mode": "voiceover",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": true,
+   "sarcasm": {
+    "present": false
+   },
+   "music": null,
+   "facialAffect": "unknown",
+   "basis": "ad-read cadence, 'Tired of...?' opening; no visual record"
+  },
+  "yt-4PJaJvXVCvE": {
+   "energy": "medium",
+   "vocalTone": [
+    "narrative",
+    "measured"
+   ],
+   "mode": "voiceover",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": null,
+   "facialAffect": "unknown",
+   "basis": "mini-doc narration, 24 pauses, heavy edit dynamics"
+  },
+  "yt-5LHXjjQW0ug": {
+   "energy": "high",
+   "vocalTone": [
+    "playful"
+   ],
+   "mode": "clip",
+   "frame": "montage",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "celebratory",
+   "basis": "football celebration clip, fast pace, no speech"
+  },
+  "yt-5chyFN44kzk": {
+   "energy": "low",
+   "vocalTone": [
+    "newsy",
+    "calm"
+   ],
+   "mode": "clip",
+   "frame": "news-reaction",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "CNN segment, 145 wpm anchor delivery"
+  },
+  "yt-7c6mMrC9RB0": {
+   "energy": "medium",
+   "vocalTone": [
+    "conversational",
+    "newsy"
+   ],
+   "mode": "to-camera",
+   "frame": "news-reaction",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "direct address with results graphics, 178 wpm"
+  },
+  "yt-7uNrejRqmqs": {
+   "energy": "high",
+   "vocalTone": [
+    "urgent",
+    "newsy"
+   ],
+   "mode": "to-camera",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "198 wpm, 'strange outcome' tension hook, chart cutaways"
+  },
+  "yt-8yCwABY3MTs": {
+   "energy": "low",
+   "vocalTone": [
+    "earnest",
+    "aggrieved"
+   ],
+   "mode": "interview",
+   "frame": "testimonial",
+   "firstPerson": true,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "serious",
+   "basis": "picketing voter, 140 wpm, halting phrasing"
+  },
+  "yt-A6e7pPUVabo": {
+   "energy": "high",
+   "vocalTone": [
+    "urgent",
+    "pointed"
+   ],
+   "mode": "to-camera",
+   "frame": "news-reaction",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": true,
+   "facialAffect": "unknown",
+   "basis": "201 wpm, rising music, Musk-donation call-out"
+  },
+  "yt-A8fnhDBLfnQ": {
+   "energy": "medium",
+   "vocalTone": [
+    "serious",
+    "concerned"
+   ],
+   "mode": "interview",
+   "frame": "news-reaction",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "two-speaker commentary over clips, mid-video rhetorical question"
+  },
+  "yt-BGkoL176bcI": {
+   "energy": "medium",
+   "vocalTone": [
+    "hopeful",
+    "earnest"
+   ],
+   "mode": "clip",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": null,
+   "facialAffect": "unknown",
+   "basis": "speech excerpt, 'good news' frame, 154 wpm with big dynamic swings"
+  },
+  "yt-BkJG9M60CzA": {
+   "energy": "medium",
+   "vocalTone": [
+    "conversational",
+    "emphatic"
+   ],
+   "mode": "to-camera",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "gesturing explainer, 14 pauses, 53 dB swing"
+  },
+  "yt-Eg8mPYYr9OU": {
+   "energy": "high",
+   "vocalTone": [
+    "confident",
+    "upbeat"
+   ],
+   "mode": "clip",
+   "frame": "montage",
+   "firstPerson": true,
+   "questionLed": true,
+   "sarcasm": {
+    "present": false
+   },
+   "music": true,
+   "facialAffect": "unknown",
+   "basis": "TED/interview montage, dynamic shifts, applause beat"
+  },
+  "yt-G41UEg-RnGc": {
+   "energy": "high",
+   "vocalTone": [
+    "emphatic",
+    "rapid"
+   ],
+   "mode": "clip",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "236 wpm, warning cadence, map graphics"
+  },
+  "yt-H0m1eql9Uqk": {
+   "energy": "medium",
+   "vocalTone": [
+    "indignant"
+   ],
+   "mode": "clip",
+   "frame": "call-out",
+   "firstPerson": true,
+   "questionLed": false,
+   "sarcasm": {
+    "present": true,
+    "cue": "'Just join a party if you want to vote. How un-American.'"
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "hearing clip plus caption lead, scornful quote-and-answer"
+  },
+  "yt-HJXSyLxPoco": {
+   "energy": "medium",
+   "vocalTone": [
+    "warm",
+    "proud"
+   ],
+   "mode": "to-camera",
+   "frame": "personal-story",
+   "firstPerson": true,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "'Hi, I'm Claire from Alaska', place-based pride"
+  },
+  "yt-HRDlnl8f35s": {
+   "energy": "medium",
+   "vocalTone": [
+    "curious",
+    "playful"
+   ],
+   "mode": "to-camera",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": true,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "'Spoilers? What's spoilers?' self-interruption device"
+  },
+  "yt-HveOZAlfKog": {
+   "energy": "medium",
+   "vocalTone": [
+    "conversational"
+   ],
+   "mode": "interview",
+   "frame": "news-reaction",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": true,
+   "facialAffect": "unknown",
+   "basis": "podcast-style mics, background music, low pitch"
+  },
+  "yt-In8GcKNNTFI": {
+   "energy": "high",
+   "vocalTone": [
+    "grave",
+    "urgent"
+   ],
+   "mode": "interview",
+   "frame": "call-out",
+   "firstPerson": false,
+   "questionLed": true,
+   "sarcasm": {
+    "present": false
+   },
+   "music": true,
+   "facialAffect": "unknown",
+   "basis": "war-powers framing, building music, 'Demand accountability' CTA"
+  },
+  "yt-JP8SHaVl674": {
+   "energy": "medium",
+   "vocalTone": [
+    "deliberate",
+    "pointed"
+   ],
+   "mode": "to-camera",
+   "frame": "news-reaction",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": true,
+    "cue": "'the Democrats are the good guys' myth framing"
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "37 pauses, slow dismantling of a premise"
+  },
+  "yt-M97WyXecL_A": {
+   "energy": "high",
+   "vocalTone": [
+    "indignant",
+    "energetic"
+   ],
+   "mode": "interview",
+   "frame": "testimonial",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "street vox-pop, quick cuts, 191 wpm"
+  },
+  "yt-PXJ6-Itlmt4": {
+   "energy": "high",
+   "vocalTone": [
+    "sarcastic",
+    "combative"
+   ],
+   "mode": "to-camera",
+   "frame": "call-out",
+   "firstPerson": false,
+   "questionLed": true,
+   "sarcasm": {
+    "present": true,
+    "cue": "'IF MAGA BILLIONAIRES SAY IT'S WRONG, IT'S PRORIGHT!'"
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "218 wpm outdoor monologue, caps-lock irony overlay"
+  },
+  "yt-THihu1i6k8Q": {
+   "energy": "medium",
+   "vocalTone": [
+    "candid",
+    "measured"
+   ],
+   "mode": "interview",
+   "frame": "news-reaction",
+   "firstPerson": false,
+   "questionLed": true,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "Q-and-A pair, careful hedging in answer"
+  },
+  "yt-XPxE92IaJC8": {
+   "energy": "medium",
+   "vocalTone": [
+    "curious",
+    "newsy"
+   ],
+   "mode": "voiceover",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": true,
+   "sarcasm": {
+    "present": false
+   },
+   "music": null,
+   "facialAffect": "unknown",
+   "basis": "'What do data centers have to do with democracy?' opening; no visual record"
+  },
+  "yt-bmf2GjzfgZA": {
+   "energy": "medium",
+   "vocalTone": [
+    "conversational",
+    "unpolished"
+   ],
+   "mode": "to-camera",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "visible false starts, cap-and-flannel informality"
+  },
+  "yt-brKvhJMqDT0": {
+   "energy": "low",
+   "vocalTone": [
+    "sincere",
+    "flat"
+   ],
+   "mode": "voiceover",
+   "frame": "testimonial",
+   "firstPerson": true,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "5 dB total range, scenery b-roll, org introduction"
+  },
+  "yt-bsXOK-004zY": {
+   "energy": "medium",
+   "vocalTone": [
+    "wry",
+    "pointed"
+   ],
+   "mode": "voiceover",
+   "frame": "call-out",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": true,
+    "cue": "'Interesting. Now, why could that be?'"
+   },
+   "music": null,
+   "facialAffect": "unknown",
+   "basis": "3.4s silent cold open, arch rhetorical beat"
+  },
+  "yt-hMOu1Ex6df4": {
+   "energy": "high",
+   "vocalTone": [
+    "animated",
+    "concerned"
+   ],
+   "mode": "interview",
+   "frame": "stat-led",
+   "firstPerson": true,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": true,
+   "facialAffect": "unknown",
+   "basis": "207 wpm table talk, repeated 'nearly 90%' emphasis, chart inserts"
+  },
+  "yt-hlvVHixBwzc": {
+   "energy": "high",
+   "vocalTone": [
+    "indignant",
+    "urgent"
+   ],
+   "mode": "voiceover",
+   "frame": "call-out",
+   "firstPerson": false,
+   "questionLed": true,
+   "sarcasm": {
+    "present": false
+   },
+   "music": null,
+   "facialAffect": "unknown",
+   "basis": "protest footage, 'Think that's fair?' at five seconds"
+  },
+  "yt-ig2rJIRDEKo": {
+   "energy": "high",
+   "vocalTone": [
+    "playful",
+    "witty"
+   ],
+   "mode": "to-camera",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": true,
+   "sarcasm": {
+    "present": true,
+    "cue": "'a dog can play basketball, but can a plant run for Senate?'"
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "absurdist hook, 206 wpm, graphics walk-through"
+  },
+  "yt-k36hkFq7_EI": {
+   "energy": "high",
+   "vocalTone": [
+    "defiant",
+    "intense"
+   ],
+   "mode": "to-camera",
+   "frame": "call-out",
+   "firstPerson": true,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "intense",
+   "basis": "model notes speaking 'with intensity'; refusal language"
+  },
+  "yt-k3lsCHemLwY": {
+   "energy": "medium",
+   "vocalTone": [
+    "amused",
+    "wry"
+   ],
+   "mode": "voiceover",
+   "frame": "news-reaction",
+   "firstPerson": true,
+   "questionLed": false,
+   "sarcasm": {
+    "present": true,
+    "cue": "'the two Dan Sullivans, or is it Dan's Sullivan?'"
+   },
+   "music": null,
+   "facialAffect": "unknown",
+   "basis": "name-farce comedy of the three Sullivans"
+  },
+  "yt-mV0zO4WIWWc": {
+   "energy": "medium",
+   "vocalTone": [
+    "neutral",
+    "instructional"
+   ],
+   "mode": "to-camera",
+   "frame": "explainer",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "civics-lesson register, 208 wpm but 7 dB flat"
+  },
+  "yt-qC7KwJRE8j8": {
+   "energy": "medium",
+   "vocalTone": [
+    "storytelling",
+    "conversational"
+   ],
+   "mode": "to-camera",
+   "frame": "personal-story",
+   "firstPerson": true,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "lunch-with-a-congressman anecdote structure"
+  },
+  "yt-rUYw1phm3NM": {
+   "energy": "medium",
+   "vocalTone": [
+    "grave",
+    "urgent"
+   ],
+   "mode": "to-camera",
+   "frame": "stat-led",
+   "firstPerson": false,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": null,
+   "facialAffect": "unknown",
+   "basis": "'shocking results no one's talking about', 10%/90% statistic lead"
+  },
+  "yt-t5Kn1BqYRLs": {
+   "energy": "medium",
+   "vocalTone": [
+    "warm",
+    "genuine"
+   ],
+   "mode": "interview",
+   "frame": "testimonial",
+   "firstPerson": true,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "voter vox-pop, plain-spoken endorsements"
+  },
+  "yt-u98EznmnpGg": {
+   "energy": "low",
+   "vocalTone": [
+    "resolute",
+    "earnest"
+   ],
+   "mode": "to-camera",
+   "frame": "testimonial",
+   "firstPerson": true,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "single credo statement, 151 wpm, campaign-sign backdrop"
+  },
+  "yt-zuq_oPyuRnY": {
+   "energy": "medium",
+   "vocalTone": [
+    "relatable",
+    "earnest"
+   ],
+   "mode": "to-camera",
+   "frame": "personal-story",
+   "firstPerson": true,
+   "questionLed": false,
+   "sarcasm": {
+    "present": false
+   },
+   "music": false,
+   "facialAffect": "unknown",
+   "basis": "'If you're like me' identification hook, staffer credential"
+  }
+ }
+}

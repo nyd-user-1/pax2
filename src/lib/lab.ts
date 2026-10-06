@@ -1,3 +1,4 @@
+import deliveryJson from "../../data/generated/delivery.json"
 import featuresJson from "../../data/generated/features.json"
 import shortsJson from "../../data/raw/yt-shorts.json"
 import { CHANNELS } from "@/lib/channels"
@@ -16,8 +17,20 @@ type Feat = {
   pegasus?: { result?: { hook?: { text?: string }; characteristics?: Record<string, string> } }
 }
 
+type Delivery = {
+  energy?: string
+  vocalTone?: string[]
+  mode?: string
+  frame?: string
+  firstPerson?: boolean
+  questionLed?: boolean
+  sarcasm?: { present?: boolean; cue?: string }
+  music?: boolean | null
+}
+
 const VIDEOS = (shortsJson as unknown as { videos: RawVideo[] }).videos
 const FEATS = featuresJson as unknown as Record<string, Feat>
+const DELIVERY = (deliveryJson as unknown as { videos: Record<string, Delivery> }).videos
 
 export const durationSec = (iso: string) => {
   const m = /PT(?:(\d+)M)?(?:(\d+)S)?/.exec(iso)
@@ -127,12 +140,17 @@ const FEATURE_DEFS: { key: string; label: string }[] = [
   { key: "breathless", label: "Three or fewer pauses" },
   { key: "question", label: "Hook or title asks a question" },
   { key: "numbered", label: "A number in the title" },
+  { key: "highEnergy", label: "High-energy delivery" },
+  { key: "toCamera", label: "Speaks straight to camera" },
+  { key: "wry", label: "Wry, sarcastic or playful register" },
+  { key: "firstPerson", label: "First-person voice" },
 ]
 
 function codeOne(v: LabVideo): Coded | null {
   const f = FEATS[`yt-${v.id}`]
   if (!f) return null
   const raw = VIDEOS.find((x) => x.id === v.id)
+  const d = DELIVERY[`yt-${v.id}`]
   const loud = f.audio?.loudnessDb ?? []
   const chars = f.pegasus?.result?.characteristics ?? {}
   const hook = f.pegasus?.result?.hook?.text ?? ""
@@ -146,6 +164,10 @@ function codeOne(v: LabVideo): Coded | null {
     breathless: (f.audio?.pauses?.length ?? 99) <= 3,
     question: hook.includes("?") || (raw?.title ?? "").includes("?"),
     numbered: /\d/.test(raw?.title ?? ""),
+    highEnergy: d?.energy === "high",
+    toCamera: d?.mode === "to-camera",
+    wry: d?.sarcasm?.present === true,
+    firstPerson: d?.firstPerson === true,
   }
   return { tier: v.tier, flags }
 }
