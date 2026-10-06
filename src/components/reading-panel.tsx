@@ -197,13 +197,13 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
         </>
       )}
 
-      <CallIt action={assess} takeId={takeId} calls={calls} nextDataset={nextDataset} baseline={baseline} baselineSnapshot={baselineSnapshot} />
+      <Forecast action={assess} takeId={takeId} calls={calls} nextDataset={nextDataset} baseline={baseline} baselineSnapshot={baselineSnapshot} />
     </div>
   )
 }
 
-/** Step 6: before the next results load, the partner and PAX each call it. Locked once logged. */
-function CallIt({ action, takeId, calls, nextDataset, baseline, baselineSnapshot }: { action: React.ReactNode; takeId: string; calls: Call[]; nextDataset: string | null; baseline: number | null; baselineSnapshot: string }) {
+/** Step 6: a forecast logged before the next results load, then shown against the actual. Locked once logged. */
+function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapshot }: { action: React.ReactNode; takeId: string; calls: Call[]; nextDataset: string | null; baseline: number | null; baselineSnapshot: string }) {
   const [predicted, setPredicted] = React.useState<"higher" | "lower" | "same">("higher")
   const [reason, setReason] = React.useState("")
   const [msg, setMsg] = React.useState<string | null>(null)
@@ -211,8 +211,8 @@ function CallIt({ action, takeId, calls, nextDataset, baseline, baselineSnapshot
   return (
     <div className="flex flex-col gap-3 surface p-4">
       <div>
-        <h3 className="font-display text-xl text-slate-900">Call it</h3>
-        <p className="text-sm text-muted-foreground">Before the next results arrive, write down which way this take&apos;s score will move. The call is locked with a timestamp, and the next review shows who was right, so predictions build a track record instead of a slogan.</p>
+        <h3 className="font-display text-xl text-slate-900">Forecast</h3>
+        <p className="text-sm text-muted-foreground">Which way this take&apos;s score will move, logged before the next results arrive. When the actual lands, the comparison tunes the next forecast &mdash; the same loop that made weather and insurance dependable.</p>
       </div>
       {calls.length > 0 && (
         <ul className="flex flex-col gap-1 text-sm">
@@ -242,12 +242,12 @@ function CallIt({ action, takeId, calls, nextDataset, baseline, baselineSnapshot
             setMsg(r.ok ? "Locked." : r.reason)
             if (r.ok) setReason("")
           })}>
-            Lock my call
+            Log the forecast
           </Button>
           {msg && <span className="text-xs text-muted-foreground">{msg}</span>}
         </div>
       ) : (
-        <p className="text-xs text-muted-foreground">Every round on file is already loaded; calls open again when a new round is expected.</p>
+        <p className="text-xs text-muted-foreground">Every round on file is already loaded; forecasting reopens when a new round is expected.</p>
       )}
       {action}
     </div>

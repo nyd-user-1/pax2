@@ -80,8 +80,7 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
           <Fold title="Formula" preview={f ? <Observations part="summary" f={f} /> : <p className="text-sm text-slate-500">The video review hasn&apos;t run on this take yet.</p>}>{f?.pegasus?.result?.characteristics && <Observations part="detail" f={f} />}</Fold>
           <Fold title="Transcript" preview={take.lines && <ScriptTimeline lines={take.lines} duration={take.durationSec} />} />
 
-          <section className="surface p-5 md:p-6">
-            <ReadingPanel
+          <ReadingPanel
               takeId={id}
               evidence={evidenceIndex(take, state, ref, takes)}
               initial={initial}
@@ -92,7 +91,6 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
               baseline={state.latest?.score.value ?? null}
               baselineSnapshot={state.latest?.snapshot.id ?? ""}
             />
-          </section>
 
           {state.history.length > 1 && (
             <Fold title="Every round, same scale">

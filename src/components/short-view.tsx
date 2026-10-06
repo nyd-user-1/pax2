@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import deliveryJson from "../../data/generated/delivery.json"
 import shorts from "../../data/raw/yt-shorts.json"
 import { RangeBar } from "@/components/bits"
 import { Fold } from "@/components/fold"
@@ -36,6 +37,7 @@ function transcriptLines(f: Features | undefined) {
 
 /** A campaign short in the take panel's exact shape; counts PAX does not hold read as a dash. */
 export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
+  const delivery = (deliveryJson as unknown as { videos: Record<string, { energy?: string; vocalTone?: string[]; mode?: string; frame?: string; sarcasm?: { present?: boolean; cue?: string } }> }).videos[id]
   const ytId = id.replace(/^yt-/, "")
   const data = shorts as unknown as Yt
   const v = data.videos.find((x) => x.id === ytId)
@@ -98,6 +100,14 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
         <div className="flex min-w-0 flex-col gap-6">
           {!inDrawer && <h1 className="font-display text-2xl leading-tight text-slate-900 md:text-[28px]">{v?.title ?? id}</h1>}
           {inDrawer && v && <p className="font-display text-lg leading-snug text-slate-900">{v.title}</p>}
+
+          {delivery && (
+            <div className="flex flex-wrap items-center gap-1.5 text-xs">
+              {[delivery.energy && `${delivery.energy} energy`, ...(delivery.vocalTone ?? []), delivery.mode?.replace(/-/g, " "), delivery.frame?.replace(/-/g, " ")].filter(Boolean).map((t) => (
+                <span key={String(t)} className="rounded-full bg-white px-2 py-0.5 text-slate-600 shadow-e1">{t}</span>
+              ))}
+            </div>
+          )}
 
           <div className="surface grid grid-cols-2 gap-4 p-5 @lg:grid-cols-4">
             {stat("Reach", DASH)}
@@ -208,9 +218,7 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
 
           <Fold title="Transcript" preview={lines ? <ScriptTimeline lines={lines} duration={duration} /> : <p className="tabular text-sm text-slate-500">{DASH}</p>} />
 
-          <section className="surface p-5 md:p-6">
-            <ReadingPanel takeId={id} evidence={[]} initial={null} events={[]} calls={[]} canRead={false} nextDataset={null} baseline={null} baselineSnapshot="" />
-          </section>
+          <ReadingPanel takeId={id} evidence={[]} initial={null} events={[]} calls={[]} canRead={false} nextDataset={null} baseline={null} baselineSnapshot="" />
         </div>
       </div>
     </SeekProvider>
