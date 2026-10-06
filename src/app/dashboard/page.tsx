@@ -1,8 +1,10 @@
 import Link from "next/link"
 
+import { ChartBlock, ListBlock, MainBlock, TwoHalfBlock, TwoThirdBlock } from "@/components/blocks"
+import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
+import { RefreshButton } from "@/components/dash/card-tools"
 import { Chart3, Chart4 } from "@/components/dash/charts"
 import { Stat2 } from "@/components/dash/stats"
-import { SectionTitle } from "@/components/ui-pax"
 import { SCRIPTS, scriptById, takeLabel } from "@/lib/catalog"
 import { board, findings, forecasts, loads, picks, steps, submissions, votes, workspace } from "@/lib/review"
 import { SAMPLE_ACTIVITY, SAMPLE_COUNTS, SAMPLE_FEED, SAMPLE_SENT } from "@/lib/sample"
@@ -87,6 +89,7 @@ export default async function DashboardPage() {
     funnel[2].n = SAMPLE_COUNTS.made
   }
   const fmaxShown = Math.max(1, ...funnel.map((f) => f.n))
+  const activityRows = show.activity.length ? show.activity : [{ date: new Date().toISOString().slice(0, 10), item1: 0, item2: 0 }]
 
   return (
     <div className="flex flex-col gap-10">
@@ -101,85 +104,94 @@ export default async function DashboardPage() {
         <Stat2 title="Calls right" value={show.calls} footer="Predictions locked before results" />
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-[2fr_1fr]">
-        <Chart3
-          title="Activity by day"
-          data={show.activity.length ? show.activity : [{ date: new Date().toISOString().slice(0, 10), item1: 0, item2: 0 }]}
-          labels={{ item1: "Readings and decisions", item2: "Volunteer input" }}
-          figures={[
-            { label: "PAX readings", value: show.readings },
-            { label: "Decisions", value: show.decisions },
-            { label: "Consensus votes", value: show.votes },
-          ]}
-          fileName="pax-activity"
-        />
-        <Chart4 title="Where the videos stand" totalLabel="Videos" data={slices} />
-      </section>
+      <BlockOrder page="dashboard" initial={["activity", "funnel", "scripts"]}>
+        <OrderedBlock id="activity" label="Activity by day">
+          <TwoThirdBlock>
+            <ChartBlock title="Activity by day" className="xl:col-span-2" tools={<RefreshButton />} rows={activityRows.map((r) => ({ date: r.date, "Readings and decisions": r.item1, "Volunteer input": r.item2 }))} name="pax-activity">
+              <Chart3
+                data={activityRows}
+                labels={{ item1: "Readings and decisions", item2: "Volunteer input" }}
+                figures={[
+                  { label: "PAX readings", value: show.readings },
+                  { label: "Decisions", value: show.decisions },
+                  { label: "Consensus votes", value: show.votes },
+                ]}
+              />
+            </ChartBlock>
+            <ChartBlock title="Where the videos stand" rows={slices.map(({ title, value }) => ({ standing: title, videos: value }))}>
+              <Chart4 totalLabel="Videos" data={slices} />
+            </ChartBlock>
+          </TwoThirdBlock>
+        </OrderedBlock>
 
-      <section className="grid gap-4 lg:grid-cols-2">
-        <div className="surface flex flex-col gap-4 p-6">
-          <SectionTitle title="From reading to new take" />
-          {funnel.map((f, i) => (
-            <div key={f.label} className="flex flex-col gap-1.5">
-              <div className="flex justify-between text-sm">
-                <span className="text-slate-600">{f.label}</span>
-                <span className="tabular font-semibold text-slate-900">{f.n}</span>
+        <OrderedBlock id="funnel" label="From reading to new take">
+          <TwoHalfBlock>
+            <MainBlock title="From reading to new take" rows={funnel.map(({ label, n }) => ({ step: label, count: n }))}>
+              <div className="flex flex-col gap-4">
+                {funnel.map((f, i) => (
+                  <div key={f.label} className="flex flex-col gap-1.5">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">{f.label}</span>
+                      <span className="tabular font-semibold text-slate-900">{f.n}</span>
+                    </div>
+                    <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
+                      <div className="grow h-full rounded-full bg-pax-ink" style={{ width: `${(f.n / fmaxShown) * 100}%`, ["--i" as string]: i }} />
+                    </div>
+                  </div>
+                ))}
+                <Link href="/evals" className="text-sm font-medium text-pax-plum hover:underline">
+                  Open Evals
+                </Link>
               </div>
-              <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
-                <div className="grow h-full rounded-full bg-pax-ink" style={{ width: `${(f.n / fmaxShown) * 100}%`, ["--i" as string]: i }} />
-              </div>
+            </MainBlock>
+            <ListBlock title="Latest" rows={show.feed.map((f) => ({ at: f.at, event: f.text }))}>
+              {show.feed.length ? (
+                <ol className="flex flex-col">
+                  {show.feed.map((f, i) => (
+                    <li key={i} data-find className="rise flex items-start gap-3 border-b border-slate-100 py-2.5 text-sm last:border-0" style={{ ["--i" as string]: i }}>
+                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-pax-plum" />
+                      <span className="flex-1 text-slate-700">{f.text}</span>
+                      <span className="shrink-0 text-xs text-slate-400">{new Date(f.at).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}</span>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p className="text-sm text-slate-500">Nothing yet.</p>
+              )}
+            </ListBlock>
+          </TwoHalfBlock>
+        </OrderedBlock>
+
+        <OrderedBlock id="scripts" label="Scores by script">
+          <ChartBlock title="Scores by script">
+            <div className="grid gap-5 md:grid-cols-3">
+              {SCRIPTS.filter((s) => takes.some((t) => t.take.scriptId === s.id)).map((s) => {
+                const xs = takes.filter((t) => t.take.scriptId === s.id && t.latest?.score.value != null)
+                return (
+                  <div key={s.id} className="flex flex-col gap-2">
+                    <p className="font-semibold text-slate-900">{s.short}</p>
+                    {xs
+                      .sort((a, b) => b.latest!.score.value! - a.latest!.score.value!)
+                      .map((t, i) => {
+                        const v = t.latest!.score.value!
+                        const tone = toneOf(t.latest!.score.low, t.latest!.score.high)
+                        return (
+                          <Link key={t.take.id} href={`/v/${t.take.id}`} scroll={false} className="group flex items-center gap-2 text-xs">
+                            <span className="w-24 shrink-0 truncate text-slate-500 group-hover:text-pax-ink">{takeLabel(t.take)}</span>
+                            <span className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
+                              <span className="grow block h-full rounded-full" style={{ width: `${v}%`, background: tone === "above" ? "#2563eb" : tone === "below" ? "#dc2626" : "#94a3b8", ["--i" as string]: i }} />
+                            </span>
+                            <span className="tabular w-6 text-right font-semibold text-slate-800">{v.toFixed(0)}</span>
+                          </Link>
+                        )
+                      })}
+                  </div>
+                )
+              })}
             </div>
-          ))}
-          <Link href="/evals" className="text-sm font-medium text-pax-plum hover:underline">
-            Open Evals
-          </Link>
-        </div>
-        <div className="surface flex flex-col gap-3 p-6">
-          <SectionTitle title="Latest" />
-          {show.feed.length ? (
-            <ol className="flex flex-col">
-              {show.feed.map((f, i) => (
-                <li key={i} className="rise flex items-start gap-3 border-b border-slate-100 py-2.5 text-sm last:border-0" style={{ ["--i" as string]: i }}>
-                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-pax-plum" />
-                  <span className="flex-1 text-slate-700">{f.text}</span>
-                  <span className="shrink-0 text-xs text-slate-400">{new Date(f.at).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}</span>
-                </li>
-              ))}
-            </ol>
-          ) : (
-            <p className="text-sm text-slate-500">Nothing yet.</p>
-          )}
-        </div>
-      </section>
-
-      <section className="flex flex-col gap-4">
-        <SectionTitle title="Scores by script" />
-        <div className="surface grid gap-5 p-6 md:grid-cols-3">
-          {SCRIPTS.filter((s) => takes.some((t) => t.take.scriptId === s.id)).map((s) => {
-            const xs = takes.filter((t) => t.take.scriptId === s.id && t.latest?.score.value != null)
-            return (
-              <div key={s.id} className="flex flex-col gap-2">
-                <p className="font-semibold text-slate-900">{s.short}</p>
-                {xs
-                  .sort((a, b) => b.latest!.score.value! - a.latest!.score.value!)
-                  .map((t, i) => {
-                    const v = t.latest!.score.value!
-                    const tone = toneOf(t.latest!.score.low, t.latest!.score.high)
-                    return (
-                      <Link key={t.take.id} href={`/v/${t.take.id}`} scroll={false} className="group flex items-center gap-2 text-xs">
-                        <span className="w-24 shrink-0 truncate text-slate-500 group-hover:text-pax-ink">{takeLabel(t.take)}</span>
-                        <span className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
-                          <span className="grow block h-full rounded-full" style={{ width: `${v}%`, background: tone === "above" ? "#2563eb" : tone === "below" ? "#dc2626" : "#94a3b8", ["--i" as string]: i }} />
-                        </span>
-                        <span className="tabular w-6 text-right font-semibold text-slate-800">{v.toFixed(0)}</span>
-                      </Link>
-                    )
-                  })}
-              </div>
-            )
-          })}
-        </div>
-      </section>
+          </ChartBlock>
+        </OrderedBlock>
+      </BlockOrder>
     </div>
   )
 }

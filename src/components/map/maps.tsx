@@ -5,7 +5,7 @@ import { GEO } from "@/lib/geo"
 const swatch = (c: string) => <span className="inline-block size-2.5 rounded-sm" style={{ background: c }} />
 
 /** Massachusetts House districts by how many names were on the 2022 general-election ballot. */
-export function UncontestedMap() {
+export function UncontestedMap({ height = 440, bare }: { height?: number | string; bare?: boolean }) {
   const d = (ma as unknown as { districts: Record<string, number> }).districts
   const values = Object.fromEntries(
     Object.entries(d).map(([name, n]) => [
@@ -20,7 +20,8 @@ export function UncontestedMap() {
       joinOn="district"
       values={values}
       view={{ longitude: -71.75, latitude: 42.25, zoom: 7.1 }}
-      height={440}
+      height={height}
+      bare={bare}
       legend={
         <div className="flex flex-col gap-1">
           <span className="font-semibold text-slate-900">

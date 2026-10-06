@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, Check, Download, ExternalLink, Minus } from "lucide-react"
 
 import upworthyTop from "../../../../data/generated/upworthy-top.json"
-import { PaxTable } from "@/components/pax-table"
+import { TableBlock } from "@/components/blocks"
 import { UpworthyLessons, UpworthyTable, type UpworthyData } from "@/components/library/upworthy-top"
 import { bytes, count, datasetBySlug, type Dataset, type Table } from "@/lib/library"
 import { kindStyle, tagStyle } from "@/lib/swatches"
@@ -49,12 +49,7 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
           </section>
         )}
 
-        {table && (
-          <section className="flex flex-col gap-3">
-            <h2 className="font-display text-xl text-slate-900">Preview</h2>
-            <PreviewTable table={table} />
-          </section>
-        )}
+        {table && <PreviewTable table={table} />}
 
         <FilesSection d={d} />
         <TailSections d={d} />
@@ -118,7 +113,6 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
       {table && (
         <section className="flex flex-col gap-3">
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className="mr-2 font-display text-xl text-slate-900">Preview</h2>
             {tables.map((x) => (
               <Link key={x.name} href={`/library/${d.slug}?t=${x.name}`} scroll={false} className={x.name === table.name ? "rounded-full bg-pax-ink px-3 py-1 text-xs font-medium text-white" : "rounded-full bg-white px-3 py-1 text-xs text-slate-600 shadow-e1 hover:text-pax-ink"}>
                 {x.name} · {count(x.rows)}
@@ -180,10 +174,10 @@ function SchemaGrid({ table }: { table: Table }) {
 function PreviewTable({ table }: { table: Table }) {
   const cols = Object.keys(table.sample[0] ?? {})
   return (
-    <PaxTable label="rows" maxH="max-h-[60vh]">
+    <TableBlock title="Preview" search="Search rows…" rows={table.sample} name="preview">
       <table className="tabular w-full text-xs">
-        <thead className="bg-slate-50 text-left text-slate-500">
-          <tr>
+        <thead className="text-left text-slate-500">
+          <tr className="bg-muted/60">
             {cols.map((c) => (
               <th key={c} className="whitespace-nowrap px-3 py-2 font-medium">
                 {c}
@@ -203,7 +197,7 @@ function PreviewTable({ table }: { table: Table }) {
           ))}
         </tbody>
       </table>
-    </PaxTable>
+    </TableBlock>
   )
 }
 

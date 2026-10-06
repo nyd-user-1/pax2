@@ -4,12 +4,10 @@ import * as React from "react"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
-import { CardAnchor, CardTools, RefreshButton } from "@/components/dash/card-tools"
-import { PaxSearch, PaxTable2 } from "@/components/pax-table2"
+import { CardBlock } from "@/components/blocks"
+import { RefreshButton } from "@/components/dash/card-tools"
 import type { PageTile } from "@/lib/build-board"
-import { Card, CardAction, CardContent, CardHeader } from "@/ui/components/nova/card"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/ui/components/nova/dialog"
-import { BLOCK_HEIGHT } from "@/components/dash/fold-card"
 import { cn } from "@/ui/lib/utils"
 
 const DOT: Record<PageTile["state"], { dot: string; label: string }> = {
@@ -22,28 +20,25 @@ const DOT: Record<PageTile["state"], { dot: string; label: string }> = {
 export function PagesBoard({ pages }: { pages: PageTile[] }) {
   const [open, setOpen] = React.useState<PageTile | null>(null)
   return (
-    <PaxTable2>
-    <Card className={cn("gap-4", BLOCK_HEIGHT)}>
-      <CardHeader>
-        <div className="flex items-center gap-1">
-          <CardAnchor>Pages</CardAnchor>
-          <PaxSearch placeholder="Search pages…" />
-        </div>
-        <CardAction>
-          <CardTools rows={pages.map(({ href, name, state, data }) => ({ name, href, state, data }))} name="pages">
-            <div className="mr-2 hidden flex-wrap gap-3 text-xs text-muted-foreground lg:flex">
-              {Object.values(DOT).map((d) => (
-                <span key={d.label} className="flex items-center gap-1.5">
-                  <span className={cn("size-2 rounded-full", d.dot)} />
-                  {d.label}
-                </span>
-              ))}
-            </div>
-            <RefreshButton />
-          </CardTools>
-        </CardAction>
-      </CardHeader>
-      <CardContent className="min-h-0 flex-1 overflow-y-auto [scrollbar-width:thin]">
+    <CardBlock
+      title="Pages"
+      search="Search pages…"
+      rows={pages.map(({ href, name, state, data }) => ({ name, href, state, data }))}
+      name="pages"
+      actions={
+        <>
+          <div className="mr-2 hidden flex-wrap gap-3 text-xs text-muted-foreground lg:flex">
+            {Object.values(DOT).map((d) => (
+              <span key={d.label} className="flex items-center gap-1.5">
+                <span className={cn("size-2 rounded-full", d.dot)} />
+                {d.label}
+              </span>
+            ))}
+          </div>
+          <RefreshButton />
+        </>
+      }
+    >
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
           {pages.map((p) => (
             <button key={p.href} data-find type="button" onClick={() => setOpen(p)} className="flex flex-col gap-1 rounded-xl border bg-card p-3 text-left transition-shadow hover:shadow-e1">
@@ -56,7 +51,6 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
             </button>
           ))}
         </div>
-      </CardContent>
 
       <Dialog open={!!open} onOpenChange={(o) => !o && setOpen(null)}>
         <DialogContent className="w-[min(760px,calc(100vw-2rem))] rounded-2xl border-0 bg-slate-100 p-2 shadow-lg sm:max-w-none">
@@ -124,7 +118,6 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
           )}
         </DialogContent>
       </Dialog>
-    </Card>
-    </PaxTable2>
+    </CardBlock>
   )
 }

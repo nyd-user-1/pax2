@@ -1,4 +1,6 @@
 import { pct, StandInNote } from "@/components/bits"
+import { CardBlock, MainBlock, TableBlock } from "@/components/blocks"
+import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { LoadData } from "@/components/load-data"
 import { WhatIf } from "@/components/what-if"
 import { scriptById, takeLabel } from "@/lib/catalog"
@@ -70,50 +72,59 @@ export default async function MethodPage() {
         ))}
       </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="font-display text-xl text-slate-900">Chosen, or learned</h2>
-        <div className="grid gap-2 md:grid-cols-2">
-          {CHOICES.map((c) => (
-            <div key={c.what} className="flex gap-3 surface p-3">
-              <span className={cn("h-fit shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", c.kind === "design" ? "bg-pax-lavender text-pax-plum" : "bg-observed/10 text-observed")}>{c.kind === "design" ? "Design choice" : "From the data"}</span>
-              <div>
-                <p className="text-sm font-medium text-pax-ink">{c.what}</p>
-                <p className="text-xs text-muted-foreground">{c.detail}</p>
-              </div>
+      {!ref && <LoadData standIn="round-1" />}
+
+      <BlockOrder page="scoring:formula" initial={ref ? ["chosen", "input", "assumptions", "adds", "scale"] : ["chosen"]}>
+        <OrderedBlock id="chosen" label="Chosen, or learned">
+          <CardBlock title="Chosen, or learned" rows={CHOICES.map((c) => ({ choice: c.what, kind: c.kind === "design" ? "Design choice" : "From the data", detail: c.detail }))} name="chosen-or-learned">
+            <div className="grid gap-2 md:grid-cols-2">
+              {CHOICES.map((c) => (
+                <div key={c.what} data-find className="flex gap-3 surface p-3">
+                  <span className={cn("h-fit shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", c.kind === "design" ? "bg-pax-lavender text-pax-plum" : "bg-observed/10 text-observed")}>{c.kind === "design" ? "Design choice" : "From the data"}</span>
+                  <div>
+                    <p className="text-sm font-medium text-pax-ink">{c.what}</p>
+                    <p className="text-xs text-muted-foreground">{c.detail}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <ol className="mt-2 flex max-w-3xl list-decimal flex-col gap-1 pl-5 text-sm text-foreground/85">
-          <li>Each component starts as a rate from platform counts.</li>
-          <li>The rate is weighted by its evidence: (count + k × reference average) ÷ (total + k).</li>
-          <li>It is placed on the reference scale: how many reference spreads above or below the reference average, on the log-odds scale.</li>
-          <li>That distance becomes 0–100 as the share of a normal curve below it, so 50 is average and 84 is one spread above.</li>
-          <li>Resonance is the weighted sum. A missing component&apos;s weight is shared among the others and the take is flagged.</li>
-        </ol>
-      </section>
+            <ol className="mt-4 flex max-w-3xl list-decimal flex-col gap-1 pl-5 text-sm text-foreground/85">
+              <li>Each component starts as a rate from platform counts.</li>
+              <li>The rate is weighted by its evidence: (count + k × reference average) ÷ (total + k).</li>
+              <li>It is placed on the reference scale: how many reference spreads above or below the reference average, on the log-odds scale.</li>
+              <li>That distance becomes 0–100 as the share of a normal curve below it, so 50 is average and 84 is one spread above.</li>
+              <li>Resonance is the weighted sum. A missing component&apos;s weight is shared among the others and the take is flagged.</li>
+            </ol>
+          </CardBlock>
+        </OrderedBlock>
 
-      {!ref ? (
-        <LoadData standIn="round-1" />
-      ) : (
-        <>
-          <section className="flex flex-col gap-3">
-            <h2 className="font-display text-xl text-slate-900">Change an input</h2>
-            <WhatIf options={scored.map((t) => ({ label: `${scriptById(t.take.scriptId)!.title.slice(0, 40)} — ${takeLabel(t.take)}`, take: t.take, snapshot: t.latest!.snapshot }))} reference={ref} />
-          </section>
+        {ref && (
+          <OrderedBlock id="input" label="Change an input">
+            <MainBlock title="Change an input">
+              <WhatIf options={scored.map((t) => ({ label: `${scriptById(t.take.scriptId)!.title.slice(0, 40)} — ${takeLabel(t.take)}`, take: t.take, snapshot: t.latest!.snapshot }))} reference={ref} />
+            </MainBlock>
+          </OrderedBlock>
+        )}
 
-          <section className="flex flex-col gap-3">
-            <h2 className="font-display text-xl text-slate-900">Do reasonable changes to the assumptions change the assessment?</h2>
-            <div className="overflow-x-auto">
+        {ref && (
+          <OrderedBlock id="assumptions" label="Do reasonable changes to the assumptions change the assessment?">
+            <TableBlock
+              title="Do reasonable changes to the assumptions change the assessment?"
+              id="assumptions"
+              search="Search takes…"
+              rows={grid.map((g) => ({ take: `${g.t.take.scriptId} · ${takeLabel(g.t.take)}`, ...Object.fromEntries(variants.map((v, i) => [v.label, Number(g.values[i].toFixed(0))])) }))}
+              name="assumptions"
+            >
               <table className="tabular w-full min-w-[820px] text-sm">
-                <thead className="text-left text-xs text-muted-foreground">
-                  <tr className="[&_th]:pb-2 [&_th]:pr-3 [&_th]:font-normal">
+                <thead className="text-left">
+                  <tr className="bg-muted/60 [&_th]:h-10 [&_th]:px-2 [&_th]:font-medium [&_th]:whitespace-nowrap [&_th]:text-foreground">
                     <th>Take</th>
                     {variants.map((v) => (
                       <th key={v.id}>{v.label}</th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="[&_td]:border-t [&_td]:py-1.5 [&_td]:pr-3">
+                <tbody className="[&_td]:border-t [&_td]:px-2 [&_td]:py-1.5">
                   {grid.map((g, gi) => (
                     <tr key={g.t.take.id}>
                       <td className="max-w-64 truncate">
@@ -137,34 +148,42 @@ export default async function MethodPage() {
                   </tr>
                 </tbody>
               </table>
-            </div>
-            <p className="max-w-3xl text-xs text-muted-foreground">Rank agreement is 1 when every alternative orders the takes the same way. Ranks that move three or more places are marked.</p>
-          </section>
+              <p className="mt-3 max-w-3xl text-xs text-muted-foreground">Rank agreement is 1 when every alternative orders the takes the same way. Ranks that move three or more places are marked.</p>
+            </TableBlock>
+          </OrderedBlock>
+        )}
 
-          <section className="flex flex-col gap-3">
-            <h2 className="font-display text-xl text-slate-900">What it adds beyond one number</h2>
-            <div className="grid gap-3 md:grid-cols-3">
-              <Stat label="Resonance vs. spend" value={spearman(base, grid.map((g) => g.spend))} note="Near zero: budget does not buy a score." />
-              <Stat label="3-second plays vs. spend" value={spearman(grid.map((g) => g.plays), grid.map((g) => g.spend))} note="A raw count mostly measures budget." />
-              <Stat label="Resonance vs. 3-second plays" value={spearman(base, grid.map((g) => g.plays))} note="Ranking by views alone tells a different story." />
-            </div>
-          </section>
+        {ref && (
+          <OrderedBlock id="adds" label="What it adds beyond one number">
+            <CardBlock title="What it adds beyond one number">
+              <div className="grid gap-3 md:grid-cols-3">
+                <Stat label="Resonance vs. spend" value={spearman(base, grid.map((g) => g.spend))} note="Near zero: budget does not buy a score." />
+                <Stat label="3-second plays vs. spend" value={spearman(grid.map((g) => g.plays), grid.map((g) => g.spend))} note="A raw count mostly measures budget." />
+                <Stat label="Resonance vs. 3-second plays" value={spearman(base, grid.map((g) => g.plays))} note="Ranking by views alone tells a different story." />
+              </div>
+            </CardBlock>
+          </OrderedBlock>
+        )}
 
-          <section className="flex flex-col gap-2">
-            <h2 className="font-display text-xl text-slate-900">Reference scale ref-1</h2>
-            <p className="text-sm text-muted-foreground">
-              Built {new Date(ref.createdAt).toLocaleString()} from {ref.n} flights in {ref.dataset}. Frozen: later rounds are scored against these numbers, and a revised formula would be published as Resonance 2 beside this one, never in its place.
-            </p>
-            <div className="tabular grid gap-2 text-xs sm:grid-cols-3">
-              {COMPONENTS.map((c) => (
-                <div key={c.key} className="rounded-lg bg-muted/50 px-3 py-2">
-                  <b className="text-pax-ink">{c.name}</b> · pooled {pct(ref.pooled[c.key], 2)} · centre {ref.mean[c.key].toFixed(2)} · spread {ref.sd[c.key].toFixed(2)}
+        {ref && (
+          <OrderedBlock id="scale" label="Reference scale ref-1">
+            <MainBlock title="Reference scale ref-1" rows={COMPONENTS.map((c) => ({ component: c.name, pooled: ref.pooled[c.key], centre: ref.mean[c.key], spread: ref.sd[c.key] }))} name="ref-1">
+              <div className="flex flex-col gap-3">
+                <p className="text-sm text-muted-foreground">
+                  Built {new Date(ref.createdAt).toLocaleString()} from {ref.n} flights in {ref.dataset}. Frozen: later rounds are scored against these numbers, and a revised formula would be published as Resonance 2 beside this one, never in its place.
+                </p>
+                <div className="tabular grid gap-2 text-xs sm:grid-cols-3">
+                  {COMPONENTS.map((c) => (
+                    <div key={c.key} className="rounded-lg bg-muted/50 px-3 py-2">
+                      <b className="text-pax-ink">{c.name}</b> · pooled {pct(ref.pooled[c.key], 2)} · centre {ref.mean[c.key].toFixed(2)} · spread {ref.sd[c.key].toFixed(2)}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </section>
-        </>
-      )}
+              </div>
+            </MainBlock>
+          </OrderedBlock>
+        )}
+      </BlockOrder>
       <StandInNote />
     </div>
   )

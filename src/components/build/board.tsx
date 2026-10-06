@@ -6,9 +6,8 @@ import { ChevronRight } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, Label, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart, XAxis } from "recharts"
 
 import type { Lesson, Limit } from "@/lib/build-board"
-import { CardAnchor, CardTools, RefreshButton } from "@/components/dash/card-tools"
-import { PaxSearch, PaxTable2 } from "@/components/pax-table2"
-import { Card, CardAction, CardContent, CardHeader } from "@/ui/components/nova/card"
+import { AccordionBlock, MainBlock, TwoHalfBlock, TwoThirdBlock } from "@/components/blocks"
+import { RefreshButton } from "@/components/dash/card-tools"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/components/nova/chart"
 import { cn } from "@/ui/lib/utils"
 
@@ -26,42 +25,37 @@ export function Volume({ spend, videos }: { spend: SpendItem[]; videos: VideoCos
   const data = view === "spend" ? spend.map((s) => ({ name: s.short, value: s.usd, full: s.item })) : videos.map((v) => ({ name: `${v.title} · ${v.label}`, value: v.cost, full: `${v.title} · ${v.label}` }))
   const ranked = [...videos].sort((a, b) => b.cost - a.cost)
   return (
-    <div className="grid grid-cols-1 gap-5 xl:grid-cols-3">
-      <Card className="xl:col-span-2">
-        <CardHeader>
-          <CardAnchor id="volume">{view === "spend" ? "Spend by Item" : "Analysis Cost by Video"}</CardAnchor>
-          <CardAction>
-            <CardTools views={[{ value: "spend", label: "Spend by Item" }, { value: "videos", label: "Cost by Video" }]} view={view} onView={(v) => setView(v as "spend" | "videos")} rows={data.map((d) => ({ item: d.full, usd: d.value }))} name="build-volume">
-            <div className="flex rounded-lg bg-muted p-0.5 text-xs">
-              {(["spend", "videos"] as const).map((v) => (
-                <button key={v} type="button" onClick={() => setView(v)} className={cn("rounded-md px-2.5 py-1", view === v ? "bg-white font-medium shadow-e1" : "text-muted-foreground")}>
-                  {v === "spend" ? "Spend by Item" : "Cost by Video"}
-                </button>
-              ))}
-            </div>
-            </CardTools>
-          </CardAction>
-        </CardHeader>
-        <CardContent>
-          <ChartContainer config={{ value: { label: "Estimated", color: "var(--chart-1)" } }} className="aspect-auto h-80 w-full">
-            <BarChart data={data} margin={{ left: 0, right: 0, top: 8 }}>
-              <CartesianGrid vertical={false} strokeDasharray="3 3" />
-              <XAxis dataKey="name" interval={0} tickLine={false} axisLine={false} tickMargin={6} tick={{ fontSize: 9 }} tickFormatter={(v: string) => (v.length > 14 ? `${v.slice(0, 13)}…` : v)} />
-              <ChartTooltip cursor={{ fillOpacity: 0.08 }} content={<ChartTooltipContent indicator="dot" labelFormatter={(_, p) => (p?.[0]?.payload as { full?: string })?.full ?? ""} formatter={(v) => money(Number(v))} />} />
-              <Bar dataKey="value" fill="var(--color-value)" radius={[3, 3, 0, 0]} />
-            </BarChart>
-          </ChartContainer>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardAnchor>Cost by Video</CardAnchor>
-          <CardAction>
-            <CardTools rows={ranked.map((v) => ({ video: `${v.title} · ${v.label}`, usd: v.cost }))} name="cost-by-video" />
-          </CardAction>
-        </CardHeader>
-        <CardContent>
-          <ul className="m-0 flex h-80 list-none flex-col gap-2 overflow-y-auto p-0 [scrollbar-width:none]">
+    <TwoThirdBlock>
+      <MainBlock
+        title={view === "spend" ? "Spend by Item" : "Analysis Cost by Video"}
+        id="volume"
+        className="xl:col-span-2"
+        rows={data.map((d) => ({ item: d.full, usd: d.value }))}
+        name="build-volume"
+        views={[{ value: "spend", label: "Spend by Item" }, { value: "videos", label: "Cost by Video" }]}
+        view={view}
+        onView={(v) => setView(v as "spend" | "videos")}
+        actions={
+          <div className="flex rounded-lg bg-muted p-0.5 text-xs">
+            {(["spend", "videos"] as const).map((v) => (
+              <button key={v} type="button" onClick={() => setView(v)} className={cn("rounded-md px-2.5 py-1", view === v ? "bg-white font-medium shadow-e1" : "text-muted-foreground")}>
+                {v === "spend" ? "Spend by Item" : "Cost by Video"}
+              </button>
+            ))}
+          </div>
+        }
+      >
+        <ChartContainer config={{ value: { label: "Estimated", color: "var(--chart-1)" } }} className="aspect-auto h-full w-full">
+          <BarChart data={data} margin={{ left: 0, right: 0, top: 8 }}>
+            <CartesianGrid vertical={false} strokeDasharray="3 3" />
+            <XAxis dataKey="name" interval={0} tickLine={false} axisLine={false} tickMargin={6} tick={{ fontSize: 9 }} tickFormatter={(v: string) => (v.length > 14 ? `${v.slice(0, 13)}…` : v)} />
+            <ChartTooltip cursor={{ fillOpacity: 0.08 }} content={<ChartTooltipContent indicator="dot" labelFormatter={(_, p) => (p?.[0]?.payload as { full?: string })?.full ?? ""} formatter={(v) => money(Number(v))} />} />
+            <Bar dataKey="value" fill="var(--color-value)" radius={[3, 3, 0, 0]} />
+          </BarChart>
+        </ChartContainer>
+      </MainBlock>
+      <MainBlock title="Cost by Video" rows={ranked.map((v) => ({ video: `${v.title} · ${v.label}`, usd: v.cost }))} name="cost-by-video">
+          <ul className="m-0 flex list-none flex-col gap-2 p-0">
             {ranked.map((v) => (
               <li key={v.id}>
                 <Link href={`/v/${v.id}`} scroll={false} className="flex items-center gap-3 rounded-lg px-1.5 py-1 hover:bg-muted">
@@ -82,28 +76,17 @@ export function Volume({ spend, videos }: { spend: SpendItem[]; videos: VideoCos
               </li>
             ))}
           </ul>
-        </CardContent>
-      </Card>
-    </div>
+      </MainBlock>
+    </TwoThirdBlock>
   )
 }
 
-/** Budget beside Limits, one card, as Feed Health beside Quotas. */
+/** Budget beside Limits: two standard blocks, half and half. */
 export function BudgetAndLimits({ spent, cap, facts, limits }: { spent: number; cap: number; facts: { label: string; value: string; note: string }[]; limits: Limit[] }) {
   const share = Math.round((spent / cap) * 100)
   return (
-    <Card className="py-0 xl:h-[419px] xl:overflow-hidden">
-      <div className="grid h-full grid-cols-1 xl:grid-cols-2 [&>[data-slot=card]]:py-6">
-        <Card className="gap-3 rounded-none border-0 bg-transparent shadow-none ring-0">
-          <CardHeader>
-            <CardAnchor>Budget</CardAnchor>
-            <CardAction>
-              <CardTools rows={facts} name="budget">
-                <RefreshButton />
-              </CardTools>
-            </CardAction>
-          </CardHeader>
-          <CardContent>
+    <TwoHalfBlock>
+      <MainBlock title="Budget" rows={facts} name="budget" actions={<RefreshButton />}>
             <ChartContainer config={{ used: { label: "Used", color: "var(--chart-1)" } }} className="mx-auto aspect-square h-40">
               <RadialBarChart data={[{ name: "used", value: share, fill: "var(--chart-1)" }]} startAngle={90} endAngle={90 - (share / 100) * 360} innerRadius={54} outerRadius={74}>
                 <PolarGrid gridType="circle" radialLines={false} stroke="none" className="first:fill-muted last:fill-background" polarRadius={[58, 50]} />
@@ -126,26 +109,19 @@ export function BudgetAndLimits({ spent, cap, facts, limits }: { spent: number; 
                 </PolarRadiusAxis>
               </RadialBarChart>
             </ChartContainer>
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              {facts.map((m) => (
-                <div key={m.label} className="rounded-lg border px-3 py-2">
-                  <p className="text-xs text-muted-foreground">{m.label}</p>
-                  <p className="truncate font-semibold">{m.value}</p>
-                  <p className="truncate text-xs text-muted-foreground">{m.note}</p>
-                </div>
-              ))}
+        <div className="mt-3 grid grid-cols-2 gap-2">
+          {facts.map((m) => (
+            <div key={m.label} className="rounded-lg border px-3 py-2">
+              <p className="text-xs text-muted-foreground">{m.label}</p>
+              <p className="truncate font-semibold">{m.value}</p>
+              <p className="truncate text-xs text-muted-foreground">{m.note}</p>
             </div>
-          </CardContent>
-        </Card>
-        <Card className="gap-3 rounded-none border-0 bg-transparent shadow-none ring-0 max-xl:border-t xl:border-l">
-          <CardHeader>
-            <CardAnchor>Limits</CardAnchor>
-            <CardAction>
-              <CardTools rows={limits} name="limits" />
-            </CardAction>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            {limits.map((q) => {
+          ))}
+        </div>
+      </MainBlock>
+      <MainBlock title="Limits" rows={limits} name="limits">
+        <div className="flex flex-col gap-4">
+          {limits.map((q) => {
               const pct = Math.min(100, Math.round((q.used / q.limit) * 100))
               return (
                 <div key={q.label} className="flex flex-col gap-1.5">
@@ -164,10 +140,9 @@ export function BudgetAndLimits({ spent, cap, facts, limits }: { spent: number; 
                 </div>
               )
             })}
-          </CardContent>
-        </Card>
-      </div>
-    </Card>
+        </div>
+      </MainBlock>
+    </TwoHalfBlock>
   )
 }
 
@@ -200,23 +175,12 @@ function LessonRow({ l }: { l: Lesson }) {
 
 export function InsightsCard({ lessons }: { lessons: Lesson[] }) {
   return (
-    <PaxTable2>
-    <Card className="gap-4">
-      <CardHeader>
-        <div className="flex items-center gap-1">
-          <CardAnchor>Insights</CardAnchor>
-          <PaxSearch placeholder="Search insights…" />
-        </div>
-        <CardAction>
-          <CardTools rows={lessons.map((l) => ({ title: l.title, when: l.when, outcome: l.outcome, headline: l.headline, lessons: l.lessons.join(" | ") }))} name="insights" />
-        </CardAction>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-2">
+    <AccordionBlock title="Insights" search="Search insights…" rows={lessons.map((l) => ({ title: l.title, when: l.when, outcome: l.outcome, headline: l.headline, lessons: l.lessons.join(" | ") }))} name="insights">
+      <div className="flex flex-col gap-2">
         {lessons.map((l) => (
           <LessonRow key={l.title} l={l} />
         ))}
-      </CardContent>
-    </Card>
-    </PaxTable2>
+      </div>
+    </AccordionBlock>
   )
 }

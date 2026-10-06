@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { PaxTable } from "@/components/pax-table"
+import { TableBlock } from "@/components/blocks"
 import { channelSummaries, fmtCompact, labVideos, type Tier } from "@/lib/lab"
 import { cn } from "@/ui/lib/utils"
 
@@ -79,12 +79,16 @@ export default function BreakoutPage() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="font-display text-xl text-slate-900">All {vids.length} videos</h2>
-        <PaxTable label="videos" maxH="max-h-[64vh]">
+      <TableBlock
+        title={`All ${vids.length} videos`}
+        id="videos"
+        search="Search videos…"
+        rows={vids.map((v) => ({ video: v.title, channel: v.channel, views: v.views, median: Math.round(v.channelMedian), ratio: `${v.ratio >= 10 ? v.ratio.toFixed(0) : v.ratio.toFixed(1)}x`, verdict: TIER[v.tier].label }))}
+        name="videos"
+      >
           <table className="tabular w-full text-sm">
-            <thead className="bg-slate-50 text-left text-xs text-slate-500">
-              <tr className="[&_th]:whitespace-nowrap [&_th]:px-4 [&_th]:py-2.5 [&_th]:font-medium">
+            <thead className="text-left text-xs text-slate-500">
+              <tr className="bg-muted/60 [&_th]:whitespace-nowrap [&_th]:px-4 [&_th]:py-2.5 [&_th]:font-medium">
                 <th>Video</th>
                 <th>Channel</th>
                 <th className="!text-right">Views</th>
@@ -110,8 +114,7 @@ export default function BreakoutPage() {
               ))}
             </tbody>
           </table>
-        </PaxTable>
-      </section>
+      </TableBlock>
     </div>
   )
 }

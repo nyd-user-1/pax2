@@ -5,7 +5,8 @@ import { PipelineFlow } from "@/components/pipeline-flow"
 import { takeById } from "@/lib/catalog"
 import { currentBatch, rows, STEPS, type StepState } from "@/lib/pipeline"
 import { submissions, workspace } from "@/lib/review"
-import { PaxTable } from "@/components/pax-table"
+import { DiagramBlock, TableBlock } from "@/components/blocks"
+import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { cn } from "@/ui/lib/utils"
 
 export const dynamic = "force-dynamic"
@@ -46,73 +47,86 @@ export default async function PipelinePage() {
         last && <p className="-mt-6 text-sm text-slate-500">Nothing running. Last run finished {new Date(last).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}.</p>
       )}
 
-      <PipelineFlow
-        d={{
-          videos: list.map((r) => ({ id: r.id, title: r.title, label: r.label })),
-          uploads: sent.length,
-          lastRun: last ? new Date(last).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : null,
-          running: !!batch,
-          total: list.length,
-          spentTotal: money(total),
-          example: list[0]?.id ?? "",
-          steps: STEPS.map((s) => ({ ...s, done: list.filter((r) => r.cells[s.id].state === "done").length, spent: money(list.reduce((a, r) => a + r.cells[s.id].cost, 0)) })),
-        }}
-      />
+      <BlockOrder page="pipeline" initial={["pipeline", "videos"]}>
+        <OrderedBlock id="pipeline" label="Pipeline">
+          <DiagramBlock title="Pipeline">
+            <PipelineFlow
+              d={{
+                videos: list.map((r) => ({ id: r.id, title: r.title, label: r.label })),
+                uploads: sent.length,
+                lastRun: last ? new Date(last).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : null,
+                running: !!batch,
+                total: list.length,
+                spentTotal: money(total),
+                example: list[0]?.id ?? "",
+                steps: STEPS.map((s) => ({ ...s, done: list.filter((r) => r.cells[s.id].state === "done").length, spent: money(list.reduce((a, r) => a + r.cells[s.id].cost, 0)) })),
+              }}
+            />
+          </DiagramBlock>
+        </OrderedBlock>
 
-      <PaxTable label="videos">
-        <table className="tabular w-full min-w-[960px] text-sm">
-          <thead className="text-left text-xs text-slate-500">
-            <tr className="border-b border-slate-100 [&_th]:px-4 [&_th]:py-3 [&_th]:font-medium">
-              <th>Video</th>
-              {STEPS.map((s) => (
-                <th key={s.id}>
-                  {s.n}. {s.name}
-                </th>
-              ))}
-              <th className="text-right">Cost</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list.map((r) => (
-              <tr key={r.id} className="border-b border-slate-100 last:border-0 [&_td]:px-4 [&_td]:py-3">
-                <td>
-                  <Link href={`/v/${r.id}`} scroll={false} className="group flex items-center gap-3">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={takeById(r.id)?.video?.poster} alt="" className="h-14 w-8 shrink-0 rounded-md bg-slate-200 object-cover" />
-                    <span className="flex flex-col">
-                      <span className="font-medium text-slate-900 group-hover:text-pax-plum">{r.title}</span>
-                      <span className="text-xs text-slate-500">
-                        {r.label} · {Math.round(r.seconds)}s
-                      </span>
-                    </span>
-                  </Link>
-                </td>
-                {STEPS.map((s) => {
-                  const c = r.cells[s.id]
-                  return (
-                    <td key={s.id}>
-                      <span className="flex items-center gap-2">
-                        <State s={c.state} />
-                        <span className={cn("text-xs", c.state === "failed" ? "text-pax-red-deep" : "text-slate-600")} title={c.state === "failed" ? c.out ?? undefined : undefined}>
-                          {c.state === "failed" ? "Failed" : c.state === "running" ? "Running" : c.state === "queued" ? "Waiting" : c.out ?? "Not run"}
+        <OrderedBlock id="videos" label="Videos">
+          <TableBlock
+            title="Videos"
+            search="Search videos…"
+            rows={list.map((r) => ({ video: r.title, label: r.label, seconds: Math.round(r.seconds), ...Object.fromEntries(STEPS.map((s) => [s.name.toLowerCase(), r.cells[s.id].state])), cost: Number(r.cost.toFixed(2)) }))}
+            name="videos"
+          >
+            <table className="tabular w-full min-w-[960px] text-sm">
+              <thead className="text-left text-xs text-slate-500">
+                <tr className="bg-muted/60 [&_th]:px-4 [&_th]:py-3 [&_th]:font-medium">
+                  <th>Video</th>
+                  {STEPS.map((s) => (
+                    <th key={s.id}>
+                      {s.n}. {s.name}
+                    </th>
+                  ))}
+                  <th className="text-right">Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                {list.map((r) => (
+                  <tr key={r.id} className="border-b border-slate-100 last:border-0 [&_td]:px-4 [&_td]:py-3">
+                    <td>
+                      <Link href={`/v/${r.id}`} scroll={false} className="group flex items-center gap-3">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={takeById(r.id)?.video?.poster} alt="" className="h-14 w-8 shrink-0 rounded-md bg-slate-200 object-cover" />
+                        <span className="flex flex-col">
+                          <span className="font-medium text-slate-900 group-hover:text-pax-plum">{r.title}</span>
+                          <span className="text-xs text-slate-500">
+                            {r.label} · {Math.round(r.seconds)}s
+                          </span>
                         </span>
-                      </span>
+                      </Link>
                     </td>
-                  )
-                })}
-                <td className="text-right text-slate-700">{money(r.cost)}</td>
-              </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            <tr className="border-t border-slate-200 font-semibold text-slate-900 [&_td]:px-4 [&_td]:py-3">
-              <td colSpan={STEPS.length + 1}>{list.length} videos</td>
-              <td className="text-right">{money(total)}</td>
-            </tr>
-          </tfoot>
-        </table>
-      </PaxTable>
-      <p className="-mt-6 text-xs text-slate-400">Costs are estimates at AWS list prices, from each video&apos;s length.</p>
+                    {STEPS.map((s) => {
+                      const c = r.cells[s.id]
+                      return (
+                        <td key={s.id}>
+                          <span className="flex items-center gap-2">
+                            <State s={c.state} />
+                            <span className={cn("text-xs", c.state === "failed" ? "text-pax-red-deep" : "text-slate-600")} title={c.state === "failed" ? c.out ?? undefined : undefined}>
+                              {c.state === "failed" ? "Failed" : c.state === "running" ? "Running" : c.state === "queued" ? "Waiting" : c.out ?? "Not run"}
+                            </span>
+                          </span>
+                        </td>
+                      )
+                    })}
+                    <td className="text-right text-slate-700">{money(r.cost)}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="border-t border-slate-200 font-semibold text-slate-900 [&_td]:px-4 [&_td]:py-3">
+                  <td colSpan={STEPS.length + 1}>{list.length} videos</td>
+                  <td className="text-right">{money(total)}</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p className="mt-3 text-xs text-slate-400">Costs are estimates at AWS list prices, from each video&apos;s length.</p>
+          </TableBlock>
+        </OrderedBlock>
+      </BlockOrder>
     </div>
   )
 }

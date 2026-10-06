@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { BookA, ChartColumn, ChevronDown, ChevronRight, ChevronsUpDown, Clapperboard, FlaskConical, Gauge, Hammer, LayoutDashboard, Library, NotebookPen, PlaySquare, Target, Video, Workflow } from "lucide-react"
+import { Activity, BookA, Brain, ChartColumn, ChevronDown, ChevronRight, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, Library, NotebookPen, PlaySquare, Rocket, Target, TrendingUp, Video, Workflow } from "lucide-react"
 
 import { Wordmark } from "@/components/wordmark"
 import { cn } from "@/ui/lib/utils"
@@ -24,6 +24,14 @@ const MORE = [
   { href: "/library", label: "Library", icon: Library },
   { href: "/pipeline", label: "Pipeline", icon: Workflow },
   { href: "/build", label: "Build", icon: Hammer },
+]
+// The lab: what the public seed-phase traces support.
+const LAB = [
+  { href: "/break-out", label: "Breakout", icon: Rocket },
+  { href: "/feature-lift", label: "Feature lift", icon: TrendingUp },
+  { href: "/velocity-tracker", label: "Velocity", icon: Activity },
+  { href: "/endgame", label: "Endgame", icon: Flag },
+  { href: "/ml", label: "ML", icon: Brain },
 ]
 
 // The header names the page; /v/ belongs to Videos.
@@ -51,6 +59,7 @@ const TITLES: [string, string][] = [
 const PANEL_THIRD = "md:w-[clamp(420px,34vw,620px)]"
 const PANEL_HALF = "md:w-[50vw]"
 const MORE_KEY = "pax-nav-more"
+const LAB_KEY = "pax-nav-lab"
 
 type PanelState = { setOpen: (open: boolean) => void; wide: boolean; setWide: (wide: boolean) => void }
 const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {} })
@@ -63,10 +72,12 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
   const [wide, setWide] = React.useState(false)
   const [scrolled, setScrolled] = React.useState(false)
   const [moreOpen, setMoreOpen] = React.useState(true)
+  const [labOpen, setLabOpen] = React.useState(true)
   const animKey = React.useRef("Scored")
   React.useEffect(() => {
     try {
       setMoreOpen(localStorage.getItem(MORE_KEY) !== "closed")
+      setLabOpen(localStorage.getItem(LAB_KEY) !== "closed")
     } catch {
       /* private mode — stays open */
     }
@@ -75,6 +86,15 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
     setMoreOpen((v) => {
       try {
         localStorage.setItem(MORE_KEY, v ? "closed" : "open")
+      } catch {
+        /* ignore */
+      }
+      return !v
+    })
+  const toggleLab = () =>
+    setLabOpen((v) => {
+      try {
+        localStorage.setItem(LAB_KEY, v ? "closed" : "open")
       } catch {
         /* ignore */
       }
@@ -117,7 +137,12 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
           <div className="flex h-full w-60 flex-col rounded-2xl border border-slate-200/80 bg-pax-mist px-3 py-4 shadow-e2">
             <nav className="flex flex-col gap-0.5">{NAV.map((n) => item(n.href, n.label, n.icon))}</nav>
             <div className="mt-auto border-t border-slate-200/70 pt-3">
-              <button type="button" onClick={toggleMore} aria-expanded={moreOpen} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-slate-400 transition-colors hover:text-slate-600">
+              <button type="button" onClick={toggleLab} aria-expanded={labOpen} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-slate-400 transition-colors hover:text-slate-600">
+                <span className="flex-1 truncate text-left text-[11px] font-semibold uppercase tracking-wider">Lab</span>
+                {labOpen ? <ChevronDown className="size-3.5 shrink-0" /> : <ChevronRight className="size-3.5 shrink-0" />}
+              </button>
+              {labOpen && <nav className="ml-[15px] mt-0.5 flex flex-col gap-0.5 border-l border-slate-200/70 pl-2">{LAB.map((n) => item(n.href, n.label, n.icon, true))}</nav>}
+              <button type="button" onClick={toggleMore} aria-expanded={moreOpen} className="mt-1 flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-slate-400 transition-colors hover:text-slate-600">
                 <span className="flex-1 truncate text-left text-[11px] font-semibold uppercase tracking-wider">More</span>
                 {moreOpen ? <ChevronDown className="size-3.5 shrink-0" /> : <ChevronRight className="size-3.5 shrink-0" />}
               </button>
@@ -192,7 +217,7 @@ function PageSwitcher({ title }: { title: string }) {
     router.push(href)
   }
   const needle = q.trim().toLowerCase()
-  const all = [...NAV, ...MORE]
+  const all = [...NAV, ...LAB, ...MORE]
   const filtered = needle ? all.filter((d) => d.label.toLowerCase().includes(needle)) : all
 
   return (

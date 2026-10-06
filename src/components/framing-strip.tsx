@@ -10,7 +10,7 @@ const DOT: Record<string, string> = { above: "bg-above ring-above/25", below: "b
 export function FramingStrip({ scripts, videos }: { scripts: { id: string; short: string; framing: string }[]; videos: VideoCardData[] }) {
   let k = 0
   return (
-    <div className="surface flex flex-col gap-1 p-5 md:p-6">
+    <div className="flex flex-col gap-1">
       <div className="grid grid-cols-[minmax(140px,220px)_1fr] items-center gap-4 pb-1 text-[11px] font-medium uppercase tracking-wider text-slate-400">
         <span />
         <span className="relative h-4">

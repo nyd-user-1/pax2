@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { PenLine, Video } from "lucide-react"
 
-import polling from "../../../data/polling.json"
 import codes from "../../../data/generated/model/script-codes.json"
 import model from "../../../data/generated/model/reference-model.json"
 import { ScriptCatalog, type CatalogScript } from "@/components/scripts/script-catalog"
@@ -82,7 +81,6 @@ export default async function ScriptsPage() {
           note: "Both state parties and the AFL-CIO oppose Question 3; supporters include officials of both parties and the NAACP.",
           href: "https://www.wbur.org/news/2026/09/28/massachusetts-ballot-question-3-backers-supporters",
         }}
-        settle={`No public poll tests which of these arguments wins — the only topline is ${polling.q3.yes}–${polling.q3.no} with ${polling.q3.undecided}% undecided. Recording them is how it gets settled.`}
       />
     </div>
   )

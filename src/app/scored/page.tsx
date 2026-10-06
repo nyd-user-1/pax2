@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Hourglass, NotepadText, Sparkles, Upload, Video } from "lucide-react"
 
+import { ChartBlock } from "@/components/blocks"
 import { FramingStrip } from "@/components/framing-strip"
 import { LoadData } from "@/components/load-data"
 import { RecordScript } from "@/components/record/record-script"
@@ -95,10 +96,9 @@ export default async function HomePage() {
       )}
 
       {scored.length > 0 && (
-        <section className="flex flex-col gap-4">
-          <SectionTitle title="Framing" />
+        <ChartBlock title="Framing">
           <FramingStrip scripts={SCRIPTS.filter((s) => cards.some((c) => c.script === s.id))} videos={cards} />
-        </section>
+        </ChartBlock>
       )}
 
       <p className="text-xs text-slate-400">Stand-in videos and results until Parallax&apos;s own arrive.</p>

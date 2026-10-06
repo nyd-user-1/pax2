@@ -12,11 +12,15 @@ import { cn } from "@/ui/lib/utils"
  *  tagged data-find. */
 const Ctx = React.createContext<{ q: string; setQ: (v: string) => void }>({ q: "", setQ: () => {} })
 
-export function PaxTable2({ children }: { children: React.ReactNode }) {
-  const [q, setQ] = React.useState("")
+export function PaxTable2({ children, value: controlled, onChange }: { children: React.ReactNode; value?: string; onChange?: (v: string) => void }) {
+  const [own, setOwn] = React.useState("")
+  // Controlled when the block already filters its own rows in state.
+  const q = onChange ? (controlled ?? "") : own
+  const setQ = onChange ?? setOwn
   const ref = React.useRef<HTMLDivElement>(null)
   // Runs after every render so freshly-streamed rows respect the live query.
   React.useEffect(() => {
+    if (onChange) return
     const root = ref.current
     if (!root) return
     const needle = q.trim().toLowerCase()
@@ -24,7 +28,7 @@ export function PaxTable2({ children }: { children: React.ReactNode }) {
       el.style.display = !needle || (el.textContent ?? "").toLowerCase().includes(needle) ? "" : "none"
     }
   })
-  const value = React.useMemo(() => ({ q, setQ }), [q])
+  const value = React.useMemo(() => ({ q, setQ }), [q, setQ])
   return (
     <Ctx.Provider value={value}>
       <div ref={ref} className="contents">

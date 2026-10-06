@@ -3,8 +3,7 @@
 import * as React from "react"
 import { Check, ChevronRight, Copy } from "lucide-react"
 
-import { FoldCard } from "@/components/dash/fold-card"
-import { PaxSearch, PaxTable2 } from "@/components/pax-table2"
+import { AccordionBlock } from "@/components/blocks"
 import { cn } from "@/ui/lib/utils"
 
 export type Todo = { title: string; detail?: string; who: "Brendan" | null; done?: boolean }
@@ -47,14 +46,12 @@ function Row({ t, n }: { t: Todo; n: number }) {
 
 export function TodoCard({ items }: { items: Todo[] }) {
   return (
-    <PaxTable2>
-    <FoldCard title="To Do" rows={items.map((t) => ({ title: t.title, status: t.done ? "done" : t.who ? "Brendan" : "open", detail: t.detail ?? "" }))} name="to-do" search={<PaxSearch placeholder="Search to-dos…" />}>
+    <AccordionBlock title="To Do" search="Search to-dos…" rows={items.map((t) => ({ title: t.title, status: t.done ? "done" : t.who ? "Brendan" : "open", detail: t.detail ?? "" }))} name="to-do">
       <div className="flex flex-col gap-2">
         {items.map((t, i) => (
           <Row key={t.title} t={t} n={i + 1} />
         ))}
       </div>
-    </FoldCard>
-    </PaxTable2>
+    </AccordionBlock>
   )
 }

@@ -1,6 +1,8 @@
 import Link from "next/link"
 
 import model from "../../../data/generated/model/reference-model.json"
+import { ChartBlock, MainBlock, TwoHalfBlock } from "@/components/blocks"
+import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { cn } from "@/ui/lib/utils"
 
 export const metadata = { title: "Reference model" }
@@ -21,7 +23,7 @@ function Row({ f, max, i }: { f: Feature; max: number; i: number }) {
   const up = f.low > 0
   const down = f.high < 0
   return (
-    <li className="grid grid-cols-[minmax(0,15rem)_minmax(0,1fr)_7.5rem] items-center gap-4 py-2.5">
+    <li data-find className="grid grid-cols-[minmax(0,15rem)_minmax(0,1fr)_7.5rem] items-center gap-4 py-2.5">
       <span className="flex min-w-0 items-center gap-2">
         <span className={cn("truncate text-sm", up || down ? "font-medium text-slate-900" : "text-slate-700")}>{f.label}</span>
         {VOLUNTEER.has(f.key) && <span className="shrink-0 rounded-full bg-pax-lavender px-2 py-0.5 text-[10px] font-semibold text-pax-plum">Volunteer</span>}
@@ -90,67 +92,79 @@ export default async function ReferencePage({ searchParams }: { searchParams: Pr
         ))}
       </section>
 
-      <section className="grid gap-4 md:grid-cols-2">
-        <div className="surface flex flex-col gap-4 p-6">
-          <span className="text-sm font-semibold text-slate-900">Ads differ</span>
-          <div className="flex flex-col gap-2.5">
-            {[
-              { l: "Average ad", v: out.meanEffect },
-              { l: "One spread above", v: out.meanEffect + out.tau },
-            ].map((b, i) => (
-              <div key={b.l} className="grid grid-cols-[8rem_minmax(0,1fr)_3.5rem] items-center gap-3 text-sm">
-                <span className="text-slate-600">{b.l}</span>
-                <div className="h-3 overflow-hidden rounded-full bg-slate-100">
-                  <div className="grow h-full rounded-full bg-pax-plum" style={{ width: `${(b.v / (out.meanEffect + out.tau)) * 100}%`, ["--i" as string]: i }} />
+      <BlockOrder page="scoring:research" initial={["differ", "features"]}>
+        <OrderedBlock id="differ" label="Ads differ">
+          <TwoHalfBlock>
+            <ChartBlock title="Ads differ" rows={[{ ad: "Average ad", points: out.meanEffect }, { ad: "One spread above", points: out.meanEffect + out.tau }]} name="ads-differ">
+              <div className="flex h-full flex-col gap-4">
+                <div className="flex flex-col gap-2.5">
+                  {[
+                    { l: "Average ad", v: out.meanEffect },
+                    { l: "One spread above", v: out.meanEffect + out.tau },
+                  ].map((b, i) => (
+                    <div key={b.l} className="grid grid-cols-[8rem_minmax(0,1fr)_3.5rem] items-center gap-3 text-sm">
+                      <span className="text-slate-600">{b.l}</span>
+                      <div className="h-3 overflow-hidden rounded-full bg-slate-100">
+                        <div className="grow h-full rounded-full bg-pax-plum" style={{ width: `${(b.v / (out.meanEffect + out.tau)) * 100}%`, ["--i" as string]: i }} />
+                      </div>
+                      <span className="tabular text-right font-semibold text-slate-900">{signed(b.v, 1)}</span>
+                    </div>
+                  ))}
                 </div>
-                <span className="tabular text-right font-semibold text-slate-900">{signed(b.v, 1)}</span>
+                <p className="mt-auto text-sm text-slate-500">Points of {(LABEL[o] ?? o).toLowerCase()}.</p>
               </div>
-            ))}
-          </div>
-          <p className="mt-auto text-sm text-slate-500">Points of {(LABEL[o] ?? o).toLowerCase()}.</p>
-        </div>
-        <div className="surface flex flex-col gap-4 p-6">
-          <span className="text-sm font-semibold text-slate-900">Style barely says which</span>
-          <div className="flex items-baseline gap-2">
-            <span className="tabular font-display text-5xl text-slate-900">{(r2 * 100).toFixed(0)}%</span>
-            <span className="text-sm text-slate-600">of the next study explained, fitted on all the others</span>
-          </div>
-          <p className="mt-auto text-sm text-slate-500">So every script is a test to run, and the chart below is a prior, not a rule.</p>
-        </div>
-      </section>
+            </ChartBlock>
+            <MainBlock title="Style barely says which">
+              <div className="flex h-full flex-col gap-4">
+                <div className="flex items-baseline gap-2">
+                  <span className="tabular font-display text-5xl text-slate-900">{(r2 * 100).toFixed(0)}%</span>
+                  <span className="text-sm text-slate-600">of the next study explained, fitted on all the others</span>
+                </div>
+                <p className="mt-auto text-sm text-slate-500">So every script is a test to run, and the chart below is a prior, not a rule.</p>
+              </div>
+            </MainBlock>
+          </TwoHalfBlock>
+        </OrderedBlock>
 
-      <section className="flex flex-col gap-4">
-        <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="font-display text-xl text-slate-900">What each feature was worth</h2>
-          <div className="flex items-center gap-3 text-xs text-slate-500">
-            <span className="flex items-center gap-1.5">
-              <span className="size-2 rounded-full bg-above" /> helps
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="size-2 rounded-full bg-slate-300" /> unclear
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="size-2 rounded-full bg-below" /> hurts
-            </span>
-            <span className="rounded-full bg-pax-lavender px-2 py-0.5 text-[10px] font-semibold text-pax-plum">Volunteer</span>
-          </div>
-        </div>
-        <div className="surface flex flex-col gap-2 px-6 py-4">
-          {groups.map((g) => (
-            <div key={g.name} className="flex flex-col">
-              <span className={cn("pt-3 pb-1 text-xs font-semibold tracking-wide uppercase", g.tone)}>
-                {g.name} · {g.rows.length}
-              </span>
-              <ol className="flex flex-col divide-y divide-slate-100">
-                {g.rows.map((f, i) => (
-                  <Row key={f.key} f={f} max={max} i={i} />
-                ))}
-              </ol>
+        <OrderedBlock id="features" label="What each feature was worth">
+          <ChartBlock
+            title="What each feature was worth"
+            search="Search features…"
+            rows={sorted.map((f) => ({ feature: f.label, points: f.diff, low: f.low, high: f.high, volunteer: VOLUNTEER.has(f.key) }))}
+            name="feature-effects"
+            tools={
+              <div className="mx-2 flex items-center gap-3 text-xs text-slate-500">
+                <span className="flex items-center gap-1.5">
+                  <span className="size-2 rounded-full bg-above" /> helps
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="size-2 rounded-full bg-slate-300" /> unclear
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="size-2 rounded-full bg-below" /> hurts
+                </span>
+                <span className="rounded-full bg-pax-lavender px-2 py-0.5 text-[10px] font-semibold text-pax-plum">Volunteer</span>
+              </div>
+            }
+          >
+            <div className="flex flex-col gap-2">
+              {groups.map((g) => (
+                <div key={g.name} className="flex flex-col">
+                  <span className={cn("pt-3 pb-1 text-xs font-semibold tracking-wide uppercase", g.tone)}>
+                    {g.name} · {g.rows.length}
+                  </span>
+                  <ol className="flex flex-col divide-y divide-slate-100">
+                    {g.rows.map((f, i) => (
+                      <Row key={f.key} f={f} max={max} i={i} />
+                    ))}
+                  </ol>
+                </div>
+              ))}
+              <p className="mt-3 text-xs text-slate-400">Points of {(LABEL[o] ?? o).toLowerCase()}, ads with the feature against ads without, with the 95% interval. Random-effects meta-regression, one feature at a time. {M.source}</p>
             </div>
-          ))}
-        </div>
-        <p className="text-xs text-slate-400">Points of {(LABEL[o] ?? o).toLowerCase()}, ads with the feature against ads without, with the 95% interval. Random-effects meta-regression, one feature at a time. {M.source}</p>
-      </section>
+          </ChartBlock>
+        </OrderedBlock>
+      </BlockOrder>
     </div>
   )
 }

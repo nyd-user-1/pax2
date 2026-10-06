@@ -27,7 +27,7 @@ export function WhatIf({ options, reference }: { options: { label: string; take:
   const before = React.useMemo(() => score(base.snapshot, base.take, reference), [base, reference])
   const after = React.useMemo(() => score(snap, base.take, reference), [snap, base, reference])
   return (
-    <div className="grid gap-6 surface p-4 md:grid-cols-[1fr_1fr]">
+    <div className="grid gap-6 md:grid-cols-[1fr_1fr]">
       <div className="flex flex-col gap-3">
         <select className="rounded-lg border bg-background px-2 py-1.5 text-sm" value={i} onChange={(e) => (setI(Number(e.target.value)), setMult({}))}>
           {options.map((o, j) => (

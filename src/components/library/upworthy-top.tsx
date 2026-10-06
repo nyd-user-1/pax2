@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
 
-import { PaxTable } from "@/components/pax-table"
+import { TableBlock } from "@/components/blocks"
 import { cn } from "@/ui/lib/utils"
 
 export type UpworthyData = {
@@ -33,7 +33,7 @@ export function UpworthyTable({ data }: { data: UpworthyData }) {
 
   const flip = (k: SortKey, firstDesc: boolean) => setSort((s) => (s.k === k ? { k, d: (s.d * -1) as 1 | -1 } : { k, d: firstDesc ? -1 : 1 }))
   const Th = ({ k, label, firstDesc = true, className }: { k: SortKey; label: string; firstDesc?: boolean; className?: string }) => (
-    <th className={cn("whitespace-nowrap bg-slate-50 px-3 py-2 font-medium", className)}>
+    <th className={cn("whitespace-nowrap px-3 py-2 font-medium", className)}>
       <button type="button" onClick={() => flip(k, firstDesc)} className="inline-flex items-center gap-1 hover:text-pax-ink">
         {label}
         {sort.k === k && (sort.d === 1 ? <ChevronUp className="size-3" /> : <ChevronDown className="size-3" />)}
@@ -42,17 +42,23 @@ export function UpworthyTable({ data }: { data: UpworthyData }) {
   )
 
   return (
-    <div className="flex flex-col gap-3">
-      <PaxTable label="headlines" value={q} onChange={setQ} maxH="max-h-[512px]">
+    <TableBlock
+      title="Headlines"
+      search="Search headlines…"
+      searchValue={q}
+      onSearch={setQ}
+      rows={shown.map((r) => ({ rank: r.rank, headline: r.h, impressions: r.i, clicks: r.c, rate: r.r, won: r.w }))}
+      name="headlines"
+    >
         <table className="w-full text-sm">
           <thead className="text-left text-xs text-slate-500">
-            <tr>
+            <tr className="bg-muted/60">
               <Th k="rank" label="#" firstDesc={false} className="w-12" />
               <Th k="h" label="Headline" firstDesc={false} />
               <Th k="i" label="Impressions" className="text-right" />
               <Th k="c" label="Clicks" className="text-right" />
               <Th k="r" label="Click rate" className="text-right" />
-              <th className="whitespace-nowrap bg-slate-50 px-3 py-2 font-medium">Won its test</th>
+              <th className="whitespace-nowrap px-3 py-2 font-medium">Won its test</th>
             </tr>
           </thead>
           <tbody className="tabular">
@@ -75,8 +81,7 @@ export function UpworthyTable({ data }: { data: UpworthyData }) {
             )}
           </tbody>
         </table>
-      </PaxTable>
-    </div>
+    </TableBlock>
   )
 }
 

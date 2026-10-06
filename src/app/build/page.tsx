@@ -4,17 +4,16 @@ import build from "../../../data/build.json"
 import libraryMeta from "../../../data/library-meta.json"
 import { BudgetAndLimits, InsightsCard, Volume } from "@/components/build/board"
 import { PagesBoard } from "@/components/build/pages-board"
+import { TableBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
-import { CardAnchor, CardTools, RefreshButton } from "@/components/dash/card-tools"
-import { FoldCard } from "@/components/dash/fold-card"
-import { PaxSearch, PaxTable2 } from "@/components/pax-table2"
+import { RefreshButton } from "@/components/dash/card-tools"
 import { TodoCard, type Todo } from "@/components/build/todo-card"
 import { LESSONS, NOT_CONNECTED, PAGES, type SourceRow } from "@/lib/build-board"
 import { FEATURES, TAKES } from "@/lib/catalog"
 import { rows } from "@/lib/pipeline"
 import { workspace } from "@/lib/review"
 import { Badge } from "@/ui/components/nova/badge"
-import { Card, CardAction, CardContent, CardHeader } from "@/ui/components/nova/card"
+import { Card, CardContent } from "@/ui/components/nova/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/components/nova/table"
 import { cn } from "@/ui/lib/utils"
 
@@ -97,10 +96,9 @@ export default async function BuildPage() {
         </OrderedBlock>
 
         <OrderedBlock id="library" label="Library">
-          <PaxTable2>
-          <FoldCard title="Library" rows={sources.map(({ name, href, publisher, kind, covers, status }) => ({ name, href, publisher, type: kind, description: covers, status }))} name="library" tools={<RefreshButton />} search={<PaxSearch placeholder="Search sources…" />}>
+          <TableBlock title="Library" rows={sources.map(({ name, href, publisher, kind, covers, status }) => ({ name, href, publisher, type: kind, description: covers, status }))} name="library" tools={<RefreshButton />} search="Search sources…">
             <Table className="table-fixed">
-              <TableHeader className="sticky top-0 z-10 bg-white">
+              <TableHeader>
                 <TableRow className="bg-muted/60">
                   <TableHead className="w-[27%]">Name</TableHead>
                   <TableHead className="w-[25%]">Publisher</TableHead>
@@ -141,21 +139,11 @@ export default async function BuildPage() {
                 ))}
               </TableBody>
             </Table>
-          </FoldCard>
-          </PaxTable2>
+          </TableBlock>
         </OrderedBlock>
 
         <OrderedBlock id="runs" label="Runs">
-          <Card className="gap-4">
-            <CardHeader>
-              <CardAnchor>Runs</CardAnchor>
-              <CardAction>
-                <CardTools rows={ran.map((r, i) => ({ run: `Analysis ${i + 1}`, videos: r.ids.length, usd: Number(r.cost.toFixed(2)), started: r.start, finished: r.end }))} name="runs">
-                  <RefreshButton />
-                </CardTools>
-              </CardAction>
-            </CardHeader>
-            <CardContent>
+          <TableBlock title="Runs" rows={ran.map((r, i) => ({ run: `Analysis ${i + 1}`, videos: r.ids.length, usd: Number(r.cost.toFixed(2)), started: r.start, finished: r.end }))} name="runs" tools={<RefreshButton />} search="Search runs…">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/60">
@@ -178,8 +166,7 @@ export default async function BuildPage() {
                   ))}
                 </TableBody>
               </Table>
-            </CardContent>
-          </Card>
+          </TableBlock>
         </OrderedBlock>
 
         <OrderedBlock id="pages" label="Pages">

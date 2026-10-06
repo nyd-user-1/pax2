@@ -16,12 +16,14 @@ export type MapProps = {
   joinOn: string
   values: Record<string, { color: string; title: string; lines: string[] }>
   view: { longitude: number; latitude: number; zoom: number }
-  height?: number
+  height?: number | string
   className?: string
   legend?: React.ReactNode
+  /** Inside a MapBlock: no card shell of its own. */
+  bare?: boolean
 }
 
-export function Choropleth({ geo, joinOn, values, view, height = 460, className, legend }: MapProps) {
+export function Choropleth({ geo, joinOn, values, view, height = 460, className, legend, bare }: MapProps) {
   const [data, setData] = React.useState<GeoJSON.FeatureCollection | null>(null)
   const [failed, setFailed] = React.useState(false)
   const [hover, setHover] = React.useState<{ x: number; y: number; key: string } | null>(null)
@@ -53,7 +55,7 @@ export function Choropleth({ geo, joinOn, values, view, height = 460, className,
   }
   const h = hover && values[hover.key]
   return (
-    <div className={cn("surface relative overflow-hidden", className)} style={{ height }}>
+    <div className={cn(bare ? "rounded-xl" : "surface", "relative overflow-hidden", className)} style={{ height }}>
       <Map
         initialViewState={view}
         mapStyle={BASEMAP}

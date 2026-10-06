@@ -1,12 +1,11 @@
 "use client"
 
 import * as React from "react"
-import { ActivityIcon, ArrowDownToLineIcon, CalendarArrowUpIcon, RefreshCwIcon } from "lucide-react"
+import { ActivityIcon, CalendarArrowUpIcon } from "lucide-react"
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Label, Pie, PieChart, XAxis, YAxis } from "recharts"
 
-import { Button } from "@/ui/components/nova/button"
 import { CardAnchor, CardTools } from "@/components/dash/card-tools"
-import { Card, CardAction, CardContent, CardFooter, CardHeader } from "@/ui/components/nova/card"
+import { Card, CardAction, CardContent, CardHeader } from "@/ui/components/nova/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/ui/components/nova/chart"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/ui/components/nova/select"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/ui/components/nova/tooltip"
@@ -245,9 +244,8 @@ export function downloadCsv(name: string, header: string[], rows: (string | numb
   URL.revokeObjectURL(url)
 }
 
-/** Sales: three figures over a stacked bar chart. Refresh re-reads the page; Download is the series as CSV; the menu is the standard one. */
+/** Sales: three figures over a stacked bar chart; the ChartBlock around it carries the title and the menu. */
 export function Chart3({
-  title = "Financial Performance",
   data,
   labels = { item1: "Item 1", item2: "Item 2" },
   figures = [
@@ -256,29 +254,14 @@ export function Chart3({
     { label: "Conversion", value: "+7.2%" },
   ],
   tickFormatter,
-  onRefresh,
-  refreshing,
-  fileName = "series",
 }: {
-  title?: string
   data?: StackRow[]
   labels?: { item1: string; item2: string }
   figures?: { label: string; value: React.ReactNode }[]
   tickFormatter?: (value: string) => string
-  onRefresh?: () => void
-  refreshing?: boolean
-  fileName?: string
 }) {
-  const [sample, setSample] = React.useState<StackRow[] | null>(null)
-  const rows = data ?? sample ?? sampleStack()
-  const refresh = () => (onRefresh ? onRefresh() : setSample(sampleStack()))
+  const rows = React.useMemo(() => data ?? sampleStack(), [data])
   const tick = tickFormatter ?? ((v: string) => fmtDay(v))
-  const download = () =>
-    downloadCsv(
-      fileName,
-      ["date", labels.item1, labels.item2],
-      rows.map((r) => [r.date, r.item1, r.item2])
-    )
   // A neutral pair, dark over light, as the split bar on Bill Performance:
   // the chart palette's first two colours are reds here, and red reads as bad.
   const config: ChartConfig = {
@@ -289,52 +272,36 @@ export function Chart3({
     },
   }
   return (
-    <Card className="@container/card max-md:py-4!">
-      <CardHeader className="max-md:px-4">
-        <CardAnchor>{title}</CardAnchor>
-        <CardAction>
-          <CardTools className="gap-2">
-            <Button variant="outline" size="icon-sm" aria-label="Refresh" onClick={refresh} disabled={refreshing}>
-              <RefreshCwIcon className={cn(refreshing && "animate-spin")} />
-            </Button>
-            <Button variant="outline" size="icon-sm" aria-label="Download as CSV" onClick={download}>
-              <ArrowDownToLineIcon />
-            </Button>
-          </CardTools>
-        </CardAction>
-        <div className="mt-4 flex items-center gap-6">
-          {figures.map((f, i) => (
-            <React.Fragment key={f.label}>
-              {i > 0 && <div className={cn("h-10 w-px bg-border", i >= 2 && "max-sm:hidden")} />}
-              <div className={cn("space-y-1.5", i >= 2 && "max-sm:hidden")}>
-                <p className="text-sm font-medium whitespace-nowrap text-muted-foreground">{f.label}</p>
-                <p className="text-lg leading-none font-bold sm:text-2xl">{f.value}</p>
-              </div>
-            </React.Fragment>
-          ))}
-        </div>
-      </CardHeader>
-      <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-        <ChartContainer config={config} className="aspect-auto h-64 w-full">
-          <BarChart data={rows}>
-            <CartesianGrid vertical={false} />
-            <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} minTickGap={32} tickFormatter={(v) => tick(String(v))} />
-            <YAxis tickLine={false} axisLine={false} tickMargin={4} width={35} className="text-sm sm:text-xs" tickFormatter={(v) => `${v}`} />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent labelFormatter={(v) => tick(String(v))} indicator="dot" />} />
-            <Bar dataKey="item1" stackId="a" fill="var(--color-item1)" radius={6} className="stroke-background" strokeWidth={3} />
-            <Bar dataKey="item2" stackId="a" fill="var(--color-item2)" radius={6} className="stroke-background" strokeWidth={3} />
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center gap-6">
+        {figures.map((f, i) => (
+          <React.Fragment key={f.label}>
+            {i > 0 && <div className={cn("h-10 w-px bg-border", i >= 2 && "max-sm:hidden")} />}
+            <div className={cn("space-y-1.5", i >= 2 && "max-sm:hidden")}>
+              <p className="text-sm font-medium whitespace-nowrap text-muted-foreground">{f.label}</p>
+              <p className="text-lg leading-none font-bold sm:text-2xl">{f.value}</p>
+            </div>
+          </React.Fragment>
+        ))}
+      </div>
+      <ChartContainer config={config} className="aspect-auto h-56 w-full">
+        <BarChart data={rows}>
+          <CartesianGrid vertical={false} />
+          <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} minTickGap={32} tickFormatter={(v) => tick(String(v))} />
+          <YAxis tickLine={false} axisLine={false} tickMargin={4} width={35} className="text-sm sm:text-xs" tickFormatter={(v) => `${v}`} />
+          <ChartTooltip cursor={false} content={<ChartTooltipContent labelFormatter={(v) => tick(String(v))} indicator="dot" />} />
+          <Bar dataKey="item1" stackId="a" fill="var(--color-item1)" radius={6} className="stroke-background" strokeWidth={3} />
+          <Bar dataKey="item2" stackId="a" fill="var(--color-item2)" radius={6} className="stroke-background" strokeWidth={3} />
+        </BarChart>
+      </ChartContainer>
+    </div>
   )
 }
 
 export type Slice = { title: string; value: number; fill: string }
 
-/** Sales: a half donut with the total in the middle and a three-up legend beneath. */
+/** Sales: a half donut with the total in the middle and a three-up legend beneath; the ChartBlock around it carries the title. */
 export function Chart4({
-  title = "Sales by Channel",
   totalLabel = "Total Sales",
   data = [
     { title: "Direct", value: 5200, fill: "var(--chart-1)" },
@@ -342,47 +309,38 @@ export function Chart4({
     { title: "Organic", value: 2500, fill: "var(--chart-3)" },
   ],
 }: {
-  title?: string
   totalLabel?: string
   data?: Slice[]
 }) {
   const total = data.reduce((acc, d) => acc + d.value, 0)
   const config: ChartConfig = Object.fromEntries(data.map((d) => [d.title, { label: d.title, color: d.fill }]))
   return (
-    <Card className="flex flex-col max-md:py-4!">
-      <CardHeader className="pb-0 max-md:px-4!">
-        <CardAnchor>{title}</CardAnchor>
-        <CardAction>
-          <CardTools />
-        </CardAction>
-      </CardHeader>
-      <CardContent className="flex-1">
-        <ChartContainer config={config} className="mx-auto -mt-6 aspect-square max-h-60 min-h-48">
-          <PieChart>
-            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="title" />} />
-            <Pie data={data} dataKey="value" nameKey="title" innerRadius={84} outerRadius={100} startAngle={180} endAngle={0} paddingAngle={4} cornerRadius={4}>
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                      <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                        <tspan x={viewBox.cx} y={(viewBox.cy || 0) - 40} className="fill-muted-foreground text-sm">
-                          {totalLabel}
-                        </tspan>
-                        <tspan x={viewBox.cx} y={(viewBox.cy || 0) - 8} className="fill-foreground text-3xl font-semibold">
-                          {total.toLocaleString()}
-                        </tspan>
-                      </text>
-                    )
-                  }
-                  return null
-                }}
-              />
-            </Pie>
-          </PieChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter className="-mt-26 flex-col gap-2 text-sm">
+    <div className="flex flex-col">
+      <ChartContainer config={config} className="mx-auto aspect-square max-h-60 min-h-48">
+        <PieChart>
+          <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="title" />} />
+          <Pie data={data} dataKey="value" nameKey="title" innerRadius={84} outerRadius={100} startAngle={180} endAngle={0} paddingAngle={4} cornerRadius={4}>
+            <Label
+              content={({ viewBox }) => {
+                if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                  return (
+                    <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
+                      <tspan x={viewBox.cx} y={(viewBox.cy || 0) - 40} className="fill-muted-foreground text-sm">
+                        {totalLabel}
+                      </tspan>
+                      <tspan x={viewBox.cx} y={(viewBox.cy || 0) - 8} className="fill-foreground text-3xl font-semibold">
+                        {total.toLocaleString()}
+                      </tspan>
+                    </text>
+                  )
+                }
+                return null
+              }}
+            />
+          </Pie>
+        </PieChart>
+      </ChartContainer>
+      <div className="-mt-26 flex flex-col gap-2 text-sm">
         <div className="grid w-full grid-cols-3 gap-2">
           {data.map((item) => (
             <div key={item.title} className="flex flex-col items-center justify-center text-center">
@@ -394,7 +352,7 @@ export function Chart4({
             </div>
           ))}
         </div>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   )
 }
