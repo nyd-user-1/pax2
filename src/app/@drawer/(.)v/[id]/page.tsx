@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 
+import homeFeed from "../../../../../data/generated/home-feed.json"
 import shorts from "../../../../../data/raw/yt-shorts.json"
 import { ShortView } from "@/components/short-view"
 import { TakePanel } from "@/components/take-panel"
@@ -13,9 +14,9 @@ export const dynamic = "force-dynamic"
 export default async function TakeInDrawer({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   if (id.startsWith("yt-")) {
-    const v = (shorts as unknown as { videos: { id: string; channelId: string; channel: string }[] }).videos.find((x) => x.id === id.replace(/^yt-/, ""))
+    const v = (shorts as unknown as { videos: { id: string; channelId: string; channel: string }[] }).videos.find((x) => x.id === id.replace(/^yt-/, "")) ?? homeFeed.find((x) => x.id === id.replace(/^yt-/, ""))
     return (
-      <TakePanel title={v ? (channelById(v.channelId)?.name ?? v.channel) : "Campaign short"}>
+      <TakePanel title={v ? (channelById(v.channelId)?.name ?? v.channel) : "Campaign short"} href={`/v/${id}`}>
         <ShortView id={id} inDrawer />
       </TakePanel>
     )
@@ -23,7 +24,7 @@ export default async function TakeInDrawer({ params }: { params: Promise<{ id: s
   const take = takeById(id)
   if (!take) notFound()
   return (
-    <TakePanel title={scriptById(take.scriptId)!.short}>
+    <TakePanel title={scriptById(take.scriptId)!.short} href={`/v/${id}`}>
       <TakeView id={id} inDrawer />
     </TakePanel>
   )

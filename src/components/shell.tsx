@@ -112,7 +112,7 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
       <div className="flex min-h-dvh md:h-dvh md:overflow-hidden md:bg-slate-200/60 md:p-[18px]">
         <div className={cn("hidden shrink-0 overflow-hidden transition-[width,margin] duration-300 ease-in-out md:block", sidebarOpen ? "md:mr-[18px] md:w-60" : "md:w-0")}>
           <div className="flex h-full w-60 flex-col rounded-2xl border border-slate-500 bg-pax-mist px-3 py-4 shadow-e2">
-            <Link href="/scored" aria-label="Scored" className="mb-4 flex px-3 pt-1">
+            <Link href="/" aria-label="Home" className="mb-4 flex px-3 pt-1">
               <Wordmark size={20} />
             </Link>
             <nav className="flex flex-col gap-0.5">{NAV.map((n) => item(n.href, n.label, n.icon))}</nav>
@@ -129,7 +129,7 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
         </div>
         <div className="flex min-w-0 flex-1 flex-col md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:bg-pax-mist md:shadow-e2">
           <header className="sticky top-0 z-20 flex items-center gap-3 border-b bg-white/90 px-4 py-2.5 backdrop-blur md:hidden">
-            <Link href="/scored" aria-label="Scored"><Wordmark size={18} /></Link>
+            <Link href="/" aria-label="Home"><Wordmark size={18} /></Link>
             <nav className="no-scrollbar flex flex-1 gap-1 overflow-x-auto">
               {NAV.map(({ href, label }) => (
                 <Link key={href} href={href} className={cn("whitespace-nowrap rounded-full px-3 py-1 text-xs", active(href) ? "bg-pax-lavender font-semibold text-pax-ink" : "text-slate-500")}>

@@ -1,7 +1,6 @@
-import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft } from "lucide-react"
 
+import { BackLink } from "@/components/back-link"
 import { ShortView } from "@/components/short-view"
 import { TakeView } from "@/components/take-view"
 import { takeById } from "@/lib/catalog"
@@ -15,9 +14,7 @@ export default async function TakePage({ params }: { params: Promise<{ id: strin
   if (!short && !takeById(id)) notFound()
   return (
     <div className="flex flex-col gap-6">
-      <Link href={short ? "/campaigns" : "/videos"} className="inline-flex w-fit items-center gap-1.5 text-sm text-slate-500 hover:text-pax-ink">
-        <ArrowLeft className="size-4" /> {short ? "Campaigns" : "Videos"}
-      </Link>
+      <BackLink />
       {short ? <ShortView id={id} /> : <TakeView id={id} />}
     </div>
   )

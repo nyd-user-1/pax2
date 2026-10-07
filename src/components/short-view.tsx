@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import deliveryJson from "../../data/generated/delivery.json"
+import homeFeed from "../../data/generated/home-feed.json"
 import shorts from "../../data/raw/yt-shorts.json"
 import { RangeBar } from "@/components/bits"
 import { Fold } from "@/components/fold"
@@ -16,6 +17,7 @@ import { cn } from "@/ui/lib/utils"
 type Yt = { fetchedAt: string; videos: { id: string; channelId: string; channel: string; title: string; published: string; duration: string; views: number | null; likes: number | null; comments: number | null }[] }
 
 const DASH = "-"
+const COMPACT = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 })
 
 const KPI_ROWS = ["Counts", "Rate", "Ref. avg", "Weighted", "Distance", "Score", "Weight"]
 const KPI_TERMS: Record<string, string> = { Counts: "counts", Rate: "rate", "Ref. avg": "reference-average", Weighted: "weighted-rate", Distance: "distance", Score: "component-score", Weight: "weight" }
@@ -40,7 +42,8 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
   const delivery = (deliveryJson as unknown as { videos: Record<string, { energy?: string; vocalTone?: string[]; mode?: string; frame?: string; sarcasm?: { present?: boolean; cue?: string } }> }).videos[id]
   const ytId = id.replace(/^yt-/, "")
   const data = shorts as unknown as Yt
-  const v = data.videos.find((x) => x.id === ytId)
+  const v = data.videos.find((x) => x.id === ytId) ?? (homeFeed as unknown as Yt["videos"]).find((x) => x.id === ytId)
+  const ratio = (homeFeed as { id: string; ratio: number }[]).find((x) => x.id === ytId)?.ratio
   const f = featuresFor(id)
   const ch = v ? channelById(v.channelId) : undefined
   const lines = transcriptLines(f)
@@ -48,6 +51,7 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
   const siblings = v
     ? data.videos.filter((x) => x.channelId === v.channelId && x.id !== ytId && featuresFor(`yt-${x.id}`)).slice(0, 3)
     : []
+  const n = (x: number | null | undefined) => (x == null ? DASH : COMPACT.format(x))
   const stat = (label: string, value: string) => (
     <div className="flex flex-col">
       <span className="tabular text-lg font-semibold text-slate-900">{value}</span>
@@ -74,16 +78,18 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
               />
             </div>
           )}
-          {f?.audio && !f.audio.error ? (
-            <div className="surface p-4">
-              <Loudness f={f.audio} />
-            </div>
-          ) : (
-            <div className="surface flex items-center justify-between p-4 text-xs text-slate-500">
-              <span>dB</span>
-              <span className="tabular">{DASH}</span>
-            </div>
-          )}
+          <div className="surface grid grid-cols-2 gap-4 p-5 @lg:grid-cols-4">
+            {stat("Views", n(v?.views))}
+            {stat("Likes", n(v?.likes))}
+            {stat("Comments", n(v?.comments))}
+            {stat("Ratio", ratio == null ? DASH : `${ratio >= 10 ? ratio.toFixed(0) : ratio.toFixed(1)}×`)}
+          </div>
+          <div className="surface grid grid-cols-2 gap-4 p-5 @lg:grid-cols-4">
+            {stat("Reach", DASH)}
+            {stat("3s+", DASH)}
+            {stat("Avg.", DASH)}
+            {stat("Spend", DASH)}
+          </div>
           {siblings.length > 0 && (
             <div className="surface flex flex-col gap-1 p-4">
               <p className="pb-1 text-xs font-medium text-slate-500">Comps</p>
@@ -98,9 +104,6 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
         </aside>
 
         <div className="flex min-w-0 flex-col gap-6">
-          {!inDrawer && <h1 className="font-display text-2xl leading-tight text-slate-900 md:text-[28px]">{v?.title ?? id}</h1>}
-          {inDrawer && v && <p className="font-display text-lg leading-snug text-slate-900">{v.title}</p>}
-
           {delivery && (
             <div className="flex flex-wrap items-center gap-1.5 text-xs">
               {[delivery.energy && `${delivery.energy} energy`, ...(delivery.vocalTone ?? []), delivery.mode?.replace(/-/g, " "), delivery.frame?.replace(/-/g, " ")].filter(Boolean).map((t) => (
@@ -109,16 +112,10 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
             </div>
           )}
 
-          <div className="surface grid grid-cols-2 gap-4 p-5 @lg:grid-cols-4">
-            {stat("Reach", DASH)}
-            {stat("Watched 3s+", DASH)}
-            {stat("Avg.", DASH)}
-            {stat("Spend", DASH)}
-          </div>
-
           <Fold
             title="Resonance"
             info={<ScoreInfo />}
+            defaultOpen
             preview={
               <div className="flex flex-col gap-6">
                 <div className="flex flex-wrap items-end justify-between gap-4">
@@ -191,7 +188,7 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
               </details>
 
               <details open className="group rounded-xl border">
-                <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-pax-ink">{DASH}</summary>
+                <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-pax-ink">Paid</summary>
                 <div className="grid gap-x-6 px-4 pb-4 text-xs @md:grid-cols-2">
                   {WINDOW_ROWS.map((label) => (
                     <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
@@ -211,6 +208,17 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
               </details>
             </div>
           </Fold>
+
+          {f?.audio && !f.audio.error ? (
+            <div className="surface p-4">
+              <Loudness f={f.audio} />
+            </div>
+          ) : (
+            <div className="surface flex items-center justify-between p-4 text-xs text-slate-500">
+              <span>dB</span>
+              <span className="tabular">{DASH}</span>
+            </div>
+          )}
 
           <Fold title="Formula" preview={f ? <Observations part="summary" f={f} /> : <p className="tabular text-sm text-slate-500">{DASH}</p>}>
             {f?.pegasus?.result?.characteristics && <Observations part="detail" f={f} />}

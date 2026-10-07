@@ -91,7 +91,7 @@ export default async function VelocityPage({ searchParams }: { searchParams: Pro
   const inProgress = all.filter((w) => w.age < 72).sort((a, b) => (b.ratio ?? -1) - (a.ratio ?? -1))
   const complete = all.filter((w) => w.age >= 72).sort((a, b) => (b.ratio ?? -1) - (a.ratio ?? -1))
   const lastPoll = rows.length ? new Date(rows.reduce((t, r) => (r.at > t ? r.at : t), rows[0].at)).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : null
-  const csv = (ws: Watched[]) => ws.map((w) => ({ channel: w.channel, video: w.title, ageHours: Math.round(w.age * 10) / 10, views: w.views, timesChannelMedian: w.ratio == null ? "" : Math.round(w.ratio * 100) / 100 }))
+  const csv = (ws: Watched[]) => ws.map((w) => ({ channel: w.channel, video: w.title, ageHours: Math.round(w.age * 10) / 10, views: w.views, ratio: w.ratio == null ? "" : Math.round(w.ratio * 100) / 100 }))
   const lab = focus ? labVideos().find((x) => x.id === focus) : undefined
   const focused = focus ? (allReal.find((c) => c.id === focus) ?? (lab ? standInCard(lab) : undefined)) : undefined
   const pool = [...(focused ? [focused] : []), ...allReal.filter((c) => c.id !== focus)]
@@ -166,7 +166,7 @@ export default async function VelocityPage({ searchParams }: { searchParams: Pro
                     <th>Video</th>
                     <th className="!text-right">Age</th>
                     <th>Views</th>
-                    <th className="!text-right">Times channel median</th>
+                    <th className="!text-right">{key === "in-progress" ? "Ratio/Live" : "Ratio/72h"}</th>
                   </tr>
                 </thead>
                 <tbody>

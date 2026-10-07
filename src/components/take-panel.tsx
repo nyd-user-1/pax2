@@ -2,13 +2,14 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { Columns2, Columns3, X } from "lucide-react"
+import { ArrowUpRight, Columns2, Columns3, X } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
 import { cn } from "@/ui/lib/utils"
 
-/** The take docks in the shell's right panel; closing returns to the page beneath. */
-export function TakePanel({ title, children }: { title: string; children: React.ReactNode }) {
+/** The take docks in the shell's right panel; closing returns to the page beneath. The title opens
+ *  the take's full page — a plain link, so the drawer doesn't intercept it. */
+export function TakePanel({ title, href, children }: { title: string; href: string; children: React.ReactNode }) {
   const router = useRouter()
   const { setOpen, wide, setWide } = useShellPanel()
   const [scrolled, setScrolled] = React.useState(false)
@@ -26,7 +27,10 @@ export function TakePanel({ title, children }: { title: string; children: React.
   return (
     <section className="fixed inset-0 z-50 flex flex-col bg-pax-mist md:static md:z-auto md:h-full md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:shadow-e2">
       <div className={cn("relative z-10 flex min-h-[73px] shrink-0 items-center justify-between gap-3 bg-pax-mist px-6 py-4 transition-shadow duration-200", scrolled && "shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)]")}>
-        <p className="truncate font-display text-xl text-slate-900">{title}</p>
+        <a href={href} className="group -mx-2 flex min-w-0 items-center gap-2 rounded-lg px-2 py-1 transition-colors hover:bg-muted">
+          <span className="truncate font-display text-xl text-slate-900">{title}</span>
+          <ArrowUpRight className="size-4 shrink-0 text-slate-500 opacity-0 transition-opacity group-hover:opacity-100" />
+        </a>
         <div className="flex shrink-0 items-center gap-2">
           <button type="button" onClick={() => setWide(!wide)} className="hidden size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax-ink md:flex" aria-label={wide ? "Narrow the panel" : "Widen the panel"}>
             {wide ? <Columns3 className="size-4" /> : <Columns2 className="size-4" />}

@@ -6,8 +6,8 @@ import { ChevronDown } from "lucide-react"
 import { cn } from "@/ui/lib/utils"
 
 /** A box that always shows its preview; the header toggles the rest underneath. */
-export function Fold({ title, info, preview, children }: { title: string; info?: React.ReactNode; preview?: React.ReactNode; children?: React.ReactNode }) {
-  const [open, setOpen] = React.useState(!preview)
+export function Fold({ title, info, preview, children, defaultOpen }: { title: string; info?: React.ReactNode; preview?: React.ReactNode; children?: React.ReactNode; defaultOpen?: boolean }) {
+  const [open, setOpen] = React.useState(defaultOpen ?? !preview)
   const more = !!children
   return (
     <div className="surface">
