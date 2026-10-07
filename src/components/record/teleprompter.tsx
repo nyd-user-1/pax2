@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { createPortal } from "react-dom"
 import { ChevronLeft, ChevronRight, Minus, Plus, X } from "lucide-react"
 
 import { cn } from "@/ui/lib/utils"
@@ -80,7 +81,8 @@ export function Teleprompter({ text, onClose, onDone }: { text: string; onClose:
     setRecording(false)
   }
 
-  return (
+  // Portaled to <body> so the app shell's page animation (a mask on the content card) can't clip it.
+  return createPortal(
     <div className="fixed inset-0 z-50 flex flex-col bg-pax-ink text-white">
       <video ref={video} autoPlay playsInline muted className="absolute inset-0 size-full -scale-x-100 object-cover opacity-70" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black/70" />
@@ -122,5 +124,7 @@ export function Teleprompter({ text, onClose, onDone }: { text: string; onClose:
         <span className="text-sm text-white/80">{recording ? "Tap to finish" : "Tap to start"}</span>
       </div>
     </div>
+    ,
+    document.body,
   )
 }

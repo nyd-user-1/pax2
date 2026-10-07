@@ -1,5 +1,9 @@
 import Link from "next/link"
 
+import { pipelineQueue } from "@/app/pipeline-actions"
+import { pollerStatus } from "@/app/velocity-actions"
+import { AdminControls } from "@/components/admin-controls"
+import { currentUser } from "@/lib/auth"
 import { ChartBlock, ListBlock, MainBlock, TwoHalfBlock, TwoThirdBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { RefreshButton } from "@/components/dash/card-tools"
@@ -92,8 +96,11 @@ export default async function DashboardPage() {
   const fmaxShown = Math.max(1, ...funnel.map((f) => f.n))
   const activityRows = show.activity.length ? show.activity : [{ date: new Date().toISOString().slice(0, 10), item1: 0, item2: 0 }]
 
+  const [user, poller, queue] = await Promise.all([currentUser(), pollerStatus().catch(() => null), pipelineQueue().catch(() => null)])
+
   return (
     <div className="flex flex-col gap-10">
+      <AdminControls admin={!!user?.admin} poller={poller} queue={queue} />
       <header className="rise flex flex-wrap items-center gap-3">
         {demo && <span className="rounded-full bg-pax-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax-red-deep">Sample data</span>}
       </header>

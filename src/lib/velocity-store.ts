@@ -1,0 +1,53 @@
+import "server-only"
+
+import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3"
+
+import type { PollRow } from "@/lib/lab"
+
+// The velocity poller's state in S3 (written by lambda/velocity): readings partitioned by UTC day,
+// channel baselines, the hourly stat card snapshots and the poller's own run state.
+
+const BUCKET = process.env.VELOCITY_BUCKET ?? "pax-638175140432"
+const s3 = new S3Client({ region: process.env.PAX_REGION ?? "us-east-1" })
+
+async function getText(key: string): Promise<string | null> {
+  try {
+    const r = await s3.send(new GetObjectCommand({ Bucket: BUCKET, Key: `velocity/${key}` }))
+    return (await r.Body?.transformToString()) ?? null
+  } catch (e) {
+    if ((e as { name?: string }).name === "NoSuchKey") return null
+    throw e
+  }
+}
+
+const lines = <T,>(t: string | null): T[] => (t ?? "").split("\n").filter(Boolean).map((l) => JSON.parse(l) as T)
+
+/** Every reading from the last `days` UTC days, oldest day first. */
+export async function recentPolls(days = 7): Promise<PollRow[]> {
+  const keys = Array.from({ length: days }, (_, i) => `polls/${new Date(Date.now() - (days - 1 - i) * 864e5).toISOString().slice(0, 10)}.jsonl`)
+  return (await Promise.all(keys.map(getText))).flatMap((t) => lines<PollRow>(t))
+}
+
+export async function baselines(): Promise<Record<string, { median: number | null }>> {
+  return JSON.parse((await getText("baselines.json")) ?? "{}")
+}
+
+export type StatSnapshot = { at: string; shorts: number; channels: number; hits: number; misses: number; tracking: number; live: number }
+
+export async function snapshots(): Promise<StatSnapshot[]> {
+  return lines<StatSnapshot>(await getText("tiles.jsonl"))
+}
+
+export type PollerState = { lastRunAt?: string; lastWatched?: number; discoveredAt?: string; catalogAt?: string }
+
+export async function pollerState(): Promise<PollerState> {
+  return JSON.parse((await getText("state.json")) ?? "{}")
+}
+
+const AP_MONTHS = ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."]
+
+/** "Oct. 7, 2026 7:32 a.m." in Eastern time. */
+export function apStamp(iso: string): string {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true }).formatToParts(new Date(iso)).map((p) => [p.type, p.value]))
+  return `${AP_MONTHS[Number(parts.month) - 1]} ${parts.day}, ${parts.year} ${parts.hour}:${parts.minute} ${parts.dayPeriod === "AM" ? "a.m." : "p.m."}`
+}

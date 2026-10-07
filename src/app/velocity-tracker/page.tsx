@@ -1,5 +1,3 @@
-import fs from "node:fs"
-import path from "node:path"
 import Link from "next/link"
 
 import { fmtCompact, labVideos, polledCards, standInCard, tierOf, velocityCards, type PollRow, type Tier, type VelocityCard } from "@/lib/lab"
@@ -8,30 +6,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { TableBlock } from "@/components/blocks"
 import { SectionTitle } from "@/components/ui-pax"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
+import { baselines, recentPolls } from "@/lib/velocity-store"
 import { cn } from "@/ui/lib/utils"
 
 export const metadata = { title: "Velocity" }
 export const dynamic = "force-dynamic"
-
-function polls(): PollRow[] {
-  try {
-    return fs
-      .readFileSync(path.join(process.cwd(), "data/velocity/polls.jsonl"), "utf8")
-      .split("\n")
-      .filter(Boolean)
-      .map((l) => JSON.parse(l) as PollRow)
-  } catch {
-    return []
-  }
-}
-
-function baselines(): Record<string, { median: number | null }> {
-  try {
-    return JSON.parse(fs.readFileSync(path.join(process.cwd(), "data/velocity/baselines.json"), "utf8"))
-  } catch {
-    return {}
-  }
-}
 
 const TIER: Record<Tier, { label: string; chip: string; line: string }> = {
   breakout: { label: "Passed explore", chip: "bg-above-soft text-above", line: "#16a34a" },
@@ -106,8 +85,7 @@ const PAGE = 12
 
 export default async function VelocityPage({ searchParams }: { searchParams: Promise<{ v?: string; page?: string }> }) {
   const { v: focus, page: pageParam } = await searchParams
-  const rows = polls()
-  const medians = baselines()
+  const [rows, medians] = await Promise.all([recentPolls(7), baselines()])
   const allReal = polledCards(rows, medians)
   const all = watched(rows, medians)
   const inProgress = all.filter((w) => w.age < 72).sort((a, b) => (b.ratio ?? -1) - (a.ratio ?? -1))

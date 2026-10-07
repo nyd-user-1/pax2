@@ -1,5 +1,3 @@
-import fs from "node:fs"
-import path from "node:path"
 import Link from "next/link"
 import { ArrowDownRight, ArrowUpRight, Minus } from "lucide-react"
 
@@ -7,52 +5,32 @@ import shorts from "../../../data/raw/yt-shorts.json"
 import { ChartBlock, TableBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { Stat2 } from "@/components/dash/stats"
+import { SnapshotRefresh } from "@/components/snapshot-refresh"
 import { labVideos, type Tier } from "@/lib/lab"
+import { apStamp, snapshots } from "@/lib/velocity-store"
 import { cn } from "@/ui/lib/utils"
 
 export const metadata = { title: "Breakout" }
 export const dynamic = "force-dynamic"
 
-const read = <T,>(f: string, fallback: T): T => {
-  try {
-    return JSON.parse(fs.readFileSync(path.join(process.cwd(), "data/velocity", f), "utf8")) as T
-  } catch {
-    return fallback
+/** The five stat cards: the latest snapshot the poller saved, against the one nearest a day earlier. */
+async function statCards() {
+  const history = await snapshots()
+  const latest = history.at(-1)
+  if (!latest) return { at: null, cards: [] }
+  const t = Date.parse(latest.at)
+  const prior = history.filter((h) => Date.parse(h.at) <= t - 24 * 3_600_000).at(-1) ?? (history.length > 1 ? history[0] : undefined)
+  const diff = (k: "shorts" | "channels" | "hits" | "misses" | "tracking") => (prior ? { n: latest[k] - prior[k] } : null)
+  return {
+    at: latest.at,
+    cards: [
+      { title: "Shorts", value: latest.shorts.toLocaleString(), diff: diff("shorts") },
+      { title: "Channels", value: String(latest.channels), diff: diff("channels") },
+      { title: "Hits", value: latest.hits.toLocaleString(), diff: diff("hits") },
+      { title: "Misses", value: latest.misses.toLocaleString(), diff: diff("misses") },
+      { title: "Live Tracking", value: String(latest.tracking), diff: diff("tracking") },
+    ],
   }
-}
-
-/** The page's five tiles: the lookback catalog's verdicts and the live watch. */
-function tiles() {
-  const { videos } = read<{ videos: { channelId: string; tier: string }[] }>("catalog.json", { videos: [] })
-  const settled = videos.filter((v) => v.tier !== "unsettled")
-  const hits = settled.filter((v) => v.tier === "breakout").length
-  const misses = settled.filter((v) => v.tier === "killed").length
-  const medians = read<Record<string, { median: number | null }>>("baselines.json", {})
-  let polls: { id: string; channelId: string; published: string; views: number; hour: number }[] = []
-  try {
-    polls = fs.readFileSync(path.join(process.cwd(), "data/velocity/polls.jsonl"), "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l))
-  } catch {}
-  const latest = new Map<string, (typeof polls)[number]>()
-  for (const r of polls) if (!latest.has(r.id) || r.hour > latest.get(r.id)!.hour) latest.set(r.id, r)
-  const now = Date.now()
-  const tracking = [...latest.values()].filter((r) => now - Date.parse(r.published) < 72 * 3_600_000)
-  const live = tracking.filter((r) => { const m = medians[r.channelId]?.median; return m ? r.views / m >= 3 : false }).length
-  const now2 = { shorts: settled.length, channels: new Set(videos.map((v) => v.channelId)).size, hits, misses, tracking: tracking.length, live }
-  // Each tile's movement against the snapshot nearest 24 hours ago (or the oldest, while history is shorter).
-  let history: (typeof now2 & { at: string })[] = []
-  try {
-    history = fs.readFileSync(path.join(process.cwd(), "data/velocity/tiles.jsonl"), "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l))
-  } catch {}
-  const before = history.filter((h) => Date.parse(h.at) <= now - 24 * 3_600_000).at(-1) ?? history[0]
-  const span = before ? Math.max(1, Math.round((now - Date.parse(before.at)) / 3_600_000)) : 0
-  const diff = (k: keyof typeof now2) => (before ? { n: now2[k] - before[k], span: `past ${span} hour${span === 1 ? "" : "s"}` } : null)
-  return [
-    { title: "Shorts", value: now2.shorts.toLocaleString(), diff: diff("shorts") },
-    { title: "Channels", value: String(now2.channels), diff: diff("channels") },
-    { title: "Hits", value: hits.toLocaleString(), diff: diff("hits") },
-    { title: "Misses", value: misses.toLocaleString(), diff: diff("misses") },
-    { title: "Live Tracking", value: String(now2.tracking), diff: diff("tracking") },
-  ]
 }
 
 /** The tile's movement since the previous snapshot; green is good news, so a rise in Misses is red. */
@@ -120,12 +98,17 @@ function Scatter() {
   )
 }
 
-export default function BreakoutPage() {
+export default async function BreakoutPage() {
   const vids = labVideos()
+  const { at, cards } = await statCards()
   return (
     <div className="flex flex-col">
+      <div className="mb-3 flex items-center justify-end gap-1 text-xs text-muted-foreground">
+        {at && <span>Snapshot: {apStamp(at)}</span>}
+        <SnapshotRefresh />
+      </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        {tiles().map((t) => (
+        {cards.map((t) => (
           <Stat2 key={t.title} title={t.title} value={t.value} footer={<Change d={t.diff} lowerIsBetter={t.title === "Misses"} />} />
         ))}
       </div>

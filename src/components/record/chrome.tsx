@@ -34,13 +34,15 @@ export function StepBar({ step, back }: { step: 1 | 2 | 3; back: { href: string;
   )
 }
 
-export function FlowPage({ title, lead, children, wide }: { title: string; lead?: string; children: React.ReactNode; wide?: boolean }) {
+export function FlowPage({ title, lead, children, wide, className }: { title?: string; lead?: string; children: React.ReactNode; wide?: boolean; className?: string }) {
   return (
-    <div className={cn("mx-auto flex w-full flex-col gap-8 px-5 py-12", wide ? "max-w-6xl" : "max-w-3xl")}>
-      <header className="flex flex-col gap-3">
-        <h1 className="font-display text-4xl font-semibold leading-tight text-pax-ink md:text-5xl">{title}</h1>
-        {lead && <p className="text-lg text-muted-foreground">{lead}</p>}
-      </header>
+    <div className={cn("mx-auto flex w-full flex-col gap-8 px-5 py-12", wide ? "max-w-6xl" : "max-w-3xl", className)}>
+      {title && (
+        <header className="flex flex-col gap-3">
+          <h1 className="font-display text-4xl font-semibold leading-tight text-pax-ink md:text-5xl">{title}</h1>
+          {lead && <p className="text-lg text-muted-foreground">{lead}</p>}
+        </header>
+      )}
       {children}
     </div>
   )
@@ -48,10 +50,9 @@ export function FlowPage({ title, lead, children, wide }: { title: string; lead?
 
 export function HelpLine() {
   return (
-    <p className="text-center text-sm text-muted-foreground">
-      First time recording?{" "}
+    <p className="text-center text-sm">
       <Link href="/record/guide" className="font-medium text-primary underline underline-offset-4">
-        Read the volunteer guide
+        Volunteer Guide
       </Link>
     </p>
   )

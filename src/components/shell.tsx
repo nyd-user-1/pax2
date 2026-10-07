@@ -77,8 +77,8 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
   const animKey = React.useRef("Scored")
   const panel = React.useMemo<PanelState>(() => ({ setOpen: setPanelOpen, wide, setWide }), [wide])
   const active = (href: string) => (href === "/videos" ? path.startsWith("/videos") || path.startsWith("/v/") : path.startsWith(href))
-  // The volunteer's recording flow is its own front door, without the partner's sidebar.
-  if (path === "/" || path.startsWith("/record") || path.startsWith("/sign")) return <div className="min-h-dvh bg-pax-mist">{children}</div>
+  // The front door (landing, record entry, sign-in) is full bleed; every step from /record/start on sits in the shell.
+  if (path === "/" || path === "/record" || path.startsWith("/sign")) return <div className="min-h-dvh bg-pax-mist">{children}</div>
   const item = (href: string, label: string, Icon: typeof Gauge, small = false) => {
     const on = active(href)
     return (
@@ -147,6 +147,8 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
             </button>
             <PageSwitcher title={title} />
             <div className="flex-1" />
+            {/* A page's own header controls (the dashboard's poller switch and pipeline run) portal in here. */}
+            <div id="page-actions" className="flex items-center gap-3" />
             <Link href="/record" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-pax-ink text-white shadow-md transition-shadow hover:shadow-e3">
               <Video className="size-4" />
             </Link>

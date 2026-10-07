@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { ArrowRight, CheckCircle2, Clapperboard, Loader2, RotateCcw, Upload, Video } from "lucide-react"
+import { ArrowRight, CheckCircle2, Loader2, RotateCcw, Upload, Video } from "lucide-react"
 
 import { submitTake, uploadUrl } from "@/app/actions"
 import { FlowPage, StepBar } from "@/components/record/chrome"
@@ -152,16 +152,6 @@ export default function CameraPage() {
             </span>
             <input ref={file} type="file" accept="video/*" className="hidden" onChange={(e) => e.target.files?.[0] && take(e.target.files[0])} />
           </div>
-          <Link href="/record/studio" className="lift surface flex items-center gap-4 p-6">
-            <span className="flex size-12 items-center justify-center rounded-full bg-pax-lavender">
-              <Clapperboard className="size-5 text-pax-ink" />
-            </span>
-            <span className="flex flex-1 flex-col">
-              <span className="text-lg font-semibold text-pax-ink">Rather not be on camera?</span>
-              <span className="text-muted-foreground">Turn your script into an animated video instead.</span>
-            </span>
-            <ArrowRight className="size-4 text-slate-400" />
-          </Link>
           <div className="rounded-3xl bg-white/70 p-6">
             <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">A few things that help</p>
             <ul className="flex flex-col gap-2">
