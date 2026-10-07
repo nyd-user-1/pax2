@@ -3,7 +3,7 @@
 Each feature carries its provenance so the interface can keep them apart:
   platform-free measurements  -> "derived"  (ffmpeg loudness, pauses, pace)
   speech-to-text              -> "derived"  (Amazon Transcribe word timings)
-  vision                      -> "ai"       (Rekognition shots and on-screen text; Pegasus observations)
+  vision                      -> "ai"       (Pegasus: observations, text overlays, pace, visual variety)
 Usage: python3 analyze.py [take-id ...]
 """
 import json, os, re, subprocess, sys, time, uuid
@@ -13,7 +13,6 @@ B = "pax-638175140432"
 R = "us-east-1"
 s3 = boto3.client("s3", region_name=R)
 tr = boto3.client("transcribe", region_name=R)
-rk = boto3.client("rekognition", region_name=R)
 br = boto3.client("bedrock-runtime", region_name=R)
 D = "/opt/pax/analyze"
 os.makedirs(D, exist_ok=True)
@@ -30,39 +29,12 @@ def start_transcribe(tid):
     return name
 
 
-def start_rek(tid):
-    v = {"S3Object": {"Bucket": B, "Name": f"videos/{tid}.mp4"}}
-    for _ in range(60):
-        try:
-            seg = rk.start_segment_detection(Video=v, SegmentTypes=["SHOT", "TECHNICAL_CUE"])["JobId"]
-            txt = rk.start_text_detection(Video=v)["JobId"]
-            return seg, txt
-        except rk.exceptions.LimitExceededException:
-            time.sleep(15)
-    raise RuntimeError("Rekognition stayed at its open-job limit")
-
-
 def wait_transcribe(name):
     while True:
         j = tr.get_transcription_job(TranscriptionJobName=name)["TranscriptionJob"]
         if j["TranscriptionJobStatus"] in ("COMPLETED", "FAILED"):
             return j["TranscriptionJobStatus"]
         time.sleep(5)
-
-
-def wait_rek(fn, job):
-    out, token = [], None
-    while True:
-        r = fn(JobId=job, **({"NextToken": token} if token else {}))
-        if r["JobStatus"] == "IN_PROGRESS":
-            time.sleep(5)
-            continue
-        if r["JobStatus"] == "FAILED":
-            return None, r
-        out.append(r)
-        token = r.get("NextToken")
-        if not token:
-            return out, None
 
 
 def audio_features(tid):
@@ -154,7 +126,7 @@ def have(key):
 ids = sys.argv[1:] or takes()
 
 # Progress for the Pipeline page: every step of every video, rewritten to S3 as it changes.
-STEPS = ["transcribe", "rekognition", "pegasus", "audio"]
+STEPS = ["transcribe", "pegasus", "audio"]
 now = lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 status = {"startedAt": now(), "updatedAt": now(), "finishedAt": None, "videos": {t: {s: "queued" for s in STEPS} for t in ids}}
 
@@ -171,9 +143,6 @@ for tid in ids:
     mark(tid, "transcribe", "running")
     print("started", tid, flush=True)
 for tid in ids:
-    # Rekognition allows 20 open jobs per account: start each take's two jobs only when its turn comes.
-    jobs[tid]["rek"] = start_rek(tid)
-    mark(tid, "rekognition", "running")
     mark(tid, "audio", "running")
     feat = {"take": tid, "analyzedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     try:
@@ -190,21 +159,6 @@ for tid in ids:
     else:
         feat["transcript"] = {"error": st}
     mark(tid, "transcribe", "failed" if "error" in feat["transcript"] else "done")
-    seg, err = wait_rek(rk.get_segment_detection, jobs[tid]["rek"][0])
-    feat["shots"] = {"source": "ai", "segments": [{"type": s["Type"], "start": s["StartTimestampMillis"] / 1000, "end": s["EndTimestampMillis"] / 1000, "kind": (s.get("TechnicalCueSegment") or {}).get("Type")} for p in (seg or []) for s in p.get("Segments", [])]} if seg else {"error": str(err)[:300]}
-    txt, err = wait_rek(rk.get_text_detection, jobs[tid]["rek"][1])
-    if txt:
-        lines = {}
-        for p in txt:
-            for d in p.get("TextDetections", []):
-                td = d["TextDetection"]
-                if td["Type"] == "LINE" and td["Confidence"] > 85:
-                    sec = int(d["Timestamp"] / 1000)
-                    lines.setdefault(sec, set()).add(td["DetectedText"])
-        feat["onScreenText"] = {"source": "ai", "bySecond": {str(k): sorted(v) for k, v in sorted(lines.items())}, "secondsWithText": len(lines)}
-    else:
-        feat["onScreenText"] = {"error": str(err)[:300]}
-    mark(tid, "rekognition", "failed" if "error" in feat["shots"] or "error" in feat["onScreenText"] else "done")
     mark(tid, "pegasus", "running")
     try:
         feat["pegasus"] = {"source": "ai", "model": "twelvelabs.pegasus-1-2", **pegasus(tid)}

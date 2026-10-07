@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react"
 
 import { CardAnchor, CardTools } from "@/components/dash/card-tools"
 import { PaxSearch, PaxTable2 } from "@/components/pax-table2"
-import { Card, CardAction, CardContent, CardHeader } from "@/ui/components/nova/card"
+import { Card, CardAction, CardContent, CardFooter, CardHeader } from "@/ui/components/nova/card"
 import { cn } from "@/ui/lib/utils"
 
 // The one block (Brendan, 2026-10-06): every dashboard block is the same card —
@@ -37,17 +37,21 @@ export type BlockProps = {
   view?: string
   onView?: (value: string) => void
   defaultOpen?: boolean
+  /** Open height when the block shouldn't be BLOCK_HEIGHT: "auto" sizes it to its content. */
+  height?: string
+  /** The block's footer line: when its data was last run or read. */
+  footer?: React.ReactNode
   /** Anchor id when the slugged title shouldn't be it. */
   id?: string
   className?: string
 }
 
-export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, id, className }: BlockProps) {
+export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, footer, height, id, className }: BlockProps) {
   const [open, setOpen] = React.useState(defaultOpen)
   return (
     <PaxTable2 value={searchValue} onChange={onSearch}>
-      <Card className={cn("gap-4", open && BLOCK_HEIGHT, className)}>
-        <CardHeader>
+      <Card className={cn("gap-4", open && height !== "auto" && (height ?? BLOCK_HEIGHT), className)}>
+        <CardHeader className={cn(open && "border-b [.border-b]:pb-2")}>
           <div className="flex items-center gap-1">
             <CardAnchor id={id}>{title}</CardAnchor>
             {tools}
@@ -62,7 +66,8 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
             </CardTools>
           </CardAction>
         </CardHeader>
-        {open && <CardContent className="min-h-0 flex-1 overflow-y-auto [scrollbar-width:thin] [&_[data-slot=table-container]]:overflow-visible [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10 [&_thead]:bg-card">{children}</CardContent>}
+        {open && <CardContent className="min-h-0 flex-1 overflow-y-auto [&_[data-slot=table-container]]:overflow-visible [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10 [&_thead]:bg-card">{children}</CardContent>}
+        {open && footer && <CardFooter className="bg-transparent py-3 text-xs text-muted-foreground">{footer}</CardFooter>}
       </Card>
     </PaxTable2>
   )
@@ -70,7 +75,7 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
 
 /** MainBlock with a table in it: the column header pins while the rows scroll. */
 export function TableBlock(props: BlockProps) {
-  return <MainBlock {...props} />
+  return <MainBlock {...props} className={cn("[&_tbody_tr]:transition-colors [&_tbody_tr:hover]:bg-muted/60", props.className)} />
 }
 
 /** MainBlock with tiles in it; tag each tile data-find so the searchbar filters them. */
@@ -103,6 +108,11 @@ export function DiagramBlock(props: BlockProps) {
   return <MainBlock {...props} />
 }
 
+/** MainBlock with a typeset formula in it. */
+export function FormulaBlock(props: BlockProps) {
+  return <MainBlock {...props} />
+}
+
 /** Two blocks side by side, two thirds and one third; give the wide one xl:col-span-2. */
 export function TwoThirdBlock({ children, className }: { children: React.ReactNode; className?: string }) {
   return <div className={cn("grid grid-cols-1 gap-5 xl:grid-cols-3", className)}>{children}</div>
@@ -111,4 +121,9 @@ export function TwoThirdBlock({ children, className }: { children: React.ReactNo
 /** Two blocks side by side, half and half. */
 export function TwoHalfBlock({ children, className }: { children: React.ReactNode; className?: string }) {
   return <div className={cn("grid grid-cols-1 gap-5 xl:grid-cols-2", className)}>{children}</div>
+}
+
+/** Three blocks side by side, a third each. */
+export function OneThirdBlock({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <div className={cn("grid grid-cols-1 gap-5 xl:grid-cols-3", className)}>{children}</div>
 }

@@ -1,5 +1,5 @@
 // Upload the downloaded shorts to s3://pax-638175140432/videos/ as yt-<videoId>.mp4,
-// plus the Rekognition-free analyzer the box will run. Node + the repo's own SDK;
+// plus the analyzer the box will run. Node + the repo's own SDK;
 // never the AWS CLI. Skips objects that already exist.
 // Usage: node scripts/upload-batch.mjs [batch-json]
 

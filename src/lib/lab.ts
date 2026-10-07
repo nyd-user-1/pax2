@@ -202,6 +202,37 @@ export type VelocityCard = {
   points: number[]
   /** The hour the exploit push visibly begins, when it does. */
   inflection: number | null
+  /** Hours since publish, on a curve built from real polls; absent on stand-ins. */
+  hours?: number
+  /** First observed hour on a real curve; earlier entries are placeholders and are not drawn. */
+  start?: number
+  /** The real readings as [hours since publish, views], drawn as observed; absent on stand-ins. */
+  series?: [number, number][]
+}
+
+export type PollRow = { at: string; id: string; channelId: string; channel: string; title: string; published: string; hour: number; views: number }
+
+/** Real curves from the poller's rows: views at each whole hour since publish, the last
+ *  known count carried forward, ending where the polling has reached. */
+export function polledCards(rows: PollRow[], baselines: Record<string, { median: number | null }> = {}): VelocityCard[] {
+  const med: Record<string, number> = { ...channelMedians() }
+  for (const [id, b] of Object.entries(baselines)) if (b.median) med[id] = b.median
+  const by = new Map<string, PollRow[]>()
+  for (const r of rows) by.set(r.id, [...(by.get(r.id) ?? []), r])
+  return [...by.values()]
+    .map((rs) => {
+      const sorted = rs.sort((a, b) => a.hour - b.hour)
+      const last = sorted.at(-1)!
+      const start = Math.ceil(sorted[0].hour)
+      const end = Math.min(72, Math.floor(last.hour))
+      // Hours before the first poll were never observed; they stay out of the curve rather than being guessed.
+      const points: number[] = Array(start).fill(0)
+      for (let h = start; h <= end; h++) points.push(sorted.filter((r) => r.hour <= h).at(-1)?.views ?? sorted[0].views)
+      const series = sorted.filter((r) => r.hour <= 72).map((r) => [r.hour, r.views] as [number, number])
+      return { id: last.id, title: last.title.replace(/\s*#\w+/g, "").trim() || last.title, channel: last.channel, views: last.views, tier: tierOf(last.views / (med[last.channelId] || 1)), points, start, series, inflection: null, hours: last.hour }
+    })
+    .filter((c) => c.start <= 6 && c.points.length - 1 - c.start >= 6)
+    .sort((a, b) => (b.hours ?? 0) - (a.hours ?? 0))
 }
 
 const seedOf = (s: string) => [...s].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7)
@@ -210,32 +241,34 @@ const prng = (seed: number) => () => {
   return seed / 2 ** 32
 }
 
-export function velocityCards(limit = 12): VelocityCard[] {
-  const vids = [...labVideos()].sort((a, b) => b.published.localeCompare(a.published)).slice(0, limit)
-  return vids.map((v) => {
-    const rnd = prng(seedOf(v.id))
-    const points: number[] = [0]
-    let inflection: number | null = null
-    if (v.tier === "breakout") {
-      const h0 = Math.round(8 + rnd() * 14)
-      inflection = h0
-      const end = v.views * (0.5 + rnd() * 0.2)
-      const base = end * 0.06
-      for (let h = 1; h <= 72; h++) {
-        if (h <= h0) points.push((base * h) / h0)
-        else {
-          const x = (h - h0) / (72 - h0)
-          points.push(base + (end - base) * (1 / (1 + Math.exp(-7 * (x - 0.45)))))
-        }
+/** A stand-in curve for one catalog video, shaped by its real verdict and final count. */
+export function standInCard(v: LabVideo): VelocityCard {
+  const rnd = prng(seedOf(v.id))
+  const points: number[] = [0]
+  let inflection: number | null = null
+  if (v.tier === "breakout") {
+    const h0 = Math.round(8 + rnd() * 14)
+    inflection = h0
+    const end = v.views * (0.5 + rnd() * 0.2)
+    const base = end * 0.06
+    for (let h = 1; h <= 72; h++) {
+      if (h <= h0) points.push((base * h) / h0)
+      else {
+        const x = (h - h0) / (72 - h0)
+        points.push(base + (end - base) * (1 / (1 + Math.exp(-7 * (x - 0.45)))))
       }
-    } else {
-      // Explore served its small audience and stopped: fast early climb, flat after.
-      const end = v.views * (v.tier === "killed" ? 0.9 : 0.75)
-      const k = v.tier === "killed" ? 10 : 20
-      for (let h = 1; h <= 72; h++) points.push(end * (1 - Math.exp(-h / k)))
     }
-    return { id: v.id, title: v.title, channel: v.channel, views: v.views, tier: v.tier, points: points.map(Math.round), inflection }
-  })
+  } else {
+    // Explore served its small audience and stopped: fast early climb, flat after.
+    const end = v.views * (v.tier === "killed" ? 0.9 : 0.75)
+    const k = v.tier === "killed" ? 10 : 20
+    for (let h = 1; h <= 72; h++) points.push(end * (1 - Math.exp(-h / k)))
+  }
+  return { id: v.id, title: v.title, channel: v.channel, views: v.views, tier: v.tier, points: points.map(Math.round), inflection }
+}
+
+export function velocityCards(limit = 12): VelocityCard[] {
+  return [...labVideos()].sort((a, b) => b.published.localeCompare(a.published)).slice(0, limit).map(standInCard)
 }
 
 // ── endgame: the organic telemetry a connected channel hands over ───────────

@@ -76,7 +76,6 @@ export function evidenceIndex(take: TakeInfo, state: TakeState, ref: Reference |
   if (f?.audio?.loudestSec?.length) out.push({ ref: "audio:loudest", label: `Loudest seconds: ${f.audio.loudestSec.join(", ")} (measured)`, t: f.audio.loudestSec[0] })
   if (f?.audio?.quietestSec?.length) out.push({ ref: "audio:quietest", label: `Quietest seconds: ${f.audio.quietestSec.join(", ")} (measured)`, t: f.audio.quietestSec[0] })
   if (f?.transcript?.wpm) out.push({ ref: "pace", label: `Speaking pace ${f.transcript.wpm} words per minute (measured)` })
-  if (f?.onScreenText) out.push({ ref: "text-on-screen", label: `On-screen text in ${f.onScreenText.secondsWithText} of ${Math.round(take.durationSec)} seconds (AI-detected)` })
   for (const p of peers) {
     if (p.take.id === take.id || !p.latest || p.latest.score.value == null) continue
     out.push({ ref: `take:${p.take.id}`, label: `${scriptById(p.take.scriptId)!.title} — ${takeLabel(p.take)}: Resonance ${p.latest.score.value.toFixed(0)} (${p.latest.score.low!.toFixed(0)}–${p.latest.score.high!.toFixed(0)})` })

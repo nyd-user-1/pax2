@@ -22,7 +22,7 @@ function State({ s }: { s: StepState }) {
   return <span className={cn(base, "border border-dashed border-slate-300 text-slate-300")}><Minus className="size-3" /></span>
 }
 
-/** Every video goes through four checks on the worker box before its version page fills in. */
+/** Every video goes through three checks on the worker box before its version page fills in. */
 export default async function PipelinePage() {
   const [batch, sent] = await Promise.all([currentBatch(), workspace().then(submissions)])
   const list = rows(batch)
@@ -31,25 +31,23 @@ export default async function PipelinePage() {
   const running = batch ? Object.values(batch.videos).filter((v) => Object.values(v).some((x) => x !== "done")).length : 0
 
   return (
-    <div className="flex flex-col gap-10">
-      <header className="rise flex flex-col gap-2">
-        <p className="max-w-2xl text-slate-600">Every video goes through four checks before its version page fills in: what is said, what is shown, what an AI reviewer notices, and how it sounds.</p>
-      </header>
-
-      {batch ? (
-        <div className="surface flex items-center gap-3 px-5 py-4 text-sm">
-          <Loader2 className="size-4 animate-spin text-pax-plum" />
-          <span className="text-slate-700">
-            Running now: {running} of {Object.keys(batch.videos).length} videos still in progress, started {new Date(batch.startedAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}.
-          </span>
-        </div>
-      ) : (
-        last && <p className="-mt-6 text-sm text-slate-500">Nothing running. Last run finished {new Date(last).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}.</p>
-      )}
-
+    <div className="flex flex-col">
       <BlockOrder page="pipeline" initial={["pipeline", "videos"]}>
         <OrderedBlock id="pipeline" label="Pipeline">
-          <DiagramBlock title="Pipeline">
+          <DiagramBlock
+            title="Pipeline"
+            height="auto"
+            footer={
+              batch ? (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="size-3.5 animate-spin text-pax-plum" />
+                  Running now: {running} of {Object.keys(batch.videos).length} videos still in progress, started {new Date(batch.startedAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}.
+                </span>
+              ) : (
+                last && `Last run ${new Date(last).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}.`
+              )
+            }
+          >
             <PipelineFlow
               d={{
                 videos: list.map((r) => ({ id: r.id, title: r.title, label: r.label })),

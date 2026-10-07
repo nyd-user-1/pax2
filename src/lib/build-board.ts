@@ -66,7 +66,7 @@ export const PAGES: PageTile[] = [
     name: "Version page",
     data: "Stand-in results; real analysis of synthetic videos; PAX readings",
     state: "mixed",
-    facts: [["Route", "/v/[id]"], ["Boxes", "4"], ["Reading", "~16 s"], ["Analysis", "4 checks"]],
+    facts: [["Route", "/v/[id]"], ["Boxes", "4"], ["Reading", "~16 s"], ["Analysis", "3 checks"]],
     what: "One video in full: the player, its numbers, Rating (the score and its parts), Formula (the AI's notes), Transcript, and the Assessment with Call it.",
     how: "The score is computed from the loaded results; Formula and Transcript come from the pipeline's analysis; Assessment asks Claude on Bedrock for a reading that must cite the records.",
     when: "To understand why one video scored as it did and decide what to test next.",
@@ -162,12 +162,12 @@ export const PAGES: PageTile[] = [
     name: "Pipeline",
     data: "The analysis results and their costs",
     state: "real",
-    facts: [["Checks", "4"], ["Videos", "11 of 11"], ["Per video", "$0.19"], ["Trigger", "By hand"]],
-    what: "What each video goes through after it is made: what starts a run, the four checks on the worker box, and where the results land.",
+    facts: [["Checks", "3"], ["Videos", "11 of 11"], ["Per video", "$0.04"], ["Trigger", "By hand"]],
+    what: "What each video goes through after it is made: what starts a run, the three checks on the worker box, and where the results land.",
     how: "Reads each video's analysis results; while a batch runs, the box writes its progress for the page to show.",
     when: "To see what a video's notes came from, or what a run cost.",
-    wrong: ["Every run is started by hand.", "Rekognition is three-quarters of the cost for little the other checks lack."],
-    better: ["Uploads start runs.", "Drop Rekognition."],
+    wrong: ["Every run is started by hand."],
+    better: ["Uploads start runs."],
   },
 ]
 
@@ -181,7 +181,7 @@ export const LESSONS: Lesson[] = [
     when: "Oct 3",
     outcome: "partial",
     headline: "11 rendered, 11 analyzed",
-    ran: ["takes.py: one Polly generative clip per script line, Mixkit footage per line, ffmpeg captions", "analyze.py: Transcribe, Rekognition, Pegasus, measured sound", "scripts/standin.mjs: both rounds rebuilt for the new lengths"],
+    ran: ["takes.py: one Polly generative clip per script line, Mixkit footage per line, ffmpeg captions", "analyze.py: Transcribe, Pegasus, measured sound", "scripts/standin.mjs: both rounds rebuilt for the new lengths"],
     lessons: [
       "Polly's generative voices return no word timings. Synthesizing each line on its own gives exact line starts; words inside a line are timed by their share of its characters.",
       "The worker box shuts itself down unless a process named pax-job… is running. A batch started as job-run.sh was stopped halfway; it reran as pax-job-analyze.sh.",
@@ -211,7 +211,7 @@ export const LESSONS: Lesson[] = [
     outcome: "partial",
     headline: "$0.15 a video",
     ran: ["Costs estimated at list prices from each video's length"],
-    lessons: ["Rekognition is three-quarters of the cost at $0.20 a minute, and mostly repeats what Pegasus notes. Without it a video costs about $0.04."],
+    lessons: ["The shot-and-text detection service was three-quarters of the cost at $0.20 a minute and mostly repeated what Pegasus notes, so the pipeline dropped it. A video now costs about $0.04."],
   },
   {
     title: "PAX readings",

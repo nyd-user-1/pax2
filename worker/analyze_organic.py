@@ -1,8 +1,7 @@
-"""PAX worker: analyze campaign shorts in s3://pax-638175140432/videos/ WITHOUT Rekognition.
+"""PAX worker: analyze campaign shorts in s3://pax-638175140432/videos/.
 
-Same checks as analyze.py minus shots/on-screen text (Rekognition is three quarters of the
-cost; Pegasus already notes text overlays). For organic shorts pulled from the campaigns'
-own channels: transcript, Pegasus review, measured sound. Writes features/<take>.json and
+The same checks as analyze.py (Pegasus covers text overlays, pace and visual variety). For
+organic shorts pulled from the campaigns' own channels: transcript, Pegasus review, measured sound. Writes features/<take>.json and
 the same jobs/status.json the Pipeline page reads.
 
 Usage: python3 analyze_organic.py <take-id ...>

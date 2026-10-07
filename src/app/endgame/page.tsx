@@ -1,5 +1,7 @@
 import { PlaySquare } from "lucide-react"
 
+import { ChartBlock, TableBlock } from "@/components/blocks"
+import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { endgameSample, fmtCompact } from "@/lib/lab"
 
 export const metadata = { title: "Endgame" }
@@ -33,7 +35,7 @@ const MAPPING = [
 export default function EndgamePage() {
   const s = endgameSample()
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col">
       <section className="surface flex flex-wrap items-center justify-between gap-4 p-6">
         <div className="flex flex-col gap-1">
           <p className="font-semibold text-slate-900">Connect a partner channel</p>
@@ -44,60 +46,59 @@ export default function EndgamePage() {
         </button>
       </section>
 
-      <section className="flex flex-col gap-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <h2 className="font-display text-xl text-slate-900">What the readout becomes</h2>
-          <span className="rounded-full bg-pax-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax-red-deep">Sample data</span>
-        </div>
-        <div className="surface flex flex-col gap-5 p-6">
-          <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <p className="font-display text-lg text-slate-900">{s.title}</p>
-            <p className="tabular text-sm text-slate-500">{s.channel} · {fmtCompact(s.views)} views</p>
-          </div>
-          <Retention points={s.retention} />
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
-            {[
-              { label: "Viewed vs. swiped", value: `${s.viewedVsSwiped}%` },
-              { label: "Avg. % viewed", value: `${s.avgPctViewed}%` },
-              { label: "Likes / 1k", value: s.likesPer1k.toFixed(1) },
-              { label: "Comments / 1k", value: s.commentsPer1k.toFixed(1) },
-              { label: "Shares / 1k", value: s.sharesPer1k.toFixed(1) },
-            ].map((x) => (
-              <span key={x.label} className="flex flex-col">
-                <span className="tabular text-lg font-semibold text-slate-900">{x.value}</span>
-                <span className="text-xs text-slate-500">{x.label}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
+      <BlockOrder page="endgame" initial={["readout", "rebased"]}>
+        <OrderedBlock id="readout" label="What the readout becomes">
+          <ChartBlock title="What the readout becomes" tools={<span className="rounded-full bg-pax-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax-red-deep">Sample data</span>}>
+            <div className="flex flex-col gap-5">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <p className="font-display text-lg text-slate-900">{s.title}</p>
+                <p className="tabular text-sm text-slate-500">{s.channel} · {fmtCompact(s.views)} views</p>
+              </div>
+              <Retention points={s.retention} />
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+                {[
+                  { label: "Viewed vs. swiped", value: `${s.viewedVsSwiped}%` },
+                  { label: "Avg. % viewed", value: `${s.avgPctViewed}%` },
+                  { label: "Likes / 1k", value: s.likesPer1k.toFixed(1) },
+                  { label: "Comments / 1k", value: s.commentsPer1k.toFixed(1) },
+                  { label: "Shares / 1k", value: s.sharesPer1k.toFixed(1) },
+                ].map((x) => (
+                  <span key={x.label} className="flex flex-col">
+                    <span className="tabular text-lg font-semibold text-slate-900">{x.value}</span>
+                    <span className="text-xs text-slate-500">{x.label}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </ChartBlock>
+        </OrderedBlock>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="font-display text-xl text-slate-900">The same score, re-based</h2>
-        <div className="surface overflow-x-auto p-0">
-          <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-left text-xs text-slate-500">
-              <tr className="[&_th]:whitespace-nowrap [&_th]:px-5 [&_th]:py-2.5 [&_th]:font-medium">
-                <th>Component</th>
-                <th>The question it answers</th>
-                <th>Fed today by paid results</th>
-                <th>Fed tomorrow by the channel</th>
-              </tr>
-            </thead>
-            <tbody>
-              {MAPPING.map((m) => (
-                <tr key={m.component} className="border-t border-slate-100 align-top">
-                  <td className="whitespace-nowrap px-5 py-3 font-semibold text-pax-ink">{m.component}</td>
-                  <td className="px-5 py-3 text-slate-600">{m.question}</td>
-                  <td className="px-5 py-3 text-slate-600">{m.paid}</td>
-                  <td className="px-5 py-3 text-slate-900">{m.organic}</td>
+        <OrderedBlock id="rebased" label="The same score, re-based">
+          <TableBlock title="The same score, re-based" rows={MAPPING} name="re-based">
+            <table className="w-full text-sm">
+              <thead className="text-left">
+                <tr className="bg-muted/60 [&_th]:h-10 [&_th]:whitespace-nowrap [&_th]:px-4 [&_th]:font-medium [&_th]:text-foreground">
+                  <th>Component</th>
+                  <th>The question it answers</th>
+                  <th>Fed today by paid results</th>
+                  <th>Fed tomorrow by the channel</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-xs text-slate-500">The snapshot shape and the scoring math stay as built; only the source of the numbers changes.</p>
-      </section>
+              </thead>
+              <tbody>
+                {MAPPING.map((m) => (
+                  <tr key={m.component} className="border-t border-slate-100 align-top">
+                    <td className="whitespace-nowrap px-4 py-3 font-semibold text-pax-ink">{m.component}</td>
+                    <td className="px-4 py-3 text-slate-600">{m.question}</td>
+                    <td className="px-4 py-3 text-slate-600">{m.paid}</td>
+                    <td className="px-4 py-3 text-slate-900">{m.organic}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="pt-3 text-xs text-slate-500">The snapshot shape and the scoring math stay as built; only the source of the numbers changes.</p>
+          </TableBlock>
+        </OrderedBlock>
+      </BlockOrder>
     </div>
   )
 }

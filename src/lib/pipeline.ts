@@ -2,22 +2,20 @@ import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3"
 
 import { FEATURES, TAKES, scriptById, takeLabel, type Features } from "@/lib/catalog"
 
-// The four checks every video goes through on the worker box (worker/analyze.py), what each
+// The three checks every video goes through on the worker box (worker/analyze.py), what each
 // produces, and where it shows up. Costs are estimates at AWS list prices, from each video's length.
 
-export type StepId = "transcribe" | "rekognition" | "pegasus" | "audio"
+export type StepId = "transcribe" | "pegasus" | "audio"
 export type StepState = "done" | "failed" | "running" | "queued" | "missing"
 
 export const STEPS: { id: StepId; n: number; name: string; service: string; makes: string; feeds: string; rate: string }[] = [
   { id: "transcribe", n: 1, name: "Speech to text", service: "Amazon Transcribe", makes: "Every spoken word with the second it starts", feeds: "Transcript", rate: "$0.024 a minute" },
-  { id: "rekognition", n: 2, name: "Shots and on-screen text", service: "Amazon Rekognition Video", makes: "Each cut between shots, and any words on screen, second by second", feeds: "The Assessment's evidence on captions and text on screen", rate: "$0.20 a minute" },
-  { id: "pegasus", n: 3, name: "Video notes", service: "TwelveLabs Pegasus 1.2 on Amazon Bedrock", makes: "Timestamped notes: the opening, what happens when, setting, pace, call to action", feeds: "Formula", rate: "$0.03 a minute, plus about $0.01 of written output" },
-  { id: "audio", n: 4, name: "Sound", service: "Measured on the worker box", makes: "Loudness each second, pitch range, and pauses of 0.3 seconds or more", feeds: "The dB chart", rate: "a fraction of a cent of box time" },
+  { id: "pegasus", n: 2, name: "Video notes", service: "TwelveLabs Pegasus 1.2 on Amazon Bedrock", makes: "Timestamped notes: the opening, what happens when, setting, pace, captions and text on screen, visual variety, call to action", feeds: "Formula, and the Assessment's evidence on captions and text on screen", rate: "$0.03 a minute, plus about $0.01 of written output" },
+  { id: "audio", n: 3, name: "Sound", service: "Measured on the worker box", makes: "Loudness each second, pitch range, and pauses of 0.3 seconds or more", feeds: "The dB chart", rate: "a fraction of a cent of box time" },
 ]
 
 const cost: Record<StepId, (sec: number) => number> = {
   transcribe: (s) => (Math.max(15, s) / 60) * 0.024,
-  rekognition: (s) => (s / 60) * 0.2,
   pegasus: (s) => s * 0.00049 + 0.0075,
   audio: (s) => (s / 3600) * 0.067,
 }
@@ -34,12 +32,6 @@ function outOf(id: StepId, f: Features | undefined): { state: StepState; out: st
     if (!t) return { state: "missing", out: null }
     if (t.error) return { state: "failed", out: t.error }
     return { state: "done", out: `${t.words.length} words${t.wpm ? ` · ${Math.round(t.wpm)} wpm` : ""}` }
-  }
-  if (id === "rekognition") {
-    if (f.shots?.error || f.onScreenText?.error) return { state: "failed", out: f.shots?.error ?? f.onScreenText?.error ?? null }
-    if (!f.shots && !f.onScreenText) return { state: "missing", out: null }
-    const shots = f.shots?.segments.filter((s) => s.type === "SHOT").length ?? 0
-    return { state: "done", out: `${shots} shot${shots === 1 ? "" : "s"} · text in ${f.onScreenText?.secondsWithText ?? 0}s` }
   }
   if (id === "pegasus") {
     const p = f.pegasus

@@ -3,14 +3,17 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BookA, Brain, ChartColumn, ChevronDown, ChevronRight, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, Library, NotebookPen, PlaySquare, Rocket, Target, TrendingUp, Video, Workflow } from "lucide-react"
+import { Activity, BadgeCheck, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, PlaySquare, Rocket, Settings, Target, TrendingUp, User2, Video, Workflow } from "lucide-react"
 
+import { DiscussionPanel } from "@/components/discussion-panel"
 import { Wordmark } from "@/components/wordmark"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
 import { cn } from "@/ui/lib/utils"
 
 // The partner's jobs first; the workings of the score and the build underneath.
 const NAV = [
   { href: "/scored", label: "Scored", icon: Gauge },
+  { href: "/chat", label: "Chat", icon: MessagesSquare },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/videos", label: "Videos", icon: PlaySquare },
   { href: "/scripts", label: "Scripts", icon: NotebookPen },
@@ -37,6 +40,7 @@ const LAB = [
 // The header names the page; /v/ belongs to Videos.
 const TITLES: [string, string][] = [
   ["/scored", "Scored"],
+  ["/chat", "Chat"],
   ["/dashboard", "Dashboard"],
   ["/videos", "Videos"],
   ["/v/", "Videos"],
@@ -58,8 +62,6 @@ const TITLES: [string, string][] = [
 
 const PANEL_THIRD = "md:w-[clamp(420px,34vw,620px)]"
 const PANEL_HALF = "md:w-[50vw]"
-const MORE_KEY = "pax-nav-more"
-const LAB_KEY = "pax-nav-lab"
 
 type PanelState = { setOpen: (open: boolean) => void; wide: boolean; setWide: (wide: boolean) => void }
 const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {} })
@@ -71,35 +73,8 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
   const [panelOpen, setPanelOpen] = React.useState(false)
   const [wide, setWide] = React.useState(false)
   const [scrolled, setScrolled] = React.useState(false)
-  const [moreOpen, setMoreOpen] = React.useState(true)
-  const [labOpen, setLabOpen] = React.useState(true)
+  const [discuss, setDiscuss] = React.useState(false)
   const animKey = React.useRef("Scored")
-  React.useEffect(() => {
-    try {
-      setMoreOpen(localStorage.getItem(MORE_KEY) !== "closed")
-      setLabOpen(localStorage.getItem(LAB_KEY) !== "closed")
-    } catch {
-      /* private mode — stays open */
-    }
-  }, [])
-  const toggleMore = () =>
-    setMoreOpen((v) => {
-      try {
-        localStorage.setItem(MORE_KEY, v ? "closed" : "open")
-      } catch {
-        /* ignore */
-      }
-      return !v
-    })
-  const toggleLab = () =>
-    setLabOpen((v) => {
-      try {
-        localStorage.setItem(LAB_KEY, v ? "closed" : "open")
-      } catch {
-        /* ignore */
-      }
-      return !v
-    })
   const panel = React.useMemo<PanelState>(() => ({ setOpen: setPanelOpen, wide, setWide }), [wide])
   const active = (href: string) => (href === "/videos" ? path.startsWith("/videos") || path.startsWith("/v/") : path.startsWith(href))
   // The volunteer's recording flow is its own front door, without the partner's sidebar.
@@ -130,27 +105,29 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
   // The take panel must not remount (and re-fade) the page beneath it.
   if (!path.startsWith("/v/")) animKey.current = title
   const panelW = wide ? PANEL_HALF : PANEL_THIRD
+  // /chat fills the content card edge to edge, as solar's chat fills its main area.
+  const full = path.startsWith("/chat")
   return (
     <PanelCtx.Provider value={panel}>
       <div className="flex min-h-dvh md:h-dvh md:overflow-hidden md:bg-slate-200/60 md:p-[18px]">
         <div className={cn("hidden shrink-0 overflow-hidden transition-[width,margin] duration-300 ease-in-out md:block", sidebarOpen ? "md:mr-[18px] md:w-60" : "md:w-0")}>
-          <div className="flex h-full w-60 flex-col rounded-2xl border border-slate-200/80 bg-pax-mist px-3 py-4 shadow-e2">
+          <div className="flex h-full w-60 flex-col rounded-2xl border border-slate-500 bg-pax-mist px-3 py-4 shadow-e2">
+            <Link href="/scored" aria-label="Scored" className="mb-4 flex px-3 pt-1">
+              <Wordmark size={20} />
+            </Link>
             <nav className="flex flex-col gap-0.5">{NAV.map((n) => item(n.href, n.label, n.icon))}</nav>
-            <div className="mt-auto border-t border-slate-200/70 pt-3">
-              <button type="button" onClick={toggleLab} aria-expanded={labOpen} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-slate-400 transition-colors hover:text-slate-600">
-                <span className="flex-1 truncate text-left text-[11px] font-semibold uppercase tracking-wider">Lab</span>
-                {labOpen ? <ChevronDown className="size-3.5 shrink-0" /> : <ChevronRight className="size-3.5 shrink-0" />}
-              </button>
-              {labOpen && <nav className="ml-[15px] mt-0.5 flex flex-col gap-0.5 border-l border-slate-200/70 pl-2">{LAB.map((n) => item(n.href, n.label, n.icon, true))}</nav>}
-              <button type="button" onClick={toggleMore} aria-expanded={moreOpen} className="mt-1 flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-slate-400 transition-colors hover:text-slate-600">
-                <span className="flex-1 truncate text-left text-[11px] font-semibold uppercase tracking-wider">More</span>
-                {moreOpen ? <ChevronDown className="size-3.5 shrink-0" /> : <ChevronRight className="size-3.5 shrink-0" />}
-              </button>
-              {moreOpen && <nav className="ml-[15px] mt-0.5 flex flex-col gap-0.5 border-l border-slate-200/70 pl-2">{MORE.map((n) => item(n.href, n.label, n.icon, true))}</nav>}
+            <div className="mt-3 min-h-0 flex-1 overflow-y-auto border-t border-slate-200/70 pt-3">
+              <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Lab</p>
+              <nav className="flex flex-col gap-0.5">{LAB.map((n) => item(n.href, n.label, n.icon))}</nav>
+              <p className="mt-3 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">More</p>
+              <nav className="flex flex-col gap-0.5">{MORE.map((n) => item(n.href, n.label, n.icon))}</nav>
+            </div>
+            <div className="border-t border-slate-200/70 pt-3">
+              <AccountMenu />
             </div>
           </div>
         </div>
-        <div className="flex min-w-0 flex-1 flex-col md:overflow-hidden md:rounded-2xl md:border md:border-slate-200/80 md:bg-pax-mist md:shadow-e2">
+        <div className="flex min-w-0 flex-1 flex-col md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:bg-pax-mist md:shadow-e2">
           <header className="sticky top-0 z-20 flex items-center gap-3 border-b bg-white/90 px-4 py-2.5 backdrop-blur md:hidden">
             <Link href="/scored" aria-label="Scored"><Wordmark size={18} /></Link>
             <nav className="no-scrollbar flex flex-1 gap-1 overflow-x-auto">
@@ -164,23 +141,29 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
               <Video className="size-3.5" /> Record
             </Link>
           </header>
-          <div className={cn("hidden shrink-0 items-center gap-3 border-b px-5 py-4 transition-[border-color,box-shadow] duration-200 md:flex", scrolled ? "border-slate-200/70 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)]" : "border-transparent")}>
-            <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle menu" className="press -ml-2.5 flex items-center rounded-full px-2.5 py-1.5 transition-colors hover:bg-slate-200/70">
-              <Wordmark size={20} />
+          <div className={cn("relative z-10 hidden shrink-0 items-center gap-3 px-5 py-4 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)] md:flex")}>
+            <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className="flex size-10 items-center justify-center rounded-full bg-white text-pax-ink shadow-e1 transition-shadow hover:shadow-e2">
+              {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
             </button>
-            <span aria-hidden className="text-lg font-light text-slate-400">|</span>
             <PageSwitcher title={title} />
             <div className="flex-1" />
-            <Link href="/record" className="press flex items-center gap-2 rounded-full bg-pax-ink px-4 py-2 text-sm font-semibold text-white shadow-e2 transition-shadow hover:shadow-e3">
-              <Video className="size-4" /> Record
+            <Link href="/record" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-pax-ink text-white shadow-md transition-shadow hover:shadow-e3">
+              <Video className="size-4" />
             </Link>
+            {/* 44b's DiscussionHeaderButton: the discussion panel opens from every page. */}
+            <button type="button" onClick={() => setDiscuss((v) => !v)} aria-pressed={discuss} aria-label="Open the discussion" className="flex size-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-colors hover:bg-slate-50">
+              <MessagesSquare className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
+            </button>
           </div>
-          <main className="flex-1 md:overflow-y-auto" onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
-            <div key={animKey.current} className="page-enter rise-kids @container w-full px-5 py-6 md:px-10 md:py-9">{children}</div>
+          <main className={cn("flex-1", full ? "flex min-h-0 flex-col md:overflow-hidden" : "md:overflow-y-auto")} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
+            <div key={animKey.current} className={cn("page-enter rise-kids @container w-full", full ? "flex min-h-0 flex-1 flex-col" : "px-5 py-6 md:px-10 md:py-9")}>{children}</div>
           </main>
         </div>
-        <div className={cn("w-0 shrink-0 overflow-hidden transition-[width,margin] duration-300 ease-in-out", panelOpen && cn("md:ml-[18px]", panelW))}>
-          <div className={cn("h-full", panelW)}>{drawer}</div>
+        <div className={cn("w-0 shrink-0 overflow-hidden transition-[width,margin] duration-300 ease-in-out", (panelOpen || discuss) && cn("md:ml-[18px]", panelW))}>
+          <div className={cn("h-full", panelW)}>
+            {drawer}
+            {discuss && !panelOpen && <DiscussionPanel onClose={() => setDiscuss(false)} />}
+          </div>
         </div>
       </div>
     </PanelCtx.Provider>
@@ -267,5 +250,88 @@ function PageSwitcher({ title }: { title: string }) {
         </div>
       )}
     </div>
+  )
+}
+
+// leuk's AccountMenu (components/shell/account-menu.tsx): the UserChip at the foot of the
+// sidebar, opening upward to the identity header and Sign out.
+type User = { name: string; email: string }
+const initials = (name: string) =>
+  name
+    .split(/[\s._-]+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]!.toUpperCase())
+    .join("")
+
+function Initials({ name, size }: { name: string; size: "sm" | "md" }) {
+  return (
+    <span className={cn("inline-flex shrink-0 select-none items-center justify-center rounded-full bg-[#DCEBEE] font-semibold text-[#2F6570]", size === "sm" ? "size-7 text-[11px]" : "size-9 text-[13px]")}>
+      {initials(name)}
+    </span>
+  )
+}
+
+function AccountMenu() {
+  const router = useRouter()
+  const [user, setUser] = React.useState<User | null | undefined>(undefined)
+  React.useEffect(() => {
+    fetch("/api/auth/me")
+      .then((r) => r.json())
+      .then((d: { user: User | null }) => setUser(d.user))
+      .catch(() => setUser(null))
+  }, [])
+  const signOut = async () => {
+    await fetch("/api/auth/signout", { method: "POST" })
+    router.push("/signin")
+    router.refresh()
+  }
+  if (user === undefined) return <div className="h-9" />
+  const name = user?.name ?? "Not signed in"
+  const item = "gap-2.5 rounded-lg px-2.5 py-2 text-sm [&_svg]:size-4 [&_svg]:text-slate-500"
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger aria-label="Account menu" className="flex w-full max-w-full items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-pax-ink outline-none transition-colors hover:bg-white/70 data-[popup-open]:bg-white/70">
+        {user ? <Initials name={name} size="sm" /> : <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-500"><User2 className="size-3.5" /></span>}
+        <span className="flex-1 truncate text-left text-sm font-semibold">{name}</span>
+        <ChevronsUpDown className="size-3.5 shrink-0 text-slate-400" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent side="top" align="start" sideOffset={8} className="w-(--anchor-width) rounded-2xl border border-slate-500 bg-pax-mist p-1.5 shadow-e2 ring-0">
+        <div className="flex items-center gap-3 px-2.5 py-2">
+          {user ? <Initials name={name} size="md" /> : <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-500"><User2 className="size-4" /></span>}
+          <span className="min-w-0">
+            <span className="block truncate text-[15px] font-semibold text-pax-ink">{name}</span>
+            {user && <span className="block truncate text-sm text-slate-500">{user.email}</span>}
+          </span>
+        </div>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem disabled className={item}>
+          <User2 /> Profile
+        </DropdownMenuItem>
+        <DropdownMenuItem disabled className={item}>
+          <BadgeCheck /> Account
+        </DropdownMenuItem>
+        <DropdownMenuItem disabled className={item}>
+          <Bell /> Notifications
+        </DropdownMenuItem>
+        <DropdownMenuItem disabled className={item}>
+          <Settings /> Settings
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem disabled className={item}>
+          <LifeBuoy /> Help
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        {user ? (
+          <DropdownMenuItem onClick={signOut} className={cn(item, "text-pax-red-deep [&_svg]:text-pax-red-deep")}>
+            <LogOut /> Sign out
+          </DropdownMenuItem>
+        ) : (
+          <DropdownMenuItem onClick={() => router.push("/signin")} className={item}>
+            <LogIn /> Sign in
+          </DropdownMenuItem>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

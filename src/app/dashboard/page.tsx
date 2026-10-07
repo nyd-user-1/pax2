@@ -6,6 +6,7 @@ import { RefreshButton } from "@/components/dash/card-tools"
 import { Chart3, Chart4 } from "@/components/dash/charts"
 import { Stat2 } from "@/components/dash/stats"
 import { SCRIPTS, scriptById, takeLabel } from "@/lib/catalog"
+import { forecastMetrics } from "@/lib/measures"
 import { board, findings, forecasts, loads, picks, steps, submissions, votes, workspace } from "@/lib/review"
 import { SAMPLE_ACTIVITY, SAMPLE_COUNTS, SAMPLE_FEED, SAMPLE_SENT } from "@/lib/sample"
 import { toneOf } from "@/lib/tone"
@@ -101,7 +102,7 @@ export default async function DashboardPage() {
         <Stat2 title="Videos in rotation" value={takes.length} footer={`${new Set(takes.map((t) => t.take.scriptId)).size} scripts · ${new Set(takes.map((t) => t.take.voice)).size} messengers`} />
         <Stat2 title="Sent by volunteers" value={show.sent} footer={show.sentNote} />
         <Stat2 title="People reached" value={reach.toLocaleString()} footer={`$${Math.round(spend).toLocaleString()} spent across ${latest.length} flights`} />
-        <Stat2 title="Calls right" value={show.calls} footer="Predictions locked before results" />
+        <Stat2 title="Forecast Metrics" value={forecastMetrics().total} footer="Unique variables & data points" />
       </section>
 
       <BlockOrder page="dashboard" initial={["activity", "funnel", "scripts"]}>

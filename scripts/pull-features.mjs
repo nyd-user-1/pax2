@@ -23,6 +23,9 @@ for (const Key of keys) {
   const r = await s3.send(new GetObjectCommand({ Bucket: B, Key }))
   const f = JSON.parse(await r.Body.transformToString())
   if (f.transcript?.words) f.transcript.words = f.transcript.words.map((w) => ({ t: w.t, w: w.w }))
+  // Shots and on-screen text came from a service the pipeline no longer runs; older files still carry them.
+  delete f.shots
+  delete f.onScreenText
   all[f.take] = f
   n++
 }

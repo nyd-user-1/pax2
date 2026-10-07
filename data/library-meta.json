@@ -212,11 +212,10 @@
     "slug": "pax-takes",
     "title": "PAX takes and video analysis",
     "publisher": "PAX",
-    "summary": "Every take's video, word-level transcript, shots, on-screen text by second, timestamped video review, and measured loudness, pitch and pauses.",
+    "summary": "Every take's video, word-level transcript, timestamped video review with captions and text on screen, and measured loudness, pitch and pauses.",
     "kind": "Video",
     "tags": [
       "transcripts",
-      "Rekognition",
       "Pegasus",
       "audio"
     ],

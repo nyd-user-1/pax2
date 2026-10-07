@@ -49,15 +49,13 @@ export const takeLabel = (t: TakeInfo) => [t.voice, t.captions ? null : "no capt
 
 export const MESSENGERS = [...new Set(TAKES.map((t) => t.voice))]
 
-// ---------- Features from the box (Transcribe, Rekognition, Pegasus, ffmpeg) ----------
+// ---------- Features from the box (Transcribe, Pegasus, ffmpeg) ----------
 
 export type Features = {
   take: string
   analyzedAt: string
   audio?: { source: Provenance; durationSec: number; loudnessDb: number[]; pitchHz: (number | null)[]; pitchMedianHz: number | null; pitchRangeHz: [number, number] | null; pauses: { t: number; sec: number }[]; loudestSec: number[]; quietestSec: number[]; error?: string }
   transcript?: { source: Provenance; text: string; words: { t: number; w: string }[]; wpm: number | null; firstWordSec: number | null; error?: string }
-  shots?: { source: Provenance; segments: { type: string; start: number; end: number; kind?: string }[]; error?: string }
-  onScreenText?: { source: Provenance; bySecond: Record<string, string[]>; secondsWithText: number; error?: string }
   pegasus?: {
     source: Provenance
     model: string

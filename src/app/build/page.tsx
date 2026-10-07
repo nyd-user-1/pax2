@@ -7,13 +7,13 @@ import { PagesBoard } from "@/components/build/pages-board"
 import { TableBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { RefreshButton } from "@/components/dash/card-tools"
+import { Stat2 } from "@/components/dash/stats"
 import { TodoCard, type Todo } from "@/components/build/todo-card"
 import { LESSONS, NOT_CONNECTED, PAGES, type SourceRow } from "@/lib/build-board"
 import { FEATURES, TAKES } from "@/lib/catalog"
 import { rows } from "@/lib/pipeline"
 import { workspace } from "@/lib/review"
 import { Badge } from "@/ui/components/nova/badge"
-import { Card, CardContent } from "@/ui/components/nova/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/components/nova/table"
 import { cn } from "@/ui/lib/utils"
 
@@ -60,12 +60,12 @@ export default async function BuildPage() {
   const todo: Todo[] = [...you.map((t) => ({ ...t, who: "Brendan" as const })), ...next.map((t) => ({ ...t, who: null })), ...[...done].reverse().map((t) => ({ ...t, who: null, done: true }))]
 
   const tiles = [
-    { title: "Spent", value: `$${spent.toFixed(2)}`, note: `of the $${b.budget.cap} cap` },
-    { title: "Done", value: done.length, note: "built and working" },
-    { title: "Waiting on Brendan", value: you.length, note: "data, access and decisions" },
-    { title: "Next", value: next.length, note: "ready to build" },
-    { title: "Videos Analyzed", value: `${videos.filter((v) => v.cost > 0).length} of ${TAKES.length}`, note: `$${perVideo.toFixed(2)} each` },
-    { title: "Sources", value: `${sources.filter((s) => s.status === "Loaded").length} of ${sources.length}`, note: "loaded" },
+    { title: "Spent", value: `$${spent.toFixed(2)}`, note: `of the $${b.budget.cap} cap`, badge: `${Math.round((spent / b.budget.cap) * 100)}%` },
+    { title: "Done", value: done.length, note: "built and working", badge: "Built" },
+    { title: "Waiting on Brendan", value: you.length, note: "data, access and decisions", badge: "Brendan" },
+    { title: "Next", value: next.length, note: "ready to build", badge: "Queued" },
+    { title: "Videos Analyzed", value: `${videos.filter((v) => v.cost > 0).length} of ${TAKES.length}`, note: `$${perVideo.toFixed(2)} each`, badge: "Pipeline" },
+    { title: "Sources", value: `${sources.filter((s) => s.status === "Loaded").length} of ${sources.length}`, note: "loaded", badge: "Library" },
   ]
 
   const short = (s: string) => s.replace(/\s*\(.*\)$/, "").split(/[,:]/)[0]
@@ -76,19 +76,12 @@ export default async function BuildPage() {
         <p className="text-sm text-muted-foreground">Updated {b.updated}</p>
       </header>
 
-      <Card className="py-0">
-        <CardContent className="px-0">
-          <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl bg-border sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
-            {tiles.map((t) => (
-              <div key={t.title} className="flex flex-col gap-1.5 bg-card p-4">
-                <p className="text-sm text-muted-foreground">{t.title}</p>
-                <span className="tabular text-2xl font-semibold">{t.value}</span>
-                <p className="text-xs text-muted-foreground">{t.note}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {/* GovBlock's Stat2 (its Sales page), the stat card Brendan chose on 2026-10-06. */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
+        {tiles.map((t) => (
+          <Stat2 key={t.title} title={t.title} value={t.value} footer={t.note} />
+        ))}
+      </div>
 
       <BlockOrder page="build" initial={["volume", "library", "runs", "pages", "budget", "todo", "insights"]}>
         <OrderedBlock id="volume" label="Volume">
@@ -179,13 +172,12 @@ export default async function BuildPage() {
             cap={b.budget.cap}
             facts={[
               { label: "Remaining", value: `$${(b.budget.cap - spent).toFixed(2)}`, note: "before the cap" },
-              { label: "Per Video", value: `$${perVideo.toFixed(2)}`, note: "about $0.04 without Rekognition" },
-              { label: "Biggest Item", value: "Rekognition", note: "three-quarters of analysis cost" },
+              { label: "Per Video", value: `$${perVideo.toFixed(2)}`, note: "about $0.04 a video from the next run on" },
+              { label: "Biggest Item", value: "Pegasus", note: "the video notes, from the next run on" },
               { label: "Workspace", value: ws, note: "the review this browser reads" },
             ]}
             limits={[
               { label: "AWS budget", sub: "estimated spend against the cap", used: Math.round(spent * 100) / 100, limit: b.budget.cap, unit: "USD" },
-              { label: "Rekognition jobs", sub: "open at once, per account", used: 0, limit: 20, unit: "jobs" },
               { label: "PAX reading", sub: "seconds per reading against Amplify's 30-second cut-off", used: 16, limit: 30, unit: "seconds" },
               { label: "Worker box", sub: "stops itself after this many idle minutes", used: 0, limit: 30, unit: "minutes" },
             ]}

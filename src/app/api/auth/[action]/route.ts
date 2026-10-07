@@ -17,7 +17,28 @@ const FRIENDLY: Record<string, string> = {
   TooManyRequestsException: "Too many tries — wait a minute and try again.",
 }
 
+// The signed-in user for the sidebar's account chip: the claims of the Cognito ID token in pax_session.
+// Display only — nothing here authorizes anything.
+export async function GET(_req: Request, { params }: { params: Promise<{ action: string }> }) {
+  const { action } = await params
+  if (action !== "me") return NextResponse.json({ error: "Unknown action" }, { status: 404 })
+  const token = (await cookies()).get("pax_session")?.value
+  if (!token) return NextResponse.json({ user: null })
+  try {
+    const claims = JSON.parse(Buffer.from(token.split(".")[1], "base64url").toString()) as { email?: string; name?: string; exp?: number }
+    if (claims.exp && claims.exp * 1000 < Date.now()) return NextResponse.json({ user: null })
+    const email = claims.email ?? ""
+    return NextResponse.json({ user: { email, name: claims.name ?? email.split("@")[0] } })
+  } catch {
+    return NextResponse.json({ user: null })
+  }
+}
+
 export async function POST(req: Request, { params }: { params: Promise<{ action: string }> }) {
+  if ((await params).action === "signout") {
+    ;(await cookies()).delete("pax_session")
+    return NextResponse.json({ ok: true })
+  }
   if (!CLIENT) return NextResponse.json({ error: "Auth isn't configured in this environment." }, { status: 503 })
   const { action } = await params
   const body = (await req.json().catch(() => ({}))) as { email?: string; password?: string; code?: string }

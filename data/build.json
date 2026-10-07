@@ -4,7 +4,7 @@
     "cap": 10,
     "spent": [
       {
-        "item": "Rekognition video (shots + on-screen text, 11 takes, one rerun)",
+        "item": "Shot and on-screen text detection (11 takes, one rerun; since dropped)",
         "usd": 1.75
       },
       {
@@ -36,7 +36,7 @@
         "usd": 0.3
       },
       {
-        "item": "Re-analysis of the 11 videos: Rekognition $1.57, Pegasus $0.31, Transcribe $0.19",
+        "item": "Re-analysis of the 11 videos: shot and text detection $1.57, Pegasus $0.31, Transcribe $0.19",
         "usd": 2.07
       },
       {
@@ -48,7 +48,7 @@
         "usd": 0.01
       },
       {
-        "item": "Organic batch: 40 campaign shorts (Pegasus, Transcribe, box; no Rekognition)",
+        "item": "Organic batch: 40 campaign shorts (Pegasus, Transcribe, box)",
         "usd": 1.9
       },
       {
@@ -80,7 +80,7 @@
         },
         {
           "title": "Video analysis",
-          "detail": "Transcribe word timings, Rekognition shots and on-screen text, Pegasus timestamped review, measured loudness, pitch and pauses"
+          "detail": "Transcribe word timings, Pegasus timestamped review (captions and text on screen included), measured loudness, pitch and pauses"
         },
         {
           "title": "Ledger",
@@ -148,7 +148,7 @@
         },
         {
           "title": "Forty campaign shorts analyzed",
-          "detail": "Top 10 by views from Courageous Colorado, Open Primaries, Unite America and FairVote, downloaded on the Mac, analyzed without Rekognition in under six minutes, zero failures. Each opens in PAX's own panel from /campaigns: public counts vs channel median, Pegasus review, transcript, sound."
+          "detail": "Top 10 by views from Courageous Colorado, Open Primaries, Unite America and FairVote, downloaded on the Mac, analyzed in under six minutes, zero failures. Each opens in PAX's own panel from /campaigns: public counts vs channel median, Pegasus review, transcript, sound."
         },
         {
           "title": "Meta Ad Library Report in the lake",
@@ -157,6 +157,10 @@
         {
           "title": "Shorts coded and patterned",
           "detail": "The 39 transcribed shorts coded on the Swayable features (organic-codes), and the top half of the set compared against the bottom half on the Organic scale (organic-patterns): slower pace, anger, a cited source, everyday messengers and statement openings sit with the travelers; question openings sit with the laggards. Thirty-nine videos — pattern-reading, not proof."
+        },
+        {
+          "title": "Video analysis runs on Pegasus",
+          "detail": "The shot-and-text detection service is out of the pipeline. Pegasus notes captions, text on screen, pace and visual variety; a video costs about $0.04."
         }
       ]
     },
@@ -179,7 +183,7 @@
         },
         {
           "title": "The Question 3 campaign's shorts",
-          "detail": "YouTube blocks downloads from AWS; downloading on the Mac is free. Analysis without Rekognition is about $0.04 a video."
+          "detail": "YouTube blocks downloads from AWS; downloading on the Mac is free. Analysis is about $0.04 a video."
         },
         {
           "title": "Meta Ad Library access",
@@ -198,10 +202,6 @@
         {
           "title": "Revisit workspaces and \"Start a fresh review\"",
           "detail": "Removed from /build on 2026-10-03. The button pointed this browser at a new, empty workspace; since empty workspaces now load both stand-in rounds, it no longer starts the loop from the top. Decide whether workspaces stay as plumbing only (for separate campaigns) and how a clean demo run is set up.\n\nThe exchange: Claude Code session a6314df4-8879-4936-8a67-b7368f9b797e, 2026-10-03 about 4:40 PM ET, starting at Brendan's question \"Start a fresh review -- what is this?\". Transcript: ~/.claude/projects/-Users-brendanstanton-Code-govblock/a6314df4-8879-4936-8a67-b7368f9b797e.jsonl"
-        },
-        {
-          "title": "Drop Rekognition from the pipeline",
-          "detail": "Rekognition is three-quarters of the analysis cost ($0.20 a minute). Pegasus already notes on-screen text; shot changes can come from ffmpeg scene detection on the box for free. Cuts a video from about $0.15 to about $0.04."
         },
         {
           "title": "Start the pipeline from an upload",

@@ -2,8 +2,9 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { ArrowRight, ChevronDown, Plus, Server } from "lucide-react"
+import { ArrowRight, ChevronDown, ChevronUp, Plus, Server } from "lucide-react"
 
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/ui/components/nova/tooltip"
 import { cn } from "@/ui/lib/utils"
 
 export type FlowStep = { id: string; name: string; service: string; makes: string; feeds: string; rate: string; done: number; spent: string }
@@ -18,7 +19,7 @@ export type FlowData = {
   example: string
 }
 
-// The pipeline as a diagram: what starts it (left), the box that runs the four checks (middle),
+// The pipeline as a diagram: what starts it (left), the box that runs the three checks (middle),
 // where the results land (right). Connectors are measured from the cards, so they follow any card
 // that opens or closes.
 
@@ -96,6 +97,7 @@ export function PipelineFlow({ d }: { d: FlowData }) {
   const rights = React.useRef<(HTMLButtonElement | null)[]>([])
   const mid = React.useRef<HTMLElement>(null)
   const [paths, setPaths] = React.useState<string[]>([])
+  const [tall, setTall] = React.useState(false)
 
   const draw = React.useCallback(() => {
     const c = box.current?.getBoundingClientRect()
@@ -139,7 +141,7 @@ export function PipelineFlow({ d }: { d: FlowData }) {
 
   return (
     <div className="relative">
-      <div className="overflow-x-auto px-4 py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className={cn("overflow-x-auto px-4 py-12 transition-[max-height] duration-300 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden", tall ? "max-h-[2000px]" : "max-h-[420px]")}>
         <div ref={box} className="relative mx-auto flex w-max items-start gap-16">
           {/* What starts a run */}
           <ul data-node className="flex w-[280px] flex-col gap-3">
@@ -257,6 +259,14 @@ export function PipelineFlow({ d }: { d: FlowData }) {
             ))}
           </svg>
         </div>
+      </div>
+      <div className="absolute bottom-1 left-1/2 -translate-x-1/2">
+        <Tooltip>
+          <TooltipTrigger onClick={() => setTall(!tall)} aria-label={tall ? "Collapse diagram" : "Expand diagram"} className="flex rounded-lg px-1.5 text-slate-500 hover:bg-black/5">
+            {tall ? <ChevronUp className="size-[18px]" /> : <ChevronDown className="size-[18px]" />}
+          </TooltipTrigger>
+          <TooltipContent className="bg-white text-slate-800 shadow-e2 ring-1 ring-slate-200 [&>:last-child]:bg-white [&>:last-child]:fill-white">{tall ? "Collapse" : "Expand"}</TooltipContent>
+        </Tooltip>
       </div>
     </div>
   )

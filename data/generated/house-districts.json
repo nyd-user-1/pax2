@@ -1,0 +1,8759 @@
+{
+ "sources": {
+  "members": "govblock_legislative.people (Open States), checked against the 2024 winner",
+  "race": "MEDSL precinct returns via GovBlock, 2024 general",
+  "previous": "Klarner State Legislative Election Returns via GovBlock, 2022 general"
+ },
+ "MA": {
+  "10th Bristol": {
+   "members": [
+    {
+     "name": "Mark Sylvia",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Mark David Sylvia",
+      "party": "Democratic",
+      "votes": 13663,
+      "won": true
+     },
+     {
+      "name": "Joseph M Pires",
+      "party": "Republican",
+      "votes": 12295,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "William M. Straus",
+      "party": "Democratic",
+      "votes": 10648,
+      "won": true
+     },
+     {
+      "name": "Jeffrey Gerald Swift",
+      "party": "Republican",
+      "votes": 8280,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "10th Essex": {
+   "members": [
+    {
+     "name": "Dan Cahill",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Daniel H Cahill",
+      "party": "Democratic",
+      "votes": 10252,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Daniel H. Cahill",
+      "party": "Democratic",
+      "votes": 6042,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "10th Hampden": {
+   "members": [
+    {
+     "name": "Carlos González",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Carlos Gonzalez",
+      "party": "Democratic",
+      "votes": 8232,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Carlos Gonzalez",
+      "party": "Democratic",
+      "votes": 4069,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "10th Middlesex": {
+   "members": [
+    {
+     "name": "John Lawn",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "John J Lawn Jr",
+      "party": "Democratic",
+      "votes": 13208,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "John J. Lawn, Jr.",
+      "party": "Democratic",
+      "votes": 9979,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "10th Norfolk": {
+   "members": [
+    {
+     "name": "Jeff Roy",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Jeffrey N Roy",
+      "party": "Democratic",
+      "votes": 15597,
+      "won": true
+     },
+     {
+      "name": "Charles F Bailey Iii",
+      "party": "Republican",
+      "votes": 9653,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Jeffrey N. Roy",
+      "party": "Democratic",
+      "votes": 12045,
+      "won": true
+     },
+     {
+      "name": "Charles F. Bailey, Iii",
+      "party": "Republican",
+      "votes": 6852,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "10th Plymouth": {
+   "members": [
+    {
+     "name": "Michelle DuBois",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Michelle Marie Dubois",
+      "party": "Democratic",
+      "votes": 12409,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Michelle M. Dubois",
+      "party": "Democratic",
+      "votes": 7031,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "10th Suffolk": {
+   "members": [
+    {
+     "name": "Billy MacGregor",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "William Macgregor",
+      "party": "Democratic",
+      "votes": 19206,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Edward Francis Coppinger",
+      "party": "Democratic",
+      "votes": 15817,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "10th Worcester": {
+   "members": [
+    {
+     "name": "Brian Murray",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Brian William Murray",
+      "party": "Democratic",
+      "votes": 15108,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Brian William Murray",
+      "party": "Democratic",
+      "votes": 10323,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "11th Bristol": {
+   "members": [
+    {
+     "name": "Chris Hendricks",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Christopher Hendricks",
+      "party": "Democratic",
+      "votes": 8940,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Christopher Hendricks",
+      "party": "Democratic",
+      "votes": 4906,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "11th Essex": {
+   "members": [
+    {
+     "name": "Sean Reid",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Sean Reid",
+      "party": "Democratic",
+      "votes": 11228,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Peter L. Capano",
+      "party": "Democratic",
+      "votes": 7135,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "11th Hampden": {
+   "members": [
+    {
+     "name": "Bud Williams",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Bud L Williams",
+      "party": "Democratic",
+      "votes": 10664,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Bud L. Williams",
+      "party": "Democratic",
+      "votes": 6165,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "11th Middlesex": {
+   "members": [
+    {
+     "name": "Amy Sangiolo",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Amy Mah Sangiolo",
+      "party": "Democratic",
+      "votes": 16719,
+      "won": true
+     },
+     {
+      "name": "Vladislav S Yanovsky",
+      "party": "Republican",
+      "votes": 3853,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Kay S. Khan",
+      "party": "Democratic",
+      "votes": 13394,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "11th Norfolk": {
+   "members": [
+    {
+     "name": "Paul McMurtry",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Paul Mc Murtry",
+      "party": "Democratic",
+      "votes": 16431,
+      "won": true
+     },
+     {
+      "name": "Andrew M Pepoli",
+      "party": "Other",
+      "votes": 7697,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Paul Mcmurtry",
+      "party": "Democratic",
+      "votes": 14495,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "11th Plymouth": {
+   "members": [
+    {
+     "name": "Rita Mendes",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Rita A Mendes",
+      "party": "Democratic",
+      "votes": 9711,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Rita A. Mendes",
+      "party": "Democratic",
+      "votes": 5066,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "11th Suffolk": {
+   "members": [
+    {
+     "name": "Judith García",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Judith A Garcia",
+      "party": "Democratic",
+      "votes": 7194,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Judith A. Garcia",
+      "party": "Democratic",
+      "votes": 4127,
+      "won": true
+     },
+     {
+      "name": "Todd B. Taylor",
+      "party": "Republican",
+      "votes": 1552,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "11th Worcester": {
+   "members": [
+    {
+     "name": "Hannah Kane",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Hannah E Kane",
+      "party": "Republican",
+      "votes": 16393,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Hannah E. Kane",
+      "party": "Republican",
+      "votes": 9194,
+      "won": true
+     },
+     {
+      "name": "Stephen Fishman",
+      "party": "Democratic",
+      "votes": 6496,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "12th Bristol": {
+   "members": [
+    {
+     "name": "Norm Orrall",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Norman J Orrall",
+      "party": "Republican",
+      "votes": 18757,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Norman J. Orrall",
+      "party": "Republican",
+      "votes": 12370,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "12th Essex": {
+   "members": [
+    {
+     "name": "Tom Walsh",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Thomas P Walsh",
+      "party": "Democratic",
+      "votes": 17194,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Thomas P. Walsh",
+      "party": "Democratic",
+      "votes": 12021,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "12th Hampden": {
+   "members": [
+    {
+     "name": "Angelo Puppolo",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Angelo J Puppolo Jr",
+      "party": "Democratic",
+      "votes": 18571,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Angelo J. Puppolo, Jr.",
+      "party": "Democratic",
+      "votes": 12882,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "12th Middlesex": {
+   "members": [
+    {
+     "name": "Greg Schwartz",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Greg Schwartz",
+      "party": "Democratic",
+      "votes": 18410,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Ruth B. Balser",
+      "party": "Democratic",
+      "votes": 15164,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "12th Norfolk": {
+   "members": [
+    {
+     "name": "John Rogers",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "John H Rogers",
+      "party": "Democratic",
+      "votes": 17443,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "John H. Rogers",
+      "party": "Democratic",
+      "votes": 12798,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "12th Plymouth": {
+   "members": [
+    {
+     "name": "Kathy LaNatra",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Kathleen R Lanatra",
+      "party": "Democratic",
+      "votes": 14462,
+      "won": true
+     },
+     {
+      "name": "Eric J Meschino",
+      "party": "Republican",
+      "votes": 12754,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Kathleen R. Lanatra",
+      "party": "Democratic",
+      "votes": 10603,
+      "won": true
+     },
+     {
+      "name": "Eric J. Meschino",
+      "party": "Republican",
+      "votes": 8767,
+      "won": false
+     },
+     {
+      "name": "Charles F. Mccoy, Jr",
+      "party": "Unenrolled",
+      "votes": 856,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "12th Suffolk": {
+   "members": [
+    {
+     "name": "Brandy Fluker-Reid",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Brandy Fluker Oakley",
+      "party": "Democratic",
+      "votes": 15339,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Brandy Fluker Oakley",
+      "party": "Democratic",
+      "votes": 10729,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "12th Worcester": {
+   "members": [
+    {
+     "name": "Meg Kilcoyne",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Meghan Kilcoyne",
+      "party": "Democratic",
+      "votes": 18684,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Meghan Kilcoyne",
+      "party": "Democratic",
+      "votes": 11044,
+      "won": true
+     },
+     {
+      "name": "Michael A. Vulcano",
+      "party": "Republican",
+      "votes": 7247,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "13th Bristol": {
+   "members": [
+    {
+     "name": "Tony Cabral",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Antonio D F Cabral",
+      "party": "Democratic",
+      "votes": 11561,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Antonio D. F. Cabral",
+      "party": "Democratic",
+      "votes": 6977,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "13th Essex": {
+   "members": [
+    {
+     "name": "Sally Kerans",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Sally P Kerans",
+      "party": "Democratic",
+      "votes": 18746,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Sally P. Kerans",
+      "party": "Democratic",
+      "votes": 13923,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "13th Middlesex": {
+   "members": [
+    {
+     "name": "Carmine Gentile",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Carmine Lawrence Gentile",
+      "party": "Democratic",
+      "votes": 18547,
+      "won": true
+     },
+     {
+      "name": "Virginia A Gardner",
+      "party": "Republican",
+      "votes": 6667,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Carmine Lawrence Gentile",
+      "party": "Democratic",
+      "votes": 16338,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "13th Norfolk": {
+   "members": [
+    {
+     "name": "Josh Tarsky",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Joshua Tarsky",
+      "party": "Democratic",
+      "votes": 15180,
+      "won": true
+     },
+     {
+      "name": "William R Dermody",
+      "party": "Other",
+      "votes": 9520,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Denise C. Garlick",
+      "party": "Democratic",
+      "votes": 17056,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "13th Suffolk": {
+   "members": [
+    {
+     "name": "Dan Hunt",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Daniel J Hunt",
+      "party": "Democratic",
+      "votes": 13061,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Daniel J. Hunt",
+      "party": "Democratic",
+      "votes": 8761,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "13th Worcester": {
+   "members": [
+    {
+     "name": "John Mahoney",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "John J Mahoney Jr",
+      "party": "Democratic",
+      "votes": 14404,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "John J. Mahoney, Jr.",
+      "party": "Democratic",
+      "votes": 10413,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "14th Bristol": {
+   "members": [
+    {
+     "name": "Adam Scanlon",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Adam J Scanlon",
+      "party": "Democratic",
+      "votes": 12478,
+      "won": true
+     },
+     {
+      "name": "David Cannata Jr",
+      "party": "Republican",
+      "votes": 9823,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Adam J. Scanlon",
+      "party": "Democratic",
+      "votes": 11212,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "14th Essex": {
+   "members": [
+    {
+     "name": "Adrianne Ramos",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Adrianne Pusateri Ramos",
+      "party": "Democratic",
+      "votes": 18597,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Adrianne Ramos",
+      "party": "Democratic",
+      "votes": 10879,
+      "won": true
+     },
+     {
+      "name": "Joseph G. Finn",
+      "party": "Republican",
+      "votes": 9161,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "14th Middlesex": {
+   "members": [
+    {
+     "name": "Simon Cataldo",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Simon Cataldo",
+      "party": "Democratic",
+      "votes": 20084,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Simon Cataldo",
+      "party": "Democratic",
+      "votes": 14542,
+      "won": true
+     },
+     {
+      "name": "Rodney E. Cleaves",
+      "party": "Republican",
+      "votes": 5400,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "14th Norfolk": {
+   "members": [
+    {
+     "name": "Alice Peisch",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Alice Hanlon Peisch",
+      "party": "Democratic",
+      "votes": 17364,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Alice Hanlon Peisch",
+      "party": "Democratic",
+      "votes": 14057,
+      "won": true
+     },
+     {
+      "name": "David Rolde",
+      "party": "Green-Rainbow",
+      "votes": 1167,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "14th Suffolk": {
+   "members": [
+    {
+     "name": "Rob Consalvo",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Rob Consalvo",
+      "party": "Democratic",
+      "votes": 16754,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Rob Consalvo",
+      "party": "Democratic",
+      "votes": 11565,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "14th Worcester": {
+   "members": [
+    {
+     "name": "Jim O'Day",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "James J O Day",
+      "party": "Democratic",
+      "votes": 13952,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "James J. Oday",
+      "party": "Democratic",
+      "votes": 9293,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "15th Essex": {
+   "members": [
+    {
+     "name": "Ryan Hamilton",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Ryan M Hamilton",
+      "party": "Democratic",
+      "votes": 16571,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Ryan M. Hamilton",
+      "party": "Democratic",
+      "votes": 10822,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "15th Middlesex": {
+   "members": [
+    {
+     "name": "Michelle Ciccolo",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Michelle Ciccolo",
+      "party": "Democratic",
+      "votes": 17682,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Michelle Ciccolo",
+      "party": "Democratic",
+      "votes": 14123,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "15th Norfolk": {
+   "members": [
+    {
+     "name": "Tommy Vitolo",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Tommy Vitolo",
+      "party": "Democratic",
+      "votes": 16140,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Tommy Vitolo",
+      "party": "Democratic",
+      "votes": 12906,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "15th Suffolk": {
+   "members": [
+    {
+     "name": "Sam Montaño",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Samantha Monta O",
+      "party": "Democratic",
+      "votes": 16450,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Samantha Montano",
+      "party": "Democratic",
+      "votes": 13030,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "15th Worcester": {
+   "members": [
+    {
+     "name": "Mary Keefe",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Mary S Keefe",
+      "party": "Democratic",
+      "votes": 8019,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Mary S. Keefe",
+      "party": "Democratic",
+      "votes": 4540,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "16th Essex": {
+   "members": [
+    {
+     "name": "Francisco Paulino",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Francisco E Paulino",
+      "party": "Democratic",
+      "votes": 10187,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Francisco E. Paulino",
+      "party": "Democratic",
+      "votes": 5363,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "16th Middlesex": {
+   "members": [
+    {
+     "name": "Rodney M Elliott",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Rodney M Elliott",
+      "party": "Democratic",
+      "votes": 12892,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Rodney M. Elliott",
+      "party": "Democratic",
+      "votes": 7270,
+      "won": true
+     },
+     {
+      "name": "Karla Jean Miller",
+      "party": "Republican",
+      "votes": 3838,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "16th Suffolk": {
+   "members": [
+    {
+     "name": "Jessica Giannino",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Jessica Ann Giannino",
+      "party": "Democratic",
+      "votes": 9141,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Jessica Ann Giannino",
+      "party": "Democratic",
+      "votes": 5753,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "16th Worcester": {
+   "members": [
+    {
+     "name": "Dan Donahue",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Daniel M Donahue",
+      "party": "Democratic",
+      "votes": 10157,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Daniel M. Donahue",
+      "party": "Democratic",
+      "votes": 6111,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "17th Essex": {
+   "members": [
+    {
+     "name": "Frank Moran",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Frank A Moran",
+      "party": "Democratic",
+      "votes": 9870,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Frank A. Moran",
+      "party": "Democratic",
+      "votes": 6031,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "17th Middlesex": {
+   "members": [
+    {
+     "name": "Vanna Howard",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Vanna Howard",
+      "party": "Democratic",
+      "votes": 9855,
+      "won": true
+     },
+     {
+      "name": "Joseph Paul Onoroski",
+      "party": "Other",
+      "votes": 2802,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Vanna Howard",
+      "party": "Democratic",
+      "votes": 7168,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "17th Suffolk": {
+   "members": [
+    {
+     "name": "Kevin Honan",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Kevin G Honan",
+      "party": "Democratic",
+      "votes": 13833,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Kevin G. Honan",
+      "party": "Democratic",
+      "votes": 9581,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "17th Worcester": {
+   "members": [
+    {
+     "name": "David LeBoeuf",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "David Henry Argosky Leboeuf",
+      "party": "Democratic",
+      "votes": 9882,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "David Henry Argosky Leboeuf",
+      "party": "Democratic",
+      "votes": 4745,
+      "won": true
+     },
+     {
+      "name": "Paul J. Fullen",
+      "party": "Republican",
+      "votes": 3270,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "18th Essex": {
+   "members": [
+    {
+     "name": "Tram Nguyen",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Tram T Nguyen",
+      "party": "Democratic",
+      "votes": 18998,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Tram T. Nguyen",
+      "party": "Democratic",
+      "votes": 11812,
+      "won": true
+     },
+     {
+      "name": "Jeffrey Peter Dufour",
+      "party": "Republican",
+      "votes": 7738,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "18th Middlesex": {
+   "members": [
+    {
+     "name": "Tara Hong",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Tara Thorn Hong",
+      "party": "Democratic",
+      "votes": 7592,
+      "won": true
+     },
+     {
+      "name": "David Michael Ouellette",
+      "party": "Other",
+      "votes": 2100,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Rady Mom",
+      "party": "Democratic",
+      "votes": 4434,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "18th Suffolk": {
+   "members": [
+    {
+     "name": "Mike Moran",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Michael J Moran",
+      "party": "Democratic",
+      "votes": 9149,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Michael J. Moran",
+      "party": "Democratic",
+      "votes": 6200,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "18th Worcester": {
+   "members": [
+    {
+     "name": "Joe McKenna",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Joseph D Mckenna",
+      "party": "Republican",
+      "votes": 20544,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Joseph D. Mckenna",
+      "party": "Republican",
+      "votes": 13642,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "19th Middlesex": {
+   "members": [
+    {
+     "name": "Dave Robertson",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "David Allen Robertson",
+      "party": "Democratic",
+      "votes": 12560,
+      "won": true
+     },
+     {
+      "name": "Paul Sarnowski",
+      "party": "Republican",
+      "votes": 9280,
+      "won": false
+     },
+     {
+      "name": "George Hugh Ferdinand",
+      "party": "Other",
+      "votes": 2029,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "David A. Robertson",
+      "party": "Democratic",
+      "votes": 10248,
+      "won": true
+     },
+     {
+      "name": "Paul Sarnowski",
+      "party": "Republican",
+      "votes": 7955,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "19th Suffolk": {
+   "members": [
+    {
+     "name": "Jeff Turco",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Jeffrey Rosario Turco",
+      "party": "Democratic",
+      "votes": 11919,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Jeffrey Rosario Turco",
+      "party": "Democratic",
+      "votes": 7803,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "19th Worcester": {
+   "members": [
+    {
+     "name": "Kate Donaghue",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Kate Donaghue",
+      "party": "Democratic",
+      "votes": 16497,
+      "won": true
+     },
+     {
+      "name": "Boyd Stewart Conklin",
+      "party": "Other",
+      "votes": 4732,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Kate Donaghue",
+      "party": "Democratic",
+      "votes": 11560,
+      "won": true
+     },
+     {
+      "name": "Jonathan I. Hostage",
+      "party": "Republican",
+      "votes": 5560,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "1st Barnstable": {
+   "members": [
+    {
+     "name": "Chris Flanagan",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Christopher Richard Flanagan",
+      "party": "Democratic",
+      "votes": 15607,
+      "won": true
+     },
+     {
+      "name": "Gerald Joseph O Connell",
+      "party": "Republican",
+      "votes": 11996,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Christopher Richard Flanagan",
+      "party": "Democratic",
+      "votes": 12454,
+      "won": true
+     },
+     {
+      "name": "Tracy A. Post",
+      "party": "Republican",
+      "votes": 10389,
+      "won": false
+     },
+     {
+      "name": "Abraham Kasparian, Jr.",
+      "party": "Unenrolled",
+      "votes": 447,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "1st Berkshire": {
+   "members": [
+    {
+     "name": "John Barrett",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "John P Barrett Iii",
+      "party": "Democratic",
+      "votes": 17785,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "John P. Barrett, Iii",
+      "party": "Democratic",
+      "votes": 12787,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "1st Bristol": {
+   "members": [
+    {
+     "name": "Mike Chaisson",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Michael Chaisson",
+      "party": "Republican",
+      "votes": 11404,
+      "won": true
+     },
+     {
+      "name": "Kostas Loukos",
+      "party": "Democratic",
+      "votes": 11316,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Fred Jay Barrows",
+      "party": "Republican",
+      "votes": 9680,
+      "won": true
+     },
+     {
+      "name": "Brendan A. Roche",
+      "party": "Democratic",
+      "votes": 7135,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "1st Essex": {
+   "members": [
+    {
+     "name": "Dawne Shand",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Dawne Frances Shand",
+      "party": "Democratic",
+      "votes": 20721,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Dawne F. Shand",
+      "party": "Democratic",
+      "votes": 12790,
+      "won": true
+     },
+     {
+      "name": "Cj Fitzwater",
+      "party": "Republican",
+      "votes": 8657,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "1st Franklin": {
+   "members": [
+    {
+     "name": "Natalie M Blais",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Natalie M Blais",
+      "party": "Democratic",
+      "votes": 20997,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Natalie M. Blais",
+      "party": "Democratic",
+      "votes": 16086,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "1st Hampden": {
+   "members": [
+    {
+     "name": "Todd Smola",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Todd M Smola",
+      "party": "Republican",
+      "votes": 19075,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Todd M. Smola",
+      "party": "Republican",
+      "votes": 13297,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "1st Hampshire": {
+   "members": [
+    {
+     "name": "Lindsay Sabadosa",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Lindsay N Sabadosa",
+      "party": "Democratic",
+      "votes": 21348,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Lindsay N. Sabadosa",
+      "party": "Democratic",
+      "votes": 17592,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "1st Middlesex": {
+   "members": [
+    {
+     "name": "Margaret Scarsdale",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Margaret R Scarsdale",
+      "party": "Democratic",
+      "votes": 13545,
+      "won": true
+     },
+     {
+      "name": "Lynne E Archambault",
+      "party": "Republican",
+      "votes": 12833,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Margaret R. Scarsdale",
+      "party": "Democratic",
+      "votes": 9384,
+      "won": true
+     },
+     {
+      "name": "Andrew James Shepherd",
+      "party": "Republican",
+      "votes": 9367,
+      "won": false
+     },
+     {
+      "name": "Catherine Lundeen",
+      "party": "Unenrolled",
+      "votes": 1074,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "1st Norfolk": {
+   "members": [
+    {
+     "name": "Bruce Ayers",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Bruce J Ayers",
+      "party": "Democratic",
+      "votes": 15517,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Bruce J. Ayers",
+      "party": "Democratic",
+      "votes": 11027,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "1st Plymouth": {
+   "members": [
+    {
+     "name": "Michelle Badger",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Michelle L Badger",
+      "party": "Democratic",
+      "votes": 15277,
+      "won": true
+     },
+     {
+      "name": "Jesse G Brown",
+      "party": "Republican",
+      "votes": 13952,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Mathew J. Muratore",
+      "party": "Republican",
+      "votes": 12470,
+      "won": true
+     },
+     {
+      "name": "Stephen Michael Palmer",
+      "party": "Democratic",
+      "votes": 9121,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "1st Suffolk": {
+   "members": [
+    {
+     "name": "Adrian Madaro",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Adrian C Madaro",
+      "party": "Democratic",
+      "votes": 11326,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Adrian C. Madaro",
+      "party": "Democratic",
+      "votes": 7022,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "1st Worcester": {
+   "members": [
+    {
+     "name": "Kim Ferguson",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Kimberly N Ferguson",
+      "party": "Republican",
+      "votes": 18371,
+      "won": true
+     },
+     {
+      "name": "Anthony L Ferrante",
+      "party": "Other",
+      "votes": 7945,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Kimberly N. Ferguson",
+      "party": "Republican",
+      "votes": 16342,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "20th Middlesex": {
+   "members": [
+    {
+     "name": "Brad Jones",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Bradley H Jones Jr",
+      "party": "Republican",
+      "votes": 21140,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Bradley H. Jones, Jr",
+      "party": "Republican",
+      "votes": 16194,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "21st Middlesex": {
+   "members": [
+    {
+     "name": "Ken Gordon",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Kenneth I Gordon",
+      "party": "Democratic",
+      "votes": 17829,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Kenneth I. Gordon",
+      "party": "Democratic",
+      "votes": 13510,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "22nd Middlesex": {
+   "members": [
+    {
+     "name": "Marc Lombardo",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Marc T Lombardo",
+      "party": "Republican",
+      "votes": 13303,
+      "won": true
+     },
+     {
+      "name": "George John Simolaris Jr",
+      "party": "Other",
+      "votes": 8461,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Marc T. Lombardo",
+      "party": "Republican",
+      "votes": 9224,
+      "won": true
+     },
+     {
+      "name": "Teresa Nicole English",
+      "party": "Democratic",
+      "votes": 7747,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "23rd Middlesex": {
+   "members": [
+    {
+     "name": "Sean Garballey",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Sean Garballey",
+      "party": "Democratic",
+      "votes": 20994,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Sean Garballey",
+      "party": "Democratic",
+      "votes": 16822,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "24th Middlesex": {
+   "members": [
+    {
+     "name": "Dave Rogers",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "David M Rogers",
+      "party": "Democratic",
+      "votes": 19562,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "David M. Rogers",
+      "party": "Democratic",
+      "votes": 16233,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "25th Middlesex": {
+   "members": [
+    {
+     "name": "Marjorie Decker",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Marjorie C Decker",
+      "party": "Democratic",
+      "votes": 13724,
+      "won": true
+     },
+     {
+      "name": "Evan Mackay",
+      "party": "Democratic",
+      "votes": 350,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Marjorie C. Decker",
+      "party": "Democratic",
+      "votes": 11018,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "26th Middlesex": {
+   "members": [
+    {
+     "name": "Mike Connolly",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Mike Connolly",
+      "party": "Democratic",
+      "votes": 17063,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Mike Connolly",
+      "party": "Democratic",
+      "votes": 11714,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "27th Middlesex": {
+   "members": [
+    {
+     "name": "Erika Uyterhoeven",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Erika Uyterhoeven",
+      "party": "Democratic",
+      "votes": 20475,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Erika Uyterhoeven",
+      "party": "Democratic",
+      "votes": 15698,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "28th Middlesex": {
+   "members": [
+    {
+     "name": "Joe McGonagle",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Joseph W Mcgonagle Jr",
+      "party": "Democratic",
+      "votes": 8414,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Joseph W. Mcgonagle, Jr",
+      "party": "Democratic",
+      "votes": 4713,
+      "won": true
+     },
+     {
+      "name": "Michael K. Marchese",
+      "party": "Unenrolled",
+      "votes": 1943,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "29th Middlesex": {
+   "members": [
+    {
+     "name": "Steve Owens",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Steven C Owens",
+      "party": "Democratic",
+      "votes": 19006,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Steven C. Owens",
+      "party": "Democratic",
+      "votes": 14817,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "2nd Barnstable": {
+   "members": [
+    {
+     "name": "Kip Diggs",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Kip A Diggs",
+      "party": "Democratic",
+      "votes": 14147,
+      "won": true
+     },
+     {
+      "name": "Susanne H Conley",
+      "party": "Republican",
+      "votes": 9686,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Kip A. Diggs",
+      "party": "Democratic",
+      "votes": 11664,
+      "won": true
+     },
+     {
+      "name": "William Buffington Peters",
+      "party": "Republican",
+      "votes": 7098,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "2nd Berkshire": {
+   "members": [
+    {
+     "name": "Paul Mark",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Tricia Farley Bouvier",
+      "party": "Democratic",
+      "votes": 15896,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Tricia Farley-Bouvier",
+      "party": "Democratic",
+      "votes": 10883,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "2nd Bristol": {
+   "members": [
+    {
+     "name": "Jim Hawkins",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "James K Hawkins",
+      "party": "Democratic",
+      "votes": 12769,
+      "won": true
+     },
+     {
+      "name": "Andrew Nelson",
+      "party": "Other",
+      "votes": 3540,
+      "won": false
+     },
+     {
+      "name": "Patricia Bellfield",
+      "party": "Other",
+      "votes": 2389,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "James K. Hawkins",
+      "party": "Democratic",
+      "votes": 8468,
+      "won": true
+     },
+     {
+      "name": "Steven Joseph Escobar",
+      "party": "Republican",
+      "votes": 5516,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "2nd Essex": {
+   "members": [
+    {
+     "name": "Kristin Kassner",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Kristin E Kassner",
+      "party": "Democratic",
+      "votes": 16063,
+      "won": true
+     },
+     {
+      "name": "Mark T Tashjian",
+      "party": "Republican",
+      "votes": 13562,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Leonard Mirra",
+      "party": "Republican",
+      "votes": 11754,
+      "won": true
+     },
+     {
+      "name": "Kristin E. Kassner",
+      "party": "Democratic",
+      "votes": 11744,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "2nd Franklin": {
+   "members": [
+    {
+     "name": "Susannah Whipps",
+     "party": "Independent"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Susannah M Whipps",
+      "party": "Other",
+      "votes": 14235,
+      "won": true
+     },
+     {
+      "name": "Jeffrey L Raymond",
+      "party": "Republican",
+      "votes": 7416,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Susannah M. Whipps",
+      "party": "Unenrolled",
+      "votes": 9797,
+      "won": true
+     },
+     {
+      "name": "Jeffrey L. Raymond",
+      "party": "Republican",
+      "votes": 4892,
+      "won": false
+     },
+     {
+      "name": "Kevin Patrick Mckeown",
+      "party": "Unenrolled",
+      "votes": 736,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "2nd Hampden": {
+   "members": [
+    {
+     "name": "Brian Ashe",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Brian M Ashe",
+      "party": "Democratic",
+      "votes": 18841,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Brian M. Ashe",
+      "party": "Democratic",
+      "votes": 13670,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "2nd Hampshire": {
+   "members": [
+    {
+     "name": "Homar Gomez",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Homar Gomez",
+      "party": "Democratic",
+      "votes": 19102,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Daniel R. Carey",
+      "party": "Democratic",
+      "votes": 15492,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "2nd Middlesex": {
+   "members": [
+    {
+     "name": "Jim Arciero",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "James Arciero",
+      "party": "Democratic",
+      "votes": 19607,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "James Arciero",
+      "party": "Democratic",
+      "votes": 12792,
+      "won": true
+     },
+     {
+      "name": "Raymond Yinggang Xie",
+      "party": "Republican",
+      "votes": 6931,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "2nd Norfolk": {
+   "members": [
+    {
+     "name": "Tackey Chan",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Tackey Chan",
+      "party": "Democratic",
+      "votes": 12919,
+      "won": true
+     },
+     {
+      "name": "Sharon Marie Cintolo",
+      "party": "Republican",
+      "votes": 5650,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Tackey Chan",
+      "party": "Democratic",
+      "votes": 9888,
+      "won": true
+     },
+     {
+      "name": "Sharon Marie Cintolo",
+      "party": "Republican",
+      "votes": 4119,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "2nd Plymouth": {
+   "members": [
+    {
+     "name": "John Gaskey",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "John Robert Gaskey",
+      "party": "Republican",
+      "votes": 16996,
+      "won": true
+     },
+     {
+      "name": "Sarah G Hewins",
+      "party": "Democratic",
+      "votes": 2097,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Susan Williams Gifford",
+      "party": "Republican",
+      "votes": 13019,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "2nd Suffolk": {
+   "members": [
+    {
+     "name": "Danny Ryan",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Daniel J Ryan",
+      "party": "Democratic",
+      "votes": 12625,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Daniel Joseph Ryan",
+      "party": "Democratic",
+      "votes": 8963,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "2nd Worcester": {
+   "members": [
+    {
+     "name": "Jon Zlotnik",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Jonathan D Zlotnik",
+      "party": "Democratic",
+      "votes": 10812,
+      "won": true
+     },
+     {
+      "name": "Bruce K Chester",
+      "party": "Republican",
+      "votes": 9882,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Jonathan D. Zlotnik",
+      "party": "Democratic",
+      "votes": 7667,
+      "won": true
+     },
+     {
+      "name": "Bruce K. Chester",
+      "party": "Republican",
+      "votes": 6664,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "30th Middlesex": {
+   "members": [
+    {
+     "name": "Rich Haggerty",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Richard M Haggerty",
+      "party": "Democratic",
+      "votes": 17200,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Richard M. Haggerty",
+      "party": "Democratic",
+      "votes": 13027,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "31st Middlesex": {
+   "members": [
+    {
+     "name": "Mike Day",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Michael Seamus Day",
+      "party": "Democratic",
+      "votes": 16753,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Michael Seamus Day",
+      "party": "Democratic",
+      "votes": 12527,
+      "won": true
+     },
+     {
+      "name": "Theodore Christos Menounos",
+      "party": "Unenrolled",
+      "votes": 5079,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "32nd Middlesex": {
+   "members": [
+    {
+     "name": "Kate Lipper-Garabedian",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Kate Lipper Garabedian",
+      "party": "Democratic",
+      "votes": 18316,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Kate Lipper-Garabedian",
+      "party": "Democratic",
+      "votes": 14673,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "33rd Middlesex": {
+   "members": [
+    {
+     "name": "Steve Ultrino",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Steven Ultrino",
+      "party": "Democratic",
+      "votes": 11360,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Steven Ultrino",
+      "party": "Democratic",
+      "votes": 7817,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "34th Middlesex": {
+   "members": [
+    {
+     "name": "Christine Barber",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Christine P Barber",
+      "party": "Democratic",
+      "votes": 16020,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Christine P. Barber",
+      "party": "Democratic",
+      "votes": 11675,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "35th Middlesex": {
+   "members": [
+    {
+     "name": "Paul Donato",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Paul J Donato Sr",
+      "party": "Democratic",
+      "votes": 14995,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Paul J. Donato, Sr.",
+      "party": "Democratic",
+      "votes": 10474,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "36th Middlesex": {
+   "members": [
+    {
+     "name": "Colleen Garry",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Colleen M Garry",
+      "party": "Democratic",
+      "votes": 18321,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Colleen M. Garry",
+      "party": "Democratic",
+      "votes": 10025,
+      "won": true
+     },
+     {
+      "name": "George Derek Boag",
+      "party": "Republican",
+      "votes": 6506,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "37th Middlesex": {
+   "members": [
+    {
+     "name": "Dan Sena",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Danillo A Sena",
+      "party": "Democratic",
+      "votes": 18789,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Danillo A. Sena",
+      "party": "Democratic",
+      "votes": 14330,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "3rd Barnstable": {
+   "members": [
+    {
+     "name": "Dave Vieira",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "David T Vieira",
+      "party": "Republican",
+      "votes": 16059,
+      "won": true
+     },
+     {
+      "name": "Kathleen Fox Alfano",
+      "party": "Democratic",
+      "votes": 12600,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "David T. Vieira",
+      "party": "Republican",
+      "votes": 12715,
+      "won": true
+     },
+     {
+      "name": "Kathleen Fox Alfano",
+      "party": "Democratic",
+      "votes": 10227,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "3rd Berkshire": {
+   "members": [
+    {
+     "name": "Leigh Davis",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Leigh Susan Davis",
+      "party": "Democratic",
+      "votes": 13819,
+      "won": true
+     },
+     {
+      "name": "Marybeth F Mitts",
+      "party": "Other",
+      "votes": 10222,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "\"\"William \\\"\"Smitty\\\"\" Pignatelli\"\"",
+      "party": "Democratic",
+      "votes": 16340,
+      "won": true
+     },
+     {
+      "name": "Michael Silvio Lavery",
+      "party": "Green-Rainbow",
+      "votes": 1698,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "3rd Bristol": {
+   "members": [
+    {
+     "name": "Lisa Field",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Carol Ann Doherty",
+      "party": "Democratic",
+      "votes": 15398,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Carol A. Doherty",
+      "party": "Democratic",
+      "votes": 8011,
+      "won": true
+     },
+     {
+      "name": "Christopher P. Coute",
+      "party": "Republican",
+      "votes": 6036,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "3rd Essex": {
+   "members": [
+    {
+     "name": "Andy Vargas",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Andres X Vargas",
+      "party": "Democratic",
+      "votes": 14198,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Andres X. Vargas",
+      "party": "Democratic",
+      "votes": 9176,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "3rd Hampden": {
+   "members": [
+    {
+     "name": "Nick Boldyga",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Nicholas A Boldyga",
+      "party": "Republican",
+      "votes": 20027,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Nicholas A. Boldyga",
+      "party": "Republican",
+      "votes": 11093,
+      "won": true
+     },
+     {
+      "name": "Anthony J. Russo",
+      "party": "Democratic",
+      "votes": 7397,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "3rd Hampshire": {
+   "members": [
+    {
+     "name": "Mindy Domb",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Mindy Domb",
+      "party": "Democratic",
+      "votes": 10536,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Mindy Domb",
+      "party": "Democratic",
+      "votes": 8333,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "3rd Middlesex": {
+   "members": [
+    {
+     "name": "Kate Hogan",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Kate Hogan",
+      "party": "Democratic",
+      "votes": 20537,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Kate Hogan",
+      "party": "Democratic",
+      "votes": 15844,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "3rd Norfolk": {
+   "members": [
+    {
+     "name": "Ron Mariano",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Ronald Mariano",
+      "party": "Democratic",
+      "votes": 14559,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Ronald Mariano",
+      "party": "Democratic",
+      "votes": 10085,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "3rd Plymouth": {
+   "members": [
+    {
+     "name": "Joan Meschino",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Joan Meschino",
+      "party": "Democratic",
+      "votes": 20424,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Joan Meschino",
+      "party": "Democratic",
+      "votes": 15999,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "3rd Suffolk": {
+   "members": [
+    {
+     "name": "Aaron Michlewitz",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Aaron M Michlewitz",
+      "party": "Democratic",
+      "votes": 13660,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Aaron M. Michlewitz",
+      "party": "Democratic",
+      "votes": 9238,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "3rd Worcester": {
+   "members": [
+    {
+     "name": "Mike Kushmerek",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Michael P Kushmerek",
+      "party": "Democratic",
+      "votes": 13098,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Michael P. Kushmerek",
+      "party": "Democratic",
+      "votes": 6824,
+      "won": true
+     },
+     {
+      "name": "Aaron L. Packard",
+      "party": "Republican",
+      "votes": 4058,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "4th Barnstable": {
+   "members": [
+    {
+     "name": "Hadley Luddy",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Hadley Luddy",
+      "party": "Democratic",
+      "votes": 22749,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Sarah K. Peake",
+      "party": "Democratic",
+      "votes": 18786,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "4th Bristol": {
+   "members": [
+    {
+     "name": "Steven Howitt",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Steven S Howitt",
+      "party": "Republican",
+      "votes": 19728,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Steven S. Howitt",
+      "party": "Republican",
+      "votes": 13380,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "4th Essex": {
+   "members": [
+    {
+     "name": "Estela Reyes",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Estela A Reyes",
+      "party": "Democratic",
+      "votes": 9285,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Estela A. Reyes",
+      "party": "Democratic",
+      "votes": 4884,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "4th Hampden": {
+   "members": [
+    {
+     "name": "Kelly Pease",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Kelly W Pease",
+      "party": "Republican",
+      "votes": 12894,
+      "won": true
+     },
+     {
+      "name": "Bridget Matthews Kane",
+      "party": "Democratic",
+      "votes": 9023,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Kelly W. Pease",
+      "party": "Republican",
+      "votes": 12256,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "4th Middlesex": {
+   "members": [
+    {
+     "name": "Danielle Gregoire",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Danielle W Gregoire",
+      "party": "Democratic",
+      "votes": 13921,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Danielle W. Gregoire",
+      "party": "Democratic",
+      "votes": 10157,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "4th Norfolk": {
+   "members": [
+    {
+     "name": "Jamie Murphy",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "James Michael Murphy",
+      "party": "Democratic",
+      "votes": 17165,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "James Michael Murphy",
+      "party": "Democratic",
+      "votes": 10255,
+      "won": true
+     },
+     {
+      "name": "Paul J. Rotondo",
+      "party": "Republican",
+      "votes": 5778,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "4th Plymouth": {
+   "members": [
+    {
+     "name": "Patrick Kearney",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Patrick Joseph Kearney",
+      "party": "Democratic",
+      "votes": 22528,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Patrick Joseph Kearney",
+      "party": "Democratic",
+      "votes": 17384,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "4th Suffolk": {
+   "members": [
+    {
+     "name": "David Biele",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "David Biele",
+      "party": "Democratic",
+      "votes": 17916,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "David Biele",
+      "party": "Democratic",
+      "votes": 11566,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "4th Worcester": {
+   "members": [
+    {
+     "name": "Natalie Higgins",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Natalie Higgins",
+      "party": "Democratic",
+      "votes": 11390,
+      "won": true
+     },
+     {
+      "name": "Salvatore Perla",
+      "party": "Republican",
+      "votes": 8418,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Natalie Higgins",
+      "party": "Democratic",
+      "votes": 7193,
+      "won": true
+     },
+     {
+      "name": "John M. Dombrowski",
+      "party": "Unenrolled",
+      "votes": 6510,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "5th Barnstable": {
+   "members": [
+    {
+     "name": "Steve Xiarhos",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Steven G Xiarhos",
+      "party": "Republican",
+      "votes": 16384,
+      "won": true
+     },
+     {
+      "name": "Owen G Fletcher",
+      "party": "Democratic",
+      "votes": 10305,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Steven G. Xiarhos",
+      "party": "Republican",
+      "votes": 15324,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "5th Bristol": {
+   "members": [
+    {
+     "name": "Justin Thurber",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Justin Thurber",
+      "party": "Republican",
+      "votes": 12390,
+      "won": true
+     },
+     {
+      "name": "Patricia A Haddad",
+      "party": "Democratic",
+      "votes": 11464,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Patricia A. Haddad",
+      "party": "Democratic",
+      "votes": 8951,
+      "won": true
+     },
+     {
+      "name": "Justin Thurber",
+      "party": "Republican",
+      "votes": 7514,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "5th Essex": {
+   "members": [
+    {
+     "name": "Dru Tarr",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Ann Margaret Ferrante",
+      "party": "Democratic",
+      "votes": 17877,
+      "won": true
+     },
+     {
+      "name": "Steven G Leblanc Jr",
+      "party": "Other",
+      "votes": 8926,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Ann-Margaret Ferrante",
+      "party": "Democratic",
+      "votes": 14971,
+      "won": true
+     },
+     {
+      "name": "Ashley Sullivan",
+      "party": "Republican",
+      "votes": 6683,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "5th Hampden": {
+   "members": [
+    {
+     "name": "Pat Duffy",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Patricia A Duffy",
+      "party": "Democratic",
+      "votes": 12368,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Patricia A. Duffy",
+      "party": "Democratic",
+      "votes": 7990,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "5th Middlesex": {
+   "members": [
+    {
+     "name": "David Linsky",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "David Paul Linsky",
+      "party": "Democratic",
+      "votes": 19141,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "David Paul Linsky",
+      "party": "Democratic",
+      "votes": 15019,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "5th Norfolk": {
+   "members": [
+    {
+     "name": "Mark Cusack",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Mark J Cusack",
+      "party": "Democratic",
+      "votes": 16139,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Mark J. Cusack",
+      "party": "Democratic",
+      "votes": 11309,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "5th Plymouth": {
+   "members": [
+    {
+     "name": "David DeCoste",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "David F Decoste",
+      "party": "Republican",
+      "votes": 19410,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "David F. Decoste",
+      "party": "Republican",
+      "votes": 10039,
+      "won": true
+     },
+     {
+      "name": "Emmanuel J. Dockter",
+      "party": "Democratic",
+      "votes": 9363,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "5th Suffolk": {
+   "members": [
+    {
+     "name": "Chris Worrell",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Christopher J Worrell",
+      "party": "Democratic",
+      "votes": 10588,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Christopher J. Worrell",
+      "party": "Democratic",
+      "votes": 5939,
+      "won": true
+     },
+     {
+      "name": "Roy A. Owens",
+      "party": "Unenrolled",
+      "votes": 750,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "5th Worcester": {
+   "members": [
+    {
+     "name": "Donnie Berthiaume",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Donald R Berthiaume Jr",
+      "party": "Republican",
+      "votes": 20333,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Donald R. Berthiaume, Jr",
+      "party": "Republican",
+      "votes": 14151,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "6th Bristol": {
+   "members": [
+    {
+     "name": "Carole Fiola",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Carole A Fiola",
+      "party": "Democratic",
+      "votes": 11766,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Carole A. Fiola",
+      "party": "Democratic",
+      "votes": 7321,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "6th Essex": {
+   "members": [
+    {
+     "name": "Hannah Bowen",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Jerald A Parisella",
+      "party": "Democratic",
+      "votes": 16598,
+      "won": true
+     },
+     {
+      "name": "Ty Vitale",
+      "party": "Republican",
+      "votes": 5548,
+      "won": false
+     },
+     {
+      "name": "Euplio R Marciano",
+      "party": "Other",
+      "votes": 1216,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Jerald A. Parisella",
+      "party": "Democratic",
+      "votes": 14666,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "6th Hampden": {
+   "members": [
+    {
+     "name": "Mike Finn",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Michael J Finn",
+      "party": "Democratic",
+      "votes": 13944,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Michael J. Finn",
+      "party": "Democratic",
+      "votes": 9055,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "6th Middlesex": {
+   "members": [
+    {
+     "name": "Priscila Sousa",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Priscila S Sousa",
+      "party": "Democratic",
+      "votes": 9374,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Priscila S. Sousa",
+      "party": "Democratic",
+      "votes": 6839,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "6th Norfolk": {
+   "members": [
+    {
+     "name": "Bill Galvin",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "William C Galvin",
+      "party": "Democratic",
+      "votes": 17933,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "William C. Galvin",
+      "party": "Democratic",
+      "votes": 12778,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "6th Plymouth": {
+   "members": [
+    {
+     "name": "Ken Sweezey",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Kenneth Peter Sweezey",
+      "party": "Republican",
+      "votes": 14908,
+      "won": true
+     },
+     {
+      "name": "Rebecca W Coletta",
+      "party": "Democratic",
+      "votes": 13234,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Josh S. Cutler",
+      "party": "Democratic",
+      "votes": 12163,
+      "won": true
+     },
+     {
+      "name": "Kenneth Sweezey",
+      "party": "Republican",
+      "votes": 9503,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "6th Suffolk": {
+   "members": [
+    {
+     "name": "Russell Holmes",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Russell E Holmes",
+      "party": "Democratic",
+      "votes": 12435,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Russell E. Holmes",
+      "party": "Democratic",
+      "votes": 7675,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "6th Worcester": {
+   "members": [
+    {
+     "name": "John Marsi",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "John J Marsi Jr",
+      "party": "Republican",
+      "votes": 12440,
+      "won": true
+     },
+     {
+      "name": "Jeanne Renaud Costello",
+      "party": "Democratic",
+      "votes": 7647,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Peter J. Durant",
+      "party": "Republican",
+      "votes": 10526,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "7th Bristol": {
+   "members": [
+    {
+     "name": "Alan Silvia",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Alan Silvia",
+      "party": "Democratic",
+      "votes": 8556,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Alan Silvia",
+      "party": "Democratic",
+      "votes": 4886,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "7th Essex": {
+   "members": [
+    {
+     "name": "Manny Cruz",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Manny Cruz",
+      "party": "Democratic",
+      "votes": 18548,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Manny Cruz",
+      "party": "Democratic",
+      "votes": 13608,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "7th Hampden": {
+   "members": [
+    {
+     "name": "Aaron Saunders",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Aaron L Saunders",
+      "party": "Democratic",
+      "votes": 18235,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Aaron L. Saunders",
+      "party": "Democratic",
+      "votes": 9577,
+      "won": true
+     },
+     {
+      "name": "James Chip Harrington",
+      "party": "Republican",
+      "votes": 8573,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "7th Middlesex": {
+   "members": [
+    {
+     "name": "Jack Lewis",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Jack Patrick Lewis",
+      "party": "Democratic",
+      "votes": 17674,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Jack Patrick Lewis",
+      "party": "Democratic",
+      "votes": 13362,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "7th Norfolk": {
+   "members": [
+    {
+     "name": "Richard Wells",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Richard Gerard Wells Jr",
+      "party": "Democratic",
+      "votes": 13379,
+      "won": true
+     },
+     {
+      "name": "Clinton Graham",
+      "party": "Other",
+      "votes": 7249,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "William J. Driscoll, Jr",
+      "party": "Democratic",
+      "votes": 12322,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "7th Plymouth": {
+   "members": [
+    {
+     "name": "Alyson Sullivan-Almeida",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Alyson M Sullivan Almeida",
+      "party": "Republican",
+      "votes": 18565,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Alyson M. Sullivan",
+      "party": "Republican",
+      "votes": 12083,
+      "won": true
+     },
+     {
+      "name": "Brandon J. Griffin",
+      "party": "Working Families",
+      "votes": 3945,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "7th Suffolk": {
+   "members": [
+    {
+     "name": "Chynah Tyler",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Chynah Tyler",
+      "party": "Democratic",
+      "votes": 8419,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Chynah Tyler",
+      "party": "Democratic",
+      "votes": 5317,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "7th Worcester": {
+   "members": [
+    {
+     "name": "Paul Frost",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Paul K Frost",
+      "party": "Republican",
+      "votes": 16472,
+      "won": true
+     },
+     {
+      "name": "Terry Burke Dotson",
+      "party": "Other",
+      "votes": 7325,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Paul K. Frost",
+      "party": "Republican",
+      "votes": 12432,
+      "won": true
+     },
+     {
+      "name": "Terry Burke Dotson",
+      "party": "Unenrolled",
+      "votes": 4067,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "8th Bristol": {
+   "members": [
+    {
+     "name": "Steven Ouellette",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Steven J Ouellette",
+      "party": "Democratic",
+      "votes": 7497,
+      "won": true
+     },
+     {
+      "name": "Christopher Thrasher",
+      "party": "Republican",
+      "votes": 7236,
+      "won": false
+     },
+     {
+      "name": "Jesse St W Gelais",
+      "party": "Other",
+      "votes": 4232,
+      "won": false
+     },
+     {
+      "name": "Manuel Soares Jr",
+      "party": "Other",
+      "votes": 2003,
+      "won": false
+     },
+     {
+      "name": "Laura A Hadley",
+      "party": "Other",
+      "votes": 1169,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Paul Schmid, Iii",
+      "party": "Democratic",
+      "votes": 8437,
+      "won": true
+     },
+     {
+      "name": "Evan Gendreau",
+      "party": "Republican",
+      "votes": 7326,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "8th Essex": {
+   "members": [
+    {
+     "name": "Jenny Armini",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Jennifer Wb Armini",
+      "party": "Democratic",
+      "votes": 18643,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Jennifer Wb Armini",
+      "party": "Democratic",
+      "votes": 14156,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "8th Hampden": {
+   "members": [
+    {
+     "name": "Shirley Arriaga",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Shirley B Arriaga",
+      "party": "Democratic",
+      "votes": 14977,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Shirley B. Arriaga",
+      "party": "Democratic",
+      "votes": 8129,
+      "won": true
+     },
+     {
+      "name": "Sean Goonan",
+      "party": "Unenrolled",
+      "votes": 4420,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "8th Middlesex": {
+   "members": [
+    {
+     "name": "James Arena-DeRosa",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "James Arena De Rosa",
+      "party": "Democratic",
+      "votes": 20170,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "James Arena-Derosa",
+      "party": "Democratic",
+      "votes": 12916,
+      "won": true
+     },
+     {
+      "name": "Loring Barnes",
+      "party": "Republican",
+      "votes": 6947,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "8th Norfolk": {
+   "members": [
+    {
+     "name": "Ted Philips",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Ted Philips",
+      "party": "Democratic",
+      "votes": 18161,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Ted Philips",
+      "party": "Democratic",
+      "votes": 12257,
+      "won": true
+     },
+     {
+      "name": "Howard L. Terban",
+      "party": "Republican",
+      "votes": 5400,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "8th Plymouth": {
+   "members": [
+    {
+     "name": "Dennis Gallagher",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Dennis C Gallagher",
+      "party": "Democratic",
+      "votes": 10971,
+      "won": true
+     },
+     {
+      "name": "Sandra M Wright",
+      "party": "Republican",
+      "votes": 10749,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Angelo L. Demilia",
+      "party": "Republican",
+      "votes": 9449,
+      "won": true
+     },
+     {
+      "name": "Eric J. Haikola",
+      "party": "Democratic",
+      "votes": 6299,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "8th Suffolk": {
+   "members": [
+    {
+     "name": "Jay Livingstone",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Jay D Livingstone",
+      "party": "Democratic",
+      "votes": 13445,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Jay D. Livingstone",
+      "party": "Democratic",
+      "votes": 9701,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "8th Worcester": {
+   "members": [
+    {
+     "name": "Mike Soter",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Michael J Soter",
+      "party": "Republican",
+      "votes": 20054,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Michael J. Soter",
+      "party": "Republican",
+      "votes": 13182,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "9th Bristol": {
+   "members": [
+    {
+     "name": "Christopher Markey",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Christopher M Markey",
+      "party": "Democratic",
+      "votes": 16627,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Christopher M. Markey",
+      "party": "Democratic",
+      "votes": 10977,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "9th Essex": {
+   "members": [
+    {
+     "name": "Donald Wong",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Donald H Wong",
+      "party": "Republican",
+      "votes": 18114,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Donald H. Wong",
+      "party": "Republican",
+      "votes": 13664,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "9th Hampden": {
+   "members": [
+    {
+     "name": "Orlando Ramos",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Orlando Ramos",
+      "party": "Democratic",
+      "votes": 11453,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Orlando Ramos",
+      "party": "Democratic",
+      "votes": 5913,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "9th Middlesex": {
+   "members": [
+    {
+     "name": "Tom Stanley",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Thomas M Stanley",
+      "party": "Democratic",
+      "votes": 13465,
+      "won": true
+     },
+     {
+      "name": "Carly Marie Downs",
+      "party": "Republican",
+      "votes": 3829,
+      "won": false
+     },
+     {
+      "name": "Sean Diamond",
+      "party": "Other",
+      "votes": 1219,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Thomas M. Stanley",
+      "party": "Democratic",
+      "votes": 11372,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "9th Norfolk": {
+   "members": [
+    {
+     "name": "Marcus Vaughn",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Marcus S Vaughn",
+      "party": "Republican",
+      "votes": 15244,
+      "won": true
+     },
+     {
+      "name": "Kevin Kalkut",
+      "party": "Democratic",
+      "votes": 11309,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Marcus S. Vaughn",
+      "party": "Republican",
+      "votes": 10534,
+      "won": true
+     },
+     {
+      "name": "Kevin Kalkut",
+      "party": "Democratic",
+      "votes": 10174,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "9th Plymouth": {
+   "members": [
+    {
+     "name": "Bridget Plouffe",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Bridget M Plouffe",
+      "party": "Democratic",
+      "votes": 11809,
+      "won": true
+     },
+     {
+      "name": "Lawrence Peter Novak",
+      "party": "Republican",
+      "votes": 6539,
+      "won": false
+     },
+     {
+      "name": "Jonathan Wilshire Gill",
+      "party": "Other",
+      "votes": 3398,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Gerard J. Cassidy",
+      "party": "Democratic",
+      "votes": 9357,
+      "won": true
+     },
+     {
+      "name": "Lawrence P. Novak",
+      "party": "Republican",
+      "votes": 6072,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "9th Suffolk": {
+   "members": [
+    {
+     "name": "John Moran",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "John Francis Moran",
+      "party": "Democratic",
+      "votes": 12852,
+      "won": true
+     },
+     {
+      "name": "Roy A Owens",
+      "party": "Republican",
+      "votes": 2734,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Jon Santiago",
+      "party": "Democratic",
+      "votes": 9957,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "9th Worcester": {
+   "members": [
+    {
+     "name": "Dave Muradian",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "David Kent Muradian Jr",
+      "party": "Republican",
+      "votes": 19799,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "David K. Muradian, Jr",
+      "party": "Republican",
+      "votes": 13516,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "Barnstable, Dukes and Nantucket": {
+   "members": [
+    {
+     "name": "Thomas Moakley",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Thomas W Moakley",
+      "party": "Democratic",
+      "votes": 21075,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Dylan A. Fernandes",
+      "party": "Democratic",
+      "votes": 15858,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  }
+ },
+ "CO": {
+  "1": {
+   "members": [
+    {
+     "name": "Javier Mabrey",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Javier Mabrey",
+      "party": "Democratic",
+      "votes": 22104,
+      "won": true
+     },
+     {
+      "name": "Barbara Dehaan",
+      "party": "Republican",
+      "votes": 12033,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Javier Mabrey",
+      "party": "Democratic",
+      "votes": 17903,
+      "won": true
+     },
+     {
+      "name": "Guillermo Diaz",
+      "party": "Republican",
+      "votes": 8981,
+      "won": false
+     },
+     {
+      "name": "Kyle Furey",
+      "party": "Libertarian",
+      "votes": 742,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "2": {
+   "members": [
+    {
+     "name": "Steven Woodrow",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Steven Woodrow",
+      "party": "Democratic",
+      "votes": 38829,
+      "won": true
+     },
+     {
+      "name": "Michael F Dimanna",
+      "party": "Republican",
+      "votes": 13501,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Steven Woodrow",
+      "party": "Democratic",
+      "votes": 34213,
+      "won": true
+     },
+     {
+      "name": "Stephanie Wheeler",
+      "party": "Republican",
+      "votes": 10476,
+      "won": false
+     },
+     {
+      "name": "Justin Savoy",
+      "party": "Libertarian",
+      "votes": 689,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "3": {
+   "members": [
+    {
+     "name": "Meg Froelich",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Meg Froelich",
+      "party": "Democratic",
+      "votes": 26049,
+      "won": true
+     },
+     {
+      "name": "Mickey Neal",
+      "party": "Republican",
+      "votes": 14619,
+      "won": false
+     },
+     {
+      "name": "Marla Fernandez",
+      "party": "Republican",
+      "votes": 14,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Meg Froelich",
+      "party": "Democratic",
+      "votes": 21957,
+      "won": true
+     },
+     {
+      "name": "Marla Fernandez",
+      "party": "Republican",
+      "votes": 10570,
+      "won": false
+     },
+     {
+      "name": "Clayton Casciato",
+      "party": "Libertarian",
+      "votes": 757,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "4": {
+   "members": [
+    {
+     "name": "Cecelia Espenoza",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Cecelia Espenoza",
+      "party": "Democratic",
+      "votes": 32315,
+      "won": true
+     },
+     {
+      "name": "Jack Daus",
+      "party": "Republican",
+      "votes": 8623,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Serena Gonzales-Gutierrez",
+      "party": "Democratic",
+      "votes": 27116,
+      "won": true
+     },
+     {
+      "name": "Jack Daus",
+      "party": "Republican",
+      "votes": 5687,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "5": {
+   "members": [
+    {
+     "name": "Alex Valdez",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Alex Valdez",
+      "party": "Democratic",
+      "votes": 32077,
+      "won": true
+     },
+     {
+      "name": "Johnnie Wesley Johnson",
+      "party": "Republican",
+      "votes": 8224,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Alex Valdez",
+      "party": "Democratic",
+      "votes": 24306,
+      "won": true
+     },
+     {
+      "name": "Johnnie Johnson",
+      "party": "Republican",
+      "votes": 4502,
+      "won": false
+     },
+     {
+      "name": "Troy Brekke",
+      "party": "Unity",
+      "votes": 539,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "6": {
+   "members": [
+    {
+     "name": "Sean Camacho",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Sean Camacho",
+      "party": "Democratic",
+      "votes": 38250,
+      "won": true
+     },
+     {
+      "name": "Kyle Witter",
+      "party": "Republican",
+      "votes": 6978,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Elisabeth Epps",
+      "party": "Democratic",
+      "votes": 32951,
+      "won": true
+     },
+     {
+      "name": "Donald D. Howell",
+      "party": "Republican",
+      "votes": 5448,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "7": {
+   "members": [
+    {
+     "name": "Jennifer Bacon",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Jennifer Bacon",
+      "party": "Democratic",
+      "votes": 22078,
+      "won": true
+     },
+     {
+      "name": "Tom Swift",
+      "party": "Republican",
+      "votes": 7206,
+      "won": false
+     },
+     {
+      "name": "Raymon Anthony Doane",
+      "party": "Libertarian",
+      "votes": 907,
+      "won": false
+     },
+     {
+      "name": "Ben Pope",
+      "party": "Democratic",
+      "votes": 9,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Jennifer Bacon",
+      "party": "Democratic",
+      "votes": 16765,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "8": {
+   "members": [
+    {
+     "name": "Lindsay Gilchrist",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Lindsay Gilchrist",
+      "party": "Democratic",
+      "votes": 39914,
+      "won": true
+     },
+     {
+      "name": "Philip Borrelli",
+      "party": "Republican",
+      "votes": 5932,
+      "won": false
+     },
+     {
+      "name": "Jesse Lashawn Parris",
+      "party": "Other",
+      "votes": 992,
+      "won": false
+     },
+     {
+      "name": "Sharron Pettiford",
+      "party": "Democratic",
+      "votes": 33,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Leslie Herod",
+      "party": "Democratic",
+      "votes": 35015,
+      "won": true
+     },
+     {
+      "name": "Hilleary Waters",
+      "party": "Republican",
+      "votes": 4833,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "9": {
+   "members": [
+    {
+     "name": "Emily Sirota",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Emily Sirota",
+      "party": "Democratic",
+      "votes": 29530,
+      "won": true
+     },
+     {
+      "name": "Tom Cowhick",
+      "party": "Republican",
+      "votes": 10108,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Emily Sirota",
+      "party": "Democratic",
+      "votes": 25925,
+      "won": true
+     },
+     {
+      "name": "Tom Cowhick",
+      "party": "Republican",
+      "votes": 7802,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "10": {
+   "members": [
+    {
+     "name": "Junie Joseph",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Junie Joseph",
+      "party": "Democratic",
+      "votes": 33889,
+      "won": true
+     },
+     {
+      "name": "William B Deoreo",
+      "party": "Republican",
+      "votes": 6290,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Junie Joseph",
+      "party": "Democratic",
+      "votes": 30894,
+      "won": true
+     },
+     {
+      "name": "William B. Deoreo",
+      "party": "Republican",
+      "votes": 4182,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "11": {
+   "members": [
+    {
+     "name": "Karen McCormick",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Karen Mccormick",
+      "party": "Democratic",
+      "votes": 31650,
+      "won": true
+     },
+     {
+      "name": "Kathy Reeves",
+      "party": "Republican",
+      "votes": 14005,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Karen Mccormick",
+      "party": "Democratic",
+      "votes": 26855,
+      "won": true
+     },
+     {
+      "name": "Tara Menza",
+      "party": "Republican",
+      "votes": 11657,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "12": {
+   "members": [
+    {
+     "name": "Kyle Brown",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Kyle Brown",
+      "party": "Democratic",
+      "votes": 39742,
+      "won": true
+     },
+     {
+      "name": "Mark Milliman",
+      "party": "Republican",
+      "votes": 12166,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Tracey Bernett",
+      "party": "Democratic",
+      "votes": 35127,
+      "won": true
+     },
+     {
+      "name": "Anya Kirvan",
+      "party": "Republican",
+      "votes": 10356,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "13": {
+   "members": [
+    {
+     "name": "Julie McCluskie",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Julie Mccluskie",
+      "party": "Democratic",
+      "votes": 30291,
+      "won": true
+     },
+     {
+      "name": "Dave Williams",
+      "party": "Republican",
+      "votes": 24613,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Julie Mccluskie",
+      "party": "Democratic",
+      "votes": 25428,
+      "won": true
+     },
+     {
+      "name": "David Buckley",
+      "party": "Republican",
+      "votes": 19956,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "14": {
+   "members": [
+    {
+     "name": "Ava Flanell",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Rose Pugliese",
+      "party": "Republican",
+      "votes": 34428,
+      "won": true
+     },
+     {
+      "name": "Katherine \"\"Kat\"\" Gayle",
+      "party": "Democratic",
+      "votes": 22301,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Rose Pugliese",
+      "party": "Republican",
+      "votes": 27250,
+      "won": true
+     },
+     {
+      "name": "Rob Rogers",
+      "party": "Democratic",
+      "votes": 17665,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "15": {
+   "members": [
+    {
+     "name": "Scott Bottoms",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Scott Bottoms",
+      "party": "Republican",
+      "votes": 26519,
+      "won": true
+     },
+     {
+      "name": "Jeff K Livingston",
+      "party": "Democratic",
+      "votes": 19215,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Scott T. Bottoms",
+      "party": "Republican",
+      "votes": 17708,
+      "won": true
+     },
+     {
+      "name": "Alvin Sexton",
+      "party": "Democratic",
+      "votes": 12200,
+      "won": false
+     },
+     {
+      "name": "John Kaufman",
+      "party": "Libertarian",
+      "votes": 1291,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "16": {
+   "members": [
+    {
+     "name": "Rebecca Keltie",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Rebecca Keltie",
+      "party": "Republican",
+      "votes": 20641,
+      "won": true
+     },
+     {
+      "name": "Steph Vigil",
+      "party": "Democratic",
+      "votes": 20638,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Stephanie Vigil",
+      "party": "Democratic",
+      "votes": 16243,
+      "won": true
+     },
+     {
+      "name": "Dave Donelson",
+      "party": "Republican",
+      "votes": 15533,
+      "won": false
+     },
+     {
+      "name": "John Hjersman",
+      "party": "Libertarian",
+      "votes": 870,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "17": {
+   "members": [
+    {
+     "name": "Regina English",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Regina English",
+      "party": "Democratic",
+      "votes": 14461,
+      "won": true
+     },
+     {
+      "name": "Elizabeth Riggs",
+      "party": "Republican",
+      "votes": 11423,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Regina English",
+      "party": "Democratic",
+      "votes": 10313,
+      "won": true
+     },
+     {
+      "name": "Rachel Inez Stovall",
+      "party": "Republican",
+      "votes": 7693,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "18": {
+   "members": [
+    {
+     "name": "Amy Paschal",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Amy T Paschal",
+      "party": "Democratic",
+      "votes": 24780,
+      "won": true
+     },
+     {
+      "name": "James R Boelens Jr",
+      "party": "Republican",
+      "votes": 21510,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Marc Snyder",
+      "party": "Democratic",
+      "votes": 20057,
+      "won": true
+     },
+     {
+      "name": "Shana Black",
+      "party": "Republican",
+      "votes": 16826,
+      "won": false
+     },
+     {
+      "name": "Greg Lauer",
+      "party": "Libertarian",
+      "votes": 1101,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "19": {
+   "members": [
+    {
+     "name": "Dan Woog",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Dan Woog",
+      "party": "Republican",
+      "votes": 28420,
+      "won": true
+     },
+     {
+      "name": "Jillaire Mcmillan",
+      "party": "Democratic",
+      "votes": 28310,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Jennifer Lea Parenti",
+      "party": "Democratic",
+      "votes": 21917,
+      "won": true
+     },
+     {
+      "name": "Dan Woog",
+      "party": "Republican",
+      "votes": 20450,
+      "won": false
+     },
+     {
+      "name": "Joe Johnson",
+      "party": "Libertarian",
+      "votes": 1168,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "20": {
+   "members": [
+    {
+     "name": "Jarvis Caldwell",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Jarvis Caldwell",
+      "party": "Republican",
+      "votes": 39949,
+      "won": true
+     },
+     {
+      "name": "Arik Dougherty",
+      "party": "Democratic",
+      "votes": 15581,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Don Wilson",
+      "party": "Republican",
+      "votes": 35500,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "21": {
+   "members": [
+    {
+     "name": "Mary Bradfield",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Mary Bradfield",
+      "party": "Republican",
+      "votes": 17631,
+      "won": true
+     },
+     {
+      "name": "Liz Rosenbaum",
+      "party": "Democratic",
+      "votes": 12646,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Mary Bradfield",
+      "party": "Republican",
+      "votes": 11612,
+      "won": true
+     },
+     {
+      "name": "Kolten Montgomery",
+      "party": "Democratic",
+      "votes": 8277,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "22": {
+   "members": [
+    {
+     "name": "Ken DeGraaf",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Ken Degraaf",
+      "party": "Republican",
+      "votes": 25890,
+      "won": true
+     },
+     {
+      "name": "Michael M Pierson",
+      "party": "Democratic",
+      "votes": 17665,
+      "won": false
+     },
+     {
+      "name": "Daniel Campana",
+      "party": "Other",
+      "votes": 2170,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Kenneth G Degraaf",
+      "party": "Republican",
+      "votes": 20763,
+      "won": true
+     },
+     {
+      "name": "Blake Garner",
+      "party": "Democratic",
+      "votes": 14080,
+      "won": false
+     },
+     {
+      "name": "Michael Giallombardo",
+      "party": "Libertarian",
+      "votes": 1167,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "23": {
+   "members": [
+    {
+     "name": "Monica Irasema Duran",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Monica Irasema Duran",
+      "party": "Democratic",
+      "votes": 31854,
+      "won": true
+     },
+     {
+      "name": "Cory Ohnesorge",
+      "party": "Republican",
+      "votes": 18073,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Monica Irasema Duran",
+      "party": "Democratic",
+      "votes": 26962,
+      "won": true
+     },
+     {
+      "name": "Fred Clifford",
+      "party": "Republican",
+      "votes": 14723,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "24": {
+   "members": [
+    {
+     "name": "Lisa Feret",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Lisa Feret",
+      "party": "Democratic",
+      "votes": 30249,
+      "won": true
+     },
+     {
+      "name": "Gwen Henderson",
+      "party": "Republican",
+      "votes": 23161,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Lindsey N. Daugherty",
+      "party": "Democratic",
+      "votes": 26093,
+      "won": true
+     },
+     {
+      "name": "Bill Patterson",
+      "party": "Republican",
+      "votes": 19281,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "25": {
+   "members": [
+    {
+     "name": "Lisa Cutter",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Tammy Story",
+      "party": "Democratic",
+      "votes": 31327,
+      "won": true
+     },
+     {
+      "name": "George B Mumma Jr",
+      "party": "Republican",
+      "votes": 28790,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Tammy Story",
+      "party": "Democratic",
+      "votes": 25678,
+      "won": true
+     },
+     {
+      "name": "Colin Larson",
+      "party": "Republican",
+      "votes": 24959,
+      "won": false
+     },
+     {
+      "name": "Todd Dennison",
+      "party": "Libertarian",
+      "votes": 1060,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "26": {
+   "members": [
+    {
+     "name": "Meghan Lukens",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Meghan Lukens",
+      "party": "Democratic",
+      "votes": 27188,
+      "won": true
+     },
+     {
+      "name": "Nathan Butler",
+      "party": "Republican",
+      "votes": 20831,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Meghan Lukens",
+      "party": "Democratic",
+      "votes": 21212,
+      "won": true
+     },
+     {
+      "name": "Savannah Wolfson",
+      "party": "Republican",
+      "votes": 18376,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "27": {
+   "members": [
+    {
+     "name": "Brianna Titone",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Brianna Titone",
+      "party": "Democratic",
+      "votes": 30193,
+      "won": true
+     },
+     {
+      "name": "Ed Cox",
+      "party": "Republican",
+      "votes": 22976,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Brianna Titone",
+      "party": "Democratic",
+      "votes": 26380,
+      "won": true
+     },
+     {
+      "name": "Lynn Emrick",
+      "party": "Republican",
+      "votes": 18169,
+      "won": false
+     },
+     {
+      "name": "Jacob Luria",
+      "party": "Libertarian",
+      "votes": 1136,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "28": {
+   "members": [
+    {
+     "name": "Sheila Lieder",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Sheila Lieder",
+      "party": "Democratic",
+      "votes": 26960,
+      "won": true
+     },
+     {
+      "name": "Peter Boddie",
+      "party": "Republican",
+      "votes": 24066,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Sheila Lieder",
+      "party": "Democratic",
+      "votes": 22064,
+      "won": true
+     },
+     {
+      "name": "Dan Montoya",
+      "party": "Republican",
+      "votes": 19821,
+      "won": false
+     },
+     {
+      "name": "Brian Bakkum",
+      "party": "Libertarian",
+      "votes": 898,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "29": {
+   "members": [
+    {
+     "name": "Shannon Bird",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Shannon Bird",
+      "party": "Democratic",
+      "votes": 30163,
+      "won": true
+     },
+     {
+      "name": "Evan Shields Hunt",
+      "party": "Republican",
+      "votes": 19409,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Shannon Bird",
+      "party": "Democratic",
+      "votes": 24632,
+      "won": true
+     },
+     {
+      "name": "Vanessa Demott",
+      "party": "Republican",
+      "votes": 15796,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "30": {
+   "members": [
+    {
+     "name": "Rebekah Stewart",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Rebekah Stewart",
+      "party": "Democratic",
+      "votes": 26647,
+      "won": true
+     },
+     {
+      "name": "Ramey Johnson",
+      "party": "Republican",
+      "votes": 16162,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Chris Kennedy",
+      "party": "Democratic",
+      "votes": 22504,
+      "won": true
+     },
+     {
+      "name": "Russ Carter",
+      "party": "Republican",
+      "votes": 11665,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "31": {
+   "members": [
+    {
+     "name": "Jacque Phillips",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Jacqueline \"\"Jacque\"\" Phillips",
+      "party": "Democratic",
+      "votes": 17221,
+      "won": true
+     },
+     {
+      "name": "Heidi Pitchforth",
+      "party": "Republican",
+      "votes": 13609,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Said Sharbini",
+      "party": "Democratic",
+      "votes": 13461,
+      "won": true
+     },
+     {
+      "name": "Heidi Pitchforth",
+      "party": "Republican",
+      "votes": 9517,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "32": {
+   "members": [
+    {
+     "name": "Manny Rutinel",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Manny Rutinel",
+      "party": "Democratic",
+      "votes": 22853,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Dafna Michaelson Jenet",
+      "party": "Democratic",
+      "votes": 12637,
+      "won": true
+     },
+     {
+      "name": "Justin Brown",
+      "party": "Republican",
+      "votes": 9897,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "33": {
+   "members": [
+    {
+     "name": "Kenny Nguyen",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "William Lindstedt",
+      "party": "Democratic",
+      "votes": 31589,
+      "won": true
+     },
+     {
+      "name": "Michael Martinez",
+      "party": "Republican",
+      "votes": 22332,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "William Lindstedt",
+      "party": "Democratic",
+      "votes": 25549,
+      "won": true
+     },
+     {
+      "name": "Stacie Dougherty",
+      "party": "Republican",
+      "votes": 17884,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "34": {
+   "members": [
+    {
+     "name": "Jenny Willford",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Jenny Willford",
+      "party": "Democratic",
+      "votes": 21326,
+      "won": true
+     },
+     {
+      "name": "Craig Sullivan",
+      "party": "Republican",
+      "votes": 18864,
+      "won": false
+     },
+     {
+      "name": "Alexander \"\"Skinny\"\" Winkler",
+      "party": "Other",
+      "votes": 971,
+      "won": false
+     },
+     {
+      "name": "Mark Bromley",
+      "party": "Other",
+      "votes": 952,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Jenny Willford",
+      "party": "Democratic",
+      "votes": 17601,
+      "won": true
+     },
+     {
+      "name": "Kevin Allen",
+      "party": "Republican",
+      "votes": 14029,
+      "won": false
+     },
+     {
+      "name": "Rob Stutz",
+      "party": "Libertarian",
+      "votes": 908,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "35": {
+   "members": [
+    {
+     "name": "Lorena García",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Lorena Garcia",
+      "party": "Democratic",
+      "votes": 19526,
+      "won": true
+     },
+     {
+      "name": "Lee J Knoll",
+      "party": "Republican",
+      "votes": 10689,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Adrienne Benavidez",
+      "party": "Democratic",
+      "votes": 15077,
+      "won": true
+     },
+     {
+      "name": "Craig Jones",
+      "party": "Republican",
+      "votes": 7779,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "36": {
+   "members": [
+    {
+     "name": "Michael Carter",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Michael Carter",
+      "party": "Democratic",
+      "votes": 21452,
+      "won": true
+     },
+     {
+      "name": "Eric Mulder",
+      "party": "Other",
+      "votes": 8532,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Mike Weissman",
+      "party": "Democratic",
+      "votes": 13736,
+      "won": true
+     },
+     {
+      "name": "William Walters",
+      "party": "Republican",
+      "votes": 7058,
+      "won": false
+     },
+     {
+      "name": "Andrew Gibson",
+      "party": "Libertarian",
+      "votes": 653,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "37": {
+   "members": [
+    {
+     "name": "Chad Clifford",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Chad Clifford",
+      "party": "Democratic",
+      "votes": 31463,
+      "won": true
+     },
+     {
+      "name": "Kevin Biehl",
+      "party": "Other",
+      "votes": 861,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Ruby Dickson",
+      "party": "Democratic",
+      "votes": 23307,
+      "won": true
+     },
+     {
+      "name": "Paul Archer",
+      "party": "Republican",
+      "votes": 18324,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "38": {
+   "members": [
+    {
+     "name": "Gretchen Rydin",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Gretchen Jeannette Rydin",
+      "party": "Democratic",
+      "votes": 29577,
+      "won": true
+     },
+     {
+      "name": "Jeffrey Patty",
+      "party": "Republican",
+      "votes": 24623,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "David Ortiz",
+      "party": "Democratic",
+      "votes": 25765,
+      "won": true
+     },
+     {
+      "name": "Jaylen Mosqueira",
+      "party": "Republican",
+      "votes": 20394,
+      "won": false
+     },
+     {
+      "name": "Brandon L. Mcdowell",
+      "party": "Libertarian",
+      "votes": 1103,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "39": {
+   "members": [
+    {
+     "name": "Brandi Bradley",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Brandi Bradley",
+      "party": "Republican",
+      "votes": 36364,
+      "won": true
+     },
+     {
+      "name": "Eric Brody",
+      "party": "Democratic",
+      "votes": 25305,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Brandi Bradley",
+      "party": "Republican",
+      "votes": 28347,
+      "won": true
+     },
+     {
+      "name": "Eric Brody",
+      "party": "Democratic",
+      "votes": 20475,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "40": {
+   "members": [
+    {
+     "name": "Naquetta Ricks",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Naquetta Ricks",
+      "party": "Democratic",
+      "votes": 24086,
+      "won": true
+     },
+     {
+      "name": "Darryl Gibbs",
+      "party": "Republican",
+      "votes": 17034,
+      "won": false
+     },
+     {
+      "name": "Allison Spink",
+      "party": "Libertarian",
+      "votes": 1446,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Naquetta Ricks",
+      "party": "Democratic",
+      "votes": 20116,
+      "won": true
+     },
+     {
+      "name": "Le Sellers",
+      "party": "Republican",
+      "votes": 12801,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "41": {
+   "members": [
+    {
+     "name": "Iman Jodeh",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Iman Jodeh",
+      "party": "Democratic",
+      "votes": 22124,
+      "won": true
+     },
+     {
+      "name": "Rob Mckenna",
+      "party": "Republican",
+      "votes": 12736,
+      "won": false
+     },
+     {
+      "name": "Keith Porter",
+      "party": "Libertarian",
+      "votes": 1231,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Iman M. Jodeh",
+      "party": "Democratic",
+      "votes": 18544,
+      "won": true
+     },
+     {
+      "name": "Stephanie Hancock",
+      "party": "Republican",
+      "votes": 10426,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "42": {
+   "members": [
+    {
+     "name": "Mandy Lindsay",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Mandy Lindsay",
+      "party": "Democratic",
+      "votes": 18097,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Mandy Lindsay",
+      "party": "Democratic",
+      "votes": 12441,
+      "won": true
+     },
+     {
+      "name": "Cory Parella",
+      "party": "Republican",
+      "votes": 4703,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "43": {
+   "members": [
+    {
+     "name": "Bob Marshall",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Bob Marshall",
+      "party": "Democratic",
+      "votes": 27915,
+      "won": true
+     },
+     {
+      "name": "Matt Burcham",
+      "party": "Republican",
+      "votes": 26542,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "\"\"Robert \\\"\"Bob\\\"\" Marshall\"\"",
+      "party": "Democratic",
+      "votes": 22876,
+      "won": true
+     },
+     {
+      "name": "Kurt Huffman",
+      "party": "Republican",
+      "votes": 22471,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "44": {
+   "members": [
+    {
+     "name": "Tony Hartsook",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Anthony Hartsook",
+      "party": "Republican",
+      "votes": 30957,
+      "won": true
+     },
+     {
+      "name": "Alyssa Nilemo",
+      "party": "Democratic",
+      "votes": 21833,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Anthony Hartsook",
+      "party": "Republican",
+      "votes": 23362,
+      "won": true
+     },
+     {
+      "name": "Bob Henry",
+      "party": "Democratic",
+      "votes": 16333,
+      "won": false
+     },
+     {
+      "name": "John Sutton",
+      "party": "Libertarian",
+      "votes": 1147,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "45": {
+   "members": [
+    {
+     "name": "Max Brooks",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Max Brooks",
+      "party": "Republican",
+      "votes": 35970,
+      "won": true
+     },
+     {
+      "name": "Chad Cox",
+      "party": "Democratic",
+      "votes": 21801,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Lisa Frizell",
+      "party": "Republican",
+      "votes": 27884,
+      "won": true
+     },
+     {
+      "name": "Ruby Martinez",
+      "party": "Democratic",
+      "votes": 17180,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "46": {
+   "members": [
+    {
+     "name": "Tisha Mauro",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Tisha Mauro",
+      "party": "Democratic",
+      "votes": 23823,
+      "won": true
+     },
+     {
+      "name": "Kim Swearingen",
+      "party": "Republican",
+      "votes": 21746,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Tisha Lyn Mauro",
+      "party": "Democratic",
+      "votes": 20197,
+      "won": true
+     },
+     {
+      "name": "Jonathan Ambler",
+      "party": "Republican",
+      "votes": 17214,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "47": {
+   "members": [
+    {
+     "name": "Ty Winter",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Ty S Winter",
+      "party": "Republican",
+      "votes": 29899,
+      "won": true
+     },
+     {
+      "name": "Elizabeth Bulthuis",
+      "party": "Democratic",
+      "votes": 14580,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Ty Winter",
+      "party": "Republican",
+      "votes": 23722,
+      "won": true
+     },
+     {
+      "name": "Edwin Dean Ormiston",
+      "party": "Democratic",
+      "votes": 12874,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "48": {
+   "members": [
+    {
+     "name": "Carlos Barron",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Carlos Barron",
+      "party": "Republican",
+      "votes": 32520,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Gabe Evans",
+      "party": "Republican",
+      "votes": 20011,
+      "won": true
+     },
+     {
+      "name": "Spring Erickson",
+      "party": "Democratic",
+      "votes": 10730,
+      "won": false
+     },
+     {
+      "name": "Eric E. Joss",
+      "party": "Libertarian",
+      "votes": 866,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "49": {
+   "members": [
+    {
+     "name": "Lesley Smith",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Lesley Smith",
+      "party": "Democratic",
+      "votes": 36669,
+      "won": true
+     },
+     {
+      "name": "Steve Ferrante",
+      "party": "Republican",
+      "votes": 20797,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Judy Amabile",
+      "party": "Democratic",
+      "votes": 33326,
+      "won": true
+     },
+     {
+      "name": "Kathryn Lehr",
+      "party": "Republican",
+      "votes": 17186,
+      "won": false
+     },
+     {
+      "name": "Daniel Lutz",
+      "party": "Libertarian",
+      "votes": 1306,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "50": {
+   "members": [
+    {
+     "name": "Ryan Gonzalez",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Ryan Gonzalez",
+      "party": "Republican",
+      "votes": 13233,
+      "won": true
+     },
+     {
+      "name": "Mary Young",
+      "party": "Democratic",
+      "votes": 12670,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Mary Young",
+      "party": "Democratic",
+      "votes": 8616,
+      "won": true
+     },
+     {
+      "name": "Ryan Gonzalez",
+      "party": "Republican",
+      "votes": 8286,
+      "won": false
+     },
+     {
+      "name": "Kyle Moore",
+      "party": "Libertarian",
+      "votes": 615,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "51": {
+   "members": [
+    {
+     "name": "Ron Weinberg",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Ron Weinberg",
+      "party": "Republican",
+      "votes": 28460,
+      "won": true
+     },
+     {
+      "name": "Sarah Mckeen",
+      "party": "Democratic",
+      "votes": 25628,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Hugh Mckean",
+      "party": "Republican",
+      "votes": 26542,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "52": {
+   "members": [
+    {
+     "name": "Yara Zokaie",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Yara Zokaie",
+      "party": "Democratic",
+      "votes": 31167,
+      "won": true
+     },
+     {
+      "name": "Steve Yurash",
+      "party": "Other",
+      "votes": 18088,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Cathy Kipp",
+      "party": "Democratic",
+      "votes": 28183,
+      "won": true
+     },
+     {
+      "name": "\"\"Deborah \\\"\"Dee Dee\\\"\" Vicino\"\"",
+      "party": "Republican",
+      "votes": 15282,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "53": {
+   "members": [
+    {
+     "name": "Andy Boesenecker",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Andy Boesenecker",
+      "party": "Democratic",
+      "votes": 31875,
+      "won": true
+     },
+     {
+      "name": "Donna Walter",
+      "party": "Republican",
+      "votes": 11479,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Andrew Boesenecker",
+      "party": "Democratic",
+      "votes": 25934,
+      "won": true
+     },
+     {
+      "name": "Donna Walter",
+      "party": "Republican",
+      "votes": 8224,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "54": {
+   "members": [
+    {
+     "name": "Matt Soper",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Matt Soper",
+      "party": "Republican",
+      "votes": 41811,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Matt Soper",
+      "party": "Republican",
+      "votes": 31026,
+      "won": true
+     },
+     {
+      "name": "Alicemarie Slaven-Emond",
+      "party": "Democratic",
+      "votes": 11013,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "55": {
+   "members": [
+    {
+     "name": "Rick Taggart",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Rick Taggart",
+      "party": "Republican",
+      "votes": 36085,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Rick Taggart",
+      "party": "Republican",
+      "votes": 25411,
+      "won": true
+     },
+     {
+      "name": "Damon Davis",
+      "party": "Democratic",
+      "votes": 14536,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "56": {
+   "members": [
+    {
+     "name": "Chris Richardson",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Chris Richardson",
+      "party": "Republican",
+      "votes": 42014,
+      "won": true
+     },
+     {
+      "name": "Alessandra A Navetta",
+      "party": "Democratic",
+      "votes": 13475,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Rod Bockenfeld",
+      "party": "Republican",
+      "votes": 33608,
+      "won": true
+     },
+     {
+      "name": "Kathleen J. Conway",
+      "party": "Democratic",
+      "votes": 9495,
+      "won": false
+     },
+     {
+      "name": "Amy Lunde",
+      "party": "Libertarian",
+      "votes": 1218,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "57": {
+   "members": [
+    {
+     "name": "Elizabeth Velasco",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Elizabeth Velasco",
+      "party": "Democratic",
+      "votes": 24604,
+      "won": true
+     },
+     {
+      "name": "Caleb Waller",
+      "party": "Republican",
+      "votes": 19494,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Elizabeth Velasco",
+      "party": "Democratic",
+      "votes": 19885,
+      "won": true
+     },
+     {
+      "name": "Perry Will",
+      "party": "Republican",
+      "votes": 17033,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "58": {
+   "members": [
+    {
+     "name": "Larry Suckla",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Larry Don Suckla",
+      "party": "Republican",
+      "votes": 30170,
+      "won": true
+     },
+     {
+      "name": "Kathleen Curry",
+      "party": "Democratic",
+      "votes": 25100,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Marc Catlin",
+      "party": "Republican",
+      "votes": 26289,
+      "won": true
+     },
+     {
+      "name": "Kevin Stanley Kuns",
+      "party": "Democratic",
+      "votes": 19996,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "59": {
+   "members": [
+    {
+     "name": "Katie Stewart",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Katie Stewart",
+      "party": "Democratic",
+      "votes": 27918,
+      "won": true
+     },
+     {
+      "name": "Clark Craig",
+      "party": "Republican",
+      "votes": 26599,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Barbara Mclachlan",
+      "party": "Democratic",
+      "votes": 26436,
+      "won": true
+     },
+     {
+      "name": "Shelli Shaw",
+      "party": "Republican",
+      "votes": 20139,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "60": {
+   "members": [
+    {
+     "name": "Stephanie Luck",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Stephanie Luck",
+      "party": "Republican",
+      "votes": 36518,
+      "won": true
+     },
+     {
+      "name": "Kathryn Green",
+      "party": "Democratic",
+      "votes": 15826,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Stephanie Luck",
+      "party": "Republican",
+      "votes": 29800,
+      "won": true
+     },
+     {
+      "name": "Kathryn Green",
+      "party": "Democratic",
+      "votes": 13526,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "61": {
+   "members": [
+    {
+     "name": "Eliza Hamrick",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Eliza Hamrick",
+      "party": "Democratic",
+      "votes": 32799,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Eliza Hamrick",
+      "party": "Democratic",
+      "votes": 20947,
+      "won": true
+     },
+     {
+      "name": "Dave Woolever",
+      "party": "Republican",
+      "votes": 19775,
+      "won": false
+     },
+     {
+      "name": "Kevin Gulbranson",
+      "party": "Libertarian",
+      "votes": 876,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "62": {
+   "members": [
+    {
+     "name": "Matt Martinez",
+     "party": "Democratic"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Matthew Martinez",
+      "party": "Democratic",
+      "votes": 21050,
+      "won": true
+     },
+     {
+      "name": "Carol Riggenbach",
+      "party": "Republican",
+      "votes": 18109,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Matthew Martinez",
+      "party": "Democratic",
+      "votes": 17304,
+      "won": true
+     },
+     {
+      "name": "Carol Riggenbach",
+      "party": "Republican",
+      "votes": 13812,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "63": {
+   "members": [
+    {
+     "name": "Dusty Johnson",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Dusty A Johnson",
+      "party": "Republican",
+      "votes": 36930,
+      "won": true
+     }
+    ],
+    "contested": false
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Richard Holtorf",
+      "party": "Republican",
+      "votes": 29793,
+      "won": true
+     }
+    ],
+    "contested": false
+   }
+  },
+  "64": {
+   "members": [
+    {
+     "name": "Scott Slaugh",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Ryan Armagost",
+      "party": "Republican",
+      "votes": 34463,
+      "won": true
+     },
+     {
+      "name": "Mark K Matthews",
+      "party": "Democratic",
+      "votes": 19810,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Ryan Armagost",
+      "party": "Republican",
+      "votes": 25216,
+      "won": true
+     },
+     {
+      "name": "Richard Webster",
+      "party": "Democratic",
+      "votes": 15033,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  },
+  "65": {
+   "members": [
+    {
+     "name": "Lori Garcia Sander",
+     "party": "Republican"
+    }
+   ],
+   "race": {
+    "election": "2024 general",
+    "candidates": [
+     {
+      "name": "Lori Garcia Sander",
+      "party": "Republican",
+      "votes": 38882,
+      "won": true
+     },
+     {
+      "name": "Will Walters",
+      "party": "Democratic",
+      "votes": 23101,
+      "won": false
+     }
+    ],
+    "contested": true
+   },
+   "previous": {
+    "election": "2022 general",
+    "candidates": [
+     {
+      "name": "Mike Lynch",
+      "party": "Republican",
+      "votes": 29328,
+      "won": true
+     },
+     {
+      "name": "Lisa Chollet",
+      "party": "Democratic",
+      "votes": 17664,
+      "won": false
+     }
+    ],
+    "contested": true
+   }
+  }
+ }
+}

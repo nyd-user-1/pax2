@@ -43,6 +43,9 @@ def features():
         # Word-level timings stay in S3; the app needs the transcript text and per-second series.
         if isinstance(f.get("transcript"), dict):
             f["transcript"]["words"] = [{"t": w["t"], "w": w["w"]} for w in f["transcript"].get("words", [])]
+        # Shots and on-screen text came from a service the pipeline no longer runs; older files still carry them.
+        f.pop("shots", None)
+        f.pop("onScreenText", None)
         allf[f["take"]] = f
     write("features.json", allf)
 
