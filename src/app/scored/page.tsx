@@ -101,7 +101,7 @@ export default async function HomePage() {
         </ChartBlock>
       )}
 
-      <p className="text-xs text-slate-400">Stand-in videos and results until Parallax&apos;s own arrive.</p>
+      <p className="text-xs text-slate-400">Stand-in videos and results until the partner&apos;s own arrive.</p>
     </div>
   )
 }

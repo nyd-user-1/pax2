@@ -4,8 +4,8 @@
 export type SourceRow = { name: string; href: string; publisher: string; kind: string; covers: string; runsOn: string; status: "Loaded" | "Stand-in" | "Not connected" }
 
 export const NOT_CONNECTED: SourceRow[] = [
-  { name: "Parallax's Ads Manager export", href: "/evals", publisher: "Meta Ads Manager", kind: "Paid results", covers: "The partner's real flights: spend, impressions, plays, watch time, actions", runsOn: "Load Data", status: "Stand-in" },
-  { name: "Parallax's videos", href: "/pipeline", publisher: "Parallax", kind: "Video", covers: "The partner's own takes, in place of the synthetic eleven", runsOn: "S3 · worker box", status: "Stand-in" },
+  { name: "The partner's Ads Manager export", href: "/evals", publisher: "Meta Ads Manager", kind: "Paid results", covers: "The partner's real flights: spend, impressions, plays, watch time, actions", runsOn: "Load Data", status: "Stand-in" },
+  { name: "The partner's videos", href: "/pipeline", publisher: "The partner", kind: "Video", covers: "The partner's own takes, in place of the synthetic eleven", runsOn: "S3 · worker box", status: "Stand-in" },
   { name: "Meta Ad Library", href: "https://www.facebook.com/ads/library/api", publisher: "Meta", kind: "Ad libraries", covers: "Every Question 3 ad on Facebook and Instagram", runsOn: "—", status: "Not connected" },
   { name: "Meta Marketing API", href: "https://developers.facebook.com/docs/marketing-api/insights", publisher: "Meta", kind: "Paid results", covers: "Results pulled directly, without a CSV", runsOn: "—", status: "Not connected" },
   { name: "TikTok Research API", href: "https://developers.tiktok.com/products/research-api/", publisher: "TikTok", kind: "Video", covers: "Reform campaigns' TikTok videos and counts", runsOn: "—", status: "Not connected" },
@@ -34,7 +34,7 @@ export const PAGES: PageTile[] = [
     what: "The current round at a glance: what to do next, the scored videos in a row, and how each framing is doing.",
     how: "Reads the workspace's loaded rounds from the ledger and scores every video against the frozen reference; Next up is built from what is missing (a round to load, a reading to ask for, a call to make).",
     when: "First thing each round: see what changed and what needs doing.",
-    wrong: ["Every score comes from stand-in results until Parallax's export is loaded."],
+    wrong: ["Every score comes from stand-in results until the partner's export is loaded."],
     better: ["Show what changed since the last visit.", "Volunteer videos in the row once uploads are analyzed."],
   },
   {
@@ -59,7 +59,7 @@ export const PAGES: PageTile[] = [
     how: "Each card is a video with its latest score; a card opens its version page in a drawer.",
     when: "To compare versions of the same script, or find the strongest messenger.",
     wrong: ["The videos are synthetic: Polly voices over stock footage."],
-    better: ["Parallax's own videos and volunteers' uploads in the same grid."],
+    better: ["The partner's own videos and volunteers' uploads in the same grid."],
   },
   {
     href: "/v/listen-stephen",

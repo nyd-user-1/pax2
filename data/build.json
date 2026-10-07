@@ -112,7 +112,7 @@
         },
         {
           "title": "Design pass",
-          "detail": "Parallax layout in red, white and blue from GovBlock forecast colors"
+          "detail": "Hermes layout in red, white and blue from GovBlock forecast colors"
         },
         {
           "title": "Design pass 1",
@@ -178,8 +178,8 @@
           "detail": "Brendan disagrees with much of the current statement of the Resonance score, the PAX AI experience and the ledger; to discuss before more is built on them."
         },
         {
-          "title": "Parallax's videos and Ads Manager export",
-          "detail": "Not available from Parallax yet (2026-10-04). When they arrive: upload the export on Reviews; drop videos in s3://pax-638175140432/videos/ and run worker/analyze.py"
+          "title": "The partner's videos and Ads Manager export",
+          "detail": "Not available from the partner yet (2026-10-04). When they arrive: upload the export on Reviews; drop videos in s3://pax-638175140432/videos/ and run worker/analyze.py"
         },
         {
           "title": "The Question 3 campaign's shorts",
@@ -190,8 +190,8 @@
           "detail": "Brendan is setting it up (2026-10-04): confirm identity at facebook.com/ID, then a developer account at developers.facebook.com; the deliverable is an access token for the ads_archive endpoint"
         },
         {
-          "title": "Ask Parallax the four questions",
-          "detail": "Asked; Parallax has no answers yet (2026-10-04). The questions stand: what Resonance measures, how many labeled pieces, holdout accuracy, any control-group validation"
+          "title": "Ask the partner the four questions",
+          "detail": "Asked; the partner has no answers yet (2026-10-04). The questions stand: what Resonance measures, how many labeled pieces, holdout accuracy, any control-group validation"
         }
       ]
     },

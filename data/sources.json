@@ -90,11 +90,11 @@
     "link": "https://www.facebook.com/ads/library/api"
   },
   {
-    "name": "Meta Marketing API (Parallax's account)",
+    "name": "Meta Marketing API (the partner's account)",
     "what": "Full metrics for their own ads: 3-second plays, ThruPlays, quartiles, watch time, shares, saves",
     "use": "Replaces the stand-in results; the Reviews page already reads this export format",
     "status": "action",
-    "action": "Parallax supplies the export or read access",
+    "action": "The partner supplies the export or read access",
     "link": "https://developers.facebook.com/docs/marketing-api/insights"
   },
   {

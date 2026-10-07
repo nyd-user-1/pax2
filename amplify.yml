@@ -9,6 +9,8 @@ frontend:
       commands:
         # The server reads AWS through the compute role; these only name the resources.
         - printf 'PAX_REGION=us-east-1\nPAX_BUCKET=pax-638175140432\nPAX_LEDGER_TABLE=pax-ledger\n' > .env.production
+        # Sign-in and admin settings come from the Amplify app's environment; the server only sees them through .env.production.
+        - env | grep -E '^(PAX_COGNITO_CLIENT_ID|PAX_COGNITO_POOL_ID|ADMIN_EMAILS)=' >> .env.production
         - npx next build
   artifacts:
     baseDirectory: .next

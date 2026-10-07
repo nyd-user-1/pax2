@@ -65,7 +65,7 @@ export function ScoreFigure({ value, low, high, status, size = "lg" }: { value: 
 export function StandInNote({ className }: { className?: string }) {
   return (
     <p className={cn("rounded-lg border border-pax-red/20 bg-pax-red-soft/50 px-3 py-2 text-xs leading-relaxed text-pax-red-deep", className)}>
-      Stand-in records until Parallax&apos;s export arrives: the takes are synthetic readings of the library scripts and the paid results are generated in Meta&apos;s export format. Upload the real export on Reviews and every screen recalculates from it.
+      Stand-in records until the partner&apos;s export arrives: the takes are synthetic readings of the library scripts and the paid results are generated in Meta&apos;s export format. Upload the real export on Reviews and every screen recalculates from it.
     </p>
   )
 }
