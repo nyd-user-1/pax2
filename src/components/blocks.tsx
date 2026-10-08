@@ -41,17 +41,19 @@ export type BlockProps = {
   height?: string
   /** The block's footer line: when its data was last run or read. */
   footer?: React.ReactNode
+  /** What stays showing when the block is collapsed (the first rows of a stats grid); nothing by default. */
+  peek?: React.ReactNode
   /** Anchor id when the slugged title shouldn't be it. */
   id?: string
   className?: string
 }
 
-export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, footer, height, id, className }: BlockProps) {
+export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, footer, height, peek, id, className }: BlockProps) {
   const [open, setOpen] = React.useState(defaultOpen)
   return (
     <PaxTable2 value={searchValue} onChange={onSearch}>
       <Card className={cn("gap-4", open && height !== "auto" && (height ?? BLOCK_HEIGHT), className)}>
-        <CardHeader className={cn(open && "border-b [.border-b]:pb-2")}>
+        <CardHeader className={cn((open || peek) && "border-b [.border-b]:pb-2")}>
           <div className="flex items-center gap-1">
             <CardAnchor id={id}>{title}</CardAnchor>
             {tools}
@@ -66,6 +68,7 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
             </CardTools>
           </CardAction>
         </CardHeader>
+        {!open && peek && <CardContent>{peek}</CardContent>}
         {open && <CardContent className="min-h-0 flex-1 overflow-y-auto [&_[data-slot=table-container]]:overflow-visible [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10 [&_thead]:bg-card">{children}</CardContent>}
         {open && footer && <CardFooter className="bg-transparent py-3 text-xs text-muted-foreground">{footer}</CardFooter>}
       </Card>

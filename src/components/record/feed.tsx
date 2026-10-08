@@ -5,8 +5,9 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ChevronDown, ChevronUp, Search, Star, X } from "lucide-react"
+import { ChevronDown, ChevronUp, Clock, MessagesSquare, PanelLeftClose, PanelLeftOpen, Search, Star, X } from "lucide-react"
 
+import { useShellPanel } from "@/components/shell"
 import { cn } from "@/ui/lib/utils"
 
 export type FeedVideo = {
@@ -123,7 +124,7 @@ function Avatar({ id }: { id: string }) {
 
 /** A full-width result row: landscape thumbnail, then title, meta, channel and
  *  the first line of the description. */
-function ListRow({ v }: { v: FeedVideo }) {
+export function ListRow({ v }: { v: FeedVideo }) {
   return (
     <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-black/10 before:bg-black/5 before:opacity-0 before:transition-opacity before:duration-200 hover:before:opacity-100 flex flex-col gap-3 sm:flex-row sm:gap-5">
       <div className="relative w-full shrink-0 overflow-hidden rounded-xl bg-slate-200 sm:w-[340px] md:w-[400px]">
@@ -145,6 +146,37 @@ function ListRow({ v }: { v: FeedVideo }) {
   )
 }
 
+/** One vertical Shorts card. */
+export function ShortCard({ v }: { v: FeedVideo }) {
+  return (
+    <Link href={`/v/yt-${v.id}`} className="group flex flex-col gap-1.5">
+      <div className="relative overflow-hidden rounded-xl bg-slate-200">
+        <HoverThumb v={v} aspect="aspect-[9/16]" />
+        <Score v={v} />
+        <Favorite id={v.id} />
+      </div>
+      <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-pax-plum">{v.title}</p>
+      <p className="tabular text-xs text-slate-500">{fmt.format(v.views)} views</p>
+    </Link>
+  )
+}
+
+/** One medium landscape card, as in the three-across band. */
+export function LandscapeCard({ v }: { v: FeedVideo }) {
+  return (
+    <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-black/10 before:bg-black/5 before:opacity-0 before:transition-opacity before:duration-200 hover:before:opacity-100 flex flex-col gap-2">
+      <div className="relative overflow-hidden rounded-xl bg-slate-200">
+        <HoverThumb v={v} aspect="aspect-video" />
+        <Score v={v} />
+        <Favorite id={v.id} />
+        <span className="tabular pointer-events-none absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
+      </div>
+      <p className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
+      <p className="tabular text-xs text-slate-500">{v.channel} · {fmt.format(v.views)} views</p>
+    </Link>
+  )
+}
+
 /** The Shorts shelf: a row of vertical cards, a second row behind Show more, and YouTube's
  *  rule-and-pill separator before the landscape rows resume. */
 function ShortsShelf({ items }: { items: FeedVideo[] }) {
@@ -156,15 +188,7 @@ function ShortsShelf({ items }: { items: FeedVideo[] }) {
       </span>
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6">
         {items.slice(0, more ? items.length : 6).map((v) => (
-          <Link key={v.id} href={`/v/yt-${v.id}`} className="group flex flex-col gap-1.5">
-            <div className="relative overflow-hidden rounded-xl bg-slate-200">
-              <HoverThumb v={v} aspect="aspect-[9/16]" />
-              <Score v={v} />
-              <Favorite id={v.id} />
-            </div>
-            <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-pax-plum">{v.title}</p>
-            <p className="tabular text-xs text-slate-500">{fmt.format(v.views)} views</p>
-          </Link>
+          <ShortCard key={v.id} v={v} />
         ))}
       </div>
       {items.length > 6 && (
@@ -188,16 +212,7 @@ function Trio({ items }: { items: FeedVideo[] }) {
   return (
     <div className="grid gap-8 sm:grid-cols-3">
       {items.map((v) => (
-        <Link key={v.id} href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-black/10 before:bg-black/5 before:opacity-0 before:transition-opacity before:duration-200 hover:before:opacity-100 flex flex-col gap-2">
-          <div className="relative overflow-hidden rounded-xl bg-slate-200">
-            <HoverThumb v={v} aspect="aspect-video" />
-            <Score v={v} />
-            <Favorite id={v.id} />
-            <span className="tabular pointer-events-none absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
-          </div>
-          <p className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
-          <p className="tabular text-xs text-slate-500">{v.channel} · {fmt.format(v.views)} views</p>
-        </Link>
+        <LandscapeCard key={v.id} v={v} />
       ))}
     </div>
   )
@@ -232,14 +247,127 @@ function Cycle({ items }: { items: FeedVideo[] }) {
   return <>{blocks}</>
 }
 
-const RETURN = "hermes:feed-return"
+/** Every word has to appear somewhere in the title, channel or description, in any order. */
+export const matches = (v: FeedVideo, needle: string) => needle.split(/\s+/).filter(Boolean).every((w) => `${v.title} ${v.channel} ${v.description}`.toLowerCase().includes(w))
 
-export function Feed({ videos }: { videos: FeedVideo[] }) {
+const RETURN = "hermes:feed-return"
+const RECENT = "hermes:recent-searches"
+
+/** The search bar, with the reader's recent searches dropping down beneath it while it's empty
+ *  (govblock's search drop-down). A search is remembered on Enter. */
+export function SearchBar({ q, setQ, placeholder = "Search videos" }: { q: string; setQ: (q: string) => void; placeholder?: string }) {
+  const [open, setOpen] = React.useState(false)
+  const [recent, setRecent] = React.useState<string[]>([])
+  const input = React.useRef<HTMLInputElement>(null)
+  React.useEffect(() => setRecent(JSON.parse(localStorage.getItem(RECENT) ?? "[]") as string[]), [])
+  const save = (next: string[]) => {
+    setRecent(next)
+    localStorage.setItem(RECENT, JSON.stringify(next))
+  }
+  const submit = () => {
+    const term = q.trim()
+    if (term.length >= 2) save([term, ...recent.filter((r) => r !== term)].slice(0, 8))
+    input.current?.blur()
+  }
+  const run = (term: string) => {
+    setQ(term)
+    save([term, ...recent.filter((r) => r !== term)].slice(0, 8))
+    setOpen(false)
+    input.current?.blur()
+  }
+  return (
+    <div
+      className="relative w-full"
+      onFocusCapture={() => setOpen(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpen(false)
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") setOpen(false)
+      }}
+    >
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          submit()
+        }}
+        className="flex h-11 items-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-e1 transition-shadow focus-within:shadow-e2"
+      >
+        <input
+          ref={input}
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder={placeholder}
+          aria-label={placeholder}
+          className="h-full min-w-0 flex-1 bg-transparent px-5 text-[15px] text-slate-900 outline-none placeholder:text-slate-400"
+        />
+        {q !== "" && (
+          <button type="button" aria-label="Clear search" onClick={() => setQ("")} className="flex h-full items-center px-2 text-slate-400 hover:text-slate-700">
+            <X className="size-4" />
+          </button>
+        )}
+        <button type="submit" aria-label="Search" className="flex h-full items-center border-l border-slate-200 bg-pax-mist px-5 text-slate-500">
+          <Search className="size-4" />
+        </button>
+      </form>
+      {open && q === "" && recent.length > 0 && (
+        <div className="absolute inset-x-0 top-full z-50 mt-2 overflow-hidden rounded-xl border bg-white text-left shadow-lg" onMouseDown={(e) => e.preventDefault()}>
+          <div className="max-h-[min(28rem,60svh)] overflow-y-auto p-4">
+            <h2 className="text-sm font-medium text-muted-foreground">
+              Recent searches <span className="tabular">({recent.length})</span>
+            </h2>
+            <ul className="mt-2 flex flex-col">
+              {recent.map((term) => (
+                <li key={term} className="group border-b py-0.5 last:border-0">
+                  <div className="-mx-2 flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-muted hover:text-foreground">
+                    <button type="button" onClick={() => run(term)} className="flex min-w-0 flex-1 items-center gap-2.5 text-left text-sm">
+                      <Clock className="size-4 shrink-0 text-muted-foreground" />
+                      <span className="truncate">{term}</span>
+                    </button>
+                    <button
+                      type="button"
+                      aria-label={`Forget ${term}`}
+                      onClick={() => save(recent.filter((r) => r !== term))}
+                      className="shrink-0 rounded p-1 text-muted-foreground opacity-0 hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100 sm:opacity-100"
+                    >
+                      <X className="size-3.5" />
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+/** Signed in, the feed's bar is the page's header: the sidebar toggle where the wordmark stood,
+ *  the search in the middle, and the discussion where Sign up stood. */
+function FeedHeader({ children }: { children: React.ReactNode }) {
+  const { sidebarOpen, toggleSidebar, discuss, toggleDiscuss } = useShellPanel()
+  return (
+    <div className="sticky top-0 z-40 flex items-center gap-4 border-b border-slate-200/70 bg-white/85 px-5 py-3 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)] backdrop-blur">
+      <button type="button" onClick={toggleSidebar} aria-label="Toggle sidebar" className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white text-pax-ink shadow-e1 transition-shadow hover:shadow-e2">
+        {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
+      </button>
+      <div className="mx-auto w-full max-w-2xl">{children}</div>
+      <button type="button" onClick={toggleDiscuss} aria-pressed={discuss} aria-label="Open the discussion" className="flex size-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-colors hover:bg-slate-50">
+        <MessagesSquare className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
+      </button>
+    </div>
+  )
+}
+
+export function Feed({ videos, signedIn = false }: { videos: FeedVideo[]; signedIn?: boolean }) {
   const [q, setQ] = React.useState("")
   const [cycles, setCycles] = React.useState(1)
   const sentinel = React.useRef<HTMLDivElement>(null)
   const section = React.useRef<HTMLElement>(null)
-  const landing = usePathname() === "/"
+  const path = usePathname()
+  const landing = path === "/" && !signedIn
+  const header = path === "/" && signedIn
 
   // Opening a video from the landing remembers where the reader was; coming back puts them there
   // again — never above the point where the search bar sticks.
@@ -260,7 +388,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   }, [landing])
 
   const needle = q.trim().toLowerCase()
-  const shown = needle ? videos.filter((v) => `${v.title} ${v.channel} ${v.description}`.toLowerCase().includes(needle)) : videos
+  const shown = needle ? videos.filter((v) => matches(v, needle)) : videos
 
   // The catalog is finite; the page isn't. Each time the spinner comes into
   // view another rotated pass appends, so the feed reads as endless.
@@ -275,42 +403,35 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   }, [needle])
 
   return (
-    <section ref={section} onClickCapture={remember} className="mx-auto w-full max-w-6xl px-6 pb-16">
-      <div className="sticky top-2.5 z-40 mx-auto w-full max-w-2xl">
-        <label className="flex h-11 items-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-e1 transition-shadow focus-within:shadow-e2">
-          <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Search videos"
-            aria-label="Search videos"
-            className="h-full min-w-0 flex-1 bg-transparent px-5 text-[15px] text-slate-900 outline-none placeholder:text-slate-400"
-          />
-          {q !== "" && (
-            <button type="button" aria-label="Clear search" onClick={() => setQ("")} className="flex h-full items-center px-2 text-slate-400 hover:text-slate-700">
-              <X className="size-4" />
-            </button>
-          )}
-          <span className="flex h-full items-center border-l border-slate-200 bg-pax-mist px-5 text-slate-500">
-            <Search className="size-4" />
-          </span>
-        </label>
-      </div>
-
-      <div className="flex flex-col gap-10 pt-10">
-        {shown.length === 0 ? (
-          <p className="py-16 text-center text-slate-500">Nothing matches &ldquo;{q}&rdquo;.</p>
-        ) : needle ? (
-          <Cycle items={shown} />
-        ) : (
-          Array.from({ length: cycles }, (_, c) => <Cycle key={c} items={rotate(shown, c * 7)} />)
-        )}
-      </div>
-
-      {!needle && shown.length > 0 && (
-        <div ref={sentinel} className="flex justify-center py-12">
-          <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-pax-ink" />
-        </div>
+    <>
+      {header && (
+        <FeedHeader>
+          <SearchBar q={q} setQ={setQ} />
+        </FeedHeader>
       )}
-    </section>
+      <section ref={section} onClickCapture={remember} className={cn("mx-auto w-full max-w-6xl px-6 pb-16", header && "pt-6")}>
+        {!header && (
+          <div className="sticky top-2.5 z-40 mx-auto w-full max-w-2xl">
+            <SearchBar q={q} setQ={setQ} />
+          </div>
+        )}
+
+        <div className="flex flex-col gap-10 pt-10">
+          {shown.length === 0 ? (
+            <p className="py-16 text-center text-slate-500">Nothing matches &ldquo;{q}&rdquo;.</p>
+          ) : needle ? (
+            <Cycle items={shown} />
+          ) : (
+            Array.from({ length: cycles }, (_, c) => <Cycle key={c} items={rotate(shown, c * 7)} />)
+          )}
+        </div>
+
+        {!needle && shown.length > 0 && (
+          <div ref={sentinel} className="flex justify-center py-12">
+            <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-pax-ink" />
+          </div>
+        )}
+      </section>
+    </>
   )
 }

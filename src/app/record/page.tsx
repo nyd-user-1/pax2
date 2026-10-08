@@ -8,6 +8,7 @@ import { LandingHeader } from "@/components/record/landing-header"
 import { LandingOnly } from "@/components/record/landing-only"
 import { PhoneMock } from "@/components/record/phone-mock"
 import { ScrollCue, ScrollTop } from "@/components/record/scroll-cue"
+import { currentUser } from "@/lib/auth"
 
 export const metadata = { title: "Record a video" }
 
@@ -21,10 +22,12 @@ const timerOf = (iso: string) => {
   return `${(m?.[1] ?? "0").padStart(2, "0")}:${(m?.[2] ?? "0").padStart(2, "0")}`
 }
 
-export default function RecordLanding() {
+export default async function RecordLanding() {
   const all = (shorts as unknown as { videos: RawVideo[] }).videos
   const top = all.filter((v) => v.channelId === FAIRVOTE).sort((a, b) => (b.views ?? 0) - (a.views ?? 0))[0]
   const feed = homeFeed as FeedVideo[]
+  // Signed in, the hero has done its job: the feed is the page.
+  if (await currentUser()) return <Feed videos={feed} signedIn />
   return (
     <div className="bg-pax-mist">
       <LandingOnly>

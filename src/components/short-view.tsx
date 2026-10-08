@@ -1,17 +1,31 @@
+import katex from "katex"
+import "katex/dist/katex.min.css"
+import * as React from "react"
+import type { ReactNode } from "react"
 import Link from "next/link"
 
-import deliveryJson from "../../data/generated/delivery.json"
+import subscribers from "../../data/generated/channel-subscribers.json"
+import samplePaid from "../../data/sample/paid.json"
 import homeFeed from "../../data/generated/home-feed.json"
 import shorts from "../../data/raw/yt-shorts.json"
 import { RangeBar } from "@/components/bits"
-import { Fold } from "@/components/fold"
+import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, TableBlock } from "@/components/blocks"
+import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
+import { HitsScatter, TIER } from "@/components/hits-scatter"
+import { FormulaExplainer } from "@/components/formula-explainer"
 import { ReadingPanel } from "@/components/reading-panel"
 import { Term } from "@/components/term"
+import { SignupGate } from "@/components/signup-gate"
+import { TagChip } from "@/components/tag-chip"
 import { ScoreInfo } from "@/components/ui-pax"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
+import { currentUser } from "@/lib/auth"
 import { featuresFor, type Features } from "@/lib/catalog"
+import { EXPLAIN, FORMULAS } from "@/lib/formulas"
 import { channelById, secs } from "@/lib/channels"
+import { labVideos, type Tier } from "@/lib/lab"
 import { COMPONENTS } from "@/lib/resonance"
+import { tagsFor } from "@/lib/tags"
 import { cn } from "@/ui/lib/utils"
 
 type Yt = { fetchedAt: string; videos: { id: string; channelId: string; channel: string; title: string; published: string; duration: string; views: number | null; likes: number | null; comments: number | null }[] }
@@ -22,6 +36,18 @@ const COMPACT = new Intl.NumberFormat("en-US", { notation: "compact", maximumFra
 const KPI_ROWS = ["Counts", "Rate", "Ref. avg", "Weighted", "Distance", "Score", "Weight"]
 const KPI_TERMS: Record<string, string> = { Counts: "counts", Rate: "rate", "Ref. avg": "reference-average", Weighted: "weighted-rate", Distance: "distance", Score: "component-score", Weight: "weight" }
 const WINDOW_ROWS = ["Spend", "Impressions", "Reach", "3s plays", "ThruPlays", "25% play", "50% play", "75% play", "100% play", "Avg. Time", "Shares", "Saves", "Comments", "Reactions", "Clicks", "CTA"]
+
+/** Signed out, everything past the public counts is locked: each block keeps its header, what's inside
+ *  it blurs — the shape of the read shows through, the numbers don't — and nothing in it can be clicked.
+ *  Signed in, the blocks stand open. */
+function Locked({ locked, children }: { locked: boolean; children: ReactNode }) {
+  if (!locked) return children
+  return (
+    <div inert className="select-none [&_[data-slot=card-content]]:blur-[3px] [&_[data-slot=card-footer]]:blur-[3px]">
+      {children}
+    </div>
+  )
+}
 
 /** Timed sentence lines from the transcript's word timings. */
 function transcriptLines(f: Features | undefined) {
@@ -38,13 +64,20 @@ function transcriptLines(f: Features | undefined) {
 }
 
 /** A campaign short in the take panel's exact shape; counts PAX does not hold read as a dash. */
-export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
-  const delivery = (deliveryJson as unknown as { videos: Record<string, { energy?: string; vocalTone?: string[]; mode?: string; frame?: string; sarcasm?: { present?: boolean; cue?: string } }> }).videos[id]
+export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
   const ytId = id.replace(/^yt-/, "")
   const data = shorts as unknown as Yt
   const v = data.videos.find((x) => x.id === ytId) ?? (homeFeed as unknown as Yt["videos"]).find((x) => x.id === ytId)
-  const ratio = (homeFeed as { id: string; ratio: number }[]).find((x) => x.id === ytId)?.ratio
+  // The ratio and its baseline: the home feed's catalog figures, else the lab's for the original 179.
+  const scored = (homeFeed as { id: string; ratio: number; channelMedian: number }[]).find((x) => x.id === ytId) ?? labVideos().find((x) => x.id === ytId)
+  const ratio = scored?.ratio
+  const pct = (part: number | null | undefined) => {
+    if (part == null || !v?.views) return DASH
+    const p = (part / v.views) * 100
+    return `${p > 0 && p < 0.1 ? p.toFixed(2) : p.toFixed(1)}%`
+  }
   const f = featuresFor(id)
+  const signedIn = !!(await currentUser())
   const ch = v ? channelById(v.channelId) : undefined
   const lines = transcriptLines(f)
   const duration = f?.audio?.durationSec ?? (v ? secs(v.duration) : 0)
@@ -59,10 +92,269 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
     </div>
   )
 
+  const locked = !signedIn
+  // Paid figures, when a video has them: today only invented samples (data/sample/paid.json).
+  const paid = (samplePaid.videos as Record<string, Record<string, unknown>>)[id] as (Record<string, string> & { tiles: Record<string, string>; analytics: Record<string, string> }) | undefined
+  const tags = tagsFor(id)
+  const statRows: [string, string][] = [
+    ["Views", n(v?.views)],
+    ["Median", n(scored ? Math.round(scored.channelMedian) : null)],
+    ["Likes", n(v?.likes)],
+    ["Like rate", pct(v?.likes)],
+    ["Comments", n(v?.comments)],
+    ["Comment rate", pct(v?.comments)],
+    ["Ratio", ratio == null ? DASH : `${ratio >= 10 ? ratio.toFixed(0) : ratio.toFixed(1)}×`],
+    ["Subscribers", n(v ? (subscribers as Record<string, number | null>)[v.channelId] : null)],
+    ["Length", v ? `${Math.floor(secs(v.duration) / 60)}:${String(secs(v.duration) % 60).padStart(2, "0")}` : DASH],
+    ["Date", v ? new Date(v.published).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : DASH],
+  ]
+  const statGrid = (rs: [string, string][]) => <div className="grid grid-cols-2 gap-4">{rs.map(([label, value]) => <React.Fragment key={label}>{stat(label, value)}</React.Fragment>)}</div>
+
+  const left: [string, string, ReactNode][] = [
+    [
+      "stats",
+      "Stats",
+      <CardBlock key="stats" title="Stats" height="auto" defaultOpen={false} peek={statGrid(statRows.slice(0, 4))} rows={statRows.map(([stat, value]) => ({ stat, value }))} name={`stats-${ytId}`}>
+        {statGrid(statRows)}
+      </CardBlock>,
+    ],
+  ]
+  left.push([
+    "analytics",
+    "Analytics",
+    <Locked key="analytics" locked={locked}>
+      <CardBlock title="Analytics" height="auto" footer={paid ? "Sample figures" : undefined}>
+        <div className="grid grid-cols-2 gap-4 @lg:grid-cols-4">
+          {stat("Reach", paid?.analytics.Reach ?? DASH)}
+          {stat("3s+", paid?.analytics["3s+"] ?? DASH)}
+          {stat("Avg.", paid?.analytics["Avg."] ?? DASH)}
+          {stat("Spend", paid?.analytics.Spend ?? DASH)}
+        </div>
+      </CardBlock>
+    </Locked>,
+  ])
+  if (f?.audio && !f.audio.error)
+    left.push([
+      "audio",
+      "Audio",
+      <Locked key="audio" locked={locked}>
+        <ChartBlock title="Audio" height="auto">
+          <Loudness f={f.audio} />
+        </ChartBlock>
+      </Locked>,
+    ])
+  if (siblings.length)
+    left.push([
+      "comps",
+      "Comps",
+      <Locked key="comps" locked={locked}>
+        <ListBlock title="Comps" height="auto">
+          <div className="flex flex-col gap-1">
+            {siblings.map((x) => (
+              <Link key={x.id} href={`/v/yt-${x.id}`} scroll={false} replace={inDrawer} className="flex items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-slate-50">
+                <span className="line-clamp-1">{x.title.replace(/\s*#\w+/g, "").trim() || x.title}</span>
+                <span className="tabular shrink-0 font-semibold text-slate-700">{DASH}</span>
+              </Link>
+            ))}
+          </div>
+        </ListBlock>
+      </Locked>,
+    ])
+
+  if (tags.length)
+    left.push([
+      "tags",
+      "Tags",
+      <CardBlock key="tags" title="Tags" height="auto">
+        <div className="flex flex-wrap items-center gap-1.5">
+          {tags.map((t) => (
+            <TagChip key={t} tag={t} />
+          ))}
+        </div>
+      </CardBlock>,
+    ])
+
+  const right: [string, string, ReactNode][] = [
+    [
+      "resonance",
+      "Resonance",
+      <CardBlock key="resonance" title="Resonance" tools={<ScoreInfo />} height="auto">
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div className="tabular flex items-baseline gap-2">
+              <span className="font-display text-4xl text-pax-ink">{DASH}</span>
+              <span className="text-xs text-muted-foreground">{DASH}</span>
+            </div>
+            <div className="min-w-56 flex-1">
+              <RangeBar value={null} low={null} high={null} />
+              <div className="mt-1 flex justify-between text-[10px] text-muted-foreground">
+                <span>0</span>
+                <span>50 = reference average</span>
+                <span>100</span>
+              </div>
+            </div>
+          </div>
+          <ul className="flex flex-col gap-1 rounded-lg bg-muted/60 px-3 py-2 text-xs text-muted-foreground">
+            <li>Evidence: {DASH}</li>
+          </ul>
+          <div className="grid gap-3 @2xl:grid-cols-3">
+            {COMPONENTS.map((meta) => (
+              <div key={meta.key} className="surface flex flex-col gap-2 p-3">
+                <div className="flex items-baseline justify-between">
+                  <span className="font-medium text-pax-ink">{meta.name}</span>
+                  <Term id={meta.key} label={false} />
+                </div>
+                <p className="text-xs text-muted-foreground">{meta.question}</p>
+                <div className="tabular flex items-baseline gap-1.5">
+                  <span className="font-display text-3xl text-pax-ink">{DASH}</span>
+                  <span className="text-xs text-muted-foreground">{DASH}</span>
+                </div>
+                <RangeBar value={null} low={null} high={null} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </CardBlock>,
+    ],
+    [
+      "kpis",
+      "KPIs",
+      <TableBlock key="kpis" title="KPIs" height="auto">
+        <div className="overflow-x-auto">
+          <table className="tabular w-full text-sm">
+            <thead className="text-left text-xs text-slate-500">
+              <tr className="[&_th]:whitespace-nowrap [&_th]:py-2 [&_th]:pr-6 [&_th]:font-medium">
+                <th />
+                {COMPONENTS.map((meta, i) => (
+                  <th key={meta.key}>
+                    <Term id={meta.key}>{meta.name}</Term> <span className="font-normal text-slate-400">· {[25, 40, 35][i]}%</span>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="[&_td]:whitespace-nowrap [&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2 [&_td]:pr-6">
+              {KPI_ROWS.map((label) => (
+                <tr key={label}>
+                  <td className="text-slate-500"><Term id={KPI_TERMS[label]} /></td>
+                  {COMPONENTS.map((meta) => (
+                    <td key={meta.key}>{DASH}</td>
+                  ))}
+                </tr>
+              ))}
+              <tr className="font-semibold text-pax-ink">
+                <td><Term id="resonance" /></td>
+                <td colSpan={3}>{DASH}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </TableBlock>,
+    ],
+    [
+      "paid",
+      "Paid",
+      <ListBlock key="paid" title="Paid" height="auto" footer={paid ? "Sample figures" : undefined}>
+        <div className="grid gap-x-6 text-xs @md:grid-cols-2">
+          {WINDOW_ROWS.map((label) => (
+            <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
+              <span className="text-muted-foreground">{label}</span>
+              <span className="tabular">{paid?.[label] ?? DASH}</span>
+            </div>
+          ))}
+          <div className="col-span-full mt-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
+            {["Spend", "Impressions (1k)", "3s play", "Per Person"].map((label) => (
+              <div key={label} className="rounded-lg bg-muted/50 px-2 py-1.5">
+                <div className="text-[10px] text-muted-foreground">{label}</div>
+                <div className="tabular text-sm text-pax-ink">{paid?.tiles[label] ?? DASH}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </ListBlock>,
+    ],
+  ]
+  if (f)
+    right.push([
+      "notes",
+      "Visual Notes",
+      <CardBlock key="notes" title="Visual Notes" height="auto">
+        <div className="flex flex-col gap-6">
+          <Observations part="summary" f={f} />
+          {f.pegasus?.result?.characteristics && <Observations part="detail" f={f} />}
+        </div>
+      </CardBlock>,
+    ])
+  if (lines)
+    right.push([
+      "transcript",
+      "Transcript",
+      <ListBlock key="transcript" title="Transcript" height="auto">
+        <ScriptTimeline lines={lines} duration={duration} />
+      </ListBlock>,
+    ])
+  right.push(
+    [
+      "hits",
+      "Hits and Misses",
+      <ChartBlock
+        key="hits"
+        title="Hits and Misses"
+        height="auto"
+        footer={
+          <span className="flex w-full flex-wrap items-center justify-end gap-4">
+            {(Object.keys(TIER) as Tier[]).map((t) => (
+              <span key={t} className="flex items-center gap-1.5">
+                <span className="size-2 rounded-full" style={{ background: TIER[t].dot }} /> {TIER[t].label}
+              </span>
+            ))}
+          </span>
+        }
+      >
+        <div className="aspect-[1100/460] w-full">
+          <HitsScatter />
+        </div>
+      </ChartBlock>,
+    ],
+    [
+      "formula",
+      "Formula",
+      <FormulaBlock key="formula" title="Formula" height="auto">
+        <div className="grid gap-3 @2xl:grid-cols-2 @5xl:grid-cols-3">
+          {FORMULAS.map(([step, tex]) => (
+            <div key={step} className="surface flex flex-col gap-2 p-4">
+              <p className="text-sm font-medium text-slate-900">{step}</p>
+              <div className="flex min-h-28 min-w-0 items-center justify-center overflow-x-auto">
+                <FormulaExplainer title={step} html={katex.renderToString(tex, { displayMode: true, throwOnError: true, output: "html" })} {...EXPLAIN[step]} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </FormulaBlock>,
+    ],
+    [
+      "forecast",
+      "Forecast",
+      <MainBlock key="forecast" title="Forecast" height="auto">
+        <ReadingPanel takeId={id} evidence={[]} initial={null} events={[]} calls={[]} canRead={false} nextDataset={null} baseline={null} baselineSnapshot="" bare />
+      </MainBlock>,
+    ],
+  )
+
+  const column = (page: string, blocks: [string, string, ReactNode][], lock: (key: string) => boolean) => (
+    <BlockOrder page={page} initial={blocks.map(([key]) => key)}>
+      {blocks.map(([key, label, node]) => (
+        <OrderedBlock key={key} id={key} label={label}>
+          {lock(key) ? <Locked locked={locked}>{node}</Locked> : node}
+        </OrderedBlock>
+      ))}
+    </BlockOrder>
+  )
+
   return (
     <SeekProvider>
+      {locked && <SignupGate />}
       <div className={cn("grid gap-8", inDrawer ? "@xl:grid-cols-[280px_1fr]" : "@4xl:grid-cols-[320px_1fr]")}>
-        <aside className={cn("flex flex-col gap-4", inDrawer ? "@xl:sticky @xl:top-0 @xl:self-start" : "@4xl:sticky @4xl:top-0 @4xl:self-start")}>
+        <aside className={cn("flex flex-col", inDrawer ? "@xl:sticky @xl:top-0 @xl:self-start" : "@4xl:sticky @4xl:top-0 @4xl:self-start")}>
           {f ? (
             <div className={cn("relative aspect-video overflow-hidden rounded-2xl bg-black shadow-e2", inDrawer ? "@xl:aspect-auto @xl:overflow-visible @xl:rounded-none @xl:bg-transparent @xl:shadow-none" : "@4xl:aspect-auto @4xl:overflow-visible @4xl:rounded-none @4xl:bg-transparent @4xl:shadow-none")}>
               <Player src={`/api/video/${id}`} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} className={cn("absolute inset-0 h-full w-full max-w-none rounded-none object-contain", inDrawer ? "@xl:static @xl:h-auto @xl:w-full @xl:max-w-[300px] @xl:rounded-2xl @xl:object-cover" : "@4xl:static @4xl:h-auto @4xl:w-full @4xl:max-w-[300px] @4xl:rounded-2xl @4xl:object-cover")} />
@@ -78,156 +370,10 @@ export function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boo
               />
             </div>
           )}
-          <div className="surface grid grid-cols-2 gap-4 p-5 @lg:grid-cols-4">
-            {stat("Views", n(v?.views))}
-            {stat("Likes", n(v?.likes))}
-            {stat("Comments", n(v?.comments))}
-            {stat("Ratio", ratio == null ? DASH : `${ratio >= 10 ? ratio.toFixed(0) : ratio.toFixed(1)}×`)}
-          </div>
-          <div className="surface grid grid-cols-2 gap-4 p-5 @lg:grid-cols-4">
-            {stat("Reach", DASH)}
-            {stat("3s+", DASH)}
-            {stat("Avg.", DASH)}
-            {stat("Spend", DASH)}
-          </div>
-          {siblings.length > 0 && (
-            <div className="surface flex flex-col gap-1 p-4">
-              <p className="pb-1 text-xs font-medium text-slate-500">Comps</p>
-              {siblings.map((x) => (
-                <Link key={x.id} href={`/v/yt-${x.id}`} scroll={false} replace={inDrawer} className="flex items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-slate-50">
-                  <span className="line-clamp-1">{x.title.replace(/\s*#\w+/g, "").trim() || x.title}</span>
-                  <span className="tabular shrink-0 font-semibold text-slate-700">{DASH}</span>
-                </Link>
-              ))}
-            </div>
-          )}
+          {column("video-left", left, () => false)}
         </aside>
 
-        <div className="flex min-w-0 flex-col gap-6">
-          {delivery && (
-            <div className="flex flex-wrap items-center gap-1.5 text-xs">
-              {[delivery.energy && `${delivery.energy} energy`, ...(delivery.vocalTone ?? []), delivery.mode?.replace(/-/g, " "), delivery.frame?.replace(/-/g, " ")].filter(Boolean).map((t) => (
-                <span key={String(t)} className="rounded-full bg-white px-2 py-0.5 text-slate-600 shadow-e1">{t}</span>
-              ))}
-            </div>
-          )}
-
-          <Fold
-            title="Resonance"
-            info={<ScoreInfo />}
-            defaultOpen
-            preview={
-              <div className="flex flex-col gap-6">
-                <div className="flex flex-wrap items-end justify-between gap-4">
-                  <div className="tabular flex items-baseline gap-2">
-                    <span className="font-display text-4xl text-pax-ink">{DASH}</span>
-                    <span className="text-xs text-muted-foreground">{DASH}</span>
-                  </div>
-                  <div className="min-w-56 flex-1">
-                    <RangeBar value={null} low={null} high={null} />
-                    <div className="mt-1 flex justify-between text-[10px] text-muted-foreground">
-                      <span>0</span>
-                      <span>50 = reference average</span>
-                      <span>100</span>
-                    </div>
-                  </div>
-                </div>
-                <ul className="flex flex-col gap-1 rounded-lg bg-muted/60 px-3 py-2 text-xs text-muted-foreground">
-                  <li>Evidence: {DASH}</li>
-                </ul>
-                <div className="grid gap-3 @2xl:grid-cols-3">
-                  {COMPONENTS.map((meta) => (
-                    <div key={meta.key} className="surface flex flex-col gap-2 p-3">
-                      <div className="flex items-baseline justify-between">
-                        <span className="font-medium text-pax-ink">{meta.name}</span>
-                        <Term id={meta.key} label={false} />
-                      </div>
-                      <p className="text-xs text-muted-foreground">{meta.question}</p>
-                      <div className="tabular flex items-baseline gap-1.5">
-                        <span className="font-display text-3xl text-pax-ink">{DASH}</span>
-                        <span className="text-xs text-muted-foreground">{DASH}</span>
-                      </div>
-                      <RangeBar value={null} low={null} high={null} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            }
-          >
-            <div className="flex flex-col gap-6">
-              <details open className="group rounded-xl border">
-                <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-pax-ink">KPIs</summary>
-                <div className="overflow-x-auto px-4 pb-4">
-                  <table className="tabular w-full text-sm">
-                    <thead className="text-left text-xs text-slate-500">
-                      <tr className="[&_th]:whitespace-nowrap [&_th]:py-2 [&_th]:pr-6 [&_th]:font-medium">
-                        <th />
-                        {COMPONENTS.map((meta, i) => (
-                          <th key={meta.key}>
-                            <Term id={meta.key}>{meta.name}</Term> <span className="font-normal text-slate-400">· {[25, 40, 35][i]}%</span>
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody className="[&_td]:whitespace-nowrap [&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2 [&_td]:pr-6">
-                      {KPI_ROWS.map((label) => (
-                        <tr key={label}>
-                          <td className="text-slate-500"><Term id={KPI_TERMS[label]} /></td>
-                          {COMPONENTS.map((meta) => (
-                            <td key={meta.key}>{DASH}</td>
-                          ))}
-                        </tr>
-                      ))}
-                      <tr className="font-semibold text-pax-ink">
-                        <td><Term id="resonance" /></td>
-                        <td colSpan={3}>{DASH}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </details>
-
-              <details open className="group rounded-xl border">
-                <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-pax-ink">Paid</summary>
-                <div className="grid gap-x-6 px-4 pb-4 text-xs @md:grid-cols-2">
-                  {WINDOW_ROWS.map((label) => (
-                    <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
-                      <span className="text-muted-foreground">{label}</span>
-                      <span className="tabular">{DASH}</span>
-                    </div>
-                  ))}
-                  <div className="col-span-full mt-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
-                    {["Spend", "Impressions (1k)", "3s play", "Per Person"].map((label) => (
-                      <div key={label} className="rounded-lg bg-muted/50 px-2 py-1.5">
-                        <div className="text-[10px] text-muted-foreground">{label}</div>
-                        <div className="tabular text-sm text-pax-ink">{DASH}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </details>
-            </div>
-          </Fold>
-
-          {f?.audio && !f.audio.error ? (
-            <div className="surface p-4">
-              <Loudness f={f.audio} />
-            </div>
-          ) : (
-            <div className="surface flex items-center justify-between p-4 text-xs text-slate-500">
-              <span>dB</span>
-              <span className="tabular">{DASH}</span>
-            </div>
-          )}
-
-          <Fold title="Formula" preview={f ? <Observations part="summary" f={f} /> : <p className="tabular text-sm text-slate-500">{DASH}</p>}>
-            {f?.pegasus?.result?.characteristics && <Observations part="detail" f={f} />}
-          </Fold>
-
-          <Fold title="Transcript" preview={lines ? <ScriptTimeline lines={lines} duration={duration} /> : <p className="tabular text-sm text-slate-500">{DASH}</p>} />
-
-          <ReadingPanel takeId={id} evidence={[]} initial={null} events={[]} calls={[]} canRead={false} nextDataset={null} baseline={null} baselineSnapshot="" />
-        </div>
+        <div className={cn("min-w-0", inDrawer ? "@xl:-mt-5" : "@4xl:-mt-5")}>{column("video-right", right, () => true)}</div>
       </div>
     </SeekProvider>
   )

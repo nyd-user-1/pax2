@@ -1,4 +1,4 @@
-import { CognitoIdentityProviderClient, ConfirmSignUpCommand, InitiateAuthCommand, ResendConfirmationCodeCommand, SignUpCommand } from "@aws-sdk/client-cognito-identity-provider"
+import { CognitoIdentityProviderClient, ConfirmForgotPasswordCommand, ConfirmSignUpCommand, ForgotPasswordCommand, InitiateAuthCommand, ResendConfirmationCodeCommand, SignUpCommand } from "@aws-sdk/client-cognito-identity-provider"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
@@ -56,6 +56,14 @@ export async function POST(req: Request, { params }: { params: Promise<{ action:
       await cip.send(new ResendConfirmationCodeCommand({ ClientId: CLIENT, Username: email }))
       return NextResponse.json({ ok: true })
     }
+    if (action === "forgot") {
+      await cip.send(new ForgotPasswordCommand({ ClientId: CLIENT, Username: email }))
+      return NextResponse.json({ ok: true })
+    }
+    if (action === "reset") {
+      await cip.send(new ConfirmForgotPasswordCommand({ ClientId: CLIENT, Username: email, ConfirmationCode: (body.code ?? "").trim(), Password: body.password ?? "" }))
+      return NextResponse.json({ ok: true })
+    }
     if (action === "signin") {
       const r = await cip.send(new InitiateAuthCommand({ ClientId: CLIENT, AuthFlow: "USER_PASSWORD_AUTH", AuthParameters: { USERNAME: email, PASSWORD: body.password ?? "" } }))
       const t = r.AuthenticationResult
@@ -69,6 +77,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ action:
     const name = (e as { name?: string }).name ?? ""
     // An unconfirmed account isn't an error — it's the next step.
     if (name === "UserNotConfirmedException") return NextResponse.json({ confirm: true }, { status: 409 })
+    if (action === "reset" && name === "InvalidParameterException") return NextResponse.json({ error: FRIENDLY.InvalidPasswordException }, { status: 400 })
     return NextResponse.json({ error: FRIENDLY[name] ?? "Something went wrong — try again." }, { status: 400 })
   }
 }

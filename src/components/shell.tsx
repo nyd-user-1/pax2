@@ -10,31 +10,31 @@ import { Wordmark } from "@/components/wordmark"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
 import { cn } from "@/ui/lib/utils"
 
-// The partner's jobs first; the workings of the score and the build underneath.
+// What stands today; everything being reworked sits under Work in progress, in the product's order —
+// the user's video and its scoring, then the research behind it.
 const NAV = [
-  { href: "/scored", label: "Scored", icon: Gauge },
   { href: "/chat", label: "Chat", icon: MessagesSquare },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/campaigns", label: "Campaigns", icon: Clapperboard },
+]
+const WIP = [
+  { href: "/scored", label: "Scored", icon: Gauge },
   { href: "/videos", label: "Videos", icon: PlaySquare },
   { href: "/scripts", label: "Scripts", icon: NotebookPen },
   { href: "/polling", label: "Polling", icon: ChartColumn },
   { href: "/evals", label: "Evals", icon: Target },
-  { href: "/campaigns", label: "Campaigns", icon: Clapperboard },
-]
-const MORE = [
-  { href: "/scoring", label: "Scoring", icon: FlaskConical },
-  { href: "/glossary", label: "Glossary", icon: BookA },
-  { href: "/library", label: "Library", icon: Library },
-  { href: "/pipeline", label: "Pipeline", icon: Workflow },
-  { href: "/build", label: "Build", icon: Hammer },
-]
-// The lab: what the public seed-phase traces support.
-const LAB = [
   { href: "/break-out", label: "Breakout", icon: Rocket },
   { href: "/feature-lift", label: "Feature lift", icon: TrendingUp },
   { href: "/velocity-tracker", label: "Velocity", icon: Activity },
   { href: "/endgame", label: "Endgame", icon: Flag },
   { href: "/ml", label: "ML", icon: Brain },
+  { href: "/scoring", label: "Scoring", icon: FlaskConical },
+]
+const MORE = [
+  { href: "/glossary", label: "Glossary", icon: BookA },
+  { href: "/library", label: "Library", icon: Library },
+  { href: "/pipeline", label: "Pipeline", icon: Workflow },
+  { href: "/build", label: "Build", icon: Hammer },
 ]
 
 // The header names the page; /v/ belongs to Videos.
@@ -58,16 +58,25 @@ const TITLES: [string, string][] = [
   ["/velocity-tracker", "Velocity"],
   ["/endgame", "Endgame"],
   ["/ml", "ML"],
+  ["/tags", "Tags"],
 ]
 
 const PANEL_THIRD = "md:w-[clamp(420px,34vw,620px)]"
 const PANEL_HALF = "md:w-[50vw]"
 
-type PanelState = { setOpen: (open: boolean) => void; wide: boolean; setWide: (wide: boolean) => void }
-const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {} })
+type PanelState = {
+  setOpen: (open: boolean) => void
+  wide: boolean
+  setWide: (wide: boolean) => void
+  sidebarOpen: boolean
+  toggleSidebar: () => void
+  discuss: boolean
+  toggleDiscuss: () => void
+}
+const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {}, sidebarOpen: false, toggleSidebar: () => {}, discuss: false, toggleDiscuss: () => {} })
 export const useShellPanel = () => React.useContext(PanelCtx)
 
-export function Shell({ children, drawer }: { children: React.ReactNode; drawer: React.ReactNode }) {
+export function Shell({ children, drawer, signedIn = false }: { children: React.ReactNode; drawer: React.ReactNode; signedIn?: boolean }) {
   const path = usePathname()
   const [sidebarOpen, setSidebarOpen] = React.useState(false)
   const [panelOpen, setPanelOpen] = React.useState(false)
@@ -75,10 +84,15 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
   const [scrolled, setScrolled] = React.useState(false)
   const [discuss, setDiscuss] = React.useState(false)
   const animKey = React.useRef("Scored")
-  const panel = React.useMemo<PanelState>(() => ({ setOpen: setPanelOpen, wide, setWide }), [wide])
+  const panel = React.useMemo<PanelState>(
+    () => ({ setOpen: setPanelOpen, wide, setWide, sidebarOpen, toggleSidebar: () => setSidebarOpen((v) => !v), discuss, toggleDiscuss: () => setDiscuss((v) => !v) }),
+    [wide, sidebarOpen, discuss],
+  )
   const active = (href: string) => (href === "/videos" ? path.startsWith("/videos") || path.startsWith("/v/") : path.startsWith(href))
   // The front door (landing, record entry, sign-in) is full bleed; every step from /record/start on sits in the shell.
-  if (path === "/" || path === "/record" || path.startsWith("/sign")) return <div className="min-h-dvh bg-pax-mist">{children}</div>
+  // Signed in, the landing is the feed, and the feed sits in the shell under its own bar.
+  const home = path === "/"
+  if ((home && !signedIn) || path === "/record" || path.startsWith("/sign")) return <div className="min-h-dvh bg-pax-mist">{children}</div>
   const item = (href: string, label: string, Icon: typeof Gauge, small = false) => {
     const on = active(href)
     return (
@@ -117,8 +131,8 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
             </Link>
             <nav className="flex flex-col gap-0.5">{NAV.map((n) => item(n.href, n.label, n.icon))}</nav>
             <div className="mt-3 min-h-0 flex-1 overflow-y-auto border-t border-slate-200/70 pt-3">
-              <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Lab</p>
-              <nav className="flex flex-col gap-0.5">{LAB.map((n) => item(n.href, n.label, n.icon))}</nav>
+              <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Work in progress</p>
+              <nav className="flex flex-col gap-0.5">{WIP.map((n) => item(n.href, n.label, n.icon))}</nav>
               <p className="mt-3 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">More</p>
               <nav className="flex flex-col gap-0.5">{MORE.map((n) => item(n.href, n.label, n.icon))}</nav>
             </div>
@@ -141,7 +155,7 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
               <Video className="size-3.5" /> Record
             </Link>
           </header>
-          <div className={cn("relative z-10 hidden shrink-0 items-center gap-3 px-5 py-4 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)] md:flex")}>
+          <div className={cn("relative z-10 hidden shrink-0 items-center gap-3 px-5 py-4 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)]", !home && "md:flex")}>
             <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className="flex size-10 items-center justify-center rounded-full bg-white text-pax-ink shadow-e1 transition-shadow hover:shadow-e2">
               {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
             </button>
@@ -158,7 +172,7 @@ export function Shell({ children, drawer }: { children: React.ReactNode; drawer:
             </button>
           </div>
           <main className={cn("flex-1", full ? "flex min-h-0 flex-col md:overflow-hidden" : "md:overflow-y-auto")} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
-            <div key={animKey.current} className={cn("page-enter rise-kids @container w-full", full ? "flex min-h-0 flex-1 flex-col" : "px-5 py-6 md:px-10 md:py-9")}>{children}</div>
+            <div key={animKey.current} className={cn("page-enter rise-kids @container w-full", full ? "flex min-h-0 flex-1 flex-col" : home ? "" : "px-5 py-6 md:px-10 md:py-9")}>{children}</div>
           </main>
         </div>
         <div className={cn("w-0 shrink-0 overflow-hidden transition-[width,margin] duration-300 ease-in-out", (panelOpen || discuss) && cn("md:ml-[18px]", panelW))}>
@@ -202,7 +216,7 @@ function PageSwitcher({ title }: { title: string }) {
     router.push(href)
   }
   const needle = q.trim().toLowerCase()
-  const all = [...NAV, ...LAB, ...MORE]
+  const all = [...NAV, ...WIP, ...MORE]
   const filtered = needle ? all.filter((d) => d.label.toLowerCase().includes(needle)) : all
 
   return (
@@ -256,7 +270,7 @@ function PageSwitcher({ title }: { title: string }) {
 }
 
 // leuk's AccountMenu (components/shell/account-menu.tsx): the UserChip at the foot of the
-// sidebar, opening upward to the identity header and Sign out.
+// sidebar, opening upward to the identity header and Log out.
 type User = { name: string; email: string }
 const initials = (name: string) =>
   name
@@ -276,6 +290,7 @@ function Initials({ name, size }: { name: string; size: "sm" | "md" }) {
 
 function AccountMenu() {
   const router = useRouter()
+  const path = usePathname()
   const [user, setUser] = React.useState<User | null | undefined>(undefined)
   React.useEffect(() => {
     fetch("/api/auth/me")
@@ -289,7 +304,15 @@ function AccountMenu() {
     router.refresh()
   }
   if (user === undefined) return <div className="h-9" />
-  const name = user?.name ?? "Not signed in"
+  // Signed out, the account chip is simply the way in.
+  if (!user)
+    return (
+      <Link href={`/signin?next=${encodeURIComponent(path)}`} className="flex w-full items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-sm font-semibold text-pax-ink transition-colors hover:bg-white/70">
+        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-500"><LogIn className="size-3.5" /></span>
+        Log in
+      </Link>
+    )
+  const name = user.name
   const item = "gap-2.5 rounded-lg px-2.5 py-2 text-sm [&_svg]:size-4 [&_svg]:text-slate-500"
   return (
     <DropdownMenu>
@@ -324,15 +347,9 @@ function AccountMenu() {
           <LifeBuoy /> Help
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        {user ? (
-          <DropdownMenuItem onClick={signOut} className={cn(item, "text-pax-red-deep [&_svg]:text-pax-red-deep")}>
-            <LogOut /> Sign out
-          </DropdownMenuItem>
-        ) : (
-          <DropdownMenuItem onClick={() => router.push("/signin")} className={item}>
-            <LogIn /> Sign in
-          </DropdownMenuItem>
-        )}
+        <DropdownMenuItem onClick={signOut} className={cn(item, "text-pax-red-deep [&_svg]:text-pax-red-deep")}>
+          <LogOut /> Log out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

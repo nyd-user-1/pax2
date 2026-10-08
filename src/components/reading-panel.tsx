@@ -101,7 +101,7 @@ function StepCard({ p, i, takeId, saved, events }: { p: Proposal; i: number; tak
   )
 }
 
-export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead, nextDataset, baseline, baselineSnapshot }: { takeId: string; evidence: Ev[]; initial: SavedReading | null; events: StepEv[]; calls: Call[]; canRead: boolean; nextDataset: string | null; baseline: number | null; baselineSnapshot: string }) {
+export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead, nextDataset, baseline, baselineSnapshot, bare = false }: { takeId: string; evidence: Ev[]; initial: SavedReading | null; events: StepEv[]; calls: Call[]; canRead: boolean; nextDataset: string | null; baseline: number | null; baselineSnapshot: string; /** Inside a block that already carries the Forecast header. */ bare?: boolean }) {
   const [saved, setSaved] = React.useState<SavedReading | null>(initial)
   const [pending, start] = React.useTransition()
   const [error, setError] = React.useState<string | null>(null)
@@ -197,21 +197,21 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
         </>
       )}
 
-      <Forecast action={assess} takeId={takeId} calls={calls} nextDataset={nextDataset} baseline={baseline} baselineSnapshot={baselineSnapshot} />
+      <Forecast action={assess} takeId={takeId} calls={calls} nextDataset={nextDataset} baseline={baseline} baselineSnapshot={baselineSnapshot} bare={bare} />
     </div>
   )
 }
 
 /** Step 6: a forecast logged before the next results load, then shown against the actual. Locked once logged. */
-function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapshot }: { action: React.ReactNode; takeId: string; calls: Call[]; nextDataset: string | null; baseline: number | null; baselineSnapshot: string }) {
+function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapshot, bare }: { action: React.ReactNode; takeId: string; calls: Call[]; nextDataset: string | null; baseline: number | null; baselineSnapshot: string; bare: boolean }) {
   const [predicted, setPredicted] = React.useState<"higher" | "lower" | "same">("higher")
   const [reason, setReason] = React.useState("")
   const [msg, setMsg] = React.useState<string | null>(null)
   const [pending, start] = React.useTransition()
   return (
-    <div className="flex flex-col gap-3 surface p-4">
+    <div className={cn("flex flex-col gap-3", !bare && "surface px-5 pb-5 pt-4")}>
+      {!bare && <h3 className="font-semibold text-slate-900">Forecast</h3>}
       <div>
-        <h3 className="font-display text-xl text-slate-900">Forecast</h3>
         <p className="text-sm text-muted-foreground">Which way this take&apos;s score will move, logged before the next results arrive. When the actual lands, the comparison tunes the next forecast &mdash; the same loop that made weather and insurance dependable.</p>
       </div>
       {calls.length > 0 && (

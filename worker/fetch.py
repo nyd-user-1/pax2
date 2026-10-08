@@ -121,6 +121,75 @@ def git(repo, name):
     return {"files": len(out), "bytes": sum(o["bytes"] for o in out)}
 
 
+import hashlib, shutil
+
+
+def wmp_get(url, dest):
+    """Stream one file to disk, hashing and counting in the same pass (no second read)."""
+    h, n = hashlib.sha256(), 0
+    with requests.get(url, stream=True, timeout=600, headers=UA) as r:
+        r.raise_for_status()
+        with open(dest, "wb") as f:
+            for chunk in r.iter_content(1 << 20):
+                f.write(chunk)
+                h.update(chunk)
+                n += len(chunk)
+    return h.hexdigest(), n
+
+
+def wmp(slug):
+    """One WMP open-copy target from code/wmp-targets.json into raw/wmp-open/<slug>/, with a _source.json beside it."""
+    targets = json.loads(s3.get_object(Bucket=B, Key="code/wmp-targets.json")["Body"].read())
+    t = next(x for x in targets if x["slug"] == slug)
+    name = f"wmp-open/{slug}"
+    d = f"{W}/{name}"
+    src = {"source_url": t["source_url"], "license": t["license"], "retrieved_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "kind": t["kind"], "ref": t["ref"]}
+    try:
+        if t["kind"] == "url":
+            os.makedirs(d, exist_ok=True)
+            files = []
+            for url, fname in t["ref"]:
+                fn = os.path.join(d, fname)
+                sha, n = wmp_get(url, fn)
+                files.append({"name": fname, "url": url, "sha256": sha, "bytes": n, **up(fn, f"raw/{name}/{fname}")})
+                os.remove(fn)
+            src["files"] = files
+            src["bytes"] = sum(f["bytes"] for f in files)
+            # One file: its own digest. Several: the digest of the sorted "name sha256" lines.
+            src["sha256"] = files[0]["sha256"] if len(files) == 1 else hashlib.sha256("\n".join(sorted(f"{f['name']} {f['sha256']}" for f in files)).encode()).hexdigest()
+        elif t["kind"] == "dataverse":
+            r = dataverse(t["ref"], name)
+            meta = requests.get("https://dataverse.harvard.edu/api/datasets/:persistentId/", params={"persistentId": t["ref"]}, headers=UA, timeout=120).json()
+            src["checksums"] = {f["dataFile"]["filename"]: f["dataFile"].get("checksum") for f in meta["data"]["latestVersion"]["files"]}
+            src["files"] = r["files"]
+            src["bytes"] = sum(f["bytes"] for f in r["files"])
+            src["sha256"] = None
+        elif t["kind"] == "git":
+            r = git(t["ref"], name)
+            src["commit"] = subprocess.run(["git", "-C", d, "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+            src["files_count"] = r["files"]
+            src["bytes"] = r["bytes"]
+            src["sha256"] = None
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
+    s3.put_object(Bucket=B, Key=f"raw/{name}/_source.json", Body=json.dumps(src, indent=1).encode())
+    return {"slug": slug, "bytes": src["bytes"], "files": len(src["files"]) if "files" in src and isinstance(src["files"], list) else src.get("files_count"), "sha256": src["sha256"]}
+
+
+if sys.argv[1:] and all(a.startswith("wmp:") for a in sys.argv[1:]):
+    # Parallel-safe: each wmp step writes its own manifest/fetch-<step>.json.
+    for s in sys.argv[1:]:
+        manifest = {"started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "steps": {}}
+        t0 = time.time()
+        try:
+            manifest["steps"][s] = {"ok": True, "result": wmp(s[4:]), "seconds": round(time.time() - t0)}
+        except Exception as e:
+            manifest["steps"][s] = {"ok": False, "error": repr(e), "trace": traceback.format_exc()[-1500:], "seconds": round(time.time() - t0)}
+        manifest["finished"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        s3.put_object(Bucket=B, Key=f"manifest/fetch-{s}.json", Body=json.dumps(manifest, indent=1).encode())
+        print(s, manifest["steps"][s]["ok"], flush=True)
+    sys.exit(0)
+
 steps = sys.argv[1:] or ["swayable", "coppock", "upworthy", "wesleyan", "polis", "hewitt_repo"]
 table = {
     "swayable": swayable,

@@ -15,18 +15,27 @@ const post = async (action: string, body: object) => {
   return { status: r.status, ...j }
 }
 
+/** Where to land after signing in: the page the reader came from (?next=), else the record flow. */
+const nextPath = () => {
+  const n = new URLSearchParams(window.location.search).get("next")
+  return n && n.startsWith("/") && !n.startsWith("//") ? n : "/record/start"
+}
+
 const FIELD = "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-shadow placeholder:text-slate-400 focus:ring-2 focus:ring-pax-plum/40"
 const BUTTON = "press flex w-full items-center justify-center gap-2 rounded-full bg-pax-ink px-6 py-3.5 text-[15px] font-semibold text-white shadow-e2 transition-shadow hover:shadow-e3 disabled:opacity-60"
 
 export function AuthForm({ mode }: { mode: Mode }) {
   const router = useRouter()
-  const [step, setStep] = React.useState<"form" | "code">("form")
+  const [step, setStep] = React.useState<"form" | "code" | "reset">("form")
   const [email, setEmail] = React.useState("")
   const [password, setPassword] = React.useState("")
   const [code, setCode] = React.useState("")
   const [busy, setBusy] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
   const [notice, setNotice] = React.useState<string | null>(null)
+  // The ?next= return address rides along when switching between sign in and sign up.
+  const [qs, setQs] = React.useState("")
+  React.useEffect(() => setQs(window.location.search), [])
 
   const signin = async () => {
     const r = await post("signin", { email, password })
@@ -40,7 +49,8 @@ export function AuthForm({ mode }: { mode: Mode }) {
       setError(r.error ?? "Something went wrong.")
       return false
     }
-    router.push("/record/start")
+    router.push(nextPath())
+    router.refresh()
     return true
   }
 
@@ -50,7 +60,11 @@ export function AuthForm({ mode }: { mode: Mode }) {
     setError(null)
     setNotice(null)
     try {
-      if (step === "code") {
+      if (step === "reset") {
+        const r = await post("reset", { email, code, password })
+        if (!r.ok) setError(r.error ?? "Something went wrong.")
+        else await signin()
+      } else if (step === "code") {
         const r = await post("confirm", { email, code })
         if (!r.ok) setError(r.error ?? "Something went wrong.")
         else if (password) await signin()
@@ -73,9 +87,50 @@ export function AuthForm({ mode }: { mode: Mode }) {
     }
   }
 
+  const forgot = async () => {
+    if (!email) {
+      setError("Enter your email first.")
+      return
+    }
+    setBusy(true)
+    setError(null)
+    const r = await post("forgot", { email })
+    setBusy(false)
+    if (!r.ok) setError(r.error ?? "Something went wrong.")
+    else {
+      setCode("")
+      setPassword("")
+      setNotice(`We emailed a six-digit code to ${email}. Enter it with a new password.`)
+      setStep("reset")
+    }
+  }
+
   return (
     <form onSubmit={submit} className="flex flex-col gap-4">
-      {step === "code" ? (
+      {step === "reset" ? (
+        <>
+          <p className="flex items-start gap-2.5 rounded-xl bg-pax-lavender/60 px-4 py-3 text-sm leading-relaxed text-pax-ink">
+            <MailCheck className="mt-0.5 size-4 shrink-0" />
+            {notice}
+          </p>
+          <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700">
+            Code
+            <input autoFocus inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} placeholder="123456" className={cn(FIELD, "tabular tracking-[0.3em]")} />
+          </label>
+          <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700">
+            New password
+            <input type="password" required autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="8+ characters, mixed" className={FIELD} />
+            <span className="text-xs font-normal text-slate-400">8+ characters with an upper, a lower, a number and a symbol.</span>
+          </label>
+          {error && <p className="text-sm font-medium text-pax-red-deep">{error}</p>}
+          <button type="submit" disabled={busy || code.trim().length < 6 || !password} className={BUTTON}>
+            {busy ? "One moment…" : "Set password and sign in"} <ArrowRight className="size-4" />
+          </button>
+          <button type="button" disabled={busy} onClick={forgot} className="text-sm text-slate-500 transition-colors hover:text-pax-ink">
+            Send a new code
+          </button>
+        </>
+      ) : step === "code" ? (
         <>
           <p className="flex items-start gap-2.5 rounded-xl bg-pax-lavender/60 px-4 py-3 text-sm leading-relaxed text-pax-ink">
             <MailCheck className="mt-0.5 size-4 shrink-0" />
@@ -112,6 +167,11 @@ export function AuthForm({ mode }: { mode: Mode }) {
             <input type="password" required autoComplete={mode === "signup" ? "new-password" : "current-password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder={mode === "signup" ? "8+ characters, mixed" : "Your password"} className={FIELD} />
             {mode === "signup" && <span className="text-xs font-normal text-slate-400">8+ characters with an upper, a lower, a number and a symbol.</span>}
           </label>
+          {mode === "signin" && (
+            <button type="button" disabled={busy} onClick={forgot} className="-mt-2 self-end text-sm text-slate-500 transition-colors hover:text-pax-ink">
+              Forgot password?
+            </button>
+          )}
           {notice && <p className="text-sm text-pax-ink">{notice}</p>}
           {error && <p className="text-sm font-medium text-pax-red-deep">{error}</p>}
           <button type="submit" disabled={busy} className={BUTTON}>
@@ -119,9 +179,9 @@ export function AuthForm({ mode }: { mode: Mode }) {
           </button>
           <p className="text-center text-sm text-slate-500">
             {mode === "signup" ? (
-              <>Already have an account? <Link href="/signin" className="font-medium text-pax-plum hover:underline">Sign in</Link></>
+              <>Already have an account? <Link href={`/signin${qs}`} className="font-medium text-pax-plum hover:underline">Sign in</Link></>
             ) : (
-              <>New here? <Link href="/signup" className="font-medium text-pax-plum hover:underline">Create an account</Link></>
+              <>New here? <Link href={`/signup${qs}`} className="font-medium text-pax-plum hover:underline">Create an account</Link></>
             )}
           </p>
         </>
