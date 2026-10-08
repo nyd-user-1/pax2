@@ -1,11 +1,19 @@
 // The home page feed: every channel's best-travelled shorts from the lookback catalog, plus every
-// short that has had the full analysis, newest first, plus each channel's YouTube avatar and public subscriber count.
+// short that has had the full analysis, plus every short on /campaigns (data/raw/yt-shorts.json),
+// newest first, plus each channel's YouTube avatar and public subscriber count. The reform-core
+// channels' videos carry the tag "reform" (not shown yet).
 // Usage: node scripts/home-feed.mjs   (reads data/velocity/catalog.json and YOUTUBE_API_KEY from .env.local)
 import fs from "node:fs"
 
 const PER_CHANNEL = 6
 const catalog = JSON.parse(fs.readFileSync("data/velocity/catalog.json", "utf8")).videos
 const features = JSON.parse(fs.readFileSync("data/generated/features.json", "utf8"))
+const campaignShorts = JSON.parse(fs.readFileSync("data/raw/yt-shorts.json", "utf8")).videos
+const groups = Object.fromEntries(JSON.parse(fs.readFileSync("lambda/velocity/channels.json", "utf8")).map((c) => [c.id, c.group]))
+const secs = (iso) => {
+  const m = iso?.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/)
+  return m ? (+(m[1] ?? 0)) * 3600 + (+(m[2] ?? 0)) * 60 + +(m[3] ?? 0) : 0
+}
 
 const byChannel = new Map()
 for (const v of catalog) (byChannel.get(v.channelId) ?? byChannel.set(v.channelId, []).get(v.channelId)).push(v)
@@ -13,6 +21,21 @@ const ranked = [...byChannel.values()].map((vs) => vs.sort((a, b) => b.views - a
 const picked = new Map()
 for (const vs of ranked) for (const v of vs) picked.set(v.id, v)
 for (const v of catalog) if (`yt-${v.id}` in features) picked.set(v.id, v)
+// Every /campaigns short, from the catalog when it is there, else from the campaign pull, measured
+// against its channel's catalog median.
+const inCatalog = new Map(catalog.map((v) => [v.id, v]))
+const channelMedian = new Map(catalog.map((v) => [v.channelId, v.channelMedian]))
+for (const c of campaignShorts) {
+  if (c.views == null || picked.has(c.id)) continue
+  const v = inCatalog.get(c.id)
+  if (v) {
+    picked.set(c.id, v)
+    continue
+  }
+  const median = channelMedian.get(c.channelId) ?? null
+  const ratio = median ? c.views / median : null
+  picked.set(c.id, { ...c, durationSec: secs(c.duration), channelMedian: median, ratio, tier: ratio == null ? "unsettled" : ratio >= 3 ? "breakout" : ratio <= 0.5 ? "killed" : "baseline" })
+}
 const videos = []
 for (const v of picked.values())
   videos.push({
@@ -30,6 +53,7 @@ for (const v of picked.values())
     duration: `PT${Math.floor(v.durationSec / 60)}M${v.durationSec % 60}S`,
     description: (v.description ?? "").split("\n")[0].replace(/\s*#\w+/g, "").trim(),
     playable: `yt-${v.id}` in features,
+    ...(groups[v.channelId] === "reform-core" && { tags: ["reform"] }),
   })
 videos.sort((a, b) => Date.parse(b.published) - Date.parse(a.published))
 fs.writeFileSync("data/generated/home-feed.json", JSON.stringify(videos))

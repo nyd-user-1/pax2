@@ -3,11 +3,11 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { Wordmark } from "@/components/wordmark"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
 import { cn } from "@/ui/lib/utils"
 
 // What stands today; everything being reworked sits under Work in progress, in the product's order —
@@ -15,7 +15,6 @@ import { cn } from "@/ui/lib/utils"
 const NAV = [
   { href: "/chat", label: "Chat", icon: MessagesSquare },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/campaigns", label: "Campaigns", icon: Clapperboard },
 ]
 const WIP = [
   { href: "/recording", label: "Recording", icon: Video },
@@ -31,6 +30,8 @@ const WIP = [
   { href: "/ml", label: "ML", icon: Brain },
   { href: "/scoring/method", label: "Score method", icon: FlaskConical },
 ]
+// Off the sidebar and the page switcher: early pages kept for reference, under the account menu's Lab.
+const LAB = [{ href: "/campaigns", label: "Campaigns", icon: Clapperboard }]
 const MORE = [
   { href: "/glossary", label: "Glossary", icon: BookA },
   { href: "/library", label: "Library", icon: Library },
@@ -382,6 +383,19 @@ function AccountMenu() {
         <DropdownMenuItem disabled className={item}>
           <Settings /> Settings
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger className={item}>
+            <Beaker /> Lab
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent className="min-w-44 rounded-2xl border border-slate-500 bg-pax-mist p-1.5 shadow-e2 ring-0">
+            {LAB.map((l) => (
+              <DropdownMenuItem key={l.href} onClick={() => router.push(l.href)} className={item}>
+                <l.icon /> {l.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem disabled className={item}>
           <LifeBuoy /> Help

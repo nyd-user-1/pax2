@@ -2,10 +2,9 @@ import Link from "next/link"
 
 import shorts from "../../../data/raw/yt-shorts.json"
 import { CampaignMap } from "@/components/map/campaign-map"
-import { ScrollStrip } from "@/components/scroll-row"
 import { ShortsSort } from "@/components/shorts-sort"
-import { CHANNELS, median, secs } from "@/lib/channels"
-import { cn } from "@/ui/lib/utils"
+import { TabRail } from "@/components/tab-rail"
+import { CHANNELS, secs } from "@/lib/channels"
 
 export const metadata = { title: "Campaign videos" }
 
@@ -31,38 +30,13 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
     newest: (a, b) => b.published.localeCompare(a.published),
   }
   const videos = all.filter((v) => v.channelId === ch.id).sort(order[s] ?? order.perday)
-  const stats = CHANNELS.map((x) => {
-    const vs = all.filter((v) => v.channelId === x.id)
-    return { ...x, n: vs.length, medianPerDay: median(vs.map((v) => v.perDay)), medianSec: median(vs.map((v) => v.sec)), medianEngagement: median(vs.map((v) => v.engagement)) }
-  })
+  const stats = CHANNELS.map((x) => ({ ...x, n: all.filter((v) => v.channelId === x.id).length }))
 
   return (
     <div className="flex flex-col gap-8">
       <CampaignMap />
 
-      <ScrollStrip itemClassName="w-[calc((100%-0.75rem)/2)] sm:w-[calc((100%-1.5rem)/3)] lg:w-[calc((100%-2.25rem)/4)]">
-        {stats.map((s) => (
-          <Link key={s.slug} href={`/campaigns?c=${s.slug}`} scroll={false} className={cn("lift surface flex h-full flex-col gap-1 border p-5", s.slug === ch.slug ? "border-pax-plum" : "border-transparent")}>
-            <span className="text-lg font-medium text-pax-ink">{s.name}</span>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/flags/${s.code}.png`} alt={s.code} className="h-4 w-auto self-start rounded-[2px] ring-1 ring-slate-200/80" />
-            <span className="tabular mt-2 text-sm">
-              <b className="font-display text-2xl font-normal text-pax-ink">{s.medianPerDay < 10 ? s.medianPerDay.toFixed(1) : Math.round(s.medianPerDay).toLocaleString()}</b> views/day, median
-            </span>
-            <span className="mt-1 block h-1.5 overflow-hidden rounded-full bg-slate-100">
-              <span className="grow block h-full rounded-full bg-pax-plum" style={{ width: `${(s.medianPerDay / Math.max(...stats.map((x) => x.medianPerDay))) * 100}%` }} />
-            </span>
-            <span className="tabular text-xs text-muted-foreground">
-              {Math.round(s.medianSec)}s median length
-            </span>
-          </Link>
-        ))}
-      </ScrollStrip>
-
-      <div className="flex items-end justify-between gap-4">
-        <h2 className="font-display text-xl text-slate-900">Shorts</h2>
-        <ShortsSort channel={ch.slug} sort={s} />
-      </div>
+      <TabRail tabs={stats.map((x) => ({ key: x.slug, label: x.name, href: `/campaigns?c=${x.slug}&s=${s}`, count: x.n }))} active={ch.slug} trailing={<ShortsSort channel={ch.slug} sort={s} />} />
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {videos.map((v) => (
           <Link key={v.id} href={`/v/yt-${v.id}`} scroll={false} className="group flex flex-col gap-2">
