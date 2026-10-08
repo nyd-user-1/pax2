@@ -64,3 +64,10 @@ export async function addToWatch(entry: WatchEntry) {
   const list = (await watchList()).filter((w) => w.youtubeId !== entry.youtubeId)
   await s3.send(new PutObjectCommand({ Bucket: BUCKET, Key: "velocity/watch.json", Body: JSON.stringify([...list, entry]), ContentType: "application/json" }))
 }
+
+export type VideoMeta = { at: string; channelId: string; published: string; title: string; description: string; tags: string[]; categoryId: string | null; language: string | null; thumbnail: string | null; durationSec: number; captions: boolean; definition: string | null; madeForKids: boolean | null; topics: string[] }
+
+/** Everything YouTube returns about each polled video beyond its counts, by YouTube id; null when it was deleted or made private. */
+export async function videoMeta(): Promise<Record<string, VideoMeta | null>> {
+  return JSON.parse((await getText("meta.json")) ?? "{}")
+}

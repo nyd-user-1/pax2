@@ -190,6 +190,40 @@ export async function handler(event = {}) {
     comments: v.statistics.commentCount == null ? null : Number(v.statistics.commentCount),
   }))
 
+  // Each video's metadata, fetched once: everything YouTube returns beyond the counts (same quota as a
+  // counts call). The first run with this code backfills every video in the recent readings.
+  const meta = await getJson("meta.json", {})
+  const missing = [...new Set([...readings, ...rows].map((r) => r.id))].filter((id) => !(id in meta))
+  if (missing.length) {
+    const got = new Map((await videos(missing, "snippet,contentDetails,status,topicDetails")).map((v) => [v.id, v]))
+    for (const id of missing) {
+      const v = got.get(id)
+      if (!v) {
+        meta[id] = null // deleted or private; not asked again
+        continue
+      }
+      const s = v.snippet
+      const t = s.thumbnails ?? {}
+      meta[id] = {
+        at: new Date(now).toISOString(),
+        channelId: s.channelId,
+        published: s.publishedAt,
+        title: s.title,
+        description: s.description ?? "",
+        tags: s.tags ?? [],
+        categoryId: s.categoryId ?? null,
+        language: s.defaultAudioLanguage ?? s.defaultLanguage ?? null,
+        thumbnail: (t.maxres ?? t.standard ?? t.high ?? t.default)?.url ?? null,
+        durationSec: secs(v.contentDetails?.duration),
+        captions: v.contentDetails?.caption === "true",
+        definition: v.contentDetails?.definition ?? null,
+        madeForKids: v.status?.madeForKids ?? null,
+        topics: (v.topicDetails?.topicCategories ?? []).map((u) => decodeURIComponent(u.split("/").pop()).replace(/_/g, " ")),
+      }
+    }
+    await put("meta.json", JSON.stringify(meta))
+  }
+
   const todayKey = `polls/${day(new Date(now))}.jsonl`
   if (rows.length) await put(todayKey, ((await getText(todayKey)) ?? "") + rows.map((r) => JSON.stringify(r)).join("\n") + "\n", "application/x-ndjson")
   await put("baselines.json", JSON.stringify(baselines))
