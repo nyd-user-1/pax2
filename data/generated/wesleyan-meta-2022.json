@@ -1,0 +1,41 @@
+{
+ "built": "2026-10-08",
+ "source": "Wesleyan Media Project, Meta 2022 election ads, core dataset (fb_2022_adid_var), CC BY-NC",
+ "scope": "Video ads Wesleyan's party classifier reads as pro-Democratic",
+ "ads": 100831,
+ "spend": 101222435,
+ "goals": [
+  {
+   "key": "persuade",
+   "ads": 77657,
+   "spend": 82783522,
+   "adShare": 77,
+   "spendShare": 81.8,
+   "medianImpressions": "6K–7K"
+  },
+  {
+   "key": "money",
+   "ads": 12668,
+   "spend": 6667816,
+   "adShare": 12.6,
+   "spendShare": 6.6,
+   "medianImpressions": "0–1K"
+  },
+  {
+   "key": "both",
+   "ads": 2141,
+   "spend": 1109230,
+   "adShare": 2.1,
+   "spendShare": 1.1,
+   "medianImpressions": "1K–2K"
+  },
+  {
+   "key": "neither",
+   "ads": 8365,
+   "spend": 10661868,
+   "adShare": 8.3,
+   "spendShare": 10.5,
+   "medianImpressions": "2K–3K"
+  }
+ ]
+}

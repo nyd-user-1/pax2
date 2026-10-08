@@ -10,6 +10,7 @@ import homeFeed from "../../data/generated/home-feed.json"
 import shorts from "../../data/raw/yt-shorts.json"
 import { RangeBar } from "@/components/bits"
 import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, TableBlock } from "@/components/blocks"
+import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/components/codebook-blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { HitsScatter, TIER } from "@/components/hits-scatter"
 import { FormulaExplainer } from "@/components/formula-explainer"
@@ -81,7 +82,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   // labeled "Sample figures" wherever they show.
   type Range = { score: number; low: number; high: number }
   const sample = (sampleVideos.videos as Record<string, unknown>)[id] as
-    | (Record<string, string> & { tiles: Record<string, string>; analytics: Record<string, string>; kpis: Record<string, Record<string, string> | string>; resonance: Range & { evidence: string; components: Record<string, Range> }; features?: Features; tags?: string[] })
+    | (Record<string, string> & { tiles: Record<string, string>; analytics: Record<string, string>; kpis: Record<string, Record<string, string> | string>; resonance: Range & { evidence: string; components: Record<string, Range> }; features?: Features; tags?: string[]; codes?: Codes })
     | undefined
   const real = featuresFor(id)
   const f = real ?? sample?.features
@@ -301,6 +302,11 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         <ScriptTimeline lines={lines} duration={duration} />
       </ListBlock>,
     ])
+  // The two ad codebooks need the video coded on them; today only the sample video is.
+  const codes = sample?.codes
+  if (codes?.swayable?.length) right.push(["swayable", "Swayable", <SwayableBlock key="swayable" codes={codes.swayable} footer={SAMPLE} />])
+  if (codes?.wesleyan) right.push(["wesleyan", "Wesleyan", <WesleyanBlock key="wesleyan" goal={codes.wesleyan} footer={SAMPLE} />])
+  if (v?.title) right.push(["upworthy", "Upworthy", <UpworthyBlock key="upworthy" title={v.title} />])
   right.push(
     [
       "hits",

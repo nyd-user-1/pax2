@@ -535,7 +535,18 @@
         "to camera",
         "stakes led"
       ],
-      "likes": 38400
+      "likes": 38400,
+      "codes": {
+        "swayable": [
+          "messenger_politician",
+          "narration_advocate_opinions",
+          "tone_negative",
+          "emotion_fear",
+          "style_text_on_screen",
+          "how_scripted"
+        ],
+        "wesleyan": "money"
+      }
     }
   }
 }
