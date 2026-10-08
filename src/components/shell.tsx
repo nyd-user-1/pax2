@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, PlaySquare, Rocket, Settings, Target, TrendingUp, User2, Video, Workflow } from "lucide-react"
+import { Activity, BadgeCheck, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { Wordmark } from "@/components/wordmark"
@@ -18,8 +18,9 @@ const NAV = [
   { href: "/campaigns", label: "Campaigns", icon: Clapperboard },
 ]
 const WIP = [
-  { href: "/scored", label: "Scored", icon: Gauge },
-  { href: "/videos", label: "Videos", icon: PlaySquare },
+  { href: "/recording", label: "Recording", icon: Video },
+  { href: "/scoring", label: "Scoring", icon: Gauge },
+  { href: "/publishing", label: "Publishing", icon: Send },
   { href: "/scripts", label: "Scripts", icon: NotebookPen },
   { href: "/polling", label: "Polling", icon: ChartColumn },
   { href: "/evals", label: "Evals", icon: Target },
@@ -28,7 +29,7 @@ const WIP = [
   { href: "/velocity-tracker", label: "Velocity", icon: Activity },
   { href: "/endgame", label: "Endgame", icon: Flag },
   { href: "/ml", label: "ML", icon: Brain },
-  { href: "/scoring", label: "Scoring", icon: FlaskConical },
+  { href: "/scoring/method", label: "Score method", icon: FlaskConical },
 ]
 const MORE = [
   { href: "/glossary", label: "Glossary", icon: BookA },
@@ -37,18 +38,19 @@ const MORE = [
   { href: "/build", label: "Build", icon: Hammer },
 ]
 
-// The header names the page; /v/ belongs to Videos.
+// The header names the page; the first match wins, so a deeper route comes before its parent.
 const TITLES: [string, string][] = [
-  ["/scored", "Scored"],
+  ["/recording", "Recording"],
+  ["/scoring/method", "Score method"],
+  ["/scoring", "Scoring"],
+  ["/publishing", "Publishing"],
   ["/chat", "Chat"],
   ["/dashboard", "Dashboard"],
-  ["/videos", "Videos"],
-  ["/v/", "Videos"],
+  ["/v/", "Video"],
   ["/scripts", "Scripts"],
   ["/polling", "Polling"],
   ["/evals", "Evals"],
   ["/campaigns", "Campaigns"],
-  ["/scoring", "Scoring"],
   ["/glossary", "Glossary"],
   ["/library", "Library"],
   ["/pipeline", "Pipeline"],
@@ -105,7 +107,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
     }),
     [wide, size, panelOpen, sidebarOpen, discuss],
   )
-  const active = (href: string) => (href === "/videos" ? path.startsWith("/videos") || path.startsWith("/v/") : path.startsWith(href))
+  const active = (href: string) => (href === "/scoring" ? path === "/scoring" : path.startsWith(href))
   // The front door (landing, record entry, sign-in) is full bleed; every step from /record/start on sits in the shell.
   const home = path === "/"
   if (path === "/record" || path.startsWith("/sign")) return <div className="min-h-dvh bg-pax-mist">{children}</div>

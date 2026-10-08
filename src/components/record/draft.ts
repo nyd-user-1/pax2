@@ -12,6 +12,8 @@ export type Draft = {
   role?: string
   town?: string
   wpm?: number
+  /** Re-recording an original video: the one this take replaces. */
+  again?: string
 }
 
 const KEY = "pax-record-draft"

@@ -210,7 +210,7 @@ export type VelocityCard = {
   series?: [number, number][]
 }
 
-export type PollRow = { at: string; id: string; channelId: string; channel: string; title: string; published: string; hour: number; views: number }
+export type PollRow = { at: string; id: string; channelId: string; channel: string; title: string; published: string; hour: number; views: number; likes?: number | null; comments?: number | null }
 
 /** Real curves from the poller's rows: views at each whole hour since publish, the last
  *  known count carried forward, ending where the polling has reached. */

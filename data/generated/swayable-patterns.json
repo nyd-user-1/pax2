@@ -1,0 +1,308 @@
+{
+ "source": "Swayable replication archive (Hewitt et al., APSR 2024), vote choice",
+ "units": "points of vote choice vs. a placebo video",
+ "ads": 575,
+ "studies": 132,
+ "score": {
+  "mean": 1.05,
+  "p10": 0.54,
+  "p25": 0.79,
+  "p50": 1.04,
+  "p75": 1.34,
+  "p90": 1.57,
+  "p99": 2.19
+ },
+ "race": [
+  {
+   "key": "2018 midterms",
+   "ads": 102,
+   "mean": 2.21,
+   "low": 1.74,
+   "high": 2.68
+  },
+  {
+   "key": "Congress",
+   "ads": 88,
+   "mean": 1.7,
+   "low": 1.38,
+   "high": 2.02
+  },
+  {
+   "key": "Other",
+   "ads": 20,
+   "mean": 1.28,
+   "low": 0.78,
+   "high": 1.78
+  },
+  {
+   "key": "Runoff",
+   "ads": 42,
+   "mean": 1.08,
+   "low": 0.69,
+   "high": 1.46
+  },
+  {
+   "key": "Presidential",
+   "ads": 292,
+   "mean": 0.87,
+   "low": 0.78,
+   "high": 0.97
+  },
+  {
+   "key": "StateLeg",
+   "ads": 31,
+   "mean": -0.09,
+   "low": -0.68,
+   "high": 0.51
+  }
+ ],
+ "audience": [
+  {
+   "key": "Independents",
+   "ads": 575,
+   "mean": 1.36,
+   "low": 1.21,
+   "high": 1.51
+  },
+  {
+   "key": "Democrats",
+   "ads": 575,
+   "mean": 1.03,
+   "low": 0.91,
+   "high": 1.15
+  },
+  {
+   "key": "Republicans",
+   "ads": 575,
+   "mean": 0.57,
+   "low": 0.44,
+   "high": 0.71
+  }
+ ],
+ "traits": [
+  {
+   "key": "messenger_veteran",
+   "label": "Veteran as messenger",
+   "ads": 32,
+   "diff": 0.2,
+   "low": -0.23,
+   "high": 0.57
+  },
+  {
+   "key": "tone_contrast",
+   "label": "Contrast",
+   "ads": 95,
+   "diff": 0.14,
+   "low": -0.04,
+   "high": 0.34
+  },
+  {
+   "key": "production_value_high",
+   "label": "High production value",
+   "ads": 396,
+   "diff": 0.12,
+   "low": -0.02,
+   "high": 0.27
+  },
+  {
+   "key": "technique_plain_folks",
+   "label": "Plain-folks appeal",
+   "ads": 123,
+   "diff": 0.11,
+   "low": -0.08,
+   "high": 0.27
+  },
+  {
+   "key": "messenger_politician",
+   "label": "Politician as messenger",
+   "ads": 69,
+   "diff": 0.11,
+   "low": -0.08,
+   "high": 0.31
+  },
+  {
+   "key": "narration_personal_story",
+   "label": "Personal story",
+   "ads": 97,
+   "diff": 0.11,
+   "low": -0.06,
+   "high": 0.29
+  },
+  {
+   "key": "explicit_vote_for",
+   "label": "Explicit ask to vote for",
+   "ads": 271,
+   "diff": 0.11,
+   "low": -0.04,
+   "high": 0.25
+  },
+  {
+   "key": "emotion_enthusiasm",
+   "label": "Enthusiasm",
+   "ads": 184,
+   "diff": 0.09,
+   "low": -0.06,
+   "high": 0.26
+  },
+  {
+   "key": "narration_explain_facts",
+   "label": "Explains facts",
+   "ads": 126,
+   "diff": 0.08,
+   "low": -0.11,
+   "high": 0.24
+  },
+  {
+   "key": "technique_neg_testimonial",
+   "label": "Negative testimonial",
+   "ads": 205,
+   "diff": 0.05,
+   "low": -0.06,
+   "high": 0.17
+  },
+  {
+   "key": "emotion_hope_pride",
+   "label": "Pride",
+   "ads": 50,
+   "diff": 0.04,
+   "low": -0.23,
+   "high": 0.3
+  },
+  {
+   "key": "fact_new_yes",
+   "label": "Offers a fact the viewer likely hasn't heard",
+   "ads": 288,
+   "diff": 0.03,
+   "low": -0.11,
+   "high": 0.16
+  },
+  {
+   "key": "emotion_humor",
+   "label": "Humor",
+   "ads": 30,
+   "diff": 0.03,
+   "low": -0.22,
+   "high": 0.26
+  },
+  {
+   "key": "messenger_celebrity",
+   "label": "Celebrity as messenger",
+   "ads": 12,
+   "diff": 0.01,
+   "low": -0.2,
+   "high": 0.29
+  },
+  {
+   "key": "emotion_anger",
+   "label": "Anger",
+   "ads": 112,
+   "diff": 0.01,
+   "low": -0.22,
+   "high": 0.21
+  },
+  {
+   "key": "how_scripted",
+   "label": "Sounds scripted",
+   "ads": 233,
+   "diff": 0.01,
+   "low": -0.13,
+   "high": 0.17
+  },
+  {
+   "key": "technique_pos_testimonial",
+   "label": "Positive testimonial",
+   "ads": 115,
+   "diff": -0.0,
+   "low": -0.17,
+   "high": 0.16
+  },
+  {
+   "key": "policy_facts",
+   "label": "Policy facts",
+   "ads": 265,
+   "diff": -0.0,
+   "low": -0.16,
+   "high": 0.18
+  },
+  {
+   "key": "tone_positive",
+   "label": "Positive tone",
+   "ads": 165,
+   "diff": -0.02,
+   "low": -0.12,
+   "high": 0.07
+  },
+  {
+   "key": "tone_negative",
+   "label": "Negative tone",
+   "ads": 320,
+   "diff": -0.04,
+   "low": -0.16,
+   "high": 0.07
+  },
+  {
+   "key": "style_amateur",
+   "label": "Amateur, phone-shot style",
+   "ads": 143,
+   "diff": -0.04,
+   "low": -0.25,
+   "high": 0.15
+  },
+  {
+   "key": "fact_cite_yes",
+   "label": "Cites a source for its facts",
+   "ads": 173,
+   "diff": -0.06,
+   "low": -0.22,
+   "high": 0.12
+  },
+  {
+   "key": "style_text_on_screen",
+   "label": "Text on screen",
+   "ads": 32,
+   "diff": -0.06,
+   "low": -0.27,
+   "high": 0.15
+  },
+  {
+   "key": "messenger_every_people",
+   "label": "Everyday people as messengers",
+   "ads": 209,
+   "diff": -0.07,
+   "low": -0.23,
+   "high": 0.09
+  },
+  {
+   "key": "narration_advocate_opinions",
+   "label": "Advocates an opinion",
+   "ads": 191,
+   "diff": -0.07,
+   "low": -0.2,
+   "high": 0.05
+  },
+  {
+   "key": "emotion_somber",
+   "label": "Somber",
+   "ads": 149,
+   "diff": -0.07,
+   "low": -0.25,
+   "high": 0.11
+  },
+  {
+   "key": "emotion_fear",
+   "label": "Fear",
+   "ads": 52,
+   "diff": -0.14,
+   "low": -0.47,
+   "high": 0.12
+  },
+  {
+   "key": "style_animation",
+   "label": "Animation",
+   "ads": 25,
+   "diff": -0.21,
+   "low": -0.51,
+   "high": 0.02
+  }
+ ]
+}

@@ -191,7 +191,7 @@ export function ScriptCatalog({ scripts, opposition }: { scripts: CatalogScript[
                   ))}
                 </ul>
               )}
-              <Link href="/scoring?tab=research" className="w-fit text-xs font-medium text-pax-plum hover:underline">
+              <Link href="/scoring/method?tab=research" className="w-fit text-xs font-medium text-pax-plum hover:underline">
                 What controlled tests found
               </Link>
             </div>

@@ -71,7 +71,7 @@ export default async function ReferencePage({ searchParams }: { searchParams: Pr
         </div>
         <div className="flex rounded-full bg-white p-1 shadow-e1">
           {Object.keys(M.outcomes).map((k) => (
-            <Link key={k} href={`/scoring?tab=research&o=${k}`} className={cn("rounded-full px-3.5 py-1.5 text-sm transition-colors", k === o ? "bg-pax-ink font-medium text-white" : "text-slate-600 hover:text-pax-ink")}>
+            <Link key={k} href={`/scoring/method?tab=research&o=${k}`} className={cn("rounded-full px-3.5 py-1.5 text-sm transition-colors", k === o ? "bg-pax-ink font-medium text-white" : "text-slate-600 hover:text-pax-ink")}>
               {LABEL[k] ?? k}
             </Link>
           ))}

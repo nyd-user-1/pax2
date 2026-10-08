@@ -51,3 +51,16 @@ export function apStamp(iso: string): string {
   const parts = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true }).formatToParts(new Date(iso)).map((p) => [p.type, p.value]))
   return `${AP_MONTHS[Number(parts.month) - 1]} ${parts.day}, ${parts.year} ${parts.hour}:${parts.minute} ${parts.dayPeriod === "AM" ? "a.m." : "p.m."}`
 }
+
+export type WatchEntry = { youtubeId: string; original: string; at: string }
+
+/** Videos Hermes published, which the poller watches beside the 65 channels' uploads. */
+export async function watchList(): Promise<WatchEntry[]> {
+  return JSON.parse((await getText("watch.json")) ?? "[]")
+}
+
+export async function addToWatch(entry: WatchEntry) {
+  const { PutObjectCommand } = await import("@aws-sdk/client-s3")
+  const list = (await watchList()).filter((w) => w.youtubeId !== entry.youtubeId)
+  await s3.send(new PutObjectCommand({ Bucket: BUCKET, Key: "velocity/watch.json", Body: JSON.stringify([...list, entry]), ContentType: "application/json" }))
+}

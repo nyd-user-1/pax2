@@ -4,7 +4,8 @@ import * as React from "react"
 import Link from "next/link"
 import { ArrowRight, CheckCircle2, Loader2, RotateCcw, Upload, Video } from "lucide-react"
 
-import { submitTake, uploadUrl } from "@/app/actions"
+import { uploadUrl } from "@/app/actions"
+import { againDraft, submitOriginal, viewer } from "@/app/original-actions"
 import { FlowPage, StepBar } from "@/components/record/chrome"
 import { useDraft } from "@/components/record/draft"
 import { Teleprompter } from "@/components/record/teleprompter"
@@ -23,6 +24,18 @@ export default function CameraPage() {
   const [state, setState] = React.useState<"idle" | "sending" | "sent" | "error">("idle")
   const [err, setErr] = React.useState<string | null>(null)
   const file = React.useRef<HTMLInputElement>(null)
+  // Signed in, the account's email gets the link; signed out, the sender types one.
+  const [me, setMe] = React.useState<string | null | undefined>(undefined)
+  const [email, setEmail] = React.useState("")
+  React.useEffect(() => {
+    viewer().then((v) => setMe(v?.email ?? null))
+  }, [])
+  // From the findings email: record the same script again, as the next version of that video.
+  React.useEffect(() => {
+    if (!ready) return
+    const again = new URLSearchParams(window.location.search).get("again")
+    if (again && draft.again !== again) againDraft(again).then((d) => d && update({ ...d, again }))
+  }, [ready, draft.again, update])
 
   const take = (f: File) => {
     const url = URL.createObjectURL(f)
@@ -40,7 +53,8 @@ export default function CameraPage() {
       const u = await uploadUrl(clip.mime.split(";")[0])
       const r = await fetch(u.url, { method: "PUT", body: clip.blob, headers: { "Content-Type": clip.mime.split(";")[0] } })
       if (!r.ok) throw new Error(`Upload failed (${r.status})`)
-      await submitTake({ id: u.id, key: u.key, scriptId: draft.scriptId, title: draft.title, text: draft.text, name: draft.name, role: draft.role, town: draft.town, seconds: Math.round(clip.seconds), consent })
+      await submitOriginal({ id: u.id, key: u.key, email: me ? undefined : email, scriptId: draft.scriptId, title: draft.title, text: draft.text, name: draft.name, role: draft.role, town: draft.town, seconds: Math.round(clip.seconds), consent, parent: draft.again })
+      update({ again: undefined })
       setState("sent")
     } catch (e) {
       setErr((e as Error).message)
@@ -52,13 +66,12 @@ export default function CameraPage() {
     return (
       <>
         <StepBar step={3} back={{ href: "/record", label: "Home" }} />
-        <FlowPage title="Sent. Thank you." lead="The team has your video. PAX reviews it next: what is said and when, what is on screen, and how it compares with the takes already running.">
+        <FlowPage title="Thanks, we'll send you a link to your video soon.">
           <div className="flex flex-col gap-4 surface p-7">
             <CheckCircle2 className="size-10 text-primary" />
-            <p className="text-muted-foreground">If it runs as an ad, its results come back to the partner&apos;s Arguments board with a score and a reading, and the next script is chosen with it in mind.</p>
             <div className="flex flex-wrap gap-4">
               <Link href="/record/start" className="rounded-full bg-pax-ink px-6 py-3 font-medium text-white">Record another</Link>
-              <Link href="/" className="rounded-full border px-6 py-3 font-medium text-pax-ink">Open the partner view</Link>
+              {me && <Link href="/recording" className="rounded-full border px-6 py-3 font-medium text-pax-ink">Your videos</Link>}
             </div>
           </div>
         </FlowPage>
@@ -86,13 +99,19 @@ export default function CameraPage() {
                     </label>
                   ))}
                 </div>
+                {me === null && (
+                  <label className="mt-4 flex flex-col gap-1">
+                    <span className="text-xs text-muted-foreground">Email, for the link to your video</span>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-lg border bg-pax-mist px-3 py-2 outline-none focus:border-primary" />
+                  </label>
+                )}
                 <label className="mt-4 flex items-start gap-2">
                   <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 accent-[var(--primary)]" />
                   <span className="text-muted-foreground">The campaign may edit this video, run it as a paid ad, and describe me by what I wrote above.</span>
                 </label>
               </div>
               <div className="flex flex-wrap items-center gap-4">
-                <button type="button" disabled={!consent || state === "sending"} onClick={send} className="flex items-center gap-2 rounded-full bg-pax-ink px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
+                <button type="button" disabled={!consent || state === "sending" || (me === null && !/^\S+@\S+\.\S+$/.test(email))} onClick={send} className="flex items-center gap-2 rounded-full bg-pax-ink px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
                   {state === "sending" ? <Loader2 className="size-4 animate-spin" /> : null} Send it <ArrowRight className="size-4" />
                 </button>
                 <button type="button" onClick={() => setClip(null)} className="flex items-center gap-2 font-medium text-primary">

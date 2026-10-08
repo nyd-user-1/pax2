@@ -4,6 +4,7 @@ import wesleyan from "../../data/generated/wesleyan-meta-2022.json"
 import { RangeBar } from "@/components/bits"
 import { CardBlock, ListBlock, TableBlock } from "@/components/blocks"
 import { Term } from "@/components/term"
+import { titlePatterns } from "@/lib/headline-patterns"
 import { cn } from "@/ui/lib/utils"
 
 /** A video's coding on the two ad codebooks: Swayable's feature keys and Wesleyan's goal. */
@@ -94,24 +95,10 @@ export function WesleyanBlock({ goal, footer }: { goal: string; footer?: string 
   )
 }
 
-/** The Upworthy headline patterns; the same tests as scripts/upworthy-top.mjs. */
-const PATTERN_TESTS: Record<string, (h: string) => boolean> = {
-  digit: (h) => /\d/.test(h),
-  this: (h) => /^(this|these)\b/i.test(h),
-  question: (h) => h.includes("?"),
-  you: (h) => /\byou(r|['’]re)?\b/i.test(h),
-  quote: (h) => /[“”"]/.test(h),
-  caps: (h) => /\b[A-Z]{3,}\b/.test(h),
-  whatwhyhow: (h) => /^(what|why|how)\b/i.test(h),
-  watch: (h) => /\b(watch|see|listen)\b/i.test(h),
-  ellipsis: (h) => /(\.\.\.|…|—| - )/.test(h),
-  firstperson: (h) => /\b(i|i['’]m|my|me)\b/i.test(h),
-}
-
 /** Upworthy: what wins the click. The video's title read against the wording patterns of
  *  Upworthy's randomized headline tests: how often each shows up in winners and in losers. */
 export function UpworthyBlock({ title }: { title: string }) {
-  const patterns = upworthy.patterns.map((p) => ({ ...p, has: PATTERN_TESTS[p.key]?.(title) ?? false })).sort((a, b) => Number(b.has) - Number(a.has))
+  const patterns = titlePatterns(title)
   return (
     <ListBlock title="Upworthy" tools={<Term id="upworthy" label={false} />} height="auto">
       <div className="flex flex-col gap-6">

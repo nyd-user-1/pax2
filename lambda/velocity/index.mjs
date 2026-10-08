@@ -173,6 +173,8 @@ export async function handler(event = {}) {
   // Keep watching anything already under watch that is still inside its window.
   const readings = await recentReadings(now)
   for (const r of readings) if (ageH(r.published) <= WINDOW_H) fresh.add(r.id)
+  // Videos Hermes published (written by the app's publishing step), watched beside the channels' uploads.
+  for (const w of await getJson("watch.json", [])) if (ageH(w.at) <= WINDOW_H) fresh.add(w.youtubeId)
 
   const rows = (await videos([...fresh])).map((v) => ({
     at: new Date(now).toISOString(),
