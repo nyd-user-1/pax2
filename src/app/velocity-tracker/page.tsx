@@ -6,40 +6,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { TableBlock } from "@/components/blocks"
 import { SectionTitle } from "@/components/ui-pax"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
+import { CURVE_TIER as TIER, CurveCard } from "@/components/velocity-curve"
 import { baselines, recentPolls } from "@/lib/velocity-store"
 import { cn } from "@/ui/lib/utils"
 
 export const metadata = { title: "Velocity" }
 export const dynamic = "force-dynamic"
 
-const TIER: Record<Tier, { label: string; chip: string; line: string }> = {
-  breakout: { label: "Passed explore", chip: "bg-above-soft text-above", line: "#16a34a" },
-  baseline: { label: "Served and settled", chip: "bg-slate-100 text-slate-500", line: "#94a3b8" },
-  killed: { label: "Killed in explore", chip: "bg-below-soft text-below", line: "#dc2626" },
-}
-
-function Curve({ card }: { card: VelocityCard }) {
-  const from = card.start ?? 0
-  const max = Math.max(...(card.series ? card.series.map(([, v]) => v) : card.points.slice(from)), 1)
-  const W = 280
-  const H = 72
-  const pts = card.series
-    ? card.series.map(([h, v]) => `${(h / 72) * W},${H - (v / max) * (H - 6)}`).join(" ")
-    : card.points.map((p, i) => `${(i / 72) * W},${H - (p / max) * (H - 6)}`).slice(from).join(" ")
-  return (
-    <svg viewBox={`0 0 ${W} ${H + 14}`} className="w-full" role="img" aria-label={`First 72 hours of ${card.title}`}>
-      <polyline points={pts} fill="none" stroke={TIER[card.tier].line} strokeWidth="2.25" strokeLinecap="round" className="grow-svg" />
-      {card.inflection != null && (
-        <circle cx={(card.inflection / 72) * W} cy={H - (card.points[card.inflection] / max) * (H - 6)} r="3.5" fill="#1e3a8a">
-          <title>{`Exploit push begins near hour ${card.inflection}`}</title>
-        </circle>
-      )}
-      {[0, 24, 48, 72].map((h) => (
-        <text key={h} x={(h / 72) * W} y={H + 12} textAnchor={h === 0 ? "start" : h === 72 ? "end" : "middle"} fontSize="9.5" fill="#94a3b8" className="tabular">{h}h</text>
-      ))}
-    </svg>
-  )
-}
 
 
 type Watched = { id: string; channel: string; title: string; age: number; views: number; ratio: number | null; series: [number, number][] }
@@ -132,21 +105,7 @@ export default async function VelocityPage({ searchParams }: { searchParams: Pro
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {cards.map((c) => (
-          <Link key={c.id} id={`yt-${c.id}`} href={`/v/yt-${c.id}`} className={cn("surface lift flex flex-col gap-2.5 p-5", c.id === focus && "ring-2 ring-pax-plum")}>
-            <span className="flex items-start justify-between gap-3">
-              <span className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{c.title}</span>
-              {c.hours != null && c.hours < 72 ? (
-                <span className="shrink-0 rounded-full bg-pax-lavender px-2.5 py-0.5 text-xs font-semibold text-pax-ink">Watching · {Math.floor(c.hours)}h</span>
-              ) : (
-                <span className={cn("shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold", c.hours == null ? "bg-pax-red-soft text-pax-red-deep" : TIER[c.tier].chip)}>{c.hours == null ? "Sample" : TIER[c.tier].label}</span>
-              )}
-            </span>
-            <Curve card={c} />
-            <span className="tabular flex items-center justify-between text-xs text-slate-500">
-              <span>{c.channel}</span>
-              <span>{fmtCompact(c.views)} views to date</span>
-            </span>
-          </Link>
+          <CurveCard key={c.id} c={c} href={`/v/yt-${c.id}`} focused={c.id === focus} />
         ))}
       </section>
 

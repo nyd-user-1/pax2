@@ -16,6 +16,7 @@ import { FormulaExplainer } from "@/components/formula-explainer"
 import { ReadingPanel } from "@/components/reading-panel"
 import { Term } from "@/components/term"
 import { SignupGate } from "@/components/signup-gate"
+import { StickyAside } from "@/components/sticky-aside"
 import { TagChip } from "@/components/tag-chip"
 import { ScoreInfo } from "@/components/ui-pax"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
@@ -34,7 +35,6 @@ const DASH = "-"
 const COMPACT = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 })
 
 const KPI_ROWS = ["Counts", "Rate", "Ref. avg", "Weighted", "Distance", "Score", "Weight"]
-const KPI_TERMS: Record<string, string> = { Counts: "counts", Rate: "rate", "Ref. avg": "reference-average", Weighted: "weighted-rate", Distance: "distance", Score: "component-score", Weight: "weight" }
 const WINDOW_ROWS = ["Spend", "Impressions", "Reach", "3s plays", "ThruPlays", "25% play", "50% play", "75% play", "100% play", "Avg. Time", "Shares", "Saves", "Comments", "Reactions", "Clicks", "CTA"]
 
 /** Signed out, everything past the public counts is locked: each block keeps its header, what's inside
@@ -76,13 +76,26 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     const p = (part / v.views) * 100
     return `${p > 0 && p < 0.1 ? p.toFixed(2) : p.toFixed(1)}%`
   }
-  const f = featuresFor(id)
+  // Paid figures, KPIs and Resonance, and for a video not yet analyzed its whole analysis (Audio,
+  // Tags, Visual Notes, Transcript, Comps): today only invented samples (data/sample/videos.json),
+  // labeled "Sample figures" wherever they show.
+  type Range = { score: number; low: number; high: number }
+  const sample = (sampleVideos.videos as Record<string, unknown>)[id] as
+    | (Record<string, string> & { tiles: Record<string, string>; analytics: Record<string, string>; kpis: Record<string, Record<string, string> | string>; resonance: Range & { evidence: string; components: Record<string, Range> }; features?: Features; tags?: string[] })
+    | undefined
+  const real = featuresFor(id)
+  const f = real ?? sample?.features
+  /** The analysis on show is the invented sample, not a real pass. */
+  const sampled = !real && !!f
+  const SAMPLE = "Sample figures"
   const signedIn = !!(await currentUser())
   const ch = v ? channelById(v.channelId) : undefined
   const lines = transcriptLines(f)
   const duration = f?.audio?.durationSec ?? (v ? secs(v.duration) : 0)
   const siblings = v
-    ? data.videos.filter((x) => x.channelId === v.channelId && x.id !== ytId && featuresFor(`yt-${x.id}`)).slice(0, 3)
+    ? sampled
+      ? [...data.videos, ...(homeFeed as unknown as Yt["videos"])].filter((x, i, all) => x.channelId === v.channelId && x.id !== ytId && all.findIndex((y) => y.id === x.id) === i).slice(0, 3)
+      : data.videos.filter((x) => x.channelId === v.channelId && x.id !== ytId && featuresFor(`yt-${x.id}`)).slice(0, 3)
     : []
   const n = (x: number | null | undefined) => (x == null ? DASH : COMPACT.format(x))
   const stat = (label: string, value: string) => (
@@ -93,19 +106,18 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   )
 
   const locked = !signedIn
-  // Paid figures, KPIs and Resonance, when a video has them: today only invented samples (data/sample/videos.json).
-  type Range = { score: number; low: number; high: number }
-  const sample = (sampleVideos.videos as Record<string, unknown>)[id] as
-    | (Record<string, string> & { tiles: Record<string, string>; analytics: Record<string, string>; kpis: Record<string, Record<string, string> | string>; resonance: Range & { evidence: string; components: Record<string, Range> } })
-    | undefined
   const paid = sample
   const res = sample?.resonance
-  const tags = tagsFor(id)
+  const realTags = tagsFor(id)
+  const tags = realTags.length ? realTags : (sample?.tags ?? [])
+  /** YouTube returned no like count; a sample video fills it, and the Stats block says so. */
+  const sampleLikes = v?.likes == null ? (sample as { likes?: number } | undefined)?.likes : undefined
+  const likes = v?.likes ?? sampleLikes ?? null
   const statRows: [string, string][] = [
     ["Views", n(v?.views)],
     ["Median", n(scored ? Math.round(scored.channelMedian) : null)],
-    ["Likes", n(v?.likes)],
-    ["Like rate", pct(v?.likes)],
+    ["Likes", n(likes)],
+    ["Like rate", pct(likes)],
     ["Comments", n(v?.comments)],
     ["Comment rate", pct(v?.comments)],
     ["Ratio", ratio == null ? DASH : `${ratio >= 10 ? ratio.toFixed(0) : ratio.toFixed(1)}×`],
@@ -119,7 +131,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "stats",
       "Stats",
-      <CardBlock key="stats" title="Stats" height="auto" defaultOpen={false} peek={statGrid(statRows.slice(0, 4))} rows={statRows.map(([stat, value]) => ({ stat, value }))} name={`stats-${ytId}`}>
+      <CardBlock key="stats" title="Stats" height="auto" defaultOpen={false} footer={sampleLikes != null ? SAMPLE : undefined} peek={statGrid(statRows.slice(0, 4))} rows={statRows.map(([stat, value]) => ({ stat, value }))} name={`stats-${ytId}`}>
         {statGrid(statRows)}
       </CardBlock>,
     ],
@@ -128,7 +140,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     "analytics",
     "Analytics",
     <Locked key="analytics" locked={locked}>
-      <CardBlock title="Analytics" height="auto" footer={paid ? "Sample figures" : undefined}>
+      <CardBlock title="Analytics" height="auto" footer={paid ? SAMPLE : undefined}>
         <div className="grid grid-cols-2 gap-4">
           {stat("Reach", paid?.analytics.Reach ?? DASH)}
           {stat("3s+", paid?.analytics["3s+"] ?? DASH)}
@@ -143,7 +155,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "audio",
       "Audio",
       <Locked key="audio" locked={locked}>
-        <ChartBlock title="Audio" height="auto">
+        <ChartBlock title="Audio" height="auto" footer={sampled ? SAMPLE : undefined}>
           <Loudness f={f.audio} />
         </ChartBlock>
       </Locked>,
@@ -153,7 +165,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "comps",
       "Comps",
       <Locked key="comps" locked={locked}>
-        <ListBlock title="Comps" height="auto">
+        <ListBlock title="Comps" height="auto" footer={sampled ? SAMPLE : undefined}>
           <div className="flex flex-col gap-1">
             {siblings.map((x) => (
               <Link key={x.id} href={`/v/yt-${x.id}`} scroll={false} replace={inDrawer} className="flex items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-slate-50">
@@ -170,7 +182,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     left.push([
       "tags",
       "Tags",
-      <CardBlock key="tags" title="Tags" height="auto">
+      <CardBlock key="tags" title="Tags" height="auto" footer={!realTags.length && tags.length ? SAMPLE : undefined}>
         <div className="flex flex-wrap items-center gap-1.5">
           {tags.map((t) => (
             <TagChip key={t} tag={t} />
@@ -183,7 +195,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "resonance",
       "Resonance",
-      <CardBlock key="resonance" title="Resonance" tools={<ScoreInfo />} height="auto" footer={sample ? "Sample figures" : undefined}>
+      <CardBlock key="resonance" title="Resonance" tools={<ScoreInfo />} height="auto" footer={sample ? SAMPLE : undefined}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="tabular flex items-baseline gap-2">
@@ -199,9 +211,6 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
               </div>
             </div>
           </div>
-          <ul className="flex flex-col gap-1 rounded-lg bg-muted/60 px-3 py-2 text-xs text-muted-foreground">
-            <li>Evidence: {res?.evidence ?? DASH}</li>
-          </ul>
           <div className="grid gap-3 @2xl:grid-cols-3">
             {COMPONENTS.map((meta) => (
               <div key={meta.key} className="surface flex flex-col gap-2 p-3">
@@ -209,7 +218,6 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                   <span className="font-medium text-pax-ink">{meta.name}</span>
                   <Term id={meta.key} label={false} />
                 </div>
-                <p className="text-xs text-muted-foreground">{meta.question}</p>
                 <div className="tabular flex items-baseline gap-1.5">
                   <span className="font-display text-3xl text-pax-ink">{res?.components[meta.key]?.score ?? DASH}</span>
                   <span className="text-xs text-muted-foreground">{res ? `${res.components[meta.key].low}–${res.components[meta.key].high}` : DASH}</span>
@@ -224,7 +232,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "kpis",
       "KPIs",
-      <TableBlock key="kpis" title="KPIs" height="auto" footer={sample ? "Sample figures" : undefined}>
+      <TableBlock key="kpis" title="KPIs" tools={<Term id="kpis" label={false} />} height="auto" footer={sample ? SAMPLE : undefined}>
         <div className="overflow-x-auto">
           <table className="tabular w-full text-sm">
             <thead className="text-left text-xs text-slate-500">
@@ -232,7 +240,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 <th />
                 {COMPONENTS.map((meta, i) => (
                   <th key={meta.key}>
-                    <Term id={meta.key}>{meta.name}</Term> <span className="font-normal text-slate-400">· {[25, 40, 35][i]}%</span>
+                    {meta.name} <span className="font-normal text-slate-400">· {[25, 40, 35][i]}%</span>
                   </th>
                 ))}
               </tr>
@@ -240,16 +248,12 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
             <tbody className="[&_td]:whitespace-nowrap [&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2 [&_td]:pr-6">
               {KPI_ROWS.map((label) => (
                 <tr key={label}>
-                  <td className="text-slate-500"><Term id={KPI_TERMS[label]} /></td>
+                  <td className="text-slate-500">{label}</td>
                   {COMPONENTS.map((meta) => (
                     <td key={meta.key}>{(sample?.kpis[label] as Record<string, string> | undefined)?.[meta.key] ?? DASH}</td>
                   ))}
                 </tr>
               ))}
-              <tr className="font-semibold text-pax-ink">
-                <td><Term id="resonance" /></td>
-                <td colSpan={3}>{(sample?.kpis.Resonance as string | undefined) ?? DASH}</td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -258,7 +262,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "paid",
       "Paid",
-      <ListBlock key="paid" title="Paid" height="auto" footer={paid ? "Sample figures" : undefined}>
+      <ListBlock key="paid" title="Paid" tools={<Term id="paid" label={false} />} height="auto" footer={paid ? SAMPLE : undefined}>
         <div className="grid gap-x-6 text-xs @md:grid-cols-2">
           {WINDOW_ROWS.map((label) => (
             <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
@@ -282,7 +286,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     right.push([
       "notes",
       "Visual Notes",
-      <CardBlock key="notes" title="Visual Notes" height="auto">
+      <CardBlock key="notes" title="Visual Notes" height="auto" footer={sampled ? SAMPLE : undefined}>
         <div className="flex flex-col gap-6">
           <Observations part="summary" f={f} />
           {f.pegasus?.result?.characteristics && <Observations part="detail" f={f} />}
@@ -293,7 +297,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     right.push([
       "transcript",
       "Transcript",
-      <ListBlock key="transcript" title="Transcript" height="auto">
+      <ListBlock key="transcript" title="Transcript" height="auto" footer={sampled ? SAMPLE : undefined}>
         <ScriptTimeline lines={lines} duration={duration} />
       </ListBlock>,
     ])
@@ -304,6 +308,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       <ChartBlock
         key="hits"
         title="Hits and Misses"
+        tools={<Term id="hits-and-misses" label={false} />}
         height="auto"
         footer={
           <span className="flex w-full flex-wrap items-center justify-end gap-4">
@@ -323,7 +328,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "formula",
       "Formula",
-      <FormulaBlock key="formula" title="Formula" height="auto">
+      <FormulaBlock key="formula" title="Formula" tools={<Term id="formula" label={false} />} height="auto">
         <div className="grid gap-3 @2xl:grid-cols-2 @5xl:grid-cols-3">
           {FORMULAS.map(([step, tex]) => (
             <div key={step} className="surface @container flex min-w-0 flex-col gap-2 p-4">
@@ -340,7 +345,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "forecast",
       "Forecast",
-      <MainBlock key="forecast" title="Forecast" height="auto">
+      <MainBlock key="forecast" title="Forecast" tools={<Term id="forecast" label={false} />} height="auto">
         <ReadingPanel takeId={id} evidence={[]} initial={null} events={[]} calls={[]} canRead={false} nextDataset={null} baseline={null} baselineSnapshot="" bare />
       </MainBlock>,
     ],
@@ -360,8 +365,8 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     <SeekProvider>
       {locked && <SignupGate />}
       <div className={cn("grid gap-8", inDrawer ? "@xl:grid-cols-[280px_1fr]" : "@4xl:grid-cols-[320px_1fr]")}>
-        <aside className={cn("flex flex-col", inDrawer ? "@xl:sticky @xl:top-0 @xl:self-start" : "@4xl:sticky @4xl:top-0 @4xl:self-start")}>
-          {f ? (
+        <StickyAside className={cn("flex flex-col", inDrawer ? "@xl:sticky @xl:top-0 @xl:self-start" : "@4xl:sticky @4xl:top-0 @4xl:self-start")}>
+          {real ? (
             <div className={cn("relative aspect-video overflow-hidden rounded-2xl bg-black shadow-e2", inDrawer ? "@xl:aspect-auto @xl:overflow-visible @xl:rounded-none @xl:bg-transparent @xl:shadow-none" : "@4xl:aspect-auto @4xl:overflow-visible @4xl:rounded-none @4xl:bg-transparent @4xl:shadow-none")}>
               <Player src={`/api/video/${id}`} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} className={cn("absolute inset-0 h-full w-full max-w-none rounded-none object-contain", inDrawer ? "@xl:static @xl:h-auto @xl:w-full @xl:max-w-[300px] @xl:rounded-2xl @xl:object-cover" : "@4xl:static @4xl:h-auto @4xl:w-full @4xl:max-w-[300px] @4xl:rounded-2xl @4xl:object-cover")} />
             </div>
@@ -377,7 +382,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
             </div>
           )}
           {column("video-left", left, () => false)}
-        </aside>
+        </StickyAside>
 
         <div className={cn("min-w-0", inDrawer ? "@xl:-mt-5" : "@4xl:-mt-5")}>{column("video-right", right, () => true)}</div>
       </div>

@@ -91,6 +91,451 @@
         },
         "Resonance": "57"
       }
+    },
+    "yt-hZIoLkOpNg4": {
+      "Spend": "$900",
+      "Impressions": "112,000",
+      "Reach": "74,300",
+      "3s plays": "33,600",
+      "ThruPlays": "13,400",
+      "25% play": "17,900",
+      "50% play": "10,800",
+      "75% play": "7,000",
+      "100% play": "4,600",
+      "Avg. Time": "0:17",
+      "Shares": "270",
+      "Saves": "95",
+      "Comments": "60",
+      "Reactions": "980",
+      "Clicks": "1,570",
+      "CTA": "1.4%",
+      "tiles": {
+        "Spend": "$900",
+        "Impressions (1k)": "$8.04",
+        "3s play": "$0.027",
+        "Per Person": "$0.012"
+      },
+      "analytics": {
+        "Reach": "74.3K",
+        "3s+": "33.6K",
+        "Avg.": "0:17",
+        "Spend": "$900"
+      },
+      "resonance": {
+        "score": 58,
+        "low": 52,
+        "high": 64,
+        "evidence": "112,000 impressions · 74,300 people reached · one paid run",
+        "components": {
+          "stop": {
+            "score": 66,
+            "low": 60,
+            "high": 72
+          },
+          "hold": {
+            "score": 52,
+            "low": 45,
+            "high": 59
+          },
+          "act": {
+            "score": 58,
+            "low": 50,
+            "high": 66
+          }
+        }
+      },
+      "kpis": {
+        "Counts": {
+          "stop": "33,600",
+          "hold": "0:17",
+          "act": "425"
+        },
+        "Rate": {
+          "stop": "30.0%",
+          "hold": "18.0%",
+          "act": "1.4%"
+        },
+        "Ref. avg": {
+          "stop": "24.0%",
+          "hold": "17.5%",
+          "act": "1.1%"
+        },
+        "Weighted": {
+          "stop": "16.5",
+          "hold": "20.8",
+          "act": "20.3"
+        },
+        "Distance": {
+          "stop": "+1.0 sd",
+          "hold": "+0.1 sd",
+          "act": "+0.5 sd"
+        },
+        "Score": {
+          "stop": "66",
+          "hold": "52",
+          "act": "58"
+        },
+        "Weight": {
+          "stop": "25%",
+          "hold": "40%",
+          "act": "35%"
+        },
+        "Resonance": "58"
+      },
+      "features": {
+        "take": "yt-hZIoLkOpNg4",
+        "analyzedAt": "2026-10-08T09:00:00Z",
+        "audio": {
+          "source": "derived",
+          "durationSec": 26.0,
+          "loudnessDb": [
+            -22.1,
+            -23.1,
+            -20.1,
+            -20.6,
+            -20.8,
+            -21.8,
+            -23.7,
+            -21.0,
+            -23.8,
+            -26.4,
+            -23.6,
+            -23.5,
+            -21.5,
+            -19.0,
+            -23.3,
+            -19.7,
+            -20.2,
+            -23.3,
+            -20.5,
+            -21.6,
+            -18.1,
+            -23.7,
+            -18.8,
+            -19.3,
+            -23.1,
+            -28.3
+          ],
+          "pitchHz": [
+            171.6,
+            207.1,
+            162.7,
+            190.7,
+            194.7,
+            176.1,
+            188.3,
+            154.4,
+            154.2,
+            null,
+            164.4,
+            197.6,
+            179.9,
+            172.0,
+            191.0,
+            181.7,
+            171.0,
+            null,
+            205.6,
+            198.9,
+            167.1,
+            190.2,
+            186.8,
+            211.3,
+            201.1,
+            170.2,
+            218.6
+          ],
+          "pitchMedianHz": 168.4,
+          "pitchRangeHz": [
+            102.3,
+            287.6
+          ],
+          "pauses": [
+            {
+              "t": 9.4,
+              "sec": 0.6
+            },
+            {
+              "t": 17.8,
+              "sec": 0.5
+            }
+          ],
+          "loudestSec": [
+            3,
+            15,
+            23
+          ],
+          "quietestSec": [
+            9,
+            17,
+            25
+          ]
+        },
+        "transcript": {
+          "source": "derived",
+          "text": "These guys are not screwing around. They are redrawing the maps state by state, and they are doing it in the open. If we sit this one out, we will lose our country. So here is the ask. Get involved, give what you can, and help take back the House.",
+          "words": [
+            {
+              "t": 0.3,
+              "w": "These"
+            },
+            {
+              "t": 0.8,
+              "w": "guys"
+            },
+            {
+              "t": 1.3,
+              "w": "are"
+            },
+            {
+              "t": 1.79,
+              "w": "not"
+            },
+            {
+              "t": 2.29,
+              "w": "screwing"
+            },
+            {
+              "t": 2.79,
+              "w": "around."
+            },
+            {
+              "t": 3.29,
+              "w": "They"
+            },
+            {
+              "t": 3.79,
+              "w": "are"
+            },
+            {
+              "t": 4.28,
+              "w": "redrawing"
+            },
+            {
+              "t": 4.78,
+              "w": "the"
+            },
+            {
+              "t": 5.28,
+              "w": "maps"
+            },
+            {
+              "t": 5.78,
+              "w": "state"
+            },
+            {
+              "t": 6.28,
+              "w": "by"
+            },
+            {
+              "t": 6.77,
+              "w": "state,"
+            },
+            {
+              "t": 7.27,
+              "w": "and"
+            },
+            {
+              "t": 7.77,
+              "w": "they"
+            },
+            {
+              "t": 8.27,
+              "w": "are"
+            },
+            {
+              "t": 8.77,
+              "w": "doing"
+            },
+            {
+              "t": 9.26,
+              "w": "it"
+            },
+            {
+              "t": 9.76,
+              "w": "in"
+            },
+            {
+              "t": 10.26,
+              "w": "the"
+            },
+            {
+              "t": 10.76,
+              "w": "open."
+            },
+            {
+              "t": 11.26,
+              "w": "If"
+            },
+            {
+              "t": 11.75,
+              "w": "we"
+            },
+            {
+              "t": 12.25,
+              "w": "sit"
+            },
+            {
+              "t": 12.75,
+              "w": "this"
+            },
+            {
+              "t": 13.25,
+              "w": "one"
+            },
+            {
+              "t": 13.75,
+              "w": "out,"
+            },
+            {
+              "t": 14.24,
+              "w": "we"
+            },
+            {
+              "t": 14.74,
+              "w": "will"
+            },
+            {
+              "t": 15.24,
+              "w": "lose"
+            },
+            {
+              "t": 15.74,
+              "w": "our"
+            },
+            {
+              "t": 16.24,
+              "w": "country."
+            },
+            {
+              "t": 16.73,
+              "w": "So"
+            },
+            {
+              "t": 17.23,
+              "w": "here"
+            },
+            {
+              "t": 17.73,
+              "w": "is"
+            },
+            {
+              "t": 18.23,
+              "w": "the"
+            },
+            {
+              "t": 18.73,
+              "w": "ask."
+            },
+            {
+              "t": 19.22,
+              "w": "Get"
+            },
+            {
+              "t": 19.72,
+              "w": "involved,"
+            },
+            {
+              "t": 20.22,
+              "w": "give"
+            },
+            {
+              "t": 20.72,
+              "w": "what"
+            },
+            {
+              "t": 21.22,
+              "w": "you"
+            },
+            {
+              "t": 21.71,
+              "w": "can,"
+            },
+            {
+              "t": 22.21,
+              "w": "and"
+            },
+            {
+              "t": 22.71,
+              "w": "help"
+            },
+            {
+              "t": 23.21,
+              "w": "take"
+            },
+            {
+              "t": 23.71,
+              "w": "back"
+            },
+            {
+              "t": 24.2,
+              "w": "the"
+            },
+            {
+              "t": 24.7,
+              "w": "House."
+            }
+          ],
+          "wpm": 115.4,
+          "firstWordSec": 0.3
+        },
+        "pegasus": {
+          "source": "ai",
+          "model": "twelvelabs.pegasus-1-2",
+          "ok": true,
+          "result": {
+            "summary": "A speaker addresses the camera about redistricting and urges viewers to help win back the House.",
+            "hook": {
+              "t": 0,
+              "text": "The speaker opens mid-thought, close to the camera.",
+              "assessment": "Direct and urgent."
+            },
+            "observations": [
+              {
+                "t": 0,
+                "end": 4,
+                "what": "Tight framing on the speaker, outdoors, in daylight."
+              },
+              {
+                "t": 6,
+                "end": 11,
+                "what": "A map graphic shows districts being redrawn."
+              },
+              {
+                "t": 13,
+                "end": 18,
+                "what": "Bold captions repeat the line about losing the country."
+              },
+              {
+                "t": 20,
+                "end": 26,
+                "what": "The speaker delivers the ask; a donate link appears on screen."
+              }
+            ],
+            "characteristics": {
+              "setting": "Outdoors, in daylight.",
+              "on_screen_people": "One speaker.",
+              "captions": "Yes, burned in throughout.",
+              "text_overlays": "Yes, on the key lines.",
+              "music": "Low, rising bed under the voice.",
+              "pace": "Fast, with quick cuts.",
+              "call_to_action": "Get involved and donate.",
+              "visual_variety": "Talking head with one map graphic."
+            },
+            "accessibility": [
+              "Captions burned in"
+            ]
+          }
+        }
+      },
+      "tags": [
+        "high energy",
+        "urgent",
+        "combative",
+        "to camera",
+        "stakes led"
+      ],
+      "likes": 38400
     }
   }
 }
