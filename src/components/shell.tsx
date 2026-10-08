@@ -68,31 +68,47 @@ type PanelState = {
   setOpen: (open: boolean) => void
   wide: boolean
   setWide: (wide: boolean) => void
+  /** The right panel's three sizes: a third, half, or the whole content area. */
+  size: PanelSize
+  cycleSize: () => void
+  panelOpen: boolean
   sidebarOpen: boolean
   toggleSidebar: () => void
   discuss: boolean
   toggleDiscuss: () => void
 }
-const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {}, sidebarOpen: false, toggleSidebar: () => {}, discuss: false, toggleDiscuss: () => {} })
+export type PanelSize = "third" | "half" | "full"
+const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {}, size: "third", cycleSize: () => {}, panelOpen: false, sidebarOpen: false, toggleSidebar: () => {}, discuss: false, toggleDiscuss: () => {} })
 export const useShellPanel = () => React.useContext(PanelCtx)
 
 export function Shell({ children, drawer, signedIn = false }: { children: React.ReactNode; drawer: React.ReactNode; signedIn?: boolean }) {
   const path = usePathname()
   const [sidebarOpen, setSidebarOpen] = React.useState(false)
   const [panelOpen, setPanelOpen] = React.useState(false)
-  const [wide, setWide] = React.useState(false)
+  const [size, setSize] = React.useState<PanelSize>("third")
+  const wide = size !== "third"
   const [scrolled, setScrolled] = React.useState(false)
   const [discuss, setDiscuss] = React.useState(false)
   const animKey = React.useRef("Scored")
   const panel = React.useMemo<PanelState>(
-    () => ({ setOpen: setPanelOpen, wide, setWide, sidebarOpen, toggleSidebar: () => setSidebarOpen((v) => !v), discuss, toggleDiscuss: () => setDiscuss((v) => !v) }),
-    [wide, sidebarOpen, discuss],
+    () => ({
+      setOpen: setPanelOpen,
+      wide,
+      setWide: (w: boolean) => setSize(w ? "half" : "third"),
+      size,
+      cycleSize: () => setSize((s) => (s === "third" ? "half" : s === "half" ? "full" : "third")),
+      panelOpen,
+      sidebarOpen,
+      toggleSidebar: () => setSidebarOpen((v) => !v),
+      discuss,
+      toggleDiscuss: () => setDiscuss((v) => !v),
+    }),
+    [wide, size, panelOpen, sidebarOpen, discuss],
   )
   const active = (href: string) => (href === "/videos" ? path.startsWith("/videos") || path.startsWith("/v/") : path.startsWith(href))
   // The front door (landing, record entry, sign-in) is full bleed; every step from /record/start on sits in the shell.
-  // Signed in, the landing is the feed, and the feed sits in the shell under its own bar.
   const home = path === "/"
-  if ((home && !signedIn) || path === "/record" || path.startsWith("/sign")) return <div className="min-h-dvh bg-pax-mist">{children}</div>
+  if (path === "/record" || path.startsWith("/sign")) return <div className="min-h-dvh bg-pax-mist">{children}</div>
   const item = (href: string, label: string, Icon: typeof Gauge, small = false) => {
     const on = active(href)
     return (
@@ -108,40 +124,62 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
       >
         {on && <span aria-hidden className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-pax-plum" />}
         <Icon
-          className={cn(small ? "size-3.5" : "size-[18px]", "shrink-0 transition-colors", on ? "fill-pax-lavender text-pax-ink" : "group-hover:fill-pax-lavender group-hover:text-pax-ink")}
+          className={cn(small ? "size-3.5" : "size-[18px]", "icon-pop shrink-0 transition-colors", on ? "fill-pax-lavender text-pax-ink" : "group-hover:fill-pax-lavender group-hover:text-pax-ink")}
           strokeWidth={on ? 2.25 : 1.75}
         />
         {label}
       </Link>
     )
   }
+  const sidebar = (
+    <div className="flex h-full w-60 flex-col rounded-2xl border border-slate-500 bg-pax-mist px-3 py-4 shadow-e2">
+      <Link href="/" aria-label="Home" className="mb-4 flex px-3 pt-1">
+        <Wordmark size={20} />
+      </Link>
+      <nav className="flex flex-col gap-0.5">{NAV.map((n) => item(n.href, n.label, n.icon))}</nav>
+      <div className="mt-3 min-h-0 flex-1 overflow-y-auto border-t border-slate-200/70 pt-3">
+        <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Work in progress</p>
+        <nav className="flex flex-col gap-0.5">{WIP.map((n) => item(n.href, n.label, n.icon))}</nav>
+        <p className="mt-3 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">More</p>
+        <nav className="flex flex-col gap-0.5">{MORE.map((n) => item(n.href, n.label, n.icon))}</nav>
+      </div>
+      <div className="border-t border-slate-200/70 pt-3">
+        <AccountMenu />
+      </div>
+    </div>
+  )
+  // The landing is full bleed. Signed in, it is the feed under its own bar, and the sidebar and the
+  // discussion slide in over it rather than pushing a shell that isn't there.
+  if (home)
+    return (
+      <PanelCtx.Provider value={panel}>
+        <div className="min-h-dvh bg-pax-mist">{children}</div>
+        {signedIn && (
+          <>
+            <div aria-hidden onClick={() => (setSidebarOpen(false), setDiscuss(false))} className={cn("fixed inset-0 z-[60] bg-slate-900/20 transition-opacity duration-300", sidebarOpen || discuss ? "opacity-100" : "pointer-events-none opacity-0")} />
+            <div className={cn("fixed inset-y-[18px] left-[18px] z-[61] transition-transform duration-300 ease-in-out", sidebarOpen ? "translate-x-0" : "-translate-x-[calc(100%+18px)]")}>{sidebar}</div>
+            <div className={cn("fixed inset-y-[18px] right-[18px] z-[61] w-[min(620px,calc(100vw-36px))] transition-transform duration-300 ease-in-out", discuss ? "translate-x-0" : "translate-x-[calc(100%+18px)]")}>
+              {discuss && <DiscussionPanel onClose={() => setDiscuss(false)} />}
+            </div>
+          </>
+        )}
+      </PanelCtx.Provider>
+    )
   const title = TITLES.find(([p]) => path.startsWith(p))?.[1] ?? (path === "/" ? "Scored" : path.slice(1).split("/")[0].replace(/^./, (c) => c.toUpperCase()))
   // The take panel must not remount (and re-fade) the page beneath it.
   if (!path.startsWith("/v/")) animKey.current = title
-  const panelW = wide ? PANEL_HALF : PANEL_THIRD
+  const panelW = size === "half" ? PANEL_HALF : PANEL_THIRD
+  // Full: the panel takes the whole content area and the page beneath folds away.
+  const takeover = (panelOpen || discuss) && size === "full"
   // /chat fills the content card edge to edge, as solar's chat fills its main area.
   const full = path.startsWith("/chat")
   return (
     <PanelCtx.Provider value={panel}>
       <div className="flex min-h-dvh md:h-dvh md:overflow-hidden md:bg-slate-200/60 md:p-[18px]">
         <div className={cn("hidden shrink-0 overflow-hidden transition-[width,margin] duration-300 ease-in-out md:block", sidebarOpen ? "md:mr-[18px] md:w-60" : "md:w-0")}>
-          <div className="flex h-full w-60 flex-col rounded-2xl border border-slate-500 bg-pax-mist px-3 py-4 shadow-e2">
-            <Link href="/" aria-label="Home" className="mb-4 flex px-3 pt-1">
-              <Wordmark size={20} />
-            </Link>
-            <nav className="flex flex-col gap-0.5">{NAV.map((n) => item(n.href, n.label, n.icon))}</nav>
-            <div className="mt-3 min-h-0 flex-1 overflow-y-auto border-t border-slate-200/70 pt-3">
-              <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Work in progress</p>
-              <nav className="flex flex-col gap-0.5">{WIP.map((n) => item(n.href, n.label, n.icon))}</nav>
-              <p className="mt-3 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">More</p>
-              <nav className="flex flex-col gap-0.5">{MORE.map((n) => item(n.href, n.label, n.icon))}</nav>
-            </div>
-            <div className="border-t border-slate-200/70 pt-3">
-              <AccountMenu />
-            </div>
-          </div>
+          {sidebar}
         </div>
-        <div className="flex min-w-0 flex-1 flex-col md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:bg-pax-mist md:shadow-e2">
+        <div className={cn("flex min-w-0 flex-1 flex-col md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:bg-pax-mist md:shadow-e2", takeover && "md:hidden")}>
           <header className="sticky top-0 z-20 flex items-center gap-3 border-b bg-white/90 px-4 py-2.5 backdrop-blur md:hidden">
             <Link href="/" aria-label="Home"><Wordmark size={18} /></Link>
             <nav className="no-scrollbar flex flex-1 gap-1 overflow-x-auto">
@@ -155,7 +193,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
               <Video className="size-3.5" /> Record
             </Link>
           </header>
-          <div className={cn("relative z-10 hidden shrink-0 items-center gap-3 px-5 py-4 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)]", !home && "md:flex")}>
+          <div className={cn("relative z-10 hidden shrink-0 items-center gap-3 px-5 py-4 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)] md:flex")}>
             <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className="flex size-10 items-center justify-center rounded-full bg-white text-pax-ink shadow-e1 transition-shadow hover:shadow-e2">
               {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
             </button>
@@ -172,11 +210,11 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
             </button>
           </div>
           <main className={cn("flex-1", full ? "flex min-h-0 flex-col md:overflow-hidden" : "md:overflow-y-auto")} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
-            <div key={animKey.current} className={cn("page-enter rise-kids @container w-full", full ? "flex min-h-0 flex-1 flex-col" : home ? "" : "px-5 py-6 md:px-10 md:py-9")}>{children}</div>
+            <div key={animKey.current} className={cn("page-enter rise-kids @container w-full", full ? "flex min-h-0 flex-1 flex-col" : "px-5 py-6 md:px-10 md:py-9")}>{children}</div>
           </main>
         </div>
-        <div className={cn("w-0 shrink-0 overflow-hidden transition-[width,margin] duration-300 ease-in-out", (panelOpen || discuss) && cn("md:ml-[18px]", panelW))}>
-          <div className={cn("h-full", panelW)}>
+        <div className={cn("w-0 shrink-0 overflow-hidden transition-[width,margin] duration-300 ease-in-out", (panelOpen || discuss) && (takeover ? "md:w-auto md:flex-1" : cn("md:ml-[18px]", panelW)))}>
+          <div className={cn("h-full", takeover ? "w-full" : panelW)}>
             {drawer}
             {discuss && !panelOpen && <DiscussionPanel onClose={() => setDiscuss(false)} />}
           </div>

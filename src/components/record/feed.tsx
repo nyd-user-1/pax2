@@ -5,7 +5,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ChevronDown, ChevronUp, Clock, MessagesSquare, PanelLeftClose, PanelLeftOpen, Search, Star, X } from "lucide-react"
+import { ChevronDown, ChevronUp, Clock, Search, Star, X } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
 import { cn } from "@/ui/lib/utils"
@@ -343,31 +343,25 @@ export function SearchBar({ q, setQ, placeholder = "Search videos" }: { q: strin
   )
 }
 
-/** Signed in, the feed's bar is the page's header: the sidebar toggle where the wordmark stood,
- *  the search in the middle, and the discussion where Sign up stood. */
-function FeedHeader({ children }: { children: React.ReactNode }) {
-  const { sidebarOpen, toggleSidebar, discuss, toggleDiscuss } = useShellPanel()
-  return (
-    <div className="sticky top-0 z-40 flex items-center gap-4 border-b border-slate-200/70 bg-white/85 px-5 py-3 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)] backdrop-blur">
-      <button type="button" onClick={toggleSidebar} aria-label="Toggle sidebar" className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white text-pax-ink shadow-e1 transition-shadow hover:shadow-e2">
-        {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
-      </button>
-      <div className="mx-auto w-full max-w-2xl">{children}</div>
-      <button type="button" onClick={toggleDiscuss} aria-pressed={discuss} aria-label="Open the discussion" className="flex size-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-colors hover:bg-slate-50">
-        <MessagesSquare className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
-      </button>
-    </div>
-  )
-}
-
-export function Feed({ videos, signedIn = false }: { videos: FeedVideo[]; signedIn?: boolean }) {
+export function Feed({ videos }: { videos: FeedVideo[] }) {
   const [q, setQ] = React.useState("")
+  // A drawer's channel name searches this feed (take-panel.tsx); a ?q= in the address does the same on arrival.
+  React.useEffect(() => {
+    document.documentElement.dataset.feed = "1"
+    const initial = new URLSearchParams(window.location.search).get("q")
+    if (initial) setQ(initial)
+    const on = (e: Event) => setQ((e as CustomEvent<string>).detail)
+    window.addEventListener("hermes:search", on)
+    return () => {
+      delete document.documentElement.dataset.feed
+      window.removeEventListener("hermes:search", on)
+    }
+  }, [])
   const [cycles, setCycles] = React.useState(1)
   const sentinel = React.useRef<HTMLDivElement>(null)
   const section = React.useRef<HTMLElement>(null)
   const path = usePathname()
-  const landing = path === "/" && !signedIn
-  const header = path === "/" && signedIn
+  const landing = path === "/"
 
   // Opening a video from the landing remembers where the reader was; coming back puts them there
   // again — never above the point where the search bar sticks.
@@ -389,6 +383,10 @@ export function Feed({ videos, signedIn = false }: { videos: FeedVideo[]; signed
 
   const needle = q.trim().toLowerCase()
   const shown = needle ? videos.filter((v) => matches(v, needle)) : videos
+  // With a video's drawer open beside the feed, search results lay out as a grid: three across beside
+  // the half-page panel, two beside the third-of-a-page one.
+  const { panelOpen, size } = useShellPanel()
+  const resultCols = panelOpen && size === "half" ? "sm:grid-cols-3" : panelOpen && size === "third" ? "sm:grid-cols-2" : null
 
   // The catalog is finite; the page isn't. Each time the spinner comes into
   // view another rotated pass appends, so the feed reads as endless.
@@ -403,35 +401,34 @@ export function Feed({ videos, signedIn = false }: { videos: FeedVideo[]; signed
   }, [needle])
 
   return (
-    <>
-      {header && (
-        <FeedHeader>
-          <SearchBar q={q} setQ={setQ} />
-        </FeedHeader>
-      )}
-      <section ref={section} onClickCapture={remember} className={cn("mx-auto w-full max-w-6xl px-6 pb-16", header && "pt-6")}>
-        {!header && (
-          <div className="sticky top-2.5 z-40 mx-auto w-full max-w-2xl">
-            <SearchBar q={q} setQ={setQ} />
-          </div>
-        )}
+    <section ref={section} onClickCapture={remember} className="mx-auto w-full max-w-6xl px-6 pb-16">
+      <div className="sticky top-2.5 z-40 mx-auto w-full max-w-2xl">
+        <SearchBar q={q} setQ={setQ} />
+      </div>
 
-        <div className="flex flex-col gap-10 pt-10">
-          {shown.length === 0 ? (
-            <p className="py-16 text-center text-slate-500">Nothing matches &ldquo;{q}&rdquo;.</p>
-          ) : needle ? (
-            <Cycle items={shown} />
+      <div className="flex flex-col gap-10 pt-10">
+        {shown.length === 0 ? (
+          <p className="py-16 text-center text-slate-500">Nothing matches &ldquo;{q}&rdquo;.</p>
+        ) : needle ? (
+          resultCols ? (
+            <div className={cn("grid gap-8", resultCols)}>
+              {shown.map((v) => (
+                <LandscapeCard key={v.id} v={v} />
+              ))}
+            </div>
           ) : (
-            Array.from({ length: cycles }, (_, c) => <Cycle key={c} items={rotate(shown, c * 7)} />)
-          )}
-        </div>
-
-        {!needle && shown.length > 0 && (
-          <div ref={sentinel} className="flex justify-center py-12">
-            <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-pax-ink" />
-          </div>
+            <Cycle items={shown} />
+          )
+        ) : (
+          Array.from({ length: cycles }, (_, c) => <Cycle key={c} items={rotate(shown, c * 7)} />)
         )}
-      </section>
-    </>
+      </div>
+
+      {!needle && shown.length > 0 && (
+        <div ref={sentinel} className="flex justify-center py-12">
+          <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-pax-ink" />
+        </div>
+      )}
+    </section>
   )
 }

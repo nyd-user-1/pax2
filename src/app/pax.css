@@ -225,3 +225,13 @@ body {
     animation: none !important;
   }
 }
+
+/* The sidebar icons' hover: govblock's animate-ui default (scale 1 → 1.2 → 1, 0.5s ease-in-out), in CSS. */
+@keyframes icon-pop {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+.group:hover > .icon-pop { animation: icon-pop 0.5s ease-in-out; }
+@media (prefers-reduced-motion: reduce) {
+  .group:hover > .icon-pop { animation: none; }
+}

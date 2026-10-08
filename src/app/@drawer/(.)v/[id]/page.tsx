@@ -16,7 +16,7 @@ export default async function TakeInDrawer({ params }: { params: Promise<{ id: s
   if (id.startsWith("yt-")) {
     const v = (shorts as unknown as { videos: { id: string; channelId: string; channel: string }[] }).videos.find((x) => x.id === id.replace(/^yt-/, "")) ?? homeFeed.find((x) => x.id === id.replace(/^yt-/, ""))
     return (
-      <TakePanel title={v ? (channelById(v.channelId)?.name ?? v.channel) : "Campaign short"} href={`/v/${id}`}>
+      <TakePanel title={v ? (channelById(v.channelId)?.name ?? v.channel) : "Campaign short"} search={v?.channel}>
         <ShortView id={id} inDrawer />
       </TakePanel>
     )
@@ -24,7 +24,7 @@ export default async function TakeInDrawer({ params }: { params: Promise<{ id: s
   const take = takeById(id)
   if (!take) notFound()
   return (
-    <TakePanel title={scriptById(take.scriptId)!.short} href={`/v/${id}`}>
+    <TakePanel title={scriptById(take.scriptId)!.short}>
       <TakeView id={id} inDrawer />
     </TakePanel>
   )

@@ -7,3 +7,9 @@ import { usePathname } from "next/navigation"
 export function LandingOnly({ children }: { children: React.ReactNode }) {
   return usePathname() === "/" ? children : null
 }
+
+/** The signed-in landing's light-blue ground, only on the landing itself: when a video's drawer opens
+ *  over the feed, the feed sits on the shell's own surface. */
+export function LandingSurface({ children }: { children: React.ReactNode }) {
+  return <div className={usePathname() === "/" ? "min-h-dvh bg-pax-lavender" : undefined}>{children}</div>
+}

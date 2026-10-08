@@ -5,7 +5,7 @@ import type { ReactNode } from "react"
 import Link from "next/link"
 
 import subscribers from "../../data/generated/channel-subscribers.json"
-import samplePaid from "../../data/sample/paid.json"
+import sampleVideos from "../../data/sample/videos.json"
 import homeFeed from "../../data/generated/home-feed.json"
 import shorts from "../../data/raw/yt-shorts.json"
 import { RangeBar } from "@/components/bits"
@@ -93,8 +93,13 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   )
 
   const locked = !signedIn
-  // Paid figures, when a video has them: today only invented samples (data/sample/paid.json).
-  const paid = (samplePaid.videos as Record<string, Record<string, unknown>>)[id] as (Record<string, string> & { tiles: Record<string, string>; analytics: Record<string, string> }) | undefined
+  // Paid figures, KPIs and Resonance, when a video has them: today only invented samples (data/sample/videos.json).
+  type Range = { score: number; low: number; high: number }
+  const sample = (sampleVideos.videos as Record<string, unknown>)[id] as
+    | (Record<string, string> & { tiles: Record<string, string>; analytics: Record<string, string>; kpis: Record<string, Record<string, string> | string>; resonance: Range & { evidence: string; components: Record<string, Range> } })
+    | undefined
+  const paid = sample
+  const res = sample?.resonance
   const tags = tagsFor(id)
   const statRows: [string, string][] = [
     ["Views", n(v?.views)],
@@ -124,7 +129,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     "Analytics",
     <Locked key="analytics" locked={locked}>
       <CardBlock title="Analytics" height="auto" footer={paid ? "Sample figures" : undefined}>
-        <div className="grid grid-cols-2 gap-4 @lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4">
           {stat("Reach", paid?.analytics.Reach ?? DASH)}
           {stat("3s+", paid?.analytics["3s+"] ?? DASH)}
           {stat("Avg.", paid?.analytics["Avg."] ?? DASH)}
@@ -178,15 +183,15 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "resonance",
       "Resonance",
-      <CardBlock key="resonance" title="Resonance" tools={<ScoreInfo />} height="auto">
+      <CardBlock key="resonance" title="Resonance" tools={<ScoreInfo />} height="auto" footer={sample ? "Sample figures" : undefined}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="tabular flex items-baseline gap-2">
-              <span className="font-display text-4xl text-pax-ink">{DASH}</span>
-              <span className="text-xs text-muted-foreground">{DASH}</span>
+              <span className="font-display text-4xl text-pax-ink">{res?.score ?? DASH}</span>
+              <span className="text-xs text-muted-foreground">{res ? `${res.low}–${res.high}` : DASH}</span>
             </div>
-            <div className="min-w-56 flex-1">
-              <RangeBar value={null} low={null} high={null} />
+            <div className="min-w-0 flex-1 basis-56">
+              <RangeBar value={res?.score ?? null} low={res?.low ?? null} high={res?.high ?? null} />
               <div className="mt-1 flex justify-between text-[10px] text-muted-foreground">
                 <span>0</span>
                 <span>50 = reference average</span>
@@ -195,7 +200,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
             </div>
           </div>
           <ul className="flex flex-col gap-1 rounded-lg bg-muted/60 px-3 py-2 text-xs text-muted-foreground">
-            <li>Evidence: {DASH}</li>
+            <li>Evidence: {res?.evidence ?? DASH}</li>
           </ul>
           <div className="grid gap-3 @2xl:grid-cols-3">
             {COMPONENTS.map((meta) => (
@@ -206,10 +211,10 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 </div>
                 <p className="text-xs text-muted-foreground">{meta.question}</p>
                 <div className="tabular flex items-baseline gap-1.5">
-                  <span className="font-display text-3xl text-pax-ink">{DASH}</span>
-                  <span className="text-xs text-muted-foreground">{DASH}</span>
+                  <span className="font-display text-3xl text-pax-ink">{res?.components[meta.key]?.score ?? DASH}</span>
+                  <span className="text-xs text-muted-foreground">{res ? `${res.components[meta.key].low}–${res.components[meta.key].high}` : DASH}</span>
                 </div>
-                <RangeBar value={null} low={null} high={null} />
+                <RangeBar value={res?.components[meta.key]?.score ?? null} low={res?.components[meta.key]?.low ?? null} high={res?.components[meta.key]?.high ?? null} />
               </div>
             ))}
           </div>
@@ -219,7 +224,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "kpis",
       "KPIs",
-      <TableBlock key="kpis" title="KPIs" height="auto">
+      <TableBlock key="kpis" title="KPIs" height="auto" footer={sample ? "Sample figures" : undefined}>
         <div className="overflow-x-auto">
           <table className="tabular w-full text-sm">
             <thead className="text-left text-xs text-slate-500">
@@ -237,13 +242,13 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 <tr key={label}>
                   <td className="text-slate-500"><Term id={KPI_TERMS[label]} /></td>
                   {COMPONENTS.map((meta) => (
-                    <td key={meta.key}>{DASH}</td>
+                    <td key={meta.key}>{(sample?.kpis[label] as Record<string, string> | undefined)?.[meta.key] ?? DASH}</td>
                   ))}
                 </tr>
               ))}
               <tr className="font-semibold text-pax-ink">
                 <td><Term id="resonance" /></td>
-                <td colSpan={3}>{DASH}</td>
+                <td colSpan={3}>{(sample?.kpis.Resonance as string | undefined) ?? DASH}</td>
               </tr>
             </tbody>
           </table>
@@ -321,9 +326,10 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       <FormulaBlock key="formula" title="Formula" height="auto">
         <div className="grid gap-3 @2xl:grid-cols-2 @5xl:grid-cols-3">
           {FORMULAS.map(([step, tex]) => (
-            <div key={step} className="surface flex flex-col gap-2 p-4">
+            <div key={step} className="surface @container flex min-w-0 flex-col gap-2 p-4">
               <p className="text-sm font-medium text-slate-900">{step}</p>
-              <div className="flex min-h-28 min-w-0 items-center justify-center overflow-x-auto">
+              {/* The typeset formula scales with its card, so it fits a narrow panel without scrolling. */}
+              <div className="flex min-h-28 min-w-0 items-center justify-center overflow-x-auto [&_.katex-display]:my-0 [&_.katex]:text-[clamp(9px,5.2cqw,17px)]">
                 <FormulaExplainer title={step} html={katex.renderToString(tex, { displayMode: true, throwOnError: true, output: "html" })} {...EXPLAIN[step]} />
               </div>
             </div>

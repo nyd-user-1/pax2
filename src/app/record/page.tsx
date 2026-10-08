@@ -5,7 +5,7 @@ import homeFeed from "../../../data/generated/home-feed.json"
 import shorts from "../../../data/raw/yt-shorts.json"
 import { Feed, type FeedVideo } from "@/components/record/feed"
 import { LandingHeader } from "@/components/record/landing-header"
-import { LandingOnly } from "@/components/record/landing-only"
+import { LandingOnly, LandingSurface } from "@/components/record/landing-only"
 import { PhoneMock } from "@/components/record/phone-mock"
 import { ScrollCue, ScrollTop } from "@/components/record/scroll-cue"
 import { currentUser } from "@/lib/auth"
@@ -27,7 +27,18 @@ export default async function RecordLanding() {
   const top = all.filter((v) => v.channelId === FAIRVOTE).sort((a, b) => (b.views ?? 0) - (a.views ?? 0))[0]
   const feed = homeFeed as FeedVideo[]
   // Signed in, the hero has done its job: the feed is the page.
-  if (await currentUser()) return <Feed videos={feed} signedIn />
+  if (await currentUser())
+    return (
+      <LandingSurface>
+        <LandingOnly>
+          <LandingHeader signedIn />
+        </LandingOnly>
+        <Feed videos={feed} />
+        <LandingOnly>
+          <ScrollTop />
+        </LandingOnly>
+      </LandingSurface>
+    )
   return (
     <div className="bg-pax-mist">
       <LandingOnly>

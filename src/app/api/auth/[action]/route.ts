@@ -36,7 +36,9 @@ export async function GET(_req: Request, { params }: { params: Promise<{ action:
 
 export async function POST(req: Request, { params }: { params: Promise<{ action: string }> }) {
   if ((await params).action === "signout") {
-    ;(await cookies()).delete("pax_session")
+    const jar = await cookies()
+    jar.delete("pax_session")
+    jar.delete("pax_refresh")
     return NextResponse.json({ ok: true })
   }
   if (!CLIENT) return NextResponse.json({ error: "Auth isn't configured in this environment." }, { status: 503 })
@@ -70,6 +72,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ action:
       if (!t?.IdToken) return NextResponse.json({ error: "Sign-in needs a step this flow doesn't support yet." }, { status: 400 })
       const jar = await cookies()
       jar.set("pax_session", t.IdToken, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: t.ExpiresIn ?? 3600, path: "/" })
+      // The refresh token keeps the reader signed in past the hour (src/proxy.ts renews the session).
+      if (t.RefreshToken) jar.set("pax_refresh", t.RefreshToken, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 30 * 86_400, path: "/" })
       return NextResponse.json({ ok: true })
     }
     return NextResponse.json({ error: "Unknown action" }, { status: 404 })

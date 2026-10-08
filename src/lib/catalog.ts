@@ -72,7 +72,20 @@ export type Features = {
   }
 }
 
-export const FEATURES = featuresJson as unknown as Record<string, Features>
+// The video model sometimes writes a time as "t": 01:09 instead of seconds, which isn't valid JSON, so
+// its whole review was set aside. Read those times as minutes:seconds and keep the review.
+function repaired(f: Features): Features {
+  const p = f.pegasus
+  if (!p || p.result || !p.raw) return f
+  try {
+    const text = p.raw.replace(/^```(?:json)?\s*|```\s*$/g, "").replace(/("(?:t|end)"\s*:\s*)(\d+):(\d{2})\b/g, (_, k: string, m: string, sec: string) => `${k}${Number(m) * 60 + Number(sec)}`)
+    return { ...f, pegasus: { ...p, ok: true, result: JSON.parse(text) } }
+  } catch {
+    return f
+  }
+}
+
+export const FEATURES = Object.fromEntries(Object.entries(featuresJson as unknown as Record<string, Features>).map(([k, f]) => [k, repaired(f)]))
 export const featuresFor = (id: string): Features | undefined => FEATURES[id]
 
 // ---------- Paid results: Meta Ads Manager's export format ----------

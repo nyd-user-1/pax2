@@ -212,7 +212,7 @@ function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapsh
     <div className={cn("flex flex-col gap-3", !bare && "surface px-5 pb-5 pt-4")}>
       {!bare && <h3 className="font-semibold text-slate-900">Forecast</h3>}
       <div>
-        <p className="text-sm text-muted-foreground">Which way this take&apos;s score will move, logged before the next results arrive. When the actual lands, the comparison tunes the next forecast &mdash; the same loop that made weather and insurance dependable.</p>
+        <p className="text-sm text-muted-foreground">A guess, written down before the numbers come in: will this video do better or worse than usual? When the numbers arrive, Hermes checks the guess against them, and every check makes the next guess sharper.</p>
       </div>
       {calls.length > 0 && (
         <ul className="flex flex-col gap-1 text-sm">

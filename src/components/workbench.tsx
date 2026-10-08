@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-import { SourceBadge, ts } from "@/components/bits"
+import { ts } from "@/components/bits"
 import type { Features } from "@/lib/catalog"
 import { cn } from "@/ui/lib/utils"
 
@@ -75,10 +75,6 @@ export function Loudness({ f }: { f: NonNullable<Features["audio"]> }) {
   const w = 100 / xs.length
   return (
     <div className="flex flex-col gap-1">
-      <div className="mb-2 flex items-center justify-between text-[11px] text-muted-foreground">
-        <span>dB</span>
-        <SourceBadge source="derived" />
-      </div>
       <svg viewBox="0 0 100 24" preserveAspectRatio="none" className="h-12 w-full cursor-pointer" onClick={(e) => {
         const r = (e.currentTarget as SVGSVGElement).getBoundingClientRect()
         seek(((e.clientX - r.left) / r.width) * f.durationSec)
