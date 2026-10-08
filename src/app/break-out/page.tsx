@@ -11,7 +11,7 @@ import { labVideos, type Tier } from "@/lib/lab"
 import { apStamp, snapshots } from "@/lib/velocity-store"
 import { cn } from "@/ui/lib/utils"
 
-export const metadata = { title: "Breakout" }
+export const metadata = { title: "iWAR" }
 export const dynamic = "force-dynamic"
 
 /** The five stat cards: the latest snapshot the poller saved, against the one nearest a day earlier. */
@@ -72,7 +72,7 @@ export default async function BreakoutPage() {
           <ChartBlock
             title="Hits and Misses"
             id="verdict"
-            rows={vids.map((v) => ({ video: v.title, channel: v.channel, ratio: Number(v.ratio.toFixed(2)), verdict: TIER[v.tier].label }))}
+            rows={vids.map((v) => ({ video: v.title, channel: v.channel, iWAR: Number(v.ratio.toFixed(2)), verdict: TIER[v.tier].label }))}
             name="seed-verdict"
             height="h-[calc(100dvh-19.5rem)] min-h-[419px]"
             footer={
@@ -97,7 +97,7 @@ export default async function BreakoutPage() {
             title={`Shorts (${vids.length})`}
             id="videos"
             search="Search videos…"
-            rows={vids.map((v) => ({ video: v.title, channel: v.channel, views: v.views, median: Math.round(v.channelMedian), ratio: `${v.ratio >= 10 ? v.ratio.toFixed(0) : v.ratio.toFixed(1)}x`, verdict: TIER[v.tier].label }))}
+            rows={vids.map((v) => ({ video: v.title, channel: v.channel, views: v.views, median: Math.round(v.channelMedian), iWAR: `${v.ratio >= 10 ? v.ratio.toFixed(0) : v.ratio.toFixed(1)}x`, verdict: TIER[v.tier].label }))}
             name="videos"
             footer={VIEWS_AS_OF}
           >
@@ -108,7 +108,7 @@ export default async function BreakoutPage() {
                     <th>Channel</th>
                     <th className="!text-right">Views</th>
                     <th className="!text-right">Channel median</th>
-                    <th className="!text-right">Ratio</th>
+                    <th className="!text-right">iWAR</th>
                     <th>Verdict</th>
                     <th>Curve</th>
                   </tr>

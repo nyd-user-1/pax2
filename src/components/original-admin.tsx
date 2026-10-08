@@ -37,7 +37,7 @@ export function ScoreButton({ id }: { id: string }) {
   return (
     <div className="flex flex-col gap-2">
       <button type="button" disabled={!!busy} onClick={run("score", () => scoreOriginal(id))} className={cn(primary, "w-fit")}>
-        <Spin on={busy === "score"} /> Score it
+        <Spin on={busy === "score"} /> Score
       </button>
       {err && <p className="text-sm text-below">{err}</p>}
     </div>

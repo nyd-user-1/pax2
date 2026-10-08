@@ -9,6 +9,9 @@ import { STAGE_LABEL, type OriginalRow } from "@/lib/originals"
 import { recentPolls } from "@/lib/velocity-store"
 import { cn } from "@/ui/lib/utils"
 
+// The Hermes channels as they will appear; a video's own link replaces its channel once it is posted.
+const CHANNELS: Record<string, string> = { YouTube: "Hermes · @hermesvideos", TikTok: "Hermes · @hermesvideos", Instagram: "Hermes · @hermesvideos" }
+
 const TABS = ["recorded", "scored", "published", "polled"] as const
 type Tab = (typeof TABS)[number]
 const TAB_LABEL: Record<Tab, string> = { recorded: "Recorded", scored: "Scored", published: "Published", polled: "Polled" }
@@ -204,7 +207,7 @@ async function Published({ row, admin }: { row: OriginalRow; admin: boolean }) {
                       {url.replace(/^https?:\/\//, "")}
                     </a>
                   ) : (
-                    "Waiting for the Hermes channel"
+                    CHANNELS[platform]
                   )}
                 </td>
               </tr>

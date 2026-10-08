@@ -5,6 +5,7 @@ import type { ReactNode } from "react"
 import Link from "next/link"
 
 import subscribers from "../../data/generated/channel-subscribers.json"
+import warBaseline from "../../data/generated/war-baseline.json"
 import sampleVideos from "../../data/sample/videos.json"
 import homeFeed from "../../data/generated/home-feed.json"
 import shorts from "../../data/raw/yt-shorts.json"
@@ -98,6 +99,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       ? [...data.videos, ...(homeFeed as unknown as Yt["videos"])].filter((x, i, all) => x.channelId === v.channelId && x.id !== ytId && all.findIndex((y) => y.id === x.id) === i).slice(0, 3)
       : data.videos.filter((x) => x.channelId === v.channelId && x.id !== ytId && featuresFor(`yt-${x.id}`)).slice(0, 3)
     : []
+  const times = (x: number) => `${x >= 10 ? x.toFixed(0) : x.toFixed(1)}×`
   const n = (x: number | null | undefined) => (x == null ? DASH : COMPACT.format(x))
   const stat = (label: string, value: string) => (
     <div className="flex flex-col">
@@ -121,7 +123,8 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     ["Like rate", pct(likes)],
     ["Comments", n(v?.comments)],
     ["Comment rate", pct(v?.comments)],
-    ["Ratio", ratio == null ? DASH : `${ratio >= 10 ? ratio.toFixed(0) : ratio.toFixed(1)}×`],
+    ["iWAR", ratio == null ? DASH : times(ratio)],
+    ["WAR", v?.views == null ? DASH : times(v.views / warBaseline.median)],
     ["Subscribers", n(v ? (subscribers as Record<string, number | null>)[v.channelId] : null)],
     ["Length", v ? `${Math.floor(secs(v.duration) / 60)}:${String(secs(v.duration) % 60).padStart(2, "0")}` : DASH],
     ["Date", v ? new Date(v.published).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : DASH],
