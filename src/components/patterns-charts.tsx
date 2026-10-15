@@ -157,9 +157,17 @@ export function VelocityLines({ data }: { data: PatternsData }) {
 
 /* ── 2 · when videos are published, Eastern time ─────────────────────────── */
 
-export function PublishHeatmap({ data }: { data: PatternsData }) {
+const bandColor = (r: number | null) => (r == null ? "#cbd5e1" : r >= 3 ? GREEN : r >= 1 ? DARK : r > 0.5 ? GRAY : RED)
+
+export function PublishHeatmap({ data, view = "published" }: { data: PatternsData; view?: string }) {
   const DOW = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
   const max = Math.max(1, ...data.heat.flat().map((c) => c.n))
+  const byCell = useMemo(() => {
+    const m = new Map<string, PatternVideo[]>()
+    for (const v of data.videos) m.set(`${v.pubDow}-${v.pubHour}`, [...(m.get(`${v.pubDow}-${v.pubHour}`) ?? []), v])
+    for (const vs of m.values()) vs.sort((a, b) => (b.ratio ?? 0) - (a.ratio ?? 0))
+    return m
+  }, [data])
   return (
     <div className="flex h-full flex-col gap-1.5">
       <div className="grid flex-1 gap-1.5" style={{ gridTemplateRows: "repeat(7, 1fr)" }}>
@@ -168,6 +176,21 @@ export function PublishHeatmap({ data }: { data: PatternsData }) {
             <span className="tabular self-center text-xs text-slate-500">{DOW[d]}</span>
             {row.map((cell, h) => {
               const pct = cell.n / max
+              if (view === "velocity") {
+                const vs = byCell.get(`${d}-${h}`) ?? []
+                return (
+                  <div key={h} className={cn("flex flex-wrap content-center items-center justify-center gap-[3px] rounded-md p-1", vs.length ? "bg-slate-50" : "bg-slate-50/50")}>
+                    {vs.map((v) => (
+                      <span
+                        key={v.id}
+                        title={`${v.title} · ${v.channel}${v.ratio != null ? ` · ${rx(v.ratio)}` : ""}`}
+                        className="size-2.5 rounded-[3px]"
+                        style={{ backgroundColor: bandColor(v.ratio) }}
+                      />
+                    ))}
+                  </div>
+                )
+              }
               return (
                 <div
                   key={h}
@@ -187,7 +210,16 @@ export function PublishHeatmap({ data }: { data: PatternsData }) {
           <span key={h} className="tabular text-center text-[11px] text-slate-400">{h % 3 === 0 ? `${h}` : ""}</span>
         ))}
       </div>
-      <p className="tabular text-xs text-slate-500">Hour published, Eastern time · green ring = at least one finished above 3x</p>
+      {view === "velocity" ? (
+        <p className="tabular flex items-center gap-3 text-xs text-slate-500">
+          Hour published, Eastern time · one tile per video
+          {([["> 3x", GREEN], ["1–3x", DARK], [".5–1x", GRAY], ["< .5x", RED]] as const).map(([label, c]) => (
+            <span key={label} className="flex items-center gap-1"><span className="size-2.5 rounded-[3px]" style={{ backgroundColor: c }} />{label}</span>
+          ))}
+        </p>
+      ) : (
+        <p className="tabular text-xs text-slate-500">Hour published, Eastern time · green ring = at least one finished above 3x</p>
+      )}
     </div>
   )
 }
@@ -444,6 +476,7 @@ const DESC: Record<string, string> = {
 
 export function PatternSections({ data }: { data: PatternsData }) {
   const [story, setStory] = useState<string | null>(null)
+  const [heatView, setHeatView] = useState("published")
   const tales = useMemo(() => stories(data), [data])
   const subs = new Map(data.channels.map((c) => [c.id, c.subs]))
   const videoRows = data.videos.map((v) => ({ title: v.title, channel: v.channel, published: v.published, views: v.views, median: v.median ?? "", ratio: v.ratio != null ? Math.round(v.ratio * 100) / 100 : "", likes: v.likes ?? "", subscribers: subs.get(v.channelId) ?? "" }))
@@ -451,7 +484,7 @@ export function PatternSections({ data }: { data: PatternsData }) {
   const channelRows = data.channels.map((c) => ({ channel: c.name, group: c.group, subscribers: c.subs ?? "", tracked: c.n, above3x: c.pushed, below05x: c.killed }))
   const sections: { key: string; title: string; rows: Record<string, unknown>[]; chart: React.ReactNode }[] = [
     { key: "velocity", title: "Velocity, every 15 minutes", rows: videoRows, chart: <VelocityLines data={data} /> },
-    { key: "publish", title: "Publish times", rows: heatRows, chart: <PublishHeatmap data={data} /> },
+    { key: "publish", title: "Publish times", rows: heatRows, chart: <PublishHeatmap data={data} view={heatView} /> },
     { key: "channels", title: "Channels", rows: channelRows, chart: <ChannelStrips data={data} /> },
     { key: "subs", title: "Subscribers", rows: videoRows, chart: <SubsScatter data={data} /> },
     { key: "engagement", title: "Engagement", rows: videoRows, chart: <EngagementScatter data={data} /> },
@@ -466,6 +499,9 @@ export function PatternSections({ data }: { data: PatternsData }) {
           name={`patterns-${s.key}`}
           rows={s.rows}
           height="h-[92dvh]"
+          views={s.key === "publish" ? [{ value: "published", label: "Published" }, { value: "velocity", label: "Velocity" }] : undefined}
+          view={s.key === "publish" ? heatView : undefined}
+          onView={s.key === "publish" ? setHeatView : undefined}
           menuItems={
             <>
               <DropdownMenuSeparator />
@@ -476,7 +512,7 @@ export function PatternSections({ data }: { data: PatternsData }) {
           }
         >
           <div className="flex h-full min-h-0 flex-col gap-3">
-            <p className="text-sm text-slate-500">{DESC[s.key]}</p>
+            <p className="text-sm text-slate-500">{s.key === "publish" && heatView === "velocity" ? "Each cell holds one tile per video published in that hour and weekday, Eastern time, colored by where it finished against its channel's median - the band legend sits below the grid." : DESC[s.key]}</p>
             <div className="min-h-0 flex-1">{s.chart}</div>
           </div>
         </ChartBlock>
