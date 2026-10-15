@@ -2,14 +2,15 @@ import TechText from "@/components/tech-text"
 
 import { cn } from "@/ui/lib/utils"
 
-/** The pax wordmark: React Bits TechText — dashed guides sketch each letter in, in the ink of wherever it sits. */
+/** The pax wordmark: React Bits TechText, blue letters with red accents, sized for the
+ *  header corner (105x56 at the landing's size and scaling with the slot elsewhere). */
 export function Wordmark({ className, size = 22 }: { className?: string; size?: number }) {
   return (
-    <span className={cn("inline-block align-middle text-slate-900", className)} style={{ width: Math.round(size * 2.6), height: Math.round(size * 1.6) }}>
+    <span className={cn("inline-block align-middle", className)} style={{ width: Math.round(size * 4.04), height: Math.round(size * 2.15) }}>
       <TechText
         text="pax"
         fontWeight={600}
-        fontSize={size}
+        fontSize={150}
         reveal="letter"
         dashLength={4}
         dashGap={2}
@@ -18,6 +19,8 @@ export function Wordmark({ className, size = 22 }: { className?: string; size?: 
         introDuration={2}
         clickKick
         guides={false}
+        accentColor="#d20526"
+        color="#073cd1"
       />
     </span>
   )
