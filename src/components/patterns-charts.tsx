@@ -294,25 +294,22 @@ export function ChannelStrips({ data }: { data: PatternsData }) {
 
 /* ── 4 + 5 · scatters: subscribers vs reach, engagement vs reach ─────────── */
 
-function Scatter({ videos, x, y, xTicks, yTicks, xLabel, yLabel, xFmt, yFmt }: {
-  videos: PatternVideo[]
-  x: (v: PatternVideo) => number
-  y: (v: PatternVideo) => number
+type SPt = { x: number; y: number; r: number; color: string; lines: string[] }
+
+function ScatterBase({ pts, xTicks, yTicks, xLabel, yLabel, xFmt, yFmt, xd, yd }: {
+  pts: SPt[]
   xTicks: number[]
   yTicks: number[]
   xLabel: string
   yLabel: string
   xFmt: (n: number) => string
   yFmt: (n: number) => string
+  xd: [number, number]
+  yd: [number, number]
 }) {
   const [tip, setTip] = useState<Tip>(null)
-  const xs = videos.map(x)
-  const ys = videos.map(y)
-  const xd: [number, number] = [Math.min(...xs), Math.max(...xs)]
-  const yd: [number, number] = [Math.min(...ys), Math.max(...ys)]
   const X = (n: number) => ML + ((n - xd[0]) / (xd[1] - xd[0] || 1)) * (VW - ML - MR)
   const Y = (n: number) => MT + (1 - (n - yd[0]) / (yd[1] - yd[0] || 1)) * (VH - MT - MB - 10)
-  const color = (t: PatternVideo["tier"]) => (t === "breakout" ? GREEN : t === "killed" ? RED : GRAY)
   return (
     <div className="relative h-full" onPointerLeave={() => setTip(null)}>
       <svg viewBox={`0 0 ${VW} ${VH}`} className="h-full w-full" preserveAspectRatio="none">
@@ -327,15 +324,15 @@ function Scatter({ videos, x, y, xTicks, yTicks, xLabel, yLabel, xFmt, yFmt }: {
         ))}
         <text x={VW - MR} y={VH - 4} textAnchor="end" fontSize="12" fill={GRAY}>{xLabel}</text>
         <text x={ML} y={MT - 2} fontSize="12" fill={GRAY}>{yLabel}</text>
-        {videos.map((v) => (
+        {pts.map((p, i) => (
           <circle
-            key={v.id}
-            cx={X(x(v))}
-            cy={Y(y(v))}
-            r={6}
-            fill={color(v.tier)}
+            key={i}
+            cx={X(p.x)}
+            cy={Y(p.y)}
+            r={p.r}
+            fill={p.color}
             fillOpacity={0.6}
-            onPointerEnter={() => setTip({ x: (X(x(v)) / VW) * 100, y: (Y(y(v)) / VH) * 100, lines: [v.title, `${v.channel} · ${fmtCompact(v.views)} views${v.ratio != null ? ` · ${rx(v.ratio)}` : ""}`] })}
+            onPointerEnter={() => setTip({ x: (X(p.x) / VW) * 100, y: (Y(p.y) / VH) * 100, lines: p.lines })}
             onPointerLeave={() => setTip(null)}
           />
         ))}
@@ -345,39 +342,63 @@ function Scatter({ videos, x, y, xTicks, yTicks, xLabel, yLabel, xFmt, yFmt }: {
   )
 }
 
+const tierColor = (t: PatternVideo["tier"]) => (t === "breakout" ? GREEN : t === "killed" ? RED : GRAY)
+
+/** One dot per CHANNEL - subscribers against the channel's median ratio, sized by videos tracked.
+ *  Per-video dots stacked into columns here (65 channels share one x each); per-channel is the
+ *  honest scatter. */
 export function SubsScatter({ data }: { data: PatternsData }) {
-  const subs = new Map(data.channels.map((c) => [c.id, c.subs]))
-  const vs = data.videos.filter((v) => v.ratio != null && (subs.get(v.channelId) ?? null) != null && subs.get(v.channelId)! > 0)
+  const pts: SPt[] = data.channels
+    .filter((c) => (c.subs ?? 0) > 0 && c.n > 0)
+    .map((c) => {
+      const ratios = data.videos.filter((v) => v.channelId === c.id && v.ratio != null).map((v) => v.ratio!).sort((a, b) => a - b)
+      const medR = ratios.length ? ratios[Math.floor(ratios.length / 2)] : null
+      return medR == null ? null : {
+        x: lg(c.subs!),
+        y: lg(Math.max(medR, 0.02)),
+        r: Math.min(14, 4 + Math.sqrt(c.n) * 1.6),
+        color: medR >= 3 ? GREEN : medR <= 0.5 ? RED : GRAY,
+        lines: [c.name, `${fmtCompact(c.subs!)} subs · ${c.n} tracked · median ${rx(medR)} · ${c.pushed} above 3x`],
+      }
+    })
+    .filter((p): p is SPt => p != null)
   return (
-    <Scatter
-      videos={vs}
-      x={(v) => lg(subs.get(v.channelId)!)}
-      y={(v) => lg(Math.max(v.ratio!, 0.02))}
+    <ScatterBase
+      pts={pts}
       xTicks={[2, 3, 4, 5, 6, 7]}
-      yTicks={[lg(0.5), lg(1), lg(3), lg(10)]}
+      yTicks={[lg(0.5), lg(1), lg(3)]}
       xLabel="channel subscribers"
-      yLabel="ratio to channel median"
+      yLabel="channel's median ratio"
       xFmt={(t) => fmtCompact(10 ** t)}
       yFmt={(t) => rx(10 ** t)}
+      xd={[Math.min(...pts.map((p) => p.x)) - 0.2, Math.max(...pts.map((p) => p.x)) + 0.2]}
+      yd={[lg(0.02), Math.max(lg(4), ...pts.map((p) => p.y)) + 0.1]}
     />
   )
 }
 
 export function EngagementScatter({ data }: { data: PatternsData }) {
   const vs = data.videos.filter((v) => v.ratio != null && v.likes != null && v.views > 0)
-  const rate = (v: PatternVideo) => (v.likes! / v.views) * 1000
-  const cap = [...vs.map(rate)].sort((a, b) => a - b)[Math.floor(vs.length * 0.98)] ?? 100
+  const rates = vs.map((v) => (v.likes! / v.views) * 1000).sort((a, b) => a - b)
+  const cap = rates[Math.floor(vs.length * 0.98)] ?? 100
+  const pts: SPt[] = vs.map((v) => ({
+    x: lg(Math.max(v.ratio!, 0.02)),
+    y: Math.min((v.likes! / v.views) * 1000, cap),
+    r: 6,
+    color: tierColor(v.tier),
+    lines: [v.title, `${v.channel} · ${fmtCompact(v.views)} views · ${rx(v.ratio!)}`],
+  }))
   return (
-    <Scatter
-      videos={vs}
-      x={(v) => lg(Math.max(v.ratio!, 0.02))}
-      y={(v) => Math.min(rate(v), cap)}
+    <ScatterBase
+      pts={pts}
       xTicks={[lg(0.5), lg(1), lg(3), lg(10)]}
       yTicks={[0, 25, 50, 75, 100].filter((t) => t <= cap)}
       xLabel="ratio to channel median"
       yLabel="likes per 1,000 views"
       xFmt={(t) => rx(10 ** t)}
       yFmt={(t) => String(Math.round(t))}
+      xd={[lg(0.02), Math.max(lg(10), ...pts.map((p) => p.x)) + 0.1]}
+      yd={[0, cap]}
     />
   )
 }
@@ -487,7 +508,7 @@ const DESC: Record<string, string> = {
   velocity: "Each line is one video's cumulative views divided by its channel's median, read every 15 minutes across its first 72 hours. The dotted guides mark the .5x, 1x and 3x bands; the chips pick which band is drawn.",
   publish: "Each cell counts the videos published in that hour and weekday, Eastern time. Deeper purple is more videos; a green ring means at least one of them finished above 3x.",
   channels: "Each dot is one video's 72-hour ratio, on its channel's row; channels sort by breakout share. The right edge carries the channel's subscribers and videos tracked.",
-  subs: "Each dot is a video, placed by its channel's subscriber count and its own ratio to that channel's median — both axes log.",
+  subs: "One dot per channel, placed by its subscriber count and the median ratio of its tracked videos — both axes log, dot size is how many videos it has in the watch.",
   engagement: "Each dot is a video, placed by its 72-hour ratio and the likes it earned per thousand views. Color is the verdict band.",
 }
 
