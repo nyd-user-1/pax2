@@ -33,7 +33,7 @@ export function TabRail({ tabs, active, trailing, className }: { tabs: RailTab[]
 
   const rail = hover ?? rest
   return (
-    <div role="tablist" className={cn("relative flex gap-1 overflow-x-auto border-b border-slate-200", className)} onMouseLeave={() => setHover(null)}>
+    <div role="tablist" className={cn("no-scrollbar relative flex gap-1 overflow-x-auto border-b border-slate-200", className)} onMouseLeave={() => setHover(null)}>
       {tabs.map((t) => {
         const on = t.key === activeKey
         const cls = cn(
