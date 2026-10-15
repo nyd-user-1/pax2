@@ -1,17 +1,16 @@
 import { cn } from "@/ui/lib/utils"
 
-/** The pax wordmark: "pa" in ink, the x two crossing bars in the parallax red and blue,
- *  built like the old double-l bars and a touch larger than the letters. */
+/** The pax wordmark: "pa" in ink, the x drawn as a glyph — two crossing strokes in the
+ *  parallax red and blue, cut to the font's stem weight, seated on the baseline, riding
+ *  just past x-height so it stands out by color more than size. */
 export function Wordmark({ className, size = 22 }: { className?: string; size?: number }) {
-  const bar = { width: Math.max(2, Math.round(size * 0.115)), height: Math.round(size * 0.72) }
-  const box = Math.round(size * 0.62)
   return (
     <span aria-label="pax" className={cn("inline-flex items-baseline font-semibold tracking-[-0.03em] text-slate-900", className)} style={{ fontSize: size, lineHeight: 1 }}>
       <span aria-hidden>pa</span>
-      <span aria-hidden className="ml-[0.05em] inline-grid place-items-center" style={{ width: box, height: box, transform: `translateY(${Math.round(size * 0.04)}px)` }}>
-        <span className="rounded-[1px] bg-pax2-red [grid-area:1/1]" style={{ ...bar, transform: "rotate(45deg)" }} />
-        <span className="rounded-[1px] bg-pax2-plum [grid-area:1/1]" style={{ ...bar, transform: "rotate(-45deg)" }} />
-      </span>
+      <svg aria-hidden viewBox="0 0 100 100" className="ml-[0.03em]" style={{ width: "0.56em", height: "0.56em", overflow: "visible" }}>
+        <line x1="10" y1="10" x2="90" y2="90" stroke="var(--pax2-plum)" strokeWidth="17" />
+        <line x1="10" y1="90" x2="90" y2="10" stroke="var(--pax2-red)" strokeWidth="17" />
+      </svg>
     </span>
   )
 }
