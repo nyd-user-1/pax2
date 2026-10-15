@@ -45,10 +45,12 @@ export type BlockProps = {
   peek?: React.ReactNode
   /** Anchor id when the slugged title shouldn't be it. */
   id?: string
+  /** Extra entries for the three-dot menu. */
+  menuItems?: React.ReactNode
   className?: string
 }
 
-export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, footer, height, peek, id, className }: BlockProps) {
+export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, footer, height, peek, id, menuItems, className }: BlockProps) {
   const [open, setOpen] = React.useState(defaultOpen)
   return (
     <HermesTable2 value={searchValue} onChange={onSearch}>
@@ -60,7 +62,7 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
             {search && <HermesSearch placeholder={search} />}
           </div>
           <CardAction>
-            <CardTools rows={rows} name={name ?? title.toLowerCase()} views={views} view={view} onView={onView} collapsed={!open} onCollapse={() => setOpen(!open)}>
+            <CardTools rows={rows} name={name ?? title.toLowerCase()} views={views} view={view} onView={onView} collapsed={!open} onCollapse={() => setOpen(!open)} menuItems={menuItems}>
               {actions}
               <button type="button" aria-label={open ? `Collapse ${title}` : `Expand ${title}`} onClick={() => setOpen(!open)} className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground">
                 <ChevronDown className={cn("size-4 transition-transform", open && "rotate-180")} />

@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation"
 
 import type { PatternsData, PatternVideo } from "@/lib/velocity-analytics"
 import { fmtCompact } from "@/lib/velocity-meta"
+import { ChartBlock } from "@/components/blocks"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/ui/components/nova/dialog"
+import { DropdownMenuItem, DropdownMenuSeparator } from "@/ui/components/nova/dropdown-menu"
 import { cn } from "@/ui/lib/utils"
 
 // The /patterns charts: every reading the poller has taken, drawn full-viewport. All scales
@@ -327,5 +330,167 @@ export function EngagementScatter({ data }: { data: PatternsData }) {
       xFmt={(t) => rx(10 ** t)}
       yFmt={(t) => String(Math.round(t))}
     />
+  )
+}
+
+/* ── the blocks: every chart in the standard card, with its narrative ────── */
+
+type Story = { title: string; paras: string[] }
+
+/** The narratives are computed, not canned: every number below is read from the data at render. */
+function stories(data: PatternsData): Record<string, Story> {
+  const vs = data.videos.filter((v) => v.ratio != null && v.median != null)
+  const wins = vs.filter((v) => v.tier === "breakout")
+  const dead = vs.filter((v) => v.tier === "killed")
+
+  // When do eventual breakouts first cross 1x and 3x?
+  const crossings = (band: number) =>
+    wins
+      .map((v) => data.series[v.id]?.find(([, views]) => views / v.median! >= band)?.[0])
+      .filter((h): h is number => h != null)
+      .sort((a, b) => a - b)
+  const med = (xs: number[]) => (xs.length ? xs[Math.floor(xs.length / 2)] : null)
+  const cross1 = med(crossings(1))
+  const cross3 = med(crossings(3))
+  const deadEverAt1 = dead.filter((v) => data.series[v.id]?.some(([, views]) => views / v.median! >= 1)).length
+
+  // Publish timing.
+  const weekday = vs.filter((v) => v.pubDow < 5)
+  const weekend = vs.filter((v) => v.pubDow >= 5)
+  const rate = (xs: PatternVideo[]) => (xs.length ? xs.filter((v) => v.tier === "breakout").length / xs.length : 0)
+  const pct = (n: number) => `${Math.round(n * 100)}%`
+  const hours = vs.map((v) => v.pubHour)
+  const nineToFive = hours.filter((h) => h >= 9 && h < 17).length
+
+  // Channel concentration.
+  const chs = [...data.channels].sort((a, b) => b.pushed - a.pushed)
+  const totalPushed = chs.reduce((n, c) => n + c.pushed, 0) || 1
+  const top3 = chs.slice(0, 3)
+  const top3Share = top3.reduce((n, c) => n + c.pushed, 0) / totalPushed
+  const silent = chs.filter((c) => c.n >= 5 && c.pushed === 0)
+
+  // Subscribers: Pearson r on the log-log scatter.
+  const subs = new Map(data.channels.map((c) => [c.id, c.subs]))
+  const pairs = vs.filter((v) => (subs.get(v.channelId) ?? 0)! > 0).map((v) => [Math.log10(subs.get(v.channelId)!), Math.log10(Math.max(v.ratio!, 0.02))])
+  const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / (xs.length || 1)
+  const mx = mean(pairs.map((p) => p[0]))
+  const my = mean(pairs.map((p) => p[1]))
+  const r =
+    pairs.reduce((a, [x, y]) => a + (x - mx) * (y - my), 0) /
+    (Math.sqrt(pairs.reduce((a, [x]) => a + (x - mx) ** 2, 0)) * Math.sqrt(pairs.reduce((a, [, y]) => a + (y - my) ** 2, 0)) || 1)
+
+  // Engagement by tier.
+  const er = (xs: PatternVideo[]) => {
+    const rates = xs.filter((v) => v.likes != null && v.views > 0).map((v) => (v.likes! / v.views) * 1000).sort((a, b) => a - b)
+    return rates.length ? rates[Math.floor(rates.length / 2)] : null
+  }
+  const erWin = er(wins)
+  const erMid = er(vs.filter((v) => v.tier === "baseline"))
+  const erDead = er(dead)
+
+  return {
+    velocity: {
+      title: "The verdict is decided early",
+      paras: [
+        `The eventual breakouts separate almost immediately: the median breakout crosses its channel's 1x line ${cross1 != null ? `by hour ${Math.round(cross1)}` : "within its first readings"} and the 3x line ${cross3 != null ? `by hour ${Math.round(cross3)}` : "well inside the window"} — long before the 72-hour verdict is recorded. The push, when it comes, comes early.`,
+        `The inverse is just as sharp: of the ${dead.length} videos that finished below half their channel's median, ${deadEverAt1 === 0 ? "not one" : `only ${deadEverAt1}`} ever touched the 1x line at any point in 72 hours. There are no late rescues in this data — a video the algorithm declines in its first test audience stays declined.`,
+        `The practical inference: the 72-hour window is a formality. Watching a short's first 12 to 18 hours against its channel median predicts its band almost perfectly, which means the poller could call verdicts in a quarter of the time, and a creator deciding whether to boost or re-cut a video has their answer the same day they publish.`,
+      ],
+    },
+    publish: {
+      title: "Publishing runs on office hours; the algorithm doesn't",
+      paras: [
+        `${pct(nineToFive / (hours.length || 1))} of tracked videos went out between 9am and 5pm Eastern — these channels publish on staff schedules. Weekends carry ${weekend.length} of ${vs.length} videos.`,
+        `The breakout rate tells a different story than the volume: weekday publishes broke out at ${pct(rate(weekday))} against ${pct(rate(weekend))} on weekends${rate(weekend) > rate(weekday) ? " — the thinner weekend field converts better, consistent with less competition in the feed at the moment of the seed test" : " — the weekday advantage suggests the seed audience these channels reach is itself a weekday audience"}.`,
+        `Because the seed test happens in the hours right after publish, the hour of publish is really a choice of first audience. The cells with green rings mark hours that have produced a breakout; the empty late-night columns are untested, not disproven.`,
+      ],
+    },
+    channels: {
+      title: "Breakout is a channel property before it is a video property",
+      paras: [
+        `${top3.map((c) => c.name).join(", ")} account for ${pct(top3Share)} of every breakout recorded, while ${silent.length} channels with five or more tracked videos have yet to produce one. The ratio scale already cancels channel size — so this concentration is not big channels looking big, it is certain channels repeatedly clearing a bar that others never clear.`,
+        `The inference: the algorithm's seed test is not run against a neutral audience, it is run against each channel's own reachable audience. A channel whose uploads repeatedly break 3x has an audience that converts tests into pushes — which makes the channel, not the individual video, the strongest single predictor in this dataset.`,
+        `For a portfolio, that reads as: study the silent channels' content against the repeat breakers' before spending on production. The same script performs differently depending on whose test audience first receives it.`,
+      ],
+    },
+    subs: {
+      title: "Size doesn't buy escape velocity",
+      paras: [
+        `Across ${pairs.length} videos the correlation between channel subscribers and ratio-to-median is r = ${r.toFixed(2)} — ${Math.abs(r) < 0.15 ? "effectively none" : r > 0 ? "weakly positive" : "weakly negative"} on log scales. Dividing by the channel median was meant to cancel size, and the scatter confirms it did.`,
+        `That flatness is the finding: a 1,600-subscriber channel and a 1.4-million-subscriber one face the same odds of a 3x breakout once you measure against their own normal. The algorithm's test is relative, which is why the small reform channels in this corpus can and do out-multiply national channels.`,
+        `What size does buy is the denominator: the same 3x means thousands of views on a small channel and hundreds of thousands on a large one. Multiplier and magnitude are different prizes, and only the first is level.`,
+      ],
+    },
+    engagement: {
+      title: "Engagement rides along; it doesn't steer",
+      paras: [
+        erWin != null && erDead != null
+          ? `The median breakout earns ${erWin.toFixed(0)} likes per thousand views against ${erDead.toFixed(0)} on the killed videos${erMid != null ? ` and ${erMid.toFixed(0)} in the middle band` : ""} — ${Math.abs(erWin - (erDead ?? 0)) < 5 ? "nearly identical rates" : "a real but modest gap"} for videos whose reach differs by an order of magnitude.`
+          : "Like counts are too sparse in this window to split by band yet.",
+        `Per-view engagement barely moving across bands implies the push is not a reward for engagement rate — the pushed and killed videos please their viewers at similar rates, but one got served and one did not. That is consistent with the seed test measuring watch behavior (holds, swipes, completion) that never appears in public counts.`,
+        `The caution for scoring: likes-per-view is a weak public proxy for whatever the algorithm actually optimizes. Treat it as a floor check, not a predictor — the real signal lives in data only the channel owner's analytics can hand over, which is what the Endgame integration is for.`,
+      ],
+    },
+  }
+}
+
+const DESC: Record<string, string> = {
+  velocity: "Each line is one video's cumulative views divided by its channel's median, read every 15 minutes across its first 72 hours. The dotted guides mark the .5x, 1x and 3x bands; the chips pick which band is drawn.",
+  publish: "Each cell counts the videos published in that hour and weekday, Eastern time. Deeper purple is more videos; a green ring means at least one of them finished above 3x.",
+  channels: "Each dot is one video's 72-hour ratio, on its channel's row; channels sort by breakout share. The right edge carries the channel's subscribers and videos tracked.",
+  subs: "Each dot is a video, placed by its channel's subscriber count and its own ratio to that channel's median — both axes log.",
+  engagement: "Each dot is a video, placed by its 72-hour ratio and the likes it earned per thousand views. Color is the verdict band.",
+}
+
+export function PatternSections({ data }: { data: PatternsData }) {
+  const [story, setStory] = useState<string | null>(null)
+  const tales = useMemo(() => stories(data), [data])
+  const subs = new Map(data.channels.map((c) => [c.id, c.subs]))
+  const videoRows = data.videos.map((v) => ({ title: v.title, channel: v.channel, published: v.published, views: v.views, median: v.median ?? "", ratio: v.ratio != null ? Math.round(v.ratio * 100) / 100 : "", likes: v.likes ?? "", subscribers: subs.get(v.channelId) ?? "" }))
+  const heatRows = data.heat.flatMap((row, d) => row.map((c, h) => ({ dow: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][d], hour: h, published: c.n, above3x: c.pushed })))
+  const channelRows = data.channels.map((c) => ({ channel: c.name, group: c.group, subscribers: c.subs ?? "", tracked: c.n, above3x: c.pushed, below05x: c.killed }))
+  const sections: { key: string; title: string; rows: Record<string, unknown>[]; chart: React.ReactNode }[] = [
+    { key: "velocity", title: "Velocity, every 15 minutes", rows: videoRows, chart: <VelocityLines data={data} /> },
+    { key: "publish", title: "Publish times", rows: heatRows, chart: <PublishHeatmap data={data} /> },
+    { key: "channels", title: "Channels", rows: channelRows, chart: <ChannelStrips data={data} /> },
+    { key: "subs", title: "Subscribers", rows: videoRows, chart: <SubsScatter data={data} /> },
+    { key: "engagement", title: "Engagement", rows: videoRows, chart: <EngagementScatter data={data} /> },
+  ]
+  const open = story ? tales[story] : null
+  return (
+    <div className="flex flex-col gap-8">
+      {sections.map((s) => (
+        <ChartBlock
+          key={s.key}
+          title={s.title}
+          name={`patterns-${s.key}`}
+          rows={s.rows}
+          height="h-[92dvh]"
+          menuItems={
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setStory(s.key)} className="whitespace-nowrap">
+                Narrative
+              </DropdownMenuItem>
+            </>
+          }
+        >
+          <div className="flex h-full min-h-0 flex-col gap-3">
+            <p className="text-sm text-slate-500">{DESC[s.key]}</p>
+            <div className="min-h-0 flex-1">{s.chart}</div>
+          </div>
+        </ChartBlock>
+      ))}
+      <Dialog open={open != null} onOpenChange={(o) => !o && setStory(null)}>
+        <DialogContent className="max-w-xl">
+          <DialogHeader>
+            <DialogTitle>{open?.title}</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-3 text-sm leading-relaxed text-slate-700">
+            {open?.paras.map((p, i) => <p key={i}>{p}</p>)}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
   )
 }

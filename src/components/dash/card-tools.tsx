@@ -83,8 +83,11 @@ export function CardTools({
   name = "card",
   collapsed,
   onCollapse,
+  menuItems,
 }: {
   children?: React.ReactNode
+  /** Extra entries for the three-dot menu (a Narrative, an Explain), after the standard ones. */
+  menuItems?: React.ReactNode
   className?: string
   /** The views the card's slot can hold; the menu switches between them. */
   views?: readonly { value: string; label: string }[]
@@ -125,6 +128,7 @@ export function CardTools({
               {collapsed ? "Expand" : "Collapse"}
             </DropdownMenuItem>
           )}
+          {menuItems}
           {rows && rows.length > 0 && (
             <>
               <DropdownMenuSeparator />
