@@ -7,9 +7,9 @@ import { cn } from "@/ui/lib/utils"
 // /velocity-tracker and the video page (moved out of the tracker 2026-10-08).
 
 export const CURVE_TIER: Record<Tier, { label: string; chip: string; line: string }> = {
-  breakout: { label: "Above 3× median", chip: "bg-above-soft text-above", line: "#16a34a" },
-  baseline: { label: "0.5–3× median", chip: "bg-slate-100 text-slate-500", line: "#94a3b8" },
-  killed: { label: "Below 0.5× median", chip: "bg-below-soft text-below", line: "#dc2626" },
+  breakout: { label: "> 3x", chip: "bg-above-soft text-above", line: "#16a34a" },
+  baseline: { label: "< 3x", chip: "bg-slate-100 text-slate-500", line: "#94a3b8" },
+  killed: { label: "< .5x", chip: "bg-below-soft text-below", line: "#dc2626" },
 }
 
 export function Curve({ card }: { card: VelocityCard }) {

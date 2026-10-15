@@ -20,8 +20,8 @@ export default function FeatureLiftPage() {
       <div className="grid gap-4 sm:grid-cols-3">
         {[
           { title: "Analyzed", value: analyzed, note: "videos through the pipeline" },
-          { title: "Above 3× median", value: breakouts, note: "of their channel's views" },
-          { title: "Below 0.5× median", value: killed, note: "of their channel's views" },
+          { title: "> 3x", value: breakouts, note: "of their channel's views" },
+          { title: "< .5x", value: killed, note: "of their channel's views" },
         ].map((t) => (
           <Stat2 key={t.title} title={t.title} value={t.value} footer={t.note} />
         ))}
