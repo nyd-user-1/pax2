@@ -15,6 +15,9 @@ const ADMINS = (process.env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().t
 export type SessionUser = { email: string; admin: boolean }
 
 export async function currentUser(): Promise<SessionUser | null> {
+  // Local development skips sign-in entirely: the dev server acts as the first admin.
+  // `next build` sets NODE_ENV=production, so no deployed build can take this branch.
+  if (process.env.NODE_ENV === "development") return { email: ADMINS[0] ?? "brendan@nysgpt.com", admin: true }
   const token = (await cookies()).get("hermes_session")?.value
   if (!token || !verifier) return null
   try {
