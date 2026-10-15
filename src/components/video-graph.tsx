@@ -97,6 +97,18 @@ function relationsOf(g: GNode, R: Rels): { rel: string; label: string; items: GN
   return []
 }
 
+/** Is there a direct record joining these two nodes? */
+function related(a: GNode, b: GNode, R: Rels): boolean {
+  const [x, y] = a.type <= b.type ? [a, b] : [b, a]
+  const v = (n: GNode) => R.video.get(n.id)
+  if (x.type === "channel" && y.type === "video") return v(y)?.channelId === x.id
+  if (x.type === "tag" && y.type === "video") return v(y)?.tags.some((t) => t.toLowerCase() === x.id) ?? false
+  if (x.type === "topic" && y.type === "video") return v(y)?.topics.includes(x.id) ?? false
+  if (x.type === "channel" && y.type === "topic") return (R.channelTopics.get(x.id)?.get(y.id) ?? 0) > 0
+  if (x.type === "channel" && y.type === "group") return R.channel.get(x.id)?.group === y.id
+  return false
+}
+
 /** The record behind an edge — every one is data we hold, named plainly. */
 function receipt(a: GNode, b: GNode): string {
   const pair = (t1: GNode["type"], t2: GNode["type"]) => (a.type === t1 && b.type === t2) || (a.type === t2 && b.type === t1)
@@ -219,6 +231,7 @@ function VideoGraphInner({ data }: { data: GraphData }) {
   const [browse, setBrowse] = useState<string | null>(null)
   const [filter, setFilter] = useState("")
   const [q, setQ] = useState("")
+  const [joinKinds, setJoinKinds] = useState<Record<string, boolean>>({ channel: true, group: true, topic: true, tag: true })
 
   const dataFor = useCallback((g: GNode): EntityData => ({
     ...g,
@@ -280,6 +293,56 @@ function VideoGraphInner({ data }: { data: GraphData }) {
     else if (store.current.has(moreKey)) removeNode(moreKey)
   }, [R, addNodes, removeNode]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  /** Selecting a card surfaces its joins: every missing edge to a card already on the canvas,
+   *  and any channel/group/topic/tag that connects it to at least one other card - those
+   *  connector cards are added and wired to everything they join. The chips filter which kinds. */
+  const surfaceJoins = useCallback((key: string) => {
+    const g = store.current.get(key)
+    if (!g || g.type === "more") return
+    const canvas = [...store.current.values()].filter((n) => keyOf(n) !== key && n.type !== "more")
+
+    const connectors: GNode[] = []
+    if (g.type === "video") {
+      const v = R.video.get(g.id)
+      if (v) {
+        const c = R.channel.get(v.channelId)
+        if (c && joinKinds.channel) connectors.push(channelNode(c))
+        if (c && joinKinds.group) connectors.push(groupNode(c.group, R.byGroup.get(c.group)?.length ?? 0))
+        if (joinKinds.tag) for (const t of v.tags) connectors.push(tagNode(t, R.byTag.get(t.toLowerCase())?.length ?? 0))
+        if (joinKinds.topic) for (const t of v.topics) connectors.push(topicNode(t, R.byTopic.get(t)?.length ?? 0))
+      }
+    }
+    if (g.type === "channel") {
+      const c = R.channel.get(g.id)
+      if (c && joinKinds.group) connectors.push(groupNode(c.group, R.byGroup.get(c.group)?.length ?? 0))
+      if (joinKinds.topic) for (const [t] of R.channelTopics.get(g.id) ?? []) connectors.push(topicNode(t, R.byTopic.get(t)?.length ?? 0))
+    }
+
+    const added: GNode[] = []
+    const wires: [string, string][] = []
+    for (const n of canvas) if (related(g, n, R)) wires.push([key, keyOf(n)])
+    for (const a of connectors) {
+      if (store.current.has(keyOf(a))) continue
+      const others = canvas.filter((n) => related(a, n, R))
+      if (!others.length) continue
+      added.push(a)
+      wires.push([keyOf(a), key])
+      for (const n of others) wires.push([keyOf(a), keyOf(n)])
+    }
+    if (!added.length && !wires.length) return
+    for (const a of added) store.current.set(keyOf(a), a)
+    setEdges((prev) => {
+      const have = new Set(prev.map((e) => e.id))
+      const fresh = wires
+        .filter(([f, t]) => !have.has(`${f}->${t}`) && !have.has(`${t}->${f}`))
+        .map(([f, t]) => ({ id: `${f}->${t}`, source: f, target: t }))
+      if (!fresh.length && !added.length) return prev
+      const all = [...prev, ...fresh]
+      sync(all)
+      return all
+    })
+  }, [R, joinKinds, setEdges, sync])
+
   const seed = useCallback((g: GNode) => {
     addNodes([g])
     setBrowse(null)
@@ -337,6 +400,7 @@ function VideoGraphInner({ data }: { data: GraphData }) {
           edges={edges}
           nodeTypes={nodeTypes}
           onNodesChange={onNodesChange}
+          onNodeClick={(_, n) => surfaceJoins(n.id)}
           onEdgeClick={(_, e) => {
             const a = store.current.get(e.source)
             const b = store.current.get(e.target)
@@ -365,6 +429,20 @@ function VideoGraphInner({ data }: { data: GraphData }) {
                   ))}
                 </div>
               )}
+            </div>
+          </Panel>
+          <Panel position="top-right">
+            <div className="flex items-center gap-1.5 rounded-full bg-white py-1.5 pl-3.5 pr-2 shadow-e1 ring-1 ring-slate-200">
+              <span className="text-xs text-slate-500">Join on select</span>
+              {(["channel", "group", "topic", "tag"] as const).map((k) => (
+                <button
+                  key={k}
+                  onClick={() => setJoinKinds((j) => ({ ...j, [k]: !j[k] }))}
+                  className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors", joinKinds[k] ? "bg-hermes-lavender text-hermes-ink" : "bg-slate-100 text-slate-400")}
+                >
+                  {k}
+                </button>
+              ))}
             </div>
           </Panel>
           {edgeInfo && (
