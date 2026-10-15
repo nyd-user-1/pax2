@@ -35,7 +35,7 @@ export function VelocityGrid({ initial, total, focus, sort, filter }: { initial:
   }, [done, focus, sort, filter])
   return (
     <>
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <section className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
         {cards.map((c) => (
           <CurveCard key={c.id} c={c} href={`/v/yt-${c.id}`} focused={c.id === focus} />
         ))}
