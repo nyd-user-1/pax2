@@ -154,7 +154,7 @@ export function PlusMenu({ scripts, videos, onSelect }: Props) {
                     onClick={() => { onSelect(`How is “${s.title}” performing across its takes?`); closeMenu() }}
                     className={`flex w-full items-center gap-3 px-4 py-3 hover:bg-[var(--inp-bg)] transition-colors ${i > 0 ? 'border-t border-[var(--border)]' : ''}`}
                   >
-                    <NotebookPen className="h-5 w-5 text-pax-plum shrink-0" />
+                    <NotebookPen className="h-5 w-5 text-hermes-plum shrink-0" />
                     <span className="text-sm font-semibold text-[var(--txt)] text-left">{s.title}</span>
                   </button>
                 ))}
@@ -175,7 +175,7 @@ export function PlusMenu({ scripts, videos, onSelect }: Props) {
                     {v.poster
                       // eslint-disable-next-line @next/next/no-img-element
                       ? <img src={v.poster} alt="" className="h-8 w-5 object-cover rounded-sm shrink-0 border border-[var(--border)]" />
-                      : <PlaySquare className="h-5 w-5 text-pax-plum shrink-0" />}
+                      : <PlaySquare className="h-5 w-5 text-hermes-plum shrink-0" />}
                     <span className="flex-1 text-left text-sm font-semibold text-[var(--txt)]">{v.label}</span>
                     {v.score != null && <span className="text-xs text-[var(--muted)] tabular">{v.score.toFixed(0)}</span>}
                   </button>

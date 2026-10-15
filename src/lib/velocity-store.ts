@@ -7,8 +7,8 @@ import type { PollRow } from "@/lib/lab"
 // The velocity poller's state in S3 (written by lambda/velocity): readings partitioned by UTC day,
 // channel baselines, the hourly stat card snapshots and the poller's own run state.
 
-const BUCKET = process.env.VELOCITY_BUCKET ?? "pax-638175140432"
-const s3 = new S3Client({ region: process.env.PAX_REGION ?? "us-east-1" })
+const BUCKET = process.env.VELOCITY_BUCKET ?? "hermes-velocity-638175140432"
+const s3 = new S3Client({ region: process.env.HERMES_REGION ?? "us-east-1" })
 
 async function getText(key: string): Promise<string | null> {
   try {

@@ -155,7 +155,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <Score v={v} />
         <Favorite id={v.id} />
       </div>
-      <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-pax-plum">{v.title}</p>
+      <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-hermes-plum">{v.title}</p>
       <p className="tabular text-xs text-slate-500">{fmt.format(v.views)} views</p>
     </Link>
   )
@@ -197,7 +197,7 @@ function ShortsShelf({ items }: { items: FeedVideo[] }) {
           <button
             type="button"
             onClick={() => setMore((m) => !m)}
-            className="relative flex h-9 w-full max-w-sm items-center justify-center gap-2 rounded-full border border-black/10 bg-pax-mist text-sm font-medium text-slate-900 transition-[filter] hover:brightness-95"
+            className="relative flex h-9 w-full max-w-sm items-center justify-center gap-2 rounded-full border border-black/10 bg-hermes-mist text-sm font-medium text-slate-900 transition-[filter] hover:brightness-95"
           >
             {more ? "Show fewer" : "Show more"} {more ? <ChevronUp className="size-5" /> : <ChevronDown className="size-5" />}
           </button>
@@ -306,7 +306,7 @@ export function SearchBar({ q, setQ, placeholder = "Search videos" }: { q: strin
             <X className="size-4" />
           </button>
         )}
-        <button type="submit" aria-label="Search" className="flex h-full items-center border-l border-slate-200 bg-pax-mist px-5 text-slate-500">
+        <button type="submit" aria-label="Search" className="flex h-full items-center border-l border-slate-200 bg-hermes-mist px-5 text-slate-500">
           <Search className="size-4" />
         </button>
       </form>
@@ -426,7 +426,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
 
       {!needle && shown.length > 0 && (
         <div ref={sentinel} className="flex justify-center py-12">
-          <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-pax-ink" />
+          <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-hermes-ink" />
         </div>
       )}
     </section>

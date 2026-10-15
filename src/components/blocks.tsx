@@ -4,7 +4,7 @@ import * as React from "react"
 import { ChevronDown } from "lucide-react"
 
 import { CardAnchor, CardTools } from "@/components/dash/card-tools"
-import { PaxSearch, PaxTable2 } from "@/components/pax-table2"
+import { HermesSearch, HermesTable2 } from "@/components/hermes-table2"
 import { Card, CardAction, CardContent, CardFooter, CardHeader } from "@/ui/components/nova/card"
 import { cn } from "@/ui/lib/utils"
 
@@ -51,13 +51,13 @@ export type BlockProps = {
 export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, footer, height, peek, id, className }: BlockProps) {
   const [open, setOpen] = React.useState(defaultOpen)
   return (
-    <PaxTable2 value={searchValue} onChange={onSearch}>
+    <HermesTable2 value={searchValue} onChange={onSearch}>
       <Card className={cn("gap-4", open && height !== "auto" && (height ?? BLOCK_HEIGHT), className)}>
         <CardHeader className={cn((open || peek) && "border-b [.border-b]:pb-2")}>
           <div className="flex items-center gap-1">
             <CardAnchor id={id}>{title}</CardAnchor>
             {tools}
-            {search && <PaxSearch placeholder={search} />}
+            {search && <HermesSearch placeholder={search} />}
           </div>
           <CardAction>
             <CardTools rows={rows} name={name ?? title.toLowerCase()} views={views} view={view} onView={onView} collapsed={!open} onCollapse={() => setOpen(!open)}>
@@ -72,7 +72,7 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
         {open && <CardContent className="min-h-0 flex-1 overflow-y-auto [&_[data-slot=table-container]]:overflow-visible [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10 [&_thead]:bg-card">{children}</CardContent>}
         {open && footer && <CardFooter className="bg-transparent py-3 text-xs text-muted-foreground">{footer}</CardFooter>}
       </Card>
-    </PaxTable2>
+    </HermesTable2>
   )
 }
 

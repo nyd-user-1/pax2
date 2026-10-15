@@ -34,7 +34,7 @@ export function UpworthyTable({ data }: { data: UpworthyData }) {
   const flip = (k: SortKey, firstDesc: boolean) => setSort((s) => (s.k === k ? { k, d: (s.d * -1) as 1 | -1 } : { k, d: firstDesc ? -1 : 1 }))
   const Th = ({ k, label, firstDesc = true, className }: { k: SortKey; label: string; firstDesc?: boolean; className?: string }) => (
     <th className={cn("whitespace-nowrap px-3 py-2 font-medium", className)}>
-      <button type="button" onClick={() => flip(k, firstDesc)} className="inline-flex items-center gap-1 hover:text-pax-ink">
+      <button type="button" onClick={() => flip(k, firstDesc)} className="inline-flex items-center gap-1 hover:text-hermes-ink">
         {label}
         {sort.k === k && (sort.d === 1 ? <ChevronUp className="size-3" /> : <ChevronDown className="size-3" />)}
       </button>
@@ -103,7 +103,7 @@ export function UpworthyLessons({ data }: { data: UpworthyData }) {
       <ul className="flex flex-col gap-2.5">
         {lessons.map((x) => (
           <li key={x} className="flex gap-2.5 text-sm leading-relaxed text-slate-700">
-            <span className="mt-[7px] size-1.5 shrink-0 rounded-full bg-pax-plum" />
+            <span className="mt-[7px] size-1.5 shrink-0 rounded-full bg-hermes-plum" />
             <span>{x}</span>
           </li>
         ))}

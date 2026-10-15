@@ -1,4 +1,4 @@
-// The campaign channels whose shorts PAX tracks, shared by /campaigns and the short view.
+// The campaign channels whose shorts Hermes tracks, shared by /campaigns and the short view.
 export const CHANNELS = [
   { id: "UC-rKSUWdEqPmP-UM7yV6Ssw", slug: "yes-on-3", name: "Vote YES on 3", place: "Massachusetts · all-party primaries", code: "MA" },
   { id: "UCpSEnGNa8pO-llnwBDDa6Tg", slug: "courageous-colorado", name: "Courageous Colorado", place: "Colorado", code: "CO" },

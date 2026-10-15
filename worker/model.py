@@ -1,18 +1,18 @@
-"""PAX worker job 6: the reference model, from the Swayable archive (Hewitt et al., APSR 2024).
+"""Hermes worker job 6: the reference model, from the Swayable archive (Hewitt et al., APSR 2024).
 
-What it produces (s3://pax-638175140432/model/):
+What it produces (s3://hermes-638175140432/model/):
   reference-model.json  per-feature persuasion differences (random-effects meta-regression, ours),
                         the authors' own meta-regression rows for the same features, the spread of
                         true effects (tau), and a leave-one-study-out check of how predictable an
                         ad's effect is from its coded features.
   ads.json              one row per ad and outcome: measured effect, its standard error, and the
-                        coded features PAX uses, for the explorer.
+                        coded features Hermes uses, for the explorer.
 Effects are in percentage points against the study's control group.
 """
 import json, os
 import boto3, numpy as np, pandas as pd
 
-B = "pax-638175140432"
+B = "hermes-638175140432"
 s3 = boto3.client("s3")
 C = "/opt/pax/curated/swayable"
 

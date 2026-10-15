@@ -17,7 +17,7 @@ export const DATASETS = [
 ]
 
 export async function workspace() {
-  return (await cookies()).get("pax-ws")?.value || "demo-2"
+  return (await cookies()).get("hermes-ws")?.value || "demo-2"
 }
 
 const k = (ws: string, s: string) => `${ws}#${s}`

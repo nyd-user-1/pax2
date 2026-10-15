@@ -27,7 +27,7 @@ export default function PersonalPage() {
   return (
     <>
       <StepBar step={1} back={{ href: "/record/start", label: "Start" }} />
-      <FlowPage title="Tell us a little about you." lead="Three short answers. PAX writes a script that sounds like you, and you can change every word.">
+      <FlowPage title="Tell us a little about you." lead="Three short answers. Hermes writes a script that sounds like you, and you can change every word.">
         <form
           className="flex flex-col gap-5 surface p-7 shadow-sm"
           onSubmit={(e) => {
@@ -46,15 +46,15 @@ export default function PersonalPage() {
         >
           {FIELDS.map((f) => (
             <label key={f.key} className="flex flex-col gap-2">
-              <span className="font-medium text-pax-ink">{f.label}</span>
+              <span className="font-medium text-hermes-ink">{f.label}</span>
               {f.short ? (
-                <input value={a[f.key]} onChange={(e) => setA({ ...a, [f.key]: e.target.value })} placeholder={f.placeholder} className="rounded-xl border bg-pax-mist px-4 py-3 outline-none focus:border-primary" />
+                <input value={a[f.key]} onChange={(e) => setA({ ...a, [f.key]: e.target.value })} placeholder={f.placeholder} className="rounded-xl border bg-hermes-mist px-4 py-3 outline-none focus:border-primary" />
               ) : (
-                <textarea value={a[f.key]} onChange={(e) => setA({ ...a, [f.key]: e.target.value })} placeholder={f.placeholder} className="min-h-24 rounded-xl border bg-pax-mist px-4 py-3 outline-none focus:border-primary" />
+                <textarea value={a[f.key]} onChange={(e) => setA({ ...a, [f.key]: e.target.value })} placeholder={f.placeholder} className="min-h-24 rounded-xl border bg-hermes-mist px-4 py-3 outline-none focus:border-primary" />
               )}
             </label>
           ))}
-          <button type="submit" disabled={pending || !a.why.trim()} className="mt-2 flex w-fit items-center gap-2 rounded-full bg-pax-ink px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
+          <button type="submit" disabled={pending || !a.why.trim()} className="mt-2 flex w-fit items-center gap-2 rounded-full bg-hermes-ink px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
             {pending ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />} Write my script <ArrowRight className="size-4" />
           </button>
           {err && <p className="text-sm text-destructive">{err}</p>}

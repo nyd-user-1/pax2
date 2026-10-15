@@ -25,7 +25,7 @@ export const SAMPLE_COUNTS = { readings: 14, decisions: 9, votes: 126, proposed:
 
 export const SAMPLE_FEED = [
   { at: day(0), text: "Maria sent a 41s video" },
-  { at: day(0), text: "PAX read They don’t have to listen" },
+  { at: day(0), text: "Hermes read They don’t have to listen" },
   { at: day(1), text: "Approved: Cut to 20 seconds, keep the opening, the payoff line and the ask" },
   { at: day(1), text: "James sent a 38s video" },
   { at: day(2), text: "Made: No-captions version of The 51% fact" },

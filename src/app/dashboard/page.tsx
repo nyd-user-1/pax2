@@ -18,7 +18,7 @@ import { toneOf } from "@/lib/tone"
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Dashboard" }
 
-// The campaign's content operation in one place: what was made, what PAX read, what the partner
+// The campaign's content operation in one place: what was made, what Hermes read, what the partner
 // decided, and how the calls are going. Every number comes from the ledger or the loaded results.
 
 const day = (iso: string) => iso.slice(0, 10)
@@ -75,7 +75,7 @@ export default async function DashboardPage() {
   ]
   const fmax = Math.max(1, ...funnel.map((f) => f.n))
   const feed = [
-    ...readings.map((r) => ({ at: r.at, text: `PAX read ${scriptById(per.find((p) => p.fs.includes(r))!.t.take.scriptId)!.short}` })),
+    ...readings.map((r) => ({ at: r.at, text: `Hermes read ${scriptById(per.find((p) => p.fs.includes(r))!.t.take.scriptId)!.short}` })),
     ...decided.map((e) => ({ at: e.at, text: `${e.status[0].toUpperCase()}${e.status.slice(1)}: ${e.change}` })),
     ...sent.map((s) => ({ at: s.at, text: `${s.name || "A volunteer"} sent a ${s.seconds}s video` })),
     ...history.map((h) => ({ at: h.at, text: `Loaded ${h.dataset === "round-1" ? "Round 1" : h.dataset === "round-2" ? "Round 2" : "an export"} (${h.rows} ads)` })),
@@ -102,7 +102,7 @@ export default async function DashboardPage() {
     <div className="flex flex-col gap-10">
       <AdminControls admin={!!user?.admin} poller={poller} queue={queue} />
       <header className="rise flex flex-wrap items-center gap-3">
-        {demo && <span className="rounded-full bg-pax-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax-red-deep">Sample data</span>}
+        {demo && <span className="rounded-full bg-hermes-red-soft px-2.5 py-0.5 text-xs font-semibold text-hermes-red-deep">Sample data</span>}
       </header>
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -115,12 +115,12 @@ export default async function DashboardPage() {
       <BlockOrder page="dashboard" initial={["activity", "funnel", "scripts"]}>
         <OrderedBlock id="activity" label="Activity by day">
           <TwoThirdBlock>
-            <ChartBlock title="Activity by day" className="xl:col-span-2" tools={<RefreshButton />} rows={activityRows.map((r) => ({ date: r.date, "Readings and decisions": r.item1, "Volunteer input": r.item2 }))} name="pax-activity">
+            <ChartBlock title="Activity by day" className="xl:col-span-2" tools={<RefreshButton />} rows={activityRows.map((r) => ({ date: r.date, "Readings and decisions": r.item1, "Volunteer input": r.item2 }))} name="hermes-activity">
               <Chart3
                 data={activityRows}
                 labels={{ item1: "Readings and decisions", item2: "Volunteer input" }}
                 figures={[
-                  { label: "PAX readings", value: show.readings },
+                  { label: "Hermes readings", value: show.readings },
                   { label: "Decisions", value: show.decisions },
                   { label: "Consensus votes", value: show.votes },
                 ]}
@@ -143,11 +143,11 @@ export default async function DashboardPage() {
                       <span className="tabular font-semibold text-slate-900">{f.n}</span>
                     </div>
                     <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
-                      <div className="grow h-full rounded-full bg-pax-ink" style={{ width: `${(f.n / fmaxShown) * 100}%`, ["--i" as string]: i }} />
+                      <div className="grow h-full rounded-full bg-hermes-ink" style={{ width: `${(f.n / fmaxShown) * 100}%`, ["--i" as string]: i }} />
                     </div>
                   </div>
                 ))}
-                <Link href="/evals" className="text-sm font-medium text-pax-plum hover:underline">
+                <Link href="/evals" className="text-sm font-medium text-hermes-plum hover:underline">
                   Open Evals
                 </Link>
               </div>
@@ -157,7 +157,7 @@ export default async function DashboardPage() {
                 <ol className="flex flex-col">
                   {show.feed.map((f, i) => (
                     <li key={i} data-find className="rise flex items-start gap-3 border-b border-slate-100 py-2.5 text-sm last:border-0" style={{ ["--i" as string]: i }}>
-                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-pax-plum" />
+                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-hermes-plum" />
                       <span className="flex-1 text-slate-700">{f.text}</span>
                       <span className="shrink-0 text-xs text-slate-400">{new Date(f.at).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}</span>
                     </li>
@@ -185,7 +185,7 @@ export default async function DashboardPage() {
                         const tone = toneOf(t.latest!.score.low, t.latest!.score.high)
                         return (
                           <Link key={t.take.id} href={`/v/${t.take.id}`} scroll={false} className="group flex items-center gap-2 text-xs">
-                            <span className="w-24 shrink-0 truncate text-slate-500 group-hover:text-pax-ink">{takeLabel(t.take)}</span>
+                            <span className="w-24 shrink-0 truncate text-slate-500 group-hover:text-hermes-ink">{takeLabel(t.take)}</span>
                             <span className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
                               <span className="grow block h-full rounded-full" style={{ width: `${v}%`, background: tone === "above" ? "#2563eb" : tone === "below" ? "#dc2626" : "#94a3b8", ["--i" as string]: i }} />
                             </span>

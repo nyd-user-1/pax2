@@ -21,8 +21,8 @@ const nextPath = () => {
   return n && n.startsWith("/") && !n.startsWith("//") ? n : "/record/start"
 }
 
-const FIELD = "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-shadow placeholder:text-slate-400 focus:ring-2 focus:ring-pax-plum/40"
-const BUTTON = "press flex w-full items-center justify-center gap-2 rounded-full bg-pax-ink px-6 py-3.5 text-[15px] font-semibold text-white shadow-e2 transition-shadow hover:shadow-e3 disabled:opacity-60"
+const FIELD = "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-shadow placeholder:text-slate-400 focus:ring-2 focus:ring-hermes-plum/40"
+const BUTTON = "press flex w-full items-center justify-center gap-2 rounded-full bg-hermes-ink px-6 py-3.5 text-[15px] font-semibold text-white shadow-e2 transition-shadow hover:shadow-e3 disabled:opacity-60"
 
 export function AuthForm({ mode }: { mode: Mode }) {
   const router = useRouter()
@@ -109,7 +109,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
     <form onSubmit={submit} className="flex flex-col gap-4">
       {step === "reset" ? (
         <>
-          <p className="flex items-start gap-2.5 rounded-xl bg-pax-lavender/60 px-4 py-3 text-sm leading-relaxed text-pax-ink">
+          <p className="flex items-start gap-2.5 rounded-xl bg-hermes-lavender/60 px-4 py-3 text-sm leading-relaxed text-hermes-ink">
             <MailCheck className="mt-0.5 size-4 shrink-0" />
             {notice}
           </p>
@@ -122,17 +122,17 @@ export function AuthForm({ mode }: { mode: Mode }) {
             <input type="password" required autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="8+ characters, mixed" className={FIELD} />
             <span className="text-xs font-normal text-slate-400">8+ characters with an upper, a lower, a number and a symbol.</span>
           </label>
-          {error && <p className="text-sm font-medium text-pax-red-deep">{error}</p>}
+          {error && <p className="text-sm font-medium text-hermes-red-deep">{error}</p>}
           <button type="submit" disabled={busy || code.trim().length < 6 || !password} className={BUTTON}>
             {busy ? "One moment…" : "Set password and sign in"} <ArrowRight className="size-4" />
           </button>
-          <button type="button" disabled={busy} onClick={forgot} className="text-sm text-slate-500 transition-colors hover:text-pax-ink">
+          <button type="button" disabled={busy} onClick={forgot} className="text-sm text-slate-500 transition-colors hover:text-hermes-ink">
             Send a new code
           </button>
         </>
       ) : step === "code" ? (
         <>
-          <p className="flex items-start gap-2.5 rounded-xl bg-pax-lavender/60 px-4 py-3 text-sm leading-relaxed text-pax-ink">
+          <p className="flex items-start gap-2.5 rounded-xl bg-hermes-lavender/60 px-4 py-3 text-sm leading-relaxed text-hermes-ink">
             <MailCheck className="mt-0.5 size-4 shrink-0" />
             {notice ?? `We emailed a six-digit code to ${email}.`}
           </p>
@@ -140,7 +140,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
             Confirmation code
             <input autoFocus inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} placeholder="123456" className={cn(FIELD, "tabular tracking-[0.3em]")} />
           </label>
-          {error && <p className="text-sm font-medium text-pax-red-deep">{error}</p>}
+          {error && <p className="text-sm font-medium text-hermes-red-deep">{error}</p>}
           <button type="submit" disabled={busy || code.trim().length < 6} className={BUTTON}>
             {busy ? "Confirming…" : "Confirm"} <ArrowRight className="size-4" />
           </button>
@@ -151,7 +151,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
               await post("resend", { email })
               setNotice(`A fresh code is on its way to ${email}.`)
             }}
-            className="text-sm text-slate-500 transition-colors hover:text-pax-ink"
+            className="text-sm text-slate-500 transition-colors hover:text-hermes-ink"
           >
             Send a new code
           </button>
@@ -168,20 +168,20 @@ export function AuthForm({ mode }: { mode: Mode }) {
             {mode === "signup" && <span className="text-xs font-normal text-slate-400">8+ characters with an upper, a lower, a number and a symbol.</span>}
           </label>
           {mode === "signin" && (
-            <button type="button" disabled={busy} onClick={forgot} className="-mt-2 self-end text-sm text-slate-500 transition-colors hover:text-pax-ink">
+            <button type="button" disabled={busy} onClick={forgot} className="-mt-2 self-end text-sm text-slate-500 transition-colors hover:text-hermes-ink">
               Forgot password?
             </button>
           )}
-          {notice && <p className="text-sm text-pax-ink">{notice}</p>}
-          {error && <p className="text-sm font-medium text-pax-red-deep">{error}</p>}
+          {notice && <p className="text-sm text-hermes-ink">{notice}</p>}
+          {error && <p className="text-sm font-medium text-hermes-red-deep">{error}</p>}
           <button type="submit" disabled={busy} className={BUTTON}>
             {busy ? "One moment…" : mode === "signup" ? "Create account" : "Sign in"} <ArrowRight className="size-4" />
           </button>
           <p className="text-center text-sm text-slate-500">
             {mode === "signup" ? (
-              <>Already have an account? <Link href={`/signin${qs}`} className="font-medium text-pax-plum hover:underline">Sign in</Link></>
+              <>Already have an account? <Link href={`/signin${qs}`} className="font-medium text-hermes-plum hover:underline">Sign in</Link></>
             ) : (
-              <>New here? <Link href={`/signup${qs}`} className="font-medium text-pax-plum hover:underline">Create an account</Link></>
+              <>New here? <Link href={`/signup${qs}`} className="font-medium text-hermes-plum hover:underline">Create an account</Link></>
             )}
           </p>
         </>

@@ -64,7 +64,7 @@ export const PAGES: PageTile[] = [
   {
     href: "/v/listen-stephen",
     name: "Version page",
-    data: "Stand-in results; real analysis of synthetic videos; PAX readings",
+    data: "Stand-in results; real analysis of synthetic videos; Hermes readings",
     state: "mixed",
     facts: [["Route", "/v/[id]"], ["Boxes", "4"], ["Reading", "~16 s"], ["Analysis", "3 checks"]],
     what: "One video in full: the player, its numbers, Rating (the score and its parts), Formula (the AI's notes), Transcript, and the Assessment with Call it.",
@@ -214,7 +214,7 @@ export const LESSONS: Lesson[] = [
     lessons: ["The shot-and-text detection service was three-quarters of the cost at $0.20 a minute and mostly repeated what Pegasus notes, so the pipeline dropped it. A video now costs about $0.04."],
   },
   {
-    title: "PAX readings",
+    title: "Hermes readings",
     when: "Oct 2",
     outcome: "clean",
     headline: "15–16 seconds a reading",

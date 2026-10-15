@@ -4,8 +4,8 @@ import path from "node:path"
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 
-const s3 = new S3Client({ region: process.env.PAX_REGION ?? "us-east-1" })
-const BUCKET = process.env.PAX_BUCKET ?? "pax-638175140432"
+const s3 = new S3Client({ region: process.env.HERMES_REGION ?? "us-east-1" })
+const BUCKET = process.env.HERMES_BUCKET ?? "hermes-638175140432"
 const ALLOWED = ["raw/", "curated/", "model/", "videos/", "features/", "transcribe/", "takes/", "athena/govblock/", "library/"]
 const LOCAL = ["data/raw/yt-shorts.json", "data/raw/yt-videos.json", "data/generated/ma-house-2022.json", "data/generated/reform-ad-spend.json"]
 

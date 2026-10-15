@@ -111,7 +111,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
   const active = (href: string) => (href === "/scoring" ? path === "/scoring" : path.startsWith(href))
   // The front door (landing, record entry, sign-in) is full bleed; every step from /record/start on sits in the shell.
   const home = path === "/"
-  if (path === "/record" || path.startsWith("/sign")) return <div className="min-h-dvh bg-pax-mist">{children}</div>
+  if (path === "/record" || path.startsWith("/sign")) return <div className="min-h-dvh bg-hermes-mist">{children}</div>
   const item = (href: string, label: string, Icon: typeof Gauge, small = false) => {
     const on = active(href)
     return (
@@ -122,12 +122,12 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
         className={cn(
           "group relative flex items-center gap-3 rounded-xl px-3 outline-none transition-[color,background-color,box-shadow]",
           small ? "py-1.5 text-[13px]" : "py-2 text-sm",
-          on ? "bg-white font-semibold text-pax-ink shadow-e1" : "text-slate-500 hover:bg-white/70 hover:text-pax-ink hover:shadow-e1",
+          on ? "bg-white font-semibold text-hermes-ink shadow-e1" : "text-slate-500 hover:bg-white/70 hover:text-hermes-ink hover:shadow-e1",
         )}
       >
-        {on && <span aria-hidden className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-pax-plum" />}
+        {on && <span aria-hidden className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-hermes-plum" />}
         <Icon
-          className={cn(small ? "size-3.5" : "size-[18px]", "icon-pop shrink-0 transition-colors", on ? "fill-pax-lavender text-pax-ink" : "group-hover:fill-pax-lavender group-hover:text-pax-ink")}
+          className={cn(small ? "size-3.5" : "size-[18px]", "icon-pop shrink-0 transition-colors", on ? "fill-hermes-lavender text-hermes-ink" : "group-hover:fill-hermes-lavender group-hover:text-hermes-ink")}
           strokeWidth={on ? 2.25 : 1.75}
         />
         {label}
@@ -135,7 +135,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
     )
   }
   const sidebar = (
-    <div className="flex h-full w-60 flex-col rounded-2xl border border-slate-500 bg-pax-mist px-3 py-4 shadow-e2">
+    <div className="flex h-full w-60 flex-col rounded-2xl border border-slate-500 bg-hermes-mist px-3 py-4 shadow-e2">
       <Link href="/" aria-label="Home" className="mb-4 flex px-3 pt-1">
         <Wordmark size={20} />
       </Link>
@@ -156,7 +156,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
   if (home)
     return (
       <PanelCtx.Provider value={panel}>
-        <div className="min-h-dvh bg-pax-mist">{children}</div>
+        <div className="min-h-dvh bg-hermes-mist">{children}</div>
         {signedIn && (
           <>
             <div aria-hidden onClick={() => (setSidebarOpen(false), setDiscuss(false))} className={cn("fixed inset-0 z-[60] bg-slate-900/20 transition-opacity duration-300", sidebarOpen || discuss ? "opacity-100" : "pointer-events-none opacity-0")} />
@@ -182,29 +182,29 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
         <div className={cn("hidden shrink-0 overflow-hidden transition-[width,margin] duration-300 ease-in-out md:block", sidebarOpen ? "md:mr-[18px] md:w-60" : "md:w-0")}>
           {sidebar}
         </div>
-        <div className={cn("flex min-w-0 flex-1 flex-col md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:bg-pax-mist md:shadow-e2", takeover && "md:hidden")}>
+        <div className={cn("flex min-w-0 flex-1 flex-col md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:bg-hermes-mist md:shadow-e2", takeover && "md:hidden")}>
           <header className="sticky top-0 z-20 flex items-center gap-3 border-b bg-white/90 px-4 py-2.5 backdrop-blur md:hidden">
             <Link href="/" aria-label="Home"><Wordmark size={18} /></Link>
             <nav className="no-scrollbar flex flex-1 gap-1 overflow-x-auto">
               {NAV.map(({ href, label }) => (
-                <Link key={href} href={href} className={cn("whitespace-nowrap rounded-full px-3 py-1 text-xs", active(href) ? "bg-pax-lavender font-semibold text-pax-ink" : "text-slate-500")}>
+                <Link key={href} href={href} className={cn("whitespace-nowrap rounded-full px-3 py-1 text-xs", active(href) ? "bg-hermes-lavender font-semibold text-hermes-ink" : "text-slate-500")}>
                   {label}
                 </Link>
               ))}
             </nav>
-            <Link href="/record" className="flex shrink-0 items-center gap-1.5 rounded-full bg-pax-ink px-3 py-1.5 text-xs font-semibold text-white">
+            <Link href="/record" className="flex shrink-0 items-center gap-1.5 rounded-full bg-hermes-ink px-3 py-1.5 text-xs font-semibold text-white">
               <Video className="size-3.5" /> Record
             </Link>
           </header>
           <div className={cn("relative z-10 hidden shrink-0 items-center gap-3 px-5 py-4 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)] md:flex")}>
-            <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className="flex size-10 items-center justify-center rounded-full bg-white text-pax-ink shadow-e1 transition-shadow hover:shadow-e2">
+            <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className="flex size-10 items-center justify-center rounded-full bg-white text-hermes-ink shadow-e1 transition-shadow hover:shadow-e2">
               {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
             </button>
             <PageSwitcher title={title} />
             <div className="flex-1" />
             {/* A page's own header controls (the dashboard's poller switch and pipeline run) portal in here. */}
             <div id="page-actions" className="flex items-center gap-3" />
-            <Link href="/record" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-pax-ink text-white shadow-md transition-shadow hover:shadow-e3">
+            <Link href="/record" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-hermes-ink text-white shadow-md transition-shadow hover:shadow-e3">
               <Video className="size-4" />
             </Link>
             {/* 44b's DiscussionHeaderButton: the discussion panel opens from every page. */}
@@ -228,7 +228,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
 }
 
 // The page name is also the jump menu: a pill that opens a filterable list of
-// every page (the leuk context switcher, in pax clothes).
+// every page (the leuk context switcher, in hermes clothes).
 function PageSwitcher({ title }: { title: string }) {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
@@ -283,7 +283,7 @@ function PageSwitcher({ title }: { title: string }) {
               onChange={(e) => setQ(e.target.value)}
               placeholder="Find…"
               aria-label="Find a page"
-              className="w-full rounded-lg bg-pax-mist px-2.5 py-1.5 text-sm text-slate-900 outline-none placeholder:text-slate-400"
+              className="w-full rounded-lg bg-hermes-mist px-2.5 py-1.5 text-sm text-slate-900 outline-none placeholder:text-slate-400"
             />
           </div>
           <div className="no-scrollbar max-h-72 overflow-y-auto p-1.5">
@@ -296,9 +296,9 @@ function PageSwitcher({ title }: { title: string }) {
                   type="button"
                   role="menuitem"
                   onClick={() => go(d.href)}
-                  className="group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm font-medium text-slate-600 transition-colors hover:bg-pax-mist hover:text-pax-ink"
+                  className="group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm font-medium text-slate-600 transition-colors hover:bg-hermes-mist hover:text-hermes-ink"
                 >
-                  <d.icon className="size-4 shrink-0 text-slate-400 transition-colors group-hover:fill-pax-lavender group-hover:text-pax-ink" strokeWidth={1.75} />
+                  <d.icon className="size-4 shrink-0 text-slate-400 transition-colors group-hover:fill-hermes-lavender group-hover:text-hermes-ink" strokeWidth={1.75} />
                   <span className="flex-1 truncate">{d.label}</span>
                 </button>
               ))
@@ -348,7 +348,7 @@ function AccountMenu() {
   // Signed out, the account chip is simply the way in.
   if (!user)
     return (
-      <Link href={`/signin?next=${encodeURIComponent(path)}`} className="flex w-full items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-sm font-semibold text-pax-ink transition-colors hover:bg-white/70">
+      <Link href={`/signin?next=${encodeURIComponent(path)}`} className="flex w-full items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-sm font-semibold text-hermes-ink transition-colors hover:bg-white/70">
         <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-500"><LogIn className="size-3.5" /></span>
         Log in
       </Link>
@@ -357,16 +357,16 @@ function AccountMenu() {
   const item = "gap-2.5 rounded-lg px-2.5 py-2 text-sm [&_svg]:size-4 [&_svg]:text-slate-500"
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger aria-label="Account menu" className="flex w-full max-w-full items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-pax-ink outline-none transition-colors hover:bg-white/70 data-[popup-open]:bg-white/70">
+      <DropdownMenuTrigger aria-label="Account menu" className="flex w-full max-w-full items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-hermes-ink outline-none transition-colors hover:bg-white/70 data-[popup-open]:bg-white/70">
         {user ? <Initials name={name} size="sm" /> : <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-500"><User2 className="size-3.5" /></span>}
         <span className="flex-1 truncate text-left text-sm font-semibold">{name}</span>
         <ChevronsUpDown className="size-3.5 shrink-0 text-slate-400" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent side="top" align="start" sideOffset={8} className="w-(--anchor-width) rounded-2xl border border-slate-500 bg-pax-mist p-1.5 shadow-e2 ring-0">
+      <DropdownMenuContent side="top" align="start" sideOffset={8} className="w-(--anchor-width) rounded-2xl border border-slate-500 bg-hermes-mist p-1.5 shadow-e2 ring-0">
         <div className="flex items-center gap-3 px-2.5 py-2">
           {user ? <Initials name={name} size="md" /> : <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-500"><User2 className="size-4" /></span>}
           <span className="min-w-0">
-            <span className="block truncate text-[15px] font-semibold text-pax-ink">{name}</span>
+            <span className="block truncate text-[15px] font-semibold text-hermes-ink">{name}</span>
             {user && <span className="block truncate text-sm text-slate-500">{user.email}</span>}
           </span>
         </div>
@@ -388,7 +388,7 @@ function AccountMenu() {
           <DropdownMenuSubTrigger className={item}>
             <Beaker /> Lab
           </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="min-w-44 rounded-2xl border border-slate-500 bg-pax-mist p-1.5 shadow-e2 ring-0">
+          <DropdownMenuSubContent className="min-w-44 rounded-2xl border border-slate-500 bg-hermes-mist p-1.5 shadow-e2 ring-0">
             {LAB.map((l) => (
               <DropdownMenuItem key={l.href} onClick={() => router.push(l.href)} className={item}>
                 <l.icon /> {l.label}
@@ -401,7 +401,7 @@ function AccountMenu() {
           <LifeBuoy /> Help
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={signOut} className={cn(item, "text-pax-red-deep [&_svg]:text-pax-red-deep")}>
+        <DropdownMenuItem onClick={signOut} className={cn(item, "text-hermes-red-deep [&_svg]:text-hermes-red-deep")}>
           <LogOut /> Log out
         </DropdownMenuItem>
       </DropdownMenuContent>

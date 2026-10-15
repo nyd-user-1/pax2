@@ -1,6 +1,6 @@
 // What Democratic video ads on Meta were for in 2022, from the Wesleyan Media Project's core file.
 // Usage: node scripts/wesleyan-meta-2022.mjs <fb_2022_adid_var.csv.gz>
-//   (s3://pax-638175140432/raw/wmp-open/fs-meta-2022-core/fb_2022_adid_var.csv.gz)
+//   (s3://hermes-638175140432/raw/wmp-open/fs-meta-2022-core/fb_2022_adid_var.csv.gz)
 // Writes data/generated/wesleyan-meta-2022.json: Wesleyan's goal classifier splits each ad into
 // persuade, raise money, both or neither; per goal, the count of ads, the spend (midpoint of
 // Meta's spend range) and the median impressions bucket.

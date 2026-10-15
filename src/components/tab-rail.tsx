@@ -37,13 +37,13 @@ export function TabRail({ tabs, active, trailing, className }: { tabs: RailTab[]
       {tabs.map((t) => {
         const on = t.key === activeKey
         const cls = cn(
-          "relative z-10 -mb-px inline-flex shrink-0 items-center gap-1.5 rounded-t-md border-b-2 border-transparent px-3 pt-1.5 pb-2.5 text-[15px] font-medium outline-none transition-colors focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-pax-plum/40",
-          on ? "text-pax-plum" : t.disabled ? "cursor-default text-slate-300" : "text-slate-600 hover:bg-pax-plum/5 hover:text-slate-900",
+          "relative z-10 -mb-px inline-flex shrink-0 items-center gap-1.5 rounded-t-md border-b-2 border-transparent px-3 pt-1.5 pb-2.5 text-[15px] font-medium outline-none transition-colors focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-hermes-plum/40",
+          on ? "text-hermes-plum" : t.disabled ? "cursor-default text-slate-300" : "text-slate-600 hover:bg-hermes-plum/5 hover:text-slate-900",
         )
         const inner = (
           <>
             {t.label}
-            {t.count !== undefined && <span className={cn("tabular rounded-full bg-slate-100 px-1.5 text-[13px]", on ? "text-pax-plum" : "text-slate-500")}>{t.count.toLocaleString("en-US")}</span>}
+            {t.count !== undefined && <span className={cn("tabular rounded-full bg-slate-100 px-1.5 text-[13px]", on ? "text-hermes-plum" : "text-slate-500")}>{t.count.toLocaleString("en-US")}</span>}
           </>
         )
         if (t.disabled)
@@ -70,7 +70,7 @@ export function TabRail({ tabs, active, trailing, className }: { tabs: RailTab[]
         )
       })}
       {trailing && <div className="ml-auto flex items-center gap-2 pb-1.5">{trailing}</div>}
-      {rail && <span aria-hidden className="pointer-events-none absolute bottom-0 z-0 h-0.5 rounded-full bg-pax-plum transition-all duration-200 ease-out" style={{ left: rail.left, width: rail.width }} />}
+      {rail && <span aria-hidden className="pointer-events-none absolute bottom-0 z-0 h-0.5 rounded-full bg-hermes-plum transition-all duration-200 ease-out" style={{ left: rail.left, width: rail.width }} />}
     </div>
   )
 }

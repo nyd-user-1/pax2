@@ -18,27 +18,27 @@ export default function StartPage() {
         <div className="flex flex-col gap-4">
           <Link href="/record/personal" className="lift group surface flex cursor-pointer flex-col gap-3 p-6">
             <span className="flex items-center justify-between">
-              <span className="flex size-10 items-center justify-center rounded-full bg-pax-mist">
-                <MessageSquareText className="size-[18px] text-pax-ink" />
+              <span className="flex size-10 items-center justify-center rounded-full bg-hermes-mist">
+                <MessageSquareText className="size-[18px] text-hermes-ink" />
               </span>
-              <span className="flex size-8 items-center justify-center rounded-full bg-pax-mist transition-colors group-hover:bg-primary group-hover:text-white">
+              <span className="flex size-8 items-center justify-center rounded-full bg-hermes-mist transition-colors group-hover:bg-primary group-hover:text-white">
                 <ArrowRight className="size-4 transition-transform duration-200 group-hover:-rotate-45" />
               </span>
             </span>
-            <h2 className="font-display text-2xl font-semibold text-pax-ink">Let&apos;s write a script in your own words</h2>
+            <h2 className="font-display text-2xl font-semibold text-hermes-ink">Let&apos;s write a script in your own words</h2>
           </Link>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:grid-rows-2">
             {OPTIONS.map(({ href, icon: Icon, title }) => (
               <Link key={href} href={href} className="lift group surface flex flex-col gap-3 p-5">
                 <span className="flex items-center justify-between">
-                  <span className="flex size-10 items-center justify-center rounded-full bg-pax-mist">
-                    <Icon className="size-[18px] text-pax-ink" />
+                  <span className="flex size-10 items-center justify-center rounded-full bg-hermes-mist">
+                    <Icon className="size-[18px] text-hermes-ink" />
                   </span>
-                  <span className="flex size-8 items-center justify-center rounded-full bg-pax-mist transition-colors group-hover:bg-primary group-hover:text-white">
+                  <span className="flex size-8 items-center justify-center rounded-full bg-hermes-mist transition-colors group-hover:bg-primary group-hover:text-white">
                     <ArrowRight className="size-4 transition-transform duration-200 group-hover:-rotate-45" />
                   </span>
                 </span>
-                <span className="text-lg font-semibold text-pax-ink">{title}</span>
+                <span className="text-lg font-semibold text-hermes-ink">{title}</span>
               </Link>
             ))}
           </div>

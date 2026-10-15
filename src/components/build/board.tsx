@@ -135,7 +135,7 @@ export function BudgetAndLimits({ spent, cap, facts, limits }: { spent: number; 
                     </span>
                   </div>
                   <div className="h-1.5 overflow-hidden rounded-full bg-muted">
-                    <div className={cn("h-full rounded-full", pct >= 85 ? "bg-pax-red" : "bg-pax-plum")} style={{ width: `${Math.max(1, pct)}%` }} />
+                    <div className={cn("h-full rounded-full", pct >= 85 ? "bg-hermes-red" : "bg-hermes-plum")} style={{ width: `${Math.max(1, pct)}%` }} />
                   </div>
                 </div>
               )
@@ -146,7 +146,7 @@ export function BudgetAndLimits({ spent, cap, facts, limits }: { spent: number; 
   )
 }
 
-const OUTCOME: Record<Lesson["outcome"], string> = { clean: "border-pax-plum bg-pax-lavender", partial: "border-amber-500 bg-amber-500/20", failed: "border-pax-red bg-pax-red-soft" }
+const OUTCOME: Record<Lesson["outcome"], string> = { clean: "border-hermes-plum bg-hermes-lavender", partial: "border-amber-500 bg-amber-500/20", failed: "border-hermes-red bg-hermes-red-soft" }
 
 function LessonRow({ l }: { l: Lesson }) {
   const [open, setOpen] = React.useState(false)

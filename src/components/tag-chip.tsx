@@ -11,7 +11,7 @@ export function TagChip({ tag, active = false }: { tag: string; active?: boolean
       aria-current={active ? "true" : undefined}
       className={cn(
         "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs transition-colors",
-        active ? "border-pax-ink bg-pax-ink text-white hover:bg-pax-ink/90" : "border-slate-200 bg-white text-slate-600 hover:bg-slate-100",
+        active ? "border-hermes-ink bg-hermes-ink text-white hover:bg-hermes-ink/90" : "border-slate-200 bg-white text-slate-600 hover:bg-slate-100",
       )}
     >
       {tag}

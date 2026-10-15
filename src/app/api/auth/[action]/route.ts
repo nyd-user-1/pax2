@@ -2,8 +2,8 @@ import { CognitoIdentityProviderClient, ConfirmForgotPasswordCommand, ConfirmSig
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
-const cip = new CognitoIdentityProviderClient({ region: process.env.PAX_REGION ?? "us-east-1" })
-const CLIENT = process.env.PAX_COGNITO_CLIENT_ID
+const cip = new CognitoIdentityProviderClient({ region: process.env.HERMES_REGION ?? "us-east-1" })
+const CLIENT = process.env.HERMES_COGNITO_CLIENT_ID
 
 const FRIENDLY: Record<string, string> = {
   UsernameExistsException: "That email already has an account — sign in instead.",
@@ -17,12 +17,12 @@ const FRIENDLY: Record<string, string> = {
   TooManyRequestsException: "Too many tries — wait a minute and try again.",
 }
 
-// The signed-in user for the sidebar's account chip: the claims of the Cognito ID token in pax_session.
+// The signed-in user for the sidebar's account chip: the claims of the Cognito ID token in hermes_session.
 // Display only — nothing here authorizes anything.
 export async function GET(_req: Request, { params }: { params: Promise<{ action: string }> }) {
   const { action } = await params
   if (action !== "me") return NextResponse.json({ error: "Unknown action" }, { status: 404 })
-  const token = (await cookies()).get("pax_session")?.value
+  const token = (await cookies()).get("hermes_session")?.value
   if (!token) return NextResponse.json({ user: null })
   try {
     const claims = JSON.parse(Buffer.from(token.split(".")[1], "base64url").toString()) as { email?: string; name?: string; exp?: number }
@@ -37,8 +37,8 @@ export async function GET(_req: Request, { params }: { params: Promise<{ action:
 export async function POST(req: Request, { params }: { params: Promise<{ action: string }> }) {
   if ((await params).action === "signout") {
     const jar = await cookies()
-    jar.delete("pax_session")
-    jar.delete("pax_refresh")
+    jar.delete("hermes_session")
+    jar.delete("hermes_refresh")
     return NextResponse.json({ ok: true })
   }
   if (!CLIENT) return NextResponse.json({ error: "Auth isn't configured in this environment." }, { status: 503 })
@@ -71,9 +71,9 @@ export async function POST(req: Request, { params }: { params: Promise<{ action:
       const t = r.AuthenticationResult
       if (!t?.IdToken) return NextResponse.json({ error: "Sign-in needs a step this flow doesn't support yet." }, { status: 400 })
       const jar = await cookies()
-      jar.set("pax_session", t.IdToken, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: t.ExpiresIn ?? 3600, path: "/" })
+      jar.set("hermes_session", t.IdToken, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: t.ExpiresIn ?? 3600, path: "/" })
       // The refresh token keeps the reader signed in past the hour (src/proxy.ts renews the session).
-      if (t.RefreshToken) jar.set("pax_refresh", t.RefreshToken, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 30 * 86_400, path: "/" })
+      if (t.RefreshToken) jar.set("hermes_refresh", t.RefreshToken, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 30 * 86_400, path: "/" })
       return NextResponse.json({ ok: true })
     }
     return NextResponse.json({ error: "Unknown action" }, { status: 404 })

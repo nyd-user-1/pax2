@@ -1,18 +1,18 @@
-"""PAX worker job: the Library's dataset cards. For each dataset: its files in S3 with sizes,
+"""Hermes worker job: the Library's dataset cards. For each dataset: its files in S3 with sizes,
 and for every table a schema, a row count and a handful of sample rows.
 
-Output: s3://pax-638175140432/library/catalog.json (published to data/generated/library.json).
+Output: s3://hermes-638175140432/library/catalog.json (published to data/generated/library.json).
 """
 import io, json, os
 import boto3, pandas as pd
 
-B = "pax-638175140432"
+B = "hermes-638175140432"
 s3 = boto3.client("s3")
 
 # slug -> prefixes holding its files, and the tables worth previewing (S3 keys of parquet or csv).
 DATASETS = {
     "swayable-archive": {"prefixes": ["raw/swayable/"], "tables": ["curated/swayable/regression_ates.parquet", "curated/swayable/tagging_2020.parquet", "curated/swayable/tagging_2018.parquet", "curated/swayable/studies.parquet", "curated/swayable/responses.parquet"]},
-    "pax-reference-model": {"prefixes": ["model/"], "tables": []},
+    "hermes-reference-model": {"prefixes": ["model/"], "tables": []},
     "emotional-ads": {"prefixes": ["raw/emotional-ads/"], "tables": []},
     "coppock-2020": {"prefixes": ["raw/coppock2020/"], "tables": ["curated/coppock2020/vote_choice_sates.parquet", "curated/coppock2020/exps.parquet"]},
     "upworthy-archive": {"prefixes": ["raw/upworthy/"], "tables": ["curated/upworthy/upworthy-archive-confirmatory-packages-03.12.2020.parquet", "curated/upworthy/upworthy-archive-exploratory-packages-03.12.2020.parquet"]},
@@ -20,7 +20,7 @@ DATASETS = {
     "polis-opendata": {"prefixes": ["raw/polis-opendata/"], "tables": []},
     "hewitt-reproduction": {"prefixes": ["raw/hewitt-repro/"], "tables": []},
     "google-reform-ads": {"prefixes": ["athena/govblock/"], "tables": []},
-    "pax-takes": {"prefixes": ["videos/", "features/", "transcribe/", "takes/"], "tables": []},
+    "hermes-takes": {"prefixes": ["videos/", "features/", "transcribe/", "takes/"], "tables": []},
 }
 
 

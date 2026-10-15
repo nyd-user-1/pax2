@@ -8,11 +8,11 @@ import { COMPONENTS, type Reference, type Score } from "@/lib/resonance"
 import type { TakeState } from "@/lib/review"
 import type { Snapshot } from "@/lib/types"
 
-// PAX: turns a score into a reading a partner can act on. The model sees only the records
+// Hermes: turns a score into a reading a partner can act on. The model sees only the records
 // below, must cite one for every claim, and anything it cites that does not exist is removed.
 
-const MODEL = process.env.PAX_MODEL ?? "us.anthropic.claude-sonnet-4-6"
-const client = new BedrockRuntimeClient({ region: process.env.PAX_REGION ?? "us-east-1" })
+const MODEL = process.env.HERMES_MODEL ?? "us.anthropic.claude-sonnet-4-6"
+const client = new BedrockRuntimeClient({ region: process.env.HERMES_REGION ?? "us-east-1" })
 
 export type Cited = { kind: "observed" | "interpretation" | "hypothesis"; text: string; evidence: string[] }
 export type Proposal = { change: string; prompted: string; uncertain: string; measure: string; evidence: string[] }
@@ -60,7 +60,7 @@ export function repairJson(s: string) {
   return out
 }
 
-/** Everything PAX may cite, keyed by a short reference. */
+/** Everything Hermes may cite, keyed by a short reference. */
 export function evidenceIndex(take: TakeInfo, state: TakeState, ref: Reference | null, peers: TakeState[]): Ev[] {
   const out: Ev[] = []
   const latest = state.latest
@@ -87,7 +87,7 @@ export function evidenceIndex(take: TakeInfo, state: TakeState, ref: Reference |
   return out
 }
 
-const SYSTEM = `You are PAX, the analyst inside a partner portal for short advocacy videos. Write for a volunteer coordinator, not a statistician.
+const SYSTEM = `You are Hermes, the analyst inside a partner portal for short advocacy videos. Write for a volunteer coordinator, not a statistician.
 Rules:
 - Use only the records provided. Every claim cites one or more evidence refs exactly as given (e.g. "metric:plays3s", "line:2", "seen:hook").
 - Keep three kinds apart: "observed" = what the records show; "interpretation" = a reading of why, clearly marked as a reading; "hypothesis" = something worth testing.
@@ -182,7 +182,7 @@ export async function read(take: TakeInfo, state: TakeState, ref: Reference | nu
     return (block && "toolUse" in block ? block.toolUse?.input : null) as Record<string, unknown> | null
   }
   const [a, b, c] = await Promise.all([ask(NARRATIVE, 1400), ask(TOOL, 1800), ask(STEPS, 1600)])
-  if (!a || !b || !c) throw new Error("PAX returned no reading")
+  if (!a || !b || !c) throw new Error("Hermes returned no reading")
   const input = { ...a, ...b, ...c }
   // Nested arrays sometimes arrive as JSON text, at times with unescaped quotes inside; accept either.
   const arr = <T,>(x: unknown): T[] => {

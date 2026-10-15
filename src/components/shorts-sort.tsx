@@ -27,7 +27,7 @@ export function ShortsSort({ channel, sort }: { channel: string; sort: string })
         {SORTS.map((s) => (
           <DropdownMenuItem key={s.value} onClick={() => router.replace(`/campaigns?c=${channel}&s=${s.value}`, { scroll: false })} className="flex items-center justify-between gap-6 whitespace-nowrap rounded-lg text-sm">
             {s.label}
-            {s.value === sort && <Check className="size-4 text-pax-plum" />}
+            {s.value === sort && <Check className="size-4 text-hermes-plum" />}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

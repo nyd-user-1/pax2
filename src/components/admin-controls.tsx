@@ -57,7 +57,7 @@ export function AdminControls({ admin, poller: initial, queue }: { admin: boolea
         title={locked ?? "Run the pipeline"}
         disabled={!admin}
         onClick={() => (setNote(null), setOpen(true))}
-        className="flex size-10 items-center justify-center rounded-full bg-white text-pax-ink shadow-e1 transition-shadow hover:shadow-e2 disabled:cursor-not-allowed disabled:opacity-60"
+        className="flex size-10 items-center justify-center rounded-full bg-white text-hermes-ink shadow-e1 transition-shadow hover:shadow-e2 disabled:cursor-not-allowed disabled:opacity-60"
       >
         <Play className="size-4 fill-current" />
       </button>
@@ -90,7 +90,7 @@ export function AdminControls({ admin, poller: initial, queue }: { admin: boolea
                   onClick={run}
                   disabled={busy || !queue?.queued.length}
                   title={queue?.queued.length ? undefined : "Nothing is queued"}
-                  className="flex h-9 items-center gap-2 rounded-full bg-pax-ink px-4 text-sm font-semibold text-white disabled:opacity-50"
+                  className="flex h-9 items-center gap-2 rounded-full bg-hermes-ink px-4 text-sm font-semibold text-white disabled:opacity-50"
                 >
                   {busy ? <Loader2 className="size-4 animate-spin" /> : <Play className="size-3.5 fill-current" />} Run
                 </button>

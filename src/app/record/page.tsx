@@ -40,22 +40,22 @@ export default async function RecordLanding() {
       </LandingSurface>
     )
   return (
-    <div className="bg-pax-mist">
+    <div className="bg-hermes-mist">
       <LandingOnly>
         <LandingHeader />
-        <section className="relative -mt-16 flex min-h-dvh flex-col justify-center bg-gradient-to-b from-pax-lavender to-pax-mist pt-16">
+        <section className="relative -mt-16 flex min-h-dvh flex-col justify-center bg-gradient-to-b from-hermes-lavender to-hermes-mist pt-16">
           <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 pb-10 md:grid-cols-[1.4fr_1fr]">
             <div className="flex flex-col gap-6">
-              <span className="flex w-fit items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-sm text-pax-ink shadow-sm">
+              <span className="flex w-fit items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-sm text-hermes-ink shadow-sm">
                 <Clock className="size-4" /> Breakthrough
               </span>
-              <h1 className="font-display text-5xl font-bold leading-[1.05] text-pax-ink lg:text-[4.25rem]">
+              <h1 className="font-display text-5xl font-bold leading-[1.05] text-hermes-ink lg:text-[4.25rem]">
                 Voice.
                 <br />
                 Amplified.
               </h1>
               <p className="max-w-md text-lg leading-relaxed text-muted-foreground">We help you choose what to say, how to say it and share it. Because your voice is the difference.</p>
-              <Link href="/record/start" className="flex w-fit items-center gap-2 rounded-full bg-pax-ink px-7 py-4 text-base font-medium text-white shadow-lg transition-transform hover:-translate-y-0.5">
+              <Link href="/record/start" className="flex w-fit items-center gap-2 rounded-full bg-hermes-ink px-7 py-4 text-base font-medium text-white shadow-lg transition-transform hover:-translate-y-0.5">
                 Let&apos;s go <ArrowRight className="size-4" />
               </Link>
               <p className="text-sm text-muted-foreground">Powered by Resonant Amplification &copy;</p>

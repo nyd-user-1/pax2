@@ -8,8 +8,8 @@ import { uploadUrl } from "@/app/actions"
 import { ownerPublish, review, scoreOriginal, submitEnhanced, watchOnYouTube } from "@/app/original-actions"
 import { cn } from "@/ui/lib/utils"
 
-const primary = "press inline-flex items-center gap-1.5 rounded-full bg-pax-ink px-4 py-2 text-sm font-semibold text-white disabled:opacity-40"
-const secondary = "press inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-pax-ink disabled:opacity-40"
+const primary = "press inline-flex items-center gap-1.5 rounded-full bg-hermes-ink px-4 py-2 text-sm font-semibold text-white disabled:opacity-40"
+const secondary = "press inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-hermes-ink disabled:opacity-40"
 
 function useRun() {
   const router = useRouter()
@@ -89,7 +89,7 @@ export function OriginalAdmin({ id, enhancing, plan = [] }: { id: string; enhanc
 
   return (
     <div className="surface flex flex-col gap-4 p-5">
-      <textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} placeholder="Notes" className="w-full resize-y rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-pax-plum" />
+      <textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} placeholder="Notes" className="w-full resize-y rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-hermes-plum" />
       <div className="flex flex-wrap gap-2">
         <button type="button" disabled={!!busy} onClick={run("rerecord", () => review(id, "rerecord", note))} className={secondary}>
           <Spin on={busy === "rerecord"} /> Re-Record
@@ -132,7 +132,7 @@ export function WatchForm({ id }: { id: string }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-wrap gap-2">
-        <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="YouTube link" className="min-w-0 flex-1 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm outline-none focus:border-pax-plum" />
+        <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="YouTube link" className="min-w-0 flex-1 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm outline-none focus:border-hermes-plum" />
         <button type="button" disabled={!!busy || !url.trim()} onClick={run("watch", () => watchOnYouTube(id, url))} className={primary}>
           <Spin on={busy === "watch"} /> Start polling
         </button>

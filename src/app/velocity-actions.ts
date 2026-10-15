@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache"
 import { requireAdmin } from "@/lib/auth"
 import { pollerState } from "@/lib/velocity-store"
 
-const REGION = process.env.PAX_REGION ?? "us-east-1"
+const REGION = process.env.HERMES_REGION ?? "us-east-1"
 const FUNCTION = "hermes-velocity-poll"
 const RULE = "hermes-velocity-poll"
 const lambda = new LambdaClient({ region: REGION })

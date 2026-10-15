@@ -26,7 +26,7 @@ function Row({ f, max, i }: { f: Feature; max: number; i: number }) {
     <li data-find className="grid grid-cols-[minmax(0,15rem)_minmax(0,1fr)_7.5rem] items-center gap-4 py-2.5">
       <span className="flex min-w-0 items-center gap-2">
         <span className={cn("truncate text-sm", up || down ? "font-medium text-slate-900" : "text-slate-700")}>{f.label}</span>
-        {VOLUNTEER.has(f.key) && <span className="shrink-0 rounded-full bg-pax-lavender px-2 py-0.5 text-[10px] font-semibold text-pax-plum">Volunteer</span>}
+        {VOLUNTEER.has(f.key) && <span className="shrink-0 rounded-full bg-hermes-lavender px-2 py-0.5 text-[10px] font-semibold text-hermes-plum">Volunteer</span>}
       </span>
       <svg viewBox="0 0 100 10" preserveAspectRatio="none" className="h-5 w-full overflow-visible">
         <rect x={50} y={0} width={0.3} height={10} className="fill-slate-300" />
@@ -65,13 +65,13 @@ export default async function ReferencePage({ searchParams }: { searchParams: Pr
       <header className="rise flex flex-wrap items-end justify-between gap-4">
         <div className="flex flex-col gap-1.5">
           <h1 className="font-display text-3xl leading-tight text-slate-900 md:text-[34px]">617 campaign ads, each tested against a control group</h1>
-          <a href="https://doi.org/10.7910/DVN/LBPSSV" target="_blank" rel="noreferrer" className="w-fit text-sm text-slate-500 hover:text-pax-plum">
+          <a href="https://doi.org/10.7910/DVN/LBPSSV" target="_blank" rel="noreferrer" className="w-fit text-sm text-slate-500 hover:text-hermes-plum">
             Swayable archive · {out.studies} randomized experiments, 2018 and 2020
           </a>
         </div>
         <div className="flex rounded-full bg-white p-1 shadow-e1">
           {Object.keys(M.outcomes).map((k) => (
-            <Link key={k} href={`/scoring/method?tab=research&o=${k}`} className={cn("rounded-full px-3.5 py-1.5 text-sm transition-colors", k === o ? "bg-pax-ink font-medium text-white" : "text-slate-600 hover:text-pax-ink")}>
+            <Link key={k} href={`/scoring/method?tab=research&o=${k}`} className={cn("rounded-full px-3.5 py-1.5 text-sm transition-colors", k === o ? "bg-hermes-ink font-medium text-white" : "text-slate-600 hover:text-hermes-ink")}>
               {LABEL[k] ?? k}
             </Link>
           ))}
@@ -105,7 +105,7 @@ export default async function ReferencePage({ searchParams }: { searchParams: Pr
                     <div key={b.l} className="grid grid-cols-[8rem_minmax(0,1fr)_3.5rem] items-center gap-3 text-sm">
                       <span className="text-slate-600">{b.l}</span>
                       <div className="h-3 overflow-hidden rounded-full bg-slate-100">
-                        <div className="grow h-full rounded-full bg-pax-plum" style={{ width: `${(b.v / (out.meanEffect + out.tau)) * 100}%`, ["--i" as string]: i }} />
+                        <div className="grow h-full rounded-full bg-hermes-plum" style={{ width: `${(b.v / (out.meanEffect + out.tau)) * 100}%`, ["--i" as string]: i }} />
                       </div>
                       <span className="tabular text-right font-semibold text-slate-900">{signed(b.v, 1)}</span>
                     </div>
@@ -143,7 +143,7 @@ export default async function ReferencePage({ searchParams }: { searchParams: Pr
                 <span className="flex items-center gap-1.5">
                   <span className="size-2 rounded-full bg-below" /> hurts
                 </span>
-                <span className="rounded-full bg-pax-lavender px-2 py-0.5 text-[10px] font-semibold text-pax-plum">Volunteer</span>
+                <span className="rounded-full bg-hermes-lavender px-2 py-0.5 text-[10px] font-semibold text-hermes-plum">Volunteer</span>
               </div>
             }
           >

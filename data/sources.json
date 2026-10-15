@@ -4,7 +4,7 @@
     "what": "617 ads, 146 randomized experiments, 51 campaigns, 2018 and 2020; every ad hand-coded; 1,583 measured effects and 607,450 de-identified responses",
     "use": "The reference model: what each coded feature was worth in measured persuasion, and how little features predict",
     "status": "loaded",
-    "where": "s3://pax-638175140432/raw/swayable · curated/swayable",
+    "where": "s3://hermes-638175140432/raw/swayable · curated/swayable",
     "link": "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/LBPSSV",
     "license": "CC0"
   },
@@ -13,7 +13,7 @@
     "what": "Replication data for real-time campaign ad experiments on emotion",
     "use": "Fetched for the next version of the reference model",
     "status": "loaded",
-    "where": "s3://pax-638175140432/raw/emotional-ads",
+    "where": "s3://hermes-638175140432/raw/emotional-ads",
     "link": "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/CB3LP1"
   },
   {
@@ -21,7 +21,7 @@
     "what": "49 ads, 59 experiments, 34,000 people, 2016 presidential",
     "use": "Second check on effect sizes; converted, not yet on screen",
     "status": "loaded",
-    "where": "s3://pax-638175140432/curated/coppock2020",
+    "where": "s3://hermes-638175140432/curated/coppock2020",
     "link": "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/TN7KWR"
   },
   {
@@ -29,7 +29,7 @@
     "what": "32,487 randomized headline tests with click outcomes, 2013–2015",
     "use": "A prior for hooks and caption text; converted, not yet on screen",
     "status": "loaded",
-    "where": "s3://pax-638175140432/curated/upworthy",
+    "where": "s3://hermes-638175140432/curated/upworthy",
     "link": "https://upworthy.natematias.com/",
     "license": "CC BY 4.0"
   },
@@ -38,7 +38,7 @@
     "what": "The standard content-coding scheme for political ads",
     "use": "Cross-reference for the feature list",
     "status": "loaded",
-    "where": "s3://pax-638175140432/raw/wesleyan",
+    "where": "s3://hermes-638175140432/raw/wesleyan",
     "link": "https://mediaproject.wesleyan.edu/dataaccess/"
   },
   {
@@ -46,15 +46,15 @@
     "what": "Real Polis conversations with full vote matrices",
     "use": "How consensus groups form; the method behind the Scripts page",
     "status": "loaded",
-    "where": "s3://pax-638175140432/raw/polis-opendata",
+    "where": "s3://hermes-638175140432/raw/polis-opendata",
     "link": "https://github.com/compdemocracy/openData"
   },
   {
     "name": "Hewitt et al. reproduction repository",
     "what": "R code that verifies and rebuilds the archive's analysis",
-    "use": "Checked against PAX's own meta-regression",
+    "use": "Checked against Hermes' own meta-regression",
     "status": "loaded",
-    "where": "s3://pax-638175140432/raw/hewitt-repro",
+    "where": "s3://hermes-638175140432/raw/hewitt-repro",
     "link": "https://github.com/active-maintenance-aec/hewitt_etal_2024"
   },
   {
@@ -70,7 +70,7 @@
     "what": "Reform advertisers in Google's ad library: VOTE YES ON 3 ($1.39M, 47 creatives), Nevada Voters First, Protect Voters First, Alaskans for Better Elections, Idahoans for Open Primaries, and others; creatives with impression bands, spend ranges, targeting, weekly spend",
     "use": "Exposure context for reform advertising",
     "status": "loaded",
-    "where": "s3://pax-638175140432/athena/govblock",
+    "where": "s3://hermes-638175140432/athena/govblock",
     "link": "https://adstransparency.google.com/political"
   },
   {

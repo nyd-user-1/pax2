@@ -13,7 +13,7 @@ import type { Evaluation, Original, Recommendation, Trait } from "@/lib/original
 //   virality    the title against Upworthy's headline tests (won vs. lost)
 // The script stands in for what was said until the recording itself is transcribed.
 
-const MODEL = process.env.PAX_MODEL ?? "us.anthropic.claude-sonnet-4-6"
+const MODEL = process.env.HERMES_MODEL ?? "us.anthropic.claude-sonnet-4-6"
 const TRAITS = patterns.traits as { key: string; label: string; ads: number; diff: number; low: number; high: number }[]
 
 type Coded = { summary: string; traits: { key: string; present: boolean; quote?: string; change?: string }[]; title?: string }
@@ -38,7 +38,7 @@ Reply with JSON only: {"summary": "...", "title": "...", "traits": [{"key": "...
 
 export async function evaluate(o: Original): Promise<Evaluation> {
   const { BedrockRuntimeClient, ConverseCommand } = await import("@aws-sdk/client-bedrock-runtime")
-  const client = new BedrockRuntimeClient({ region: process.env.PAX_REGION ?? "us-east-1" })
+  const client = new BedrockRuntimeClient({ region: process.env.HERMES_REGION ?? "us-east-1" })
   const r = await client.send(new ConverseCommand({ modelId: MODEL, messages: [{ role: "user", content: [{ text: prompt(o) }] }], inferenceConfig: { maxTokens: 4000, temperature: 0 } }))
   const raw = r.output?.message?.content?.map((c) => ("text" in c ? c.text : "")).join("") ?? ""
   const coded = JSON.parse(raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1)) as Coded

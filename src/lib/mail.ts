@@ -33,7 +33,7 @@ export async function send(to: string[], subject: string, body: { html: string; 
   let error: string | undefined
   try {
     const { SESv2Client, SendEmailCommand } = await import("@aws-sdk/client-sesv2")
-    const ses = new SESv2Client({ region: process.env.PAX_REGION ?? "us-east-1" })
+    const ses = new SESv2Client({ region: process.env.HERMES_REGION ?? "us-east-1" })
     await ses.send(
       new SendEmailCommand({
         FromEmailAddress: `Hermes <${FROM}>`,

@@ -27,7 +27,7 @@ export async function OriginalsQueue({ queue }: { queue: "recording" | "scoring"
       <TabRail tabs={QUEUES.map((x) => ({ key: x.key, label: x.label, href: x.href, count: rows.filter((r) => x.stages.includes(r.stage)).length }))} active={queue} />
       {!user ? (
         <p className="text-sm text-slate-500">
-          <Link href={`/signin?next=/${queue}`} className="font-medium text-pax-plum hover:underline">
+          <Link href={`/signin?next=/${queue}`} className="font-medium text-hermes-plum hover:underline">
             Sign in
           </Link>{" "}
           to see your videos.
@@ -58,7 +58,7 @@ function Table({ rows, admin }: { rows: OriginalRow[]; admin: boolean }) {
           {rows.map((r) => (
             <tr key={r.id}>
               <td>
-                <Link href={`/v/${r.id}`} scroll={false} className="font-medium text-slate-900 hover:text-pax-plum">
+                <Link href={`/v/${r.id}`} scroll={false} className="font-medium text-slate-900 hover:text-hermes-plum">
                   {r.title ?? "Untitled video"}
                 </Link>
                 {r.name && <span className="text-slate-500"> · {r.name}</span>}

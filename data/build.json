@@ -87,7 +87,7 @@
           "detail": "DynamoDB, append-only: loads refuse duplicates, scores saved with formula and reference, decisions as events, forecasts locked before results"
         },
         {
-          "title": "PAX readings",
+          "title": "Hermes readings",
           "detail": "Claude on Bedrock; every claim cites a record or is removed; observed / interpretation / hypothesis kept apart"
         },
         {
@@ -104,7 +104,7 @@
         },
         {
           "title": "Record a video",
-          "detail": "Pick, Record, Send: four ways to start, the library with PAX notes, an editor with research checks, a personal script from three answers, a full-screen teleprompter, upload to S3, submissions on Reviews"
+          "detail": "Pick, Record, Send: four ways to start, the library with Hermes notes, an editor with research checks, a personal script from three answers, a full-screen teleprompter, upload to S3, submissions on Reviews"
         },
         {
           "title": "Four campaigns side by side",
@@ -148,7 +148,7 @@
         },
         {
           "title": "Forty campaign shorts analyzed",
-          "detail": "Top 10 by views from Courageous Colorado, Open Primaries, Unite America and FairVote, downloaded on the Mac, analyzed in under six minutes, zero failures. Each opens in PAX's own panel from /campaigns: public counts vs channel median, Pegasus review, transcript, sound."
+          "detail": "Top 10 by views from Courageous Colorado, Open Primaries, Unite America and FairVote, downloaded on the Mac, analyzed in under six minutes, zero failures. Each opens in Hermes' own panel from /campaigns: public counts vs channel median, Pegasus review, transcript, sound."
         },
         {
           "title": "Meta Ad Library Report in the lake",
@@ -175,11 +175,11 @@
       "items": [
         {
           "title": "Talk through the three goals",
-          "detail": "Brendan disagrees with much of the current statement of the Resonance score, the PAX AI experience and the ledger; to discuss before more is built on them."
+          "detail": "Brendan disagrees with much of the current statement of the Resonance score, the Hermes AI experience and the ledger; to discuss before more is built on them."
         },
         {
           "title": "The partner's videos and Ads Manager export",
-          "detail": "Not available from the partner yet (2026-10-04). When they arrive: upload the export on Reviews; drop videos in s3://pax-638175140432/videos/ and run worker/analyze.py"
+          "detail": "Not available from the partner yet (2026-10-04). When they arrive: upload the export on Reviews; drop videos in s3://hermes-638175140432/videos/ and run worker/analyze.py"
         },
         {
           "title": "The Question 3 campaign's shorts",
@@ -229,7 +229,7 @@
         },
         {
           "title": "Analyze volunteer uploads",
-          "detail": "Sent videos land in s3://pax-638175140432/uploads/; run worker/analyze.py on them (convert webm to mp4 first)"
+          "detail": "Sent videos land in s3://hermes-638175140432/uploads/; run worker/analyze.py on them (convert webm to mp4 first)"
         }
       ]
     }
@@ -237,15 +237,15 @@
   "resources": [
     {
       "name": "Repository",
-      "id": "github.com/nyd-user-1/pax"
+      "id": "github.com/nyd-user-1/hermes"
     },
     {
       "name": "Bucket",
-      "id": "pax-638175140432"
+      "id": "hermes-638175140432"
     },
     {
       "name": "Ledger table",
-      "id": "pax-ledger"
+      "id": "hermes-ledger"
     },
     {
       "name": "Worker box",
@@ -253,7 +253,7 @@
     },
     {
       "name": "Worker role",
-      "id": "pax-worker"
+      "id": "hermes-worker"
     }
   ]
 }

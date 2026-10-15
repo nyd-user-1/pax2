@@ -77,7 +77,7 @@ export function WesleyanBlock({ goal, footer }: { goal: string; footer?: string 
             </thead>
             <tbody className="[&_td]:whitespace-nowrap [&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2 [&_td]:pr-6">
               {wesleyan.goals.map((g) => (
-                <tr key={g.key} className={cn(g.key === goal && "bg-pax-plum/10 font-medium text-slate-900")}>
+                <tr key={g.key} className={cn(g.key === goal && "bg-hermes-plum/10 font-medium text-slate-900")}>
                   <td className="pl-2">{GOALS[g.key]}</td>
                   <td>{g.adShare}%</td>
                   <td>{g.spendShare}%</td>
@@ -110,7 +110,7 @@ export function UpworthyBlock({ title }: { title: string }) {
           {patterns.map((p) => (
             <div key={p.key} className={cn("flex flex-wrap items-center justify-between gap-x-4 gap-y-1 py-2.5", !p.has && "text-slate-400")}>
               <span className="flex items-center gap-2 text-sm">
-                <span className={cn("size-2 shrink-0 rounded-full", p.has ? "bg-pax-plum" : "border border-slate-300")} />
+                <span className={cn("size-2 shrink-0 rounded-full", p.has ? "bg-hermes-plum" : "border border-slate-300")} />
                 <span className={cn(p.has && "font-medium text-slate-900")}>{p.label}</span>
               </span>
               <span className={cn("tabular text-xs", p.has ? "text-slate-600" : "text-slate-400")}>

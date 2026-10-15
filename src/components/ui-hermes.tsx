@@ -35,14 +35,14 @@ export function CountUp({ value, decimals = 0, className }: { value: number; dec
 export function ScoreInfo({ className }: { className?: string }) {
   return (
     <Popover>
-      <PopoverTrigger className={cn("inline-flex size-5 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-pax-ink", className)} aria-label="What this score means">
+      <PopoverTrigger className={cn("inline-flex size-5 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-hermes-ink", className)} aria-label="What this score means">
         <Info className="size-3.5" />
       </PopoverTrigger>
       <PopoverContent className="w-80 rounded-2xl p-4 text-sm leading-relaxed shadow-e3">
-        <p className="font-semibold text-pax-ink">Resonance, 0 to 100</p>
+        <p className="font-semibold text-hermes-ink">Resonance, 0 to 100</p>
         <p className="text-slate-600">How well a paid video stopped the scroll, held viewers and got them to share, save or comment, per person reached. 50 is the average of the first round of results.</p>
         <p className="text-slate-600">The range shows how sure the score is: a few thousand impressions give a wide range, budget alone never raises it.</p>
-        <Link href="/scoring/method" className="font-medium text-pax-plum hover:underline">
+        <Link href="/scoring/method" className="font-medium text-hermes-plum hover:underline">
           How the score works
         </Link>
       </PopoverContent>

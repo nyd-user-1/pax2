@@ -21,7 +21,7 @@
         },
         {
           "line": 1,
-          "note": "The number lands in the second line and is repeated three ways — no opponent, no debate, no choice. A fact most viewers haven't heard is one of the few script choices that paid off on favorability. Parallax's 51% is kept verbatim; the returns PAX holds put it at 62.8% — 628 of the last 1,000 races.",
+          "note": "The number lands in the second line and is repeated three ways — no opponent, no debate, no choice. A fact most viewers haven't heard is one of the few script choices that paid off on favorability. Parallax's 51% is kept verbatim; the returns Hermes holds put it at 62.8% — 628 of the last 1,000 races.",
           "research": "fact_new_yes",
           "outcome": "favorability",
           "source": { "label": "Uncontested races 2014–2022", "href": "/polling" }
@@ -45,7 +45,7 @@
       "title": "No competition, no accountability.",
       "framing": "The calmest of the three, and the only one that names Question 3 directly.",
       "approach": "The plain case",
-      "source": "Opening line from the Parallax library card; the rest drafted by PAX as a stand-in until the full script arrives",
+      "source": "Opening line from the Parallax library card; the rest drafted by Hermes as a stand-in until the full script arrives",
       "text": "More than half of Massachusetts races since 2014 have been completely uncontested. Think about that.\nWhen there’s only one name on the ballot, there’s no debate, no comparison, and no reason for anyone to earn your vote.\nQuestion 3 would put every candidate on one primary ballot, and the top finishers would move on to November. Every voter, in every party or none, gets a say.\nThat means real campaigns in the fall, with candidates who have to knock on doors, show up to debates, and explain where they stand.\nIt’s a simple change. More choices on the ballot, and representatives who have to answer to all of us.\nVote yes on Question 3.",
       "short": "No competition",
       "why": [
@@ -77,7 +77,7 @@
       "title": "When politicians don't have to compete, they don't have to listen.",
       "framing": "The accountability argument, with a plain-English analogy in the middle.",
       "approach": "The analogy",
-      "source": "Opening line from the Parallax library card; the rest drafted by PAX as a stand-in until the full script arrives",
+      "source": "Opening line from the Parallax library card; the rest drafted by Hermes as a stand-in until the full script arrives",
       "text": "In most Massachusetts races, there’s no competition — one candidate, one party, no choice.\nWhy does that matter? Think about the only coffee shop in town. If nobody else can open across the street, prices go up and service goes down. Nobody has to try.\nPolitics works the same way. When politicians don’t have to compete, they don’t have to listen.\nSince 2014, more than half of the races for the State House and Senate have had just one name on the ballot.\nQuestion 3 changes the rules. Every candidate runs in one primary, and the top two finishers face off in November.\nTwo real choices in the fall means every vote has to be earned. That’s how you get representatives who actually listen.",
       "short": "They don’t have to listen",
       "why": [
@@ -112,7 +112,7 @@
       "title": "Candidates should have to win a majority.",
       "framing": "The argument that polls best — for a viewer who wants to hear what voters actually support.",
       "approach": "The polled argument",
-      "source": "Written by PAX on the RealClear Opinion Research national poll (Jan 2026) and the uncontested-race returns",
+      "source": "Written by Hermes on the RealClear Opinion Research national poll (Jan 2026) and the uncontested-race returns",
       "text": "Here’s a line from a national poll this January: open primaries would produce better candidates — candidates who appeal to a majority of voters, not just their base.\nSeventy-three percent of voters agreed. Democrats, Republicans and independents — majorities of all three.\nNow look at Massachusetts. In the last decade, nearly two-thirds of our state legislative races had exactly one name on the November ballot. Nobody had to appeal to a majority. Nobody had to appeal to anyone.\nQuestion 3 is the fix: one primary, every candidate on it, every voter gets a ballot, and the top finishers go to November.\nIf you think candidates should have to win over a majority, this is how you make them.\nVote yes on Question 3.",
       "short": "Appeal to a majority",
       "why": [
@@ -151,7 +151,7 @@
       "title": "Massachusetts’ biggest party is nobody’s.",
       "framing": "For the unenrolled viewer — two in three voters — who’s never felt a primary was theirs.",
       "approach": "The unenrolled",
-      "source": "Written by PAX on the Aug 2026 enrollment figures and the uncontested-race returns",
+      "source": "Written by Hermes on the Aug 2026 enrollment figures and the uncontested-race returns",
       "text": "Quick quiz. What’s the biggest political party in Massachusetts?\nIt’s not the Democrats — they’re twenty-four percent of registered voters. It’s not the Republicans — eight percent. It’s unenrolled: two out of every three of us belong to no party at all.\nBut primaries are still run party by party. You pick one ballot, you get a say in that one race — and by November, most races here have just one name left anyway.\nQuestion 3 ends the sorting. One primary, every candidate on it, every voter gets the same ballot, and the top finishers move on.\nTwo-thirds of this state never joined a party. The election should work for them too.\nVote yes on 3.",
       "short": "Two-thirds, no party",
       "why": [
@@ -185,7 +185,7 @@
       "title": "Who ran against your rep? Probably nobody.",
       "framing": "Make it local: in 2022, 106 of the 160 House districts had one name on the ballot — check yours and say so.",
       "approach": "Your district",
-      "source": "Written by PAX on the 2022 Massachusetts House returns, district by district",
+      "source": "Written by Hermes on the 2022 Massachusetts House returns, district by district",
       "text": "Quick question: who ran against your state rep in the last election?\nIf you can’t remember, here’s why. In 2022, one hundred six of the one hundred sixty Massachusetts House districts had exactly one name on the ballot. Two out of three.\nMine was one of them. No debate. No one knocking on my door. The election was over before it started.\nQuestion 3 would change that: every candidate in one primary, every voter voting, and the top finishers facing off in November. Even a safe seat would have to be defended out loud.\nLook up your district. If nobody ran against your rep either, now you know what to do about it.\nVote yes on Question 3.",
       "short": "Your own district",
       "why": [
@@ -221,7 +221,7 @@
       "title": "Washington has voted this way for nearly twenty years.",
       "framing": "For the skeptic who’s heard the case against: concede the strongest objection, then answer it.",
       "approach": "The track record",
-      "source": "Written by PAX on the statewide ballot history and the No side's own arguments",
+      "source": "Written by Hermes on the statewide ballot history and the No side's own arguments",
       "text": "The strongest argument against Question 3 is that it could put two candidates from the same party on the November ballot.\nThat’s true. It can.\nHere’s what’s also true: in Massachusetts right now, nearly two-thirds of legislative races put ONE candidate on the November ballot. We skipped the two-of-the-same-party problem and went straight to none.\nWashington has used a top-two primary since 2008, California since 2012. Hundreds of elections. It’s not an experiment anymore — it’s just how they vote.\nAnd when two candidates from one party do face off, everyone else finally gets a say in which one wins.\nTwo names on every ballot, picked by everybody, beats one name picked for you.\nVote yes on Question 3.",
       "short": "Twenty years of it",
       "why": [

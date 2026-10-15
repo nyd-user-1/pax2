@@ -10,7 +10,7 @@ import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
-const BUCKET = process.env.VELOCITY_BUCKET ?? "pax-638175140432"
+const BUCKET = process.env.VELOCITY_BUCKET ?? "hermes-velocity-638175140432"
 const P = "velocity/"
 const WINDOW_H = 72
 const SETTLED_H = 7 * 24

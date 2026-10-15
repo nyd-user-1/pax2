@@ -26,7 +26,7 @@ export default async function TakePage({ params, searchParams }: { params: Promi
     <div className="flex flex-col gap-6">
       {/* Back stays put while the page scrolls under it: pinned to the top of the scrolling area, on the
           page's own colour, reaching over the page padding so nothing shows above it. */}
-      <div className="sticky top-0 z-20 -mx-5 -mt-6 bg-pax-mist px-5 pt-6 pb-3 md:-mx-10 md:-mt-9 md:px-10 md:pt-9">
+      <div className="sticky top-0 z-20 -mx-5 -mt-6 bg-hermes-mist px-5 pt-6 pb-3 md:-mx-10 md:-mt-9 md:px-10 md:pt-9">
         <BackLink />
       </div>
       {row ? <OriginalView row={row} tab={sp.tab} publish={sp.publish === "1"} /> : short ? <ShortView id={id} /> : <TakeView id={id} />}

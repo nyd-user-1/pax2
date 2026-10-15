@@ -117,7 +117,7 @@ export default async function BreakoutPage() {
                   {vids.map((v) => (
                     <tr key={v.id} className="border-t border-slate-100">
                       <td className="max-w-80 px-4 py-2.5">
-                        <Link href={`/v/yt-${v.id}`} className="line-clamp-1 font-sans text-slate-900 hover:text-pax-plum">{v.title}</Link>
+                        <Link href={`/v/yt-${v.id}`} className="line-clamp-1 font-sans text-slate-900 hover:text-hermes-plum">{v.title}</Link>
                       </td>
                       <td className="whitespace-nowrap px-4 py-2.5 text-slate-500">{v.channel}</td>
                       <td className="px-4 py-2.5 text-right text-slate-700">{v.views.toLocaleString()}</td>
@@ -127,7 +127,7 @@ export default async function BreakoutPage() {
                         <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold", TIER[v.tier].chip)}>{TIER[v.tier].label}</span>
                       </td>
                       <td className="px-4 py-2.5">
-                        <Link href={`/velocity-tracker?v=${v.id}`} className="text-pax-ink hover:text-pax-plum hover:underline">Curve</Link>
+                        <Link href={`/velocity-tracker?v=${v.id}`} className="text-hermes-ink hover:text-hermes-plum hover:underline">Curve</Link>
                       </td>
                     </tr>
                   ))}

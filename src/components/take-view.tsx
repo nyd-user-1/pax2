@@ -3,16 +3,16 @@ import Link from "next/link"
 import type { SavedReading } from "@/app/actions"
 import { ReadingPanel } from "@/components/reading-panel"
 import { Fold } from "@/components/fold"
-import { ScoreInfo } from "@/components/ui-pax"
+import { ScoreInfo } from "@/components/ui-hermes"
 import { LoadData } from "@/components/load-data"
 import { ScorePanel } from "@/components/score-panel"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
 import { featuresFor, scriptById, takeById, takeLabel } from "@/lib/catalog"
-import { evidenceIndex, type Reading } from "@/lib/pax"
+import { evidenceIndex, type Reading } from "@/lib/hermes"
 import { board, DATASETS, findings, forecasts, loads, steps, workspace } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
 
-/** One take: the video, its number, PAX's read, and the detail a tap away. */
+/** One take: the video, its number, Hermes' read, and the detail a tap away. */
 export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
   const take = takeById(id)!
   const ws = await workspace()

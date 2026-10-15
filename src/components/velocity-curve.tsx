@@ -43,9 +43,9 @@ export function CurveCard({ c, href, focused = false }: { c: VelocityCard; href?
       <span className="flex items-start justify-between gap-3">
         <span className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{c.title}</span>
         {c.hours != null && c.hours < 72 ? (
-          <span className="shrink-0 rounded-full bg-pax-lavender px-2.5 py-0.5 text-xs font-semibold text-pax-ink">Watching · {Math.floor(c.hours)}h</span>
+          <span className="shrink-0 rounded-full bg-hermes-lavender px-2.5 py-0.5 text-xs font-semibold text-hermes-ink">Watching · {Math.floor(c.hours)}h</span>
         ) : (
-          <span className={cn("shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold", c.hours == null ? "bg-pax-red-soft text-pax-red-deep" : CURVE_TIER[c.tier].chip)}>{c.hours == null ? "Sample" : CURVE_TIER[c.tier].label}</span>
+          <span className={cn("shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold", c.hours == null ? "bg-hermes-red-soft text-hermes-red-deep" : CURVE_TIER[c.tier].chip)}>{c.hours == null ? "Sample" : CURVE_TIER[c.tier].label}</span>
         )}
       </span>
       <Curve card={c} />
@@ -55,7 +55,7 @@ export function CurveCard({ c, href, focused = false }: { c: VelocityCard; href?
       </span>
     </>
   )
-  const cls = cn("surface flex flex-col gap-2.5 p-5", href && "lift", focused && "ring-2 ring-pax-plum")
+  const cls = cn("surface flex flex-col gap-2.5 p-5", href && "lift", focused && "ring-2 ring-hermes-plum")
   return href ? (
     <Link id={`yt-${c.id}`} href={href} className={cls}>
       {body}

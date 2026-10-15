@@ -19,7 +19,7 @@ export default async function ScoringPage({ searchParams }: { searchParams: Prom
     <div className="flex flex-col gap-8">
       <div className="flex w-fit gap-1 rounded-full bg-white p-1 shadow-e1">
         {TABS.map((t) => (
-          <Link key={t.id} href={`/scoring/method?tab=${t.id}`} className={cn("rounded-full px-4 py-2 text-sm transition-colors", tab === t.id ? "bg-pax-ink font-semibold text-white" : "text-slate-500 hover:text-pax-ink")}>
+          <Link key={t.id} href={`/scoring/method?tab=${t.id}`} className={cn("rounded-full px-4 py-2 text-sm transition-colors", tab === t.id ? "bg-hermes-ink font-semibold text-white" : "text-slate-500 hover:text-hermes-ink")}>
             {t.label}
           </Link>
         ))}

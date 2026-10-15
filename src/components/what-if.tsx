@@ -44,7 +44,7 @@ export function WhatIf({ options, reference }: { options: { label: string; take:
                 ×{(mult[k.key] ?? 1).toFixed(2)} = {((base.snapshot.metrics[k.key].value ?? 0) * (mult[k.key] ?? 1)).toLocaleString(undefined, { maximumFractionDigits: 1 })}
               </span>
             </span>
-            <input type="range" min={0.1} max={3} step={0.05} value={mult[k.key] ?? 1} onChange={(e) => setMult((m) => ({ ...m, [k.key]: Number(e.target.value) }))} className="accent-[var(--pax-plum)]" />
+            <input type="range" min={0.1} max={3} step={0.05} value={mult[k.key] ?? 1} onChange={(e) => setMult((m) => ({ ...m, [k.key]: Number(e.target.value) }))} className="accent-[var(--hermes-plum)]" />
           </label>
         ))}
         <p className="text-xs text-muted-foreground">Spend moves nothing: it is a delivery condition. Doubling impressions and plays together leaves the rates alone and only narrows the range.</p>
@@ -57,7 +57,7 @@ export function WhatIf({ options, reference }: { options: { label: string; take:
           <div key={l} className="flex flex-col gap-2">
             <div className="flex items-baseline justify-between">
               <span className="text-xs text-muted-foreground">{l}</span>
-              <span className="tabular font-display text-3xl text-pax-ink">{s.value?.toFixed(1) ?? "Not scored"}</span>
+              <span className="tabular font-display text-3xl text-hermes-ink">{s.value?.toFixed(1) ?? "Not scored"}</span>
             </div>
             {s.value != null && <RangeBar value={s.value} low={s.low} high={s.high} />}
             <div className="tabular grid grid-cols-3 gap-2 text-xs">

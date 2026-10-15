@@ -10,8 +10,8 @@ import { requireAdmin } from "@/lib/auth"
 // through worker/analyze_organic.py (transcript, Pegasus notes, measured sound — no Rekognition).
 // The box shuts itself down after about 30 idle minutes.
 
-const REGION = process.env.PAX_REGION ?? "us-east-1"
-const BUCKET = "pax-638175140432"
+const REGION = process.env.HERMES_REGION ?? "us-east-1"
+const BUCKET = "hermes-638175140432"
 const BOX = "i-029959fd31bba9a75"
 const PER_VIDEO = 0.04
 const s3 = new S3Client({ region: REGION })

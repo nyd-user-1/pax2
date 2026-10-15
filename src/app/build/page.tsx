@@ -28,7 +28,7 @@ type Item = { title: string; detail?: string }
 type Build = { updated: string; budget: { cap: number; spent: { item: string; usd: number }[] }; columns: { id: string; title: string; items: Item[] }[]; resources: { name: string; id: string }[] }
 
 const when = (iso: string) => new Date(iso).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })
-const STATUS_TONE: Record<SourceRow["status"], string> = { Loaded: "text-pax-plum", "Stand-in": "text-pax-red-deep", "Not connected": "text-muted-foreground" }
+const STATUS_TONE: Record<SourceRow["status"], string> = { Loaded: "text-hermes-plum", "Stand-in": "text-hermes-red-deep", "Not connected": "text-muted-foreground" }
 
 /** Analysis runs on record: the videos' analysis times, split wherever twenty minutes pass with none. */
 function runs(cost: Record<string, number>) {
@@ -105,11 +105,11 @@ export default async function BuildPage() {
                   <TableRow key={s.name}>
                     <TableCell className="truncate font-medium" title={s.name}>
                       {s.href.startsWith("http") ? (
-                        <a href={s.href} target="_blank" rel="noreferrer" className="text-pax-ink hover:text-pax-plum hover:underline">
+                        <a href={s.href} target="_blank" rel="noreferrer" className="text-hermes-ink hover:text-hermes-plum hover:underline">
                           {s.name}
                         </a>
                       ) : (
-                        <Link href={s.href} className="text-pax-ink hover:text-pax-plum hover:underline">
+                        <Link href={s.href} className="text-hermes-ink hover:text-hermes-plum hover:underline">
                           {s.name}
                         </Link>
                       )}
@@ -178,7 +178,7 @@ export default async function BuildPage() {
             ]}
             limits={[
               { label: "AWS budget", sub: "estimated spend against the cap", used: Math.round(spent * 100) / 100, limit: b.budget.cap, unit: "USD" },
-              { label: "PAX reading", sub: "seconds per reading against Amplify's 30-second cut-off", used: 16, limit: 30, unit: "seconds" },
+              { label: "Hermes reading", sub: "seconds per reading against Amplify's 30-second cut-off", used: 16, limit: 30, unit: "seconds" },
               { label: "Worker box", sub: "stops itself after this many idle minutes", used: 0, limit: 30, unit: "minutes" },
             ]}
           />

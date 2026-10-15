@@ -7,8 +7,8 @@ import { board, workspace } from "@/lib/review"
 // The /chat answer, after solar's /api/chat: a system prompt carrying the record (here, every take's
 // current score and its parts, and the scripts), then the reply streamed back as plain text.
 
-const client = new BedrockRuntimeClient({ region: process.env.PAX_REGION ?? "us-east-1" })
-const MODEL = process.env.PAX_CHAT_MODEL ?? process.env.PAX_MODEL ?? "us.anthropic.claude-sonnet-4-6"
+const client = new BedrockRuntimeClient({ region: process.env.HERMES_REGION ?? "us-east-1" })
+const MODEL = process.env.HERMES_CHAT_MODEL ?? process.env.HERMES_MODEL ?? "us.anthropic.claude-sonnet-4-6"
 
 const BASE_SYSTEM_PROMPT = `You are the analyst inside Hermes, a tool that scores advocacy videos for the Question 3 campaign (Massachusetts' top-two primary initiative).
 

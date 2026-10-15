@@ -19,13 +19,13 @@ export function LibraryBrowser({ cards }: { cards: Card[] }) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-3 md:flex-row md:items-center">
-        <label className="surface flex flex-1 items-center gap-2 px-4 py-3 focus-within:ring-2 focus-within:ring-pax-plum/40">
+        <label className="surface flex flex-1 items-center gap-2 px-4 py-3 focus-within:ring-2 focus-within:ring-hermes-plum/40">
           <Search className="size-4 text-slate-400" />
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search datasets: persuasion, hooks, Massachusetts, shorts…" className="flex-1 bg-transparent text-sm outline-none" />
         </label>
         <div className="flex flex-wrap gap-2">
           {[null, ...kinds].map((k) => (
-            <button key={k ?? "all"} type="button" onClick={() => setKind(k)} style={k && kind === k ? kindStyle(k) : undefined} className={cn("rounded-full px-3.5 py-1.5 text-sm transition-colors", kind === k ? (k ? "font-medium shadow-e1" : "bg-pax-ink font-medium text-white") : "bg-white text-slate-600 shadow-e1 hover:text-pax-ink")}>
+            <button key={k ?? "all"} type="button" onClick={() => setKind(k)} style={k && kind === k ? kindStyle(k) : undefined} className={cn("rounded-full px-3.5 py-1.5 text-sm transition-colors", kind === k ? (k ? "font-medium shadow-e1" : "bg-hermes-ink font-medium text-white") : "bg-white text-slate-600 shadow-e1 hover:text-hermes-ink")}>
               {k ?? "All"}
             </button>
           ))}
@@ -52,7 +52,7 @@ export function LibraryBrowser({ cards }: { cards: Card[] }) {
             <div className="tabular flex items-center gap-3 border-t border-slate-100 pt-3 text-xs text-slate-500">
               {c.rows && <span>{c.rows} rows</span>}
               {c.size && <span>{c.size}</span>}
-              {c.used > 0 && <span className="ml-auto font-medium text-pax-plum">Used in PAX</span>}
+              {c.used > 0 && <span className="ml-auto font-medium text-hermes-plum">Used in Hermes</span>}
             </div>
           </Link>
         ))}

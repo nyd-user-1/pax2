@@ -4,7 +4,7 @@ import { fmtCompact, labVideos, polledCards, standInCard, tierOf, velocityCards,
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 import { TableBlock } from "@/components/blocks"
-import { SectionTitle } from "@/components/ui-pax"
+import { SectionTitle } from "@/components/ui-hermes"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { CURVE_TIER as TIER, CurveCard } from "@/components/velocity-curve"
 import { baselines, recentPolls } from "@/lib/velocity-store"
@@ -73,12 +73,12 @@ export default async function VelocityPage({ searchParams }: { searchParams: Pro
   const shown = pool.slice((page - 1) * PAGE, page * PAGE)
   const cards = shown.length < PAGE && page === 1 ? [...shown, ...velocityCards(PAGE + 1).filter((c) => !shown.some((r) => r.id === c.id))].slice(0, PAGE) : shown
   const href = (n: number) => `/velocity-tracker?${new URLSearchParams({ ...(focus && { v: focus }), ...(n > 1 && { page: String(n) }) })}`
-  const arrow = (on: boolean) => cn("flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 transition-opacity hover:text-pax-ink", !on && "pointer-events-none opacity-30")
+  const arrow = (on: boolean) => cn("flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 transition-opacity hover:text-hermes-ink", !on && "pointer-events-none opacity-30")
   return (
     <div className="flex flex-col gap-6">
       {cards.some((c) => c.hours == null) && (
         <section className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full bg-pax-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax-red-deep">Sample curves</span>
+          <span className="rounded-full bg-hermes-red-soft px-2.5 py-0.5 text-xs font-semibold text-hermes-red-deep">Sample curves</span>
           <p className="text-sm text-slate-500">Curves marked Sample are stand-ins shaped by each video&apos;s real verdict and final count; real readings replace them for every short published since the watch began.</p>
         </section>
       )}
@@ -142,7 +142,7 @@ export default async function VelocityPage({ searchParams }: { searchParams: Pro
                       <tr key={w.id} className="border-t border-slate-100">
                         <td className="whitespace-nowrap px-4 py-2.5 text-slate-500">{w.channel}</td>
                         <td className="max-w-96 px-4 py-2.5">
-                          <Link href={`/v/yt-${w.id}`} className="line-clamp-1 text-slate-900 hover:text-pax-plum">{w.title}</Link>
+                          <Link href={`/v/yt-${w.id}`} className="line-clamp-1 text-slate-900 hover:text-hermes-plum">{w.title}</Link>
                         </td>
                         <td className="whitespace-nowrap px-4 py-2.5 text-right text-slate-500">{Math.min(72, Math.floor(w.age))}h</td>
                         <td className="px-4 py-2.5">

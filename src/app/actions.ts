@@ -4,7 +4,7 @@ import { cookies } from "next/headers"
 import { revalidatePath } from "next/cache"
 
 import { takeById } from "@/lib/catalog"
-import { read, type Reading } from "@/lib/pax"
+import { read, type Reading } from "@/lib/hermes"
 import { FORMULA_V1 } from "@/lib/resonance"
 import { board, DATASETS, findings, loadExport, recordForecast, recordPick, recordStep, recordVote, saveFinding, steps, workspace, type LoadResult } from "@/lib/review"
 
@@ -29,7 +29,7 @@ export async function uploadExport(form: FormData): Promise<LoadResult> {
 
 export type SavedReading = { at: string; reading: Reading; model: string; snapshotId: string; formula: string; reference: string; scoreValue: number | null }
 
-/** Ask PAX for a reading of the latest results, and save it with the score version and evidence it used. */
+/** Ask Hermes for a reading of the latest results, and save it with the score version and evidence it used. */
 export async function requestReading(takeId: string): Promise<SavedReading> {
   const ws = await workspace()
   const take = takeById(takeId)
@@ -80,7 +80,7 @@ export async function castVote(conversation: string, voter: string, tid: number,
 /** Start a fresh review: a new workspace, the old one left intact. */
 export async function freshReview() {
   const id = `ws-${Date.now().toString(36)}`
-  ;(await cookies()).set("pax-ws", id, { httpOnly: true, sameSite: "lax", maxAge: 60 * 60 * 24 * 60, path: "/" })
+  ;(await cookies()).set("hermes-ws", id, { httpOnly: true, sameSite: "lax", maxAge: 60 * 60 * 24 * 60, path: "/" })
   revalidatePath("/", "layout")
   return id
 }
@@ -97,7 +97,7 @@ export async function writeScript(input: { name: string; role: string; town: str
   }
   const ranked = SCRIPTS.map((s) => ({ s, m: mean(s.id) })).sort((a, b) => (b.m ?? -1) - (a.m ?? -1))
   const base = ranked[0].m != null ? ranked[0] : { s: SCRIPTS.find((s) => s.id === "calm")!, m: null }
-  const client = new BedrockRuntimeClient({ region: process.env.PAX_REGION ?? "us-east-1" })
+  const client = new BedrockRuntimeClient({ region: process.env.HERMES_REGION ?? "us-east-1" })
   const prompt = `Write a script a volunteer will read to a phone camera, 80 to 110 words, in the first person, in plain spoken English that sounds like this person, not like a campaign.
 Build it on this argument (keep its core claim and framing): "${base.s.title}" — ${base.s.framing}
 Reference text of that argument:
@@ -110,7 +110,7 @@ About the volunteer, in their words:
 - A moment they felt they had no real choice: ${input.moment || "(not given)"}
 
 Rules: open with one short line that would make someone stop scrolling; use one of their own details; keep any number only if it appears in the reference text; end with "Vote yes on Question 3." Return only the script, line breaks between sentences groups, no title.`
-  const r = await client.send(new ConverseCommand({ modelId: process.env.PAX_MODEL ?? "us.anthropic.claude-sonnet-4-6", messages: [{ role: "user", content: [{ text: prompt }] }], inferenceConfig: { maxTokens: 500, temperature: 0.6 } }))
+  const r = await client.send(new ConverseCommand({ modelId: process.env.HERMES_MODEL ?? "us.anthropic.claude-sonnet-4-6", messages: [{ role: "user", content: [{ text: prompt }] }], inferenceConfig: { maxTokens: 500, temperature: 0.6 } }))
   const text = r.output?.message?.content?.map((c) => ("text" in c ? c.text : "")).join("").trim() ?? ""
   return { text, basedOn: base.s.id, basedOnTitle: base.s.title, why: base.m != null ? `the framing scoring best so far (average Resonance ${base.m.toFixed(0)})` : "the framing with the strongest research prior, until paid results arrive" }
 }
@@ -123,12 +123,12 @@ export async function uploadUrl(contentType: string) {
   const ext = contentType.includes("mp4") ? "mp4" : contentType.includes("quicktime") ? "mov" : "webm"
   const id = `sub-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`
   const key = `uploads/${ws}/${id}.${ext}`
-  const s3 = new S3Client({ region: process.env.PAX_REGION ?? "us-east-1" })
-  const url = await getSignedUrl(s3, new PutObjectCommand({ Bucket: process.env.PAX_BUCKET ?? "pax-638175140432", Key: key, ContentType: contentType }), { expiresIn: 900 })
+  const s3 = new S3Client({ region: process.env.HERMES_REGION ?? "us-east-1" })
+  const url = await getSignedUrl(s3, new PutObjectCommand({ Bucket: process.env.HERMES_BUCKET ?? "hermes-638175140432", Key: key, ContentType: contentType }), { expiresIn: 900 })
   return { id, key, url }
 }
 
-/** Record a sent video with its script and the messenger's own description; PAX reviews it next. */
+/** Record a sent video with its script and the messenger's own description; Hermes reviews it next. */
 export async function submitTake(input: { id: string; key: string; scriptId?: string; title?: string; text?: string; name?: string; role?: string; town?: string; seconds: number; consent: boolean }) {
   const ws = await workspace()
   const { putOnce, now } = await import("@/lib/ledger")

@@ -25,8 +25,8 @@ export function TakePanel({ title, search, children }: { title: string; search?:
     return () => window.removeEventListener("keydown", onKey)
   }, [router])
   return (
-    <section className="fixed inset-0 z-50 flex flex-col bg-pax-mist md:static md:z-auto md:h-full md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:shadow-e2">
-      <div className={cn("relative z-10 flex min-h-[73px] shrink-0 items-center justify-between gap-3 bg-pax-mist px-6 py-4 transition-shadow duration-200", scrolled && "shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)]")}>
+    <section className="fixed inset-0 z-50 flex flex-col bg-hermes-mist md:static md:z-auto md:h-full md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:shadow-e2">
+      <div className={cn("relative z-10 flex min-h-[73px] shrink-0 items-center justify-between gap-3 bg-hermes-mist px-6 py-4 transition-shadow duration-200", scrolled && "shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)]")}>
         {search ? (
           <button
             type="button"
@@ -44,10 +44,10 @@ export function TakePanel({ title, search, children }: { title: string; search?:
         )}
         <div className="flex shrink-0 items-center gap-2">
           {/* The icon shows the size the next press goes to: a third, half, then the whole area. */}
-          <button type="button" onClick={cycleSize} className="hidden size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax-ink md:flex" aria-label={size === "third" ? "Half the page" : size === "half" ? "Full page" : "A third of the page"}>
+          <button type="button" onClick={cycleSize} className="hidden size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-hermes-ink md:flex" aria-label={size === "third" ? "Half the page" : size === "half" ? "Full page" : "A third of the page"}>
             {size === "third" ? <Columns2 className="size-4" /> : size === "half" ? <Maximize2 className="size-4" /> : <Columns3 className="size-4" />}
           </button>
-          <button type="button" onClick={() => router.back()} className="flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax-ink" aria-label="Close">
+          <button type="button" onClick={() => router.back()} className="flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-hermes-ink" aria-label="Close">
             <X className="size-4" />
           </button>
         </div>

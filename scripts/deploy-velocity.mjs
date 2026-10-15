@@ -7,7 +7,7 @@ const lambda = new LambdaClient({ region: "us-east-1" })
 const key = fs.readFileSync(".env.local", "utf8").match(/^YOUTUBE_API_KEY=(.*)$/m)[1].replace(/^"|"$/g, "").trim()
 const FunctionName = "hermes-velocity-poll"
 const ZipFile = fs.readFileSync("/tmp/hermes/velocity.zip")
-const config = { Role: "arn:aws:iam::638175140432:role/hermes-velocity-poller", Handler: "index.handler", Runtime: "nodejs22.x", Timeout: 900, MemorySize: 1024, Environment: { Variables: { YOUTUBE_API_KEY: key, VELOCITY_BUCKET: "pax-638175140432" } }, Description: "hermes velocity poller: 15-minute YouTube Shorts readings, daily catalog, hourly stat card snapshot" }
+const config = { Role: "arn:aws:iam::638175140432:role/hermes-velocity-poller", Handler: "index.handler", Runtime: "nodejs22.x", Timeout: 900, MemorySize: 1024, Environment: { Variables: { YOUTUBE_API_KEY: key, VELOCITY_BUCKET: "hermes-velocity-638175140432" } }, Description: "hermes velocity poller: 15-minute YouTube Shorts readings, daily catalog, hourly stat card snapshot" }
 let exists = true
 try { await lambda.send(new GetFunctionCommand({ FunctionName })) } catch { exists = false }
 if (!exists) {
