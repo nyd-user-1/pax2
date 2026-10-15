@@ -1,14 +1,17 @@
 import { cn } from "@/ui/lib/utils"
 
-/** The pax wordmark: "pa" in ink, the x drawn as two crossing strokes — red, then blue. */
+/** The pax wordmark: "pa" in ink, the x two crossing bars in the parallax red and blue,
+ *  built like the old double-l bars and a touch larger than the letters. */
 export function Wordmark({ className, size = 22 }: { className?: string; size?: number }) {
+  const bar = { width: Math.max(2, Math.round(size * 0.115)), height: Math.round(size * 0.72) }
+  const box = Math.round(size * 0.62)
   return (
     <span aria-label="pax" className={cn("inline-flex items-baseline font-semibold tracking-[-0.03em] text-slate-900", className)} style={{ fontSize: size, lineHeight: 1 }}>
       <span aria-hidden>pa</span>
-      <svg aria-hidden viewBox="0 0 10 10" style={{ width: "0.52em", height: "0.52em", marginLeft: "0.04em" }}>
-        <line x1="1.2" y1="1.2" x2="8.8" y2="8.8" stroke="var(--pax2-red)" strokeWidth="1.8" strokeLinecap="round" />
-        <line x1="8.8" y1="1.2" x2="1.2" y2="8.8" stroke="var(--pax2-plum)" strokeWidth="1.8" strokeLinecap="round" />
-      </svg>
+      <span aria-hidden className="ml-[0.05em] inline-grid place-items-center" style={{ width: box, height: box, transform: `translateY(${Math.round(size * 0.04)}px)` }}>
+        <span className="rounded-[1px] bg-pax2-red [grid-area:1/1]" style={{ ...bar, transform: "rotate(45deg)" }} />
+        <span className="rounded-[1px] bg-pax2-plum [grid-area:1/1]" style={{ ...bar, transform: "rotate(-45deg)" }} />
+      </span>
     </span>
   )
 }
