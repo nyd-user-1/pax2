@@ -2,6 +2,7 @@ import Link from "next/link"
 
 import { TableBlock } from "@/components/blocks"
 import { TabRail } from "@/components/tab-rail"
+import { WaveHero } from "@/components/wave-hero"
 import { currentUser } from "@/lib/auth"
 import { originals, STAGE_LABEL, type OriginalRow, type Stage } from "@/lib/originals"
 
@@ -26,12 +27,7 @@ export async function OriginalsQueue({ queue }: { queue: "recording" | "scoring"
     <div className="flex flex-col gap-6">
       <TabRail tabs={QUEUES.map((x) => ({ key: x.key, label: x.label, href: x.href, count: rows.filter((r) => x.stages.includes(r.stage)).length }))} active={queue} />
       {!user ? (
-        <p className="text-sm text-slate-500">
-          <Link href={`/signin?next=/${queue}`} className="font-medium text-hermes-plum hover:underline">
-            Sign in
-          </Link>{" "}
-          to see your videos.
-        </p>
+        <WaveHero next={`/${queue}`} />
       ) : (
         <TableBlock title={q.label} height="auto">
           {shown.length ? <Table rows={shown} admin={user.admin} /> : <p className="text-sm text-slate-500">Nothing here yet.</p>}

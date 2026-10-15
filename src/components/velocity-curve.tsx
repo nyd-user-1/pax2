@@ -81,27 +81,35 @@ export function Curve({ card }: { card: VelocityCard }) {
   )
 }
 
-/** One short's curve card, as the velocity tracker shows it: title and verdict, the curve, channel and
- *  views. On the tracker it links to the video; on the video page it stands alone. */
+const thumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
+
+/** One short's curve card, as the velocity tracker shows it: title and verdict, the thumbnail with
+ *  the curve under the pointer, channel, views and the channel median. On the tracker it links to
+ *  the video; on the video page it stands alone. */
 export function CurveCard({ c, href, focused = false }: { c: VelocityCard; href?: string; focused?: boolean }) {
   const body = (
     <>
       <span className="flex items-start justify-between gap-3">
         <span className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{c.title}</span>
         {c.hours != null && c.hours < 72 ? (
-          <span className="shrink-0 rounded-full bg-hermes-lavender px-2.5 py-0.5 text-xs font-semibold text-hermes-ink">Watching · {Math.floor(c.hours)}h</span>
+          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-hermes-lavender px-2.5 py-0.5 text-xs font-semibold text-hermes-ink"><span className="size-1.5 animate-pulse rounded-full bg-hermes-ink" />Watching · {Math.floor(c.hours)}h</span>
         ) : (
           <span className={cn("shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold", c.hours == null ? "bg-hermes-red-soft text-hermes-red-deep" : CURVE_TIER[c.tier].chip)}>{c.hours == null ? "Sample" : CURVE_TIER[c.tier].label}</span>
         )}
       </span>
-      <Curve card={c} />
-      <span className="tabular flex items-center justify-between text-xs text-slate-500">
-        <span>{c.channel}</span>
-        <span>{fmtCompact(c.views)} views to date</span>
+      <span className="curve-media relative block overflow-hidden rounded-lg">
+        <img src={thumb(c.id)} alt="" loading="lazy" className="aspect-video w-full object-cover transition-opacity duration-200 group-hover:opacity-0" />
+        <span className="curve-chart absolute inset-0 flex flex-col justify-center bg-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          <Curve card={c} />
+        </span>
+      </span>
+      <span className="tabular flex items-center justify-between gap-3 text-xs text-slate-500">
+        <span className="truncate">{c.channel}</span>
+        <span className="shrink-0">{c.median != null ? `${fmtCompact(c.views)} views · median ${fmtCompact(c.median)}` : `${fmtCompact(c.views)} views to date`}</span>
       </span>
     </>
   )
-  const cls = cn("surface flex flex-col gap-2.5 p-5", href && "lift", focused && "ring-2 ring-hermes-plum")
+  const cls = cn("surface group flex flex-col gap-2.5 p-5", href && "lift", focused && "ring-2 ring-hermes-plum")
   return href ? (
     <Link id={`yt-${c.id}`} href={href} className={cls}>
       {body}

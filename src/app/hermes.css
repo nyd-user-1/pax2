@@ -235,3 +235,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .group:hover > .icon-pop { animation: none; }
 }
+
+/* Touch screens have no hover: the curve stays, the thumbnail yields. */
+@media (hover: none) {
+  .curve-media img { opacity: 0 }
+  .curve-media .curve-chart { opacity: 1 }
+}
