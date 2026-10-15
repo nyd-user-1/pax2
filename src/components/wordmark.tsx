@@ -6,7 +6,7 @@ import { cn } from "@/ui/lib/utils"
  *  header corner (105x56 at the landing's size and scaling with the slot elsewhere). */
 export function Wordmark({ className, size = 22 }: { className?: string; size?: number }) {
   return (
-    <span className={cn("inline-block align-middle", className)} style={{ width: Math.round(size * 4.04), height: Math.round(size * 2.15) }}>
+    <span className={cn("inline-block align-middle text-pax2-ink", className)} style={{ width: Math.round(size * 4.04), height: Math.round(size * 2.15) }}>
       <TechText
         text="pax"
         fontWeight={600}
@@ -19,8 +19,9 @@ export function Wordmark({ className, size = 22 }: { className?: string; size?: 
         introDuration={2}
         clickKick
         guides={false}
+        sweep={false}
         accentColor="#d20526"
-        color="#073cd1"
+        color="currentColor"
       />
     </span>
   )
