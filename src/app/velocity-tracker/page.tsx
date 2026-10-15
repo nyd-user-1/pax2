@@ -6,7 +6,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { TableBlock } from "@/components/blocks"
 import { SectionTitle } from "@/components/ui-hermes"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
-import { CURVE_TIER as TIER, CurveCard } from "@/components/velocity-curve"
+import { CurveCard } from "@/components/velocity-curve"
+import { CURVE_TIER as TIER } from "@/lib/velocity-meta"
 import { baselines, recentPolls } from "@/lib/velocity-store"
 import { cn } from "@/ui/lib/utils"
 
@@ -30,6 +31,8 @@ function watched(rows: PollRow[], medians: Record<string, { median: number | nul
     // across every row pushed the page past Amplify's response cap.
     const hourly = new Map<number, PollRow>()
     for (const r of sorted) if (r.hour <= 72) hourly.set(Math.floor(r.hour), r)
+    // A cumulative count never falls; dips in the readings are API noise, clamped away here.
+    let peak = 0
     return {
       id: last.id,
       channel: last.channel,
@@ -37,7 +40,7 @@ function watched(rows: PollRow[], medians: Record<string, { median: number | nul
       age: (now - Date.parse(last.published)) / 3_600_000,
       views: last.views,
       ratio: m ? last.views / m : null,
-      series: [...hourly.values()].map((r) => [r.hour, r.views]),
+      series: [...hourly.values()].map((r) => [r.hour, (peak = Math.max(peak, r.views))]),
     }
   })
 }

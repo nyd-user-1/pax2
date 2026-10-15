@@ -44,7 +44,8 @@ const median = (xs: number[]) => {
 
 // ── breakout: the seed verdict read off the catalog ─────────────────────────
 
-export type Tier = "breakout" | "baseline" | "killed"
+import type { Tier } from "./velocity-meta"
+export type { Tier } from "./velocity-meta"
 
 /** Passed the gate at 3x the channel's own median; killed below half of it.
  *  Normalizing by channel cancels subscriber count and seed-audience size. */
@@ -208,6 +209,8 @@ export type VelocityCard = {
   start?: number
   /** The real readings as [hours since publish, views], drawn as observed; absent on stand-ins. */
   series?: [number, number][]
+  /** The channel's median views when known; the ratio scale and its guides need it. */
+  median?: number | null
 }
 
 export type PollRow = { at: string; id: string; channelId: string; channel: string; title: string; published: string; hour: number; views: number; likes?: number | null; comments?: number | null }
@@ -221,7 +224,9 @@ export function polledCards(rows: PollRow[], baselines: Record<string, { median:
   for (const r of rows) by.set(r.id, [...(by.get(r.id) ?? []), r])
   return [...by.values()]
     .map((rs) => {
-      const sorted = rs.sort((a, b) => a.hour - b.hour)
+      // A cumulative count never falls; dips in the readings are API noise, clamped away here.
+      let peak = 0
+      const sorted = rs.sort((a, b) => a.hour - b.hour).map((r) => ({ ...r, views: (peak = Math.max(peak, r.views)) }))
       const last = sorted.at(-1)!
       const start = Math.ceil(sorted[0].hour)
       const end = Math.min(72, Math.floor(last.hour))
@@ -229,7 +234,7 @@ export function polledCards(rows: PollRow[], baselines: Record<string, { median:
       const points: number[] = Array(start).fill(0)
       for (let h = start; h <= end; h++) points.push(sorted.filter((r) => r.hour <= h).at(-1)?.views ?? sorted[0].views)
       const series = sorted.filter((r) => r.hour <= 72).map((r) => [r.hour, r.views] as [number, number])
-      return { id: last.id, title: last.title.replace(/\s*#\w+/g, "").trim() || last.title, channel: last.channel, views: last.views, tier: tierOf(last.views / (med[last.channelId] || 1)), points, start, series, inflection: null, hours: last.hour }
+      return { id: last.id, title: last.title.replace(/\s*#\w+/g, "").trim() || last.title, channel: last.channel, views: last.views, tier: tierOf(last.views / (med[last.channelId] || 1)), points, start, series, median: med[last.channelId] || null, inflection: null, hours: last.hour }
     })
     .filter((c) => c.start <= 6 && c.points.length - 1 - c.start >= 6)
     .sort((a, b) => (b.hours ?? 0) - (a.hours ?? 0))
@@ -312,4 +317,4 @@ export function endgameSample(): EndgameSample {
   }
 }
 
-export const fmtCompact = (n: number) => new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(n)
+export { fmtCompact } from "./velocity-meta"
