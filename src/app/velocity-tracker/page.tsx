@@ -26,6 +26,10 @@ function watched(rows: PollRow[], medians: Record<string, { median: number | nul
     const sorted = rs.sort((a, b) => a.hour - b.hour)
     const last = sorted.at(-1)!
     const m = medians[last.channelId]?.median
+    // One reading per hour: a 88px sparkline can't show the 15-minute cadence, and the full series
+    // across every row pushed the page past Amplify's response cap.
+    const hourly = new Map<number, PollRow>()
+    for (const r of sorted) if (r.hour <= 72) hourly.set(Math.floor(r.hour), r)
     return {
       id: last.id,
       channel: last.channel,
@@ -33,7 +37,7 @@ function watched(rows: PollRow[], medians: Record<string, { median: number | nul
       age: (now - Date.parse(last.published)) / 3_600_000,
       views: last.views,
       ratio: m ? last.views / m : null,
-      series: sorted.filter((r) => r.hour <= 72).map((r) => [r.hour, r.views]),
+      series: [...hourly.values()].map((r) => [r.hour, r.views]),
     }
   })
 }
@@ -43,7 +47,8 @@ function Spark({ series, color }: { series: [number, number][]; color: string })
   const W = 88
   const H = 22
   const max = Math.max(...series.map(([, v]) => v), 1)
-  const pts = series.map(([h, v]) => `${(h / 72) * W},${H - 2 - (v / max) * (H - 4)}`).join(" ")
+  const r1 = (n: number) => Math.round(n * 10) / 10
+  const pts = series.map(([h, v]) => `${r1((h / 72) * W)},${r1(H - 2 - (v / max) * (H - 4))}`).join(" ")
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="h-[22px] w-[88px] shrink-0" aria-hidden>
       <line x1={0} y1={H - 1} x2={W} y2={H - 1} stroke="#e2e8f0" />
