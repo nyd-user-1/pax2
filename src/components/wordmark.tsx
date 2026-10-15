@@ -7,7 +7,7 @@ export function Wordmark({ className, size = 22 }: { className?: string; size?: 
   return (
     <span aria-label="pax" className={cn("inline-flex items-baseline font-semibold tracking-[-0.03em] text-slate-900", className)} style={{ fontSize: size, lineHeight: 1 }}>
       <span aria-hidden>pa</span>
-      <svg aria-hidden viewBox="0 0 100 100" className="ml-[0.03em]" style={{ width: "0.7em", height: "0.7em", overflow: "visible" }}>
+      <svg aria-hidden viewBox="0 0 100 100" className="ml-[0.03em]" style={{ width: "0.7em", height: "0.7em", overflow: "visible", transform: "translateY(0.09em)" }}>
         <line x1="10" y1="10" x2="90" y2="90" stroke="var(--pax2-plum)" strokeWidth="17" />
         <line x1="10" y1="90" x2="90" y2="10" stroke="var(--pax2-red)" strokeWidth="17" />
       </svg>
