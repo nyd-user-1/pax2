@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, Clock } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 import homeFeed from "../../../data/generated/home-feed.json"
 import shorts from "../../../data/raw/yt-shorts.json"
@@ -46,9 +46,6 @@ export default async function RecordLanding() {
         <section className="relative -mt-16 flex min-h-dvh flex-col justify-center bg-gradient-to-b from-pax2-lavender to-pax2-mist pt-16">
           <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 pb-10 md:grid-cols-[1.4fr_1fr]">
             <div className="flex flex-col gap-6">
-              <span className="flex w-fit items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-sm text-pax2-ink shadow-sm">
-                <Clock className="size-4" /> Breakthrough
-              </span>
               <h1 className="font-display text-5xl font-bold leading-[1.05] text-pax2-ink lg:text-[4.25rem]">
                 Voice.
                 <br />
