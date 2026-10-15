@@ -1,12 +1,12 @@
-"""Hermes worker job 7: code each library script on the Swayable archive's features, so a script gets a
+"""PAX2 worker job 7: code each library script on the Swayable archive's features, so a script gets a
 research prior before anyone records it. Claude on Bedrock does the coding (AI-assessed, labeled so).
 
-Output: s3://hermes-638175140432/model/script-codes.json
+Output: s3://pax-2-638175140432/model/script-codes.json
 """
 import json, os, re
 import boto3
 
-B = "hermes-638175140432"
+B = "pax-2-638175140432"
 s3 = boto3.client("s3")
 br = boto3.client("bedrock-runtime", region_name="us-east-1")
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

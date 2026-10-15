@@ -9,8 +9,8 @@ import { STAGE_LABEL, type OriginalRow } from "@/lib/originals"
 import { recentPolls } from "@/lib/velocity-store"
 import { cn } from "@/ui/lib/utils"
 
-// The Hermes channels as they will appear; a video's own link replaces its channel once it is posted.
-const CHANNELS: Record<string, string> = { YouTube: "Hermes · @hermesvideos", TikTok: "Hermes · @hermesvideos", Instagram: "Hermes · @hermesvideos" }
+// The PAX2 channels as they will appear; a video's own link replaces its channel once it is posted.
+const CHANNELS: Record<string, string> = { YouTube: "PAX2 · @pax2videos", TikTok: "PAX2 · @pax2videos", Instagram: "PAX2 · @pax2videos" }
 
 const TABS = ["recorded", "scored", "published", "polled"] as const
 type Tab = (typeof TABS)[number]
@@ -44,7 +44,7 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
           {row.parent && (
             <>
               {" · "}
-              <Link href={`/v/${row.parent}`} className="text-hermes-plum hover:underline">
+              <Link href={`/v/${row.parent}`} className="text-pax2-plum hover:underline">
                 version {row.version - 1}
               </Link>
             </>
@@ -52,7 +52,7 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
           {row.replacedBy && (
             <>
               {" · "}
-              <Link href={`/v/${row.replacedBy}`} className="text-hermes-plum hover:underline">
+              <Link href={`/v/${row.replacedBy}`} className="text-pax2-plum hover:underline">
                 replaced by version {row.version + 1}
               </Link>
             </>
@@ -128,7 +128,7 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
                 <div key={r.change} className="flex flex-col gap-1 py-3">
                   <span className="flex flex-wrap items-baseline justify-between gap-2">
                     <span className="text-sm font-medium text-slate-900">{r.change}</span>
-                    <span className={cn("rounded-full px-2 py-0.5 text-xs", r.axis === "persuasion" ? "bg-hermes-plum/10 text-hermes-plum" : "bg-slate-100 text-slate-600")}>{r.axis === "persuasion" ? "Persuasion" : "Virality"}</span>
+                    <span className={cn("rounded-full px-2 py-0.5 text-xs", r.axis === "persuasion" ? "bg-pax2-plum/10 text-pax2-plum" : "bg-slate-100 text-slate-600")}>{r.axis === "persuasion" ? "Persuasion" : "Virality"}</span>
                   </span>
                   <span className="text-xs text-slate-500">
                     {r.why}
@@ -203,7 +203,7 @@ async function Published({ row, admin }: { row: OriginalRow; admin: boolean }) {
                 <td className="font-medium text-slate-900">{platform}</td>
                 <td className="text-slate-600">
                   {url ? (
-                    <a href={url} target="_blank" rel="noreferrer" className="text-hermes-plum hover:underline">
+                    <a href={url} target="_blank" rel="noreferrer" className="text-pax2-plum hover:underline">
                       {url.replace(/^https?:\/\//, "")}
                     </a>
                   ) : (

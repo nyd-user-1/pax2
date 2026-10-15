@@ -17,12 +17,12 @@ const TITLE: Record<View, string> = { welcome: "Discussion", chat: "Chat", slack
 function Row({ icon, label, sub, onClick }: { icon: React.ReactNode; label: string; sub: string; onClick: () => void }) {
   return (
     <button type="button" onClick={onClick} className="group flex w-full items-center gap-3 border-b border-slate-200/70 px-6 py-4 text-left transition-colors hover:bg-white/70">
-      <span className="flex size-4 shrink-0 items-center justify-center text-slate-400 group-hover:text-hermes-ink">{icon}</span>
+      <span className="flex size-4 shrink-0 items-center justify-center text-slate-400 group-hover:text-pax2-ink">{icon}</span>
       <span className="flex-1">
-        <span className="block text-[15px] font-medium text-slate-900 group-hover:text-hermes-ink">{label}</span>
+        <span className="block text-[15px] font-medium text-slate-900 group-hover:text-pax2-ink">{label}</span>
         <span className="block text-xs text-slate-500">{sub}</span>
       </span>
-      <ChevronRight className="size-4 text-slate-400 group-hover:text-hermes-ink" />
+      <ChevronRight className="size-4 text-slate-400 group-hover:text-pax2-ink" />
     </button>
   )
 }
@@ -31,21 +31,21 @@ export function DiscussionPanel({ onClose }: { onClose: () => void }) {
   const { wide, setWide } = useShellPanel()
   const [view, setView] = React.useState<View>("welcome")
   return (
-    <section className="fixed inset-0 z-50 flex flex-col bg-hermes-mist md:static md:z-auto md:h-full md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:shadow-e2">
-      <div className="relative z-10 flex min-h-[73px] shrink-0 items-center justify-between gap-3 bg-hermes-mist px-6 py-4">
+    <section className="fixed inset-0 z-50 flex flex-col bg-pax2-mist md:static md:z-auto md:h-full md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:shadow-e2">
+      <div className="relative z-10 flex min-h-[73px] shrink-0 items-center justify-between gap-3 bg-pax2-mist px-6 py-4">
         <div className="flex min-w-0 items-center gap-2">
           {view !== "welcome" && (
-            <button type="button" onClick={() => setView("welcome")} aria-label="Back" className="-ml-2 flex size-9 shrink-0 items-center justify-center rounded-full text-slate-600 hover:bg-white hover:text-hermes-ink">
+            <button type="button" onClick={() => setView("welcome")} aria-label="Back" className="-ml-2 flex size-9 shrink-0 items-center justify-center rounded-full text-slate-600 hover:bg-white hover:text-pax2-ink">
               <ArrowLeft className="size-4" />
             </button>
           )}
           <p className="truncate font-display text-xl text-slate-900">{TITLE[view]}</p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
-          <button type="button" onClick={() => setWide(!wide)} className="hidden size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-hermes-ink md:flex" aria-label={wide ? "Narrow the panel" : "Widen the panel"}>
+          <button type="button" onClick={() => setWide(!wide)} className="hidden size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax2-ink md:flex" aria-label={wide ? "Narrow the panel" : "Widen the panel"}>
             {wide ? <Columns3 className="size-4" /> : <Columns2 className="size-4" />}
           </button>
-          <button type="button" onClick={onClose} className="flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-hermes-ink" aria-label="Close">
+          <button type="button" onClick={onClose} className="flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax2-ink" aria-label="Close">
             <X className="size-4" />
           </button>
         </div>

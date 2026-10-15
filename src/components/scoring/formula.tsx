@@ -80,9 +80,9 @@ export default async function MethodPage() {
             <div className="grid gap-2 md:grid-cols-2">
               {CHOICES.map((c) => (
                 <div key={c.what} data-find className="flex gap-3 surface p-3">
-                  <span className={cn("h-fit shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", c.kind === "design" ? "bg-hermes-lavender text-hermes-plum" : "bg-observed/10 text-observed")}>{c.kind === "design" ? "Design choice" : "From the data"}</span>
+                  <span className={cn("h-fit shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", c.kind === "design" ? "bg-pax2-lavender text-pax2-plum" : "bg-observed/10 text-observed")}>{c.kind === "design" ? "Design choice" : "From the data"}</span>
                   <div>
-                    <p className="text-sm font-medium text-hermes-ink">{c.what}</p>
+                    <p className="text-sm font-medium text-pax2-ink">{c.what}</p>
                     <p className="text-xs text-muted-foreground">{c.detail}</p>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ export default async function MethodPage() {
                       {g.values.map((v, i) => {
                         const r = rank(grid.map((x) => x.values[i]))[gi]
                         return (
-                          <td key={i} className={cn(i > 0 && Math.abs(r - baseRank[gi]) >= 3 && "text-hermes-plum")}>
+                          <td key={i} className={cn(i > 0 && Math.abs(r - baseRank[gi]) >= 3 && "text-pax2-plum")}>
                             {v.toFixed(0)} <span className="text-[10px] text-muted-foreground">#{r}</span>
                           </td>
                         )
@@ -175,7 +175,7 @@ export default async function MethodPage() {
                 <div className="tabular grid gap-2 text-xs sm:grid-cols-3">
                   {COMPONENTS.map((c) => (
                     <div key={c.key} className="rounded-lg bg-muted/50 px-3 py-2">
-                      <b className="text-hermes-ink">{c.name}</b> · pooled {pct(ref.pooled[c.key], 2)} · centre {ref.mean[c.key].toFixed(2)} · spread {ref.sd[c.key].toFixed(2)}
+                      <b className="text-pax2-ink">{c.name}</b> · pooled {pct(ref.pooled[c.key], 2)} · centre {ref.mean[c.key].toFixed(2)} · spread {ref.sd[c.key].toFixed(2)}
                     </div>
                   ))}
                 </div>
@@ -193,7 +193,7 @@ function Stat({ label, value, note }: { label: string; value: number | null; not
   return (
     <div className="surface p-4">
       <p className="text-xs text-muted-foreground">{label}</p>
-      <p className="tabular font-display text-4xl text-hermes-ink">{value == null ? "—" : value.toFixed(2)}</p>
+      <p className="tabular font-display text-4xl text-pax2-ink">{value == null ? "—" : value.toFixed(2)}</p>
       <p className="text-xs text-muted-foreground">{note}</p>
     </div>
   )

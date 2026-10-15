@@ -31,7 +31,7 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
     >
       {signedIn ? (
         <>
-          <button type="button" onClick={toggleSidebar} aria-label="Toggle sidebar" className="flex size-10 items-center justify-center rounded-full bg-white text-hermes-ink shadow-e1 transition-shadow hover:shadow-e2">
+          <button type="button" onClick={toggleSidebar} aria-label="Toggle sidebar" className="flex size-10 items-center justify-center rounded-full bg-white text-pax2-ink shadow-e1 transition-shadow hover:shadow-e2">
             {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
           </button>
           <button type="button" onClick={toggleDiscuss} aria-pressed={discuss} aria-label="Open the discussion" className="flex size-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-colors hover:bg-slate-50">
@@ -41,7 +41,7 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
       ) : (
         <>
           <Link href="/" aria-label="Home"><Wordmark size={26} /></Link>
-          <Link href="/signup" className="press rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-hermes-ink shadow-e1 transition-shadow hover:shadow-e2">
+          <Link href="/signup" className="press rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-pax2-ink shadow-e1 transition-shadow hover:shadow-e2">
             Sign up
           </Link>
         </>

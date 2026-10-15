@@ -1,4 +1,4 @@
-"""Hermes worker job 3: download the Question 3 campaign shorts to s3://hermes-638175140432/videos/.
+"""PAX2 worker job 3: download the Question 3 campaign shorts to s3://pax-2-638175140432/videos/.
 
 Input: data/raw/yt-videos.json (YouTube Data API listing, committed in the repo).
 Keeps vertical-length videos (under two minutes) from the two Yes on 3 channels.
@@ -6,10 +6,10 @@ Keeps vertical-length videos (under two minutes) from the two Yes on 3 channels.
 import json, os, re, subprocess, sys, time
 import boto3
 
-B = "hermes-638175140432"
+B = "pax-2-638175140432"
 s3 = boto3.client("s3")
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-D = "/opt/hermes/videos"
+D = "/opt/pax2/videos"
 os.makedirs(D, exist_ok=True)
 
 

@@ -1385,7 +1385,7 @@
    }
   ]
  },
- "hermes-reference-model": {
+ "pax2-reference-model": {
   "files": [
    {
     "key": "model/ads.json",
@@ -2807,7 +2807,7 @@
   "bytes": 1151271,
   "tables": []
  },
- "hermes-takes": {
+ "pax2-takes": {
   "files": [
    {
     "key": "videos/coin-danielle.mp4",

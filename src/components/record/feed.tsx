@@ -86,7 +86,7 @@ function Score({ v }: { v: FeedVideo }) {
   )
 }
 
-const FAVORITES = "hermes:favorites"
+const FAVORITES = "pax2:favorites"
 
 /** A star in the thumbnail's top-right corner on hover; once favorited it stays, filled.
  *  Favorites live in this browser. */
@@ -155,7 +155,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <Score v={v} />
         <Favorite id={v.id} />
       </div>
-      <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-hermes-plum">{v.title}</p>
+      <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-pax2-plum">{v.title}</p>
       <p className="tabular text-xs text-slate-500">{fmt.format(v.views)} views</p>
     </Link>
   )
@@ -197,7 +197,7 @@ function ShortsShelf({ items }: { items: FeedVideo[] }) {
           <button
             type="button"
             onClick={() => setMore((m) => !m)}
-            className="relative flex h-9 w-full max-w-sm items-center justify-center gap-2 rounded-full border border-black/10 bg-hermes-mist text-sm font-medium text-slate-900 transition-[filter] hover:brightness-95"
+            className="relative flex h-9 w-full max-w-sm items-center justify-center gap-2 rounded-full border border-black/10 bg-pax2-mist text-sm font-medium text-slate-900 transition-[filter] hover:brightness-95"
           >
             {more ? "Show fewer" : "Show more"} {more ? <ChevronUp className="size-5" /> : <ChevronDown className="size-5" />}
           </button>
@@ -250,8 +250,8 @@ function Cycle({ items }: { items: FeedVideo[] }) {
 /** Every word has to appear somewhere in the title, channel or description, in any order. */
 export const matches = (v: FeedVideo, needle: string) => needle.split(/\s+/).filter(Boolean).every((w) => `${v.title} ${v.channel} ${v.description}`.toLowerCase().includes(w))
 
-const RETURN = "hermes:feed-return"
-const RECENT = "hermes:recent-searches"
+const RETURN = "pax2:feed-return"
+const RECENT = "pax2:recent-searches"
 
 /** The search bar, with the reader's recent searches dropping down beneath it while it's empty
  *  (govblock's search drop-down). A search is remembered on Enter. */
@@ -306,7 +306,7 @@ export function SearchBar({ q, setQ, placeholder = "Search videos" }: { q: strin
             <X className="size-4" />
           </button>
         )}
-        <button type="submit" aria-label="Search" className="flex h-full items-center border-l border-slate-200 bg-hermes-mist px-5 text-slate-500">
+        <button type="submit" aria-label="Search" className="flex h-full items-center border-l border-slate-200 bg-pax2-mist px-5 text-slate-500">
           <Search className="size-4" />
         </button>
       </form>
@@ -351,10 +351,10 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
     const initial = new URLSearchParams(window.location.search).get("q")
     if (initial) setQ(initial)
     const on = (e: Event) => setQ((e as CustomEvent<string>).detail)
-    window.addEventListener("hermes:search", on)
+    window.addEventListener("pax2:search", on)
     return () => {
       delete document.documentElement.dataset.feed
-      window.removeEventListener("hermes:search", on)
+      window.removeEventListener("pax2:search", on)
     }
   }, [])
   const [cycles, setCycles] = React.useState(1)
@@ -426,7 +426,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
 
       {!needle && shown.length > 0 && (
         <div ref={sentinel} className="flex justify-center py-12">
-          <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-hermes-ink" />
+          <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-pax2-ink" />
         </div>
       )}
     </section>

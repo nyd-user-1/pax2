@@ -5,8 +5,8 @@ import { takeById } from "@/lib/catalog"
 import { currentUser } from "@/lib/auth"
 import { isOriginalId, original } from "@/lib/originals"
 
-const s3 = new S3Client({ region: process.env.HERMES_REGION ?? "us-east-1" })
-const BUCKET = process.env.HERMES_BUCKET ?? "hermes-638175140432"
+const s3 = new S3Client({ region: process.env.PAX2_REGION ?? "us-east-1" })
+const BUCKET = process.env.PAX2_BUCKET ?? "pax-2-638175140432"
 
 // The videos stay private in S3; the player gets a short-lived signed link.
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {

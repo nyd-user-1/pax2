@@ -1,6 +1,6 @@
 #!/bin/bash
 # Pull every upload (up to 150 per channel) with public counts and length, from the
-# YouTube Data API, for the reform channels Hermes uses as stand-in content.
+# YouTube Data API, for the reform channels PAX2 uses as stand-in content.
 # curl + jq only; the key is read from livingston's env file and never printed.
 set -e
 cd "$(dirname "$0")/.."

@@ -1,4 +1,4 @@
-// The velocity poller, as a Lambda on a 15-minute EventBridge schedule (rule hermes-velocity-poll,
+// The velocity poller, as a Lambda on a 15-minute EventBridge schedule (rule pax2-velocity-poll,
 // switched on and off from /dashboard). Every run re-reads the counts of every short the tracked
 // channels published in the last 72 hours; every 30 minutes it also scans the channels for new
 // uploads. Daily: each channel's baseline (median views of its settled shorts) and the 18-month
@@ -10,7 +10,7 @@ import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
-const BUCKET = process.env.VELOCITY_BUCKET ?? "hermes-velocity-638175140432"
+const BUCKET = process.env.VELOCITY_BUCKET ?? "pax-2-velocity-638175140432"
 const P = "velocity/"
 const WINDOW_H = 72
 const SETTLED_H = 7 * 24
@@ -173,7 +173,7 @@ export async function handler(event = {}) {
   // Keep watching anything already under watch that is still inside its window.
   const readings = await recentReadings(now)
   for (const r of readings) if (ageH(r.published) <= WINDOW_H) fresh.add(r.id)
-  // Videos Hermes published (written by the app's publishing step), watched beside the channels' uploads.
+  // Videos PAX2 published (written by the app's publishing step), watched beside the channels' uploads.
   for (const w of await getJson("watch.json", [])) if (ageH(w.at) <= WINDOW_H) fresh.add(w.youtubeId)
 
   const rows = (await videos([...fresh])).map((v) => ({

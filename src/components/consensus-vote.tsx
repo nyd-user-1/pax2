@@ -14,8 +14,8 @@ export function ConsensusVote({ slug, statements, voted }: { slug: string; state
   const [done, setDone] = React.useState<number[]>([])
   const [pending, start] = React.useTransition()
   React.useEffect(() => {
-    const v = localStorage.getItem("hermes-voter") ?? newVoter()
-    localStorage.setItem("hermes-voter", v)
+    const v = localStorage.getItem("pax2-voter") ?? newVoter()
+    localStorage.setItem("pax2-voter", v)
     setVoter(v)
     setDone(voted[v] ?? [])
   }, [voted])
@@ -26,14 +26,14 @@ export function ConsensusVote({ slug, statements, voted }: { slug: string; state
     start(() => castVote(slug, voter, next.tid, val))
   }
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border bg-hermes-mist p-5">
+    <div className="flex flex-col gap-3 rounded-2xl border bg-pax2-mist p-5">
       <div className="flex items-center justify-between text-xs text-muted-foreground">
         <span>
           {done.length} of {statements.length} judged
         </span>
-        <button type="button" className="flex items-center gap-1 hover:text-hermes-ink" onClick={() => {
+        <button type="button" className="flex items-center gap-1 hover:text-pax2-ink" onClick={() => {
           const v = newVoter()
-          localStorage.setItem("hermes-voter", v)
+          localStorage.setItem("pax2-voter", v)
           setVoter(v)
           setDone([])
         }}>
@@ -42,7 +42,7 @@ export function ConsensusVote({ slug, statements, voted }: { slug: string; state
       </div>
       {next ? (
         <>
-          <p className="font-display text-2xl leading-snug text-hermes-ink">{next.text}</p>
+          <p className="font-display text-2xl leading-snug text-pax2-ink">{next.text}</p>
           <div className="flex gap-2">
             <Button disabled={pending} onClick={() => vote(1)}>
               <Check className="size-4" /> Agree

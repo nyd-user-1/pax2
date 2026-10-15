@@ -33,10 +33,10 @@ export function SignupGate() {
         <p id="signup-gate-title" className="font-display text-lg leading-snug text-slate-900">Complete Analysis</p>
         <p className="text-sm leading-relaxed text-slate-600">Sign up to see the complete analysis of this video and hundreds more.</p>
         <div className="flex items-center gap-2">
-          <Link href={`/signup${next}`} className="press rounded-full bg-hermes-ink px-5 py-2.5 text-sm font-semibold text-white shadow-e1 transition-shadow hover:shadow-e2">
+          <Link href={`/signup${next}`} className="press rounded-full bg-pax2-ink px-5 py-2.5 text-sm font-semibold text-white shadow-e1 transition-shadow hover:shadow-e2">
             Sign up
           </Link>
-          <Link href={`/signin${next}`} className="press rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-hermes-ink shadow-e1 ring-1 ring-slate-200 transition-shadow hover:shadow-e2">
+          <Link href={`/signin${next}`} className="press rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-pax2-ink shadow-e1 ring-1 ring-slate-200 transition-shadow hover:shadow-e2">
             Log in
           </Link>
         </div>

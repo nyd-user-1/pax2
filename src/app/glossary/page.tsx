@@ -17,7 +17,7 @@ export default function GlossaryPage() {
         </TableHeader>
         <TableBody>
           {GLOSSARY.map((t) => (
-            <TableRow key={t.id} id={t.id} className="scroll-mt-24 target:bg-hermes-lavender/50">
+            <TableRow key={t.id} id={t.id} className="scroll-mt-24 target:bg-pax2-lavender/50">
               <TableCell className="align-top whitespace-normal">
                 <p className="font-semibold text-slate-900">{t.full}</p>
                 {t.short !== t.full && <p className="text-xs text-slate-400">Shown as “{t.short}”</p>}

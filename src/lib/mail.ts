@@ -4,11 +4,11 @@ import { now, putOnce, query, type Item } from "@/lib/ledger"
 
 // Email through Amazon SES, every message also written to the ledger's outbox (MAIL / <iso>), sent
 // or not, so a failed send is visible in the app. SES is in its sandbox until production access is
-// granted: until then it only delivers to verified addresses, and the sender (HERMES_MAIL_FROM)
+// granted: until then it only delivers to verified addresses, and the sender (PAX2_MAIL_FROM)
 // must itself be verified.
 
-const FROM = process.env.HERMES_MAIL_FROM ?? "brendan@nysgpt.com"
-export const SITE = (process.env.HERMES_URL ?? "http://localhost:3000").replace(/\/$/, "")
+const FROM = process.env.PAX2_MAIL_FROM ?? "brendan@nysgpt.com"
+export const SITE = (process.env.PAX2_URL ?? "http://localhost:3000").replace(/\/$/, "")
 export const ADMINS = (process.env.ADMIN_EMAILS ?? "brendan@nysgpt.com").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean)
 
 export type Mail = Item & { at: string; to: string[]; subject: string; text: string; html: string; about?: string; status: "sent" | "failed"; error?: string }
@@ -33,10 +33,10 @@ export async function send(to: string[], subject: string, body: { html: string; 
   let error: string | undefined
   try {
     const { SESv2Client, SendEmailCommand } = await import("@aws-sdk/client-sesv2")
-    const ses = new SESv2Client({ region: process.env.HERMES_REGION ?? "us-east-1" })
+    const ses = new SESv2Client({ region: process.env.PAX2_REGION ?? "us-east-1" })
     await ses.send(
       new SendEmailCommand({
-        FromEmailAddress: `Hermes <${FROM}>`,
+        FromEmailAddress: `PAX2 <${FROM}>`,
         Destination: { ToAddresses: to },
         Content: { Simple: { Subject: { Data: subject }, Body: { Html: { Data: body.html }, Text: { Data: body.text } } } },
       }),

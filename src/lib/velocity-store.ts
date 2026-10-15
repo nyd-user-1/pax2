@@ -7,8 +7,8 @@ import type { PollRow } from "@/lib/lab"
 // The velocity poller's state in S3 (written by lambda/velocity): readings partitioned by UTC day,
 // channel baselines, the hourly stat card snapshots and the poller's own run state.
 
-const BUCKET = process.env.VELOCITY_BUCKET ?? "hermes-velocity-638175140432"
-const s3 = new S3Client({ region: process.env.HERMES_REGION ?? "us-east-1" })
+const BUCKET = process.env.VELOCITY_BUCKET ?? "pax-2-velocity-638175140432"
+const s3 = new S3Client({ region: process.env.PAX2_REGION ?? "us-east-1" })
 
 async function getText(key: string): Promise<string | null> {
   try {
@@ -54,7 +54,7 @@ export function apStamp(iso: string): string {
 
 export type WatchEntry = { youtubeId: string; original: string; at: string }
 
-/** Videos Hermes published, which the poller watches beside the 65 channels' uploads. */
+/** Videos PAX2 published, which the poller watches beside the 65 channels' uploads. */
 export async function watchList(): Promise<WatchEntry[]> {
   return JSON.parse((await getText("watch.json")) ?? "[]")
 }

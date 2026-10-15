@@ -2,7 +2,7 @@ import "server-only"
 
 import { get, now, putOnce, query, type Item } from "@/lib/ledger"
 
-// Original content: a video a user records for Hermes, from the recording to the wild.
+// Original content: a video a user records for PAX2, from the recording to the wild.
 //
 //   pk               sk               item
 //   ORIGINALS        <id>             the index row, one per video
@@ -11,11 +11,11 @@ import { get, now, putOnce, query, type Item } from "@/lib/ledger"
 //
 // Append-only like the rest of the ledger: a decision is a new event, never an edit.
 //
-// The flow: recorded → scored (Hermes evaluates it; the admins get "Original Content ready for
+// The flow: recorded → scored (PAX2 evaluates it; the admins get "Original Content ready for
 // review") → an admin reviews it, adds notes and picks one of three:
 //   Re-Record  the owner gets the findings by email and chooses: record again, or publish as is
 //   Approved   published as is
-//   Enhance    the Hermes Enrichment Engine plans the changes; the enhanced cut comes back as
+//   Enhance    the PAX2 Enrichment Engine plans the changes; the enhanced cut comes back as
 //              version 2, is scored, and is reviewed again
 // → published (the owner is emailed the link) → polled once it is live on YouTube.
 

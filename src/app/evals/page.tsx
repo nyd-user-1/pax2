@@ -8,7 +8,7 @@ import { SlopeChart } from "@/components/charts/slope"
 import { faceFor, scriptById, takeLabel } from "@/lib/catalog"
 import { SAMPLE_CALLS, SAMPLE_DECISIONS, SAMPLE_SENT } from "@/lib/sample"
 import { toneOf } from "@/lib/tone"
-import type { Reading } from "@/lib/hermes"
+import type { Reading } from "@/lib/pax2"
 import { COMPONENTS } from "@/lib/resonance"
 import { board, findings, forecasts, loads, steps, submissions, workspace } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
@@ -64,7 +64,7 @@ export default async function ReviewsPage() {
         <ol className="flex flex-col gap-2">
           {history.map((h) => (
             <li key={h.fileHash} className="flex flex-wrap items-baseline justify-between gap-2 surface px-4 py-2 text-sm">
-              <span className="font-medium text-hermes-ink">{h.dataset === "upload" ? "Uploaded export" : h.dataset === "round-1" ? "Round 1" : "Round 2"}</span>
+              <span className="font-medium text-pax2-ink">{h.dataset === "upload" ? "Uploaded export" : h.dataset === "round-1" ? "Round 1" : "Round 2"}</span>
               <span className="text-muted-foreground" title={`File fingerprint ${h.fileHash}`}>
                 {h.rows} ads · results as of {h.asOf} · loaded {new Date(h.at).toLocaleString()}
               </span>
@@ -90,7 +90,7 @@ export default async function ReviewsPage() {
                     {s.name}, {s.role}, {s.town} · {s.seconds}s · {new Date(s.at).toLocaleDateString()}
                   </span>
                 </span>
-                <span className={cn("rounded-full px-2.5 py-0.5 text-[11px] font-medium", s.status === "scored" ? "bg-above-soft text-above" : s.status === "running" ? "bg-hermes-lavender text-hermes-ink" : "bg-slate-100 text-slate-600")}>{s.status}</span>
+                <span className={cn("rounded-full px-2.5 py-0.5 text-[11px] font-medium", s.status === "scored" ? "bg-above-soft text-above" : s.status === "running" ? "bg-pax2-lavender text-pax2-ink" : "bg-slate-100 text-slate-600")}>{s.status}</span>
               </li>
             ))}
           </ul>
@@ -98,7 +98,7 @@ export default async function ReviewsPage() {
           <ul className="grid gap-2 md:grid-cols-2">
             {sent.map((s) => (
               <li key={s.sk} data-find className="flex flex-col gap-1 rounded-xl border px-4 py-3 text-sm">
-                <span className="font-medium text-hermes-ink">{s.title ?? "Uploaded video"}</span>
+                <span className="font-medium text-pax2-ink">{s.title ?? "Uploaded video"}</span>
                 <span className="text-xs text-muted-foreground">
                   {[s.name, s.role, s.town].filter(Boolean).join(" · ") || "No description"} · {s.seconds}s · sent {new Date(s.at).toLocaleString()}
                 </span>
@@ -120,7 +120,7 @@ export default async function ReviewsPage() {
                 <Link key={d.take} data-find href={`/v/${d.take}`} scroll={false} className="surface lift flex flex-col gap-1.5 p-4">
                   <span className="flex items-center justify-between gap-2 text-xs text-slate-500">
                     {scriptById(t.take.scriptId)!.short} · {takeLabel(t.take)}
-                    <span className={cn("rounded-full px-2 py-0.5 text-[11px] font-semibold", d.status === "made" ? "bg-above text-white" : d.status === "approved" ? "bg-hermes-ink text-white" : d.status === "revised" ? "bg-hermes-lavender text-hermes-ink" : "bg-slate-100 text-slate-600")}>{d.status}</span>
+                    <span className={cn("rounded-full px-2 py-0.5 text-[11px] font-semibold", d.status === "made" ? "bg-above text-white" : d.status === "approved" ? "bg-pax2-ink text-white" : d.status === "revised" ? "bg-pax2-lavender text-pax2-ink" : "bg-slate-100 text-slate-600")}>{d.status}</span>
                   </span>
                   <span className="font-medium leading-snug text-slate-900">{d.change}</span>
                   <span className="text-xs text-slate-500">How to tell: {d.measure}</span>
@@ -132,16 +132,16 @@ export default async function ReviewsPage() {
         ) : (
           <div className="grid gap-3 md:grid-cols-2">
             {carried.map(({ t, e, finding }) => (
-              <Link key={e.stepId} data-find href={`/v/${t.take.id}`} className="flex flex-col gap-1 surface p-4 hover:bg-hermes-mist">
+              <Link key={e.stepId} data-find href={`/v/${t.take.id}`} className="flex flex-col gap-1 surface p-4 hover:bg-pax2-mist">
                 <span className="text-xs text-muted-foreground">
                   {scriptById(t.take.scriptId)!.title} — {takeLabel(t.take)}
                 </span>
-                <span className="font-medium text-hermes-ink">{e.change}</span>
+                <span className="font-medium text-pax2-ink">{e.change}</span>
                 <span className="text-xs text-muted-foreground">
                   {e.status === "made" ? "Made" : e.status === "approved" ? "Approved, not yet made" : e.status === "revised" ? "Revised, not yet made" : "Saved for later"} · decided {new Date(e.at).toLocaleDateString()} against score {finding?.score.value?.toFixed(0) ?? "—"} ({e.formula}, {e.reference})
                 </span>
                 {e.measure && <span className="text-xs text-foreground/80">How to tell: {e.measure}</span>}
-                {e.status !== "made" && <span className="text-[11px] text-hermes-red-deep">A later score on this take updates what is known about it; it says nothing about the change until the change is made and measured.</span>}
+                {e.status !== "made" && <span className="text-[11px] text-pax2-red-deep">A later score on this take updates what is known about it; it says nothing about the change until the change is made and measured.</span>}
               </Link>
             ))}
           </div>
@@ -164,8 +164,8 @@ export default async function ReviewsPage() {
             })}
           />
           {takes.some((t) => t.history.length === 1 && t.history[0].snapshot.dataset === "round-2") && (
-            <div className="rounded-xl border border-hermes-plum/30 bg-hermes-mist p-4 text-sm">
-              <p className="font-medium text-hermes-ink">New in this round</p>
+            <div className="rounded-xl border border-pax2-plum/30 bg-pax2-mist p-4 text-sm">
+              <p className="font-medium text-pax2-ink">New in this round</p>
               {takes
                 .filter((t) => t.history.length === 1 && t.history[0].snapshot.dataset === "round-2")
                 .map((t) => {
@@ -234,7 +234,7 @@ export default async function ReviewsPage() {
                         return <td key={c.key}>{ca != null && cb != null ? `${cb - ca >= 0 ? "+" : ""}${(cb - ca).toFixed(0)}` : "—"}</td>
                       })}
                       <td className="text-xs">
-                        {sa == null && sb ? `First score: ${SIDE[sb]}` : conclusion ? <span className="font-medium text-hermes-plum">Conclusion changed: {SIDE[sa!]} to {SIDE[sb!]}</span> : sb ? `Score changed, conclusion holds: ${SIDE[sb]}` : "Still not scorable"}
+                        {sa == null && sb ? `First score: ${SIDE[sb]}` : conclusion ? <span className="font-medium text-pax2-plum">Conclusion changed: {SIDE[sa!]} to {SIDE[sb!]}</span> : sb ? `Score changed, conclusion holds: ${SIDE[sb]}` : "Still not scorable"}
                       </td>
                     </tr>
                   )
@@ -257,7 +257,7 @@ export default async function ReviewsPage() {
                 const t = takes.find((x) => x.take.id === c.take)!
                 return (
                   <li key={c.take} data-find className="surface flex flex-wrap items-center gap-3 px-4 py-3 text-sm">
-                    <span className="rounded-full bg-hermes-lavender px-2 py-0.5 text-[11px] font-medium text-hermes-ink">Locked {new Date(c.at).toLocaleDateString()}</span>
+                    <span className="rounded-full bg-pax2-lavender px-2 py-0.5 text-[11px] font-medium text-pax2-ink">Locked {new Date(c.at).toLocaleDateString()}</span>
                     <span className="text-slate-700">
                       {scriptById(t.take.scriptId)!.short} · {t.take.voice}: called <b>{c.predicted}</b> than {c.baseline}
                     </span>
@@ -278,7 +278,7 @@ export default async function ReviewsPage() {
             <ul className="flex flex-col gap-2">
               {resolved.map(({ t, c, actual, right }) => (
                 <li key={c.at} data-find className="flex flex-wrap items-baseline gap-2 surface px-4 py-2 text-sm">
-                  <span className="rounded bg-hermes-lavender px-1.5 text-[11px] font-medium text-hermes-plum">Locked {new Date(c.at).toLocaleString()}</span>
+                  <span className="rounded bg-pax2-lavender px-1.5 text-[11px] font-medium text-pax2-plum">Locked {new Date(c.at).toLocaleString()}</span>
                   <span>
                     {takeLabel(t.take)}: {c.by} called <b>{c.predicted}</b> than {c.baseline?.toFixed(0)}
                   </span>
@@ -298,4 +298,4 @@ export default async function ReviewsPage() {
   )
 }
 
-const SAMPLE_CHIP = <span className="rounded-full bg-hermes-red-soft px-2.5 py-0.5 text-xs font-semibold text-hermes-red-deep">Sample data</span>
+const SAMPLE_CHIP = <span className="rounded-full bg-pax2-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax2-red-deep">Sample data</span>

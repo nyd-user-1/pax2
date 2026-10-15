@@ -98,16 +98,16 @@ const MEDIA_CHIP: Record<VelocityCard["tier"], string> = {
 export function CurveCard({ c, href, focused = false }: { c: VelocityCard; href?: string; focused?: boolean }) {
   const body = (
     <>
-      <span className={cn("curve-media relative block overflow-hidden rounded-xl bg-slate-200", focused && "ring-2 ring-hermes-plum")}>
+      <span className={cn("curve-media relative block overflow-hidden rounded-xl bg-slate-200", focused && "ring-2 ring-pax2-plum")}>
         <img src={thumb(c.id)} alt="" loading="lazy" className="aspect-video w-full object-cover transition-opacity duration-200 group-hover:opacity-0" />
         <span className="curve-chart absolute inset-0 bg-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
           <Curve card={c} />
         </span>
         <span className="absolute right-2 top-2">
           {c.hours != null && c.hours < 72 ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-hermes-lavender px-2.5 py-0.5 text-xs font-semibold text-hermes-ink shadow-sm"><span className="size-1.5 animate-pulse rounded-full bg-hermes-ink" />Watching · {Math.floor(c.hours)}h</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-pax2-lavender px-2.5 py-0.5 text-xs font-semibold text-pax2-ink shadow-sm"><span className="size-1.5 animate-pulse rounded-full bg-pax2-ink" />Watching · {Math.floor(c.hours)}h</span>
           ) : (
-            <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold shadow-sm", c.hours == null ? "bg-hermes-red-soft text-hermes-red-deep" : MEDIA_CHIP[c.tier])}>{c.hours == null ? "Sample" : c.median != null ? rx(c.views / c.median) : CURVE_TIER[c.tier].label}</span>
+            <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold shadow-sm", c.hours == null ? "bg-pax2-red-soft text-pax2-red-deep" : MEDIA_CHIP[c.tier])}>{c.hours == null ? "Sample" : c.median != null ? rx(c.views / c.median) : CURVE_TIER[c.tier].label}</span>
           )}
         </span>
       </span>

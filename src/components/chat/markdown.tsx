@@ -1,6 +1,6 @@
 'use client'
 
-// Ported from solar (src/components/MarkdownContent.tsx); hermes colors arrive through the --txt/--muted/--border/--inp-bg variables the chat root sets.
+// Ported from solar (src/components/MarkdownContent.tsx); pax2 colors arrive through the --txt/--muted/--border/--inp-bg variables the chat root sets.
 
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -51,7 +51,7 @@ export function MarkdownContent({ content, isStreaming }: Props) {
       <li className="text-[17px] text-[var(--txt)] leading-relaxed">{children}</li>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="border-l-2 border-hermes-plum pl-3 my-3 text-[var(--muted)] italic">{children}</blockquote>
+      <blockquote className="border-l-2 border-pax2-plum pl-3 my-3 text-[var(--muted)] italic">{children}</blockquote>
     ),
     hr: () => (
       <div className="my-4 border-t border-[var(--border)]" />
@@ -66,7 +66,7 @@ export function MarkdownContent({ content, isStreaming }: Props) {
         )
       }
       return (
-        <code className="bg-[var(--inp-bg)] text-hermes-plum rounded px-1.5 py-0.5 text-xs font-mono">{children}</code>
+        <code className="bg-[var(--inp-bg)] text-pax2-plum rounded px-1.5 py-0.5 text-xs font-mono">{children}</code>
       )
     },
     pre: ({ children }) => (
@@ -93,9 +93,9 @@ export function MarkdownContent({ content, isStreaming }: Props) {
     ),
     a: ({ href, children }) => {
       if (href?.startsWith('/')) {
-        return <Link href={href} className="text-hermes-plum hover:underline">{children}</Link>
+        return <Link href={href} className="text-pax2-plum hover:underline">{children}</Link>
       }
-      return <a href={href} target="_blank" rel="noopener noreferrer" className="text-hermes-plum hover:underline">{children}</a>
+      return <a href={href} target="_blank" rel="noopener noreferrer" className="text-pax2-plum hover:underline">{children}</a>
     },
   }
 

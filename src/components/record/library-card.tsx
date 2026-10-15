@@ -22,25 +22,25 @@ export function LibraryCard({ s }: { s: CardData }) {
       className="lift group flex flex-col gap-4 surface p-6 text-left"
     >
       <span className="flex items-start justify-between gap-3">
-        <span className="text-lg font-semibold leading-snug text-hermes-ink">{s.title}</span>
-        <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-hermes-mist transition-colors group-hover:bg-primary group-hover:text-white">
+        <span className="text-lg font-semibold leading-snug text-pax2-ink">{s.title}</span>
+        <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-pax2-mist transition-colors group-hover:bg-primary group-hover:text-white">
           <ArrowRight className="size-4" />
         </span>
       </span>
       <span className="text-muted-foreground">{s.framing}</span>
       <span className="border-l-2 border-primary/30 pl-4 italic text-muted-foreground">“{excerpt}”</span>
       <span className="flex flex-wrap gap-2">
-        <span className="flex items-center gap-1.5 rounded-full bg-hermes-mist px-3 py-1 text-sm text-hermes-ink">
+        <span className="flex items-center gap-1.5 rounded-full bg-pax2-mist px-3 py-1 text-sm text-pax2-ink">
           <Mic className="size-3.5" /> About {s.seconds} seconds
         </span>
-        <span className="flex items-center gap-1.5 rounded-full bg-hermes-mist px-3 py-1 text-sm text-hermes-ink">
+        <span className="flex items-center gap-1.5 rounded-full bg-pax2-mist px-3 py-1 text-sm text-pax2-ink">
           <MapPin className="size-3.5" /> {s.place}
         </span>
       </span>
       {s.notes.length > 0 && (
         <span className="flex flex-col gap-1 border-t pt-3">
           {s.notes.map((n) => (
-            <span key={n.label} className={n.tone === "good" ? "text-sm font-medium text-hermes-ink" : n.tone === "caution" ? "text-sm font-medium text-hermes-red-deep" : "text-sm text-muted-foreground"}>
+            <span key={n.label} className={n.tone === "good" ? "text-sm font-medium text-pax2-ink" : n.tone === "caution" ? "text-sm font-medium text-pax2-red-deep" : "text-sm text-muted-foreground"}>
               {n.label}
             </span>
           ))}

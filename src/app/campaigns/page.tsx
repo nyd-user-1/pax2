@@ -50,7 +50,7 @@ export default async function CampaignPage({ searchParams }: { searchParams: Pro
                 </span>
               </span>
             </div>
-            <p className="line-clamp-2 text-sm leading-snug text-hermes-ink">{v.title.replace(/\s*#\w+/g, "").trim() || v.title}</p>
+            <p className="line-clamp-2 text-sm leading-snug text-pax2-ink">{v.title.replace(/\s*#\w+/g, "").trim() || v.title}</p>
             <p className="tabular text-xs text-slate-500">{v.published.slice(0, 10)}</p>
           </Link>
         ))}

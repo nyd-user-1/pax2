@@ -10,14 +10,14 @@ import { DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand } from "@a
 //   LOAD#<dataset>          <file hash>                     a load event (a second load of the same file is refused)
 //   SNAP#<flight>           <as-of>#<window end>            a results snapshot
 //   REF#<reference>         META                            a frozen reference scale
-//   TAKE#<take>             FINDING#<iso>                   a Hermes finding with its score version and evidence
+//   TAKE#<take>             FINDING#<iso>                   a PAX2 finding with its score version and evidence
 //   TAKE#<take>             STEP#<step>#<iso>               a next-step decision event
 //   TAKE#<take>             CALL#<iso>                      a forecast, locked before the results it predicts
 //   PICK#<claim>            <iso>                           a script choice and the reason for it
 //   VOTE#<conversation>     <voter>#<statement>             a consensus vote
 
-const TABLE = process.env.HERMES_LEDGER_TABLE ?? "hermes-ledger"
-const client = DynamoDBDocumentClient.from(new DynamoDBClient({ region: process.env.HERMES_REGION ?? "us-east-1" }), { marshallOptions: { removeUndefinedValues: true } })
+const TABLE = process.env.PAX2_LEDGER_TABLE ?? "pax2-ledger"
+const client = DynamoDBDocumentClient.from(new DynamoDBClient({ region: process.env.PAX2_REGION ?? "us-east-1" }), { marshallOptions: { removeUndefinedValues: true } })
 
 export type Item = { pk: string; sk: string; [k: string]: unknown }
 

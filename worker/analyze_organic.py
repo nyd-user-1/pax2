@@ -1,4 +1,4 @@
-"""Hermes worker: analyze campaign shorts in s3://hermes-638175140432/videos/.
+"""PAX2 worker: analyze campaign shorts in s3://pax-2-638175140432/videos/.
 
 The same checks as analyze.py (Pegasus covers text overlays, pace and visual variety). For
 organic shorts pulled from the campaigns' own channels: transcript, Pegasus review, measured sound. Writes features/<take>.json and
@@ -9,17 +9,17 @@ Usage: python3 analyze_organic.py <take-id ...>
 import json, os, re, subprocess, sys, time, uuid
 import boto3, numpy as np
 
-B = "hermes-638175140432"
+B = "pax-2-638175140432"
 R = "us-east-1"
 s3 = boto3.client("s3", region_name=R)
 tr = boto3.client("transcribe", region_name=R)
 br = boto3.client("bedrock-runtime", region_name=R)
-D = "/opt/hermes/analyze"
+D = "/opt/pax2/analyze"
 os.makedirs(D, exist_ok=True)
 
 
 def start_transcribe(tid):
-    name = f"hermes-{tid}-{uuid.uuid4().hex[:6]}"
+    name = f"pax2-{tid}-{uuid.uuid4().hex[:6]}"
     tr.start_transcription_job(TranscriptionJobName=name, LanguageCode="en-US", Media={"MediaFileUri": f"s3://{B}/videos/{tid}.mp4"}, OutputBucketName=B, OutputKey=f"transcribe/{tid}.json")
     return name
 

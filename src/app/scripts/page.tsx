@@ -65,10 +65,10 @@ export default async function ScriptsPage() {
     <div className="flex flex-col gap-10">
       <header className="rise flex flex-wrap items-center justify-end gap-4">
         <div className="flex items-center gap-2">
-          <Link href="/record/personal" className="press inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-hermes-ink shadow-e1">
+          <Link href="/record/personal" className="press inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-pax2-ink shadow-e1">
             <PenLine className="size-4" /> New
           </Link>
-          <Link href="/record" className="press inline-flex items-center gap-2 rounded-full bg-hermes-ink px-5 py-2.5 text-sm font-semibold text-white shadow-e2">
+          <Link href="/record" className="press inline-flex items-center gap-2 rounded-full bg-pax2-ink px-5 py-2.5 text-sm font-semibold text-white shadow-e2">
             <Video className="size-4" /> Record
           </Link>
         </div>

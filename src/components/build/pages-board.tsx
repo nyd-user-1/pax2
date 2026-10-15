@@ -11,8 +11,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { cn } from "@/ui/lib/utils"
 
 const DOT: Record<PageTile["state"], { dot: string; label: string }> = {
-  real: { dot: "bg-hermes-plum", label: "Real data" },
-  "stand-in": { dot: "bg-hermes-red", label: "Stand-in data" },
+  real: { dot: "bg-pax2-plum", label: "Real data" },
+  "stand-in": { dot: "bg-pax2-red", label: "Stand-in data" },
   mixed: { dot: "bg-slate-400", label: "Real and stand-in" },
 }
 
@@ -87,7 +87,7 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
                   ))}
                   {open.wrong.length > 0 && (
                     <>
-                      <dt className="font-medium text-hermes-red-deep">Wrong</dt>
+                      <dt className="font-medium text-pax2-red-deep">Wrong</dt>
                       <dd className="m-0">
                         <ul className="m-0 list-disc space-y-1 pl-4">
                           {open.wrong.map((x) => (
@@ -99,7 +99,7 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
                   )}
                   {open.better.length > 0 && (
                     <>
-                      <dt className="font-medium text-hermes-plum">Better</dt>
+                      <dt className="font-medium text-pax2-plum">Better</dt>
                       <dd className="m-0">
                         <ul className="m-0 list-disc space-y-1 pl-4">
                           {open.better.map((x) => (
@@ -110,7 +110,7 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
                     </>
                   )}
                 </dl>
-                <Link href={open.href} className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-hermes-ink px-4 py-2 text-sm font-medium text-white hover:bg-hermes-plum">
+                <Link href={open.href} className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-pax2-ink px-4 py-2 text-sm font-medium text-white hover:bg-pax2-plum">
                   Open {open.name} <ArrowUpRight className="size-4" />
                 </Link>
               </div>

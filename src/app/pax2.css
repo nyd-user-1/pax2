@@ -1,21 +1,21 @@
-/* Hermes design tokens. One sans family; hierarchy from size, weight and space. Blue and red are
+/* PAX2 design tokens. One sans family; hierarchy from size, weight and space. Blue and red are
    GovBlock's forecast colors and they carry meaning: green = above the reference, red = below,
    navy = actions and type. */
 :root:root {
-  --hermes-ink: #1e3a8a;
-  --hermes-plum: #2563eb;
-  --hermes-lavender: #dbeafe;
-  --hermes-mist: #f5f7fb;
-  --hermes-red: #dc2626;
-  --hermes-red-deep: #991b1b;
-  --hermes-red-soft: #fee2e2;
-  --hermes-above: #16a34a;
-  --hermes-above-soft: #f0fdf4;
-  --hermes-below: #dc2626;
-  --hermes-below-soft: #fef2f2;
-  --hermes-observed: #1e3a8a;
-  --hermes-interpretation: #4b5563;
-  --hermes-hypothesis: #dc2626;
+  --pax2-ink: #1e3a8a;
+  --pax2-plum: #2563eb;
+  --pax2-lavender: #dbeafe;
+  --pax2-mist: #f5f7fb;
+  --pax2-red: #dc2626;
+  --pax2-red-deep: #991b1b;
+  --pax2-red-soft: #fee2e2;
+  --pax2-above: #16a34a;
+  --pax2-above-soft: #f0fdf4;
+  --pax2-below: #dc2626;
+  --pax2-below-soft: #fef2f2;
+  --pax2-observed: #1e3a8a;
+  --pax2-interpretation: #4b5563;
+  --pax2-hypothesis: #dc2626;
   --primary: #1e3a8a;
   --primary-foreground: #fff;
   --ring: #2563eb;
@@ -24,29 +24,29 @@
   --chart-3: #1e3a8a;
   --chart-4: #f87171;
   --chart-5: #dc2626;
-  --hermes-shadow-1: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 1px rgb(15 23 42 / 0.03);
-  --hermes-shadow-2: 0 4px 14px -4px rgb(15 23 42 / 0.1), 0 2px 4px -2px rgb(15 23 42 / 0.06);
-  --hermes-shadow-3: 0 18px 40px -12px rgb(15 23 42 / 0.22), 0 6px 12px -6px rgb(15 23 42 / 0.1);
+  --pax2-shadow-1: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 1px rgb(15 23 42 / 0.03);
+  --pax2-shadow-2: 0 4px 14px -4px rgb(15 23 42 / 0.1), 0 2px 4px -2px rgb(15 23 42 / 0.06);
+  --pax2-shadow-3: 0 18px 40px -12px rgb(15 23 42 / 0.22), 0 6px 12px -6px rgb(15 23 42 / 0.1);
 }
 
 @theme inline {
-  --color-hermes-ink: var(--hermes-ink);
-  --color-hermes-plum: var(--hermes-plum);
-  --color-hermes-lavender: var(--hermes-lavender);
-  --color-hermes-mist: var(--hermes-mist);
-  --color-hermes-red: var(--hermes-red);
-  --color-hermes-red-deep: var(--hermes-red-deep);
-  --color-hermes-red-soft: var(--hermes-red-soft);
-  --color-above: var(--hermes-above);
-  --color-above-soft: var(--hermes-above-soft);
-  --color-below: var(--hermes-below);
-  --color-below-soft: var(--hermes-below-soft);
-  --color-observed: var(--hermes-observed);
-  --color-interpretation: var(--hermes-interpretation);
-  --color-hypothesis: var(--hermes-hypothesis);
-  --shadow-e1: var(--hermes-shadow-1);
-  --shadow-e2: var(--hermes-shadow-2);
-  --shadow-e3: var(--hermes-shadow-3);
+  --color-pax2-ink: var(--pax2-ink);
+  --color-pax2-plum: var(--pax2-plum);
+  --color-pax2-lavender: var(--pax2-lavender);
+  --color-pax2-mist: var(--pax2-mist);
+  --color-pax2-red: var(--pax2-red);
+  --color-pax2-red-deep: var(--pax2-red-deep);
+  --color-pax2-red-soft: var(--pax2-red-soft);
+  --color-above: var(--pax2-above);
+  --color-above-soft: var(--pax2-above-soft);
+  --color-below: var(--pax2-below);
+  --color-below-soft: var(--pax2-below-soft);
+  --color-observed: var(--pax2-observed);
+  --color-interpretation: var(--pax2-interpretation);
+  --color-hypothesis: var(--pax2-hypothesis);
+  --shadow-e1: var(--pax2-shadow-1);
+  --shadow-e2: var(--pax2-shadow-2);
+  --shadow-e3: var(--pax2-shadow-3);
 }
 
 /* Headings: the body family at heavier weight and tighter tracking. */
@@ -65,14 +65,14 @@
 }
 
 body {
-  background: var(--hermes-mist);
+  background: var(--pax2-mist);
 }
 
 /* A raised surface, and the lift it gives when it can be opened. */
 .surface {
   background: #fff;
   border-radius: 1.25rem;
-  box-shadow: var(--hermes-shadow-1);
+  box-shadow: var(--pax2-shadow-1);
   outline: 1px solid rgb(15 23 42 / 0.06);
 }
 .lift {
@@ -82,14 +82,14 @@ body {
 }
 .lift:hover {
   transform: translateY(-3px);
-  box-shadow: var(--hermes-shadow-3);
+  box-shadow: var(--pax2-shadow-3);
 }
 .press:active {
   transform: scale(0.97);
 }
 
 /* Entrance: content rises in, staggered by --i. */
-@keyframes hermes-rise {
+@keyframes pax2-rise {
   from {
     opacity: 0;
     transform: translateY(10px);
@@ -100,29 +100,29 @@ body {
   }
 }
 .rise {
-  animation: hermes-rise 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: pax2-rise 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   animation-delay: calc(var(--i, 0) * 45ms);
 }
 
-@keyframes hermes-grow {
+@keyframes pax2-grow {
   from {
     transform: scaleX(0);
   }
 }
 .grow {
   transform-origin: left;
-  animation: hermes-grow 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: pax2-grow 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   animation-delay: calc(var(--i, 0) * 45ms + 150ms);
 }
 
-@keyframes hermes-dot-in {
+@keyframes pax2-dot-in {
   from {
     left: 50%;
     opacity: 0;
   }
 }
 .dot-in {
-  animation: hermes-dot-in 800ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: pax2-dot-in 800ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   animation-delay: calc(var(--i, 0) * 60ms + 200ms);
 }
 
@@ -140,7 +140,7 @@ body {
 .grow-svg {
   transform-box: fill-box;
   transform-origin: left center;
-  animation: hermes-grow 800ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: pax2-grow 800ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   animation-delay: calc(var(--i, 0) * 35ms + 100ms);
 }
 
@@ -175,12 +175,12 @@ body {
 /* Page entrance: the content dissolves on from the left while its sections
    rise in sequence — the home-page feel, applied by the shell on every page. */
 .page-enter {
-  animation: hermes-sweep 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: pax2-sweep 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   mask-image: linear-gradient(to right, #000 55%, transparent 80%);
   mask-size: 250% 100%;
   mask-repeat: no-repeat;
 }
-@keyframes hermes-sweep {
+@keyframes pax2-sweep {
   from {
     mask-position: 100% 0;
   }
@@ -189,7 +189,7 @@ body {
   }
 }
 .rise-kids > * > * {
-  animation: hermes-rise 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: pax2-rise 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .rise-kids > * > :nth-child(2) { animation-delay: 50ms; }
 .rise-kids > * > :nth-child(3) { animation-delay: 100ms; }
@@ -208,7 +208,7 @@ body {
 }
 
 /* A light float for the scroll cue: a slow 6px drift, not a bounce. */
-@keyframes hermes-float {
+@keyframes pax2-float {
   0%,
   100% {
     transform: translate(-50%, 0);
@@ -218,7 +218,7 @@ body {
   }
 }
 .float-cue {
-  animation: hermes-float 3s ease-in-out infinite;
+  animation: pax2-float 3s ease-in-out infinite;
 }
 @media (prefers-reduced-motion: reduce) {
   .float-cue {

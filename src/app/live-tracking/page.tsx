@@ -97,7 +97,7 @@ export default async function LiveTrackingPage() {
                       <tr key={w.id} className="border-t border-slate-100">
                         <td className="whitespace-nowrap px-4 py-2.5 text-slate-500">{w.channel}</td>
                         <td className="max-w-96 px-4 py-2.5">
-                          <Link href={`/v/yt-${w.id}`} className="line-clamp-1 text-slate-900 hover:text-hermes-plum">{w.title}</Link>
+                          <Link href={`/v/yt-${w.id}`} className="line-clamp-1 text-slate-900 hover:text-pax2-plum">{w.title}</Link>
                         </td>
                         <td className="whitespace-nowrap px-4 py-2.5 text-right text-slate-500">{Math.min(72, Math.floor(w.age))}h</td>
                         <td className="px-4 py-2.5">

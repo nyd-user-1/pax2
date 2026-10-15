@@ -80,7 +80,7 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
           {d.fileCount > 0 && <Fact label="Files" value={`${d.fileCount} · ${bytes(d.bytes)}`} />}
           <Fact label="License" value={d.license} />
           {d.link && (
-            <a href={d.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-medium text-hermes-plum hover:underline">
+            <a href={d.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-medium text-pax2-plum hover:underline">
               Original source <ExternalLink className="size-3.5" />
             </a>
           )}
@@ -114,7 +114,7 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
         <section className="flex flex-col gap-3">
           <div className="flex flex-wrap items-center gap-2">
             {tables.map((x) => (
-              <Link key={x.name} href={`/library/${d.slug}?t=${x.name}`} scroll={false} className={x.name === table.name ? "rounded-full bg-hermes-ink px-3 py-1 text-xs font-medium text-white" : "rounded-full bg-white px-3 py-1 text-xs text-slate-600 shadow-e1 hover:text-hermes-ink"}>
+              <Link key={x.name} href={`/library/${d.slug}?t=${x.name}`} scroll={false} className={x.name === table.name ? "rounded-full bg-pax2-ink px-3 py-1 text-xs font-medium text-white" : "rounded-full bg-white px-3 py-1 text-xs text-slate-600 shadow-e1 hover:text-pax2-ink"}>
                 {x.name} · {count(x.rows)}
               </Link>
             ))}
@@ -139,7 +139,7 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
 
 function BackLink() {
   return (
-    <Link href="/library" className="inline-flex w-fit items-center gap-1.5 text-sm text-slate-500 hover:text-hermes-ink">
+    <Link href="/library" className="inline-flex w-fit items-center gap-1.5 text-sm text-slate-500 hover:text-pax2-ink">
       <ArrowLeft className="size-4" /> Library
     </Link>
   )
@@ -233,9 +233,9 @@ function TailSections({ d }: { d: Dataset }) {
     <section className="grid gap-4 md:grid-cols-2">
       {d.usedIn.length > 0 && (
         <div className="surface flex flex-col gap-2 p-5">
-          <p className="font-semibold text-slate-900">Used in Hermes</p>
+          <p className="font-semibold text-slate-900">Used in PAX2</p>
           {d.usedIn.map((u) => (
-            <Link key={u.href + u.label} href={u.href} className="text-sm font-medium text-hermes-plum hover:underline">
+            <Link key={u.href + u.label} href={u.href} className="text-sm font-medium text-pax2-plum hover:underline">
               {u.label}
             </Link>
           ))}

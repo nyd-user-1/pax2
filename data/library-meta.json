@@ -36,9 +36,9 @@
     ]
   },
   {
-    "slug": "hermes-reference-model",
-    "title": "Hermes reference model",
-    "publisher": "Hermes · built from the persuasion experiments",
+    "slug": "pax2-reference-model",
+    "title": "PAX2 reference model",
+    "publisher": "PAX2 · built from the persuasion experiments",
     "summary": "Per-feature persuasion differences from a random-effects meta-regression, the spread of true effects, and a leave-one-study-out test of how predictable an ad is from its features.",
     "kind": "Models",
     "tags": [
@@ -60,7 +60,7 @@
         "href": "/scripts"
       },
       {
-        "label": "Hermes readings",
+        "label": "PAX2 readings",
         "href": "/videos"
       }
     ]
@@ -209,9 +209,9 @@
     ]
   },
   {
-    "slug": "hermes-takes",
-    "title": "Hermes takes and video analysis",
-    "publisher": "Hermes",
+    "slug": "pax2-takes",
+    "title": "PAX2 takes and video analysis",
+    "publisher": "PAX2",
     "summary": "Every take's video, word-level transcript, timestamped video review with captions and text on screen, and measured loudness, pitch and pauses.",
     "kind": "Video",
     "tags": [
@@ -292,7 +292,7 @@
     "license": "See repository",
     "link": "https://github.com/active-maintenance-aec/hewitt_etal_2024",
     "can": [
-      "Check Hermes' reference model against the authors' pipeline"
+      "Check PAX2' reference model against the authors' pipeline"
     ],
     "cannot": [],
     "usedIn": []

@@ -1,17 +1,17 @@
-"""Hermes worker job 1: fetch the reference datasets into s3://hermes-638175140432/raw/.
+"""PAX2 worker job 1: fetch the reference datasets into s3://pax-2-638175140432/raw/.
 
-Runs on the hermes-worker box only (never on the Mac). Every step is independent:
+Runs on the pax2-worker box only (never on the Mac). Every step is independent:
 a failure is recorded in the manifest and the next step runs.
 """
 import json, os, subprocess, sys, time, zipfile, glob, traceback
 import boto3, requests
 
-B = "hermes-638175140432"
+B = "pax-2-638175140432"
 s3 = boto3.client("s3")
-W = "/opt/hermes/raw"
+W = "/opt/pax2/raw"
 os.makedirs(W, exist_ok=True)
 manifest = {"started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "steps": {}}
-UA = {"User-Agent": "hermes-research/0.1 (brendan@nysgpt.com)"}
+UA = {"User-Agent": "pax2-research/0.1 (brendan@nysgpt.com)"}
 
 
 def up(path, key):

@@ -20,7 +20,7 @@ import { Term } from "@/components/term"
 import { SignupGate } from "@/components/signup-gate"
 import { StickyAside } from "@/components/sticky-aside"
 import { TagChip } from "@/components/tag-chip"
-import { ScoreInfo } from "@/components/ui-hermes"
+import { ScoreInfo } from "@/components/ui-pax2"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
 import { currentUser } from "@/lib/auth"
 import { featuresFor, type Features } from "@/lib/catalog"
@@ -65,7 +65,7 @@ function transcriptLines(f: Features | undefined) {
   })
 }
 
-/** A campaign short in the take panel's exact shape; counts Hermes does not hold read as a dash. */
+/** A campaign short in the take panel's exact shape; counts PAX2 does not hold read as a dash. */
 export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
   const ytId = id.replace(/^yt-/, "")
   const data = shorts as unknown as Yt
@@ -203,7 +203,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         <div className="flex flex-col gap-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="tabular flex items-baseline gap-2">
-              <span className="font-display text-4xl text-hermes-ink">{res?.score ?? DASH}</span>
+              <span className="font-display text-4xl text-pax2-ink">{res?.score ?? DASH}</span>
               <span className="text-xs text-muted-foreground">{res ? `${res.low}–${res.high}` : DASH}</span>
             </div>
             <div className="min-w-0 flex-1 basis-56">
@@ -219,11 +219,11 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
             {COMPONENTS.map((meta) => (
               <div key={meta.key} className="surface flex flex-col gap-2 p-3">
                 <div className="flex items-baseline justify-between">
-                  <span className="font-medium text-hermes-ink">{meta.name}</span>
+                  <span className="font-medium text-pax2-ink">{meta.name}</span>
                   <Term id={meta.key} label={false} />
                 </div>
                 <div className="tabular flex items-baseline gap-1.5">
-                  <span className="font-display text-3xl text-hermes-ink">{res?.components[meta.key]?.score ?? DASH}</span>
+                  <span className="font-display text-3xl text-pax2-ink">{res?.components[meta.key]?.score ?? DASH}</span>
                   <span className="text-xs text-muted-foreground">{res ? `${res.components[meta.key].low}–${res.components[meta.key].high}` : DASH}</span>
                 </div>
                 <RangeBar value={res?.components[meta.key]?.score ?? null} low={res?.components[meta.key]?.low ?? null} high={res?.components[meta.key]?.high ?? null} />
@@ -278,7 +278,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
             {["Spend", "Impressions (1k)", "3s play", "Per Person"].map((label) => (
               <div key={label} className="rounded-lg bg-muted/50 px-2 py-1.5">
                 <div className="text-[10px] text-muted-foreground">{label}</div>
-                <div className="tabular text-sm text-hermes-ink">{paid?.tiles[label] ?? DASH}</div>
+                <div className="tabular text-sm text-pax2-ink">{paid?.tiles[label] ?? DASH}</div>
               </div>
             ))}
           </div>

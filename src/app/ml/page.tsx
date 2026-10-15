@@ -53,7 +53,7 @@ export default function MlPage() {
     {
       n: 6,
       title: "Ship as a prior",
-      detail: "The model's probability becomes the pre-publish iWAR estimate shown with its inputs, the way every Hermes number shows its math. It advises which take to post first; the live curve then renders the real verdict.",
+      detail: "The model's probability becomes the pre-publish iWAR estimate shown with its inputs, the way every PAX2 number shows its math. It advises which take to post first; the live curve then renders the real verdict.",
       status: "UI exists on /break-out",
       ok: true,
     },
@@ -81,11 +81,11 @@ export default function MlPage() {
             <div className="flex flex-col divide-y divide-slate-100">
               {steps.map((s) => (
                 <div key={s.n} data-find className="flex gap-4 py-4 first:pt-0">
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-hermes-lavender font-mono text-sm font-semibold text-hermes-ink">{s.n}</span>
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-pax2-lavender font-mono text-sm font-semibold text-pax2-ink">{s.n}</span>
                   <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <span className="flex flex-wrap items-center gap-2">
                       <span className="font-semibold text-slate-900">{s.title}</span>
-                      <span className={cn("rounded-full px-2 py-0.5 text-[11px] font-semibold", s.ok ? "bg-above-soft text-above" : "bg-hermes-red-soft text-hermes-red-deep")}>{s.status}</span>
+                      <span className={cn("rounded-full px-2 py-0.5 text-[11px] font-semibold", s.ok ? "bg-above-soft text-above" : "bg-pax2-red-soft text-pax2-red-deep")}>{s.status}</span>
                     </span>
                     <span className="text-sm leading-relaxed text-slate-600">{s.detail}</span>
                   </div>

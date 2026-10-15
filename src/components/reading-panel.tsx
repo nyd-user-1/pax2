@@ -6,7 +6,7 @@ import { Check, Loader2, Pencil, Bookmark, Hammer } from "lucide-react"
 import { callIt, decide, requestReading, type SavedReading } from "@/app/actions"
 import { KindChip } from "@/components/bits"
 import { At } from "@/components/workbench"
-import type { Proposal, Reading } from "@/lib/hermes"
+import type { Proposal, Reading } from "@/lib/pax2"
 import { Button } from "@/ui/components/nova/button"
 import { Textarea } from "@/ui/components/nova/textarea"
 import { cn } from "@/ui/lib/utils"
@@ -46,8 +46,8 @@ function StepCard({ p, i, takeId, saved, events }: { p: Proposal; i: number; tak
   return (
     <div className="flex flex-col gap-3 rounded-xl border bg-card p-4">
       <div className="flex items-start justify-between gap-3">
-        {editing ? <Textarea value={text} onChange={(e) => setText(e.target.value)} className="min-h-16 text-sm" /> : <p className="font-medium leading-snug text-hermes-ink">{latest?.change ?? p.change}</p>}
-        <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", latest ? "bg-hermes-plum text-white" : "bg-muted text-muted-foreground")}>{STATUS_LABEL[latest?.status ?? "proposed"]}</span>
+        {editing ? <Textarea value={text} onChange={(e) => setText(e.target.value)} className="min-h-16 text-sm" /> : <p className="font-medium leading-snug text-pax2-ink">{latest?.change ?? p.change}</p>}
+        <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", latest ? "bg-pax2-plum text-white" : "bg-muted text-muted-foreground")}>{STATUS_LABEL[latest?.status ?? "proposed"]}</span>
       </div>
       <dl className="grid gap-2 text-sm sm:grid-cols-3">
         <div>
@@ -129,7 +129,7 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
 
       {r && (
         <>
-          <div className="rounded-2xl bg-hermes-ink p-5 text-white">
+          <div className="rounded-2xl bg-pax2-ink p-5 text-white">
             <p className="font-display text-2xl leading-snug">{r.takeaway}</p>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
@@ -144,8 +144,8 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
           </div>
 
           {r.priorChecks?.length > 0 && (
-            <div className="flex flex-col gap-2 rounded-xl border border-hermes-plum/30 bg-hermes-mist p-4">
-              <h3 className="text-sm font-medium text-hermes-ink">The last review, checked against the new results</h3>
+            <div className="flex flex-col gap-2 rounded-xl border border-pax2-plum/30 bg-pax2-mist p-4">
+              <h3 className="text-sm font-medium text-pax2-ink">The last review, checked against the new results</h3>
               {r.priorChecks.map((p, i) => (
                 <div key={i} className="text-sm">
                   <span className={cn("mr-2 rounded-full px-2 py-0.5 text-[11px] font-medium", p.status === "supported" ? "bg-observed/15 text-observed" : p.status === "challenged" ? "bg-destructive/10 text-destructive" : "bg-muted text-muted-foreground")}>
@@ -165,7 +165,7 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
               r.findings
                 .filter((f) => f.kind === k)
                 .map((f, i) => (
-                  <div key={`${k}${i}`} className="flex flex-col gap-1 border-l-2 pl-3" style={{ borderColor: `var(--hermes-${k})` }}>
+                  <div key={`${k}${i}`} className="flex flex-col gap-1 border-l-2 pl-3" style={{ borderColor: `var(--pax2-${k})` }}>
                     <div className="flex items-start gap-2">
                       <KindChip kind={f.kind} />
                       <p className="text-sm leading-snug">{f.text}</p>
@@ -212,13 +212,13 @@ function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapsh
     <div className={cn("flex flex-col gap-3", !bare && "surface px-5 pb-5 pt-4")}>
       {!bare && <h3 className="font-semibold text-slate-900">Forecast</h3>}
       <div>
-        <p className="text-sm text-muted-foreground">A guess, written down before the numbers come in: will this video do better or worse than usual? When the numbers arrive, Hermes checks the guess against them, and every check makes the next guess sharper.</p>
+        <p className="text-sm text-muted-foreground">A guess, written down before the numbers come in: will this video do better or worse than usual? When the numbers arrive, PAX2 checks the guess against them, and every check makes the next guess sharper.</p>
       </div>
       {calls.length > 0 && (
         <ul className="flex flex-col gap-1 text-sm">
           {calls.map((c) => (
             <li key={c.at} className="flex flex-wrap items-baseline gap-2">
-              <span className="rounded bg-hermes-lavender px-1.5 text-[11px] font-medium text-hermes-plum">Locked {new Date(c.at).toLocaleString()}</span>
+              <span className="rounded bg-pax2-lavender px-1.5 text-[11px] font-medium text-pax2-plum">Locked {new Date(c.at).toLocaleString()}</span>
               <span>
                 {c.by}: {c.predicted} than {c.baseline?.toFixed(0) ?? "—"} by {c.target === "round-1" ? "Round 1" : "Round 2"}
               </span>

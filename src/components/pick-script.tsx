@@ -23,7 +23,7 @@ export function PickScript({ scriptId }: { scriptId: string }) {
     )
   if (!open)
     return (
-      <button type="button" onClick={() => setOpen(true)} className="w-fit rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-hermes-ink shadow-e1 transition-shadow hover:shadow-e2">
+      <button type="button" onClick={() => setOpen(true)} className="w-fit rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-pax2-ink shadow-e1 transition-shadow hover:shadow-e2">
         Choose for the next round
       </button>
     )

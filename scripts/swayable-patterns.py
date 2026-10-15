@@ -1,7 +1,7 @@
 """Patterns in Swayable's 575 vote-choice ad tests, written to data/generated/swayable-patterns.json.
 
 Usage: python3 scripts/swayable-patterns.py <dir holding studies.csv, regression_ates.csv and
-       regression_ates_subgroup__{democrat,independent,republican}.csv from s3://hermes-638175140432/curated/swayable/>
+       regression_ates_subgroup__{democrat,independent,republican}.csv from s3://pax-2-638175140432/curated/swayable/>
 
 - score: the spread of ad effects (points of vote choice vs. a placebo video), each ad's raw result
   pulled toward the average by its own noise (empirical Bayes, DerSimonian-Laird).

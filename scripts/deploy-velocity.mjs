@@ -1,13 +1,13 @@
-// Deploys lambda/velocity to the hermes-velocity-poll function (creating it the first time). The
+// Deploys lambda/velocity to the pax2-velocity-poll function (creating it the first time). The
 // YouTube key is read from .env.local into the function environment and never printed.
-// Usage: (cd lambda/velocity && zip -q /tmp/hermes/velocity.zip index.mjs channels.json) && node scripts/deploy-velocity.mjs
+// Usage: (cd lambda/velocity && zip -q /tmp/pax2/velocity.zip index.mjs channels.json) && node scripts/deploy-velocity.mjs
 import fs from "node:fs"
 import { CreateFunctionCommand, GetFunctionCommand, LambdaClient, UpdateFunctionCodeCommand, UpdateFunctionConfigurationCommand, waitUntilFunctionActiveV2, waitUntilFunctionUpdatedV2 } from "@aws-sdk/client-lambda"
 const lambda = new LambdaClient({ region: "us-east-1" })
 const key = fs.readFileSync(".env.local", "utf8").match(/^YOUTUBE_API_KEY=(.*)$/m)[1].replace(/^"|"$/g, "").trim()
-const FunctionName = "hermes-velocity-poll"
-const ZipFile = fs.readFileSync("/tmp/hermes/velocity.zip")
-const config = { Role: "arn:aws:iam::638175140432:role/hermes-velocity-poller", Handler: "index.handler", Runtime: "nodejs22.x", Timeout: 900, MemorySize: 1024, Environment: { Variables: { YOUTUBE_API_KEY: key, VELOCITY_BUCKET: "hermes-velocity-638175140432" } }, Description: "hermes velocity poller: 15-minute YouTube Shorts readings, daily catalog, hourly stat card snapshot" }
+const FunctionName = "pax2-velocity-poll"
+const ZipFile = fs.readFileSync("/tmp/pax2/velocity.zip")
+const config = { Role: "arn:aws:iam::638175140432:role/pax2-velocity-poller", Handler: "index.handler", Runtime: "nodejs22.x", Timeout: 900, MemorySize: 1024, Environment: { Variables: { YOUTUBE_API_KEY: key, VELOCITY_BUCKET: "pax-2-velocity-638175140432" } }, Description: "pax2 velocity poller: 15-minute YouTube Shorts readings, daily catalog, hourly stat card snapshot" }
 let exists = true
 try { await lambda.send(new GetFunctionCommand({ FunctionName })) } catch { exists = false }
 if (!exists) {

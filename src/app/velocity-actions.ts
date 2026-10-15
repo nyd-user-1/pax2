@@ -8,9 +8,9 @@ import { polledCards, type VelocityCard } from "@/lib/lab"
 import { requireAdmin } from "@/lib/auth"
 import { baselines, pollerState, recentPolls } from "@/lib/velocity-store"
 
-const REGION = process.env.HERMES_REGION ?? "us-east-1"
-const FUNCTION = "hermes-velocity-poll"
-const RULE = "hermes-velocity-poll"
+const REGION = process.env.PAX2_REGION ?? "us-east-1"
+const FUNCTION = "pax2-velocity-poll"
+const RULE = "pax2-velocity-poll"
 const lambda = new LambdaClient({ region: REGION })
 const events = new EventBridgeClient({ region: REGION })
 

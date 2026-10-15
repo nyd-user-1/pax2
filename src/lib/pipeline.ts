@@ -49,8 +49,8 @@ function outOf(id: StepId, f: Features | undefined): { state: StepState; out: st
 /** The batch the box is working on right now, if any (written by worker/analyze.py). */
 export type Batch = { startedAt: string; updatedAt: string; finishedAt: string | null; videos: Record<string, Partial<Record<StepId, StepState>>> }
 
-const s3 = new S3Client({ region: process.env.HERMES_REGION ?? "us-east-1" })
-const BUCKET = process.env.HERMES_BUCKET ?? "hermes-638175140432"
+const s3 = new S3Client({ region: process.env.PAX2_REGION ?? "us-east-1" })
+const BUCKET = process.env.PAX2_BUCKET ?? "pax-2-638175140432"
 
 export async function currentBatch(): Promise<Batch | null> {
   try {

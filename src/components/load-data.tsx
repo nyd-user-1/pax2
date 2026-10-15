@@ -43,9 +43,9 @@ export function LoadData({ standIn, className }: { standIn?: string; className?:
         setOver(false)
         upload(e.dataTransfer.files?.[0])
       }}
-      className={cn("flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed px-6 py-8 text-center transition-colors", over ? "border-hermes-plum bg-hermes-lavender/40" : "border-slate-300 bg-white/60", className)}
+      className={cn("flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed px-6 py-8 text-center transition-colors", over ? "border-pax2-plum bg-pax2-lavender/40" : "border-slate-300 bg-white/60", className)}
     >
-      <span className="flex size-11 items-center justify-center rounded-full bg-hermes-lavender text-hermes-plum">
+      <span className="flex size-11 items-center justify-center rounded-full bg-pax2-lavender text-pax2-plum">
         <Upload className="size-5" />
       </span>
       <p className="text-sm text-slate-600">Drop the Ads Manager export here</p>
@@ -54,7 +54,7 @@ export function LoadData({ standIn, className }: { standIn?: string; className?:
         <TooltipTrigger
           disabled={pending}
           onClick={() => (standIn ? run(() => loadDataset(standIn)) : input.current?.click())}
-          className="inline-flex h-9 items-center gap-2 rounded-full bg-hermes-ink px-4 text-sm font-medium text-white shadow-e1 transition-colors hover:bg-hermes-plum disabled:opacity-60"
+          className="inline-flex h-9 items-center gap-2 rounded-full bg-pax2-ink px-4 text-sm font-medium text-white shadow-e1 transition-colors hover:bg-pax2-plum disabled:opacity-60"
         >
           {pending && <Loader2 className="size-4 animate-spin" />}
           Load Data

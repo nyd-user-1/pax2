@@ -1,4 +1,4 @@
-"""Hermes worker job 4: stand-in takes of the library scripts, until the partner's own videos arrive.
+"""PAX2 worker job 4: stand-in takes of the library scripts, until the partner's own videos arrive.
 
 Each take = one script read by one Polly generative voice (the stand-in messenger) over Mixkit
 stock footage, one clip per script line, rendered 1080x1920 with burned-in captions.
@@ -6,16 +6,16 @@ Each line is synthesized on its own, so every line's start time is exact; words 
 are timed by their share of the line's characters (generative voices return no word marks).
 Two production variants make the matrix testable: captions off, and a short cut.
 Usage: python3 takes.py <scripts.json>   (the library's scripts: [{id, text}])
-Output: s3://hermes-638175140432/videos/<take>.mp4 + .jpg, takes/<take>.json (lines, words, duration).
+Output: s3://pax-2-638175140432/videos/<take>.mp4 + .jpg, takes/<take>.json (lines, words, duration).
 """
 import json, os, re, subprocess, sys
 import boto3, requests
 
-B = "hermes-638175140432"
+B = "pax-2-638175140432"
 s3 = boto3.client("s3")
 polly = boto3.client("polly", region_name="us-east-1")
-D = "/opt/hermes/takes"
-C = "/opt/hermes/takes/clips"
+D = "/opt/pax2/takes"
+C = "/opt/pax2/takes/clips"
 os.makedirs(C, exist_ok=True)
 FONT = f"{D}/Inter.ttf"
 if not os.path.exists(FONT):

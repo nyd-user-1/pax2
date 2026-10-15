@@ -41,7 +41,7 @@ export function SlopeChart({ rows, left = "Round 1", right = "Round 2" }: { rows
           const len = Math.hypot(W - pad.l - pad.r, y(r.b) - y(r.a))
           return (
             <g key={r.id} opacity={dim ? 0.15 : 1} onMouseEnter={() => setHover(r.id)} onMouseLeave={() => setHover(null)} className="cursor-pointer transition-opacity">
-              <line x1={pad.l} y1={y(r.a)} x2={W - pad.r} y2={y(r.b)} stroke={c} strokeWidth={on ? 3.5 : 2} strokeLinecap="round" strokeDasharray={len} strokeDashoffset={len} style={{ animation: `hermes-draw 900ms cubic-bezier(.2,.8,.2,1) ${i * 60 + 150}ms forwards` }} />
+              <line x1={pad.l} y1={y(r.a)} x2={W - pad.r} y2={y(r.b)} stroke={c} strokeWidth={on ? 3.5 : 2} strokeLinecap="round" strokeDasharray={len} strokeDashoffset={len} style={{ animation: `pax2-draw 900ms cubic-bezier(.2,.8,.2,1) ${i * 60 + 150}ms forwards` }} />
               <line x1={pad.l} y1={y(r.a)} x2={W - pad.r} y2={y(r.b)} stroke="transparent" strokeWidth={14} />
               <circle cx={pad.l} cy={y(r.a)} r={on ? 5 : 3.5} fill={c} />
               <circle cx={W - pad.r} cy={y(r.b)} r={on ? 5 : 3.5} fill={c} />
@@ -61,14 +61,14 @@ export function SlopeChart({ rows, left = "Round 1", right = "Round 2" }: { rows
       </svg>
       <div className="mt-2 flex min-h-6 flex-wrap items-center justify-between gap-2 text-sm">
         {hover ? (
-          <Link href={`/v/${hover}`} scroll={false} className="font-medium text-hermes-ink hover:underline">
+          <Link href={`/v/${hover}`} scroll={false} className="font-medium text-pax2-ink hover:underline">
             {rows.find((r) => r.id === hover)?.label}
           </Link>
         ) : (
           <span className="text-slate-500">Hover a line to see the take; the scale and the average never move.</span>
         )}
       </div>
-      <style>{`@keyframes hermes-draw { to { stroke-dashoffset: 0 } }`}</style>
+      <style>{`@keyframes pax2-draw { to { stroke-dashoffset: 0 } }`}</style>
     </div>
   )
 }

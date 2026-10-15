@@ -75,7 +75,7 @@ export function Choropleth({ geo, joinOn, values, view, height = 460, className,
         )}
       </Map>
       {!data && !failed && <div className="absolute inset-0 animate-pulse bg-slate-100" />}
-      {failed && <p className="absolute inset-x-0 top-4 mx-auto w-fit rounded-full bg-white px-3 py-1 text-xs text-hermes-red-deep shadow-e1">The map shapes did not load.</p>}
+      {failed && <p className="absolute inset-x-0 top-4 mx-auto w-fit rounded-full bg-white px-3 py-1 text-xs text-pax2-red-deep shadow-e1">The map shapes did not load.</p>}
       {h && hover && (
         <div className="pointer-events-none absolute z-10 w-max max-w-64 rounded-xl bg-slate-900 px-3 py-2 text-xs text-white shadow-e3" style={{ left: Math.min(hover.x + 14, 9999), top: hover.y + 14 }}>
           <p className="font-semibold">{h.title}</p>

@@ -64,7 +64,7 @@ export const PAGES: PageTile[] = [
   {
     href: "/v/listen-stephen",
     name: "Version page",
-    data: "Stand-in results; real analysis of synthetic videos; Hermes readings",
+    data: "Stand-in results; real analysis of synthetic videos; PAX2 readings",
     state: "mixed",
     facts: [["Route", "/v/[id]"], ["Boxes", "4"], ["Reading", "~16 s"], ["Analysis", "3 checks"]],
     what: "One video in full: the player, its numbers, Rating (the score and its parts), Formula (the AI's notes), Transcript, and the Assessment with Call it.",
@@ -184,7 +184,7 @@ export const LESSONS: Lesson[] = [
     ran: ["takes.py: one Polly generative clip per script line, Mixkit footage per line, ffmpeg captions", "analyze.py: Transcribe, Pegasus, measured sound", "scripts/standin.mjs: both rounds rebuilt for the new lengths"],
     lessons: [
       "Polly's generative voices return no word timings. Synthesizing each line on its own gives exact line starts; words inside a line are timed by their share of its characters.",
-      "The worker box shuts itself down unless a process named hermes-job… is running. A batch started as job-run.sh was stopped halfway; it reran as hermes-job-analyze.sh.",
+      "The worker box shuts itself down unless a process named pax2-job… is running. A batch started as job-run.sh was stopped halfway; it reran as pax2-job-analyze.sh.",
       "Interest divides watch time by the video's length, so stand-in results must be rebuilt whenever lengths change.",
       "The ledger keeps every load, so new results go into a fresh workspace rather than over the old one.",
     ],
@@ -214,7 +214,7 @@ export const LESSONS: Lesson[] = [
     lessons: ["The shot-and-text detection service was three-quarters of the cost at $0.20 a minute and mostly repeated what Pegasus notes, so the pipeline dropped it. A video now costs about $0.04."],
   },
   {
-    title: "Hermes readings",
+    title: "PAX2 readings",
     when: "Oct 2",
     outcome: "clean",
     headline: "15–16 seconds a reading",

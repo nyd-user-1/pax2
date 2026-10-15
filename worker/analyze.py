@@ -1,4 +1,4 @@
-"""Hermes worker job 5: analyze every video in s3://hermes-638175140432/videos/ and write features/<take>.json.
+"""PAX2 worker job 5: analyze every video in s3://pax-2-638175140432/videos/ and write features/<take>.json.
 
 Each feature carries its provenance so the interface can keep them apart:
   platform-free measurements  -> "derived"  (ffmpeg loudness, pauses, pace)
@@ -9,12 +9,12 @@ Usage: python3 analyze.py [take-id ...]
 import json, os, re, subprocess, sys, time, uuid
 import boto3, numpy as np
 
-B = "hermes-638175140432"
+B = "pax-2-638175140432"
 R = "us-east-1"
 s3 = boto3.client("s3", region_name=R)
 tr = boto3.client("transcribe", region_name=R)
 br = boto3.client("bedrock-runtime", region_name=R)
-D = "/opt/hermes/analyze"
+D = "/opt/pax2/analyze"
 os.makedirs(D, exist_ok=True)
 
 
@@ -24,7 +24,7 @@ def takes():
 
 
 def start_transcribe(tid):
-    name = f"hermes-{tid}-{uuid.uuid4().hex[:6]}"
+    name = f"pax2-{tid}-{uuid.uuid4().hex[:6]}"
     tr.start_transcription_job(TranscriptionJobName=name, LanguageCode="en-US", Media={"MediaFileUri": f"s3://{B}/videos/{tid}.mp4"}, OutputBucketName=B, OutputKey=f"transcribe/{tid}.json")
     return name
 

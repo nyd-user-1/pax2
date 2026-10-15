@@ -55,7 +55,7 @@ export function WaveHero({ next }: { next: string }) {
         <div ref={ballRef} className="absolute bottom-0 left-0 z-10 size-3 rounded-full bg-zinc-900 shadow-sm" style={{ transformOrigin: "bottom center" }} />
       </div>
       <h1 className="text-center text-2xl font-semibold text-slate-900">
-        <Link href={`/signin?next=${next}`} className="text-hermes-plum hover:underline">Sign in</Link> to make some noise.
+        <Link href={`/signin?next=${next}`} className="text-pax2-plum hover:underline">Sign in</Link> to make some noise.
       </h1>
     </div>
   )

@@ -26,7 +26,7 @@ export function SourceBadge({ source, className }: { source: Provenance; classNa
     <span
       className={cn(
         "inline-flex items-center rounded px-1.5 py-px text-[10px] font-medium uppercase tracking-wide",
-        source === "stand-in" && "bg-hermes-red-soft text-hermes-red-deep",
+        source === "stand-in" && "bg-pax2-red-soft text-pax2-red-deep",
         source === "ai" && "bg-hypothesis/10 text-hypothesis",
         source === "platform" && "bg-observed/10 text-observed",
         (source === "derived" || source === "coded" || source === "library") && "bg-muted text-muted-foreground",
@@ -44,8 +44,8 @@ export function RangeBar({ value, low, high, className }: { value: number | null
     <div className={cn("relative h-2 w-full rounded-full bg-muted", className)}>
       <div className="absolute top-1/2 h-px w-full -translate-y-1/2 bg-border" style={{ left: 0 }} />
       <div className="absolute inset-y-0 left-1/2 w-px bg-foreground/15" />
-      {low != null && high != null && <div className="grow absolute inset-y-0 rounded-full bg-hermes-plum/20" style={{ left: `${low}%`, width: `${Math.max(1, high - low)}%` }} />}
-      {value != null && <div className="absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background bg-hermes-plum shadow" style={{ left: `${value}%` }} />}
+      {low != null && high != null && <div className="grow absolute inset-y-0 rounded-full bg-pax2-plum/20" style={{ left: `${low}%`, width: `${Math.max(1, high - low)}%` }} />}
+      {value != null && <div className="absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background bg-pax2-plum shadow" style={{ left: `${value}%` }} />}
     </div>
   )
 }
@@ -54,7 +54,7 @@ export function ScoreFigure({ value, low, high, status, size = "lg" }: { value: 
   if (status === "unscorable" || value == null) return <span className={cn("text-muted-foreground", size === "lg" ? "text-2xl" : "text-sm")}>Not scored</span>
   return (
     <span className="tabular inline-flex items-baseline gap-1.5">
-      <span className={cn("font-display text-hermes-ink", size === "lg" ? "text-5xl" : "text-2xl")}>{value.toFixed(0)}</span>
+      <span className={cn("font-display text-pax2-ink", size === "lg" ? "text-5xl" : "text-2xl")}>{value.toFixed(0)}</span>
       <span className={cn("text-muted-foreground", size === "lg" ? "text-sm" : "text-xs")}>
         {low!.toFixed(0)}–{high!.toFixed(0)}
       </span>
@@ -64,7 +64,7 @@ export function ScoreFigure({ value, low, high, status, size = "lg" }: { value: 
 
 export function StandInNote({ className }: { className?: string }) {
   return (
-    <p className={cn("rounded-lg border border-hermes-red/20 bg-hermes-red-soft/50 px-3 py-2 text-xs leading-relaxed text-hermes-red-deep", className)}>
+    <p className={cn("rounded-lg border border-pax2-red/20 bg-pax2-red-soft/50 px-3 py-2 text-xs leading-relaxed text-pax2-red-deep", className)}>
       Stand-in records until the partner&apos;s export arrives: the takes are synthetic readings of the library scripts and the paid results are generated in Meta&apos;s export format. Upload the real export on Reviews and every screen recalculates from it.
     </p>
   )

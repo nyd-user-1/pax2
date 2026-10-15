@@ -5,7 +5,7 @@ import { CURVE_TIER } from "@/lib/velocity-meta"
 import { cn } from "@/ui/lib/utils"
 
 import { moreVelocityCards, type VelocityFilter, type VelocitySort } from "@/app/velocity-actions"
-import { SectionTitle } from "@/components/ui-hermes"
+import { SectionTitle } from "@/components/ui-pax2"
 import { VelocityGrid } from "@/components/velocity-grid"
 import { VelocitySortMenu } from "@/components/velocity-sort"
 
@@ -39,7 +39,7 @@ export default async function VelocityPage({ searchParams }: { searchParams: Pro
     <div className="flex flex-col gap-6">
       {cards.some((c) => c.hours == null) && (
         <section className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full bg-hermes-red-soft px-2.5 py-0.5 text-xs font-semibold text-hermes-red-deep">Sample curves</span>
+          <span className="rounded-full bg-pax2-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax2-red-deep">Sample curves</span>
           <p className="text-sm text-slate-500">Curves marked Sample are stand-ins shaped by each video&apos;s real verdict and final count; real readings replace them for every short published since the watch began.</p>
         </section>
       )}

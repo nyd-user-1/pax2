@@ -19,14 +19,14 @@ export function PhoneMock({ videoId, timer = "00:00" }: { videoId: string; timer
             <div className="absolute inset-x-0 top-10 flex items-center justify-between px-5 text-white/90">
               <X className="size-4" />
               <span className="flex items-center gap-1.5 font-mono text-xs tracking-widest">
-                <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-hermes-red" />
+                <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-pax2-red" />
                 {timer}
               </span>
               <Zap className="size-4" />
             </div>
             <div className="absolute inset-x-0 bottom-5 flex flex-col items-center gap-3">
               <span className="flex size-[4.2rem] items-center justify-center rounded-full border-[3.5px] border-white/95">
-                <span className="size-[3.3rem] rounded-full bg-hermes-red" />
+                <span className="size-[3.3rem] rounded-full bg-pax2-red" />
               </span>
               <span className="flex items-center gap-4 text-[10px] font-semibold tracking-[0.18em] text-white/90">
                 <span className="border-b-2 border-white pb-0.5">VIDEO</span>
@@ -36,7 +36,7 @@ export function PhoneMock({ videoId, timer = "00:00" }: { videoId: string; timer
           </div>
         </div>
       </div>
-      <span aria-hidden className="absolute -inset-x-6 bottom-[-26px] h-10 rounded-[100%] bg-hermes-ink/20 blur-2xl" />
+      <span aria-hidden className="absolute -inset-x-6 bottom-[-26px] h-10 rounded-[100%] bg-pax2-ink/20 blur-2xl" />
     </div>
   )
 }

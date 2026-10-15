@@ -35,16 +35,16 @@ export async function againDraft(id: string) {
   return { title: row.title, text: row.text, name: row.name, role: row.role, town: row.town }
 }
 
-/** A recording lands. It is scored straight away when automatic scoring is on (HERMES_AUTOSCORE=1);
+/** A recording lands. It is scored straight away when automatic scoring is on (PAX2_AUTOSCORE=1);
  *  otherwise it waits on /recording for an admin to press Score. */
 export async function submitOriginal(input: { id: string; key: string; email?: string; scriptId?: string; title?: string; text?: string; name?: string; role?: string; town?: string; seconds: number; consent: boolean; parent?: string }) {
   const user = await currentUser()
   const owner = (user?.email ?? input.email ?? "").trim().toLowerCase()
-  if (!/^\S+@\S+\.\S+$/.test(owner)) throw new Error("An email address is needed, so Hermes can send the link.")
+  if (!/^\S+@\S+\.\S+$/.test(owner)) throw new Error("An email address is needed, so PAX2 can send the link.")
   const parent = input.parent ? await originalRow(input.parent) : null
   await createOriginal({ id: input.id, owner, key: input.key, version: parent ? parent.version + 1 : 1, parent: parent?.id, title: input.title, text: input.text, name: input.name, role: input.role, town: input.town, seconds: input.seconds, consent: input.consent })
   if (parent) await addEvent(parent.id, { kind: "replaced", by: owner, child: input.id })
-  if (process.env.HERMES_AUTOSCORE === "1") await score(input.id)
+  if (process.env.PAX2_AUTOSCORE === "1") await score(input.id)
   refresh(input.id)
   return { ok: true }
 }
@@ -52,7 +52,7 @@ export async function submitOriginal(input: { id: string; key: string; email?: s
 async function score(id: string) {
   const row = await must(id)
   const evaluation = await evaluate(row)
-  await addEvent(id, { kind: "scored", by: "hermes", evaluation })
+  await addEvent(id, { kind: "scored", by: "pax2", evaluation })
   const body = layout({
     heading: "Original Content ready for review",
     paragraphs: [`${row.title ?? "A new video"}${row.name ? `, recorded by ${row.name}` : ""}${row.version > 1 ? ` (version ${row.version})` : ""}, has been scored.`, evaluation.summary],
@@ -74,11 +74,11 @@ export async function saveNote(id: string, note: string) {
 }
 
 async function publish(row: OriginalRow, by: string) {
-  // The Hermes channels don't exist yet: each destination is recorded and waits for its link.
+  // The PAX2 channels don't exist yet: each destination is recorded and waits for its link.
   await addEvent(row.id, { kind: "published", by, destinations: ["YouTube", "TikTok", "Instagram"].map((platform) => ({ platform, url: null })) })
   const body = layout({
     heading: "Your video is published",
-    paragraphs: [`${row.title ?? "Your video"} is going out on the Hermes channels. Hermes will watch how it does in its first days and show it on the video's page.`],
+    paragraphs: [`${row.title ?? "Your video"} is going out on the PAX2 channels. PAX2 will watch how it does in its first days and show it on the video's page.`],
     buttons: [{ label: "See your video", href: link(row.id, "published") }],
   })
   await send([row.owner], "Your video is published", body, row.id)
@@ -133,7 +133,7 @@ export async function submitEnhanced(input: { parent: string; id: string; key: s
   const parent = await must(input.parent)
   await createOriginal({ id: input.id, owner: parent.owner, key: input.key, version: parent.version + 1, parent: parent.id, title: parent.title, text: parent.text, name: parent.name, role: parent.role, town: parent.town, seconds: input.seconds, consent: parent.consent })
   await addEvent(parent.id, { kind: "replaced", by: admin.email, child: input.id })
-  if (process.env.HERMES_AUTOSCORE === "1") await score(input.id)
+  if (process.env.PAX2_AUTOSCORE === "1") await score(input.id)
   refresh(parent.id)
   refresh(input.id)
   return { id: input.id }

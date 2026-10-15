@@ -1,4 +1,4 @@
-// Upload the downloaded shorts to s3://hermes-638175140432/videos/ as yt-<videoId>.mp4,
+// Upload the downloaded shorts to s3://pax-2-638175140432/videos/ as yt-<videoId>.mp4,
 // plus the analyzer the box will run. Node + the repo's own SDK;
 // never the AWS CLI. Skips objects that already exist.
 // Usage: node scripts/upload-batch.mjs [batch-json]
@@ -6,7 +6,7 @@
 import { createReadStream, readFileSync } from "node:fs"
 import { HeadObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3"
 
-const B = "hermes-638175140432"
+const B = "pax-2-638175140432"
 const s3 = new S3Client({ region: "us-east-1" })
 const batch = JSON.parse(readFileSync(process.argv[2] ?? "data/raw/yt-batch-2026-10-04.json", "utf8"))
 

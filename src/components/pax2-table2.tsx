@@ -5,14 +5,14 @@ import { Search } from "lucide-react"
 
 import { cn } from "@/ui/lib/utils"
 
-/** HermesTable2 — the in-card standard: the search sits in the card's own header
+/** PAX2Table2 — the in-card standard: the search sits in the card's own header
  *  row right after the title, the column header row pins, and the card's rows
  *  and tiles filter in place as you type. Wrap the whole card; drop
- *  <HermesSearch /> after the h2. Matching runs over `tbody tr` plus anything
+ *  <PAX2Search /> after the h2. Matching runs over `tbody tr` plus anything
  *  tagged data-find. */
 const Ctx = React.createContext<{ q: string; setQ: (v: string) => void }>({ q: "", setQ: () => {} })
 
-export function HermesTable2({ children, value: controlled, onChange }: { children: React.ReactNode; value?: string; onChange?: (v: string) => void }) {
+export function PAX2Table2({ children, value: controlled, onChange }: { children: React.ReactNode; value?: string; onChange?: (v: string) => void }) {
   const [own, setOwn] = React.useState("")
   // Controlled when the block already filters its own rows in state.
   const q = onChange ? (controlled ?? "") : own
@@ -38,7 +38,7 @@ export function HermesTable2({ children, value: controlled, onChange }: { childr
   )
 }
 
-export function HermesSearch({ placeholder = "Search…", className }: { placeholder?: string; className?: string }) {
+export function PAX2Search({ placeholder = "Search…", className }: { placeholder?: string; className?: string }) {
   const { q, setQ } = React.useContext(Ctx)
   return (
     <label className={cn("ml-1 flex h-7 w-44 items-center gap-1.5 rounded-full bg-slate-100/80 px-2.5 transition-colors focus-within:bg-slate-100", className)}>

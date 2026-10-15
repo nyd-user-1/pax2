@@ -165,13 +165,13 @@ function EntityNode({ data, selected }: NodeProps<Node<EntityData>>) {
     )
   const Icon = ICON[d.type]
   return (
-    <div className={cn(CARD, selected && "border-hermes-plum ring-1 ring-hermes-plum")} style={{ width: NODE_W[d.type], borderLeftWidth: d.type === "video" ? 3 : undefined, borderLeftColor: d.type === "video" && d.tier ? TIER_COLOR[d.tier] : undefined }}>
+    <div className={cn(CARD, selected && "border-pax2-plum ring-1 ring-pax2-plum")} style={{ width: NODE_W[d.type], borderLeftWidth: d.type === "video" ? 3 : undefined, borderLeftColor: d.type === "video" && d.tier ? TIER_COLOR[d.tier] : undefined }}>
       <Handle type="target" position={Position.Left} className="!h-2 !w-2 !border-0 !bg-slate-300" />
       <Handle type="source" position={Position.Right} className="!h-2 !w-2 !border-0 !bg-slate-300" />
       <p className="flex items-start gap-1.5">
         <Icon className="mt-0.5 h-3 w-3 shrink-0 text-slate-400" />
         {d.type === "video" ? (
-          <Link href={`/v/yt-${d.id}`} onClick={(e) => e.stopPropagation()} className="line-clamp-2 font-semibold leading-snug text-slate-900 hover:text-hermes-plum">{d.label}</Link>
+          <Link href={`/v/yt-${d.id}`} onClick={(e) => e.stopPropagation()} className="line-clamp-2 font-semibold leading-snug text-slate-900 hover:text-pax2-plum">{d.label}</Link>
         ) : (
           <span className="line-clamp-2 font-semibold leading-snug text-slate-900">{d.label}</span>
         )}
@@ -376,7 +376,7 @@ function VideoGraphInner({ data }: { data: GraphData }) {
               <span className="text-sm font-semibold text-slate-900">{RAIL_TYPES.find((t) => t.key === browse)?.label}</span>
             </div>
             <div className="border-b border-slate-200 p-2">
-              <input value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Filter…" className="h-8 w-full rounded-md border border-slate-200 px-2 text-xs outline-none focus:border-hermes-plum" />
+              <input value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Filter…" className="h-8 w-full rounded-md border border-slate-200 px-2 text-xs outline-none focus:border-pax2-plum" />
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto">
               {railItems(browse, R)
@@ -438,7 +438,7 @@ function VideoGraphInner({ data }: { data: GraphData }) {
                 <button
                   key={k}
                   onClick={() => setJoinKinds((j) => ({ ...j, [k]: !j[k] }))}
-                  className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors", joinKinds[k] ? "bg-hermes-lavender text-hermes-ink" : "bg-slate-100 text-slate-400")}
+                  className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors", joinKinds[k] ? "bg-pax2-lavender text-pax2-ink" : "bg-slate-100 text-slate-400")}
                 >
                   {k}
                 </button>

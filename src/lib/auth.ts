@@ -3,12 +3,12 @@ import "server-only"
 import { CognitoJwtVerifier } from "aws-jwt-verify"
 import { cookies } from "next/headers"
 
-// The signed-in user, from the Cognito ID token in the hermes_session cookie — verified against the
+// The signed-in user, from the Cognito ID token in the pax2_session cookie — verified against the
 // pool's signing keys, so this one can authorize. Admins are the pool's "admins" group plus anyone
 // listed in ADMIN_EMAILS (so a new admin is one the moment they confirm their account).
 
-const POOL = process.env.HERMES_COGNITO_POOL_ID
-const CLIENT = process.env.HERMES_COGNITO_CLIENT_ID
+const POOL = process.env.PAX2_COGNITO_POOL_ID
+const CLIENT = process.env.PAX2_COGNITO_CLIENT_ID
 const verifier = POOL && CLIENT ? CognitoJwtVerifier.create({ userPoolId: POOL, tokenUse: "id", clientId: CLIENT }) : null
 const ADMINS = (process.env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean)
 
@@ -18,7 +18,7 @@ export async function currentUser(): Promise<SessionUser | null> {
   // Local development skips sign-in entirely: the dev server acts as the first admin.
   // `next build` sets NODE_ENV=production, so no deployed build can take this branch.
   if (process.env.NODE_ENV === "development") return { email: ADMINS[0] ?? "brendan@nysgpt.com", admin: true }
-  const token = (await cookies()).get("hermes_session")?.value
+  const token = (await cookies()).get("pax2_session")?.value
   if (!token || !verifier) return null
   try {
     const claims = await verifier.verify(token)

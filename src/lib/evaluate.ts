@@ -4,7 +4,7 @@ import patterns from "../../data/generated/swayable-patterns.json"
 import { titlePatterns } from "@/lib/headline-patterns"
 import type { Evaluation, Original, Recommendation, Trait } from "@/lib/originals"
 
-// The Hermes evaluation of an original video. One model pass reads the script the messenger recorded
+// The PAX2 evaluation of an original video. One model pass reads the script the messenger recorded
 // and codes it on Swayable's traits, quoting the line that shows each one, and writes a concrete
 // change for each trait worth adding or dropping. Every number comes from the evidence files, never
 // from the model:
@@ -13,13 +13,13 @@ import type { Evaluation, Original, Recommendation, Trait } from "@/lib/original
 //   virality    the title against Upworthy's headline tests (won vs. lost)
 // The script stands in for what was said until the recording itself is transcribed.
 
-const MODEL = process.env.HERMES_MODEL ?? "us.anthropic.claude-sonnet-4-6"
+const MODEL = process.env.PAX2_MODEL ?? "us.anthropic.claude-sonnet-4-6"
 const TRAITS = patterns.traits as { key: string; label: string; ads: number; diff: number; low: number; high: number }[]
 
 type Coded = { summary: string; traits: { key: string; present: boolean; quote?: string; change?: string }[]; title?: string }
 
 function prompt(o: Original) {
-  return `You are coding a short political video for Hermes. Below is the script its messenger recorded${o.title ? `, titled "${o.title}"` : ""}${o.seconds ? `, ${o.seconds} seconds long` : ""}.
+  return `You are coding a short political video for PAX2. Below is the script its messenger recorded${o.title ? `, titled "${o.title}"` : ""}${o.seconds ? `, ${o.seconds} seconds long` : ""}.
 
 SCRIPT:
 ${o.text ?? "(no script given)"}
@@ -38,7 +38,7 @@ Reply with JSON only: {"summary": "...", "title": "...", "traits": [{"key": "...
 
 export async function evaluate(o: Original): Promise<Evaluation> {
   const { BedrockRuntimeClient, ConverseCommand } = await import("@aws-sdk/client-bedrock-runtime")
-  const client = new BedrockRuntimeClient({ region: process.env.HERMES_REGION ?? "us-east-1" })
+  const client = new BedrockRuntimeClient({ region: process.env.PAX2_REGION ?? "us-east-1" })
   const r = await client.send(new ConverseCommand({ modelId: MODEL, messages: [{ role: "user", content: [{ text: prompt(o) }] }], inferenceConfig: { maxTokens: 4000, temperature: 0 } }))
   const raw = r.output?.message?.content?.map((c) => ("text" in c ? c.text : "")).join("") ?? ""
   const coded = JSON.parse(raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1)) as Coded

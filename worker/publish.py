@@ -1,11 +1,11 @@
-"""Hermes worker job: copy what the box produced in S3 into the repo's data/generated/ and push it.
+"""PAX2 worker job: copy what the box produced in S3 into the repo's data/generated/ and push it.
 
 Usage: python3 publish.py takes features model ...   (each name is a section below)
 """
 import json, os, subprocess, sys
 import boto3
 
-B = "hermes-638175140432"
+B = "pax-2-638175140432"
 s3 = boto3.client("s3")
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 G = f"{REPO}/data/generated"
@@ -70,7 +70,7 @@ for s in sys.argv[1:]:
     TABLE[s]()
 subprocess.run(["git", "-C", REPO, "add", "data/generated"], check=True)
 if subprocess.run(["git", "-C", REPO, "diff", "--cached", "--quiet"]).returncode:
-    subprocess.run(["git", "-C", REPO, "-c", "user.name=hermes-worker", "-c", "user.email=hermes-worker@users.noreply.github.com", "commit", "-q", "-m", f"data: {' '.join(sys.argv[1:])} from the worker box"], check=True)
+    subprocess.run(["git", "-C", REPO, "-c", "user.name=pax2-worker", "-c", "user.email=pax2-worker@users.noreply.github.com", "commit", "-q", "-m", f"data: {' '.join(sys.argv[1:])} from the worker box"], check=True)
     subprocess.run(["git", "-C", REPO, "push", "-q"], check=True)
     print("pushed", flush=True)
 else:

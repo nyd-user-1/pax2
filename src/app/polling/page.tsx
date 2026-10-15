@@ -13,7 +13,7 @@ export const metadata = { title: "Polling" }
 
 function Source({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <a href={href} target="_blank" rel="noreferrer" className="text-xs text-slate-400 transition-colors hover:text-hermes-plum">
+    <a href={href} target="_blank" rel="noreferrer" className="text-xs text-slate-400 transition-colors hover:text-pax2-plum">
       {children}
     </a>
   )
@@ -76,7 +76,7 @@ export default function PollingPage() {
                   const pass = v.yes >= 50
                   return (
                     <li key={`${v.state}-${v.year}`} className="grid grid-cols-[9.5rem_minmax(0,1fr)_3.5rem] items-center gap-3">
-                      <a href={v.url} target="_blank" rel="noreferrer" className="flex flex-col leading-tight hover:text-hermes-plum">
+                      <a href={v.url} target="_blank" rel="noreferrer" className="flex flex-col leading-tight hover:text-pax2-plum">
                         <span className="text-sm font-medium text-slate-800">
                           {v.state} <span className="font-normal text-slate-400">{v.year}</span>
                         </span>
@@ -118,7 +118,7 @@ export default function PollingPage() {
                   </li>
                 ))}
               </ul>
-              <a href={polling.national.url} target="_blank" rel="noreferrer" className="mt-auto text-xs text-slate-400 hover:text-hermes-plum">
+              <a href={polling.national.url} target="_blank" rel="noreferrer" className="mt-auto text-xs text-slate-400 hover:text-pax2-plum">
                 Emerson · {polling.national.field}
               </a>
             </div>
@@ -131,7 +131,7 @@ export default function PollingPage() {
           <MapBlock title="Uncontested districts" className="xl:col-span-2">
             <UncontestedMap height="100%" bare />
           </MapBlock>
-          <ListBlock title="One name on the ballot" search="Search districts…" rows={oneName.map((district) => ({ district }))} name="uncontested-districts" actions={<Link href="/record" className="press inline-flex w-fit items-center gap-2 rounded-full bg-hermes-ink px-4 py-1.5 text-sm font-semibold text-white shadow-e1"><Video className="size-4" /> Record</Link>}>
+          <ListBlock title="One name on the ballot" search="Search districts…" rows={oneName.map((district) => ({ district }))} name="uncontested-districts" actions={<Link href="/record" className="press inline-flex w-fit items-center gap-2 rounded-full bg-pax2-ink px-4 py-1.5 text-sm font-semibold text-white shadow-e1"><Video className="size-4" /> Record</Link>}>
             <div className="flex flex-col gap-4">
               <div className="flex items-baseline gap-2">
                 <span className="tabular font-display text-5xl text-below">{oneName.length}</span>
@@ -139,7 +139,7 @@ export default function PollingPage() {
               </div>
               <div className="flex flex-wrap content-start gap-1.5">
                 {oneName.map((d) => (
-                  <span key={d} data-find className="rounded-full bg-hermes-red-soft px-2.5 py-1 text-xs font-medium text-hermes-red-deep">
+                  <span key={d} data-find className="rounded-full bg-pax2-red-soft px-2.5 py-1 text-xs font-medium text-pax2-red-deep">
                     {d}
                   </span>
                 ))}

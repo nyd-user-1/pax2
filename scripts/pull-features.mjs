@@ -6,7 +6,7 @@
 import { readFileSync, writeFileSync } from "node:fs"
 import { GetObjectCommand, ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3"
 
-const B = "hermes-638175140432"
+const B = "pax-2-638175140432"
 const s3 = new S3Client({ region: "us-east-1" })
 
 const keys = []

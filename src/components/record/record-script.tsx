@@ -16,7 +16,7 @@ export function RecordScript({ id, title, text, label = "Record this script" }: 
         update({ mode: "library", scriptId: id, title, text })
         router.push("/record/script")
       }}
-      className="flex w-fit items-center gap-2 rounded-full bg-hermes-ink px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-transform hover:-translate-y-0.5"
+      className="flex w-fit items-center gap-2 rounded-full bg-pax2-ink px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-transform hover:-translate-y-0.5"
     >
       <Video className="size-4" /> {label}
     </button>

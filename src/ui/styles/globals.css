@@ -3,7 +3,7 @@
 @plugin "tailwind-scrollbar-hide";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "../../app/hermes.css";
+@import "../../app/pax2.css";
 
 /* Two darks and two lights (Brendan, 2026-09-07): `.dark` is the original,
    `.dark-2` the lighter one that lifts off pure black; `.light-2` is its

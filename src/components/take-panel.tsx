@@ -25,14 +25,14 @@ export function TakePanel({ title, search, children }: { title: string; search?:
     return () => window.removeEventListener("keydown", onKey)
   }, [router])
   return (
-    <section className="fixed inset-0 z-50 flex flex-col bg-hermes-mist md:static md:z-auto md:h-full md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:shadow-e2">
-      <div className={cn("relative z-10 flex min-h-[73px] shrink-0 items-center justify-between gap-3 bg-hermes-mist px-6 py-4 transition-shadow duration-200", scrolled && "shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)]")}>
+    <section className="fixed inset-0 z-50 flex flex-col bg-pax2-mist md:static md:z-auto md:h-full md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:shadow-e2">
+      <div className={cn("relative z-10 flex min-h-[73px] shrink-0 items-center justify-between gap-3 bg-pax2-mist px-6 py-4 transition-shadow duration-200", scrolled && "shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)]")}>
         {search ? (
           <button
             type="button"
             onClick={() => {
               // The feed beneath picks this up; anywhere else, the home feed opens with the search run.
-              if (document.documentElement.dataset.feed) window.dispatchEvent(new CustomEvent("hermes:search", { detail: search }))
+              if (document.documentElement.dataset.feed) window.dispatchEvent(new CustomEvent("pax2:search", { detail: search }))
               else router.push(`/?q=${encodeURIComponent(search)}`)
             }}
             className="-mx-2 min-w-0 truncate rounded-lg px-2 py-1 text-left font-display text-xl text-slate-900 transition-colors hover:bg-muted"
@@ -44,10 +44,10 @@ export function TakePanel({ title, search, children }: { title: string; search?:
         )}
         <div className="flex shrink-0 items-center gap-2">
           {/* The icon shows the size the next press goes to: a third, half, then the whole area. */}
-          <button type="button" onClick={cycleSize} className="hidden size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-hermes-ink md:flex" aria-label={size === "third" ? "Half the page" : size === "half" ? "Full page" : "A third of the page"}>
+          <button type="button" onClick={cycleSize} className="hidden size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax2-ink md:flex" aria-label={size === "third" ? "Half the page" : size === "half" ? "Full page" : "A third of the page"}>
             {size === "third" ? <Columns2 className="size-4" /> : size === "half" ? <Maximize2 className="size-4" /> : <Columns3 className="size-4" />}
           </button>
-          <button type="button" onClick={() => router.back()} className="flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-hermes-ink" aria-label="Close">
+          <button type="button" onClick={() => router.back()} className="flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax2-ink" aria-label="Close">
             <X className="size-4" />
           </button>
         </div>

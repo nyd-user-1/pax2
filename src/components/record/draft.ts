@@ -16,7 +16,7 @@ export type Draft = {
   again?: string
 }
 
-const KEY = "hermes-record-draft"
+const KEY = "pax2-record-draft"
 
 export function useDraft() {
   const [draft, setDraft] = React.useState<Draft>({})

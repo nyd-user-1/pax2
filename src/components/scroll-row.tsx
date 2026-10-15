@@ -22,7 +22,7 @@ export function ScrollRow({ title, videos, href, legend }: { title: string; vide
     return () => window.removeEventListener("resize", measure)
   }, [measure])
   const page = (dir: 1 | -1) => ref.current?.scrollBy({ left: dir * ref.current.clientWidth * 0.8, behavior: "smooth" })
-  const arrow = (show: boolean) => cn("flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 transition-opacity hover:text-hermes-ink", !show && "pointer-events-none opacity-0")
+  const arrow = (show: boolean) => cn("flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 transition-opacity hover:text-pax2-ink", !show && "pointer-events-none opacity-0")
 
   return (
     <section className="flex flex-col gap-4">
@@ -46,7 +46,7 @@ export function ScrollRow({ title, videos, href, legend }: { title: string; vide
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         {legend}
-        <Link href={href} className="inline-flex items-center gap-1 text-sm font-medium text-hermes-plum hover:underline">
+        <Link href={href} className="inline-flex items-center gap-1 text-sm font-medium text-pax2-plum hover:underline">
           See all <ArrowRight className="size-4" />
         </Link>
       </div>
@@ -72,7 +72,7 @@ export function ScrollStrip({ children, itemClassName }: { children: React.React
     return () => window.removeEventListener("resize", measure)
   }, [measure])
   const page = (dir: 1 | -1) => ref.current?.scrollBy({ left: dir * ref.current.clientWidth * 0.8, behavior: "smooth" })
-  const arrow = (show: boolean) => cn("flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 transition-opacity hover:text-hermes-ink", !show && "pointer-events-none opacity-0")
+  const arrow = (show: boolean) => cn("flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 transition-opacity hover:text-pax2-ink", !show && "pointer-events-none opacity-0")
 
   return (
     <section className="flex flex-col gap-2">

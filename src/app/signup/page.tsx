@@ -7,7 +7,7 @@ export const metadata = { title: "Sign up" }
 
 export default function SignUpPage() {
   return (
-    <div className="flex min-h-dvh flex-col bg-gradient-to-b from-hermes-lavender to-hermes-mist">
+    <div className="flex min-h-dvh flex-col bg-gradient-to-b from-pax2-lavender to-pax2-mist">
       <header className="flex items-center px-6 py-5 md:px-10">
         <Link href="/" aria-label="Home"><Wordmark size={26} /></Link>
       </header>
