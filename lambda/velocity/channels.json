@@ -1,392 +1,398 @@
 [
- {
-  "id": "UC-rKSUWdEqPmP-UM7yV6Ssw",
-  "name": "Vote YES on 3",
-  "handle": "",
-  "group": "reform-core"
- },
- {
-  "id": "UCpSEnGNa8pO-llnwBDDa6Tg",
-  "name": "Courageous Colorado",
-  "handle": "",
-  "group": "reform-core"
- },
- {
-  "id": "UCdr9X0FtE_GnXk_JwWYUx3g",
-  "name": "Open Primaries",
-  "handle": "",
-  "group": "reform-core"
- },
- {
-  "id": "UC3HvCnPvYMIwh15fJxrEcKA",
-  "name": "Unite America",
-  "handle": "",
-  "group": "reform-core"
- },
- {
-  "id": "UCb8R3tlbcYaE5J5-HUBf7mw",
-  "name": "FairVote",
-  "handle": "",
-  "group": "reform-core"
- },
- {
-  "id": "UCNq9sO0a_5F4_FOmgb4t7cQ",
-  "name": "The Hometown Holler",
-  "handle": "@thehometownholler",
-  "group": "reform"
- },
- {
-  "id": "UCKQWfpebku7BRYncTR5WCtA",
-  "name": "Voters Not Politicians",
-  "handle": "@votersnotpoliticians",
-  "group": "reform"
- },
- {
-  "id": "UCdFZ5b8bpOLRgbOATyPRtdw",
-  "name": "No Labels",
-  "handle": "@nolabels",
-  "group": "reform"
- },
- {
-  "id": "UC3SXZ16R98huyTvFKH2368w",
-  "name": "Tangle News ",
-  "handle": "@tanglenews",
-  "group": "media-nonpartisan"
- },
- {
-  "id": "UCRzgK52MmetD9aG8pDOID3g",
-  "name": "RepresentUs",
-  "handle": "@representus",
-  "group": "reform"
- },
- {
-  "id": "UCtlZ4t6aS4rAJoPyYD9DGLA",
-  "name": "Braver Angels",
-  "handle": "@braverangels",
-  "group": "reform"
- },
- {
-  "id": "UC0awOtps956eViUmrGNT4OA",
-  "name": "Forward Party",
-  "handle": "@forwardparty",
-  "group": "reform"
- },
- {
-  "id": "UC0WNv4MkP1YYgu9PZhmQYuw",
-  "name": "FairVote Illinois",
-  "handle": "@fairvoteillinois",
-  "group": "reform"
- },
- {
-  "id": "UCS2g2ycFXBXney1W7aPjS7g",
-  "name": "Isaac Saul",
-  "handle": "@isaacsaul",
-  "group": "media-nonpartisan"
- },
- {
-  "id": "UC2f6aAg2luzuvqF8wlmpPgw",
-  "name": "Voter Choice Irvine",
-  "handle": "@voterchoiceirvine",
-  "group": "reform"
- },
- {
-  "id": "UCcNkGwVX4_F1rcgItwCk1zQ",
-  "name": "Brennan Center for Justice",
-  "handle": "@brennancenter",
-  "group": "voting-rights"
- },
- {
-  "id": "UCOXJ8D5_j7j9d22-zV9gVng",
-  "name": "Democracy Forward",
-  "handle": "@democracyforward",
-  "group": "voting-rights"
- },
- {
-  "id": "UCnpLmnN_7TxPdpGODs-JXxg",
-  "name": "End Citizens United",
-  "handle": "@endcitizensunited",
-  "group": "voting-rights"
- },
- {
-  "id": "UCfSPmAvh4u45lYwaN-_cRMg",
-  "name": "CampaignLegalCenter",
-  "handle": "@campaignlegalcenter",
-  "group": "voting-rights"
- },
- {
-  "id": "UC-rzEZUdRSDqKxrM-OO3W8Q",
-  "name": "Protect Democracy",
-  "handle": "@protectdemocracy",
-  "group": "voting-rights"
- },
- {
-  "id": "UCfvAh7dhDSvR-7BCERJcvpw",
-  "name": "When We All Vote",
-  "handle": "@whenweallvote",
-  "group": "voting-rights"
- },
- {
-  "id": "UCA79W1bqi48-8lgnVX6MtUQ",
-  "name": "VoteRiders",
-  "handle": "@voteriders",
-  "group": "voting-rights"
- },
- {
-  "id": "UCbPojIVZdVhfBTRwj64j0Cw",
-  "name": "The Capitol Feed",
-  "handle": "@thecapitolfeed-h7n",
-  "group": "independent-media"
- },
- {
-  "id": "UCyLIs900abY403f0PYb2Z6A",
-  "name": "Independent Voter Podcast",
-  "handle": "@independentvoterpodcast",
-  "group": "independent-media"
- },
- {
-  "id": "UCAL4wWZ3XXDcYq6famrWGLw",
-  "name": "It's Independent's Day",
-  "handle": "@iday26",
-  "group": "independent-media"
- },
- {
-  "id": "UCI4FrugvYJeGlRNNdw4b8rA",
-  "name": "The Independent Angle",
-  "handle": "@independentangleclips",
-  "group": "independent-media"
- },
- {
-  "id": "UCa3FveLY2QzlHzFUyVoL2_Q",
-  "name": "The Independent Take",
-  "handle": "@theindependenttake",
-  "group": "independent-media"
- },
- {
-  "id": "UCgqlvdBgHQbcIQx_7vq5HnA",
-  "name": "The Voter",
-  "handle": "@thevoter.1",
-  "group": "independent-media"
- },
- {
-  "id": "UCR_A7Lr1eyJuHKoY-sgWLYA",
-  "name": "Improve Our Elections",
-  "handle": "@improveourelections",
-  "group": "independent-media"
- },
- {
-  "id": "UCBKUxItz5y4Om3t4P_hpDtA",
-  "name": "Voter Rules Watch",
-  "handle": "@hedoespodcast",
-  "group": "suspect-automated"
- },
- {
-  "id": "UCFO4EFmxai7r0Zz_OH83MxQ",
-  "name": "ReformWatch",
-  "handle": "@reformwatch",
-  "group": "suspect-automated"
- },
- {
-  "id": "UC5pduQrF4VqTPJPdS9F7YPg",
-  "name": "Yes! End ranked choice voting in Alaska!",
-  "handle": "@yesendrcv",
-  "group": "reform-opposition"
- },
- {
-  "id": "UCEWR8wuVWZVH2tF66U2IL9A",
-  "name": "Electoral Reform Society",
-  "handle": "@electoralreformsociety",
-  "group": "uk"
- },
- {
-  "id": "UCKTPks8QcY-i8l7YeW5OdjA",
-  "name": "openDemocracy",
-  "handle": "@_opendemocracy",
-  "group": "uk"
- },
- {
-  "id": "UCowCx0IJW06ZwJjBP_07H1Q",
-  "name": "Lib Dems for Electoral Reform",
-  "handle": "@libdems4er",
-  "group": "uk"
- },
- {
-  "id": "UCH1dpzjCEiGAt8CXkryhkZg",
-  "name": "Bernie Sanders",
-  "handle": "@berniesanders",
-  "group": "official-D"
- },
- {
-  "id": "UCyh7oTKYsxhDWMsvlNP2Kng",
-  "name": "Ro Khanna",
-  "handle": "@rokhanna",
-  "group": "official-D"
- },
- {
-  "id": "UCXGNJfdHYtIKm9GTUu_IQZg",
-  "name": "Rep Maxwell Alejandro Frost",
-  "handle": "@repmaxwellfrost",
-  "group": "official-D"
- },
- {
-  "id": "UCY-3GVY7vhOuuixr1QBMWEg",
-  "name": "Gavin Newsom",
-  "handle": "@gavinnewsom",
-  "group": "official-D"
- },
- {
-  "id": "UCI8FbW3Sm5y_3eP2g8kyXHg",
-  "name": "JB Pritzker",
-  "handle": "@jbpritzker",
-  "group": "official-D"
- },
- {
-  "id": "UC0rt6GK1jP3gCtPVRtt4EPQ",
-  "name": "Cory Booker",
-  "handle": "@corybooker",
-  "group": "official-D"
- },
- {
-  "id": "UCRkl0jj4HdoUbHosDHDqy0A",
-  "name": "Senator Jon Ossoff",
-  "handle": "@senossoff",
-  "group": "official-D"
- },
- {
-  "id": "UC0Arr9_NIOkWt-hyuhQpx1Q",
-  "name": "Abdul El-Sayed",
-  "handle": "@abdulelsayed",
-  "group": "candidate-D"
- },
- {
-  "id": "UCt_l7Nge_872rTm5Jvbo6Mw",
-  "name": "Sherrod Brown",
-  "handle": "@sherrodbrown",
-  "group": "candidate-D"
- },
- {
-  "id": "UCxauM3N4Nb47HG6PuDMh0Ow",
-  "name": "Pete Buttigieg",
-  "handle": "@petebuttigieg",
-  "group": "candidate-D"
- },
- {
-  "id": "UCY0jKbBT2SdUo-hLgDwz5qg",
-  "name": "James Talarico",
-  "handle": "@jamestalaricotx",
-  "group": "candidate-D"
- },
- {
-  "id": "UChm_bCQMmaxljPge4-V9fVQ",
-  "name": "Mallory McMorrow",
-  "handle": "@mallory-mcmorrow",
-  "group": "candidate-D"
- },
- {
-  "id": "UCXHT0c_Cqdvp6UAfXDxuGow",
-  "name": "Mary Peltola",
-  "handle": "@mary_peltola",
-  "group": "candidate-D"
- },
- {
-  "id": "UCautFW0hm0QPVXFVeSpSpxg",
-  "name": "Vivek Ramaswamy",
-  "handle": "@vivekgramaswamy",
-  "group": "candidate-R"
- },
- {
-  "id": "UCVCYFjhcTameGcKMbbi_VrA",
-  "name": "John James",
-  "handle": "@johnjamesmi",
-  "group": "candidate-R"
- },
- {
-  "id": "UCVoJ8bX1PsgclyC5Ozb0bDg",
-  "name": "Congresswoman Nancy Mace",
-  "handle": "@repnancymace",
-  "group": "official-R"
- },
- {
-  "id": "UC2XDiCjAHtJqnSEzrHAY5IQ",
-  "name": "Dan Crenshaw",
-  "handle": "@dancrenshawtx",
-  "group": "official-R"
- },
- {
-  "id": "UCd5HDJNylAJsBXRQO0E9fbw",
-  "name": "Osborn for Senate",
-  "handle": "@osbornforne",
-  "group": "candidate-independent"
- },
- {
-  "id": "UClkO4MArT2WKWj32YDD_-Ew",
-  "name": "The Democrats",
-  "handle": "@thedemocrats",
-  "group": "party-D"
- },
- {
-  "id": "UCLpDIMhugA0YQ2tiSB1_8HA",
-  "name": "NRSC",
-  "handle": "@nrsc",
-  "group": "party-R"
- },
- {
-  "id": "UCJjSDX-jUChzOEyok9XYRJQ",
-  "name": "Jubilee",
-  "handle": "@jubilee",
-  "group": "media-nonpartisan"
- },
- {
-  "id": "UCSRRURbKlPf1HwPUhjmufTg",
-  "name": "The Free Press",
-  "handle": "@thefreepress",
-  "group": "media-nonpartisan"
- },
- {
-  "id": "UCZWlSUNDvCCS1hBiXV0zKcA",
-  "name": "PragerU",
-  "handle": "@prageru",
-  "group": "media-R"
- },
- {
-  "id": "UCVrK_pMRp_q8IelpfUCTGLQ",
-  "name": "Turning Point USA",
-  "handle": "@turningpointusa",
-  "group": "media-R"
- },
- {
-  "id": "UCaeO5vkdj5xOQHp4UmIN6dw",
-  "name": "The Daily Wire",
-  "handle": "@dailywire",
-  "group": "media-R"
- },
- {
-  "id": "UCnQC_G5Xsjhp9fEJKuIcrSw",
-  "name": "Ben Shapiro",
-  "handle": "@benshapiro",
-  "group": "media-R"
- },
- {
-  "id": "UCLdP3jmBYe9lAZQbY6OSYjw",
-  "name": "Benny Johnson",
-  "handle": "@bennyjohnson",
-  "group": "media-R"
- },
- {
-  "id": "UC9r9HYFxEQOBXSopFS61ZWg",
-  "name": "MeidasTouch",
-  "handle": "@meidastouch",
-  "group": "media-D"
- },
- {
-  "id": "UCKRoXz3hHAu2XL_k3Ef4vJQ",
-  "name": "Pod Save America",
-  "handle": "@podsaveamerica",
-  "group": "media-D"
- },
- {
-  "id": "UCQANb2YPwAtK-IQJrLaaUFw",
-  "name": "Brian Tyler Cohen",
-  "handle": "@briantylercohen",
-  "group": "media-D"
- }
+  {
+    "id": "UC-rKSUWdEqPmP-UM7yV6Ssw",
+    "name": "Vote YES on 3",
+    "handle": "",
+    "group": "reform-core"
+  },
+  {
+    "id": "UCpSEnGNa8pO-llnwBDDa6Tg",
+    "name": "Courageous Colorado",
+    "handle": "",
+    "group": "reform-core"
+  },
+  {
+    "id": "UCdr9X0FtE_GnXk_JwWYUx3g",
+    "name": "Open Primaries",
+    "handle": "",
+    "group": "reform-core"
+  },
+  {
+    "id": "UC3HvCnPvYMIwh15fJxrEcKA",
+    "name": "Unite America",
+    "handle": "",
+    "group": "reform-core"
+  },
+  {
+    "id": "UCb8R3tlbcYaE5J5-HUBf7mw",
+    "name": "FairVote",
+    "handle": "",
+    "group": "reform-core"
+  },
+  {
+    "id": "UCNq9sO0a_5F4_FOmgb4t7cQ",
+    "name": "The Hometown Holler",
+    "handle": "@thehometownholler",
+    "group": "reform"
+  },
+  {
+    "id": "UCKQWfpebku7BRYncTR5WCtA",
+    "name": "Voters Not Politicians",
+    "handle": "@votersnotpoliticians",
+    "group": "reform"
+  },
+  {
+    "id": "UCdFZ5b8bpOLRgbOATyPRtdw",
+    "name": "No Labels",
+    "handle": "@nolabels",
+    "group": "reform"
+  },
+  {
+    "id": "UC3SXZ16R98huyTvFKH2368w",
+    "name": "Tangle News ",
+    "handle": "@tanglenews",
+    "group": "media-nonpartisan"
+  },
+  {
+    "id": "UCRzgK52MmetD9aG8pDOID3g",
+    "name": "RepresentUs",
+    "handle": "@representus",
+    "group": "reform"
+  },
+  {
+    "id": "UCtlZ4t6aS4rAJoPyYD9DGLA",
+    "name": "Braver Angels",
+    "handle": "@braverangels",
+    "group": "reform"
+  },
+  {
+    "id": "UC0awOtps956eViUmrGNT4OA",
+    "name": "Forward Party",
+    "handle": "@forwardparty",
+    "group": "reform"
+  },
+  {
+    "id": "UC0WNv4MkP1YYgu9PZhmQYuw",
+    "name": "FairVote Illinois",
+    "handle": "@fairvoteillinois",
+    "group": "reform"
+  },
+  {
+    "id": "UCS2g2ycFXBXney1W7aPjS7g",
+    "name": "Isaac Saul",
+    "handle": "@isaacsaul",
+    "group": "media-nonpartisan"
+  },
+  {
+    "id": "UC2f6aAg2luzuvqF8wlmpPgw",
+    "name": "Voter Choice Irvine",
+    "handle": "@voterchoiceirvine",
+    "group": "reform"
+  },
+  {
+    "id": "UCcNkGwVX4_F1rcgItwCk1zQ",
+    "name": "Brennan Center for Justice",
+    "handle": "@brennancenter",
+    "group": "voting-rights"
+  },
+  {
+    "id": "UCOXJ8D5_j7j9d22-zV9gVng",
+    "name": "Democracy Forward",
+    "handle": "@democracyforward",
+    "group": "voting-rights"
+  },
+  {
+    "id": "UCnpLmnN_7TxPdpGODs-JXxg",
+    "name": "End Citizens United",
+    "handle": "@endcitizensunited",
+    "group": "voting-rights"
+  },
+  {
+    "id": "UCfSPmAvh4u45lYwaN-_cRMg",
+    "name": "CampaignLegalCenter",
+    "handle": "@campaignlegalcenter",
+    "group": "voting-rights"
+  },
+  {
+    "id": "UC-rzEZUdRSDqKxrM-OO3W8Q",
+    "name": "Protect Democracy",
+    "handle": "@protectdemocracy",
+    "group": "voting-rights"
+  },
+  {
+    "id": "UCfvAh7dhDSvR-7BCERJcvpw",
+    "name": "When We All Vote",
+    "handle": "@whenweallvote",
+    "group": "voting-rights"
+  },
+  {
+    "id": "UCA79W1bqi48-8lgnVX6MtUQ",
+    "name": "VoteRiders",
+    "handle": "@voteriders",
+    "group": "voting-rights"
+  },
+  {
+    "id": "UCbPojIVZdVhfBTRwj64j0Cw",
+    "name": "The Capitol Feed",
+    "handle": "@thecapitolfeed-h7n",
+    "group": "independent-media"
+  },
+  {
+    "id": "UCyLIs900abY403f0PYb2Z6A",
+    "name": "Independent Voter Podcast",
+    "handle": "@independentvoterpodcast",
+    "group": "independent-media"
+  },
+  {
+    "id": "UCAL4wWZ3XXDcYq6famrWGLw",
+    "name": "It's Independent's Day",
+    "handle": "@iday26",
+    "group": "independent-media"
+  },
+  {
+    "id": "UCI4FrugvYJeGlRNNdw4b8rA",
+    "name": "The Independent Angle",
+    "handle": "@independentangleclips",
+    "group": "independent-media"
+  },
+  {
+    "id": "UCa3FveLY2QzlHzFUyVoL2_Q",
+    "name": "The Independent Take",
+    "handle": "@theindependenttake",
+    "group": "independent-media"
+  },
+  {
+    "id": "UCgqlvdBgHQbcIQx_7vq5HnA",
+    "name": "The Voter",
+    "handle": "@thevoter.1",
+    "group": "independent-media"
+  },
+  {
+    "id": "UCR_A7Lr1eyJuHKoY-sgWLYA",
+    "name": "Improve Our Elections",
+    "handle": "@improveourelections",
+    "group": "independent-media"
+  },
+  {
+    "id": "UCBKUxItz5y4Om3t4P_hpDtA",
+    "name": "Voter Rules Watch",
+    "handle": "@hedoespodcast",
+    "group": "suspect-automated"
+  },
+  {
+    "id": "UCFO4EFmxai7r0Zz_OH83MxQ",
+    "name": "ReformWatch",
+    "handle": "@reformwatch",
+    "group": "suspect-automated"
+  },
+  {
+    "id": "UC5pduQrF4VqTPJPdS9F7YPg",
+    "name": "Yes! End ranked choice voting in Alaska!",
+    "handle": "@yesendrcv",
+    "group": "reform-opposition"
+  },
+  {
+    "id": "UCEWR8wuVWZVH2tF66U2IL9A",
+    "name": "Electoral Reform Society",
+    "handle": "@electoralreformsociety",
+    "group": "uk"
+  },
+  {
+    "id": "UCKTPks8QcY-i8l7YeW5OdjA",
+    "name": "openDemocracy",
+    "handle": "@_opendemocracy",
+    "group": "uk"
+  },
+  {
+    "id": "UCowCx0IJW06ZwJjBP_07H1Q",
+    "name": "Lib Dems for Electoral Reform",
+    "handle": "@libdems4er",
+    "group": "uk"
+  },
+  {
+    "id": "UCH1dpzjCEiGAt8CXkryhkZg",
+    "name": "Bernie Sanders",
+    "handle": "@berniesanders",
+    "group": "official-D"
+  },
+  {
+    "id": "UCyh7oTKYsxhDWMsvlNP2Kng",
+    "name": "Ro Khanna",
+    "handle": "@rokhanna",
+    "group": "official-D"
+  },
+  {
+    "id": "UCXGNJfdHYtIKm9GTUu_IQZg",
+    "name": "Rep Maxwell Alejandro Frost",
+    "handle": "@repmaxwellfrost",
+    "group": "official-D"
+  },
+  {
+    "id": "UCY-3GVY7vhOuuixr1QBMWEg",
+    "name": "Gavin Newsom",
+    "handle": "@gavinnewsom",
+    "group": "official-D"
+  },
+  {
+    "id": "UCI8FbW3Sm5y_3eP2g8kyXHg",
+    "name": "JB Pritzker",
+    "handle": "@jbpritzker",
+    "group": "official-D"
+  },
+  {
+    "id": "UC0rt6GK1jP3gCtPVRtt4EPQ",
+    "name": "Cory Booker",
+    "handle": "@corybooker",
+    "group": "official-D"
+  },
+  {
+    "id": "UCRkl0jj4HdoUbHosDHDqy0A",
+    "name": "Senator Jon Ossoff",
+    "handle": "@senossoff",
+    "group": "official-D"
+  },
+  {
+    "id": "UC0Arr9_NIOkWt-hyuhQpx1Q",
+    "name": "Abdul El-Sayed",
+    "handle": "@abdulelsayed",
+    "group": "candidate-D"
+  },
+  {
+    "id": "UCt_l7Nge_872rTm5Jvbo6Mw",
+    "name": "Sherrod Brown",
+    "handle": "@sherrodbrown",
+    "group": "candidate-D"
+  },
+  {
+    "id": "UCxauM3N4Nb47HG6PuDMh0Ow",
+    "name": "Pete Buttigieg",
+    "handle": "@petebuttigieg",
+    "group": "candidate-D"
+  },
+  {
+    "id": "UCY0jKbBT2SdUo-hLgDwz5qg",
+    "name": "James Talarico",
+    "handle": "@jamestalaricotx",
+    "group": "candidate-D"
+  },
+  {
+    "id": "UChm_bCQMmaxljPge4-V9fVQ",
+    "name": "Mallory McMorrow",
+    "handle": "@mallory-mcmorrow",
+    "group": "candidate-D"
+  },
+  {
+    "id": "UCXHT0c_Cqdvp6UAfXDxuGow",
+    "name": "Mary Peltola",
+    "handle": "@mary_peltola",
+    "group": "candidate-D"
+  },
+  {
+    "id": "UCautFW0hm0QPVXFVeSpSpxg",
+    "name": "Vivek Ramaswamy",
+    "handle": "@vivekgramaswamy",
+    "group": "candidate-R"
+  },
+  {
+    "id": "UCVCYFjhcTameGcKMbbi_VrA",
+    "name": "John James",
+    "handle": "@johnjamesmi",
+    "group": "candidate-R"
+  },
+  {
+    "id": "UCVoJ8bX1PsgclyC5Ozb0bDg",
+    "name": "Congresswoman Nancy Mace",
+    "handle": "@repnancymace",
+    "group": "official-R"
+  },
+  {
+    "id": "UC2XDiCjAHtJqnSEzrHAY5IQ",
+    "name": "Dan Crenshaw",
+    "handle": "@dancrenshawtx",
+    "group": "official-R"
+  },
+  {
+    "id": "UCd5HDJNylAJsBXRQO0E9fbw",
+    "name": "Osborn for Senate",
+    "handle": "@osbornforne",
+    "group": "candidate-independent"
+  },
+  {
+    "id": "UClkO4MArT2WKWj32YDD_-Ew",
+    "name": "The Democrats",
+    "handle": "@thedemocrats",
+    "group": "party-D"
+  },
+  {
+    "id": "UCLpDIMhugA0YQ2tiSB1_8HA",
+    "name": "NRSC",
+    "handle": "@nrsc",
+    "group": "party-R"
+  },
+  {
+    "id": "UCJjSDX-jUChzOEyok9XYRJQ",
+    "name": "Jubilee",
+    "handle": "@jubilee",
+    "group": "media-nonpartisan"
+  },
+  {
+    "id": "UCSRRURbKlPf1HwPUhjmufTg",
+    "name": "The Free Press",
+    "handle": "@thefreepress",
+    "group": "media-nonpartisan"
+  },
+  {
+    "id": "UCZWlSUNDvCCS1hBiXV0zKcA",
+    "name": "PragerU",
+    "handle": "@prageru",
+    "group": "media-R"
+  },
+  {
+    "id": "UCVrK_pMRp_q8IelpfUCTGLQ",
+    "name": "Turning Point USA",
+    "handle": "@turningpointusa",
+    "group": "media-R"
+  },
+  {
+    "id": "UCaeO5vkdj5xOQHp4UmIN6dw",
+    "name": "The Daily Wire",
+    "handle": "@dailywire",
+    "group": "media-R"
+  },
+  {
+    "id": "UCnQC_G5Xsjhp9fEJKuIcrSw",
+    "name": "Ben Shapiro",
+    "handle": "@benshapiro",
+    "group": "media-R"
+  },
+  {
+    "id": "UCLdP3jmBYe9lAZQbY6OSYjw",
+    "name": "Benny Johnson",
+    "handle": "@bennyjohnson",
+    "group": "media-R"
+  },
+  {
+    "id": "UC9r9HYFxEQOBXSopFS61ZWg",
+    "name": "MeidasTouch",
+    "handle": "@meidastouch",
+    "group": "media-D"
+  },
+  {
+    "id": "UCKRoXz3hHAu2XL_k3Ef4vJQ",
+    "name": "Pod Save America",
+    "handle": "@podsaveamerica",
+    "group": "media-D"
+  },
+  {
+    "id": "UCQANb2YPwAtK-IQJrLaaUFw",
+    "name": "Brian Tyler Cohen",
+    "handle": "@briantylercohen",
+    "group": "media-D"
+  },
+  {
+    "id": "UCgIuEJP3M3zg-vt5Z1UVfdg",
+    "name": "Voter Freedom",
+    "handle": "VoterFreedom",
+    "group": "reform"
+  }
 ]

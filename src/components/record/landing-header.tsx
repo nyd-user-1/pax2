@@ -40,7 +40,7 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
         </>
       ) : (
         <>
-          <Link href="/" aria-label="Home"><Wordmark size={26} /></Link>
+          <Link href="/" aria-label="Home"><Wordmark size={26} className="mt-3" /></Link>
           <Link href="/signup" className="press rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-pax2-ink shadow-e1 transition-shadow hover:shadow-e2">
             Sign up
           </Link>
