@@ -27,6 +27,8 @@ const WIP = [
   { href: "/feature-lift", label: "Feature lift", icon: TrendingUp },
   { href: "/velocity-tracker", label: "Velocity", icon: Activity },
   { href: "/live-tracking", label: "Live tracking", icon: Radio },
+  { href: "/patterns", label: "Patterns", icon: ChartColumn },
+  { href: "/graph", label: "Graph", icon: Workflow },
   { href: "/endgame", label: "Endgame", icon: Flag },
   { href: "/ml", label: "ML", icon: Brain },
   { href: "/scoring/method", label: "Score method", icon: FlaskConical },
@@ -61,6 +63,8 @@ const TITLES: [string, string][] = [
   ["/feature-lift", "Feature lift"],
   ["/velocity-tracker", "Velocity"],
   ["/live-tracking", "Live tracking"],
+  ["/patterns", "Patterns"],
+  ["/graph", "Graph"],
   ["/endgame", "Endgame"],
   ["/ml", "ML"],
   ["/tags", "Tags"],
@@ -177,7 +181,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
   // Full: the panel takes the whole content area and the page beneath folds away.
   const takeover = (panelOpen || discuss) && size === "full"
   // /chat fills the content card edge to edge, as solar's chat fills its main area.
-  const full = path.startsWith("/chat")
+  const full = path.startsWith("/chat") || path.startsWith("/graph")
   return (
     <PanelCtx.Provider value={panel}>
       <div className="flex min-h-dvh md:h-dvh md:overflow-hidden md:bg-slate-200/60 md:p-[18px]">
