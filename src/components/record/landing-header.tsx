@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 
-import { MessagesSquare, PanelLeftClose, PanelLeftOpen } from "lucide-react"
+import { MessagesSquare } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
 import { Wordmark } from "@/components/wordmark"
@@ -31,8 +31,8 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
     >
       {signedIn ? (
         <>
-          <button type="button" onClick={toggleSidebar} aria-label="Toggle sidebar" className="flex size-10 items-center justify-center rounded-full bg-white text-pax2-ink shadow-e1 transition-shadow hover:shadow-e2">
-            {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
+          <button type="button" onClick={toggleSidebar} aria-label="Toggle sidebar" aria-expanded={sidebarOpen} className="flex size-10 items-center justify-center rounded-full bg-white text-pax2-ink shadow-e1 transition-shadow hover:shadow-e2">
+            <Wordmark size={15} />
           </button>
           <button type="button" onClick={toggleDiscuss} aria-pressed={discuss} aria-label="Open the discussion" className="flex size-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-colors hover:bg-slate-50">
             <MessagesSquare className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
@@ -40,7 +40,9 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
         </>
       ) : (
         <>
-          <Link href="/" aria-label="Home"><Wordmark size={26} /></Link>
+          <button type="button" onClick={toggleSidebar} aria-label="Toggle sidebar" aria-expanded={sidebarOpen} className="flex size-10 items-center justify-center rounded-full bg-white text-pax2-ink shadow-e1 transition-shadow hover:shadow-e2">
+            <Wordmark size={15} />
+          </button>
           <Link href="/signup" className="press rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-pax2-ink shadow-e1 transition-shadow hover:shadow-e2">
             Sign up
           </Link>
