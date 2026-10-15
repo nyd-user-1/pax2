@@ -8,20 +8,21 @@ import { CURVE_TIER, fmtCompact } from "@/lib/velocity-meta"
 import { cn } from "@/ui/lib/utils"
 
 // A short's first 72 hours against its channel's own median: the curve on a ratio scale with
-// dotted guides at .5x, 1x and 3x, and a readout under the pointer. Stand-ins have no median
-// and draw on their own absolute scale, without guides. Shared by /velocity-tracker and the
-// video page (moved out of the tracker 2026-10-08).
+// dotted guides at .5x, 1x and 3x, and a readout under the pointer. The drawing is 16:9 to fill
+// the card's media box edge to edge; strokes are non-scaling so the line stays 2px at any card
+// width. Stand-ins have no median and draw on their own absolute scale, without guides.
 
 export { CURVE_TIER }
 
-const W = 280
-const H = 72
-const PAD = 6
+const W = 320
+const H = 180
+const TOP = 14
+const BASE = 158
 
 type Pt = { x: number; y: number; h: number; views: number; ratio: number | null }
 
 const r1 = (n: number) => Math.round(n * 10) / 10
-const rx = (r: number) => `${r >= 10 ? r.toFixed(0) : r.toFixed(1)}x`
+const rx = (r: number) => `${(r >= 10 ? r.toFixed(0) : r.toFixed(1)).replace(/^0\./, ".")}x`
 
 export function Curve({ card }: { card: VelocityCard }) {
   const [hover, setHover] = useState<Pt | null>(null)
@@ -32,10 +33,10 @@ export function Curve({ card }: { card: VelocityCard }) {
   const raw: [number, number][] = card.series ?? card.points.slice(from).map((v, i) => [from + i, v])
   if (raw.length === 0) return null
   const top = med ? Math.max(...raw.map(([, v]) => v / med), 3.3) : Math.max(...raw.map(([, v]) => v), 1)
-  const yOf = (v: number) => H - ((med ? v / med : v) / top) * (H - PAD)
+  const yOf = (v: number) => BASE - ((med ? v / med : v) / top) * (BASE - TOP)
   const pts: Pt[] = raw.map(([h, v]) => ({ x: (h / 72) * W, y: yOf(v), h, views: v, ratio: med ? v / med : null }))
   const line = pts.map((p) => `${r1(p.x)},${r1(p.y)}`).join(" ")
-  const area = `${line} ${r1(pts.at(-1)!.x)},${H} ${r1(pts[0].x)},${H}`
+  const area = `${line} ${r1(pts.at(-1)!.x)},${BASE} ${r1(pts[0].x)},${BASE}`
   const end = pts.at(-1)!
   const guides = med ? ([[0.5, ".5x"], [1, "1x"], [3, "3x"]] as const).filter(([g]) => g <= top) : []
   const move = (e: React.PointerEvent<SVGSVGElement>) => {
@@ -47,16 +48,16 @@ export function Curve({ card }: { card: VelocityCard }) {
     setHover(best)
   }
   return (
-    <div className="relative" onPointerLeave={() => setHover(null)}>
-      <svg ref={svgRef} viewBox={`0 0 ${W} ${H + 14}`} className="w-full" role="img" aria-label={`First 72 hours of ${card.title}`} onPointerMove={move}>
+    <div className="relative h-full" onPointerLeave={() => setHover(null)}>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="block h-full w-full" role="img" aria-label={`First 72 hours of ${card.title}`} onPointerMove={move}>
         {guides.map(([g, label]) => (
           <g key={label}>
-            <line x1={0} x2={W} y1={r1(yOf(g * (med as number)))} y2={r1(yOf(g * (med as number)))} stroke="#cbd5e1" strokeWidth="1" strokeDasharray="2 4" />
-            <text x={W} y={r1(yOf(g * (med as number))) - 2.5} textAnchor="end" fontSize="8.5" fill="#94a3b8" className="tabular">{label}</text>
+            <line x1={0} x2={W} y1={r1(yOf(g * (med as number)))} y2={r1(yOf(g * (med as number)))} stroke="#cbd5e1" strokeWidth="1" strokeDasharray="2 4" vectorEffect="non-scaling-stroke" />
+            <text x={W - 4} y={r1(yOf(g * (med as number))) - 3} textAnchor="end" fontSize="8" fill="#94a3b8" className="tabular">{label}</text>
           </g>
         ))}
         <polygon points={area} fill={tier.line} opacity="0.07" className="grow-svg" />
-        <polyline points={line} fill="none" stroke={tier.line} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="grow-svg" />
+        <polyline points={line} fill="none" stroke={tier.line} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" className="grow-svg" />
         <circle cx={r1(end.x)} cy={r1(end.y)} r="3" fill={tier.line} />
         {card.inflection != null && (
           <circle cx={(card.inflection / 72) * W} cy={r1(yOf(card.points[card.inflection]))} r="3.5" fill="#1e3a8a">
@@ -64,15 +65,15 @@ export function Curve({ card }: { card: VelocityCard }) {
           </circle>
         )}
         {[0, 24, 48, 72].map((h) => (
-          <text key={h} x={(h / 72) * W} y={H + 12} textAnchor={h === 0 ? "start" : h === 72 ? "end" : "middle"} fontSize="9.5" fill="#94a3b8" className="tabular">{h}h</text>
+          <text key={h} x={h === 0 ? 2 : h === 72 ? W - 2 : (h / 72) * W} y={H - 8} textAnchor={h === 0 ? "start" : h === 72 ? "end" : "middle"} fontSize="9" fill="#94a3b8" className="tabular">{h}h</text>
         ))}
-        {hover && <line x1={hover.x} x2={hover.x} y1={PAD - 2} y2={H} stroke="#94a3b8" strokeWidth="1" />}
-        {hover && <circle cx={hover.x} cy={hover.y} r="3.5" fill="#fff" stroke={tier.line} strokeWidth="2" />}
+        {hover && <line x1={hover.x} x2={hover.x} y1={TOP - 4} y2={BASE} stroke="#94a3b8" strokeWidth="1" vectorEffect="non-scaling-stroke" />}
+        {hover && <circle cx={hover.x} cy={hover.y} r="3.5" fill="#fff" stroke={tier.line} strokeWidth="2" vectorEffect="non-scaling-stroke" />}
       </svg>
       {hover && (
         <div
-          className="tabular pointer-events-none absolute top-0 -translate-x-1/2 -translate-y-1 whitespace-nowrap rounded-md bg-white px-2 py-1 text-[11px] text-slate-700 shadow-e1 ring-1 ring-slate-200"
-          style={{ left: `${Math.min(88, Math.max(12, (hover.x / W) * 100))}%` }}
+          className="tabular pointer-events-none absolute top-1 -translate-x-1/2 whitespace-nowrap rounded-md bg-white px-2 py-1 text-[11px] text-slate-700 shadow-e1 ring-1 ring-slate-200"
+          style={{ left: `${Math.min(84, Math.max(16, (hover.x / W) * 100))}%` }}
         >
           {Math.floor(hover.h)}h · {fmtCompact(hover.views)} views{hover.ratio != null && ` · ${rx(hover.ratio)}`}
         </div>
@@ -91,21 +92,22 @@ const MEDIA_CHIP: Record<VelocityCard["tier"], string> = {
 }
 
 /** One short's curve card, patterned on the home feed's LandscapeCard: the bare rounded media box
- *  with the verdict chip overlaid, the curve taking the box under the pointer, then title and the
- *  channel line below. On the tracker it links to the video; on the video page it stands alone. */
+ *  with the chip overlaid, the curve filling the box under the pointer, then title and the channel
+ *  line below. The chip carries the video's actual ratio; its color carries the band. On the
+ *  tracker it links to the video; on the video page it stands alone. */
 export function CurveCard({ c, href, focused = false }: { c: VelocityCard; href?: string; focused?: boolean }) {
   const body = (
     <>
       <span className={cn("curve-media relative block overflow-hidden rounded-xl bg-slate-200", focused && "ring-2 ring-hermes-plum")}>
         <img src={thumb(c.id)} alt="" loading="lazy" className="aspect-video w-full object-cover transition-opacity duration-200 group-hover:opacity-0" />
-        <span className="curve-chart absolute inset-0 flex flex-col justify-center bg-white px-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+        <span className="curve-chart absolute inset-0 bg-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
           <Curve card={c} />
         </span>
         <span className="absolute right-2 top-2">
           {c.hours != null && c.hours < 72 ? (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-hermes-lavender px-2.5 py-0.5 text-xs font-semibold text-hermes-ink shadow-sm"><span className="size-1.5 animate-pulse rounded-full bg-hermes-ink" />Watching · {Math.floor(c.hours)}h</span>
           ) : (
-            <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold shadow-sm", c.hours == null ? "bg-hermes-red-soft text-hermes-red-deep" : MEDIA_CHIP[c.tier])}>{c.hours == null ? "Sample" : CURVE_TIER[c.tier].label}</span>
+            <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold shadow-sm", c.hours == null ? "bg-hermes-red-soft text-hermes-red-deep" : MEDIA_CHIP[c.tier])}>{c.hours == null ? "Sample" : c.median != null ? rx(c.views / c.median) : CURVE_TIER[c.tier].label}</span>
           )}
         </span>
       </span>
