@@ -161,6 +161,7 @@ const bandColor = (r: number | null) => (r == null ? "#cbd5e1" : r >= 3 ? GREEN 
 
 export function PublishHeatmap({ data, view = "published" }: { data: PatternsData; view?: string }) {
   const DOW = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+  const [band, setBand] = useState("all")
   const max = Math.max(1, ...data.heat.flat().map((c) => c.n))
   const byCell = useMemo(() => {
     const m = new Map<string, PatternVideo[]>()
@@ -170,6 +171,21 @@ export function PublishHeatmap({ data, view = "published" }: { data: PatternsDat
   }, [data])
   return (
     <div className="flex h-full flex-col gap-1.5">
+      {view === "velocity" && (
+        <div className="flex items-center gap-1.5 pb-1">
+          <button onClick={() => setBand("all")} className={cn("rounded-full px-3 py-1 text-xs font-semibold transition-shadow", band === "all" ? "bg-slate-900 text-white" : "bg-white text-slate-600 shadow-e1 hover:shadow-e2")}>All</button>
+          {BANDS.map((b) => (
+            <button
+              key={b.key}
+              onClick={() => setBand(b.key)}
+              className={cn("rounded-full px-3 py-1 text-xs font-semibold transition-shadow", b.key === band ? "text-white" : "bg-white text-slate-600 shadow-e1 hover:shadow-e2")}
+              style={b.key === band ? { backgroundColor: b.color } : undefined}
+            >
+              {b.label}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="grid flex-1 gap-1.5" style={{ gridTemplateRows: "repeat(7, 1fr)" }}>
         {data.heat.map((row, d) => (
           <div key={d} className="grid gap-1.5" style={{ gridTemplateColumns: "3rem repeat(24, 1fr)" }}>
@@ -177,7 +193,8 @@ export function PublishHeatmap({ data, view = "published" }: { data: PatternsDat
             {row.map((cell, h) => {
               const pct = cell.n / max
               if (view === "velocity") {
-                const vs = byCell.get(`${d}-${h}`) ?? []
+                const test = BANDS.find((b) => b.key === band)?.test
+                const vs = (byCell.get(`${d}-${h}`) ?? []).filter((v) => !test || (v.ratio != null && test(v.ratio)))
                 return (
                   <div key={h} className={cn("flex flex-wrap content-center items-center justify-center gap-[3px] rounded-md p-1", vs.length ? "bg-slate-50" : "bg-slate-50/50")}>
                     {vs.map((v) => (
