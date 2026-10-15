@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { Wordmark } from "@/components/wordmark"
@@ -26,6 +26,7 @@ const WIP = [
   { href: "/break-out", label: "iWAR", icon: Rocket },
   { href: "/feature-lift", label: "Feature lift", icon: TrendingUp },
   { href: "/velocity-tracker", label: "Velocity", icon: Activity },
+  { href: "/live-tracking", label: "Live tracking", icon: Radio },
   { href: "/endgame", label: "Endgame", icon: Flag },
   { href: "/ml", label: "ML", icon: Brain },
   { href: "/scoring/method", label: "Score method", icon: FlaskConical },
@@ -59,6 +60,7 @@ const TITLES: [string, string][] = [
   ["/break-out", "iWAR"],
   ["/feature-lift", "Feature lift"],
   ["/velocity-tracker", "Velocity"],
+  ["/live-tracking", "Live tracking"],
   ["/endgame", "Endgame"],
   ["/ml", "ML"],
   ["/tags", "Tags"],

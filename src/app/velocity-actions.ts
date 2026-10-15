@@ -4,8 +4,9 @@ import { DescribeRuleCommand, DisableRuleCommand, EnableRuleCommand, EventBridge
 import { InvokeCommand, LambdaClient } from "@aws-sdk/client-lambda"
 import { revalidatePath } from "next/cache"
 
+import { polledCards, type VelocityCard } from "@/lib/lab"
 import { requireAdmin } from "@/lib/auth"
-import { pollerState } from "@/lib/velocity-store"
+import { baselines, pollerState, recentPolls } from "@/lib/velocity-store"
 
 const REGION = process.env.HERMES_REGION ?? "us-east-1"
 const FUNCTION = "hermes-velocity-poll"
@@ -32,4 +33,21 @@ export async function setPoller(enabled: boolean): Promise<PollerStatus> {
   await events.send(enabled ? new EnableRuleCommand({ Name: RULE }) : new DisableRuleCommand({ Name: RULE }))
   revalidatePath("/dashboard")
   return pollerStatus()
+}
+
+let cardsCache: { at: number; cards: VelocityCard[] } | null = null
+
+/** Every real curve card, cached briefly per instance - the poller only writes every 15 minutes. */
+async function allCards(): Promise<VelocityCard[]> {
+  if (cardsCache && Date.now() - cardsCache.at < 5 * 60_000) return cardsCache.cards
+  const [rows, medians] = await Promise.all([recentPolls(7), baselines()])
+  cardsCache = { at: Date.now(), cards: polledCards(rows, medians) }
+  return cardsCache.cards
+}
+
+/** One scroll batch of curve cards for /velocity-tracker; the focused video leads when named. */
+export async function moreVelocityCards(offset: number, focus?: string): Promise<{ cards: VelocityCard[]; total: number }> {
+  const all = await allCards()
+  const pool = focus ? [...all.filter((c) => c.id === focus), ...all.filter((c) => c.id !== focus)] : all
+  return { cards: pool.slice(offset, offset + 12), total: pool.length }
 }
