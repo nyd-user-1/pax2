@@ -1,13 +1,25 @@
-import { cn } from "@/ui/lib/utils"
+import GlitchText from "@/components/glitch-text"
 
-/** The pax mark: the x alone — two crossing strokes in the parallax red and blue. */
+/** The pax wordmark: glitch text with the parallax red and blue as the slice shadows. */
 export function Wordmark({ className, size = 22 }: { className?: string; size?: number }) {
   return (
-    <span aria-label="pax" className={cn("inline-flex items-center", className)} style={{ fontSize: size, lineHeight: 1 }}>
-      <svg aria-hidden viewBox="0 0 100 100" style={{ width: "1.26em", height: "1.26em", overflow: "visible" }}>
-        <line x1="10" y1="10" x2="90" y2="90" stroke="var(--pax2-plum)" strokeWidth="17" />
-        <line x1="10" y1="90" x2="90" y2="10" stroke="var(--pax2-red)" strokeWidth="17" />
-      </svg>
-    </span>
+    <GlitchText
+      mode="slices"
+      trigger="always"
+      speed={1}
+      intensity={0.5}
+      burstDuration={0.6}
+      offset={10}
+      skew={0}
+      flicker={false}
+      fontWeight={900}
+      enableShadows
+      shadowColors={["#dc2626", "#2563eb"]}
+      fontSize={size}
+      color="#0f172a"
+      className={className}
+    >
+      pax
+    </GlitchText>
   )
 }
