@@ -403,6 +403,149 @@ export function EngagementScatter({ data }: { data: PatternsData }) {
   )
 }
 
+/* ── rate candles: one video's views-per-hour, six hours per candle ──────── */
+
+const q = (sorted: number[], p: number) => sorted[Math.min(sorted.length - 1, Math.floor(p * sorted.length))] ?? 0
+
+/** Views-per-hour between consecutive readings, with a 3-reading rolling average: 15-minute
+ *  deltas are noisy, the average keeps the candle shape from being noise. */
+function rates(series: [number, number][]): { h: number; rate: number }[] {
+  const raw: { h: number; rate: number }[] = []
+  for (let i = 1; i < series.length; i++) {
+    const dt = series[i][0] - series[i - 1][0]
+    if (dt > 0) raw.push({ h: series[i][0], rate: (series[i][1] - series[i - 1][1]) / dt })
+  }
+  return raw.map((r, i) => {
+    const win = raw.slice(Math.max(0, i - 1), i + 2)
+    return { h: r.h, rate: win.reduce((a, x) => a + x.rate, 0) / win.length }
+  })
+}
+
+export function RateCandles({ data }: { data: PatternsData }) {
+  const candidates = useMemo(
+    () => data.videos.filter((v) => (data.series[v.id]?.length ?? 0) >= 12).sort((a, b) => (b.ratio ?? 0) - (a.ratio ?? 0)),
+    [data]
+  )
+  const [id, setId] = useState(candidates[0]?.id ?? "")
+  const [tip, setTip] = useState<Tip>(null)
+  const video = candidates.find((v) => v.id === id) ?? candidates[0]
+  if (!video) return <p className="text-sm text-slate-500">No video has enough readings yet.</p>
+  const rs = rates(data.series[video.id])
+  const candles = Array.from({ length: 12 }, (_, i) => {
+    const t0 = i * 6
+    const inWin = rs.filter((r) => r.h >= t0 && r.h < t0 + 6)
+    if (inWin.length < 2) return null
+    const vals = inWin.map((r) => r.rate)
+    return { t0, open: vals[0], close: vals[vals.length - 1], hi: Math.max(...vals), lo: Math.min(...vals) }
+  }).filter((c): c is NonNullable<typeof c> => c != null)
+  const maxRate = Math.max(1, ...candles.map((c) => c.hi))
+  const X = (h: number) => ML + (h / 72) * (VW - ML - MR)
+  const Y = (r: number) => MT + (1 - r / (maxRate * 1.08)) * (VH - MT - MB)
+  const bw = ((VW - ML - MR) / 12) * 0.55
+  return (
+    <div className="flex h-full flex-col gap-3">
+      <select
+        value={video.id}
+        onChange={(e) => { setId(e.target.value); setTip(null) }}
+        className="w-fit max-w-full rounded-full bg-white py-1.5 pl-3.5 pr-8 text-sm text-slate-700 shadow-e1 outline-none"
+      >
+        {candidates.map((v) => (
+          <option key={v.id} value={v.id}>
+            {v.ratio != null ? `${rx(v.ratio)} · ` : ""}{v.title.length > 70 ? `${v.title.slice(0, 69)}…` : v.title} · {v.channel}
+          </option>
+        ))}
+      </select>
+      <div className="relative min-h-0 flex-1" onPointerLeave={() => setTip(null)}>
+        <svg viewBox={`0 0 ${VW} ${VH}`} className="h-full w-full" preserveAspectRatio="none">
+          {[0.25, 0.5, 0.75, 1].map((f) => (
+            <g key={f}>
+              <line x1={ML} x2={VW - MR} y1={Y(maxRate * f)} y2={Y(maxRate * f)} stroke="#e2e8f0" strokeDasharray="3 5" vectorEffect="non-scaling-stroke" />
+              <text x={ML - 8} y={Y(maxRate * f) + 3} textAnchor="end" fontSize="12" fill={GRAY} className="tabular">{fmtCompact(maxRate * f)}</text>
+            </g>
+          ))}
+          {[0, 12, 24, 36, 48, 60, 72].map((h) => (
+            <text key={h} x={X(h)} y={VH - MB + 20} textAnchor="middle" fontSize="12" fill={GRAY} className="tabular">{h}h</text>
+          ))}
+          <text x={ML} y={MT - 2} fontSize="12" fill={GRAY}>views per hour</text>
+          {candles.map((c) => {
+            const cx = X(c.t0 + 3)
+            const up = c.close >= c.open
+            const color = up ? GREEN : RED
+            return (
+              <g
+                key={c.t0}
+                onPointerEnter={() => setTip({ x: (cx / VW) * 100, y: (Y(c.hi) / VH) * 100, lines: [`${c.t0}–${c.t0 + 6}h`, `open ${fmtCompact(c.open)}/hr · close ${fmtCompact(c.close)}/hr`, `high ${fmtCompact(c.hi)}/hr · low ${fmtCompact(c.lo)}/hr`] })}
+                onPointerLeave={() => setTip(null)}
+              >
+                <line x1={cx} x2={cx} y1={Y(c.hi)} y2={Y(c.lo)} stroke={color} strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+                <rect x={cx - bw / 2} y={Y(Math.max(c.open, c.close))} width={bw} height={Math.max(2, Math.abs(Y(c.open) - Y(c.close)))} fill={color} fillOpacity={0.85} rx={2} />
+              </g>
+            )
+          })}
+        </svg>
+        <TipBox tip={tip} />
+      </div>
+    </div>
+  )
+}
+
+/* ── ratio spread: the fleet's distribution, hour by hour ────────────────── */
+
+export function RatioSpreadBoxes({ data }: { data: PatternsData }) {
+  const [tip, setTip] = useState<Tip>(null)
+  const hours = Array.from({ length: 24 }, (_, i) => (i + 1) * 3)
+  const boxes = hours.map((h) => {
+    const vals: number[] = []
+    for (const v of data.videos) {
+      if (v.median == null) continue
+      const ser = data.series[v.id]
+      if (!ser?.length || ser[0][0] > h) continue
+      // A video only counts at hours its readings reach - no carrying a stale value forward.
+      if (ser.at(-1)![0] < h) continue
+      const atH = [...ser].filter(([hh]) => hh <= h).at(-1)
+      if (!atH) continue
+      vals.push(Math.max(atH[1] / v.median, 0.02))
+    }
+    vals.sort((a, b) => a - b)
+    return vals.length < 5 ? null : { h, n: vals.length, p5: q(vals, 0.05), p25: q(vals, 0.25), p50: q(vals, 0.5), p75: q(vals, 0.75), p95: q(vals, 0.95) }
+  }).filter((b): b is NonNullable<typeof b> => b != null)
+  if (!boxes.length) return <p className="text-sm text-slate-500">Not enough readings yet.</p>
+  const top = Math.max(4, ...boxes.map((b) => b.p95))
+  const X = (h: number) => ML + (h / 72) * (VW - ML - MR)
+  const Y = (r: number) => MT + (1 - (lg(Math.max(r, 0.02)) - lg(0.02)) / (lg(top * 1.2) - lg(0.02))) * (VH - MT - MB)
+  const bw = ((VW - ML - MR) / 24) * 0.5
+  return (
+    <div className="relative h-full" onPointerLeave={() => setTip(null)}>
+      <svg viewBox={`0 0 ${VW} ${VH}`} className="h-full w-full" preserveAspectRatio="none">
+        {[0.5, 1, 3].map((g) => (
+          <g key={g}>
+            <line x1={ML} x2={VW - MR} y1={Y(g)} y2={Y(g)} stroke="#cbd5e1" strokeDasharray="3 5" vectorEffect="non-scaling-stroke" />
+            <text x={ML - 8} y={Y(g) + 3} textAnchor="end" fontSize="12" fill={GRAY} className="tabular">{rx(g)}</text>
+          </g>
+        ))}
+        {[0, 12, 24, 36, 48, 60, 72].map((h) => (
+          <text key={h} x={X(h)} y={VH - MB + 20} textAnchor="middle" fontSize="12" fill={GRAY} className="tabular">{h}h</text>
+        ))}
+        {boxes.map((b) => {
+          const cx = X(b.h - 1.5)
+          return (
+            <g
+              key={b.h}
+              onPointerEnter={() => setTip({ x: (cx / VW) * 100, y: (Y(b.p95) / VH) * 100, lines: [`hour ${b.h} · ${b.n} videos`, `p95 ${rx(b.p95)} · p75 ${rx(b.p75)} · median ${rx(b.p50)}`, `p25 ${rx(b.p25)} · p5 ${rx(b.p5)}`] })}
+              onPointerLeave={() => setTip(null)}
+            >
+              <line x1={cx} x2={cx} y1={Y(b.p95)} y2={Y(b.p5)} stroke={GRAY} strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+              <rect x={cx - bw / 2} y={Y(b.p75)} width={bw} height={Math.max(2, Y(b.p25) - Y(b.p75))} fill="var(--hermes-plum)" fillOpacity={0.35} rx={2} />
+              <line x1={cx - bw / 2} x2={cx + bw / 2} y1={Y(b.p50)} y2={Y(b.p50)} stroke="#0f172a" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+            </g>
+          )
+        })}
+      </svg>
+      <TipBox tip={tip} />
+    </div>
+  )
+}
+
 /* ── the blocks: every chart in the standard card, with its narrative ────── */
 
 type Story = { title: string; paras: string[] }
@@ -501,6 +644,41 @@ function stories(data: PatternsData): Record<string, Story> {
         `The caution for scoring: likes-per-view is a weak public proxy for whatever the algorithm actually optimizes. Treat it as a floor check, not a predictor — the real signal lives in data only the channel owner's analytics can hand over, which is what the Endgame integration is for.`,
       ],
     },
+    candles: {
+      title: "The push is a rate event, not a level event",
+      paras: [
+        (() => {
+          const peaks = wins
+            .map((v) => {
+              const ser = data.series[v.id]
+              if (!ser?.length) return null
+              let best = 0, bestH = 0
+              for (let t = 0; t <= 66; t += 6) {
+                const a = [...ser].filter(([h]) => h <= t).at(-1)?.[1] ?? 0
+                const b = [...ser].filter(([h]) => h <= t + 6).at(-1)?.[1] ?? 0
+                if (b - a > best) { best = b - a; bestH = t }
+              }
+              return bestH
+            })
+            .filter((h): h is number => h != null)
+            .sort((a, b) => a - b)
+          const medPeak = peaks.length ? peaks[Math.floor(peaks.length / 2)] : null
+          return medPeak != null
+            ? `Across the ${wins.length} breakouts, the six-hour window with the biggest view gain starts at hour ${medPeak} for the median video. The candle chart shows the same thing for one video at a time: a short run of green candles, then red as the rate falls back.`
+            : "Too few breakouts with full series to place the peak yet."
+        })(),
+        "The rate peaks and then falls while the cumulative count keeps rising. That is why the line charts all flatten: the push is a burst measured in hours, and everything after it is residual traffic.",
+        "Read the wicks: a tall upper wick with a small body is a burst the algorithm did not sustain. A sequence of full green bodies is a sustained push. Those are different events with the same 72-hour total.",
+      ],
+    },
+    spread: {
+      title: "The fleet separates in the first day, then holds its shape",
+      paras: [
+        "The box is the middle half of all tracked videos' ratios at that hour; the whiskers are the 5th and 95th percentiles. The spread between whiskers is set early and mostly stops widening after the first day.",
+        "The median line stays near 1x the whole way, which is what the ratio construction predicts: half the fleet above its channel's normal, half below. The information is in the whiskers, not the middle.",
+        "If the p95 whisker at hour 12 already sits where it ends at hour 72, then ranking videos at hour 12 gives nearly the same order as ranking them at the verdict. That matches the velocity chart's story from the other direction.",
+      ],
+    },
   }
 }
 
@@ -510,6 +688,8 @@ const DESC: Record<string, string> = {
   channels: "Each dot is one video's 72-hour ratio, on its channel's row; channels sort by breakout share. The right edge carries the channel's subscribers and videos tracked.",
   subs: "One dot per channel, placed by its subscriber count and the median ratio of its tracked videos — both axes log, dot size is how many videos it has in the watch.",
   engagement: "Each dot is a video, placed by its 72-hour ratio and the likes it earned per thousand views. Color is the verdict band.",
+  candles: "One video's views-per-hour, one candle per six hours. Open and close are the rate entering and leaving the window; the wicks are the fastest and slowest 15-minute stretches inside it. Green means the rate rose over the window, red means it fell. Rates carry a 3-reading rolling average because 15-minute deltas are noisy. Pick the video above the chart.",
+  spread: "Each box is every tracked video's ratio to its channel median at that hour: the box is the middle half, the dark line the median, the whiskers the 5th and 95th percentiles.",
 }
 
 export function PatternSections({ data }: { data: PatternsData }) {
@@ -526,6 +706,8 @@ export function PatternSections({ data }: { data: PatternsData }) {
     { key: "channels", title: "Channels", rows: channelRows, chart: <ChannelStrips data={data} /> },
     { key: "subs", title: "Subscribers", rows: videoRows, chart: <SubsScatter data={data} /> },
     { key: "engagement", title: "Engagement", rows: videoRows, chart: <EngagementScatter data={data} /> },
+    { key: "candles", title: "Rate candles", rows: videoRows, chart: <RateCandles data={data} /> },
+    { key: "spread", title: "Ratio spread by hour", rows: videoRows, chart: <RatioSpreadBoxes data={data} /> },
   ]
   const open = story ? tales[story] : null
   return (
