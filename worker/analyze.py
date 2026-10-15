@@ -14,7 +14,7 @@ R = "us-east-1"
 s3 = boto3.client("s3", region_name=R)
 tr = boto3.client("transcribe", region_name=R)
 br = boto3.client("bedrock-runtime", region_name=R)
-D = "/opt/pax/analyze"
+D = "/opt/hermes/analyze"
 os.makedirs(D, exist_ok=True)
 
 

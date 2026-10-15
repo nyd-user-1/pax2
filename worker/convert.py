@@ -1,14 +1,14 @@
 """Hermes worker job 2: turn the R archives into Parquet + CSV under curated/, and report every schema.
 
-Reads /opt/pax/raw (left by fetch.py). Runs on the worker box only.
+Reads /opt/hermes/raw (left by fetch.py). Runs on the worker box only.
 """
 import glob, json, os, sys, time, traceback
 import boto3, pandas as pd, rdata
 
 B = "hermes-638175140432"
 s3 = boto3.client("s3")
-W = "/opt/pax/raw"
-C = "/opt/pax/curated"
+W = "/opt/hermes/raw"
+C = "/opt/hermes/curated"
 os.makedirs(C, exist_ok=True)
 report = {}
 

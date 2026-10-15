@@ -55,7 +55,7 @@ export async function runPipeline(): Promise<{ started: number; commandId: strin
       DocumentName: "AWS-RunShellScript",
       Comment: `hermes pipeline run: ${queued.length} video(s)`,
       // The box's aws CLI is broken (no dateutil), so the code is pulled with boto3, which works.
-      Parameters: { commands: [`python3 -c "import boto3; boto3.client('s3').download_file('${BUCKET}', 'code/analyze_organic.py', '/opt/pax/analyze_organic.py')"`, `cd /opt/pax && python3 analyze_organic.py ${queued.join(" ")}`], executionTimeout: ["14400"] },
+      Parameters: { commands: [`python3 -c "import boto3; boto3.client('s3').download_file('${BUCKET}', 'code/analyze_organic.py', '/opt/hermes/analyze_organic.py')"`, `cd /opt/hermes && python3 analyze_organic.py ${queued.join(" ")}`], executionTimeout: ["14400"] },
     }),
   )
   return { started: queued.length, commandId: r.Command?.CommandId ?? "" }

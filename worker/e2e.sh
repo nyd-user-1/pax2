@@ -1,10 +1,10 @@
 #!/bin/bash
 # End-to-end check on the worker box: start the built app, call the server actions the way the
 # browser does (Next-Action header), in a throwaway workspace cookie. Prints what came back.
-cd /opt/pax/repo
+cd /opt/hermes/repo
 WS="e2e-$(date +%s)"
 PORT=3311
-(PORT=$PORT npx next start -p $PORT > /opt/pax/e2e-server.log 2>&1 &) ; sleep 8
+(PORT=$PORT npx next start -p $PORT > /opt/hermes/e2e-server.log 2>&1 &) ; sleep 8
 M=.next/server/server-reference-manifest.json
 id() { node -e "const m=require('./$M');for(const [k,v] of Object.entries(m.node)){if(v.exportedName==='$1'){console.log(k);process.exit(0)}}"; }
 call() { # name, page, json-args
@@ -18,4 +18,4 @@ echo "== reading coin-ruth"; call requestReading /v/coin-ruth '["coin-ruth"]' | 
 echo "== take page"; curl -s -o /dev/null -w "%{http_code}\n" -b "hermes-ws=$WS" "http://127.0.0.1:$PORT/v/coin-ruth"
 for p in /method /reviews /scripts /reference /sources /build; do echo "$p $(curl -s -o /dev/null -w '%{http_code}' -b "hermes-ws=$WS" "http://127.0.0.1:$PORT$p")"; done
 pkill -f "next start -p $PORT"
-grep -i -E "error|fail" /opt/pax/e2e-server.log | head -20
+grep -i -E "error|fail" /opt/hermes/e2e-server.log | head -20

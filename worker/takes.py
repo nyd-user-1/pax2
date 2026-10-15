@@ -14,8 +14,8 @@ import boto3, requests
 B = "hermes-638175140432"
 s3 = boto3.client("s3")
 polly = boto3.client("polly", region_name="us-east-1")
-D = "/opt/pax/takes"
-C = "/opt/pax/takes/clips"
+D = "/opt/hermes/takes"
+C = "/opt/hermes/takes/clips"
 os.makedirs(C, exist_ok=True)
 FONT = f"{D}/Inter.ttf"
 if not os.path.exists(FONT):

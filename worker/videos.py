@@ -9,7 +9,7 @@ import boto3
 B = "hermes-638175140432"
 s3 = boto3.client("s3")
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-D = "/opt/pax/videos"
+D = "/opt/hermes/videos"
 os.makedirs(D, exist_ok=True)
 
 

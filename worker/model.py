@@ -14,7 +14,7 @@ import boto3, numpy as np, pandas as pd
 
 B = "hermes-638175140432"
 s3 = boto3.client("s3")
-C = "/opt/pax/curated/swayable"
+C = "/opt/hermes/curated/swayable"
 
 FEATURES = {
     "technique_plain_folks": "Plain-folks appeal",

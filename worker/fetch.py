@@ -8,7 +8,7 @@ import boto3, requests
 
 B = "hermes-638175140432"
 s3 = boto3.client("s3")
-W = "/opt/pax/raw"
+W = "/opt/hermes/raw"
 os.makedirs(W, exist_ok=True)
 manifest = {"started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "steps": {}}
 UA = {"User-Agent": "hermes-research/0.1 (brendan@nysgpt.com)"}
