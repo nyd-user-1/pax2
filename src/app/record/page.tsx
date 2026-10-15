@@ -26,8 +26,9 @@ export default async function RecordLanding() {
   const all = (shorts as unknown as { videos: RawVideo[] }).videos
   const top = all.filter((v) => v.channelId === FAIRVOTE).sort((a, b) => (b.views ?? 0) - (a.views ?? 0))[0]
   const feed = homeFeed as FeedVideo[]
-  // Signed in, the hero has done its job: the feed is the page.
-  if (await currentUser())
+  // Signed in, the hero has done its job: the feed is the page. Local dev is exempt —
+  // its auto-admin shortcut would otherwise hide the hero forever.
+  if (process.env.NODE_ENV !== "development" && (await currentUser()))
     return (
       <LandingSurface>
         <LandingOnly>
