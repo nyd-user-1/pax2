@@ -22,7 +22,7 @@ const nextPath = () => {
 }
 
 const FIELD = "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-shadow placeholder:text-slate-400 focus:ring-2 focus:ring-pax2-plum/40"
-const BUTTON = "press flex w-full items-center justify-center gap-2 rounded-full bg-pax2-ink px-6 py-3.5 text-[15px] font-semibold text-white shadow-e2 transition-shadow hover:shadow-e3 disabled:opacity-60"
+const BUTTON = "flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-pax2-ink text-[15px] font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 
 export function AuthForm({ mode }: { mode: Mode }) {
   const router = useRouter()

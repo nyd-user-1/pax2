@@ -7,16 +7,14 @@ export const metadata = { title: "Sign up" }
 
 export default function SignUpPage() {
   return (
-    <div className="flex min-h-dvh flex-col bg-gradient-to-b from-pax2-lavender to-pax2-mist">
-      <header className="flex items-center px-6 py-5 md:px-10">
-        <Link href="/" aria-label="Home"><Wordmark size={26} /></Link>
+    <main className="flex min-h-dvh w-full items-center justify-center bg-pax2-mist px-6">
+      <header className="fixed inset-x-0 top-0 z-10 flex items-center px-6 py-5">
+        <Link href="/" aria-label="Home"><Wordmark size={28} /></Link>
       </header>
-      <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-6 pb-24">
-        <div className="rounded-3xl bg-white p-8 shadow-e3">
-          <h1 className="font-display pb-6 text-2xl text-slate-900">Create your account</h1>
-          <AuthForm mode="signup" />
-        </div>
-      </main>
-    </div>
+      <div className="w-full max-w-sm">
+        <h1 className="font-display m-0 mb-8 text-center text-4xl font-normal text-pax2-ink">Create an account</h1>
+        <AuthForm mode="signup" />
+      </div>
+    </main>
   )
 }
