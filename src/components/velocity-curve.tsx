@@ -83,6 +83,13 @@ export function Curve({ card }: { card: VelocityCard }) {
 
 const thumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
 
+// On the media box the verdict chips go solid - red and green carry white, gray keeps black ink.
+const MEDIA_CHIP: Record<VelocityCard["tier"], string> = {
+  breakout: "bg-[#16a34a] text-white",
+  baseline: "bg-slate-100 text-slate-900",
+  killed: "bg-[#dc2626] text-white",
+}
+
 /** One short's curve card, patterned on the home feed's LandscapeCard: the bare rounded media box
  *  with the verdict chip overlaid, the curve taking the box under the pointer, then title and the
  *  channel line below. On the tracker it links to the video; on the video page it stands alone. */
@@ -98,7 +105,7 @@ export function CurveCard({ c, href, focused = false }: { c: VelocityCard; href?
           {c.hours != null && c.hours < 72 ? (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-hermes-lavender px-2.5 py-0.5 text-xs font-semibold text-hermes-ink shadow-sm"><span className="size-1.5 animate-pulse rounded-full bg-hermes-ink" />Watching · {Math.floor(c.hours)}h</span>
           ) : (
-            <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold shadow-sm", c.hours == null ? "bg-hermes-red-soft text-hermes-red-deep" : CURVE_TIER[c.tier].chip)}>{c.hours == null ? "Sample" : CURVE_TIER[c.tier].label}</span>
+            <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold shadow-sm", c.hours == null ? "bg-hermes-red-soft text-hermes-red-deep" : MEDIA_CHIP[c.tier])}>{c.hours == null ? "Sample" : CURVE_TIER[c.tier].label}</span>
           )}
         </span>
       </span>
