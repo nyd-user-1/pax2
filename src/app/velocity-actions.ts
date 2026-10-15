@@ -45,9 +45,23 @@ async function allCards(): Promise<VelocityCard[]> {
   return cardsCache.cards
 }
 
+export type VelocitySort = "oldest" | "views" | "az"
+
+const ORDER: Record<VelocitySort, (a: VelocityCard, b: VelocityCard) => number> = {
+  // furthest along first: finished 72-hour curves lead, ones still in flight trail
+  oldest: (a, b) => (b.hours ?? 0) - (a.hours ?? 0),
+  views: (a, b) => b.views - a.views,
+  az: (a, b) => alpha(a.title).localeCompare(alpha(b.title), "en", { sensitivity: "base", numeric: true }),
+}
+
+// A–Z reads past leading quotes and emoji: "🚨Ilhan Omar…" files under I.
+function alpha(title: string) {
+  return title.replace(/^[^\p{L}\p{N}]+/u, "")
+}
+
 /** One scroll batch of curve cards for /velocity-tracker; the focused video leads when named. */
-export async function moreVelocityCards(offset: number, focus?: string): Promise<{ cards: VelocityCard[]; total: number }> {
-  const all = await allCards()
+export async function moreVelocityCards(offset: number, focus?: string, sort: VelocitySort = "oldest"): Promise<{ cards: VelocityCard[]; total: number }> {
+  const all = [...(await allCards())].sort(ORDER[sort] ?? ORDER.oldest)
   const pool = focus ? [...all.filter((c) => c.id === focus), ...all.filter((c) => c.id !== focus)] : all
   return { cards: pool.slice(offset, offset + 12), total: pool.length }
 }
