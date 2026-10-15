@@ -89,7 +89,7 @@ export default async function VelocityPage({ searchParams }: { searchParams: Pro
       )}
 
       <SectionTitle
-        title="Curves"
+        title="Velocity"
         className="items-center"
         action={
           pool.length > 0 && (
