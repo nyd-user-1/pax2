@@ -138,10 +138,10 @@ export function ListRow({ v }: { v: FeedVideo }) {
       </div>
       <div className="flex min-w-0 flex-col gap-1.5">
         <p className="font-display text-lg leading-snug text-slate-900">{v.title}</p>
-        <p className="tabular text-sm text-slate-500">{fmt.format(v.views)} views · {age(v.published)}</p>
+        <p className="tabular text-sm text-pax2-blue">{fmt.format(v.views)} views · {age(v.published)}</p>
         <span className="flex items-center gap-2 pt-1">
           <Avatar id={v.channelId} />
-          <span className="text-sm text-slate-600">{v.channel}</span>
+          <span className="text-sm font-medium text-slate-800">{v.channel}</span>
         </span>
         {v.description && <p className="hidden pt-1 text-sm leading-relaxed text-slate-800 sm:line-clamp-2">{v.description}</p>}
       </div>
