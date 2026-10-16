@@ -287,13 +287,13 @@ const SORTS = [
 
 type FeedSort = (typeof SORTS)[number]["value"]
 
-/** Same menu anatomy as VelocitySortMenu — one dropdown look everywhere. */
+/** VelocitySortMenu's menu, its trigger dressed as section two's Learn more. */
 function FeedSortMenu({ sort, setSort }: { sort: FeedSort; setSort: (s: FeedSort) => void }) {
   const current = SORTS.find((s) => s.value === sort) ?? SORTS[0]
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger aria-label="Sort videos" className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-white px-3.5 text-sm sm:px-4 text-slate-700 shadow-e1 outline-none transition-shadow hover:shadow-e2 data-[popup-open]:shadow-e2">
-        <ArrowUpDown className="size-3.5 text-slate-400" />
+      <DropdownMenuTrigger aria-label="Sort videos" className="press inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-pax2-blue px-4 text-base font-medium text-white shadow-md outline-none transition-shadow hover:shadow-e3 data-[popup-open]:shadow-e3 sm:px-6">
+        <ArrowUpDown className="size-5" />
         {/* Icon-only on phones, so the search keeps the row. */}
         <span className="hidden sm:inline">{current.label}</span>
       </DropdownMenuTrigger>
@@ -346,7 +346,7 @@ const RECENT = "pax2:recent-searches"
 
 /** The search bar, with the reader's recent searches dropping down beneath it while it's empty
  *  (govblock's search drop-down). A search is remembered on Enter. */
-export function SearchBar({ q, setQ, placeholder = "Search videos" }: { q: string; setQ: (q: string) => void; placeholder?: string }) {
+export function SearchBar({ q, setQ, placeholder = "Search videos", className }: { q: string; setQ: (q: string) => void; placeholder?: string; className?: string }) {
   const [open, setOpen] = React.useState(false)
   const [recent, setRecent] = React.useState<string[]>([])
   const input = React.useRef<HTMLInputElement>(null)
@@ -382,7 +382,7 @@ export function SearchBar({ q, setQ, placeholder = "Search videos" }: { q: strin
           e.preventDefault()
           submit()
         }}
-        className="flex h-11 items-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-e1 transition-shadow focus-within:shadow-e2"
+        className={cn("flex items-center overflow-hidden rounded-full border bg-white transition-[box-shadow,border-color,background-color]", className ?? "h-11 border-slate-200 shadow-e1 focus-within:shadow-e2")}
       >
         <input
           ref={input}
@@ -501,7 +501,8 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
       {/* Sticks just beneath the 4rem header, never inside it. */}
       <div className="sticky top-[4.75rem] z-40 flex w-full items-center justify-between gap-4">
         <div className="w-full min-w-0 max-w-2xl">
-          <SearchBar q={q} setQ={setQ} />
+          {/* Dressed as section two's Try it. */}
+          <SearchBar q={q} setQ={setQ} className="h-14 border-slate-400 shadow-md hover:border-pax2-blue hover:bg-slate-50 focus-within:border-pax2-blue" />
         </div>
         <FeedSortMenu sort={sort} setSort={setSort} />
       </div>
