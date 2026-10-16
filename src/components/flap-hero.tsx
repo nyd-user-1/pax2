@@ -12,10 +12,10 @@ import SplitFlapText from "@/components/split-flap-text"
 const STEPS: { rows: [string, string]; tile: string; text: string }[] = [
   { rows: ["STOP", "ENGAGING"], tile: "var(--pax2-red)", text: "#f8fafc" },
   { rows: ["START", "RESONATING"], tile: "#ffffff", text: "#000000" },
-  { rows: ["PAX", "AMERICANA 🇺🇸"], tile: "var(--pax2-blue)", text: "#f8fafc" },
+  { rows: ["PAX", "AMERICANA🇺🇸"], tile: "var(--pax2-blue)", text: "#f8fafc" },
 ]
 /** Boards per row. Words start in box 1; the board itself stays centered on the page. */
-const WIDTH = 11
+const WIDTH = 10
 /** The curtain's hold plus its sweep, in ms. */
 const CURTAIN = 1200
 /** One message's flips plus its hold. */
