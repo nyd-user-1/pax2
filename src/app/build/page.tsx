@@ -28,7 +28,7 @@ type Item = { title: string; detail?: string }
 type Build = { updated: string; budget: { cap: number; spent: { item: string; usd: number }[] }; columns: { id: string; title: string; items: Item[] }[]; resources: { name: string; id: string }[] }
 
 const when = (iso: string) => new Date(iso).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })
-const STATUS_TONE: Record<SourceRow["status"], string> = { Loaded: "text-pax2-plum", "Stand-in": "text-pax2-red-deep", "Not connected": "text-muted-foreground" }
+const STATUS_TONE: Record<SourceRow["status"], string> = { Loaded: "text-pax2-light-blue", "Stand-in": "text-pax2-red-deep", "Not connected": "text-muted-foreground" }
 
 /** Analysis runs on record: the videos' analysis times, split wherever twenty minutes pass with none. */
 function runs(cost: Record<string, number>) {
@@ -105,11 +105,11 @@ export default async function BuildPage() {
                   <TableRow key={s.name}>
                     <TableCell className="truncate font-medium" title={s.name}>
                       {s.href.startsWith("http") ? (
-                        <a href={s.href} target="_blank" rel="noreferrer" className="text-pax2-blue hover:text-pax2-plum hover:underline">
+                        <a href={s.href} target="_blank" rel="noreferrer" className="text-pax2-blue hover:text-pax2-light-blue hover:underline">
                           {s.name}
                         </a>
                       ) : (
-                        <Link href={s.href} className="text-pax2-blue hover:text-pax2-plum hover:underline">
+                        <Link href={s.href} className="text-pax2-blue hover:text-pax2-light-blue hover:underline">
                           {s.name}
                         </Link>
                       )}

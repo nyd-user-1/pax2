@@ -47,7 +47,7 @@ export default function StudioPage() {
       <FlowPage title="Make it without a camera." lead="Your words, animated line by line. Pick a look and a motion; the preview plays as you choose." wide>
         {ready && !lines.length ? (
           <p className="text-slate-500">
-            No script yet. <Link href="/record/start" className="text-pax2-plum underline">Pick or write one first</Link>.
+            No script yet. <Link href="/record/start" className="text-pax2-light-blue underline">Pick or write one first</Link>.
           </p>
         ) : (
           <div className="grid gap-8 lg:grid-cols-[360px_1fr]">
@@ -93,7 +93,7 @@ export default function StudioPage() {
               </div>
               <div className="surface flex flex-col gap-3 p-5">
                 <p className="font-semibold text-slate-900">The ask on the last card</p>
-                <input value={ask} onChange={(e) => setAsk(e.target.value)} maxLength={28} className="rounded-xl border bg-pax2-mist px-4 py-3 outline-none focus:border-pax2-plum" />
+                <input value={ask} onChange={(e) => setAsk(e.target.value)} maxLength={28} className="rounded-xl border bg-pax2-mist px-4 py-3 outline-none focus:border-pax2-light-blue" />
               </div>
               <div className="surface flex flex-col gap-2 p-5 text-sm text-slate-600">
                 <p className="font-semibold text-slate-900">{lines.length} scenes · {Math.round(frames / FPS)} seconds</p>

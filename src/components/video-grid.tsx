@@ -44,19 +44,19 @@ export function VideoGrid({ videos, scripts }: { videos: VideoCardData[]; script
           <DropdownMenuContent align="start" className="w-max min-w-44 rounded-2xl p-1.5 shadow-e3">
             <DropdownMenuItem onClick={() => (setScript(null), setVoice(null))} className="flex items-center justify-between gap-6 whitespace-nowrap rounded-xl px-3 py-2 text-sm">
               All
-              {!script && !voice && <Check className="size-4 text-pax2-plum" />}
+              {!script && !voice && <Check className="size-4 text-pax2-light-blue" />}
             </DropdownMenuItem>
             {scripts.map((s) => (
               <DropdownMenuItem key={s.id} onClick={() => setScript(script === s.id ? null : s.id)} className="flex items-center justify-between gap-6 whitespace-nowrap rounded-xl px-3 py-2 text-sm">
                 {s.short}
-                {script === s.id && <Check className="size-4 text-pax2-plum" />}
+                {script === s.id && <Check className="size-4 text-pax2-light-blue" />}
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
             {voices.map((v) => (
               <DropdownMenuItem key={v} onClick={() => setVoice(voice === v ? null : v)} className="flex items-center justify-between gap-6 whitespace-nowrap rounded-xl px-3 py-2 text-sm">
                 {v}
-                {voice === v && <Check className="size-4 text-pax2-plum" />}
+                {voice === v && <Check className="size-4 text-pax2-light-blue" />}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
@@ -74,7 +74,7 @@ export function VideoGrid({ videos, scripts }: { videos: VideoCardData[]; script
                   <s.icon className="size-4 text-slate-400" />
                   {s.label}
                 </span>
-                {sort === s.id && <Check className="size-4 text-pax2-plum" />}
+                {sort === s.id && <Check className="size-4 text-pax2-light-blue" />}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>

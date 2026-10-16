@@ -16,9 +16,9 @@ const money = (n: number) => (n < 0.01 ? "<$0.01" : `$${n.toFixed(2)}`)
 
 function State({ s }: { s: StepState }) {
   const base = "flex size-5 shrink-0 items-center justify-center rounded-full"
-  if (s === "done") return <span className={cn(base, "bg-pax2-lavender text-pax2-plum")}><Check className="size-3" /></span>
+  if (s === "done") return <span className={cn(base, "bg-pax2-lavender text-pax2-light-blue")}><Check className="size-3" /></span>
   if (s === "failed") return <span className={cn(base, "bg-pax2-red-soft text-pax2-red-deep")}><X className="size-3" /></span>
-  if (s === "running") return <span className={cn(base, "text-pax2-plum")}><Loader2 className="size-4 animate-spin" /></span>
+  if (s === "running") return <span className={cn(base, "text-pax2-light-blue")}><Loader2 className="size-4 animate-spin" /></span>
   return <span className={cn(base, "border border-dashed border-slate-300 text-slate-300")}><Minus className="size-3" /></span>
 }
 
@@ -40,7 +40,7 @@ export default async function PipelinePage() {
             footer={
               batch ? (
                 <span className="flex items-center gap-2">
-                  <Loader2 className="size-3.5 animate-spin text-pax2-plum" />
+                  <Loader2 className="size-3.5 animate-spin text-pax2-light-blue" />
                   Running now: {running} of {Object.keys(batch.videos).length} videos still in progress, started {new Date(batch.startedAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}.
                 </span>
               ) : (
@@ -90,7 +90,7 @@ export default async function PipelinePage() {
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={takeById(r.id)?.video?.poster} alt="" className="h-14 w-8 shrink-0 rounded-md bg-slate-200 object-cover" />
                         <span className="flex flex-col">
-                          <span className="font-medium text-slate-900 group-hover:text-pax2-plum">{r.title}</span>
+                          <span className="font-medium text-slate-900 group-hover:text-pax2-light-blue">{r.title}</span>
                           <span className="text-xs text-slate-500">
                             {r.label} · {Math.round(r.seconds)}s
                           </span>

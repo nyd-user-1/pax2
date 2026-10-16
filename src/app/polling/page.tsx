@@ -13,7 +13,7 @@ export const metadata = { title: "Polling" }
 
 function Source({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <a href={href} target="_blank" rel="noreferrer" className="text-xs text-slate-400 transition-colors hover:text-pax2-plum">
+    <a href={href} target="_blank" rel="noreferrer" className="text-xs text-slate-400 transition-colors hover:text-pax2-light-blue">
       {children}
     </a>
   )
@@ -76,7 +76,7 @@ export default function PollingPage() {
                   const pass = v.yes >= 50
                   return (
                     <li key={`${v.state}-${v.year}`} className="grid grid-cols-[9.5rem_minmax(0,1fr)_3.5rem] items-center gap-3">
-                      <a href={v.url} target="_blank" rel="noreferrer" className="flex flex-col leading-tight hover:text-pax2-plum">
+                      <a href={v.url} target="_blank" rel="noreferrer" className="flex flex-col leading-tight hover:text-pax2-light-blue">
                         <span className="text-sm font-medium text-slate-800">
                           {v.state} <span className="font-normal text-slate-400">{v.year}</span>
                         </span>
@@ -118,7 +118,7 @@ export default function PollingPage() {
                   </li>
                 ))}
               </ul>
-              <a href={polling.national.url} target="_blank" rel="noreferrer" className="mt-auto text-xs text-slate-400 hover:text-pax2-plum">
+              <a href={polling.national.url} target="_blank" rel="noreferrer" className="mt-auto text-xs text-slate-400 hover:text-pax2-light-blue">
                 Emerson · {polling.national.field}
               </a>
             </div>

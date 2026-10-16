@@ -131,7 +131,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
           on ? "bg-white font-semibold text-pax2-blue shadow-e1" : "text-slate-500 hover:bg-white/70 hover:text-pax2-blue hover:shadow-e1",
         )}
       >
-        {on && <span aria-hidden className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-pax2-plum" />}
+        {on && <span aria-hidden className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-pax2-light-blue" />}
         <Icon
           className={cn(small ? "size-3.5" : "size-[18px]", "icon-pop shrink-0 transition-colors", on ? "fill-pax2-lavender text-pax2-blue" : "group-hover:fill-pax2-lavender group-hover:text-pax2-blue")}
           strokeWidth={on ? 2.25 : 1.75}

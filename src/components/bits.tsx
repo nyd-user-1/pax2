@@ -44,8 +44,8 @@ export function RangeBar({ value, low, high, className }: { value: number | null
     <div className={cn("relative h-2 w-full rounded-full bg-muted", className)}>
       <div className="absolute top-1/2 h-px w-full -translate-y-1/2 bg-border" style={{ left: 0 }} />
       <div className="absolute inset-y-0 left-1/2 w-px bg-foreground/15" />
-      {low != null && high != null && <div className="grow absolute inset-y-0 rounded-full bg-pax2-plum/20" style={{ left: `${low}%`, width: `${Math.max(1, high - low)}%` }} />}
-      {value != null && <div className="absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background bg-pax2-plum shadow" style={{ left: `${value}%` }} />}
+      {low != null && high != null && <div className="grow absolute inset-y-0 rounded-full bg-pax2-light-blue/20" style={{ left: `${low}%`, width: `${Math.max(1, high - low)}%` }} />}
+      {value != null && <div className="absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background bg-pax2-light-blue shadow" style={{ left: `${value}%` }} />}
     </div>
   )
 }

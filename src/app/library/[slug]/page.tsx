@@ -80,7 +80,7 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
           {d.fileCount > 0 && <Fact label="Files" value={`${d.fileCount} · ${bytes(d.bytes)}`} />}
           <Fact label="License" value={d.license} />
           {d.link && (
-            <a href={d.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-medium text-pax2-plum hover:underline">
+            <a href={d.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-medium text-pax2-light-blue hover:underline">
               Original source <ExternalLink className="size-3.5" />
             </a>
           )}
@@ -235,7 +235,7 @@ function TailSections({ d }: { d: Dataset }) {
         <div className="surface flex flex-col gap-2 p-5">
           <p className="font-semibold text-slate-900">Used in PAX2</p>
           {d.usedIn.map((u) => (
-            <Link key={u.href + u.label} href={u.href} className="text-sm font-medium text-pax2-plum hover:underline">
+            <Link key={u.href + u.label} href={u.href} className="text-sm font-medium text-pax2-light-blue hover:underline">
               {u.label}
             </Link>
           ))}

@@ -164,7 +164,7 @@ export default async function ReviewsPage() {
             })}
           />
           {takes.some((t) => t.history.length === 1 && t.history[0].snapshot.dataset === "round-2") && (
-            <div className="rounded-xl border border-pax2-plum/30 bg-pax2-mist p-4 text-sm">
+            <div className="rounded-xl border border-pax2-light-blue/30 bg-pax2-mist p-4 text-sm">
               <p className="font-medium text-pax2-blue">New in this round</p>
               {takes
                 .filter((t) => t.history.length === 1 && t.history[0].snapshot.dataset === "round-2")
@@ -234,7 +234,7 @@ export default async function ReviewsPage() {
                         return <td key={c.key}>{ca != null && cb != null ? `${cb - ca >= 0 ? "+" : ""}${(cb - ca).toFixed(0)}` : "—"}</td>
                       })}
                       <td className="text-xs">
-                        {sa == null && sb ? `First score: ${SIDE[sb]}` : conclusion ? <span className="font-medium text-pax2-plum">Conclusion changed: {SIDE[sa!]} to {SIDE[sb!]}</span> : sb ? `Score changed, conclusion holds: ${SIDE[sb]}` : "Still not scorable"}
+                        {sa == null && sb ? `First score: ${SIDE[sb]}` : conclusion ? <span className="font-medium text-pax2-light-blue">Conclusion changed: {SIDE[sa!]} to {SIDE[sb!]}</span> : sb ? `Score changed, conclusion holds: ${SIDE[sb]}` : "Still not scorable"}
                       </td>
                     </tr>
                   )
@@ -278,7 +278,7 @@ export default async function ReviewsPage() {
             <ul className="flex flex-col gap-2">
               {resolved.map(({ t, c, actual, right }) => (
                 <li key={c.at} data-find className="flex flex-wrap items-baseline gap-2 surface px-4 py-2 text-sm">
-                  <span className="rounded bg-pax2-lavender px-1.5 text-[11px] font-medium text-pax2-plum">Locked {new Date(c.at).toLocaleString()}</span>
+                  <span className="rounded bg-pax2-lavender px-1.5 text-[11px] font-medium text-pax2-light-blue">Locked {new Date(c.at).toLocaleString()}</span>
                   <span>
                     {takeLabel(t.take)}: {c.by} called <b>{c.predicted}</b> than {c.baseline?.toFixed(0)}
                   </span>

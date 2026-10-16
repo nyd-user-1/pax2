@@ -17,7 +17,7 @@ function Row({ t, n }: { t: Todo; n: number }) {
   return (
     <div data-find className="rounded-md border bg-card">
       <button type="button" onClick={() => setOpen(!open)} className="flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left">
-        <span title={t.done ? "done" : t.who ? "Brendan" : "open"} className={cn("size-4 shrink-0 rounded-[3px] border", t.done ? "border-pax2-plum bg-pax2-lavender" : t.who ? "border-pax2-red bg-pax2-red-soft" : "border-slate-300")} />
+        <span title={t.done ? "done" : t.who ? "Brendan" : "open"} className={cn("size-4 shrink-0 rounded-[3px] border", t.done ? "border-pax2-light-blue bg-pax2-lavender" : t.who ? "border-pax2-red bg-pax2-red-soft" : "border-slate-300")} />
         <ChevronRight className={cn("size-3.5 shrink-0 text-muted-foreground transition-transform", open && "rotate-90")} />
         <span className="shrink-0 font-mono text-xs text-muted-foreground">{n}.</span>
         <span className={cn("min-w-0 flex-1 text-sm", t.done && "text-muted-foreground line-through")}>{t.title}</span>

@@ -54,7 +54,7 @@ function Table({ rows, admin }: { rows: OriginalRow[]; admin: boolean }) {
           {rows.map((r) => (
             <tr key={r.id}>
               <td>
-                <Link href={`/v/${r.id}`} scroll={false} className="font-medium text-slate-900 hover:text-pax2-plum">
+                <Link href={`/v/${r.id}`} scroll={false} className="font-medium text-slate-900 hover:text-pax2-light-blue">
                   {r.title ?? "Untitled video"}
                 </Link>
                 {r.name && <span className="text-slate-500"> · {r.name}</span>}

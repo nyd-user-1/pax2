@@ -213,7 +213,7 @@ export function PublishHeatmap({ data, view = "published" }: { data: PatternsDat
                   key={h}
                   title={`${DOW[d]} ${h}:00 ET · ${cell.n} published${cell.n ? ` · ${cell.pushed} above 3x` : ""}`}
                   className={cn("tabular flex items-center justify-center rounded-md text-xs", pct > 0.55 ? "text-white" : "text-slate-600", cell.pushed > 0 && "ring-2 ring-inset ring-[#16a34a]")}
-                  style={{ backgroundColor: cell.n ? `color-mix(in oklab, var(--pax2-plum) ${Math.round(12 + pct * 78)}%, white)` : "#f1f5f9" }}
+                  style={{ backgroundColor: cell.n ? `color-mix(in oklab, var(--pax2-light-blue) ${Math.round(12 + pct * 78)}%, white)` : "#f1f5f9" }}
                 >
                   {cell.n || ""}
                 </div>
@@ -535,7 +535,7 @@ export function RatioSpreadBoxes({ data }: { data: PatternsData }) {
               onPointerLeave={() => setTip(null)}
             >
               <line x1={cx} x2={cx} y1={Y(b.p95)} y2={Y(b.p5)} stroke={GRAY} strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
-              <rect x={cx - bw / 2} y={Y(b.p75)} width={bw} height={Math.max(2, Y(b.p25) - Y(b.p75))} fill="var(--pax2-plum)" fillOpacity={0.35} rx={2} />
+              <rect x={cx - bw / 2} y={Y(b.p75)} width={bw} height={Math.max(2, Y(b.p25) - Y(b.p75))} fill="var(--pax2-light-blue)" fillOpacity={0.35} rx={2} />
               <line x1={cx - bw / 2} x2={cx + bw / 2} y1={Y(b.p50)} y2={Y(b.p50)} stroke="#0f172a" strokeWidth="2" vectorEffect="non-scaling-stroke" />
             </g>
           )

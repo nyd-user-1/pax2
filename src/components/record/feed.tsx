@@ -155,7 +155,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <Score v={v} />
         <Favorite id={v.id} />
       </div>
-      <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-pax2-plum">{v.title}</p>
+      <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-pax2-light-blue">{v.title}</p>
       <p className="tabular text-xs text-slate-500">{fmt.format(v.views)} views</p>
     </Link>
   )

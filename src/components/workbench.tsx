@@ -35,7 +35,7 @@ export function SeekProvider({ children }: { children: React.ReactNode }) {
 export function At({ t, children, className }: { t: number; children?: React.ReactNode; className?: string }) {
   const { seek } = useSeek()
   return (
-    <button type="button" onClick={() => seek(t)} className={cn("tabular rounded bg-pax2-lavender px-1.5 py-px text-[11px] font-medium text-pax2-plum hover:bg-pax2-plum hover:text-white", className)}>
+    <button type="button" onClick={() => seek(t)} className={cn("tabular rounded bg-pax2-lavender px-1.5 py-px text-[11px] font-medium text-pax2-light-blue hover:bg-pax2-light-blue hover:text-white", className)}>
       {children ?? ts(t)}
     </button>
   )
@@ -55,7 +55,7 @@ export function ScriptTimeline({ lines, duration }: { lines: { t: number; text: 
         return (
           <li key={i}>
             <button type="button" onClick={() => seek(l.t)} className={cn("flex w-full gap-3 rounded-lg px-2 py-1.5 text-left text-sm transition-colors hover:bg-pax2-mist", on && "bg-pax2-lavender")}>
-              <span className="tabular w-10 shrink-0 pt-px text-xs text-pax2-plum">{ts(l.t)}</span>
+              <span className="tabular w-10 shrink-0 pt-px text-xs text-pax2-light-blue">{ts(l.t)}</span>
               <span className={cn("leading-snug", on ? "text-pax2-blue" : "text-foreground/80")}>{l.text}</span>
             </button>
           </li>
@@ -83,7 +83,7 @@ export function Loudness({ f }: { f: NonNullable<Features["audio"]> }) {
           const h = 3 + ((d - lo) / Math.max(1, hi - lo)) * 20
           const loud = f.loudestSec.includes(i)
           const quiet = f.quietestSec.includes(i)
-          return <rect key={i} x={i * w + w * 0.1} y={24 - h} width={w * 0.8} height={h} rx={0.4} className={cn(loud ? "fill-pax2-plum" : quiet ? "fill-pax2-red" : "fill-pax2-plum/30")} />
+          return <rect key={i} x={i * w + w * 0.1} y={24 - h} width={w * 0.8} height={h} rx={0.4} className={cn(loud ? "fill-pax2-light-blue" : quiet ? "fill-pax2-red" : "fill-pax2-light-blue/30")} />
         })}
         {f.pauses.map((p, i) => (
           <rect key={`p${i}`} x={(p.t / f.durationSec) * 100} y={0} width={0.4} height={3} className="fill-foreground/40" />
@@ -91,7 +91,7 @@ export function Loudness({ f }: { f: NonNullable<Features["audio"]> }) {
         <rect x={(now / f.durationSec) * 100} y={0} width={0.35} height={24} className="fill-foreground" />
       </svg>
       <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
-        <span className="flex items-center gap-1"><span className="size-2 rounded-sm bg-pax2-plum" />loudest</span>
+        <span className="flex items-center gap-1"><span className="size-2 rounded-sm bg-pax2-light-blue" />loudest</span>
         <span className="flex items-center gap-1"><span className="size-2 rounded-sm bg-pax2-red" />quietest</span>
         <span>{f.pauses.length} pauses ≥ 0.3s</span>
       </div>
@@ -125,7 +125,7 @@ function Timeline({ entries }: { entries: { t: number; label: string | null; tex
     <ol className="relative flex flex-col gap-5 pl-6 before:absolute before:inset-y-2 before:left-[5px] before:w-px before:bg-slate-200">
       {entries.map((e, i) => (
         <li key={i} className="relative flex flex-col gap-1">
-          <span className={cn("absolute -left-6 top-1.5 size-[11px] rounded-full border-2 bg-white transition-colors", i === at && now > 0 ? "border-pax2-plum bg-pax2-plum" : e.label ? "border-pax2-blue" : "border-slate-300")} />
+          <span className={cn("absolute -left-6 top-1.5 size-[11px] rounded-full border-2 bg-white transition-colors", i === at && now > 0 ? "border-pax2-light-blue bg-pax2-light-blue" : e.label ? "border-pax2-blue" : "border-slate-300")} />
           <div className="flex items-center gap-2">
             <At t={e.t} />
             {e.label && <span className="text-xs font-semibold text-pax2-blue">{e.label}</span>}

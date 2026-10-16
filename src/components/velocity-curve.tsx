@@ -98,7 +98,7 @@ const MEDIA_CHIP: Record<VelocityCard["tier"], string> = {
 export function CurveCard({ c, href, focused = false }: { c: VelocityCard; href?: string; focused?: boolean }) {
   const body = (
     <>
-      <span className={cn("curve-media relative block overflow-hidden rounded-xl bg-slate-200", focused && "ring-2 ring-pax2-plum")}>
+      <span className={cn("curve-media relative block overflow-hidden rounded-xl bg-slate-200", focused && "ring-2 ring-pax2-light-blue")}>
         <img src={thumb(c.id)} alt="" loading="lazy" className="aspect-video w-full object-cover transition-opacity duration-200 group-hover:opacity-0" />
         <span className="curve-chart absolute inset-0 bg-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
           <Curve card={c} />

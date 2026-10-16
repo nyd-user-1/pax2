@@ -80,7 +80,7 @@ export default async function MethodPage() {
             <div className="grid gap-2 md:grid-cols-2">
               {CHOICES.map((c) => (
                 <div key={c.what} data-find className="flex gap-3 surface p-3">
-                  <span className={cn("h-fit shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", c.kind === "design" ? "bg-pax2-lavender text-pax2-plum" : "bg-observed/10 text-observed")}>{c.kind === "design" ? "Design choice" : "From the data"}</span>
+                  <span className={cn("h-fit shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", c.kind === "design" ? "bg-pax2-lavender text-pax2-light-blue" : "bg-observed/10 text-observed")}>{c.kind === "design" ? "Design choice" : "From the data"}</span>
                   <div>
                     <p className="text-sm font-medium text-pax2-blue">{c.what}</p>
                     <p className="text-xs text-muted-foreground">{c.detail}</p>
@@ -133,7 +133,7 @@ export default async function MethodPage() {
                       {g.values.map((v, i) => {
                         const r = rank(grid.map((x) => x.values[i]))[gi]
                         return (
-                          <td key={i} className={cn(i > 0 && Math.abs(r - baseRank[gi]) >= 3 && "text-pax2-plum")}>
+                          <td key={i} className={cn(i > 0 && Math.abs(r - baseRank[gi]) >= 3 && "text-pax2-light-blue")}>
                             {v.toFixed(0)} <span className="text-[10px] text-muted-foreground">#{r}</span>
                           </td>
                         )

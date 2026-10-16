@@ -21,7 +21,7 @@ const nextPath = () => {
   return n && n.startsWith("/") && !n.startsWith("//") ? n : "/record/start"
 }
 
-const FIELD = "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-shadow placeholder:text-slate-400 focus:ring-2 focus:ring-pax2-plum/40"
+const FIELD = "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-shadow placeholder:text-slate-400 focus:ring-2 focus:ring-pax2-light-blue/40"
 const BUTTON = "flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-pax2-blue text-[15px] font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 
 export function AuthForm({ mode }: { mode: Mode }) {
@@ -179,9 +179,9 @@ export function AuthForm({ mode }: { mode: Mode }) {
           </button>
           <p className="text-center text-sm text-slate-500">
             {mode === "signup" ? (
-              <>Already have an account? <Link href={`/signin${qs}`} className="font-medium text-pax2-plum hover:underline">Sign in</Link></>
+              <>Already have an account? <Link href={`/signin${qs}`} className="font-medium text-pax2-light-blue hover:underline">Sign in</Link></>
             ) : (
-              <>New here? <Link href={`/signup${qs}`} className="font-medium text-pax2-plum hover:underline">Create an account</Link></>
+              <>New here? <Link href={`/signup${qs}`} className="font-medium text-pax2-light-blue hover:underline">Create an account</Link></>
             )}
           </p>
         </>

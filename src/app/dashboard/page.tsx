@@ -147,7 +147,7 @@ export default async function DashboardPage() {
                     </div>
                   </div>
                 ))}
-                <Link href="/evals" className="text-sm font-medium text-pax2-plum hover:underline">
+                <Link href="/evals" className="text-sm font-medium text-pax2-light-blue hover:underline">
                   Open Evals
                 </Link>
               </div>
@@ -157,7 +157,7 @@ export default async function DashboardPage() {
                 <ol className="flex flex-col">
                   {show.feed.map((f, i) => (
                     <li key={i} data-find className="rise flex items-start gap-3 border-b border-slate-100 py-2.5 text-sm last:border-0" style={{ ["--i" as string]: i }}>
-                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-pax2-plum" />
+                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-pax2-light-blue" />
                       <span className="flex-1 text-slate-700">{f.text}</span>
                       <span className="shrink-0 text-xs text-slate-400">{new Date(f.at).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}</span>
                     </li>

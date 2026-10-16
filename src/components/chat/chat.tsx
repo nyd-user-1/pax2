@@ -407,19 +407,19 @@ export function Chat({ scripts = [], videos = [], compact = false }: { scripts?:
           {suggestions.map(sg => (
             <button key={sg.place_id} onClick={() => { selectAddress(sg); exitAddressMode() }}
               className="flex w-full items-start gap-3 px-4 py-3 text-sm text-[var(--txt)] hover:bg-[var(--inp-bg)] transition-colors text-left border-b border-[var(--border)] last:border-0">
-              <MapPin className="h-4 w-4 text-pax2-plum shrink-0 mt-0.5" />
+              <MapPin className="h-4 w-4 text-pax2-light-blue shrink-0 mt-0.5" />
               <span>{sg.description}</span>
             </button>
           ))}
         </div>
       )}
-      <div className={`flex flex-col rounded-2xl border ${addressMode ? 'border-pax2-plum' : recordingState !== 'idle' ? 'border-blue-500' : 'border-[var(--border)]'} bg-[var(--inp-bg)] px-4 pt-3 pb-3 transition-all gap-1 shadow-[0_1px_3px_rgba(0,0,0,0.04)] ${isFocused ? 'shadow-[0_8px_24px_rgba(0,0,0,0.08)]' : ''}`}>
+      <div className={`flex flex-col rounded-2xl border ${addressMode ? 'border-pax2-light-blue' : recordingState !== 'idle' ? 'border-blue-500' : 'border-[var(--border)]'} bg-[var(--inp-bg)] px-4 pt-3 pb-3 transition-all gap-1 shadow-[0_1px_3px_rgba(0,0,0,0.04)] ${isFocused ? 'shadow-[0_8px_24px_rgba(0,0,0,0.08)]' : ''}`}>
 
         {selectedAddress && (
           <div className="flex items-center gap-2 pb-2.5 mb-1 border-b border-[var(--border)]">
-            <MapPin className="h-3.5 w-3.5 text-pax2-plum shrink-0" />
-            <span className="text-xs text-pax2-plum truncate flex-1 font-medium">{selectedAddress.description}</span>
-            <button onClick={clearAddress} className="text-[var(--muted)] hover:text-pax2-plum transition-colors shrink-0">
+            <MapPin className="h-3.5 w-3.5 text-pax2-light-blue shrink-0" />
+            <span className="text-xs text-pax2-light-blue truncate flex-1 font-medium">{selectedAddress.description}</span>
+            <button onClick={clearAddress} className="text-[var(--muted)] hover:text-pax2-light-blue transition-colors shrink-0">
               <X className="h-3.5 w-3.5" />
             </button>
           </div>
@@ -435,7 +435,7 @@ export function Chat({ scripts = [], videos = [], compact = false }: { scripts?:
             }}
           >
             <span className="text-[var(--txt)]">What explains the score on </span>
-            <span className="text-pax2-plum font-semibold">{selectedVideo.label}</span>
+            <span className="text-pax2-light-blue font-semibold">{selectedVideo.label}</span>
             <span className="text-[var(--txt)]">?</span>
           </div>
         ) : recordingState === 'recording' ? (
@@ -476,7 +476,7 @@ export function Chat({ scripts = [], videos = [], compact = false }: { scripts?:
           <button
             onClick={() => addressMode ? exitAddressMode() : setAddressMode(true)}
             className={`ml-2 shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
-              addressMode || selectedAddress ? 'text-pax2-plum bg-pax2-plum/10' : 'text-[var(--muted)] hover:bg-[rgba(0,0,0,0.07)] hover:text-[var(--txt)]'
+              addressMode || selectedAddress ? 'text-pax2-light-blue bg-pax2-light-blue/10' : 'text-[var(--muted)] hover:bg-[rgba(0,0,0,0.07)] hover:text-[var(--txt)]'
             }`}
             title={addressMode ? 'Exit address mode' : 'Look up an address'}>
             <MapPin className="h-4 w-4" />
@@ -575,7 +575,7 @@ export function Chat({ scripts = [], videos = [], compact = false }: { scripts?:
                           className="absolute inset-0 bg-[var(--inp-bg)]"
                           style={v.poster ? { backgroundImage: `url(${v.poster})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
                         >
-                          {!v.poster && <div className="absolute inset-0 flex items-center justify-center"><PlaySquare className="h-8 w-8 text-pax2-plum opacity-40" /></div>}
+                          {!v.poster && <div className="absolute inset-0 flex items-center justify-center"><PlaySquare className="h-8 w-8 text-pax2-light-blue opacity-40" /></div>}
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                         <div className="absolute bottom-2 left-3">

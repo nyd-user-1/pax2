@@ -24,7 +24,7 @@ export type FlowData = {
 // that opens or closes.
 
 function Count({ n, on }: { n: number | string; on: boolean }) {
-  return <span className={cn("ml-1 flex h-[18px] min-w-[18px] items-center justify-center rounded px-1 text-xs", on ? "bg-pax2-lavender text-pax2-plum" : "bg-slate-100 text-slate-500")}>{n}</span>
+  return <span className={cn("ml-1 flex h-[18px] min-w-[18px] items-center justify-center rounded px-1 text-xs", on ? "bg-pax2-lavender text-pax2-light-blue" : "bg-slate-100 text-slate-500")}>{n}</span>
 }
 
 function Section({ title, children, href }: { title?: string; children: React.ReactNode; href?: string }) {
@@ -79,7 +79,7 @@ function FlowMap({ from, to, href }: { from: string; to: string; href?: string }
       <span className="truncate text-sm text-slate-800">{from}</span>
       <ArrowRight className="size-3.5 text-slate-400" />
       {href ? (
-        <Link href={href} className="truncate rounded px-1.5 py-0.5 text-right text-sm text-slate-800 underline decoration-pax2-plum underline-offset-4 hover:bg-slate-100">
+        <Link href={href} className="truncate rounded px-1.5 py-0.5 text-right text-sm text-slate-800 underline decoration-pax2-light-blue underline-offset-4 hover:bg-slate-100">
           {to}
         </Link>
       ) : (

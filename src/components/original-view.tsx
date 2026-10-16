@@ -44,7 +44,7 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
           {row.parent && (
             <>
               {" · "}
-              <Link href={`/v/${row.parent}`} className="text-pax2-plum hover:underline">
+              <Link href={`/v/${row.parent}`} className="text-pax2-light-blue hover:underline">
                 version {row.version - 1}
               </Link>
             </>
@@ -52,7 +52,7 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
           {row.replacedBy && (
             <>
               {" · "}
-              <Link href={`/v/${row.replacedBy}`} className="text-pax2-plum hover:underline">
+              <Link href={`/v/${row.replacedBy}`} className="text-pax2-light-blue hover:underline">
                 replaced by version {row.version + 1}
               </Link>
             </>
@@ -128,7 +128,7 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
                 <div key={r.change} className="flex flex-col gap-1 py-3">
                   <span className="flex flex-wrap items-baseline justify-between gap-2">
                     <span className="text-sm font-medium text-slate-900">{r.change}</span>
-                    <span className={cn("rounded-full px-2 py-0.5 text-xs", r.axis === "persuasion" ? "bg-pax2-plum/10 text-pax2-plum" : "bg-slate-100 text-slate-600")}>{r.axis === "persuasion" ? "Persuasion" : "Virality"}</span>
+                    <span className={cn("rounded-full px-2 py-0.5 text-xs", r.axis === "persuasion" ? "bg-pax2-light-blue/10 text-pax2-light-blue" : "bg-slate-100 text-slate-600")}>{r.axis === "persuasion" ? "Persuasion" : "Virality"}</span>
                   </span>
                   <span className="text-xs text-slate-500">
                     {r.why}
@@ -203,7 +203,7 @@ async function Published({ row, admin }: { row: OriginalRow; admin: boolean }) {
                 <td className="font-medium text-slate-900">{platform}</td>
                 <td className="text-slate-600">
                   {url ? (
-                    <a href={url} target="_blank" rel="noreferrer" className="text-pax2-plum hover:underline">
+                    <a href={url} target="_blank" rel="noreferrer" className="text-pax2-light-blue hover:underline">
                       {url.replace(/^https?:\/\//, "")}
                     </a>
                   ) : (

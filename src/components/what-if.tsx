@@ -44,7 +44,7 @@ export function WhatIf({ options, reference }: { options: { label: string; take:
                 ×{(mult[k.key] ?? 1).toFixed(2)} = {((base.snapshot.metrics[k.key].value ?? 0) * (mult[k.key] ?? 1)).toLocaleString(undefined, { maximumFractionDigits: 1 })}
               </span>
             </span>
-            <input type="range" min={0.1} max={3} step={0.05} value={mult[k.key] ?? 1} onChange={(e) => setMult((m) => ({ ...m, [k.key]: Number(e.target.value) }))} className="accent-[var(--pax2-plum)]" />
+            <input type="range" min={0.1} max={3} step={0.05} value={mult[k.key] ?? 1} onChange={(e) => setMult((m) => ({ ...m, [k.key]: Number(e.target.value) }))} className="accent-[var(--pax2-light-blue)]" />
           </label>
         ))}
         <p className="text-xs text-muted-foreground">Spend moves nothing: it is a delivery condition. Doubling impressions and plays together leaves the rates alone and only narrows the range.</p>

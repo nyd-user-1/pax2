@@ -47,7 +47,7 @@ function StepCard({ p, i, takeId, saved, events }: { p: Proposal; i: number; tak
     <div className="flex flex-col gap-3 rounded-xl border bg-card p-4">
       <div className="flex items-start justify-between gap-3">
         {editing ? <Textarea value={text} onChange={(e) => setText(e.target.value)} className="min-h-16 text-sm" /> : <p className="font-medium leading-snug text-pax2-blue">{latest?.change ?? p.change}</p>}
-        <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", latest ? "bg-pax2-plum text-white" : "bg-muted text-muted-foreground")}>{STATUS_LABEL[latest?.status ?? "proposed"]}</span>
+        <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", latest ? "bg-pax2-light-blue text-white" : "bg-muted text-muted-foreground")}>{STATUS_LABEL[latest?.status ?? "proposed"]}</span>
       </div>
       <dl className="grid gap-2 text-sm sm:grid-cols-3">
         <div>
@@ -144,7 +144,7 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
           </div>
 
           {r.priorChecks?.length > 0 && (
-            <div className="flex flex-col gap-2 rounded-xl border border-pax2-plum/30 bg-pax2-mist p-4">
+            <div className="flex flex-col gap-2 rounded-xl border border-pax2-light-blue/30 bg-pax2-mist p-4">
               <h3 className="text-sm font-medium text-pax2-blue">The last review, checked against the new results</h3>
               {r.priorChecks.map((p, i) => (
                 <div key={i} className="text-sm">
@@ -218,7 +218,7 @@ function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapsh
         <ul className="flex flex-col gap-1 text-sm">
           {calls.map((c) => (
             <li key={c.at} className="flex flex-wrap items-baseline gap-2">
-              <span className="rounded bg-pax2-lavender px-1.5 text-[11px] font-medium text-pax2-plum">Locked {new Date(c.at).toLocaleString()}</span>
+              <span className="rounded bg-pax2-lavender px-1.5 text-[11px] font-medium text-pax2-light-blue">Locked {new Date(c.at).toLocaleString()}</span>
               <span>
                 {c.by}: {c.predicted} than {c.baseline?.toFixed(0) ?? "—"} by {c.target === "round-1" ? "Round 1" : "Round 2"}
               </span>

@@ -103,7 +103,7 @@ export function UpworthyLessons({ data }: { data: UpworthyData }) {
       <ul className="flex flex-col gap-2.5">
         {lessons.map((x) => (
           <li key={x} className="flex gap-2.5 text-sm leading-relaxed text-slate-700">
-            <span className="mt-[7px] size-1.5 shrink-0 rounded-full bg-pax2-plum" />
+            <span className="mt-[7px] size-1.5 shrink-0 rounded-full bg-pax2-light-blue" />
             <span>{x}</span>
           </li>
         ))}

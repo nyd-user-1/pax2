@@ -3,7 +3,7 @@
    navy = actions and type. */
 :root:root {
   --pax2-blue: #1e3a8a;
-  --pax2-plum: #2563eb;
+  --pax2-light-blue: #2563eb;
   --pax2-lavender: #dbeafe;
   --pax2-mist: #f5f7fb;
   --pax2-red: #dc2626;
@@ -31,7 +31,7 @@
 
 @theme inline {
   --color-pax2-blue: var(--pax2-blue);
-  --color-pax2-plum: var(--pax2-plum);
+  --color-pax2-light-blue: var(--pax2-light-blue);
   --color-pax2-lavender: var(--pax2-lavender);
   --color-pax2-mist: var(--pax2-mist);
   --color-pax2-red: var(--pax2-red);
