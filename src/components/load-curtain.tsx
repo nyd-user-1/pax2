@@ -22,7 +22,7 @@ const TRAIL = 0.18
 /** The tilt of the leading edge, as motion.dev's default. */
 const ANGLE = 9
 const OFF = "-140vw"
-/** A paint beat under the sheets before they lift — long enough for PAX's outline to draw and fill, in ms. */
+/** A paint beat under the sheets before they lift — long enough for PAX's outline to draw, in ms. */
 const HOLD = 1600
 
 /** The curtain belongs to the front door: a load on any other page skips it. */
@@ -70,7 +70,7 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
         {/* Un-skewed, so the word stands upright on the tilted sheet. */}
         <div className="absolute inset-0 flex items-center justify-center" style={{ transform: `skewX(${ANGLE}deg)` }}>
           <motion.div
-            className="flex h-[46vh] w-[80vw] items-center text-white [&_[data-fill-char]]:fill-pax2-blue [&_[data-fill-char]:nth-child(2)]:fill-pax2-red"
+            className="flex h-[46vh] w-[80vw] items-center text-white"
             initial={{ x: "0vw", opacity: 1 }}
             animate={revealing ? { x: "-24vw", opacity: 0 } : { x: "0vw", opacity: 1 }}
             transition={{ duration: SWEEP, ease: EASE }}
@@ -78,12 +78,11 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
             <StrokeText
               text="PAX"
               strokeColor="currentColor"
-              fillColor="currentColor"
+              fillMode="none"
               fontSize={144}
               fontFamily="'PAX Curtain', monospace"
               letterSpacing={0}
               drawDuration={0.9}
-              fillDelay={0.1}
               stagger={0.08}
             />
           </motion.div>
