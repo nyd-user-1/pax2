@@ -60,7 +60,7 @@ export default async function RecordLanding() {
                 <br />
                 Amplified.
               </h1>
-              <p className="max-w-md text-lg leading-relaxed text-slate-800">We help you choose what to say, how to say it and share it. Because your voice is the difference.</p>
+              <p className="max-w-md text-lg leading-relaxed text-slate-900">We help you choose what to say, how to say it and share it. Because your voice is the difference.</p>
               <Link href="/record/start" className="flex w-fit items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 text-base font-medium text-white shadow-lg transition-transform hover:-translate-y-0.5">
                 Let&apos;s go <ArrowRight className="size-4" />
               </Link>
