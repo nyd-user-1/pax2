@@ -31,7 +31,8 @@ export function FlapHero() {
           cycleDelay={1600}
           glare={0.3}
           fontSize="1em"
-          tileColors={["var(--pax2-ink)", "var(--pax2-red)", "var(--pax2-ink)"]}
+          tileColors={["var(--pax2-ink)", "var(--pax2-red)", "#ffffff"]}
+          textColors={["#f8fafc", "#f8fafc", "#000000"]}
         />
       )}
     </div>
