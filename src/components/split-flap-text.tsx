@@ -22,9 +22,9 @@ export const graphemes = chars
 
 type Align = "left" | "center" | "right"
 type Order = "left" | "right" | "center" | "random"
-type Tile = { current: string; next: string; flipping: boolean; tick: number; slow?: boolean; color: string; nextColor: string }
+type Tile = { current: string; next: string; flipping: boolean; tick: number; slow?: boolean; color: string; nextColor: string; bg: string; nextBg: string }
 type Plan = { index: number; from: string; target: string; sequence: string[]; start: number; step: number; done: boolean; flipMs: number; slow: boolean }
-type Update = { index: number; current: string; next: string; done: boolean; slow: boolean; currentColor: string; nextColor: string }
+type Update = { index: number; current: string; next: string; done: boolean; slow: boolean; currentColor: string; nextColor: string; currentBg: string; nextBg: string }
 
 export interface SplitFlapTextProps extends React.HTMLAttributes<HTMLDivElement> {
   words?: string[]
@@ -74,7 +74,7 @@ const normalizePhrase = (phrase: string | null | undefined, width: number, align
   return list.join("") + " ".repeat(pad)
 }
 
-const createTiles = (phrase: string, color: string): Tile[] =>
+const createTiles = (phrase: string, color: string, bg: string): Tile[] =>
   chars(phrase).map((char) => ({
     current: char,
     next: char,
@@ -82,6 +82,8 @@ const createTiles = (phrase: string, color: string): Tile[] =>
     tick: 0,
     color,
     nextColor: color,
+    bg,
+    nextBg: bg,
   }))
 
 const sampleChar = (charset: string) => charset.charAt(Math.floor(Math.random() * charset.length)) || " "
@@ -197,15 +199,17 @@ const SplitFlapText = ({
       order,
       special: delayedChar,
       textColor,
+      tileColor,
     }),
-    [flipDuration, stagger, cycleDelay, flipsPerChar, charset, order, delayedChar?.char, delayedChar?.delayMs, delayedChar?.scale, textColor],
+    [flipDuration, stagger, cycleDelay, flipsPerChar, charset, order, delayedChar?.char, delayedChar?.delayMs, delayedChar?.scale, textColor, tileColor],
   )
   const timingRef = useRef(timing)
 
-  const [tiles, setTiles] = useState<Tile[]>(() => createTiles(intro ? " ".repeat(width) : normalizedPhrases[0], textColor))
+  const [tiles, setTiles] = useState<Tile[]>(() => createTiles(intro ? " ".repeat(width) : normalizedPhrases[0], textColor, tileColor))
   const [activeIndex, setActiveIndex] = useState(0)
-  /** The letter colour currently on the board; a new colour arrives only on the flips themselves. */
+  /** The letter and card colours currently on the board; new colours arrive only on the flips themselves. */
   const appliedColorRef = useRef(textColor)
+  const appliedBgRef = useRef(tileColor)
 
   useEffect(() => {
     timingRef.current = timing
@@ -221,10 +225,13 @@ const SplitFlapText = ({
     }
 
     const animateTo = (target: string) => {
-      const { flipMs, staggerMs, flips, glyphs, order: cascade, special, textColor: newColor } = timingRef.current
+      const { flipMs, staggerMs, flips, glyphs, order: cascade, special, textColor: newColor, tileColor: newBg } = timingRef.current
       const oldColor = appliedColorRef.current
       const colorChanged = newColor !== oldColor
       appliedColorRef.current = newColor
+      const oldBg = appliedBgRef.current
+      const bgChanged = newBg !== oldBg
+      appliedBgRef.current = newBg
       const targetChars = chars(target)
       const from = normalizePhrase(shownRef.current ?? target, targetChars.length)
       const fromChars = chars(from)
@@ -238,8 +245,9 @@ const SplitFlapText = ({
       if (!prefersReducedMotion) {
         for (let index = 0; index < targetChars.length; index += 1) {
           const same = fromChars[index] === targetChars[index]
-          // An unchanged letter still re-flips when the colour changed; an unchanged blank stays put.
-          if (same && (!colorChanged || targetChars[index] === " ")) continue
+          // A card-colour change turns every card over, blanks included; a letter-colour change
+          // re-flips the letters; otherwise an unchanged tile stays put.
+          if (same && !bgChanged && (!colorChanged || targetChars[index] === " ")) continue
           const slow = special != null && targetChars[index] === special.char
           plans.push({
             index,
@@ -261,12 +269,12 @@ const SplitFlapText = ({
       }
 
       if (!plans.length) {
-        setTiles(createTiles(target, newColor))
+        setTiles(createTiles(target, newColor, newBg))
         return 0
       }
 
       fromRef.current = from
-      setTiles(createTiles(from, oldColor))
+      setTiles(createTiles(from, oldColor, oldBg))
 
       const totalDuration = plans.reduce((max, plan) => Math.max(max, plan.start + plan.sequence.length * plan.flipMs), 0)
       const startedAt = performance.now()
@@ -301,6 +309,8 @@ const SplitFlapText = ({
                 slow: plan.slow,
                 currentColor: step === 0 ? oldColor : newColor,
                 nextColor: newColor,
+                currentBg: step === 0 ? oldBg : newBg,
+                nextBg: newBg,
               })
             }
           } else if (!plan.done) {
@@ -313,6 +323,8 @@ const SplitFlapText = ({
               slow: plan.slow,
               currentColor: newColor,
               nextColor: newColor,
+              currentBg: newBg,
+              nextBg: newBg,
             })
           }
         })
@@ -332,6 +344,8 @@ const SplitFlapText = ({
                 slow: update.slow,
                 color: update.currentColor,
                 nextColor: update.nextColor,
+                bg: update.currentBg,
+                nextBg: update.nextBg,
               }
             })
             return nextTiles
@@ -391,7 +405,7 @@ const SplitFlapText = ({
       stopFrame()
       fromRef.current = null
       setActiveIndex(indexRef.current)
-      setTiles(createTiles(shownRef.current, appliedColorRef.current))
+      setTiles(createTiles(shownRef.current, appliedColorRef.current, appliedBgRef.current))
     } else {
       startDuration = show(indexRef.current)
     }
@@ -452,9 +466,12 @@ const SplitFlapText = ({
           aria-hidden="true"
           key={`${index}-${tiles.length}`}
           style={
-            tile.flipping && tile.slow && delayedChar
-              ? ({ "--split-flap-flip-duration": `${Math.max(0.04, Number(flipDuration) || 0.12) * delayedChar.scale}s` } as React.CSSProperties)
-              : undefined
+            {
+              "--split-flap-tile-color": tile.flipping ? tile.nextBg : tile.bg,
+              ...(tile.flipping && tile.slow && delayedChar
+                ? { "--split-flap-flip-duration": `${Math.max(0.04, Number(flipDuration) || 0.12) * delayedChar.scale}s` }
+                : {}),
+            } as React.CSSProperties
           }
         >
           <span className="split-flap-text__half split-flap-text__half--top" key={minimal ? `top-${tile.tick}` : "top"}>
@@ -463,6 +480,7 @@ const SplitFlapText = ({
           <span
             className="split-flap-text__half split-flap-text__half--bottom"
             key={minimal ? `bottom-${tile.tick}` : "bottom"}
+            style={{ "--split-flap-tile-color": tile.bg } as React.CSSProperties}
           >
             <span className="split-flap-text__char" style={{ color: tile.color }}>{toGlyph(tile.current)}</span>
           </span>
@@ -478,7 +496,11 @@ const SplitFlapText = ({
                   />
                 </>
               )}
-              <span className="split-flap-text__flap split-flap-text__flap--front" key={`front-${index}-${tile.tick}`}>
+              <span
+                className="split-flap-text__flap split-flap-text__flap--front"
+                key={`front-${index}-${tile.tick}`}
+                style={{ "--split-flap-tile-color": tile.bg } as React.CSSProperties}
+              >
                 <span className="split-flap-text__char" style={{ color: tile.color }}>{toGlyph(tile.current)}</span>
               </span>
               <span className="split-flap-text__flap split-flap-text__flap--back" key={`back-${index}-${tile.tick}`}>
