@@ -10,6 +10,7 @@ import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookm
 import { useShellPanel } from "@/components/shell"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
 import { cn } from "@/ui/lib/utils"
+import { whiteButton } from "@/components/white-button"
 
 export type FeedVideo = {
   id: string
@@ -113,8 +114,9 @@ function Favorite({ id }: { id: string }) {
       aria-label={on ? "Remove from favorites" : "Add to favorites"}
       aria-pressed={on}
       onClick={toggle}
-      className={cn(
-        "absolute right-2 top-2 z-10 flex size-9 items-center justify-center rounded-full bg-white text-slate-700 shadow-e1 transition-[opacity,box-shadow] hover:shadow-e2",
+      className={whiteButton(
+        "circle",
+        "absolute right-2 top-2 z-10 transition-[opacity,color,background-color,border-color]",
         on ? "opacity-100" : "opacity-0 group-hover:opacity-100 focus-visible:opacity-100",
       )}
     >

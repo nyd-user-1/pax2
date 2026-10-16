@@ -6,6 +6,7 @@ import { ArrowDownAZ, ArrowUpDown, Check, ChevronDown, Clock, Trophy, Users } fr
 
 import { VideoCard, type VideoCardData } from "@/components/video-card"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
+import { whiteButton } from "@/components/white-button"
 
 type Sort = "score" | "reach" | "az" | "time"
 
@@ -37,7 +38,7 @@ export function VideoGrid({ videos, scripts }: { videos: VideoCardData[]; script
     <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-center gap-2">
         <DropdownMenu>
-          <DropdownMenuTrigger className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-sm text-slate-700 shadow-e1 outline-none transition-shadow hover:shadow-e2 data-[popup-open]:shadow-e2">
+          <DropdownMenuTrigger className={whiteButton("md")}>
             {[scripts.find((s) => s.id === script)?.short, voice].filter(Boolean).join(" · ") || "All"}
             <ChevronDown className="size-3.5 text-slate-400" />
           </DropdownMenuTrigger>
@@ -62,7 +63,7 @@ export function VideoGrid({ videos, scripts }: { videos: VideoCardData[]; script
           </DropdownMenuContent>
         </DropdownMenu>
         <DropdownMenu>
-          <DropdownMenuTrigger className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-sm text-slate-700 shadow-e1 outline-none transition-shadow hover:shadow-e2 data-[popup-open]:shadow-e2">
+          <DropdownMenuTrigger className={whiteButton("md")}>
             <ArrowUpDown className="size-3.5 text-slate-400" />
             {SORTS.find((s) => s.id === sort)!.label}
             <ChevronDown className="size-3.5 text-slate-400" />

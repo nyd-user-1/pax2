@@ -8,6 +8,7 @@ import { runPipeline, type PipelineQueue } from "@/app/pipeline-actions"
 import { setPoller, type PollerStatus } from "@/app/velocity-actions"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/ui/components/nova/dialog"
 import { cn } from "@/ui/lib/utils"
+import { whiteButton } from "@/components/white-button"
 
 // The dashboard's admin controls, placed in the shell header's page-actions slot: the poller's
 // on/off switch and the pipeline run. Anyone can see them; only admins can use them.
@@ -44,7 +45,7 @@ export function AdminControls({ admin, poller: initial, queue }: { admin: boolea
         disabled={!admin || !poller || busy}
         onClick={toggle}
         title={locked ?? `Poller ${poller?.enabled ? "on" : "off"} · last run ${clock(poller?.lastRunAt ?? null)}${poller?.lastWatched != null ? ` · ${poller.lastWatched} watched` : ""}`}
-        className="flex h-10 items-center gap-2.5 rounded-full bg-white pl-4 pr-1.5 text-sm text-slate-600 shadow-e1 transition-shadow hover:shadow-e2 disabled:cursor-not-allowed disabled:opacity-60"
+        className={whiteButton("md", "h-10 gap-2.5 py-0 pl-4 pr-1.5")}
       >
         Poller
         <span className={cn("relative h-6 w-10 rounded-full transition-colors", poller?.enabled ? "bg-green-500" : "bg-slate-300")}>
@@ -57,7 +58,7 @@ export function AdminControls({ admin, poller: initial, queue }: { admin: boolea
         title={locked ?? "Run the pipeline"}
         disabled={!admin}
         onClick={() => (setNote(null), setOpen(true))}
-        className="flex size-10 items-center justify-center rounded-full bg-white text-pax2-blue shadow-e1 transition-shadow hover:shadow-e2 disabled:cursor-not-allowed disabled:opacity-60"
+        className={whiteButton("circle")}
       >
         <Play className="size-4 fill-current" />
       </button>

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { ArrowUpDown, Check } from "lucide-react"
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
+import { whiteButton } from "@/components/white-button"
 
 export const SORTS = [
   { value: "perday", label: "Views per day" },
@@ -19,7 +20,7 @@ export function ShortsSort({ channel, sort }: { channel: string; sort: string })
   const current = SORTS.find((s) => s.value === sort) ?? SORTS[0]
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger aria-label="Sort shorts" className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-sm text-slate-700 shadow-e1 outline-none transition-shadow hover:shadow-e2 data-[popup-open]:shadow-e2">
+      <DropdownMenuTrigger aria-label="Sort shorts" className={whiteButton("md")}>
         <ArrowUpDown className="size-3.5 text-slate-400" />
         {current.label}
       </DropdownMenuTrigger>

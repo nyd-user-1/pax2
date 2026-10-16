@@ -7,9 +7,10 @@ import { Loader2, Upload } from "lucide-react"
 import { uploadUrl } from "@/app/actions"
 import { ownerPublish, review, scoreOriginal, submitEnhanced, watchOnYouTube } from "@/app/original-actions"
 import { cn } from "@/ui/lib/utils"
+import { whiteButton } from "@/components/white-button"
 
 const primary = "press inline-flex items-center gap-1.5 rounded-full bg-pax2-blue px-4 py-2 text-sm font-semibold text-white disabled:opacity-40"
-const secondary = "press inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-pax2-blue disabled:opacity-40"
+const secondary = whiteButton("md")
 
 function useRun() {
   const router = useRouter()

@@ -10,6 +10,7 @@ import { RevealFx } from "@/components/reveal-fx"
 import { Wordmark } from "@/components/wordmark"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
 import { cn } from "@/ui/lib/utils"
+import { whiteButton } from "@/components/white-button"
 
 // What stands today; everything being reworked sits under Work in progress, in the product's order —
 // the user's video and its scoring, then the research behind it.
@@ -211,7 +212,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
             </Link>
           </header>
           <div className={cn("relative z-10 hidden shrink-0 items-center gap-3 px-5 py-4 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)] md:flex")}>
-            <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className="flex size-10 items-center justify-center rounded-full bg-white text-pax2-blue shadow-e1 transition-shadow hover:shadow-e2">
+            <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className={whiteButton("circle")}>
               {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
             </button>
             <PageSwitcher title={title} />
@@ -222,7 +223,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
               <Video className="size-4" />
             </Link>
             {/* 44b's DiscussionHeaderButton: the discussion panel opens from every page. */}
-            <button type="button" onClick={() => setDiscuss((v) => !v)} aria-pressed={discuss} aria-label="Open the discussion" className="flex size-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-colors hover:bg-slate-50">
+            <button type="button" onClick={() => setDiscuss((v) => !v)} aria-pressed={discuss} aria-label="Open the discussion" className={whiteButton("circle")}>
               <MessagesSquare className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
             </button>
           </div>

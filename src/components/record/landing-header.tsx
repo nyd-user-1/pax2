@@ -9,6 +9,7 @@ import { SEQUENCE_MS } from "@/components/flap-hero"
 import { useShellPanel } from "@/components/shell"
 import StrokeText from "@/components/stroke-text"
 import { cn } from "@/ui/lib/utils"
+import { whiteButton } from "@/components/white-button"
 
 /** The landing's sticky top bar: transparent over the hero, then white with
  *  the shell's hairline-and-shadow once the feed scrolls beneath it. The feed's
@@ -38,10 +39,10 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
     >
       {signedIn ? (
         <>
-          <button type="button" onClick={toggleSidebar} aria-label="Toggle sidebar" className="flex size-10 items-center justify-center rounded-full bg-white text-pax2-blue shadow-e1 transition-shadow hover:shadow-e2">
+          <button type="button" onClick={toggleSidebar} aria-label="Toggle sidebar" className={whiteButton("circle")}>
             {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
           </button>
-          <button type="button" onClick={toggleDiscuss} aria-pressed={discuss} aria-label="Open the discussion" className="flex size-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-colors hover:bg-slate-50">
+          <button type="button" onClick={toggleDiscuss} aria-pressed={discuss} aria-label="Open the discussion" className={whiteButton("circle")}>
             <MessagesSquare className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
           </button>
         </>
@@ -68,7 +69,7 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
               />
             )}
           </Link>
-          <Link href="/signup" className="press rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-pax2-blue shadow-e1 transition-shadow hover:shadow-e2">
+          <Link href="/signup" className={whiteButton("md")}>
             Sign up
           </Link>
         </>

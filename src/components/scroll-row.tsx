@@ -6,6 +6,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 
 import { VideoCard, type VideoCardData } from "@/components/video-card"
 import { cn } from "@/ui/lib/utils"
+import { whiteButton } from "@/components/white-button"
 
 /** A titled row of videos that scrolls sideways: arrows in the header, the legend and See all underneath. */
 export function ScrollRow({ title, videos, href, legend }: { title: string; videos: VideoCardData[]; href: string; legend: React.ReactNode }) {
@@ -22,7 +23,7 @@ export function ScrollRow({ title, videos, href, legend }: { title: string; vide
     return () => window.removeEventListener("resize", measure)
   }, [measure])
   const page = (dir: 1 | -1) => ref.current?.scrollBy({ left: dir * ref.current.clientWidth * 0.8, behavior: "smooth" })
-  const arrow = (show: boolean) => cn("flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 transition-opacity hover:text-pax2-blue", !show && "pointer-events-none opacity-0")
+  const arrow = (show: boolean) => whiteButton("circle", "transition-[opacity,color,background-color,border-color]", !show && "pointer-events-none opacity-0")
 
   return (
     <section className="flex flex-col gap-4">
@@ -72,7 +73,7 @@ export function ScrollStrip({ children, itemClassName }: { children: React.React
     return () => window.removeEventListener("resize", measure)
   }, [measure])
   const page = (dir: 1 | -1) => ref.current?.scrollBy({ left: dir * ref.current.clientWidth * 0.8, behavior: "smooth" })
-  const arrow = (show: boolean) => cn("flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 transition-opacity hover:text-pax2-blue", !show && "pointer-events-none opacity-0")
+  const arrow = (show: boolean) => whiteButton("circle", "transition-[opacity,color,background-color,border-color]", !show && "pointer-events-none opacity-0")
 
   return (
     <section className="flex flex-col gap-2">

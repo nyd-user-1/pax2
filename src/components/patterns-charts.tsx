@@ -9,6 +9,7 @@ import { ChartBlock } from "@/components/blocks"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/ui/components/nova/dialog"
 import { DropdownMenuItem, DropdownMenuSeparator } from "@/ui/components/nova/dropdown-menu"
 import { cn } from "@/ui/lib/utils"
+import { whiteButton } from "@/components/white-button"
 
 // The /patterns charts: every reading the poller has taken, drawn full-viewport. All scales
 // that span orders of magnitude are log; ratio guides sit at .5x, 1x and 3x everywhere so the
@@ -447,7 +448,7 @@ export function RateCandles({ data }: { data: PatternsData }) {
       <select
         value={video.id}
         onChange={(e) => { setId(e.target.value); setTip(null) }}
-        className="w-fit max-w-full rounded-full bg-white py-1.5 pl-3.5 pr-8 text-sm text-slate-700 shadow-e1 outline-none"
+        className={whiteButton("md", "inline-block w-fit max-w-full pl-3.5 pr-8 text-left")}
       >
         {candidates.map((v) => (
           <option key={v.id} value={v.id}>

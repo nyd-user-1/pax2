@@ -7,6 +7,7 @@ import { Check } from "lucide-react"
 import { pickScript } from "@/app/actions"
 import { Button } from "@/ui/components/nova/button"
 import { Textarea } from "@/ui/components/nova/textarea"
+import { whiteButton } from "@/components/white-button"
 
 /** Choose a script for the next round, with the reason kept beside the choice. Confirms in place. */
 export function PickScript({ scriptId }: { scriptId: string }) {
@@ -23,7 +24,7 @@ export function PickScript({ scriptId }: { scriptId: string }) {
     )
   if (!open)
     return (
-      <button type="button" onClick={() => setOpen(true)} className="w-fit rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-pax2-blue shadow-e1 transition-shadow hover:shadow-e2">
+      <button type="button" onClick={() => setOpen(true)} className={whiteButton("md", "w-fit")}>
         Choose for the next round
       </button>
     )

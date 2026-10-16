@@ -5,6 +5,7 @@ import { ArrowUpDown, Check } from "lucide-react"
 
 import type { VelocitySort } from "@/app/velocity-actions"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
+import { whiteButton } from "@/components/white-button"
 
 export const SORTS: { value: VelocitySort; label: string }[] = [
   { value: "oldest", label: "Oldest" },
@@ -26,7 +27,7 @@ export function VelocitySortMenu({ sort, focus, filter }: { sort: VelocitySort; 
   }
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger aria-label="Sort curves" className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-sm text-slate-700 shadow-e1 outline-none transition-shadow hover:shadow-e2 data-[popup-open]:shadow-e2">
+      <DropdownMenuTrigger aria-label="Sort curves" className={whiteButton("md")}>
         <ArrowUpDown className="size-3.5 text-slate-400" />
         {current.label}
       </DropdownMenuTrigger>

@@ -4,6 +4,7 @@ import * as React from "react"
 import { createPortal } from "react-dom"
 import Link from "next/link"
 import { X } from "lucide-react"
+import { whiteButton } from "@/components/white-button"
 
 /** The sign-in wall's invitation, the traditional way: a modal over the whole page with frosted glass
  *  behind it. Closing it leaves the page as it stands, the locked panels still blurred. */
@@ -36,7 +37,7 @@ export function SignupGate() {
           <Link href={`/signup${next}`} className="press rounded-full bg-pax2-blue px-5 py-2.5 text-sm font-semibold text-white shadow-e1 transition-shadow hover:shadow-e2">
             Sign up
           </Link>
-          <Link href={`/signin${next}`} className="press rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-pax2-blue shadow-e1 ring-1 ring-slate-200 transition-shadow hover:shadow-e2">
+          <Link href={`/signin${next}`} className={whiteButton("md")}>
             Log in
           </Link>
         </div>

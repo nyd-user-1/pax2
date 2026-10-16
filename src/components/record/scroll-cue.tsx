@@ -3,7 +3,7 @@
 import * as React from "react"
 import { ArrowUp, ChevronDown } from "lucide-react"
 
-import { cn } from "@/ui/lib/utils"
+import { whiteButton, FLOAT } from "@/components/white-button"
 
 /** The classic circled down-arrow at the hero's foot: one tap scrolls a full
  *  viewport to whatever comes next. It leaves as soon as the reader scrolls, and
@@ -29,8 +29,10 @@ export function ScrollCue({ className }: { className?: string }) {
       type="button"
       aria-label="Scroll down"
       onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
-      className={cn(
-        "absolute bottom-7 left-1/2 flex size-11 -translate-x-1/2 float-cue items-center justify-center rounded-full bg-white text-pax2-blue shadow-e2 transition-[opacity,box-shadow] duration-500 hover:shadow-e3",
+      className={whiteButton(
+        "circle",
+        FLOAT,
+        "absolute bottom-7 left-1/2 -translate-x-1/2 transition-[opacity,color,background-color,border-color] duration-500",
         shown ? "opacity-100" : "pointer-events-none opacity-0 duration-150",
         className,
       )}
@@ -55,8 +57,9 @@ export function ScrollTop() {
       type="button"
       aria-label="Back to top"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={cn(
-        "fixed bottom-6 right-6 z-50 flex size-11 items-center justify-center rounded-full bg-white text-pax2-blue shadow-e2 transition-[opacity,box-shadow] duration-200 hover:shadow-e3",
+      className={whiteButton(
+        "circle",
+        "fixed bottom-6 right-6 z-50 transition-[opacity,color,background-color,border-color] duration-200",
         shown ? "opacity-100" : "pointer-events-none opacity-0",
       )}
     >

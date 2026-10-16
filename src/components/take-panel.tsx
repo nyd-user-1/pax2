@@ -6,6 +6,7 @@ import { Columns2, Columns3, Maximize2, X } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
 import { cn } from "@/ui/lib/utils"
+import { whiteButton } from "@/components/white-button"
 
 /** The take docks in the shell's right panel; closing returns to the page beneath. A short's title is
  *  its channel: pressing it searches the feed for that channel. */
@@ -44,10 +45,10 @@ export function TakePanel({ title, search, children }: { title: string; search?:
         )}
         <div className="flex shrink-0 items-center gap-2">
           {/* The icon shows the size the next press goes to: a third, half, then the whole area. */}
-          <button type="button" onClick={cycleSize} className="hidden size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax2-blue md:flex" aria-label={size === "third" ? "Half the page" : size === "half" ? "Full page" : "A third of the page"}>
+          <button type="button" onClick={cycleSize} className={whiteButton("circle", "hidden md:inline-flex")} aria-label={size === "third" ? "Half the page" : size === "half" ? "Full page" : "A third of the page"}>
             {size === "third" ? <Columns2 className="size-4" /> : size === "half" ? <Maximize2 className="size-4" /> : <Columns3 className="size-4" />}
           </button>
-          <button type="button" onClick={() => router.back()} className="flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax2-blue" aria-label="Close">
+          <button type="button" onClick={() => router.back()} className={whiteButton("circle")} aria-label="Close">
             <X className="size-4" />
           </button>
         </div>

@@ -6,6 +6,7 @@ import { ArrowLeft, ChevronRight, Columns2, Columns3, Hash, MessagesSquare, X } 
 import { Chat } from "@/components/chat/chat"
 import { useShellPanel } from "@/components/shell"
 import { cn } from "@/ui/lib/utils"
+import { whiteButton } from "@/components/white-button"
 
 // 44b's DiscussionPanel (components/DiscussionPanel.tsx), cut to three doors: Chat, Slack and
 // Discord. A welcome list of rows; each opens its view in the same panel, with Back to the list.
@@ -42,10 +43,10 @@ export function DiscussionPanel({ onClose }: { onClose: () => void }) {
           <p className="truncate font-display text-xl text-slate-900">{TITLE[view]}</p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
-          <button type="button" onClick={() => setWide(!wide)} className="hidden size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax2-blue md:flex" aria-label={wide ? "Narrow the panel" : "Widen the panel"}>
+          <button type="button" onClick={() => setWide(!wide)} className={whiteButton("circle", "hidden md:inline-flex")} aria-label={wide ? "Narrow the panel" : "Widen the panel"}>
             {wide ? <Columns3 className="size-4" /> : <Columns2 className="size-4" />}
           </button>
-          <button type="button" onClick={onClose} className="flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax2-blue" aria-label="Close">
+          <button type="button" onClick={onClose} className={whiteButton("circle")} aria-label="Close">
             <X className="size-4" />
           </button>
         </div>

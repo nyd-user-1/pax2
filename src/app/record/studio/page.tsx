@@ -10,6 +10,7 @@ import { FlowPage, StepBar } from "@/components/record/chrome"
 import { useDraft } from "@/components/record/draft"
 import { FPS, LOOKS, ScriptVideo, totalFrames, type Motion } from "@/components/studio/script-video"
 import { cn } from "@/ui/lib/utils"
+import { whiteButton } from "@/components/white-button"
 
 const MOTIONS: { id: Motion; label: string }[] = [
   { id: "rise", label: "Rise" },
@@ -35,7 +36,7 @@ export default function StudioPage() {
         <FlowPage title="Sent. Thank you." lead="The team has your design and renders it at full quality. If it runs, its results come back to the partner's Home with a score.">
           <div className="flex gap-4">
             <Link href="/record/start" className="rounded-full bg-pax2-blue px-6 py-3 font-medium text-white">Make another</Link>
-            <Link href="/" className="rounded-full bg-white px-6 py-3 font-medium text-pax2-blue shadow-e1">Open the partner view</Link>
+            <Link href="/" className={whiteButton("lg")}>Open the partner view</Link>
           </div>
         </FlowPage>
       </>
