@@ -136,10 +136,11 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
 /** The card's bottom-right corner: like and comment counts, then paid media's mark in the
  *  three-dot button's box mirrored from the top-right — as far from the bottom and right as the
  *  dots sit from the top and right. */
-function CardFoot({ v, box }: { v: FeedVideo; box?: string }) {
-  if (v.likes == null && v.comments == null && !v.paid) return null
+function CardFoot({ v, box, lead }: { v: FeedVideo; box?: string; lead?: React.ReactNode }) {
+  if (!lead && v.likes == null && v.comments == null && !v.paid) return null
   return (
     <div className="tabular mt-auto flex h-9 items-center justify-end gap-3 text-xs text-pax2-blue">
+      {lead && <span className="mr-auto min-w-0 truncate">{lead}</span>}
       {v.likes != null && (
         <span className="flex items-center gap-1" aria-label={`${v.likes} likes`}>
           <ThumbsUp className="size-3.5" /> {fmt.format(v.likes)}
@@ -227,16 +228,15 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <Favorite id={v.id} />
       </div>
       <div className="flex items-start justify-between gap-1">
-        <p className="line-clamp-2 min-w-0 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-pax2-light-blue">{v.title}</p>
+        <p className="line-clamp-2 min-h-[2lh] min-w-0 text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
         <RowMenu className="-mr-1.5 size-8" />
       </div>
       <span className="flex min-w-0 items-center gap-1.5">
         <Avatar id={v.channelId} className="size-5" />
         <span className="truncate text-xs font-medium text-slate-800">{v.channel}</span>
       </span>
-      <p className="tabular text-xs text-pax2-blue">{fmt.format(v.views)} views</p>
       {/* Shorts' dots are a size-8 box pulled 6px right; the corner mirrors that. */}
-      <CardFoot v={v} box="-mb-1.5 -mr-1.5 size-8" />
+      <CardFoot v={v} box="-mb-1.5 -mr-1.5 size-8" lead={`${fmt.format(v.views)} views`} />
     </Link>
   )
 }
@@ -251,7 +251,7 @@ export function LandscapeCard({ v }: { v: FeedVideo }) {
         <Favorite id={v.id} />
         <span className="tabular pointer-events-none absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
       </div>
-      <p className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
+      <p className="line-clamp-2 min-h-[2lh] text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
       <p className="tabular text-xs text-pax2-blue">{v.channel} · {fmt.format(v.views)} views</p>
       <CardFoot v={v} />
     </Link>
@@ -263,7 +263,7 @@ export function LandscapeCard({ v }: { v: FeedVideo }) {
 function ShortsShelf({ items }: { items: FeedVideo[] }) {
   const [more, setMore] = React.useState(false)
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-6">
       <span className="flex items-center gap-2 text-sm font-semibold text-slate-900">
         <img src="/logos/youtube-shorts.svg" alt="" className="h-5 w-auto" /> Shorts
       </span>
@@ -762,8 +762,9 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
 
   return (
     <section ref={section} onClickCapture={remember} className="mx-auto w-full max-w-6xl px-6 pb-16">
-      {/* Sticks just beneath the 4rem header, never inside it. */}
-      <div className="sticky top-[4.75rem] z-40 mx-auto w-full max-w-2xl">
+      {/* On the landing it sticks just beneath the 4rem header, never inside it; inside the
+          shell's scroll pane (a video's page) there is no such header, so it sticks at the top. */}
+      <div className={cn("sticky z-40 mx-auto w-full max-w-2xl", landing ? "top-[4.75rem]" : "top-3")}>
         {/* Dressed as section two's Try it. */}
         <SearchBar
           q={q}

@@ -7,6 +7,7 @@ import Link from "next/link"
 import subscribers from "../../data/generated/channel-subscribers.json"
 import warBaseline from "../../data/generated/war-baseline.json"
 import sampleVideos from "../../data/sample/videos.json"
+import paidBatch from "../../data/generated/voter-freedom-paid.json"
 import homeFeed from "../../data/generated/home-feed.json"
 import shorts from "../../data/raw/yt-shorts.json"
 import { RangeBar } from "@/components/bits"
@@ -66,6 +67,38 @@ function transcriptLines(f: Features | undefined) {
 }
 
 /** A campaign short in the take panel's exact shape; counts PAX2 does not hold read as a dash. */
+type PaidRow = Record<string, string>
+type Creative = { creativeId: string; cut: "exact" | "edit"; videoId: string; rows: PaidRow[] }
+const MONTHS = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."]
+const day = (iso: string) => {
+  const d = new Date(`${iso}T12:00:00Z`)
+  return `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}`
+}
+
+/** A paid video's real ad figures from the batch (data/generated/voter-freedom-paid.json). Only the
+ *  creatives that are exact cuts of the upload count — an ad-only edit's plays must not pose as the
+ *  upload's — unless edits are all the video ran as. Play depths are reported as shares of starts. */
+function adFigures(ytId: string) {
+  const all = (paidBatch.creatives as unknown as Creative[]).filter((c) => c.videoId === ytId)
+  if (!all.length) return null
+  const exact = all.filter((c) => c.cut === "exact")
+  const used = exact.length ? exact : all
+  const rows = used.flatMap((c) => c.rows)
+  const sum = (k: string) => rows.reduce((t, r) => t + (Number(r[k]) || 0), 0)
+  const depth = (k: string) => rows.reduce((t, r) => t + ((Number(r.video_starts) || 0) * (Number(r[k]) || 0)) / 100, 0)
+  const dates = [...new Set(rows.map((r) => r.report_date))].sort()
+  const spend = sum("spend_usd")
+  const impressions = sum("impressions")
+  const clicks = sum("clicks")
+  const starts = sum("video_starts")
+  const thruplays = sum("views_15s_thruplays_reported")
+  const completions = sum("video_completions_reported")
+  const edits = all.length - exact.length
+  const ran = dates.length > 1 ? `${day(dates[0])} and ${day(dates[dates.length - 1])}` : day(dates[0])
+  const footer = `${used.length} ad creative${used.length === 1 ? "" : "s"}${!exact.length ? (used.length === 1 ? ", an ad-only edit" : ", all ad-only edits") : ""} · reported ${ran} ${dates[0].slice(0, 4)}${exact.length && edits ? ` · ${edits} ad-only edit${edits === 1 ? "" : "s"} not counted` : ""}`
+  return { spend, impressions, clicks, starts, thruplays, completions, views30: sum("views_30s_reported"), p25: depth("views_25pct_reported_pct"), p50: depth("views_50pct_reported_pct"), p75: depth("views_75pct_reported_pct"), footer }
+}
+
 export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
   const ytId = id.replace(/^yt-/, "")
   const data = shorts as unknown as Yt
@@ -110,6 +143,26 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
 
   const locked = !signedIn
   const paid = sample
+  const ads = adFigures(ytId)
+  const usd = (x: number) => `$${x.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+  const rate = (x: number, of: number) => (of ? `${((x / of) * 100).toFixed(2)}%` : DASH)
+  const per = (x: number, of: number) => (of ? usd(x / of) : DASH)
+  const adRows: [string, string][] = ads
+    ? [
+        ["Spend", usd(ads.spend)],
+        ["Impressions", n(ads.impressions)],
+        ["Starts", n(ads.starts)],
+        ["ThruPlays (15s)", n(ads.thruplays)],
+        ["30s views", n(ads.views30)],
+        ["25% play", n(Math.round(ads.p25))],
+        ["50% play", n(Math.round(ads.p50))],
+        ["75% play", n(Math.round(ads.p75))],
+        ["100% play", n(ads.completions)],
+        ["Clicks", n(ads.clicks)],
+        ["CTR", rate(ads.clicks, ads.impressions)],
+        ["Cost / ThruPlay", per(ads.spend, ads.thruplays)],
+      ]
+    : []
   const res = sample?.resonance
   const realTags = tagsFor(id)
   const tags = realTags.length ? realTags : (sample?.tags ?? [])
@@ -144,13 +197,22 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     "analytics",
     "Analytics",
     <Locked key="analytics" locked={locked}>
-      <CardBlock title="Analytics" height="auto" footer={paid ? SAMPLE : undefined}>
-        <div className="grid grid-cols-2 gap-4">
-          {stat("Reach", paid?.analytics.Reach ?? DASH)}
-          {stat("3s+", paid?.analytics["3s+"] ?? DASH)}
-          {stat("Avg.", paid?.analytics["Avg."] ?? DASH)}
-          {stat("Spend", paid?.analytics.Spend ?? DASH)}
-        </div>
+      <CardBlock title="Analytics" height="auto" footer={ads ? ads.footer : paid ? SAMPLE : undefined}>
+        {ads ? (
+          <div className="grid grid-cols-2 gap-4">
+            {stat("Spend", usd(ads.spend))}
+            {stat("Impressions", n(ads.impressions))}
+            {stat("ThruPlays (15s)", n(ads.thruplays))}
+            {stat("Completion", rate(ads.completions, ads.starts))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-4">
+            {stat("Reach", paid?.analytics.Reach ?? DASH)}
+            {stat("3s+", paid?.analytics["3s+"] ?? DASH)}
+            {stat("Avg.", paid?.analytics["Avg."] ?? DASH)}
+            {stat("Spend", paid?.analytics.Spend ?? DASH)}
+          </div>
+        )}
       </CardBlock>
     </Locked>,
   ])
@@ -266,7 +328,32 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "paid",
       "Paid",
-      <ListBlock key="paid" title="Paid" tools={<Term id="paid" label={false} />} height="auto" footer={paid ? SAMPLE : undefined}>
+      <ListBlock key="paid" title="Paid" tools={<Term id="paid" label={false} />} height="auto" footer={ads ? ads.footer : paid ? SAMPLE : undefined}>
+        {ads ? (
+          <div className="grid gap-x-6 text-xs @md:grid-cols-2">
+            {adRows.map(([label, value]) => (
+              <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
+                <span className="text-muted-foreground">{label}</span>
+                <span className="tabular">{value}</span>
+              </div>
+            ))}
+            <div className="col-span-full mt-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
+              {(
+                [
+                  ["Spend", usd(ads.spend)],
+                  ["Impressions (1k)", per(ads.spend * 1000, ads.impressions)],
+                  ["ThruPlay rate", rate(ads.thruplays, ads.starts)],
+                  ["Per start", per(ads.spend, ads.starts)],
+                ] as const
+              ).map(([label, value]) => (
+                <div key={label} className="rounded-lg bg-muted/50 px-2 py-1.5">
+                  <div className="text-[10px] text-muted-foreground">{label}</div>
+                  <div className="tabular text-sm text-pax2-blue">{value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
         <div className="grid gap-x-6 text-xs @md:grid-cols-2">
           {WINDOW_ROWS.map((label) => (
             <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
@@ -283,6 +370,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
             ))}
           </div>
         </div>
+        )}
       </ListBlock>,
     ],
   ]
