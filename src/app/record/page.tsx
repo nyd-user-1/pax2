@@ -62,9 +62,11 @@ export default async function RecordLanding() {
             <div className="flex flex-col gap-6">
               <h1 className="font-display text-5xl font-bold leading-[1.05] text-pax2-blue lg:text-[4.25rem]">Video built for Resonance.</h1>
               <p className="max-w-md text-lg leading-relaxed text-slate-900">We help you choose what to say, how to say it and share it. Because your voice is the difference.</p>
-              <Link href="/record/start" className="flex w-fit items-center gap-2 rounded-full border border-slate-200 bg-white px-7 py-4 text-base font-medium text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(15,23,42,0.1)] ring-2 ring-slate-300/70 ring-offset-2 transition-colors hover:bg-slate-100">
-                Let&apos;s go <ArrowRight className="size-4" />
-              </Link>
+              <div className="w-fit rounded-xl border border-black/15 bg-slate-50 p-1">
+                <Link href="/record/start" className="flex items-center gap-2 rounded-lg bg-white px-7 py-3.5 text-base font-medium text-slate-900 shadow-md shadow-black/[0.07] ring-1 ring-black/15 transition-colors hover:bg-slate-50">
+                  Let&apos;s go <ArrowRight className="size-4" />
+                </Link>
+              </div>
               <p className="text-sm text-muted-foreground">Powered by Resonant Amplification &copy;</p>
             </div>
             <PhoneMock videoId={`yt-${top.id}`} timer={timerOf(top.duration)} />
