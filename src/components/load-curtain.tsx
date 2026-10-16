@@ -17,8 +17,8 @@ const TRAIL = 0.18
 /** The tilt of the leading edge, as motion.dev's default. */
 const ANGLE = 9
 const OFF = "-140vw"
-/** A paint beat under the sheets before they lift, in ms. */
-const HOLD = 350
+/** A paint beat under the sheets before they lift — long enough for PAX's forward drift to read, in ms. */
+const HOLD = 900
 
 export function LoadCurtain({ onDone }: { onDone?: () => void }) {
   const reduced = useReducedMotion()
@@ -63,13 +63,20 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
         {/* Un-skewed, so the word stands upright on the tilted sheet. */}
         <div className="absolute inset-0 flex items-center justify-center" style={{ transform: `skewX(${ANGLE}deg)` }}>
           <motion.span
-            className="px-6 text-center font-semibold tracking-tight text-white"
-            style={{ fontSize: "clamp(2.5rem, 9vw, 9rem)", lineHeight: 1, skewX: -6 }}
-            initial={{ x: "0vw", opacity: 1 }}
+            className="px-6 text-center text-white"
+            style={{
+              fontSize: "clamp(2.5rem, 9vw, 9rem)",
+              lineHeight: 1,
+              skewX: -6,
+              fontFamily: "'SFMono-Regular', 'Roboto Mono', 'Cascadia Code', 'Liberation Mono', Menlo, monospace",
+              fontWeight: 760,
+              letterSpacing: "0.035em",
+            }}
+            initial={{ x: "-7vw", opacity: 1 }}
             animate={revealing ? { x: "-24vw", opacity: 0 } : { x: "0vw", opacity: 1 }}
-            transition={{ duration: SWEEP, ease: EASE }}
+            transition={revealing ? { duration: SWEEP, ease: EASE } : { duration: 0.9, ease: "easeOut" }}
           >
-            pax
+            PAX
           </motion.span>
         </div>
       </motion.div>

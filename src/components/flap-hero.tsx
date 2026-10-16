@@ -17,7 +17,7 @@ const STEPS: { rows: [string, string]; tile: string; text: string }[] = [
 /** Boards per row. Words start in box 1; the board itself stays centered on the page. */
 const WIDTH = 10
 /** The curtain's hold plus its sweep, in ms. */
-const CURTAIN = 1200
+const CURTAIN = 1700
 /** One message's flips plus its hold. */
 const STEP_MS = 2800
 /** The last message's flips plus the flag's late, slow run, before the cue appears. */
@@ -64,7 +64,11 @@ export function FlapHero() {
       ) : (
         <div style={{ height: "2.38em" }} />
       )}
-      <div className={`relative mt-10 h-11 transition-opacity duration-700 ${cue ? "opacity-100" : "pointer-events-none opacity-0"}`}>
+      <div className={`mt-10 flex flex-col items-center gap-2 px-6 text-center transition-opacity duration-700 ${cue ? "opacity-100" : "opacity-0"}`}>
+        <p className="text-xl font-semibold text-pax2-blue md:text-2xl">Your voice matters.</p>
+        <p className="text-base text-slate-500 md:text-lg">Learn to use it effectively with the Pax Video Engine.</p>
+      </div>
+      <div className={`relative mt-8 h-11 transition-opacity duration-700 ${cue ? "opacity-100" : "pointer-events-none opacity-0"}`}>
         <ScrollCue className="static translate-x-0" />
       </div>
     </div>
