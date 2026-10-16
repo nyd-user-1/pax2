@@ -306,9 +306,16 @@ const CursorGrid = ({
       depth: false,
       stencil: false,
     })
-    if (!container || !canvas || !gl) return undefined
+    if (!container || !canvas || !gl) {
+      // No WebGL2: leave nothing behind rather than an empty layer.
+      if (canvas) canvas.style.display = "none"
+      return undefined
+    }
     const shader = link(gl)
-    if (!shader) return undefined
+    if (!shader) {
+      canvas.style.display = "none"
+      return undefined
+    }
     const u = shader.uniforms
     const vao = gl.createVertexArray()
     const stateTexture = gl.createTexture()
@@ -570,6 +577,16 @@ const CursorGrid = ({
 
     const onVisibility = () => wake()
 
+    // A crashed canvas paints as an opaque white sheet over the page; on context
+    // loss, pull it out of the picture instead.
+    const onContextLost = (event: Event) => {
+      event.preventDefault()
+      cancelAnimationFrame(raf)
+      raf = 0
+      canvas.style.display = "none"
+    }
+    canvas.addEventListener("webglcontextlost", onContextLost)
+
     const resizeObserver = new ResizeObserver(() => {
       rebuild()
       draw()
@@ -600,6 +617,8 @@ const CursorGrid = ({
     return () => {
       cancelAnimationFrame(raf)
       wakeRef.current = null
+      canvas.removeEventListener("webglcontextlost", onContextLost)
+      canvas.style.display = ""
       resizeObserver.disconnect()
       intersection.disconnect()
       window.removeEventListener("pointermove", onPointerMove)
