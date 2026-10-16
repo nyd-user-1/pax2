@@ -5,10 +5,10 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowUpDown, Bookmark, ChevronDown, ChevronUp, Clock, DollarSign, EllipsisVertical, Forward, ListPlus, Search, Star, X, type LucideIcon } from "lucide-react"
+import { ArrowUpDown, Bookmark, Check, ChevronDown, ChevronUp, Clock, DollarSign, EllipsisVertical, Forward, ListPlus, Search, Star, X, type LucideIcon } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
 import { cn } from "@/ui/lib/utils"
 
 export type FeedVideo = {
@@ -285,35 +285,35 @@ type Order = (a: FeedVideo, b: FeedVideo) => number
 const then = (first: Order, next: Order): Order => (a, b) => first(a, b) || next(a, b)
 const paidFirst: Order = (a, b) => Number(!!b.paid) - Number(!!a.paid)
 
-/** One row per measure, its two directions side by side. `title` names the choice on the trigger. */
+/** Each measure and its two directions; the menu lists the measures, then the chosen one's directions. */
 const SORTS = [
   { measure: "Date", choices: [
-    { value: "newest", label: "Newest", title: "Newest", order: by(posted, -1) },
-    { value: "oldest", label: "Oldest", title: "Oldest", order: by(posted, 1) },
+    { value: "newest", label: "Newest first", title: "Newest", order: by(posted, -1) },
+    { value: "oldest", label: "Oldest first", title: "Oldest", order: by(posted, 1) },
   ] },
   { measure: "Views", choices: [
-    { value: "views", label: "Most", title: "Most views", order: by((v) => v.views, -1) },
-    { value: "fewest-views", label: "Fewest", title: "Fewest views", order: by((v) => v.views, 1) },
+    { value: "views", label: "Most first", title: "Most views", order: by((v) => v.views, -1) },
+    { value: "fewest-views", label: "Fewest first", title: "Fewest views", order: by((v) => v.views, 1) },
   ] },
   { measure: "Likes", choices: [
-    { value: "likes", label: "Most", title: "Most liked", order: by((v) => v.likes, -1) },
-    { value: "fewest-likes", label: "Least", title: "Least liked", order: by((v) => v.likes, 1) },
+    { value: "likes", label: "Most first", title: "Most liked", order: by((v) => v.likes, -1) },
+    { value: "fewest-likes", label: "Least first", title: "Least liked", order: by((v) => v.likes, 1) },
   ] },
   { measure: "Comments", choices: [
-    { value: "comments", label: "Most", title: "Most comments", order: by((v) => v.comments, -1) },
-    { value: "fewest-comments", label: "Fewest", title: "Fewest comments", order: by((v) => v.comments, 1) },
+    { value: "comments", label: "Most first", title: "Most comments", order: by((v) => v.comments, -1) },
+    { value: "fewest-comments", label: "Fewest first", title: "Fewest comments", order: by((v) => v.comments, 1) },
   ] },
   { measure: "Breakout", choices: [
-    { value: "breakout", label: "Biggest", title: "Biggest breakout", order: by((v) => v.ratio, -1) },
-    { value: "smallest-breakout", label: "Smallest", title: "Smallest breakout", order: by((v) => v.ratio, 1) },
+    { value: "breakout", label: "Biggest first", title: "Biggest breakout", order: by((v) => v.ratio, -1) },
+    { value: "smallest-breakout", label: "Smallest first", title: "Smallest breakout", order: by((v) => v.ratio, 1) },
   ] },
   { measure: "Media", choices: [
-    { value: "earned", label: "Earned", title: "Earned media", order: then((a, b) => paidFirst(b, a), by(posted, -1)) },
-    { value: "paid", label: "Paid", title: "Paid media", order: then(paidFirst, by(posted, -1)) },
+    { value: "earned", label: "Earned first", title: "Earned media", order: then((a, b) => paidFirst(b, a), by(posted, -1)) },
+    { value: "paid", label: "Paid first", title: "Paid media", order: then(paidFirst, by(posted, -1)) },
   ] },
   { measure: "Title", choices: [
-    { value: "az", label: "A–Z", title: "A–Z", order: (a: FeedVideo, b: FeedVideo) => a.title.localeCompare(b.title) },
-    { value: "za", label: "Z–A", title: "Z–A", order: (a: FeedVideo, b: FeedVideo) => b.title.localeCompare(a.title) },
+    { value: "az", label: "A to Z", title: "A–Z", order: (a: FeedVideo, b: FeedVideo) => a.title.localeCompare(b.title) },
+    { value: "za", label: "Z to A", title: "Z–A", order: (a: FeedVideo, b: FeedVideo) => b.title.localeCompare(a.title) },
   ] },
 ] as const
 
@@ -323,6 +323,7 @@ type FeedSort = (typeof CHOICES)[number]["value"]
 /** VelocitySortMenu's menu, its trigger dressed as section two's Learn more. */
 function FeedSortMenu({ sort, setSort }: { sort: FeedSort; setSort: (s: FeedSort) => void }) {
   const current = CHOICES.find((c) => c.value === sort) ?? CHOICES[0]
+  const measure = SORTS.find((s) => s.choices.some((c) => c.value === sort)) ?? SORTS[0]
   return (
     <DropdownMenu>
       <DropdownMenuTrigger aria-label="Sort videos" className="press inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-pax2-blue px-4 text-base font-medium text-white shadow-md outline-none transition-shadow hover:shadow-e3 data-[popup-open]:shadow-e3 sm:px-6">
@@ -330,25 +331,24 @@ function FeedSortMenu({ sort, setSort }: { sort: FeedSort; setSort: (s: FeedSort
         {/* Icon-only on phones, so the search keeps the row. */}
         <span className="hidden sm:inline">{current.title}</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-64 rounded-xl p-1.5">
+      <DropdownMenuContent align="end" className="min-w-48 rounded-xl">
         {SORTS.map((s) => (
-          <div key={s.measure} className="flex items-center justify-between gap-6 px-2 py-1">
-            <span className="text-sm text-slate-800">{s.measure}</span>
-            <span className="flex gap-1">
-              {s.choices.map((c) => (
-                <DropdownMenuItem
-                  key={c.value}
-                  onClick={() => setSort(c.value)}
-                  className={cn(
-                    "rounded-full px-3 py-1 text-sm whitespace-nowrap",
-                    c.value === sort ? "bg-[#dbe7fa] font-medium text-[#033882]! focus:bg-[#dbe7fa]" : "text-slate-600 focus:bg-slate-100",
-                  )}
-                >
-                  {c.label}
-                </DropdownMenuItem>
-              ))}
-            </span>
-          </div>
+          <DropdownMenuItem
+            key={s.measure}
+            closeOnClick={false}
+            onClick={() => s !== measure && setSort(s.choices[0].value)}
+            className="flex items-center justify-between gap-6 whitespace-nowrap rounded-lg text-sm"
+          >
+            {s.measure}
+            {s === measure && <Check className="size-4 text-pax2-light-blue" />}
+          </DropdownMenuItem>
+        ))}
+        <DropdownMenuSeparator />
+        {measure.choices.map((c) => (
+          <DropdownMenuItem key={c.value} onClick={() => setSort(c.value)} className="flex items-center justify-between gap-6 whitespace-nowrap rounded-lg text-sm">
+            {c.label}
+            {c.value === sort && <Check className="size-4 text-pax2-light-blue" />}
+          </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
