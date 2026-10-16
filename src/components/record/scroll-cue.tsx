@@ -8,7 +8,7 @@ import { cn } from "@/ui/lib/utils"
 /** The classic circled down-arrow at the hero's foot: one tap scrolls a full
  *  viewport to whatever comes next. It leaves as soon as the reader scrolls, and
  *  only comes back once they've returned to the very top and paused there. */
-export function ScrollCue() {
+export function ScrollCue({ className }: { className?: string }) {
   const [shown, setShown] = React.useState(true)
   React.useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | undefined
@@ -32,6 +32,7 @@ export function ScrollCue() {
       className={cn(
         "absolute bottom-7 left-1/2 flex size-11 -translate-x-1/2 float-cue items-center justify-center rounded-full bg-white text-pax2-ink shadow-e2 transition-[opacity,box-shadow] duration-500 hover:shadow-e3",
         shown ? "opacity-100" : "pointer-events-none opacity-0 duration-150",
+        className,
       )}
     >
       <ChevronDown className="size-5" />

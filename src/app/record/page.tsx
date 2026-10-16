@@ -8,7 +8,7 @@ import { Feed, type FeedVideo } from "@/components/record/feed"
 import { LandingHeader } from "@/components/record/landing-header"
 import { LandingOnly, LandingSurface } from "@/components/record/landing-only"
 import { PhoneMock } from "@/components/record/phone-mock"
-import { ScrollCue, ScrollTop } from "@/components/record/scroll-cue"
+import { ScrollTop } from "@/components/record/scroll-cue"
 import { currentUser } from "@/lib/auth"
 
 export const metadata = { title: "Record a video" }
@@ -47,7 +47,6 @@ export default async function RecordLanding() {
         <LandingHeader />
         <section className="relative -mt-16 flex min-h-dvh flex-col justify-center bg-gradient-to-b from-pax2-lavender to-pax2-mist pt-16">
           <FlapHero />
-          <ScrollCue />
         </section>
         <section className="relative flex min-h-dvh flex-col justify-center">
           <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 pb-10 md:grid-cols-[1.4fr_1fr]">
