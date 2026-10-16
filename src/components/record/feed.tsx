@@ -252,9 +252,10 @@ function FeedSortMenu({ sort, setSort }: { sort: FeedSort; setSort: (s: FeedSort
   const current = SORTS.find((s) => s.value === sort) ?? SORTS[0]
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger aria-label="Sort videos" className="inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-white px-4 text-sm text-slate-700 shadow-e1 outline-none transition-shadow hover:shadow-e2 data-[popup-open]:shadow-e2">
+      <DropdownMenuTrigger aria-label="Sort videos" className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-white px-3.5 text-sm sm:px-4 text-slate-700 shadow-e1 outline-none transition-shadow hover:shadow-e2 data-[popup-open]:shadow-e2">
         <ArrowUpDown className="size-3.5 text-slate-400" />
-        {current.label}
+        {/* Icon-only on phones, so the search keeps the row. */}
+        <span className="hidden sm:inline">{current.label}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-48 rounded-xl">
         {SORTS.map((s) => (
@@ -457,8 +458,9 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
 
   return (
     <section ref={section} onClickCapture={remember} className="mx-auto w-full max-w-6xl px-6 pb-16">
-      <div className="sticky top-2.5 z-40 flex w-full items-center justify-between gap-4">
-        <div className="w-full max-w-2xl">
+      {/* Sticks just beneath the 4rem header, never inside it. */}
+      <div className="sticky top-[4.75rem] z-40 flex w-full items-center justify-between gap-4">
+        <div className="w-full min-w-0 max-w-2xl">
           <SearchBar q={q} setQ={setQ} />
         </div>
         <FeedSortMenu sort={sort} setSort={setSort} />
