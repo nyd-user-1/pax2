@@ -12,6 +12,7 @@ import { LandingOnly, LandingSurface } from "@/components/record/landing-only"
 import { PhoneMock } from "@/components/record/phone-mock"
 import { ScrollTop } from "@/components/record/scroll-cue"
 import { currentUser } from "@/lib/auth"
+import { tagsFor } from "@/lib/tags"
 
 export const metadata = { title: "Record a video" }
 
@@ -28,7 +29,8 @@ const timerOf = (iso: string) => {
 export default async function RecordLanding() {
   const all = (shorts as unknown as { videos: RawVideo[] }).videos
   const top = all.filter((v) => v.channelId === FAIRVOTE).sort((a, b) => (b.views ?? 0) - (a.views ?? 0))[0]
-  const feed = homeFeed as FeedVideo[]
+  // Each video carries its delivery tags, for the feed's tag filter.
+  const feed = (homeFeed as FeedVideo[]).map((v) => ({ ...v, tags: tagsFor(`yt-${v.id}`) }))
   // Signed in, the hero has done its job: the feed is the page. Local dev is exempt —
   // its auto-admin shortcut would otherwise hide the hero forever.
   if (process.env.NODE_ENV !== "development" && (await currentUser()))

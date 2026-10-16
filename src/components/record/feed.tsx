@@ -5,7 +5,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowDown, ArrowUp, Bookmark, ChevronDown, ChevronUp, Clock, DollarSign, EllipsisVertical, Forward, ListPlus, Search, SlidersHorizontal, Star, X, type LucideIcon } from "lucide-react"
+import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, DollarSign, EllipsisVertical, Forward, ListPlus, MessageCircle, Search, SlidersHorizontal, Star, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
@@ -26,6 +26,7 @@ export type FeedVideo = {
   likes?: number | null
   comments?: number | null
   paid?: boolean
+  tags?: string[]
 }
 
 const fmt = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 })
@@ -132,14 +133,31 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
   { label: "Share", icon: Forward },
 ]
 
-/** Paid media's mark: the three-dot button's box mirrored into the bottom-right corner,
- *  so it sits as far from the bottom and right as the dots do from the top and right. */
-function PaidMark({ v, className }: { v: FeedVideo; className?: string }) {
-  if (!v.paid) return null
+/** The card's bottom-right corner: like and comment counts, then paid media's mark in the
+ *  three-dot button's box mirrored from the top-right — as far from the bottom and right as the
+ *  dots sit from the top and right. */
+function CardFoot({ v, box }: { v: FeedVideo; box?: string }) {
+  if (v.likes == null && v.comments == null && !v.paid) return null
   return (
-    <span className={cn("absolute bottom-0 right-0 flex size-9 items-center justify-center", className)}>
-      <DollarSign role="img" aria-label="Paid media" className="size-5 text-green-600" />
-    </span>
+    <div className="tabular mt-auto flex items-center justify-end gap-3 text-xs text-pax2-blue">
+      {v.likes != null && (
+        <span className="flex items-center gap-1" aria-label={`${v.likes} likes`}>
+          <ThumbsUp className="size-3.5" /> {fmt.format(v.likes)}
+        </span>
+      )}
+      {v.comments != null && (
+        <span className="flex items-center gap-1" aria-label={`${v.comments} comments`}>
+          <MessageCircle className="size-3.5" /> {fmt.format(v.comments)}
+        </span>
+      )}
+      {v.paid ? (
+        <span className={cn("flex size-9 shrink-0 items-center justify-center", box)}>
+          <DollarSign role="img" aria-label="Paid media" className="size-5 text-green-600" />
+        </span>
+      ) : (
+        <span className="h-9 w-2" />
+      )}
+    </div>
   )
 }
 
@@ -193,8 +211,8 @@ export function ListRow({ v }: { v: FeedVideo }) {
           <span className="text-sm font-medium text-slate-800">{v.channel}</span>
         </span>
         {v.description && <p className="hidden pt-1 text-sm leading-relaxed text-slate-800 sm:line-clamp-2">{v.description}</p>}
+        <CardFoot v={v} />
       </div>
-      <PaidMark v={v} />
     </Link>
   )
 }
@@ -213,7 +231,8 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <RowMenu className="-mr-1.5 size-8" />
       </div>
       <p className="tabular text-xs text-pax2-blue">{fmt.format(v.views)} views</p>
-      <PaidMark v={v} className="-bottom-1.5 -right-1.5 size-8" />
+      {/* Shorts' dots are a size-8 box pulled 6px right; the corner mirrors that. */}
+      <CardFoot v={v} box="-mb-1.5 -mr-1.5 size-8" />
     </Link>
   )
 }
@@ -230,7 +249,7 @@ export function LandscapeCard({ v }: { v: FeedVideo }) {
       </div>
       <p className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
       <p className="tabular text-xs text-pax2-blue">{v.channel} · {fmt.format(v.views)} views</p>
-      <PaidMark v={v} />
+      <CardFoot v={v} />
     </Link>
   )
 }
@@ -290,21 +309,54 @@ type Order = (a: FeedVideo, b: FeedVideo) => number
 const then = (first: Order, next: Order): Order => (a, b) => first(a, b) || next(a, b)
 const paidFirst: Order = (a, b) => Number(!!b.paid) - Number(!!a.paid)
 
-/** One item per measure; its arrow is the direction, and choosing it again flips it.
- *  Down is descending: newest, most, paid first, Z to A. */
-const SORTS = [
-  { measure: "Date", down: by(posted, -1), up: by(posted, 1) },
-  { measure: "Views", down: by((v) => v.views, -1), up: by((v) => v.views, 1) },
-  { measure: "Likes", down: by((v) => v.likes, -1), up: by((v) => v.likes, 1) },
-  { measure: "Comments", down: by((v) => v.comments, -1), up: by((v) => v.comments, 1) },
-  { measure: "Breakout", down: by((v) => v.ratio, -1), up: by((v) => v.ratio, 1) },
-  { measure: "Media", down: then(paidFirst, by(posted, -1)), up: then((a, b) => paidFirst(b, a), by(posted, -1)) },
-  { measure: "Title", down: (a: FeedVideo, b: FeedVideo) => b.title.localeCompare(a.title), up: (a: FeedVideo, b: FeedVideo) => a.title.localeCompare(b.title) },
+const perDay = (v: FeedVideo) => v.views / Math.max(1, (Date.now() - posted(v)) / 86_400_000)
+
+/** The sort chips. A measured chip steps off → ↓ → ↑ → off; A–Z and Media are on or off, Media
+ *  reading Earned (no ad spend, the default) until it's switched to Paid. Every chip that's on
+ *  joins the order in the sequence it was switched on. Down is descending: newest, most, paid first. */
+const SORT_KEYS = [
+  { key: "date", label: "Date", pick: posted },
+  { key: "trending", label: "Trending", pick: perDay },
+  { key: "views", label: "Views", pick: (v: FeedVideo) => v.views },
+  { key: "likes", label: "Likes", pick: (v: FeedVideo) => v.likes },
+  { key: "comments", label: "Comments", pick: (v: FeedVideo) => v.comments },
+  { key: "title", label: "A–Z", order: (a: FeedVideo, b: FeedVideo) => a.title.localeCompare(b.title) },
+  { key: "media", label: "Earned", onLabel: "Paid", order: paidFirst },
 ] as const
 
-type FeedSort = { measure: (typeof SORTS)[number]["measure"]; dir: "up" | "down" }
+type SortKey = (typeof SORT_KEYS)[number]["key"]
+type FeedSort = { key: SortKey; dir: "down" | "up" }[]
 
-const DEFAULT_SORT: FeedSort = { measure: "Date", dir: "down" }
+const NEWEST = by(posted, -1)
+/** The chips' combined order; with none on, newest first. */
+const orderOf = (sorts: FeedSort): Order =>
+  [...sorts, null].reduceRight<Order>((next, s) => {
+    if (!s) return NEWEST
+    const k = SORT_KEYS.find((x) => x.key === s.key)!
+    const first = "pick" in k ? by(k.pick, s.dir === "down" ? -1 : 1) : k.order
+    return then(first, next)
+  }, NEWEST)
+
+/** One chip's next step. */
+const step = (sorts: FeedSort, key: SortKey): FeedSort => {
+  const on = sorts.find((s) => s.key === key)
+  const measured = "pick" in SORT_KEYS.find((x) => x.key === key)!
+  if (!on) return [...sorts, { key, dir: "down" }]
+  if (measured && on.dir === "down") return sorts.map((s) => (s.key === key ? { key, dir: "up" } : s))
+  return sorts.filter((s) => s.key !== key)
+}
+
+/** What narrows the feed beyond the search words. */
+export type Refine = {
+  sorts: FeedSort
+  setSorts: (s: FeedSort) => void
+  channel: string
+  setChannel: (c: string) => void
+  tag: string
+  setTag: (t: string) => void
+  channels: string[]
+  tags: string[]
+}
 
 const rotate = <T,>(xs: T[], n: number) => {
   const k = xs.length ? n % xs.length : 0
@@ -343,23 +395,98 @@ const RECENT = "pax2:recent-searches"
 
 /** The search bar, with the reader's recent searches dropping down beneath it while it's empty
  *  (govblock's search drop-down). A search is remembered on Enter. */
+/** A one-line filter with autocomplete: matches drop beneath it as the reader types; a pick fills it. */
+function Suggest({
+  icon: Icon,
+  placeholder,
+  value,
+  setValue,
+  options,
+}: {
+  icon: LucideIcon
+  placeholder: string
+  value: string
+  setValue: (v: string) => void
+  options: string[]
+}) {
+  const [text, setText] = React.useState(value)
+  const [open, setOpen] = React.useState(false)
+  React.useEffect(() => setText(value), [value])
+  const needle = text.trim().toLowerCase()
+  const hits = needle && needle !== value.toLowerCase() ? options.filter((o) => o.toLowerCase().includes(needle)).slice(0, 6) : []
+  const pick = (o: string) => {
+    setValue(o)
+    setText(o)
+    setOpen(false)
+  }
+  return (
+    <div className="relative">
+      <div className="flex h-10 items-center gap-2 rounded-full border border-slate-200 px-3.5 transition-colors focus-within:border-pax2-blue">
+        <Icon aria-hidden className="size-4 shrink-0 text-slate-400" />
+        <input
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value)
+            setOpen(true)
+            if (e.target.value === "") setValue("")
+          }}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setOpen(false)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && hits[0]) {
+              e.preventDefault()
+              pick(hits[0])
+            }
+          }}
+          placeholder={placeholder}
+          aria-label={placeholder}
+          className="min-w-0 flex-1 bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
+        />
+        {text !== "" && (
+          <button
+            type="button"
+            aria-label={`Clear ${placeholder.toLowerCase()}`}
+            onClick={() => {
+              setText("")
+              setValue("")
+            }}
+            className="text-slate-400 hover:text-slate-700"
+          >
+            <X className="size-3.5" />
+          </button>
+        )}
+      </div>
+      {open && hits.length > 0 && (
+        <ul className="absolute inset-x-0 top-full z-10 mt-1 overflow-hidden rounded-xl border border-slate-200 bg-white py-1 shadow-lg">
+          {hits.map((o) => (
+            <li key={o}>
+              <button type="button" onClick={() => pick(o)} className="w-full truncate px-3.5 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-50 hover:text-pax2-blue">
+                {o}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
 /** The search bar, which grows downward into one panel: recent searches while it's empty and
- *  focused (govblock's search drop-down), or — from the sliders at its right end — the sort.
+ *  focused (govblock's search drop-down), or — from the sliders at its right end — channel and
+ *  tag filters over the sort chips.
  *  A search is remembered on Enter. */
 export function SearchBar({
   q,
   setQ,
   placeholder = "Search videos",
   className,
-  sort,
-  setSort,
+  refine,
 }: {
   q: string
   setQ: (q: string) => void
   placeholder?: string
   className?: string
-  sort?: FeedSort
-  setSort?: (s: FeedSort) => void
+  refine?: Refine
 }) {
   const [focused, setFocused] = React.useState(false)
   const [sorting, setSorting] = React.useState(false)
@@ -393,7 +520,7 @@ export function SearchBar({
   }
   const showRecent = !sorting && focused && q === "" && recent.length > 0
   const open = sorting || showRecent
-  const sorted = sort && (sort.measure !== DEFAULT_SORT.measure || sort.dir !== DEFAULT_SORT.dir)
+  const refined = !!refine && (refine.sorts.length > 0 || refine.channel !== "" || refine.tag !== "")
   // Open, bar and panel share one border: pax blue on the landing's dressed bar, slate otherwise.
   const edge = className ? "border-pax2-blue" : "border-slate-200"
   return (
@@ -436,10 +563,10 @@ export function SearchBar({
             <X className="size-4" />
           </button>
         )}
-        {sort && setSort ? (
+        {refine ? (
           <button
             type="button"
-            aria-label="Sort"
+            aria-label="Filter and sort"
             aria-expanded={sorting}
             onClick={() => setSorting((o) => !o)}
             className={cn(
@@ -448,7 +575,7 @@ export function SearchBar({
             )}
           >
             <SlidersHorizontal className="size-5" />
-            {sorted && !sorting && <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-pax2-blue ring-2 ring-white" />}
+            {refined && !sorting && <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-pax2-blue ring-2 ring-white" />}
           </button>
         ) : (
           <span className="w-3" />
@@ -456,44 +583,64 @@ export function SearchBar({
       </form>
       {open && (
         <div
-          className={cn("absolute inset-x-0 top-full z-50 -mt-px overflow-hidden rounded-b-[28px] border border-t-0 bg-white text-left shadow-lg", edge)}
-          onMouseDown={(e) => e.preventDefault()}
+          className={cn("absolute inset-x-0 top-full z-50 -mt-px rounded-b-[28px] border border-t-0 bg-white text-left shadow-lg", edge)}
+          // Clicks inside keep the search's focus — except into the filter inputs, which take it.
+          onMouseDown={(e) => {
+            if (!(e.target instanceof HTMLInputElement)) e.preventDefault()
+          }}
         >
           <div className="mx-5 border-t border-slate-200" />
-          {sorting && sort && setSort ? (
-            <div className="px-5 pb-5 pt-4">
-              <div className="flex h-6 items-center justify-between">
-                <h2 className="text-sm font-medium text-slate-500">Sort by</h2>
-                {sorted && (
-                  <button type="button" onClick={() => setSort(DEFAULT_SORT)} className="text-sm font-medium text-pax2-blue hover:underline">
-                    Reset
-                  </button>
-                )}
+          {sorting && refine ? (
+            <div className="flex flex-col gap-4 px-5 pb-5 pt-4">
+              <div className="grid gap-2 sm:grid-cols-2">
+                <Suggest icon={UserRound} placeholder="Channel" value={refine.channel} setValue={refine.setChannel} options={refine.channels} />
+                <Suggest icon={Tag} placeholder="Tags" value={refine.tag} setValue={refine.setTag} options={refine.tags} />
               </div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {SORTS.map(({ measure }) => {
-                  const on = measure === sort.measure
-                  const Arrow = sort.dir === "up" ? ArrowUp : ArrowDown
-                  return (
+              <div>
+                <div className="flex h-6 items-center justify-between">
+                  <h2 className="text-sm font-medium text-slate-500">Sort by</h2>
+                  {refined && (
                     <button
-                      key={measure}
                       type="button"
-                      aria-pressed={on}
-                      onClick={() => setSort({ measure, dir: on ? (sort.dir === "up" ? "down" : "up") : measure === "Title" ? "up" : "down" })}
-                      className={cn(
-                        "flex h-9 items-center gap-1.5 rounded-full border px-4 text-sm font-medium transition-colors",
-                        on ? "border-pax2-blue bg-pax2-blue text-white" : "border-slate-200 text-slate-700 hover:border-pax2-blue hover:text-pax2-blue",
-                      )}
+                      onClick={() => {
+                        refine.setSorts([])
+                        refine.setChannel("")
+                        refine.setTag("")
+                      }}
+                      className="text-sm font-medium text-pax2-blue hover:underline"
                     >
-                      {measure}
-                      {on && <Arrow aria-label={sort.dir === "up" ? "ascending" : "descending"} className="size-3.5" />}
+                      Reset
                     </button>
-                  )
-                })}
+                  )}
+                </div>
+                <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {SORT_KEYS.map((k) => {
+                    const at = refine.sorts.findIndex((x) => x.key === k.key)
+                    const on = at >= 0 ? refine.sorts[at] : null
+                    const Icon = k.key === "title" ? ArrowDownAZ : !on ? ArrowUpDown : on.dir === "up" ? ArrowUpNarrowWide : ArrowDownWideNarrow
+                    return (
+                      <button
+                        key={k.key}
+                        type="button"
+                        aria-pressed={!!on}
+                        onClick={() => refine.setSorts(step(refine.sorts, k.key))}
+                        className={cn(
+                          "flex h-9 w-full items-center justify-center gap-1.5 rounded-full border px-3 text-sm font-medium transition-colors",
+                          on ? "border-pax2-blue bg-pax2-blue text-white" : "border-slate-200 text-slate-700 hover:border-pax2-blue hover:text-pax2-blue",
+                        )}
+                      >
+                        {/* With more than one chip on, each shows its place in the order. */}
+                        {on && refine.sorts.length > 1 && <span className="tabular text-xs opacity-75">{at + 1}</span>}
+                        {on && "onLabel" in k ? k.onLabel : k.label}
+                        <Icon aria-hidden className="size-4" />
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
             </div>
           ) : (
-            <div className="max-h-[min(28rem,60svh)] overflow-y-auto px-5 pb-4 pt-3">
+            <div className="max-h-[min(28rem,60svh)] overflow-y-auto rounded-b-[28px] px-5 pb-4 pt-3">
               <h2 className="text-sm font-medium text-muted-foreground">
                 Recent searches <span className="tabular">({recent.length})</span>
               </h2>
@@ -527,7 +674,11 @@ export function SearchBar({
 
 export function Feed({ videos }: { videos: FeedVideo[] }) {
   const [q, setQ] = React.useState("")
-  const [sort, setSort] = React.useState<FeedSort>(DEFAULT_SORT)
+  const [sorts, setSorts] = React.useState<FeedSort>([])
+  const [channel, setChannel] = React.useState("")
+  const [tag, setTag] = React.useState("")
+  const channels = React.useMemo(() => [...new Set(videos.map((v) => v.channel))].sort((a, b) => a.localeCompare(b)), [videos])
+  const tags = React.useMemo(() => [...new Set(videos.flatMap((v) => v.tags ?? []))].sort((a, b) => a.localeCompare(b)), [videos])
   // A drawer's channel name searches this feed (take-panel.tsx); a ?q= in the address does the same on arrival.
   React.useEffect(() => {
     document.documentElement.dataset.feed = "1"
@@ -565,10 +716,14 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   }, [landing])
 
   const needle = q.trim().toLowerCase()
-  const order = (SORTS.find((s) => s.measure === sort.measure) ?? SORTS[0])[sort.dir]
+  // Narrowed by words, channel or tag, the feed is a finite list of results, not an endless one.
+  const narrowed = !!needle || channel !== "" || tag !== ""
   const shown = React.useMemo(
-    () => (needle ? videos.filter((v) => matches(v, needle)) : videos).toSorted(order),
-    [videos, needle, order],
+    () =>
+      videos
+        .filter((v) => (!needle || matches(v, needle)) && (!channel || v.channel === channel) && (!tag || (v.tags ?? []).includes(tag)))
+        .toSorted(orderOf(sorts)),
+    [videos, needle, channel, tag, sorts],
   )
   // With a video's drawer open beside the feed, search results lay out as a grid: three across beside
   // the half-page panel, two beside the third-of-a-page one.
@@ -579,32 +734,31 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   // view another rotated pass appends, so the feed reads as endless.
   React.useEffect(() => {
     const el = sentinel.current
-    if (!el || needle) return
+    if (!el || narrowed) return
     const io = new IntersectionObserver((es) => {
       if (es.some((e) => e.isIntersecting)) setCycles((c) => c + 1)
     }, { rootMargin: "600px" })
     io.observe(el)
     return () => io.disconnect()
-  }, [needle])
+  }, [narrowed])
 
   return (
     <section ref={section} onClickCapture={remember} className="mx-auto w-full max-w-6xl px-6 pb-16">
       {/* Sticks just beneath the 4rem header, never inside it. */}
-      <div className="sticky top-[4.75rem] z-40 w-full max-w-2xl">
+      <div className="sticky top-[4.75rem] z-40 mx-auto w-full max-w-2xl">
         {/* Dressed as section two's Try it. */}
         <SearchBar
           q={q}
           setQ={setQ}
-          sort={sort}
-          setSort={setSort}
+          refine={{ sorts, setSorts, channel, setChannel, tag, setTag, channels, tags }}
           className="h-14 border-slate-400 shadow-md hover:border-pax2-blue hover:bg-slate-50 focus-within:border-pax2-blue"
         />
       </div>
 
       <div className="flex flex-col gap-10 pt-10">
         {shown.length === 0 ? (
-          <p className="py-16 text-center text-slate-500">Nothing matches &ldquo;{q}&rdquo;.</p>
-        ) : needle ? (
+          <p className="py-16 text-center text-slate-500">{needle ? <>Nothing matches &ldquo;{q}&rdquo;.</> : "Nothing matches these filters."}</p>
+        ) : narrowed ? (
           resultCols ? (
             <div className={cn("grid gap-8", resultCols)}>
               {shown.map((v) => (
@@ -619,7 +773,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
         )}
       </div>
 
-      {!needle && shown.length > 0 && (
+      {!narrowed && shown.length > 0 && (
         <div ref={sentinel} className="flex justify-center py-12">
           <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-pax2-blue" />
         </div>
