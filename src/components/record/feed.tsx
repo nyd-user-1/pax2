@@ -123,8 +123,8 @@ function Favorite({ id }: { id: string }) {
   )
 }
 
-function Avatar({ id }: { id: string }) {
-  return <img src={`/logos/channels/${id}.jpg`} alt="" className="size-8 shrink-0 rounded-full object-cover" />
+function Avatar({ id, className }: { id: string; className?: string }) {
+  return <img src={`/logos/channels/${id}.jpg`} alt="" className={cn("size-8 shrink-0 rounded-full object-cover", className)} />
 }
 
 const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
@@ -139,7 +139,7 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
 function CardFoot({ v, box }: { v: FeedVideo; box?: string }) {
   if (v.likes == null && v.comments == null && !v.paid) return null
   return (
-    <div className="tabular mt-auto flex items-center justify-end gap-3 text-xs text-pax2-blue">
+    <div className="tabular mt-auto flex h-9 items-center justify-end gap-3 text-xs text-pax2-blue">
       {v.likes != null && (
         <span className="flex items-center gap-1" aria-label={`${v.likes} likes`}>
           <ThumbsUp className="size-3.5" /> {fmt.format(v.likes)}
@@ -230,6 +230,10 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <p className="line-clamp-2 min-w-0 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-pax2-light-blue">{v.title}</p>
         <RowMenu className="-mr-1.5 size-8" />
       </div>
+      <span className="flex min-w-0 items-center gap-1.5">
+        <Avatar id={v.channelId} className="size-5" />
+        <span className="truncate text-xs font-medium text-slate-800">{v.channel}</span>
+      </span>
       <p className="tabular text-xs text-pax2-blue">{fmt.format(v.views)} views</p>
       {/* Shorts' dots are a size-8 box pulled 6px right; the corner mirrors that. */}
       <CardFoot v={v} box="-mb-1.5 -mr-1.5 size-8" />

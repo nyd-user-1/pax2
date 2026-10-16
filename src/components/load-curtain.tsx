@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { usePathname } from "next/navigation"
 import { motion, useReducedMotion } from "motion/react"
 
 import StrokeText from "@/components/stroke-text"
@@ -24,8 +25,10 @@ const OFF = "-140vw"
 /** A paint beat under the sheets before they lift — long enough for PAX's outline to draw and fill, in ms. */
 const HOLD = 1600
 
+/** The curtain belongs to the front door: a load on any other page skips it. */
 export function LoadCurtain({ onDone }: { onDone?: () => void }) {
-  const reduced = useReducedMotion()
+  const root = React.useRef(usePathname() === "/").current
+  const reduced = useReducedMotion() || !root
   const [revealing, setRevealing] = React.useState(false)
   const [gone, setGone] = React.useState(false)
   const done = React.useRef(false)
