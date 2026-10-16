@@ -5,17 +5,19 @@ import Link from "next/link"
 
 import { MessagesSquare, PanelLeftClose, PanelLeftOpen } from "lucide-react"
 
+import { useCurtainDone } from "@/components/load-curtain"
 import { useShellPanel } from "@/components/shell"
-import { Wordmark } from "@/components/wordmark"
+import StrokeText from "@/components/stroke-text"
 import { cn } from "@/ui/lib/utils"
 
 /** The landing's sticky top bar: transparent over the hero, then white with
  *  the shell's hairline-and-shadow once the feed scrolls beneath it. The feed's
  *  search bar docks into its empty center. Signed in, there's no hero: the sidebar toggle stands where
- *  the wordmark was and the discussion where Sign up was, and the bar turns white as soon as the feed moves. */
+ *  PAX was and the discussion where Sign up was, and the bar turns white as soon as the feed moves. */
 export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
   const [scrolled, setScrolled] = React.useState(false)
   const { sidebarOpen, toggleSidebar, discuss, toggleDiscuss } = useShellPanel()
+  const curtainDone = useCurtainDone()
   React.useEffect(() => {
     const on = () => setScrolled(window.scrollY > (signedIn ? 8 : window.innerHeight - 140))
     on()
@@ -40,7 +42,23 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
         </>
       ) : (
         <>
-          <Link href="/" aria-label="Home"><Wordmark size={26} /></Link>
+          {/* The curtain's PAX in small, drawing once the curtain has cleared. */}
+          <Link href="/" aria-label="Home" className="block h-[26px] w-14 [&_svg]:ml-0">
+            {curtainDone && (
+              <StrokeText
+                text="PAX"
+                strokeColor="var(--pax2-blue)"
+                fillColor="var(--pax2-blue)"
+                strokeWidth={1}
+                fontSize={28}
+                fontFamily="'PAX Curtain', monospace"
+                letterSpacing={0}
+                drawDuration={0.9}
+                fillDelay={0.1}
+                stagger={0.08}
+              />
+            )}
+          </Link>
           <Link href="/signup" className="press rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-pax2-blue shadow-e1 transition-shadow hover:shadow-e2">
             Sign up
           </Link>
