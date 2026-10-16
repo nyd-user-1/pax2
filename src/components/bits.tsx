@@ -54,7 +54,7 @@ export function ScoreFigure({ value, low, high, status, size = "lg" }: { value: 
   if (status === "unscorable" || value == null) return <span className={cn("text-muted-foreground", size === "lg" ? "text-2xl" : "text-sm")}>Not scored</span>
   return (
     <span className="tabular inline-flex items-baseline gap-1.5">
-      <span className={cn("font-display text-pax2-ink", size === "lg" ? "text-5xl" : "text-2xl")}>{value.toFixed(0)}</span>
+      <span className={cn("font-display text-pax2-blue", size === "lg" ? "text-5xl" : "text-2xl")}>{value.toFixed(0)}</span>
       <span className={cn("text-muted-foreground", size === "lg" ? "text-sm" : "text-xs")}>
         {low!.toFixed(0)}–{high!.toFixed(0)}
       </span>

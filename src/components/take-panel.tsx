@@ -44,10 +44,10 @@ export function TakePanel({ title, search, children }: { title: string; search?:
         )}
         <div className="flex shrink-0 items-center gap-2">
           {/* The icon shows the size the next press goes to: a third, half, then the whole area. */}
-          <button type="button" onClick={cycleSize} className="hidden size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax2-ink md:flex" aria-label={size === "third" ? "Half the page" : size === "half" ? "Full page" : "A third of the page"}>
+          <button type="button" onClick={cycleSize} className="hidden size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax2-blue md:flex" aria-label={size === "third" ? "Half the page" : size === "half" ? "Full page" : "A third of the page"}>
             {size === "third" ? <Columns2 className="size-4" /> : size === "half" ? <Maximize2 className="size-4" /> : <Columns3 className="size-4" />}
           </button>
-          <button type="button" onClick={() => router.back()} className="flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax2-ink" aria-label="Close">
+          <button type="button" onClick={() => router.back()} className="flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-e1 hover:text-pax2-blue" aria-label="Close">
             <X className="size-4" />
           </button>
         </div>

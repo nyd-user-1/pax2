@@ -12,7 +12,7 @@ export default function SignUpPage() {
         <Link href="/" aria-label="Home"><Wordmark size={28} /></Link>
       </header>
       <div className="w-full max-w-sm">
-        <h1 className="font-display m-0 mb-8 text-center text-4xl font-normal text-pax2-ink">Create an account</h1>
+        <h1 className="font-display m-0 mb-8 text-center text-4xl font-normal text-pax2-blue">Create an account</h1>
         <AuthForm mode="signup" />
       </div>
     </main>

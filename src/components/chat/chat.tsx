@@ -521,7 +521,7 @@ export function Chat({ scripts = [], videos = [], compact = false }: { scripts?:
             <button type="button"
               onClick={() => submit(selectedVideo ? ask(selectedVideo) : input)}
               disabled={(!input.trim() && !selectedVideo) || loading}
-              className="ml-1 flex h-9 w-9 items-center justify-center rounded-xl bg-pax2-ink text-white disabled:opacity-25 hover:opacity-80 transition-opacity">
+              className="ml-1 flex h-9 w-9 items-center justify-center rounded-xl bg-pax2-blue text-white disabled:opacity-25 hover:opacity-80 transition-opacity">
               <ArrowUp className="h-4 w-4" />
             </button>
           )}

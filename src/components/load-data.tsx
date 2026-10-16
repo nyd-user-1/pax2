@@ -54,7 +54,7 @@ export function LoadData({ standIn, className }: { standIn?: string; className?:
         <TooltipTrigger
           disabled={pending}
           onClick={() => (standIn ? run(() => loadDataset(standIn)) : input.current?.click())}
-          className="inline-flex h-9 items-center gap-2 rounded-full bg-pax2-ink px-4 text-sm font-medium text-white shadow-e1 transition-colors hover:bg-pax2-plum disabled:opacity-60"
+          className="inline-flex h-9 items-center gap-2 rounded-full bg-pax2-blue px-4 text-sm font-medium text-white shadow-e1 transition-colors hover:bg-pax2-plum disabled:opacity-60"
         >
           {pending && <Loader2 className="size-4 animate-spin" />}
           Load Data

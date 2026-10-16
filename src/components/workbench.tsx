@@ -56,7 +56,7 @@ export function ScriptTimeline({ lines, duration }: { lines: { t: number; text: 
           <li key={i}>
             <button type="button" onClick={() => seek(l.t)} className={cn("flex w-full gap-3 rounded-lg px-2 py-1.5 text-left text-sm transition-colors hover:bg-pax2-mist", on && "bg-pax2-lavender")}>
               <span className="tabular w-10 shrink-0 pt-px text-xs text-pax2-plum">{ts(l.t)}</span>
-              <span className={cn("leading-snug", on ? "text-pax2-ink" : "text-foreground/80")}>{l.text}</span>
+              <span className={cn("leading-snug", on ? "text-pax2-blue" : "text-foreground/80")}>{l.text}</span>
             </button>
           </li>
         )
@@ -125,10 +125,10 @@ function Timeline({ entries }: { entries: { t: number; label: string | null; tex
     <ol className="relative flex flex-col gap-5 pl-6 before:absolute before:inset-y-2 before:left-[5px] before:w-px before:bg-slate-200">
       {entries.map((e, i) => (
         <li key={i} className="relative flex flex-col gap-1">
-          <span className={cn("absolute -left-6 top-1.5 size-[11px] rounded-full border-2 bg-white transition-colors", i === at && now > 0 ? "border-pax2-plum bg-pax2-plum" : e.label ? "border-pax2-ink" : "border-slate-300")} />
+          <span className={cn("absolute -left-6 top-1.5 size-[11px] rounded-full border-2 bg-white transition-colors", i === at && now > 0 ? "border-pax2-plum bg-pax2-plum" : e.label ? "border-pax2-blue" : "border-slate-300")} />
           <div className="flex items-center gap-2">
             <At t={e.t} />
-            {e.label && <span className="text-xs font-semibold text-pax2-ink">{e.label}</span>}
+            {e.label && <span className="text-xs font-semibold text-pax2-blue">{e.label}</span>}
           </div>
           <p className="text-sm leading-relaxed text-foreground/85">{e.text}</p>
         </li>

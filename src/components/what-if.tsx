@@ -57,7 +57,7 @@ export function WhatIf({ options, reference }: { options: { label: string; take:
           <div key={l} className="flex flex-col gap-2">
             <div className="flex items-baseline justify-between">
               <span className="text-xs text-muted-foreground">{l}</span>
-              <span className="tabular font-display text-3xl text-pax2-ink">{s.value?.toFixed(1) ?? "Not scored"}</span>
+              <span className="tabular font-display text-3xl text-pax2-blue">{s.value?.toFixed(1) ?? "Not scored"}</span>
             </div>
             {s.value != null && <RangeBar value={s.value} low={s.low} high={s.high} />}
             <div className="tabular grid grid-cols-3 gap-2 text-xs">

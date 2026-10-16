@@ -114,7 +114,7 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
         <section className="flex flex-col gap-3">
           <div className="flex flex-wrap items-center gap-2">
             {tables.map((x) => (
-              <Link key={x.name} href={`/library/${d.slug}?t=${x.name}`} scroll={false} className={x.name === table.name ? "rounded-full bg-pax2-ink px-3 py-1 text-xs font-medium text-white" : "rounded-full bg-white px-3 py-1 text-xs text-slate-600 shadow-e1 hover:text-pax2-ink"}>
+              <Link key={x.name} href={`/library/${d.slug}?t=${x.name}`} scroll={false} className={x.name === table.name ? "rounded-full bg-pax2-blue px-3 py-1 text-xs font-medium text-white" : "rounded-full bg-white px-3 py-1 text-xs text-slate-600 shadow-e1 hover:text-pax2-blue"}>
                 {x.name} · {count(x.rows)}
               </Link>
             ))}
@@ -139,7 +139,7 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
 
 function BackLink() {
   return (
-    <Link href="/library" className="inline-flex w-fit items-center gap-1.5 text-sm text-slate-500 hover:text-pax2-ink">
+    <Link href="/library" className="inline-flex w-fit items-center gap-1.5 text-sm text-slate-500 hover:text-pax2-blue">
       <ArrowLeft className="size-4" /> Library
     </Link>
   )

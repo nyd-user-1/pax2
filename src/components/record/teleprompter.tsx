@@ -83,7 +83,7 @@ export function Teleprompter({ text, onClose, onDone }: { text: string; onClose:
 
   // Portaled to <body> so the app shell's page animation (a mask on the content card) can't clip it.
   return createPortal(
-    <div className="fixed inset-0 z-50 flex flex-col bg-pax2-ink text-white">
+    <div className="fixed inset-0 z-50 flex flex-col bg-pax2-blue text-white">
       <video ref={video} autoPlay playsInline muted className="absolute inset-0 size-full -scale-x-100 object-cover opacity-70" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black/70" />
       <div className="relative flex items-center justify-between px-6 py-4">

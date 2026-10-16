@@ -46,7 +46,7 @@ function StepCard({ p, i, takeId, saved, events }: { p: Proposal; i: number; tak
   return (
     <div className="flex flex-col gap-3 rounded-xl border bg-card p-4">
       <div className="flex items-start justify-between gap-3">
-        {editing ? <Textarea value={text} onChange={(e) => setText(e.target.value)} className="min-h-16 text-sm" /> : <p className="font-medium leading-snug text-pax2-ink">{latest?.change ?? p.change}</p>}
+        {editing ? <Textarea value={text} onChange={(e) => setText(e.target.value)} className="min-h-16 text-sm" /> : <p className="font-medium leading-snug text-pax2-blue">{latest?.change ?? p.change}</p>}
         <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", latest ? "bg-pax2-plum text-white" : "bg-muted text-muted-foreground")}>{STATUS_LABEL[latest?.status ?? "proposed"]}</span>
       </div>
       <dl className="grid gap-2 text-sm sm:grid-cols-3">
@@ -129,7 +129,7 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
 
       {r && (
         <>
-          <div className="rounded-2xl bg-pax2-ink p-5 text-white">
+          <div className="rounded-2xl bg-pax2-blue p-5 text-white">
             <p className="font-display text-2xl leading-snug">{r.takeaway}</p>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
@@ -145,7 +145,7 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
 
           {r.priorChecks?.length > 0 && (
             <div className="flex flex-col gap-2 rounded-xl border border-pax2-plum/30 bg-pax2-mist p-4">
-              <h3 className="text-sm font-medium text-pax2-ink">The last review, checked against the new results</h3>
+              <h3 className="text-sm font-medium text-pax2-blue">The last review, checked against the new results</h3>
               {r.priorChecks.map((p, i) => (
                 <div key={i} className="text-sm">
                   <span className={cn("mr-2 rounded-full px-2 py-0.5 text-[11px] font-medium", p.status === "supported" ? "bg-observed/15 text-observed" : p.status === "challenged" ? "bg-destructive/10 text-destructive" : "bg-muted text-muted-foreground")}>

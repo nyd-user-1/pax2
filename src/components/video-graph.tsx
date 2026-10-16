@@ -438,7 +438,7 @@ function VideoGraphInner({ data }: { data: GraphData }) {
                 <button
                   key={k}
                   onClick={() => setJoinKinds((j) => ({ ...j, [k]: !j[k] }))}
-                  className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors", joinKinds[k] ? "bg-pax2-lavender text-pax2-ink" : "bg-slate-100 text-slate-400")}
+                  className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors", joinKinds[k] ? "bg-pax2-lavender text-pax2-blue" : "bg-slate-100 text-slate-400")}
                 >
                   {k}
                 </button>

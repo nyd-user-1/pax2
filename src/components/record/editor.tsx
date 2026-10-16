@@ -72,17 +72,17 @@ export function Editor({ research }: { research: Record<string, Research> }) {
               update({ text: e.target.value })
             }}
             placeholder="Say it the way you'd say it to a neighbor."
-            className="h-80 w-full resize-y bg-transparent p-7 text-lg leading-relaxed text-pax2-ink outline-none"
+            className="h-80 w-full resize-y bg-transparent p-7 text-lg leading-relaxed text-pax2-blue outline-none"
           />
           <div className="flex items-center justify-between border-t bg-pax2-mist px-7 py-3 text-sm">
             <span className="text-muted-foreground">{words(text)} words</span>
-            <span className="flex items-center gap-1.5 font-medium text-pax2-ink">
+            <span className="flex items-center gap-1.5 font-medium text-pax2-blue">
               <Mic className="size-4" /> About {secondsAt(text)} seconds to say
             </span>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-6">
-          <button type="button" disabled={!words(text)} onClick={() => router.push("/record/camera")} className="flex items-center gap-2 rounded-full bg-pax2-ink px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
+          <button type="button" disabled={!words(text)} onClick={() => router.push("/record/camera")} className="flex items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
             Looks good, let&apos;s record <ArrowRight className="size-4" />
           </button>
           <Link href="/record/library" className="font-medium text-primary">
@@ -96,7 +96,7 @@ export function Editor({ research }: { research: Record<string, Research> }) {
           <div key={c.title} className="flex gap-3">
             <span className={cn("mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full", c.ok ? "bg-primary text-white" : "border text-muted-foreground")}>{c.ok ? <Check className="size-3" /> : <Circle className="size-2" />}</span>
             <span className="flex flex-col">
-              <span className={cn("text-sm font-medium", c.ok ? "text-pax2-ink" : "text-muted-foreground")}>{c.title}</span>
+              <span className={cn("text-sm font-medium", c.ok ? "text-pax2-blue" : "text-muted-foreground")}>{c.title}</span>
               <span className="text-xs leading-relaxed text-muted-foreground">{c.detail}</span>
             </span>
           </div>

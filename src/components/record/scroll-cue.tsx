@@ -30,7 +30,7 @@ export function ScrollCue({ className }: { className?: string }) {
       aria-label="Scroll down"
       onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
       className={cn(
-        "absolute bottom-7 left-1/2 flex size-11 -translate-x-1/2 float-cue items-center justify-center rounded-full bg-white text-pax2-ink shadow-e2 transition-[opacity,box-shadow] duration-500 hover:shadow-e3",
+        "absolute bottom-7 left-1/2 flex size-11 -translate-x-1/2 float-cue items-center justify-center rounded-full bg-white text-pax2-blue shadow-e2 transition-[opacity,box-shadow] duration-500 hover:shadow-e3",
         shown ? "opacity-100" : "pointer-events-none opacity-0 duration-150",
         className,
       )}
@@ -56,7 +56,7 @@ export function ScrollTop() {
       aria-label="Back to top"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className={cn(
-        "fixed bottom-6 right-6 z-50 flex size-11 items-center justify-center rounded-full bg-white text-pax2-ink shadow-e2 transition-[opacity,box-shadow] duration-200 hover:shadow-e3",
+        "fixed bottom-6 right-6 z-50 flex size-11 items-center justify-center rounded-full bg-white text-pax2-blue shadow-e2 transition-[opacity,box-shadow] duration-200 hover:shadow-e3",
         shown ? "opacity-100" : "pointer-events-none opacity-0",
       )}
     >

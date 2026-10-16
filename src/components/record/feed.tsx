@@ -426,7 +426,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
 
       {!needle && shown.length > 0 && (
         <div ref={sentinel} className="flex justify-center py-12">
-          <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-pax2-ink" />
+          <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-pax2-blue" />
         </div>
       )}
     </section>

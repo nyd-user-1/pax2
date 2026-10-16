@@ -22,7 +22,7 @@ const nextPath = () => {
 }
 
 const FIELD = "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-shadow placeholder:text-slate-400 focus:ring-2 focus:ring-pax2-plum/40"
-const BUTTON = "flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-pax2-ink text-[15px] font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+const BUTTON = "flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-pax2-blue text-[15px] font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 
 export function AuthForm({ mode }: { mode: Mode }) {
   const router = useRouter()
@@ -109,7 +109,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
     <form onSubmit={submit} className="flex flex-col gap-4">
       {step === "reset" ? (
         <>
-          <p className="flex items-start gap-2.5 rounded-xl bg-pax2-lavender/60 px-4 py-3 text-sm leading-relaxed text-pax2-ink">
+          <p className="flex items-start gap-2.5 rounded-xl bg-pax2-lavender/60 px-4 py-3 text-sm leading-relaxed text-pax2-blue">
             <MailCheck className="mt-0.5 size-4 shrink-0" />
             {notice}
           </p>
@@ -126,13 +126,13 @@ export function AuthForm({ mode }: { mode: Mode }) {
           <button type="submit" disabled={busy || code.trim().length < 6 || !password} className={BUTTON}>
             {busy ? "One moment…" : "Set password and sign in"} <ArrowRight className="size-4" />
           </button>
-          <button type="button" disabled={busy} onClick={forgot} className="text-sm text-slate-500 transition-colors hover:text-pax2-ink">
+          <button type="button" disabled={busy} onClick={forgot} className="text-sm text-slate-500 transition-colors hover:text-pax2-blue">
             Send a new code
           </button>
         </>
       ) : step === "code" ? (
         <>
-          <p className="flex items-start gap-2.5 rounded-xl bg-pax2-lavender/60 px-4 py-3 text-sm leading-relaxed text-pax2-ink">
+          <p className="flex items-start gap-2.5 rounded-xl bg-pax2-lavender/60 px-4 py-3 text-sm leading-relaxed text-pax2-blue">
             <MailCheck className="mt-0.5 size-4 shrink-0" />
             {notice ?? `We emailed a six-digit code to ${email}.`}
           </p>
@@ -151,7 +151,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
               await post("resend", { email })
               setNotice(`A fresh code is on its way to ${email}.`)
             }}
-            className="text-sm text-slate-500 transition-colors hover:text-pax2-ink"
+            className="text-sm text-slate-500 transition-colors hover:text-pax2-blue"
           >
             Send a new code
           </button>
@@ -168,11 +168,11 @@ export function AuthForm({ mode }: { mode: Mode }) {
             {mode === "signup" && <span className="text-xs font-normal text-slate-400">8+ characters with an upper, a lower, a number and a symbol.</span>}
           </label>
           {mode === "signin" && (
-            <button type="button" disabled={busy} onClick={forgot} className="-mt-2 self-end text-sm text-slate-500 transition-colors hover:text-pax2-ink">
+            <button type="button" disabled={busy} onClick={forgot} className="-mt-2 self-end text-sm text-slate-500 transition-colors hover:text-pax2-blue">
               Forgot password?
             </button>
           )}
-          {notice && <p className="text-sm text-pax2-ink">{notice}</p>}
+          {notice && <p className="text-sm text-pax2-blue">{notice}</p>}
           {error && <p className="text-sm font-medium text-pax2-red-deep">{error}</p>}
           <button type="submit" disabled={busy} className={BUTTON}>
             {busy ? "One moment…" : mode === "signup" ? "Create account" : "Sign in"} <ArrowRight className="size-4" />

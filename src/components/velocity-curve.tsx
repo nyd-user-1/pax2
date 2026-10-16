@@ -105,7 +105,7 @@ export function CurveCard({ c, href, focused = false }: { c: VelocityCard; href?
         </span>
         <span className="absolute right-2 top-2">
           {c.hours != null && c.hours < 72 ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-pax2-lavender px-2.5 py-0.5 text-xs font-semibold text-pax2-ink shadow-sm"><span className="size-1.5 animate-pulse rounded-full bg-pax2-ink" />Watching · {Math.floor(c.hours)}h</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-pax2-lavender px-2.5 py-0.5 text-xs font-semibold text-pax2-blue shadow-sm"><span className="size-1.5 animate-pulse rounded-full bg-pax2-blue" />Watching · {Math.floor(c.hours)}h</span>
           ) : (
             <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold shadow-sm", c.hours == null ? "bg-pax2-red-soft text-pax2-red-deep" : MEDIA_CHIP[c.tier])}>{c.hours == null ? "Sample" : c.median != null ? rx(c.views / c.median) : CURVE_TIER[c.tier].label}</span>
           )}

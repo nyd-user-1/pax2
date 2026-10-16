@@ -110,7 +110,7 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
                     </>
                   )}
                 </dl>
-                <Link href={open.href} className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-pax2-ink px-4 py-2 text-sm font-medium text-white hover:bg-pax2-plum">
+                <Link href={open.href} className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-pax2-blue px-4 py-2 text-sm font-medium text-white hover:bg-pax2-plum">
                   Open {open.name} <ArrowUpRight className="size-4" />
                 </Link>
               </div>

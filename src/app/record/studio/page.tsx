@@ -26,7 +26,7 @@ export default function StudioPage() {
   const [state, setState] = React.useState<"idle" | "sending" | "sent">("idle")
   const lines = React.useMemo(() => (draft.text ?? "").replace(/\s+/g, " ").split(/(?<=[.!?…])\s+/).map((s) => s.trim()).filter(Boolean).slice(0, 10), [draft.text])
   const frames = Math.max(FPS * 3, totalFrames(lines))
-  const chip = (on: boolean) => cn("press rounded-full px-3.5 py-1.5 text-sm transition-colors", on ? "bg-pax2-ink font-semibold text-white" : "bg-white text-slate-600 shadow-e1 hover:text-pax2-ink")
+  const chip = (on: boolean) => cn("press rounded-full px-3.5 py-1.5 text-sm transition-colors", on ? "bg-pax2-blue font-semibold text-white" : "bg-white text-slate-600 shadow-e1 hover:text-pax2-blue")
 
   if (state === "sent")
     return (
@@ -34,8 +34,8 @@ export default function StudioPage() {
         <StepBar step={3} back={{ href: "/record", label: "Home" }} />
         <FlowPage title="Sent. Thank you." lead="The team has your design and renders it at full quality. If it runs, its results come back to the partner's Home with a score.">
           <div className="flex gap-4">
-            <Link href="/record/start" className="rounded-full bg-pax2-ink px-6 py-3 font-medium text-white">Make another</Link>
-            <Link href="/" className="rounded-full bg-white px-6 py-3 font-medium text-pax2-ink shadow-e1">Open the partner view</Link>
+            <Link href="/record/start" className="rounded-full bg-pax2-blue px-6 py-3 font-medium text-white">Make another</Link>
+            <Link href="/" className="rounded-full bg-white px-6 py-3 font-medium text-pax2-blue shadow-e1">Open the partner view</Link>
           </div>
         </FlowPage>
       </>
@@ -72,7 +72,7 @@ export default function StudioPage() {
                 <p className="font-semibold text-slate-900">Look</p>
                 <div className="flex flex-wrap gap-3">
                   {LOOKS.map((l) => (
-                    <button key={l.id} type="button" onClick={() => setLook(l)} className={cn("press flex items-center gap-2 rounded-full py-1.5 pl-1.5 pr-3.5 text-sm shadow-e1 transition-shadow", look.id === l.id ? "bg-pax2-ink text-white" : "bg-white text-slate-600 hover:shadow-e2")}>
+                    <button key={l.id} type="button" onClick={() => setLook(l)} className={cn("press flex items-center gap-2 rounded-full py-1.5 pl-1.5 pr-3.5 text-sm shadow-e1 transition-shadow", look.id === l.id ? "bg-pax2-blue text-white" : "bg-white text-slate-600 hover:shadow-e2")}>
                       <span className="flex size-7 items-center justify-center rounded-full" style={{ background: l.background, border: `3px solid ${l.accent}` }}>
                         {look.id === l.id && <Check className="size-3.5" style={{ color: l.ink }} />}
                       </span>
@@ -107,7 +107,7 @@ export default function StudioPage() {
                   await submitTake({ id: `studio-${Date.now().toString(36)}`, key: `studio:${look.id}:${motion}`, scriptId: draft.scriptId, title: `${draft.title ?? "Studio video"} · ${look.label}, ${MOTIONS.find((m) => m.id === motion)!.label}`, text: draft.text, name: draft.name, role: draft.role, town: draft.town, seconds: Math.round(frames / FPS), consent: true })
                   setState("sent")
                 }}
-                className="press flex w-fit items-center gap-2 rounded-full bg-pax2-ink px-7 py-4 font-semibold text-white shadow-e2 disabled:opacity-40"
+                className="press flex w-fit items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 font-semibold text-white shadow-e2 disabled:opacity-40"
               >
                 {state === "sending" ? <Loader2 className="size-4 animate-spin" /> : null} Send this design <ArrowRight className="size-4" />
               </button>

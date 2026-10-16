@@ -81,7 +81,7 @@ export default function MlPage() {
             <div className="flex flex-col divide-y divide-slate-100">
               {steps.map((s) => (
                 <div key={s.n} data-find className="flex gap-4 py-4 first:pt-0">
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-pax2-lavender font-mono text-sm font-semibold text-pax2-ink">{s.n}</span>
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-pax2-lavender font-mono text-sm font-semibold text-pax2-blue">{s.n}</span>
                   <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <span className="flex flex-wrap items-center gap-2">
                       <span className="font-semibold text-slate-900">{s.title}</span>

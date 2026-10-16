@@ -41,7 +41,7 @@ function Marker({ n, hot, onHot }: { n: number; hot: boolean; onHot: (n: number 
       <span
         onMouseEnter={() => onHot(n)}
         onMouseLeave={() => onHot(null)}
-        className={cn("ml-1 inline-flex size-[17px] cursor-default items-center justify-center rounded-full align-baseline text-[10px] font-bold transition-colors", hot ? "bg-pax2-plum text-white" : "bg-pax2-lavender text-pax2-ink")}
+        className={cn("ml-1 inline-flex size-[17px] cursor-default items-center justify-center rounded-full align-baseline text-[10px] font-bold transition-colors", hot ? "bg-pax2-plum text-white" : "bg-pax2-lavender text-pax2-blue")}
       >
         {n}
       </span>
@@ -83,7 +83,7 @@ export function ScriptCatalog({ scripts, opposition }: { scripts: CatalogScript[
               data-find
               className="lift flex flex-col justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-300 px-4 py-3 text-left hover:border-pax2-plum/50"
             >
-              <span className="flex size-9 items-center justify-center rounded-full bg-pax2-lavender text-pax2-ink">
+              <span className="flex size-9 items-center justify-center rounded-full bg-pax2-lavender text-pax2-blue">
                 <PenLine className="size-4" />
               </span>
               <span className="font-display text-[17px] leading-snug text-slate-900">Your own story</span>
@@ -103,7 +103,7 @@ export function ScriptCatalog({ scripts, opposition }: { scripts: CatalogScript[
                   className={cn("flex flex-col gap-2 rounded-2xl px-4 py-3 text-left transition-all", on ? "bg-white shadow-e2 ring-2 ring-pax2-plum/50" : "bg-white/60 shadow-e1 hover:bg-white hover:shadow-e2")}
                 >
                   <span className="flex w-full items-center justify-between gap-2">
-                    <span className="rounded-full bg-pax2-lavender px-2.5 py-0.5 text-[11px] font-semibold text-pax2-ink">{x.approach}</span>
+                    <span className="rounded-full bg-pax2-lavender px-2.5 py-0.5 text-[11px] font-semibold text-pax2-blue">{x.approach}</span>
                     {x.average != null && (
                       <span className={cn("tabular rounded-full px-2 py-0.5 text-xs font-bold", toneClasses[t], t === "even" && "outline outline-1 outline-slate-200")}>{x.average.toFixed(0)}</span>
                     )}
@@ -156,7 +156,7 @@ export function ScriptCatalog({ scripts, opposition }: { scripts: CatalogScript[
                   onMouseLeave={() => setHot(null)}
                   className={cn("-m-2 flex gap-2.5 rounded-xl p-2 transition-colors", hot === k + 1 && "bg-pax2-lavender/50")}
                 >
-                  <span className={cn("mt-0.5 flex size-[18px] shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition-colors", hot === k + 1 ? "bg-pax2-plum text-white" : "bg-pax2-lavender text-pax2-ink")}>{k + 1}</span>
+                  <span className={cn("mt-0.5 flex size-[18px] shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition-colors", hot === k + 1 ? "bg-pax2-plum text-white" : "bg-pax2-lavender text-pax2-blue")}>{k + 1}</span>
                   <div className="flex min-w-0 flex-col gap-1.5">
                     <p className="text-sm leading-relaxed text-slate-700">{w.note}</p>
                     {w.research && (
@@ -205,7 +205,7 @@ export function ScriptCatalog({ scripts, opposition }: { scripts: CatalogScript[
                     return (
                       <li key={v.id}>
                         <Link href={`/v/${v.id}`} scroll={false} className="group flex items-center gap-2 text-sm">
-                          <span className="flex-1 text-slate-700 group-hover:text-pax2-ink">{v.voice}</span>
+                          <span className="flex-1 text-slate-700 group-hover:text-pax2-blue">{v.voice}</span>
                           {v.low != null && v.high != null && (
                             <span className="tabular text-xs text-slate-400">
                               {v.low.toFixed(0)}–{v.high.toFixed(0)}

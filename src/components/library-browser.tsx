@@ -25,7 +25,7 @@ export function LibraryBrowser({ cards }: { cards: Card[] }) {
         </label>
         <div className="flex flex-wrap gap-2">
           {[null, ...kinds].map((k) => (
-            <button key={k ?? "all"} type="button" onClick={() => setKind(k)} style={k && kind === k ? kindStyle(k) : undefined} className={cn("rounded-full px-3.5 py-1.5 text-sm transition-colors", kind === k ? (k ? "font-medium shadow-e1" : "bg-pax2-ink font-medium text-white") : "bg-white text-slate-600 shadow-e1 hover:text-pax2-ink")}>
+            <button key={k ?? "all"} type="button" onClick={() => setKind(k)} style={k && kind === k ? kindStyle(k) : undefined} className={cn("rounded-full px-3.5 py-1.5 text-sm transition-colors", kind === k ? (k ? "font-medium shadow-e1" : "bg-pax2-blue font-medium text-white") : "bg-white text-slate-600 shadow-e1 hover:text-pax2-blue")}>
               {k ?? "All"}
             </button>
           ))}

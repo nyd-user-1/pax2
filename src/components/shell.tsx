@@ -128,12 +128,12 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
         className={cn(
           "group relative flex items-center gap-3 rounded-xl px-3 outline-none transition-[color,background-color,box-shadow]",
           small ? "py-1.5 text-[13px]" : "py-2 text-sm",
-          on ? "bg-white font-semibold text-pax2-ink shadow-e1" : "text-slate-500 hover:bg-white/70 hover:text-pax2-ink hover:shadow-e1",
+          on ? "bg-white font-semibold text-pax2-blue shadow-e1" : "text-slate-500 hover:bg-white/70 hover:text-pax2-blue hover:shadow-e1",
         )}
       >
         {on && <span aria-hidden className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-pax2-plum" />}
         <Icon
-          className={cn(small ? "size-3.5" : "size-[18px]", "icon-pop shrink-0 transition-colors", on ? "fill-pax2-lavender text-pax2-ink" : "group-hover:fill-pax2-lavender group-hover:text-pax2-ink")}
+          className={cn(small ? "size-3.5" : "size-[18px]", "icon-pop shrink-0 transition-colors", on ? "fill-pax2-lavender text-pax2-blue" : "group-hover:fill-pax2-lavender group-hover:text-pax2-blue")}
           strokeWidth={on ? 2.25 : 1.75}
         />
         {label}
@@ -193,24 +193,24 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
             <Link href="/" aria-label="Home"><Wordmark size={18} /></Link>
             <nav className="no-scrollbar flex flex-1 gap-1 overflow-x-auto">
               {NAV.map(({ href, label }) => (
-                <Link key={href} href={href} className={cn("whitespace-nowrap rounded-full px-3 py-1 text-xs", active(href) ? "bg-pax2-lavender font-semibold text-pax2-ink" : "text-slate-500")}>
+                <Link key={href} href={href} className={cn("whitespace-nowrap rounded-full px-3 py-1 text-xs", active(href) ? "bg-pax2-lavender font-semibold text-pax2-blue" : "text-slate-500")}>
                   {label}
                 </Link>
               ))}
             </nav>
-            <Link href="/record" className="flex shrink-0 items-center gap-1.5 rounded-full bg-pax2-ink px-3 py-1.5 text-xs font-semibold text-white">
+            <Link href="/record" className="flex shrink-0 items-center gap-1.5 rounded-full bg-pax2-blue px-3 py-1.5 text-xs font-semibold text-white">
               <Video className="size-3.5" /> Record
             </Link>
           </header>
           <div className={cn("relative z-10 hidden shrink-0 items-center gap-3 px-5 py-4 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)] md:flex")}>
-            <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className="flex size-10 items-center justify-center rounded-full bg-white text-pax2-ink shadow-e1 transition-shadow hover:shadow-e2">
+            <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className="flex size-10 items-center justify-center rounded-full bg-white text-pax2-blue shadow-e1 transition-shadow hover:shadow-e2">
               {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
             </button>
             <PageSwitcher title={title} />
             <div className="flex-1" />
             {/* A page's own header controls (the dashboard's poller switch and pipeline run) portal in here. */}
             <div id="page-actions" className="flex items-center gap-3" />
-            <Link href="/record" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-pax2-ink text-white shadow-md transition-shadow hover:shadow-e3">
+            <Link href="/record" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-pax2-blue text-white shadow-md transition-shadow hover:shadow-e3">
               <Video className="size-4" />
             </Link>
             {/* 44b's DiscussionHeaderButton: the discussion panel opens from every page. */}
@@ -302,9 +302,9 @@ function PageSwitcher({ title }: { title: string }) {
                   type="button"
                   role="menuitem"
                   onClick={() => go(d.href)}
-                  className="group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm font-medium text-slate-600 transition-colors hover:bg-pax2-mist hover:text-pax2-ink"
+                  className="group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm font-medium text-slate-600 transition-colors hover:bg-pax2-mist hover:text-pax2-blue"
                 >
-                  <d.icon className="size-4 shrink-0 text-slate-400 transition-colors group-hover:fill-pax2-lavender group-hover:text-pax2-ink" strokeWidth={1.75} />
+                  <d.icon className="size-4 shrink-0 text-slate-400 transition-colors group-hover:fill-pax2-lavender group-hover:text-pax2-blue" strokeWidth={1.75} />
                   <span className="flex-1 truncate">{d.label}</span>
                 </button>
               ))
@@ -354,7 +354,7 @@ function AccountMenu() {
   // Signed out, the account chip is simply the way in.
   if (!user)
     return (
-      <Link href={`/signin?next=${encodeURIComponent(path)}`} className="flex w-full items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-sm font-semibold text-pax2-ink transition-colors hover:bg-white/70">
+      <Link href={`/signin?next=${encodeURIComponent(path)}`} className="flex w-full items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-sm font-semibold text-pax2-blue transition-colors hover:bg-white/70">
         <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-500"><LogIn className="size-3.5" /></span>
         Log in
       </Link>
@@ -363,7 +363,7 @@ function AccountMenu() {
   const item = "gap-2.5 rounded-lg px-2.5 py-2 text-sm [&_svg]:size-4 [&_svg]:text-slate-500"
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger aria-label="Account menu" className="flex w-full max-w-full items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-pax2-ink outline-none transition-colors hover:bg-white/70 data-[popup-open]:bg-white/70">
+      <DropdownMenuTrigger aria-label="Account menu" className="flex w-full max-w-full items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-pax2-blue outline-none transition-colors hover:bg-white/70 data-[popup-open]:bg-white/70">
         {user ? <Initials name={name} size="sm" /> : <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-500"><User2 className="size-3.5" /></span>}
         <span className="flex-1 truncate text-left text-sm font-semibold">{name}</span>
         <ChevronsUpDown className="size-3.5 shrink-0 text-slate-400" />
@@ -372,7 +372,7 @@ function AccountMenu() {
         <div className="flex items-center gap-3 px-2.5 py-2">
           {user ? <Initials name={name} size="md" /> : <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-slate-200 text-slate-500"><User2 className="size-4" /></span>}
           <span className="min-w-0">
-            <span className="block truncate text-[15px] font-semibold text-pax2-ink">{name}</span>
+            <span className="block truncate text-[15px] font-semibold text-pax2-blue">{name}</span>
             {user && <span className="block truncate text-sm text-slate-500">{user.email}</span>}
           </span>
         </div>

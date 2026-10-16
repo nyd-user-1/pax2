@@ -55,7 +55,7 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
       {/* The first sheet, carrying the name. */}
       <motion.div
         className={sheet}
-        style={{ background: "var(--pax2-ink)", skewX: -ANGLE }}
+        style={{ background: "var(--pax2-blue)", skewX: -ANGLE }}
         initial={{ x: "0vw" }}
         animate={{ x: revealing ? OFF : "0vw" }}
         transition={{ duration: SWEEP, ease: EASE }}

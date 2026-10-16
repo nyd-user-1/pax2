@@ -41,7 +41,7 @@ export default function EndgamePage() {
           <p className="font-semibold text-slate-900">Connect a partner channel</p>
           <p className="max-w-xl text-sm text-slate-600">One OAuth grant with the yt-analytics.readonly scope hands over the seed-phase telemetry for every video the partner publishes: retention curves, viewed-vs-swiped, average percentage viewed. Free, no ad spend.</p>
         </div>
-        <button type="button" disabled title="Awaiting the first partner channel" className="flex items-center gap-2 rounded-full bg-pax2-ink px-5 py-2.5 text-sm font-semibold text-white opacity-50">
+        <button type="button" disabled title="Awaiting the first partner channel" className="flex items-center gap-2 rounded-full bg-pax2-blue px-5 py-2.5 text-sm font-semibold text-white opacity-50">
           <PlaySquare className="size-4" /> Connect with YouTube
         </button>
       </section>
@@ -87,7 +87,7 @@ export default function EndgamePage() {
               <tbody>
                 {MAPPING.map((m) => (
                   <tr key={m.component} className="border-t border-slate-100 align-top">
-                    <td className="whitespace-nowrap px-4 py-3 font-semibold text-pax2-ink">{m.component}</td>
+                    <td className="whitespace-nowrap px-4 py-3 font-semibold text-pax2-blue">{m.component}</td>
                     <td className="px-4 py-3 text-slate-600">{m.question}</td>
                     <td className="px-4 py-3 text-slate-600">{m.paid}</td>
                     <td className="px-4 py-3 text-slate-900">{m.organic}</td>

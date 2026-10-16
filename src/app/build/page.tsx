@@ -105,11 +105,11 @@ export default async function BuildPage() {
                   <TableRow key={s.name}>
                     <TableCell className="truncate font-medium" title={s.name}>
                       {s.href.startsWith("http") ? (
-                        <a href={s.href} target="_blank" rel="noreferrer" className="text-pax2-ink hover:text-pax2-plum hover:underline">
+                        <a href={s.href} target="_blank" rel="noreferrer" className="text-pax2-blue hover:text-pax2-plum hover:underline">
                           {s.name}
                         </a>
                       ) : (
-                        <Link href={s.href} className="text-pax2-ink hover:text-pax2-plum hover:underline">
+                        <Link href={s.href} className="text-pax2-blue hover:text-pax2-plum hover:underline">
                           {s.name}
                         </Link>
                       )}

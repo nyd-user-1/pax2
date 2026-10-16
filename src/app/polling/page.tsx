@@ -131,7 +131,7 @@ export default function PollingPage() {
           <MapBlock title="Uncontested districts" className="xl:col-span-2">
             <UncontestedMap height="100%" bare />
           </MapBlock>
-          <ListBlock title="One name on the ballot" search="Search districts…" rows={oneName.map((district) => ({ district }))} name="uncontested-districts" actions={<Link href="/record" className="press inline-flex w-fit items-center gap-2 rounded-full bg-pax2-ink px-4 py-1.5 text-sm font-semibold text-white shadow-e1"><Video className="size-4" /> Record</Link>}>
+          <ListBlock title="One name on the ballot" search="Search districts…" rows={oneName.map((district) => ({ district }))} name="uncontested-districts" actions={<Link href="/record" className="press inline-flex w-fit items-center gap-2 rounded-full bg-pax2-blue px-4 py-1.5 text-sm font-semibold text-white shadow-e1"><Video className="size-4" /> Record</Link>}>
             <div className="flex flex-col gap-4">
               <div className="flex items-baseline gap-2">
                 <span className="tabular font-display text-5xl text-below">{oneName.length}</span>

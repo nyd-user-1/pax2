@@ -13,7 +13,7 @@ export function BackLink() {
     router.push("/")
   }
   return (
-    <button type="button" onClick={back} className="inline-flex w-fit items-center gap-1.5 text-sm text-slate-500 hover:text-pax2-ink">
+    <button type="button" onClick={back} className="inline-flex w-fit items-center gap-1.5 text-sm text-slate-500 hover:text-pax2-blue">
       <ArrowLeft className="size-4" /> Back
     </button>
   )

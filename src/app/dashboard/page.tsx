@@ -143,7 +143,7 @@ export default async function DashboardPage() {
                       <span className="tabular font-semibold text-slate-900">{f.n}</span>
                     </div>
                     <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
-                      <div className="grow h-full rounded-full bg-pax2-ink" style={{ width: `${(f.n / fmaxShown) * 100}%`, ["--i" as string]: i }} />
+                      <div className="grow h-full rounded-full bg-pax2-blue" style={{ width: `${(f.n / fmaxShown) * 100}%`, ["--i" as string]: i }} />
                     </div>
                   </div>
                 ))}
@@ -185,7 +185,7 @@ export default async function DashboardPage() {
                         const tone = toneOf(t.latest!.score.low, t.latest!.score.high)
                         return (
                           <Link key={t.take.id} href={`/v/${t.take.id}`} scroll={false} className="group flex items-center gap-2 text-xs">
-                            <span className="w-24 shrink-0 truncate text-slate-500 group-hover:text-pax2-ink">{takeLabel(t.take)}</span>
+                            <span className="w-24 shrink-0 truncate text-slate-500 group-hover:text-pax2-blue">{takeLabel(t.take)}</span>
                             <span className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
                               <span className="grow block h-full rounded-full" style={{ width: `${v}%`, background: tone === "above" ? "#2563eb" : tone === "below" ? "#dc2626" : "#94a3b8", ["--i" as string]: i }} />
                             </span>

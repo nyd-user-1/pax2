@@ -46,7 +46,7 @@ export default function PersonalPage() {
         >
           {FIELDS.map((f) => (
             <label key={f.key} className="flex flex-col gap-2">
-              <span className="font-medium text-pax2-ink">{f.label}</span>
+              <span className="font-medium text-pax2-blue">{f.label}</span>
               {f.short ? (
                 <input value={a[f.key]} onChange={(e) => setA({ ...a, [f.key]: e.target.value })} placeholder={f.placeholder} className="rounded-xl border bg-pax2-mist px-4 py-3 outline-none focus:border-primary" />
               ) : (
@@ -54,7 +54,7 @@ export default function PersonalPage() {
               )}
             </label>
           ))}
-          <button type="submit" disabled={pending || !a.why.trim()} className="mt-2 flex w-fit items-center gap-2 rounded-full bg-pax2-ink px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
+          <button type="submit" disabled={pending || !a.why.trim()} className="mt-2 flex w-fit items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
             {pending ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />} Write my script <ArrowRight className="size-4" />
           </button>
           {err && <p className="text-sm text-destructive">{err}</p>}

@@ -36,7 +36,7 @@ export function PhoneMock({ videoId, timer = "00:00" }: { videoId: string; timer
           </div>
         </div>
       </div>
-      <span aria-hidden className="absolute -inset-x-6 bottom-[-26px] h-10 rounded-[100%] bg-pax2-ink/20 blur-2xl" />
+      <span aria-hidden className="absolute -inset-x-6 bottom-[-26px] h-10 rounded-[100%] bg-pax2-blue/20 blur-2xl" />
     </div>
   )
 }

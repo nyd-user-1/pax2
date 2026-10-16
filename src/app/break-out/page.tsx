@@ -127,7 +127,7 @@ export default async function BreakoutPage() {
                         <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold", TIER[v.tier].chip)}>{TIER[v.tier].label}</span>
                       </td>
                       <td className="px-4 py-2.5">
-                        <Link href={`/velocity-tracker?v=${v.id}`} className="text-pax2-ink hover:text-pax2-plum hover:underline">Curve</Link>
+                        <Link href={`/velocity-tracker?v=${v.id}`} className="text-pax2-blue hover:text-pax2-plum hover:underline">Curve</Link>
                       </td>
                     </tr>
                   ))}

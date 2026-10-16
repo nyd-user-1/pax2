@@ -31,7 +31,7 @@ export function FramingStrip({ scripts, videos }: { scripts: { id: string; short
             <div className="relative h-10">
               <div className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-gradient-to-r from-below/15 via-slate-100 to-above/15" />
               <div className="absolute left-1/2 top-1 h-8 w-px bg-slate-300" />
-              {mean != null && <div className="dot-in absolute top-1/2 h-6 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded bg-pax2-ink/40" style={{ left: `${mean}%` }} />}
+              {mean != null && <div className="dot-in absolute top-1/2 h-6 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded bg-pax2-blue/40" style={{ left: `${mean}%` }} />}
               {vs.map((v) => {
                 const tone = toneOf(v.low, v.high)
                 return (

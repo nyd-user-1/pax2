@@ -70,8 +70,8 @@ export default function CameraPage() {
           <div className="flex flex-col gap-4 surface p-7">
             <CheckCircle2 className="size-10 text-primary" />
             <div className="flex flex-wrap gap-4">
-              <Link href="/record/start" className="rounded-full bg-pax2-ink px-6 py-3 font-medium text-white">Record another</Link>
-              {me && <Link href="/recording" className="rounded-full border px-6 py-3 font-medium text-pax2-ink">Your videos</Link>}
+              <Link href="/record/start" className="rounded-full bg-pax2-blue px-6 py-3 font-medium text-white">Record another</Link>
+              {me && <Link href="/recording" className="rounded-full border px-6 py-3 font-medium text-pax2-blue">Your videos</Link>}
             </div>
           </div>
         </FlowPage>
@@ -87,7 +87,7 @@ export default function CameraPage() {
             <video src={clip.url} controls playsInline className="aspect-[9/16] w-full rounded-3xl bg-black object-cover shadow-xl" />
             <div className="flex flex-col gap-4">
               <div className="surface p-6 text-sm">
-                <p className="font-medium text-pax2-ink">{draft.title ?? "Your video"}</p>
+                <p className="font-medium text-pax2-blue">{draft.title ?? "Your video"}</p>
                 <p className="text-muted-foreground">
                   {Math.round(clip.seconds)} seconds · {clip.source === "recorded" ? "recorded here" : "uploaded"}
                 </p>
@@ -111,7 +111,7 @@ export default function CameraPage() {
                 </label>
               </div>
               <div className="flex flex-wrap items-center gap-4">
-                <button type="button" disabled={!consent || state === "sending" || (me === null && !/^\S+@\S+\.\S+$/.test(email))} onClick={send} className="flex items-center gap-2 rounded-full bg-pax2-ink px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
+                <button type="button" disabled={!consent || state === "sending" || (me === null && !/^\S+@\S+\.\S+$/.test(email))} onClick={send} className="flex items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
                   {state === "sending" ? <Loader2 className="size-4 animate-spin" /> : null} Send it <ArrowRight className="size-4" />
                 </button>
                 <button type="button" onClick={() => setClip(null)} className="flex items-center gap-2 font-medium text-primary">
@@ -133,14 +133,14 @@ export default function CameraPage() {
           <div className="flex flex-col gap-5 surface p-6 shadow-sm">
             <div className="flex items-center gap-4">
               <span className="flex size-12 items-center justify-center rounded-full bg-pax2-mist">
-                <Video className="size-5 text-pax2-ink" />
+                <Video className="size-5 text-pax2-blue" />
               </span>
               <span className="flex flex-col">
-                <span className="text-lg font-semibold text-pax2-ink">Record with the teleprompter</span>
+                <span className="text-lg font-semibold text-pax2-blue">Record with the teleprompter</span>
                 <span className="text-muted-foreground">PAX2 opens your camera and scrolls your words for you.</span>
               </span>
             </div>
-            <button type="button" disabled={!ready || !draft.text} onClick={() => setPrompter(true)} className="flex items-center justify-center gap-2 rounded-full bg-pax2-ink py-4 font-medium text-white shadow-lg disabled:opacity-40">
+            <button type="button" disabled={!ready || !draft.text} onClick={() => setPrompter(true)} className="flex items-center justify-center gap-2 rounded-full bg-pax2-blue py-4 font-medium text-white shadow-lg disabled:opacity-40">
               <Video className="size-4" /> Start recording
             </button>
             {ready && !draft.text && (
@@ -163,10 +163,10 @@ export default function CameraPage() {
             className={cn("flex cursor-pointer items-center gap-4 rounded-3xl border-2 border-dashed bg-pax2-mist p-6 transition-colors", drag && "border-primary bg-white")}
           >
             <span className="flex size-12 items-center justify-center rounded-full bg-white">
-              <Upload className="size-5 text-pax2-ink" />
+              <Upload className="size-5 text-pax2-blue" />
             </span>
             <span className="flex flex-col">
-              <span className="text-lg font-semibold text-pax2-ink">Already recorded it?</span>
+              <span className="text-lg font-semibold text-pax2-blue">Already recorded it?</span>
               <span className="text-muted-foreground">Drop your video here, or choose a file.</span>
             </span>
             <input ref={file} type="file" accept="video/*" className="hidden" onChange={(e) => e.target.files?.[0] && take(e.target.files[0])} />
@@ -175,7 +175,7 @@ export default function CameraPage() {
             <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">A few things that help</p>
             <ul className="flex flex-col gap-2">
               {TIPS.map((t) => (
-                <li key={t} className="flex items-center gap-2 text-pax2-ink">
+                <li key={t} className="flex items-center gap-2 text-pax2-blue">
                   <CheckCircle2 className="size-4 text-primary" /> {t}
                 </li>
               ))}
