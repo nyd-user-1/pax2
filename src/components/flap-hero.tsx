@@ -9,10 +9,10 @@ import SplitFlapText from "@/components/split-flap-text"
 // eleven boards, both rows driven through the three messages by one clock so
 // they can never drift. The scroll cue belongs to the board, not the viewport:
 // it fades in beneath it once PAX AMERICANA has landed.
-const STEPS: { rows: [string, string]; tile: string; text: string }[] = [
-  { rows: ["STOP", "ENGAGING"], tile: "var(--pax2-red)", text: "#f8fafc" },
-  { rows: ["START", "RESONATING"], tile: "#ffffff", text: "#000000" },
-  { rows: ["PAX", "AMERICANA 🇺🇸"], tile: "var(--pax2-blue)", text: "#f8fafc" },
+const STEPS: { rows: [string, string]; text: string }[] = [
+  { rows: ["STOP", "ENGAGING"], text: "var(--pax2-red)" },
+  { rows: ["START", "RESONATING"], text: "var(--pax2-blue)" },
+  { rows: ["PAX", "AMERICANA 🇺🇸"], text: "#000000" },
 ]
 /** Boards per row. Words start in box 1; the board itself stays centered on the page. */
 const WIDTH = 11
@@ -36,6 +36,7 @@ const ROW = {
   // Em-based gap and radius so the whole board scales as one shape, nothing fixed in px.
   gap: "0.09em",
   tileRadius: "0.12em",
+  tileColor: "#ffffff",
   // The flag waits half a second after the letters finish, then flips 30% slower.
   delayedChar: { char: "🇺🇸", delayMs: 500, scale: 1.3 },
 } as const
@@ -58,7 +59,7 @@ export function FlapHero() {
       {step >= 0 ? (
         <div className="flex flex-col items-center gap-[0.22em]">
           {s.rows.map((word, i) => (
-            <SplitFlapText key={i} {...ROW} words={[word]} tileColor={s.tile} textColor={s.text} />
+            <SplitFlapText key={i} {...ROW} words={[word]} textColor={s.text} />
           ))}
         </div>
       ) : (
