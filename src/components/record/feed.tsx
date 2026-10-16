@@ -131,9 +131,9 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
   { label: "Share", icon: Forward },
 ]
 
-/** The row's three-dot menu. Its items are built but not yet wired. Clicks stay out of
+/** A card's three-dot menu. Its items are built but not yet wired. Clicks stay out of
  *  the card's link — the menu portals out of it, but React events still bubble through. */
-function RowMenu() {
+function RowMenu({ className }: { className?: string }) {
   const hold = (e: React.SyntheticEvent) => {
     e.preventDefault()
     e.stopPropagation()
@@ -143,7 +143,7 @@ function RowMenu() {
       <DropdownMenuTrigger
         aria-label="More actions"
         onClick={hold}
-        className="-mr-2 -mt-1 flex size-9 shrink-0 items-center justify-center rounded-full text-slate-700 outline-none transition-colors hover:text-pax2-blue data-[popup-open]:text-pax2-blue"
+        className={cn("flex size-9 shrink-0 items-center justify-center rounded-full text-slate-700 outline-none transition-colors hover:bg-slate-200/70 data-[popup-open]:bg-slate-200/70", className)}
       >
         <EllipsisVertical className="size-5" />
       </DropdownMenuTrigger>
@@ -164,7 +164,7 @@ function RowMenu() {
 export function ListRow({ v }: { v: FeedVideo }) {
   return (
     <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:transition-colors before:duration-200 hover:before:border-pax2-blue flex flex-col gap-3 sm:flex-row sm:gap-5">
-      <div className="relative w-full shrink-0 overflow-hidden rounded-xl bg-slate-200 sm:w-[340px] md:w-[400px]">
+      <div className="relative w-full shrink-0 overflow-hidden rounded-xl bg-slate-200 sm:w-[380px] md:w-[448px]">
         <HoverThumb v={v} aspect="aspect-video" />
         <Score v={v} />
         <Favorite id={v.id} />
@@ -189,13 +189,16 @@ export function ListRow({ v }: { v: FeedVideo }) {
 /** One vertical Shorts card. */
 export function ShortCard({ v }: { v: FeedVideo }) {
   return (
-    <Link href={`/v/yt-${v.id}`} className="group flex flex-col gap-1.5">
+    <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:transition-colors before:duration-200 hover:before:border-pax2-blue flex flex-col gap-1.5">
       <div className="relative overflow-hidden rounded-xl bg-slate-200">
         <HoverThumb v={v} aspect="aspect-[9/16]" />
         <Score v={v} />
         <Favorite id={v.id} />
       </div>
-      <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-pax2-light-blue">{v.title}</p>
+      <div className="flex items-start justify-between gap-1">
+        <p className="line-clamp-2 min-w-0 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-pax2-light-blue">{v.title}</p>
+        <RowMenu className="-mr-1.5 size-8" />
+      </div>
       <p className="tabular text-xs text-pax2-blue">{fmt.format(v.views)} views</p>
     </Link>
   )
@@ -226,12 +229,12 @@ function ShortsShelf({ items }: { items: FeedVideo[] }) {
       <span className="flex items-center gap-2 text-sm font-semibold text-slate-900">
         <img src="/logos/youtube-shorts.svg" alt="" className="h-5 w-auto" /> Shorts
       </span>
-      <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6">
-        {items.slice(0, more ? items.length : 6).map((v) => (
+      <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5">
+        {items.slice(0, more ? items.length : 5).map((v) => (
           <ShortCard key={v.id} v={v} />
         ))}
       </div>
-      {items.length > 6 && (
+      {items.length > 5 && (
         <div className="relative mt-3 flex justify-center">
           <span className="absolute inset-x-0 top-1/2 h-px bg-black/10" />
           <button
@@ -320,9 +323,9 @@ function Cycle({ items }: { items: FeedVideo[] }) {
   let p = 0
   while (i < items.length) {
     const kind = pattern[p % pattern.length]
-    if (kind === "shorts" && items.length - i >= 12) {
-      blocks.push(<ShortsShelf key={i} items={items.slice(i, i + 12)} />)
-      i += 12
+    if (kind === "shorts" && items.length - i >= 10) {
+      blocks.push(<ShortsShelf key={i} items={items.slice(i, i + 10)} />)
+      i += 10
     } else if (kind === "trio" && items.length - i >= 3) {
       blocks.push(<Trio key={i} items={items.slice(i, i + 3)} />)
       i += 3
