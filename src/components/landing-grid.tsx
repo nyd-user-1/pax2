@@ -7,18 +7,21 @@ import { SEQUENCE_MS } from "@/components/flap-hero"
 
 // The page-wide grid: one viewport-sized layer fixed behind every section, so the
 // effect rides along wherever the reader scrolls. It wakes when the hero's board
-// sequence finishes. Literal hex: the colours feed WebGL uniforms, which cannot
-// read CSS variables. Pax blue.
+// sequence finishes. The colours feed WebGL uniforms, which cannot read CSS
+// variables, so the pax blue token is resolved to its hex as the grid wakes.
 export function LandingGrid() {
-  const [on, setOn] = React.useState(false)
+  const [blue, setBlue] = React.useState<string | null>(null)
   React.useEffect(() => {
-    const t = window.setTimeout(() => setOn(true), SEQUENCE_MS)
+    const t = window.setTimeout(
+      () => setBlue(getComputedStyle(document.documentElement).getPropertyValue("--pax2-blue").trim()),
+      SEQUENCE_MS,
+    )
     return () => window.clearTimeout(t)
   }, [])
-  if (!on) return null
+  if (!blue) return null
   return (
     <div className="pointer-events-none fixed inset-0">
-      <CursorGrid color="#1e3a8a" gridColor="#1e3a8a" gridOpacity={0.16} fillOpacity={0.08} spotlight={0.8} />
+      <CursorGrid color={blue} gridColor={blue} gridOpacity={0.16} fillOpacity={0.08} spotlight={0.8} />
     </div>
   )
 }
