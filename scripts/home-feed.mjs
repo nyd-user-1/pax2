@@ -1,5 +1,6 @@
 // The home page feed: every channel's best-travelled shorts from the lookback catalog, plus every
 // short that has had the full analysis, plus every short on /campaigns (data/raw/yt-shorts.json),
+// plus every video a paid creative ran (data/generated/voter-freedom-paid.json), flagged paid,
 // newest first, plus each channel's YouTube avatar and public subscriber count. The reform-core
 // channels' videos carry the tag "reform" (not shown yet).
 // Usage: node scripts/home-feed.mjs   (reads data/velocity/catalog.json and YOUTUBE_API_KEY from .env.local)
@@ -9,6 +10,8 @@ const PER_CHANNEL = 6
 const catalog = JSON.parse(fs.readFileSync("data/velocity/catalog.json", "utf8")).videos
 const features = JSON.parse(fs.readFileSync("data/generated/features.json", "utf8"))
 const campaignShorts = JSON.parse(fs.readFileSync("data/raw/yt-shorts.json", "utf8")).videos
+const paidIds = new Set(JSON.parse(fs.readFileSync("data/generated/voter-freedom-paid.json", "utf8")).creatives.map((c) => c.videoId))
+const paidUploads = JSON.parse(fs.readFileSync("data/raw/voter-freedom.json", "utf8")).videos.filter((v) => paidIds.has(v.id))
 const groups = Object.fromEntries(JSON.parse(fs.readFileSync("lambda/velocity/channels.json", "utf8")).map((c) => [c.id, c.group]))
 const secs = (iso) => {
   const m = iso?.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/)
@@ -21,11 +24,11 @@ const ranked = [...byChannel.values()].map((vs) => vs.sort((a, b) => b.views - a
 const picked = new Map()
 for (const vs of ranked) for (const v of vs) picked.set(v.id, v)
 for (const v of catalog) if (`yt-${v.id}` in features) picked.set(v.id, v)
-// Every /campaigns short, from the catalog when it is there, else from the campaign pull, measured
+// Every /campaigns short and paid upload, from the catalog when it is there, else from its own pull, measured
 // against its channel's catalog median.
 const inCatalog = new Map(catalog.map((v) => [v.id, v]))
 const channelMedian = new Map(catalog.map((v) => [v.channelId, v.channelMedian]))
-for (const c of campaignShorts) {
+for (const c of [...campaignShorts, ...paidUploads]) {
   if (c.views == null || picked.has(c.id)) continue
   const v = inCatalog.get(c.id)
   if (v) {
@@ -53,6 +56,7 @@ for (const v of picked.values())
     duration: `PT${Math.floor(v.durationSec / 60)}M${v.durationSec % 60}S`,
     description: (v.description ?? "").split("\n")[0].replace(/\s*#\w+/g, "").trim(),
     playable: `yt-${v.id}` in features,
+    ...(paidIds.has(v.id) && { paid: true }),
     ...(groups[v.channelId] === "reform-core" && { tags: ["reform"] }),
   })
 videos.sort((a, b) => Date.parse(b.published) - Date.parse(a.published))

@@ -5,7 +5,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowUpDown, Bookmark, Check, ChevronDown, ChevronUp, Clock, EllipsisVertical, Forward, ListPlus, Search, Star, X, type LucideIcon } from "lucide-react"
+import { ArrowUpDown, Bookmark, ChevronDown, ChevronUp, Clock, DollarSign, EllipsisVertical, Forward, ListPlus, Search, Star, X, type LucideIcon } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
@@ -25,6 +25,7 @@ export type FeedVideo = {
   playable: boolean
   likes?: number | null
   comments?: number | null
+  paid?: boolean
 }
 
 const fmt = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 })
@@ -131,6 +132,12 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
   { label: "Share", icon: Forward },
 ]
 
+/** Paid media's mark, in the card's bottom-right corner: 6px in from the halo's edge. */
+function PaidMark({ v }: { v: FeedVideo }) {
+  if (!v.paid) return null
+  return <DollarSign role="img" aria-label="Paid media" className="absolute -bottom-1.5 -right-1.5 size-5 text-green-600" />
+}
+
 /** A card's three-dot menu. Its items are built but not yet wired. Clicks stay out of
  *  the card's link — the menu portals out of it, but React events still bubble through. */
 function RowMenu({ className }: { className?: string }) {
@@ -182,6 +189,7 @@ export function ListRow({ v }: { v: FeedVideo }) {
         </span>
         {v.description && <p className="hidden pt-1 text-sm leading-relaxed text-slate-800 sm:line-clamp-2">{v.description}</p>}
       </div>
+      <PaidMark v={v} />
     </Link>
   )
 }
@@ -200,6 +208,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <RowMenu className="-mr-1.5 size-8" />
       </div>
       <p className="tabular text-xs text-pax2-blue">{fmt.format(v.views)} views</p>
+      <PaidMark v={v} />
     </Link>
   )
 }
@@ -216,6 +225,7 @@ export function LandscapeCard({ v }: { v: FeedVideo }) {
       </div>
       <p className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
       <p className="tabular text-xs text-pax2-blue">{v.channel} · {fmt.format(v.views)} views</p>
+      <PaidMark v={v} />
     </Link>
   )
 }
@@ -271,38 +281,74 @@ const by = (pick: (v: FeedVideo) => number | null | undefined, dir: 1 | -1) => (
 }
 const posted = (v: FeedVideo) => new Date(v.published).getTime()
 
+type Order = (a: FeedVideo, b: FeedVideo) => number
+const then = (first: Order, next: Order): Order => (a, b) => first(a, b) || next(a, b)
+const paidFirst: Order = (a, b) => Number(!!b.paid) - Number(!!a.paid)
+
+/** One row per measure, its two directions side by side. `title` names the choice on the trigger. */
 const SORTS = [
-  { value: "newest", label: "Newest", order: by(posted, -1) },
-  { value: "oldest", label: "Oldest", order: by(posted, 1) },
-  { value: "views", label: "Most views", order: by((v) => v.views, -1) },
-  { value: "fewest-views", label: "Fewest views", order: by((v) => v.views, 1) },
-  { value: "likes", label: "Most liked", order: by((v) => v.likes, -1) },
-  { value: "fewest-likes", label: "Least liked", order: by((v) => v.likes, 1) },
-  { value: "comments", label: "Most comments", order: by((v) => v.comments, -1) },
-  { value: "fewest-comments", label: "Fewest comments", order: by((v) => v.comments, 1) },
-  { value: "breakout", label: "Biggest breakout", order: by((v) => v.ratio, -1) },
-  { value: "az", label: "A–Z", order: (a: FeedVideo, b: FeedVideo) => a.title.localeCompare(b.title) },
-  { value: "za", label: "Z–A", order: (a: FeedVideo, b: FeedVideo) => b.title.localeCompare(a.title) },
+  { measure: "Date", choices: [
+    { value: "newest", label: "Newest", title: "Newest", order: by(posted, -1) },
+    { value: "oldest", label: "Oldest", title: "Oldest", order: by(posted, 1) },
+  ] },
+  { measure: "Views", choices: [
+    { value: "views", label: "Most", title: "Most views", order: by((v) => v.views, -1) },
+    { value: "fewest-views", label: "Fewest", title: "Fewest views", order: by((v) => v.views, 1) },
+  ] },
+  { measure: "Likes", choices: [
+    { value: "likes", label: "Most", title: "Most liked", order: by((v) => v.likes, -1) },
+    { value: "fewest-likes", label: "Least", title: "Least liked", order: by((v) => v.likes, 1) },
+  ] },
+  { measure: "Comments", choices: [
+    { value: "comments", label: "Most", title: "Most comments", order: by((v) => v.comments, -1) },
+    { value: "fewest-comments", label: "Fewest", title: "Fewest comments", order: by((v) => v.comments, 1) },
+  ] },
+  { measure: "Breakout", choices: [
+    { value: "breakout", label: "Biggest", title: "Biggest breakout", order: by((v) => v.ratio, -1) },
+    { value: "smallest-breakout", label: "Smallest", title: "Smallest breakout", order: by((v) => v.ratio, 1) },
+  ] },
+  { measure: "Media", choices: [
+    { value: "earned", label: "Earned", title: "Earned media", order: then((a, b) => paidFirst(b, a), by(posted, -1)) },
+    { value: "paid", label: "Paid", title: "Paid media", order: then(paidFirst, by(posted, -1)) },
+  ] },
+  { measure: "Title", choices: [
+    { value: "az", label: "A–Z", title: "A–Z", order: (a: FeedVideo, b: FeedVideo) => a.title.localeCompare(b.title) },
+    { value: "za", label: "Z–A", title: "Z–A", order: (a: FeedVideo, b: FeedVideo) => b.title.localeCompare(a.title) },
+  ] },
 ] as const
 
-type FeedSort = (typeof SORTS)[number]["value"]
+const CHOICES = SORTS.flatMap((s) => s.choices)
+type FeedSort = (typeof CHOICES)[number]["value"]
 
 /** VelocitySortMenu's menu, its trigger dressed as section two's Learn more. */
 function FeedSortMenu({ sort, setSort }: { sort: FeedSort; setSort: (s: FeedSort) => void }) {
-  const current = SORTS.find((s) => s.value === sort) ?? SORTS[0]
+  const current = CHOICES.find((c) => c.value === sort) ?? CHOICES[0]
   return (
     <DropdownMenu>
       <DropdownMenuTrigger aria-label="Sort videos" className="press inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-pax2-blue px-4 text-base font-medium text-white shadow-md outline-none transition-shadow hover:shadow-e3 data-[popup-open]:shadow-e3 sm:px-6">
         <ArrowUpDown className="size-5" />
         {/* Icon-only on phones, so the search keeps the row. */}
-        <span className="hidden sm:inline">{current.label}</span>
+        <span className="hidden sm:inline">{current.title}</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-48 rounded-xl">
+      <DropdownMenuContent align="end" className="min-w-64 rounded-xl p-1.5">
         {SORTS.map((s) => (
-          <DropdownMenuItem key={s.value} onClick={() => setSort(s.value)} className="flex items-center justify-between gap-6 whitespace-nowrap rounded-lg text-sm">
-            {s.label}
-            {s.value === sort && <Check className="size-4 text-pax2-light-blue" />}
-          </DropdownMenuItem>
+          <div key={s.measure} className="flex items-center justify-between gap-6 px-2 py-1">
+            <span className="text-sm text-slate-800">{s.measure}</span>
+            <span className="flex gap-1">
+              {s.choices.map((c) => (
+                <DropdownMenuItem
+                  key={c.value}
+                  onClick={() => setSort(c.value)}
+                  className={cn(
+                    "rounded-full px-3 py-1 text-sm whitespace-nowrap",
+                    c.value === sort ? "bg-[#dbe7fa] font-medium text-[#033882]! focus:bg-[#dbe7fa]" : "text-slate-600 focus:bg-slate-100",
+                  )}
+                >
+                  {c.label}
+                </DropdownMenuItem>
+              ))}
+            </span>
+          </div>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
@@ -474,7 +520,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   }, [landing])
 
   const needle = q.trim().toLowerCase()
-  const order = (SORTS.find((s) => s.value === sort) ?? SORTS[0]).order
+  const order = (CHOICES.find((c) => c.value === sort) ?? CHOICES[0]).order
   const shown = React.useMemo(
     () => (needle ? videos.filter((v) => matches(v, needle)) : videos).toSorted(order),
     [videos, needle, order],
