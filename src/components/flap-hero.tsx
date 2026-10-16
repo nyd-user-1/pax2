@@ -36,6 +36,9 @@ const ROW = {
   padTo: WIDTH,
   glare: 0.3,
   fontSize: "1em",
+  // Em-based gap and radius so the whole board scales as one shape, nothing fixed in px.
+  gap: "0.09em",
+  tileRadius: "0.12em",
 } as const
 
 export function FlapHero() {
@@ -52,7 +55,7 @@ export function FlapHero() {
   }, [])
   const s = STEPS[Math.max(0, step)]
   return (
-    <div className="flex w-full flex-col items-center px-4" style={{ fontSize: "clamp(15px, 5.5vw, 68px)" }}>
+    <div className="flex w-full flex-col items-center px-4" style={{ fontSize: "clamp(15px, 7.7vw, 200px)" }}>
       {step >= 0 ? (
         <div className="flex flex-col items-center gap-[0.22em]">
           {s.rows.map((word, i) => (
