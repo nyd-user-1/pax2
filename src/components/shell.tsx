@@ -3,10 +3,10 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { motion, useReducedMotion } from "motion/react"
 import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
+import { RevealFx } from "@/components/reveal-fx"
 import { Wordmark } from "@/components/wordmark"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
 import { cn } from "@/ui/lib/utils"
@@ -100,7 +100,6 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
   const [scrolled, setScrolled] = React.useState(false)
   const [discuss, setDiscuss] = React.useState(false)
   const animKey = React.useRef("Scored")
-  const reduced = useReducedMotion()
   const panel = React.useMemo<PanelState>(
     () => ({
       setOpen: setPanelOpen,
@@ -119,7 +118,14 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
   const active = (href: string) => (href === "/scoring" ? path === "/scoring" : path.startsWith(href))
   // The front door (landing, record entry, sign-in) is full bleed; every step from /record/start on sits in the shell.
   const home = path === "/"
-  if (path === "/record" || path.startsWith("/sign")) return <div className="min-h-dvh bg-pax2-mist">{children}</div>
+  if (path === "/record" || path.startsWith("/sign"))
+    return (
+      <div className="min-h-dvh bg-pax2-mist">
+        <RevealFx key={path} translateY={4}>
+          {children}
+        </RevealFx>
+      </div>
+    )
   const item = (href: string, label: string, Icon: typeof Gauge, small = false) => {
     const on = active(href)
     return (
@@ -221,16 +227,10 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
             </button>
           </div>
           <main className={cn("flex-1", full ? "flex min-h-0 flex-col md:overflow-hidden" : "md:overflow-y-auto")} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
-            {/* Each page arrives with framer motion's fade-and-rise; the front door has its curtain instead. */}
-            <motion.div
-              key={animKey.current}
-              initial={reduced ? false : { opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-              className={cn("@container w-full", full ? "flex min-h-0 flex-1 flex-col" : "px-5 py-6 md:px-10 md:py-9")}
-            >
+            {/* Each page arrives with RevealFx's wipe; the front door has its curtain instead. */}
+            <RevealFx key={animKey.current} translateY={4} className={cn("@container w-full", full ? "flex min-h-0 flex-1 flex-col" : "px-5 py-6 md:px-10 md:py-9")}>
               {children}
-            </motion.div>
+            </RevealFx>
           </main>
         </div>
         <div className={cn("w-0 shrink-0 overflow-hidden transition-[width,margin] duration-300 ease-in-out", (panelOpen || discuss) && (takeover ? "md:w-auto md:flex-1" : cn("md:ml-[18px]", panelW)))}>
