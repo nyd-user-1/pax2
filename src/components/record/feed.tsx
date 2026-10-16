@@ -5,7 +5,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, DollarSign, EllipsisVertical, Forward, ListPlus, MessageCircle, Search, SlidersHorizontal, Star, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
+import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, DollarSign, EllipsisVertical, Forward, ListPlus, MessageCircle, Search, SlidersHorizontal, TrendingUp, Star, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
@@ -487,12 +487,15 @@ export function SearchBar({
   placeholder = "Search videos",
   className,
   refine,
+  trending,
 }: {
   q: string
   setQ: (q: string) => void
   placeholder?: string
   className?: string
   refine?: Refine
+  /** Videos to offer under Trending while the bar is empty and focused. */
+  trending?: FeedVideo[]
 }) {
   const [focused, setFocused] = React.useState(false)
   const [sorting, setSorting] = React.useState(false)
@@ -524,7 +527,7 @@ export function SearchBar({
     setFocused(false)
     input.current?.blur()
   }
-  const showRecent = !sorting && focused && q === "" && recent.length > 0
+  const showRecent = !sorting && focused && q === "" && (recent.length > 0 || !!trending?.length)
   const open = sorting || showRecent
   const refined = !!refine && (refine.sorts.length > 0 || refine.channel !== "" || refine.tag !== "")
   // Open, bar and panel share one border: pax blue on the landing's dressed bar, slate otherwise.
@@ -564,12 +567,13 @@ export function SearchBar({
           enterKeyHint="search"
           className="h-full min-w-0 flex-1 bg-transparent px-3 text-[15px] text-slate-900 outline-none placeholder:text-slate-400"
         />
-        {q !== "" && (
+        {(q !== "" || sorting) && (
           <button
             type="button"
-            aria-label="Clear search"
+            aria-label={sorting && q === "" ? "Close" : "Clear search"}
             onClick={() => {
               setQ("")
+              setSorting(false)
               input.current?.focus()
             }}
             className="flex size-10 shrink-0 items-center justify-center rounded-full text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
@@ -660,30 +664,53 @@ export function SearchBar({
               </div>
             </div>
           ) : (
-            <div className="max-h-[min(28rem,60svh)] overflow-y-auto rounded-b-[28px] px-5 pb-4 pt-3">
-              <h2 className="text-sm font-medium text-slate-800">
-                Recent searches <span className="tabular">({recent.length})</span>
-              </h2>
-              <ul className="mt-2 flex flex-col">
-                {recent.map((term) => (
-                  <li key={term} className="group border-b py-0.5 last:border-0">
-                    <div className="-mx-2 flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-muted hover:text-foreground">
-                      <button type="button" onClick={() => run(term)} className="flex min-w-0 flex-1 items-center gap-2.5 text-left text-sm">
-                        <Clock className="size-4 shrink-0 text-slate-800" />
-                        <span className="truncate">{term}</span>
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={`Forget ${term}`}
-                        onClick={() => save(recent.filter((r) => r !== term))}
-                        className="shrink-0 rounded p-1 text-slate-800 opacity-0 hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100 sm:opacity-100"
-                      >
-                        <X className="size-3.5" />
-                      </button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+            <div className="flex max-h-[min(32rem,65svh)] flex-col gap-4 overflow-y-auto rounded-b-[28px] px-5 pb-4 pt-3">
+              {recent.length > 0 && (
+                <div>
+                  <h2 className="text-sm font-medium text-slate-800">
+                    Recent searches <span className="tabular">({recent.length})</span>
+                  </h2>
+                  <ul className="mt-2 flex flex-col">
+                    {recent.map((term) => (
+                      <li key={term} className="group border-b py-0.5 last:border-0">
+                        <div className="-mx-2 flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-muted hover:text-foreground">
+                          <button type="button" onClick={() => run(term)} className="flex min-w-0 flex-1 items-center gap-2.5 text-left text-sm">
+                            <Clock className="size-4 shrink-0 text-slate-800" />
+                            <span className="truncate">{term}</span>
+                          </button>
+                          <button
+                            type="button"
+                            aria-label={`Forget ${term}`}
+                            onClick={() => save(recent.filter((r) => r !== term))}
+                            className="shrink-0 rounded p-1 text-slate-800 opacity-0 hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100 sm:opacity-100"
+                          >
+                            <X className="size-3.5" />
+                          </button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {!!trending?.length && (
+                <div>
+                  <h2 className="text-sm font-medium text-slate-800">Trending</h2>
+                  <ul className="mt-2 flex flex-col">
+                    {trending.map((v) => (
+                      <li key={v.id} className="border-b py-0.5 last:border-0">
+                        <Link
+                          href={`/v/yt-${v.id}`}
+                          className="-mx-2 flex items-center gap-2.5 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-muted hover:text-pax2-blue"
+                        >
+                          <TrendingUp className="size-4 shrink-0 text-pax2-blue" />
+                          <span className="min-w-0 flex-1 truncate">{v.title}</span>
+                          <span className="hidden shrink-0 text-xs text-slate-500 sm:inline">{v.channel}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -699,6 +726,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   const [tag, setTag] = React.useState("")
   const channels = React.useMemo(() => [...new Set(videos.map((v) => v.channel))].sort((a, b) => a.localeCompare(b)), [videos])
   const tags = React.useMemo(() => [...new Set(videos.flatMap((v) => v.tags ?? []))].sort((a, b) => a.localeCompare(b)), [videos])
+  const trending = React.useMemo(() => videos.toSorted(by(perDay, -1)).slice(0, 6), [videos])
   // A drawer's channel name searches this feed (take-panel.tsx); a ?q= in the address does the same on arrival.
   React.useEffect(() => {
     document.documentElement.dataset.feed = "1"
@@ -772,6 +800,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
           q={q}
           setQ={setQ}
           refine={{ sorts, setSorts, channel, setChannel, tag, setTag, channels, tags }}
+          trending={trending}
           className="h-14 border-slate-400 shadow-md hover:border-pax2-blue hover:bg-slate-50 focus-within:border-pax2-blue"
         />
       </div>
