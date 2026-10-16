@@ -5,7 +5,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowUpDown, Check, ChevronDown, ChevronUp, Clock, Search, Star, X } from "lucide-react"
+import { ArrowUpDown, Bookmark, Check, ChevronDown, ChevronUp, Clock, EllipsisVertical, Forward, ListPlus, Search, Star, X, type LucideIcon } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
@@ -125,19 +125,56 @@ function Avatar({ id }: { id: string }) {
   return <img src={`/logos/channels/${id}.jpg`} alt="" className="size-8 shrink-0 rounded-full object-cover" />
 }
 
+const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
+  { label: "Add to queue", icon: ListPlus },
+  { label: "Save to playlist", icon: Bookmark },
+  { label: "Share", icon: Forward },
+]
+
+/** The row's three-dot menu. Its items are built but not yet wired. Clicks stay out of
+ *  the card's link — the menu portals out of it, but React events still bubble through. */
+function RowMenu() {
+  const hold = (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        aria-label="More actions"
+        onClick={hold}
+        className="-mr-2 -mt-1 flex size-9 shrink-0 items-center justify-center rounded-full text-slate-700 outline-none transition-colors hover:text-pax2-blue data-[popup-open]:text-pax2-blue"
+      >
+        <EllipsisVertical className="size-5" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" onClick={hold} className="min-w-52 rounded-xl p-1.5">
+        {ROW_ACTIONS.map(({ label, icon: Icon }) => (
+          <DropdownMenuItem key={label} className="gap-3 rounded-lg px-2.5 py-2 text-sm text-slate-800">
+            <Icon className="size-5! text-[#033882]! transition-colors group-focus/dropdown-menu-item:fill-[#dbe7fa]" />
+            {label}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
 /** A full-width result row: landscape thumbnail, then title, meta, channel and
  *  the first line of the description. */
 export function ListRow({ v }: { v: FeedVideo }) {
   return (
-    <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:transition-[filter,border-color] before:duration-200 hover:before:border-pax2-blue hover:before:brightness-95 flex flex-col gap-3 sm:flex-row sm:gap-5">
+    <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:transition-colors before:duration-200 hover:before:border-pax2-blue flex flex-col gap-3 sm:flex-row sm:gap-5">
       <div className="relative w-full shrink-0 overflow-hidden rounded-xl bg-slate-200 sm:w-[340px] md:w-[400px]">
         <HoverThumb v={v} aspect="aspect-video" />
         <Score v={v} />
         <Favorite id={v.id} />
         <span className="tabular pointer-events-none absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
       </div>
-      <div className="flex min-w-0 flex-col gap-1.5">
-        <p className="font-display text-lg leading-snug text-slate-900">{v.title}</p>
+      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+        <div className="flex items-start justify-between gap-3">
+          <p className="font-display text-lg leading-snug text-slate-900">{v.title}</p>
+          <RowMenu />
+        </div>
         <p className="tabular text-sm text-pax2-blue">{fmt.format(v.views)} views · {age(v.published)}</p>
         <span className="flex items-center gap-2 pt-1">
           <Avatar id={v.channelId} />
@@ -159,7 +196,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <Favorite id={v.id} />
       </div>
       <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-900 group-hover:text-pax2-light-blue">{v.title}</p>
-      <p className="tabular text-xs text-slate-500">{fmt.format(v.views)} views</p>
+      <p className="tabular text-xs text-pax2-blue">{fmt.format(v.views)} views</p>
     </Link>
   )
 }
@@ -167,7 +204,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
 /** One medium landscape card, as in the three-across band. */
 export function LandscapeCard({ v }: { v: FeedVideo }) {
   return (
-    <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:transition-[filter,border-color] before:duration-200 hover:before:border-pax2-blue hover:before:brightness-95 flex flex-col gap-2">
+    <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:transition-colors before:duration-200 hover:before:border-pax2-blue flex flex-col gap-2">
       <div className="relative overflow-hidden rounded-xl bg-slate-200">
         <HoverThumb v={v} aspect="aspect-video" />
         <Score v={v} />
@@ -175,7 +212,7 @@ export function LandscapeCard({ v }: { v: FeedVideo }) {
         <span className="tabular pointer-events-none absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
       </div>
       <p className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
-      <p className="tabular text-xs text-slate-500">{v.channel} · {fmt.format(v.views)} views</p>
+      <p className="tabular text-xs text-pax2-blue">{v.channel} · {fmt.format(v.views)} views</p>
     </Link>
   )
 }
