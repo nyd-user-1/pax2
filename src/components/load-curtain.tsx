@@ -53,7 +53,7 @@ export function LoadCurtain() {
         <div className="absolute inset-0 flex items-center justify-center" style={{ transform: `skewX(${ANGLE}deg)` }}>
           <motion.span
             className="px-6 text-center font-semibold tracking-tight text-white"
-            style={{ fontSize: "clamp(2.5rem, 9vw, 9rem)", lineHeight: 1 }}
+            style={{ fontSize: "clamp(2.5rem, 9vw, 9rem)", lineHeight: 1, skewX: -6 }}
             initial={{ x: "0vw", opacity: 1 }}
             animate={revealing ? { x: "-24vw", opacity: 0 } : { x: "0vw", opacity: 1 }}
             transition={{ duration: SWEEP, ease: EASE }}
