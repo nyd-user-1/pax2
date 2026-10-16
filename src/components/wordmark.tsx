@@ -1,28 +1,16 @@
-import TechText from "@/components/tech-text"
-
 import { cn } from "@/ui/lib/utils"
 
-/** The pax wordmark: React Bits TechText, blue letters with red accents, sized for the
- *  header corner (105x56 at the landing's size and scaling with the slot elsewhere). */
+/** The parallax wordmark, restored from the original pax repo: the double l drawn as two bars, blue and red. */
 export function Wordmark({ className, size = 22 }: { className?: string; size?: number }) {
+  const bar = { width: Math.max(2, Math.round(size * 0.11)), height: Math.round(size * 1.05) }
   return (
-    <span className={cn("inline-block align-middle text-pax2-ink", className)} style={{ width: Math.round(size * 4.04), height: Math.round(size * 2.15) }}>
-      <TechText
-        text="pax"
-        fontWeight={600}
-        fontSize={150}
-        reveal="letter"
-        dashLength={4}
-        dashGap={2}
-        specks={15}
-        intro="none"
-        introDuration={2}
-        clickKick
-        guides={false}
-        sweep={false}
-        accentColor="#d20526"
-        color="currentColor"
-      />
+    <span className={cn("inline-flex items-baseline font-semibold tracking-[-0.03em] text-slate-900", className)} style={{ fontSize: size, lineHeight: 1 }} aria-label="parallax">
+      <span aria-hidden>para</span>
+      <span aria-hidden className="mx-[0.06em] inline-flex gap-[0.07em] self-end" style={{ transform: `translateY(${Math.round(size * 0.04)}px)` }}>
+        <span className="rounded-[1px] bg-pax2-plum" style={bar} />
+        <span className="rounded-[1px] bg-pax2-red" style={bar} />
+      </span>
+      <span aria-hidden>ax</span>
     </span>
   )
 }
