@@ -14,6 +14,11 @@ const CHARSETS: Record<string, string> = {
   numeric: "0123456789",
 }
 
+// One tile per glyph the reader sees: graphemes, not UTF-16 units, so a flag
+// emoji rides a single tile.
+const segmenter = typeof Intl !== "undefined" && "Segmenter" in Intl ? new Intl.Segmenter() : null
+const chars = (value: string) => (segmenter ? Array.from(segmenter.segment(value), (part) => part.segment) : Array.from(value))
+
 type Align = "left" | "center" | "right"
 type Order = "left" | "right" | "center" | "random"
 type Tile = { current: string; next: string; flipping: boolean; tick: number }
@@ -51,16 +56,18 @@ const resolveCharset = (charset: string) => {
 }
 
 const normalizePhrase = (phrase: string | null | undefined, width: number, align: Align = "left") => {
-  const safe = String(phrase ?? "").slice(0, width)
-  if (align === "right") return safe.padStart(width, " ")
+  const list = chars(String(phrase ?? "")).slice(0, width)
+  const pad = width - list.length
+  if (align === "right") return " ".repeat(pad) + list.join("")
   if (align === "center") {
-    return safe.padStart(safe.length + Math.floor((width - safe.length) / 2), " ").padEnd(width, " ")
+    const lead = Math.floor(pad / 2)
+    return " ".repeat(lead) + list.join("") + " ".repeat(pad - lead)
   }
-  return safe.padEnd(width, " ")
+  return list.join("") + " ".repeat(pad)
 }
 
 const createTiles = (phrase: string): Tile[] =>
-  phrase.split("").map((char) => ({
+  chars(phrase).map((char) => ({
     current: char,
     next: char,
     flipping: false,
@@ -158,7 +165,7 @@ const SplitFlapText = ({
   const phrases = useMemo(() => phrasesKey.split("\u001f"), [phrasesKey])
 
   const width = useMemo(() => {
-    const longest = phrases.reduce((max, phrase) => Math.max(max, phrase.length), 1)
+    const longest = phrases.reduce((max, phrase) => Math.max(max, chars(phrase).length), 1)
     return Math.max(1, Math.ceil(Number(padTo) || 0), longest)
   }, [padTo, phrases])
 
@@ -198,8 +205,10 @@ const SplitFlapText = ({
 
     const animateTo = (target: string) => {
       const { flipMs, staggerMs, flips, glyphs, order: cascade } = timingRef.current
-      const from = normalizePhrase(shownRef.current ?? target, target.length)
-      const randomOrder = cascade === "random" ? shuffleIndices(target.length) : null
+      const targetChars = chars(target)
+      const from = normalizePhrase(shownRef.current ?? target, targetChars.length)
+      const fromChars = chars(from)
+      const randomOrder = cascade === "random" ? shuffleIndices(targetChars.length) : null
 
       stopFrame()
       shownRef.current = target
@@ -207,14 +216,14 @@ const SplitFlapText = ({
 
       const plans: Plan[] = []
       if (!prefersReducedMotion) {
-        for (let index = 0; index < target.length; index += 1) {
-          if (from[index] === target[index]) continue
+        for (let index = 0; index < targetChars.length; index += 1) {
+          if (fromChars[index] === targetChars[index]) continue
           plans.push({
             index,
-            from: from[index],
-            target: target[index],
-            sequence: buildSequence(target[index], flips, glyphs),
-            start: cascadeStep(index, target.length, cascade, randomOrder) * staggerMs,
+            from: fromChars[index],
+            target: targetChars[index],
+            sequence: buildSequence(targetChars[index], flips, glyphs),
+            start: cascadeStep(index, targetChars.length, cascade, randomOrder) * staggerMs,
             step: -1,
             done: false,
           })
