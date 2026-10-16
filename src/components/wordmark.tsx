@@ -7,7 +7,7 @@ export function Wordmark({ className, size = 22 }: { className?: string; size?: 
     <span className={cn("inline-flex items-baseline font-semibold tracking-[-0.03em] text-slate-900", className)} style={{ fontSize: size, lineHeight: 1 }} aria-label="parallax">
       <span aria-hidden>para</span>
       <span aria-hidden className="mx-[0.06em] inline-flex gap-[0.07em] self-end" style={{ transform: `translateY(${Math.round(size * 0.04)}px)` }}>
-        <span className="rounded-[1px] bg-pax2-plum" style={bar} />
+        <span className="rounded-[1px] bg-pax2-ink" style={bar} />
         <span className="rounded-[1px] bg-pax2-red" style={bar} />
       </span>
       <span aria-hidden>ax</span>

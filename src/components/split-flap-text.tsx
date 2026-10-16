@@ -34,6 +34,8 @@ export interface SplitFlapTextProps extends React.HTMLAttributes<HTMLDivElement>
   charset?: string
   flipsPerChar?: number
   tileColor?: string
+  /** One tile colour per message; the board recolours as each message starts. Falls back to tileColor. */
+  tileColors?: string[]
   textColor?: string
   tileRadius?: number | string
   gap?: number | string
@@ -137,6 +139,7 @@ const SplitFlapText = ({
   charset = "alphanumeric",
   flipsPerChar = 8,
   tileColor = "#111827",
+  tileColors,
   textColor = "#f8fafc",
   tileRadius = 8,
   gap = 6,
@@ -384,7 +387,7 @@ const SplitFlapText = ({
     .filter(Boolean)
     .join(" ")
   const componentStyle = {
-    "--split-flap-tile-color": tileColor,
+    "--split-flap-tile-color": tileColors?.[activeIndex] ?? tileColor,
     "--split-flap-text-color": textColor,
     "--split-flap-radius": toCssUnit(tileRadius),
     "--split-flap-gap": toCssUnit(gap),
