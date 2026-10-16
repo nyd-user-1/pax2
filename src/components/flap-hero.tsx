@@ -16,7 +16,7 @@ const STEPS: { rows: [string, string]; tile: string; text: string }[] = [
 ]
 /** Boards per row: the longest row plus flanks — the first and last box never carry a character,
  *  and every row sits on the same grid. */
-const WIDTH = 14
+const WIDTH = 13
 
 const centered = (word: string) => " ".repeat(Math.floor((WIDTH - graphemes(word).length) / 2)) + word
 /** The curtain's hold plus its sweep, in ms. */
