@@ -48,8 +48,9 @@ export default async function RecordLanding() {
       <LandingOnly>
         <LandingGrid />
         {/* Videos soften as they scroll in and out: blur bands at the viewport's edges,
-            each hiding when there is nothing beyond it. Under the header's z-30. */}
-        <GradualBlur position="top" target="page" autoHide height="5rem" zIndex={20} />
+            each hiding when there is nothing beyond it. Under the header's z-30; the top band
+            starts at the 4rem header's foot so the header doesn't cover it. */}
+        <GradualBlur position="top" target="page" autoHide height="5rem" zIndex={20} style={{ top: "4rem" }} />
         <GradualBlur position="bottom" target="page" autoHide height="5rem" zIndex={20} />
         <LandingHeader />
         {/* Not positioned: the gradient must paint beneath the fixed grid layer, while
