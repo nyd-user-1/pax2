@@ -55,7 +55,7 @@ export function FlapHero() {
   }, [])
   const s = STEPS[Math.max(0, step)]
   return (
-    <div className="flex w-full flex-col items-center px-4" style={{ fontSize: "clamp(15px, 7.7vw, 200px)" }}>
+    <div className="flex w-full flex-col items-center px-4" style={{ fontSize: "clamp(15px, 6.9vw, 180px)" }}>
       {step >= 0 ? (
         <div className="flex flex-col items-center gap-[0.22em]">
           {s.rows.map((word, i) => (
