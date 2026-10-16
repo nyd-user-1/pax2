@@ -3,6 +3,8 @@
 import * as React from "react"
 import { motion, useReducedMotion } from "motion/react"
 
+import ParticleText from "@/components/particle-text"
+
 // The govblock page curtain (apps/web/components/page-curtain.tsx, Brendan's
 // 2026-09-12 build for /unite-2), cut down to its reveal half for the initial
 // load: the page arrives already under two skewed sheets — ink leading with the
@@ -17,8 +19,8 @@ const TRAIL = 0.18
 /** The tilt of the leading edge, as motion.dev's default. */
 const ANGLE = 9
 const OFF = "-140vw"
-/** A paint beat under the sheets before they lift — long enough for PAX's forward drift to read, in ms. */
-const HOLD = 900
+/** A paint beat under the sheets before they lift — long enough for PAX's particles to gather, in ms. */
+const HOLD = 1600
 
 export function LoadCurtain({ onDone }: { onDone?: () => void }) {
   const reduced = useReducedMotion()
@@ -62,33 +64,23 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
       >
         {/* Un-skewed, so the word stands upright on the tilted sheet. */}
         <div className="absolute inset-0 flex items-center justify-center" style={{ transform: `skewX(${ANGLE}deg)` }}>
-          <motion.span
-            className="flex px-6 text-white"
-            style={{
-              fontSize: "clamp(2.5rem, 9vw, 9rem)",
-              lineHeight: 1,
-              skewX: -6,
-              fontFamily: "'SFMono-Regular', 'Roboto Mono', 'Cascadia Code', 'Liberation Mono', Menlo, monospace",
-              fontWeight: 760,
-              letterSpacing: "0.035em",
-            }}
+          <motion.div
+            className="h-[46vh] w-[80vw] text-white"
             initial={{ x: "0vw", opacity: 1 }}
             animate={revealing ? { x: "-24vw", opacity: 0 } : { x: "0vw", opacity: 1 }}
             transition={{ duration: SWEEP, ease: EASE }}
           >
-            {/* Staggered arrival: each letter slides in from behind and springs into place. */}
-            {["P", "A", "X"].map((ch, i) => (
-              <motion.span
-                key={ch}
-                className="inline-block"
-                initial={{ x: "-18vw", opacity: 0 }}
-                animate={{ x: "0vw", opacity: 1 }}
-                transition={{ delay: 0.12 * i, type: "spring", stiffness: 260, damping: 20 }}
-              >
-                {ch}
-              </motion.span>
-            ))}
-          </motion.span>
+            <ParticleText
+              text="PAX"
+              color="currentColor"
+              highlightColor="#dc2626"
+              fontSize="clamp(2.5rem, 9vw, 9rem)"
+              fontWeight={760}
+              fontFamily="'SFMono-Regular', 'Roboto Mono', 'Cascadia Code', 'Liberation Mono', Menlo, monospace"
+              gatherDuration={1100}
+              stagger={250}
+            />
+          </motion.div>
         </div>
       </motion.div>
     </div>

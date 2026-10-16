@@ -17,7 +17,7 @@ const STEPS: { rows: [string, string]; tile: string; text: string }[] = [
 /** Boards per row. Words start in box 1; the board itself stays centered on the page. */
 const WIDTH = 10
 /** The curtain's hold plus its sweep, in ms. */
-const CURTAIN = 1700
+const CURTAIN = 2400
 /** One message's flips plus its hold. */
 const STEP_MS = 2800
 /** The flag lands this long after the third message starts; VIDEO then flips in on row 1. */
