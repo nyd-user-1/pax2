@@ -3,7 +3,7 @@
 import * as React from "react"
 import { motion, useReducedMotion } from "motion/react"
 
-import ParticleText from "@/components/particle-text"
+import StrokeText from "@/components/stroke-text"
 
 // The govblock page curtain (apps/web/components/page-curtain.tsx, Brendan's
 // 2026-09-12 build for /unite-2), cut down to its reveal half for the initial
@@ -19,7 +19,7 @@ const TRAIL = 0.18
 /** The tilt of the leading edge, as motion.dev's default. */
 const ANGLE = 9
 const OFF = "-140vw"
-/** A paint beat under the sheets before they lift — long enough for PAX's particles to gather, in ms. */
+/** A paint beat under the sheets before they lift — long enough for PAX's outline to draw and fill, in ms. */
 const HOLD = 1600
 
 export function LoadCurtain({ onDone }: { onDone?: () => void }) {
@@ -65,20 +65,22 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
         {/* Un-skewed, so the word stands upright on the tilted sheet. */}
         <div className="absolute inset-0 flex items-center justify-center" style={{ transform: `skewX(${ANGLE}deg)` }}>
           <motion.div
-            className="h-[46vh] w-[80vw] text-white"
+            className="flex h-[46vh] w-[80vw] items-center text-white"
             initial={{ x: "0vw", opacity: 1 }}
             animate={revealing ? { x: "-24vw", opacity: 0 } : { x: "0vw", opacity: 1 }}
             transition={{ duration: SWEEP, ease: EASE }}
           >
-            <ParticleText
+            <StrokeText
               text="PAX"
-              color="currentColor"
-              highlightColor="#dc2626"
-              fontSize="clamp(2.5rem, 9vw, 9rem)"
+              strokeColor="currentColor"
+              fillColor="currentColor"
+              fontSize={144}
               fontWeight={760}
               fontFamily="'SFMono-Regular', 'Roboto Mono', 'Cascadia Code', 'Liberation Mono', Menlo, monospace"
-              gatherDuration={1100}
-              stagger={250}
+              letterSpacing={0}
+              drawDuration={0.9}
+              fillDelay={0.1}
+              stagger={0.08}
             />
           </motion.div>
         </div>
