@@ -14,15 +14,11 @@ const STEPS: { rows: [string, string]; tile: string; text: string }[] = [
   { rows: ["START", "RESONATING"], tile: "var(--pax2-red)", text: "#f8fafc" },
   { rows: ["PAX", "AMERICANA 🇺🇸"], tile: "#ffffff", text: "#000000" },
 ]
-/** Boards per row: the longest row plus flanks — the first and last box never carry a character. */
+/** Boards per row: the longest row plus flanks — the first and last box never carry a character,
+ *  and every row sits on the same grid. */
 const WIDTH = 14
-/** Half a tile plus half a gap: the optical shift for a word whose parity can't split the pads evenly. */
-const HALF_TILE = "calc(0.39em + 3px)"
 
-const centered = (word: string) => {
-  const n = graphemes(word).length
-  return { text: " ".repeat(Math.floor((WIDTH - n) / 2)) + word, shifted: (WIDTH - n) % 2 === 1 }
-}
+const centered = (word: string) => " ".repeat(Math.floor((WIDTH - graphemes(word).length) / 2)) + word
 /** The curtain's hold plus its sweep, in ms. */
 const CURTAIN = 1200
 /** One message's flips plus its hold. */
@@ -59,14 +55,9 @@ export function FlapHero() {
     <div className="flex w-full flex-col items-center px-4" style={{ fontSize: "clamp(15px, 5.5vw, 68px)" }}>
       {step >= 0 ? (
         <div className="flex flex-col items-center gap-[0.22em]">
-          {s.rows.map((word, i) => {
-            const row = centered(word)
-            return (
-              <div key={i} style={row.shifted ? { transform: `translateX(${HALF_TILE})` } : undefined}>
-                <SplitFlapText {...ROW} words={[row.text]} tileColor={s.tile} textColor={s.text} />
-              </div>
-            )
-          })}
+          {s.rows.map((word, i) => (
+            <SplitFlapText key={i} {...ROW} words={[centered(word)]} tileColor={s.tile} textColor={s.text} />
+          ))}
         </div>
       ) : (
         <div style={{ height: "2.38em" }} />
