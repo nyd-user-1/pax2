@@ -67,7 +67,6 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
             style={{
               fontSize: "clamp(2.5rem, 9vw, 9rem)",
               lineHeight: 1,
-              skewX: -6,
               fontFamily: "'SFMono-Regular', 'Roboto Mono', 'Cascadia Code', 'Liberation Mono', Menlo, monospace",
               fontWeight: 760,
               letterSpacing: "0.035em",
@@ -76,14 +75,14 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
             animate={revealing ? { x: "-24vw", opacity: 0 } : { x: "0vw", opacity: 1 }}
             transition={{ duration: SWEEP, ease: EASE }}
           >
-            {/* Staggered arrival: each letter slides in from behind and springs into place. */}
+            {/* The lean arrives: each letter snaps from upright to the forward lean, left to right. */}
             {["P", "A", "X"].map((ch, i) => (
               <motion.span
                 key={ch}
                 className="inline-block"
-                initial={{ x: "-18vw", opacity: 0 }}
-                animate={{ x: "0vw", opacity: 1 }}
-                transition={{ delay: 0.12 * i, type: "spring", stiffness: 260, damping: 20 }}
+                initial={{ skewX: 0 }}
+                animate={{ skewX: -6 }}
+                transition={{ delay: 0.25 + 0.15 * i, type: "spring", stiffness: 500, damping: 18 }}
               >
                 {ch}
               </motion.span>
