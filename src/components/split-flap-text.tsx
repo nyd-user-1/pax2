@@ -23,7 +23,7 @@ export const graphemes = chars
 type Align = "left" | "center" | "right"
 type Order = "left" | "right" | "center" | "random"
 type Tile = { current: string; next: string; flipping: boolean; tick: number; slow?: boolean; color: string; nextColor: string; bg: string; nextBg: string }
-type Plan = { index: number; from: string; target: string; sequence: string[]; start: number; step: number; done: boolean; flipMs: number; slow: boolean }
+type Plan = { index: number; from: string; target: string; sequence: string[]; start: number; step: number; done: boolean; flipMs: number; slow: boolean; bg: string }
 type Update = { index: number; current: string; next: string; done: boolean; slow: boolean; currentColor: string; nextColor: string; currentBg: string; nextBg: string }
 
 export interface SplitFlapTextProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -54,6 +54,8 @@ export interface SplitFlapTextProps extends React.HTMLAttributes<HTMLDivElement>
   /** A glyph that waits: it starts flipping delayMs after every other tile has finished,
    *  and each of its flips runs scale times the normal duration. */
   delayedChar?: { char: string; delayMs: number; scale: number }
+  /** Tiles whose incoming glyph is in `chars` land on this card colour instead of tileColor. */
+  charBg?: { chars: string; bg: string }
 }
 
 const toCssUnit = (value: number | string) => (typeof value === "number" ? `${value}px` : value)
@@ -164,6 +166,7 @@ const SplitFlapText = ({
   order = "left",
   tileStyle = "board",
   delayedChar,
+  charBg,
   className = "",
   style = {},
   ...props
@@ -200,8 +203,9 @@ const SplitFlapText = ({
       special: delayedChar,
       textColor,
       tileColor,
+      charBg,
     }),
-    [flipDuration, stagger, cycleDelay, flipsPerChar, charset, order, delayedChar?.char, delayedChar?.delayMs, delayedChar?.scale, textColor, tileColor],
+    [flipDuration, stagger, cycleDelay, flipsPerChar, charset, order, delayedChar?.char, delayedChar?.delayMs, delayedChar?.scale, textColor, tileColor, charBg?.chars, charBg?.bg],
   )
   const timingRef = useRef(timing)
 
@@ -225,7 +229,7 @@ const SplitFlapText = ({
     }
 
     const animateTo = (target: string) => {
-      const { flipMs, staggerMs, flips, glyphs, order: cascade, special, textColor: newColor, tileColor: newBg } = timingRef.current
+      const { flipMs, staggerMs, flips, glyphs, order: cascade, special, textColor: newColor, tileColor: newBg, charBg: accent } = timingRef.current
       const oldColor = appliedColorRef.current
       const colorChanged = newColor !== oldColor
       appliedColorRef.current = newColor
@@ -259,6 +263,7 @@ const SplitFlapText = ({
             done: false,
             flipMs: slow ? flipMs * special.scale : flipMs,
             slow,
+            bg: accent && accent.chars.includes(targetChars[index]) ? accent.bg : newBg,
           })
         }
         // The delayed glyph starts only after every ordinary tile has finished.
@@ -309,8 +314,8 @@ const SplitFlapText = ({
                 slow: plan.slow,
                 currentColor: step === 0 ? oldColor : newColor,
                 nextColor: newColor,
-                currentBg: step === 0 ? oldBg : newBg,
-                nextBg: newBg,
+                currentBg: step === 0 ? oldBg : plan.bg,
+                nextBg: plan.bg,
               })
             }
           } else if (!plan.done) {
@@ -323,8 +328,8 @@ const SplitFlapText = ({
               slow: plan.slow,
               currentColor: newColor,
               nextColor: newColor,
-              currentBg: newBg,
-              nextBg: newBg,
+              currentBg: plan.bg,
+              nextBg: plan.bg,
             })
           }
         })

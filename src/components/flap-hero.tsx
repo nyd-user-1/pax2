@@ -20,8 +20,10 @@ const WIDTH = 10
 const CURTAIN = 1700
 /** One message's flips plus its hold. */
 const STEP_MS = 2800
-/** The last message's flips plus the flag's late, slow run, before the cue appears. */
-const SETTLE = 2800
+/** The flag lands this long after the third message starts; VIDEO then flips in on row 1. */
+const FLAG_LANDS = 2500
+/** VIDEO's flips, before the cue appears. */
+const VIDEO_RUN = 1400
 
 const ROW = {
   loop: false,
@@ -48,25 +50,33 @@ export function FlapHero() {
       window.setTimeout(() => setStep(0), CURTAIN),
       window.setTimeout(() => setStep(1), CURTAIN + STEP_MS),
       window.setTimeout(() => setStep(2), CURTAIN + 2 * STEP_MS),
-      window.setTimeout(() => setCue(true), CURTAIN + 2 * STEP_MS + SETTLE),
+      window.setTimeout(() => setStep(3), CURTAIN + 2 * STEP_MS + FLAG_LANDS),
+      window.setTimeout(() => setCue(true), CURTAIN + 2 * STEP_MS + FLAG_LANDS + VIDEO_RUN),
     ]
     return () => timers.forEach((t) => window.clearTimeout(t))
   }, [])
-  const s = STEPS[Math.max(0, step)]
+  const s = STEPS[Math.min(Math.max(0, step), 2)]
   return (
     <div className="flex w-full flex-col items-center px-4" style={{ fontSize: "clamp(15px, 6.2vw, 162px)" }}>
       {step >= 0 ? (
         <div className="flex flex-col items-center gap-[0.22em]">
-          {s.rows.map((word, i) => (
-            <SplitFlapText key={i} {...ROW} words={[word]} tileColor={s.tile} textColor={s.text} />
+          {[step >= 3 ? "PAX VIDEO" : s.rows[0], s.rows[1]].map((word, i) => (
+            <SplitFlapText
+              key={i}
+              {...ROW}
+              words={[word]}
+              tileColor={s.tile}
+              textColor={s.text}
+              charBg={i === 0 && step >= 3 ? { chars: "VIDEO", bg: "var(--pax2-red)" } : undefined}
+            />
           ))}
         </div>
       ) : (
         <div style={{ height: "2.38em" }} />
       )}
       <div className={`mt-10 flex flex-col items-center gap-2 px-6 text-center transition-opacity duration-700 ${cue ? "opacity-100" : "opacity-0"}`}>
-        <p className="text-xl font-semibold text-pax2-blue md:text-2xl">Your voice matters.</p>
-        <p className="text-base text-slate-500 md:text-lg">Learn to use it effectively with the Pax Video Engine.</p>
+        <p className="text-xl font-semibold text-pax2-blue md:text-2xl">Your voice matters. Fine tune it with PAX.</p>
+        <p className="text-base text-slate-500 md:text-lg">A video engine built for resonance not reach.</p>
       </div>
       <div className={`relative mt-8 h-11 transition-opacity duration-700 ${cue ? "opacity-100" : "pointer-events-none opacity-0"}`}>
         <ScrollCue className="static translate-x-0" />

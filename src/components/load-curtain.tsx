@@ -76,14 +76,14 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
             animate={revealing ? { x: "-24vw", opacity: 0 } : { x: "0vw", opacity: 1 }}
             transition={{ duration: SWEEP, ease: EASE }}
           >
-            {/* Speed settle: each letter arrives stretched and blurred as if moving fast, then sharpens to a stop. */}
+            {/* Staggered arrival: each letter slides in from behind and springs into place. */}
             {["P", "A", "X"].map((ch, i) => (
               <motion.span
                 key={ch}
                 className="inline-block"
-                initial={{ scaleX: 1.6, x: "-6vw", opacity: 0.4, filter: "blur(6px)" }}
-                animate={{ scaleX: 1, x: "0vw", opacity: 1, filter: "blur(0px)" }}
-                transition={{ delay: 0.12 * i, duration: 0.45, ease: "easeOut" }}
+                initial={{ x: "-18vw", opacity: 0 }}
+                animate={{ x: "0vw", opacity: 1 }}
+                transition={{ delay: 0.12 * i, type: "spring", stiffness: 260, damping: 20 }}
               >
                 {ch}
               </motion.span>
