@@ -45,7 +45,7 @@ export default async function RecordLanding() {
     <div className="bg-pax2-mist">
       <LandingOnly>
         <LandingHeader />
-        <section className="relative -mt-16 flex min-h-dvh flex-col justify-center bg-gradient-to-b from-pax2-lavender to-pax2-mist pt-16">
+        <section className="relative -mt-16 flex min-h-dvh flex-col justify-center bg-gradient-to-b from-pax2-lavender to-pax2-mist">
           <FlapHero />
         </section>
         <section className="relative flex min-h-dvh flex-col justify-center">
