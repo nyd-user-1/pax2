@@ -62,9 +62,14 @@ export default async function RecordLanding() {
             <div className="flex flex-col gap-6">
               <h1 className="font-display text-5xl font-bold leading-[1.05] text-pax2-blue lg:text-[4.25rem]">Video built for Resonance.</h1>
               <p className="max-w-md text-lg leading-relaxed text-slate-900">We help you choose what to say, how to say it and share it. Because your voice is the difference.</p>
-              <Link href="/record/start" className="flex w-fit items-center gap-2 rounded-full border border-slate-400 bg-white px-7 py-4 text-base font-medium text-slate-500 shadow-md transition-colors hover:border-pax2-blue hover:bg-slate-50">
-                <Video className="size-5" style={{ color: "#033882", fill: "#dbe7fa" }} /> Try it
-              </Link>
+              <div className="flex items-center gap-3">
+                <Link href="/record/start" className="flex w-fit items-center gap-2 rounded-full border border-slate-400 bg-white px-7 py-4 text-base font-medium text-pax2-blue shadow-md transition-colors hover:border-pax2-blue hover:bg-slate-50">
+                  <Video className="size-5" style={{ color: "#033882", fill: "#dbe7fa" }} /> Try it
+                </Link>
+                <Link href="#learn" className="press flex w-fit items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 text-base font-medium text-white shadow-md transition-shadow hover:shadow-e3">
+                  <Video className="size-5" /> Learn more
+                </Link>
+              </div>
               <p className="text-sm text-muted-foreground">Powered by Resonant Amplification &copy;</p>
             </div>
             <PhoneMock videoId={`yt-${top.id}`} timer={timerOf(top.duration)} />
@@ -72,7 +77,7 @@ export default async function RecordLanding() {
         </section>
       </LandingOnly>
       {/* Positioned, so the feed paints above the fixed grid layer. */}
-      <div className="relative">
+      <div id="learn" className="relative">
         <Feed videos={feed} />
       </div>
       <LandingOnly>
