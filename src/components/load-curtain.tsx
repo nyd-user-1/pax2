@@ -63,7 +63,7 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
         {/* Un-skewed, so the word stands upright on the tilted sheet. */}
         <div className="absolute inset-0 flex items-center justify-center" style={{ transform: `skewX(${ANGLE}deg)` }}>
           <motion.span
-            className="px-6 text-center text-white"
+            className="flex px-6 text-white"
             style={{
               fontSize: "clamp(2.5rem, 9vw, 9rem)",
               lineHeight: 1,
@@ -72,11 +72,22 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
               fontWeight: 760,
               letterSpacing: "0.035em",
             }}
-            initial={{ x: "-7vw", opacity: 1 }}
+            initial={{ x: "0vw", opacity: 1 }}
             animate={revealing ? { x: "-24vw", opacity: 0 } : { x: "0vw", opacity: 1 }}
-            transition={revealing ? { duration: SWEEP, ease: EASE } : { duration: 0.9, ease: "easeOut" }}
+            transition={{ duration: SWEEP, ease: EASE }}
           >
-            PAX
+            {/* Staggered arrival: each letter slides in from behind and springs into place. */}
+            {["P", "A", "X"].map((ch, i) => (
+              <motion.span
+                key={ch}
+                className="inline-block"
+                initial={{ x: "-18vw", opacity: 0 }}
+                animate={{ x: "0vw", opacity: 1 }}
+                transition={{ delay: 0.12 * i, type: "spring", stiffness: 260, damping: 20 }}
+              >
+                {ch}
+              </motion.span>
+            ))}
           </motion.span>
         </div>
       </motion.div>
