@@ -12,7 +12,7 @@ import { cn } from "@/ui/lib/utils"
 
 /** The landing's sticky top bar: transparent over the hero, then white with
  *  the shell's hairline-and-shadow once the feed scrolls beneath it. The feed's
- *  search bar and sort stick just beneath it. Signed in, there's no hero: the sidebar toggle stands where
+ *  search bar sticks just beneath it. Signed in, there's no hero: the sidebar toggle stands where
  *  PAX was and the discussion where Sign up was, and the bar turns white as soon as the feed moves. */
 export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
   const [scrolled, setScrolled] = React.useState(false)

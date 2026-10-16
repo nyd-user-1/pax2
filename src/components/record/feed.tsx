@@ -5,7 +5,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowDown, ArrowUp, ArrowUpDown, Bookmark, ChevronDown, ChevronUp, Clock, DollarSign, EllipsisVertical, Forward, ListPlus, Search, Star, X, type LucideIcon } from "lucide-react"
+import { ArrowDown, ArrowUp, Bookmark, ChevronDown, ChevronUp, Clock, DollarSign, EllipsisVertical, Forward, ListPlus, Search, SlidersHorizontal, Star, X, type LucideIcon } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
@@ -304,36 +304,7 @@ const SORTS = [
 
 type FeedSort = { measure: (typeof SORTS)[number]["measure"]; dir: "up" | "down" }
 
-/** VelocitySortMenu's menu, its trigger dressed as section two's Learn more. */
-function FeedSortMenu({ sort, setSort }: { sort: FeedSort; setSort: (s: FeedSort) => void }) {
-  const Arrow = sort.dir === "up" ? ArrowUp : ArrowDown
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger aria-label="Sort videos" className="press inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-pax2-blue px-4 text-base font-medium text-white shadow-md outline-none transition-shadow hover:shadow-e3 data-[popup-open]:shadow-e3 sm:px-6">
-        <ArrowUpDown className="size-5 sm:hidden" />
-        {/* Icon-only on phones, so the search keeps the row. */}
-        <span className="hidden items-center gap-1.5 sm:inline-flex">
-          {sort.measure} <Arrow className="size-4" />
-        </span>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-44 rounded-xl">
-        {SORTS.map(({ measure }) => {
-          const on = measure === sort.measure
-          return (
-            <DropdownMenuItem
-              key={measure}
-              onClick={() => setSort({ measure, dir: on ? (sort.dir === "up" ? "down" : "up") : measure === "Title" ? "up" : "down" })}
-              className="flex items-center justify-between gap-6 whitespace-nowrap rounded-lg text-sm"
-            >
-              {measure}
-              {on && <Arrow className="size-4 text-pax2-light-blue" />}
-            </DropdownMenuItem>
-          )
-        })}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}
+const DEFAULT_SORT: FeedSort = { measure: "Date", dir: "down" }
 
 const rotate = <T,>(xs: T[], n: number) => {
   const k = xs.length ? n % xs.length : 0
@@ -372,11 +343,39 @@ const RECENT = "pax2:recent-searches"
 
 /** The search bar, with the reader's recent searches dropping down beneath it while it's empty
  *  (govblock's search drop-down). A search is remembered on Enter. */
-export function SearchBar({ q, setQ, placeholder = "Search videos", className }: { q: string; setQ: (q: string) => void; placeholder?: string; className?: string }) {
-  const [open, setOpen] = React.useState(false)
+/** The search bar, which grows downward into one panel: recent searches while it's empty and
+ *  focused (govblock's search drop-down), or — from the sliders at its right end — the sort.
+ *  A search is remembered on Enter. */
+export function SearchBar({
+  q,
+  setQ,
+  placeholder = "Search videos",
+  className,
+  sort,
+  setSort,
+}: {
+  q: string
+  setQ: (q: string) => void
+  placeholder?: string
+  className?: string
+  sort?: FeedSort
+  setSort?: (s: FeedSort) => void
+}) {
+  const [focused, setFocused] = React.useState(false)
+  const [sorting, setSorting] = React.useState(false)
   const [recent, setRecent] = React.useState<string[]>([])
+  const root = React.useRef<HTMLDivElement>(null)
   const input = React.useRef<HTMLInputElement>(null)
   React.useEffect(() => setRecent(JSON.parse(localStorage.getItem(RECENT) ?? "[]") as string[]), [])
+  // The sort panel holds no focus, so a click anywhere else is what closes it.
+  React.useEffect(() => {
+    if (!sorting) return
+    const away = (e: PointerEvent) => {
+      if (!root.current?.contains(e.target as Node)) setSorting(false)
+    }
+    document.addEventListener("pointerdown", away)
+    return () => document.removeEventListener("pointerdown", away)
+  }, [sorting])
   const save = (next: string[]) => {
     setRecent(next)
     localStorage.setItem(RECENT, JSON.stringify(next))
@@ -389,18 +388,26 @@ export function SearchBar({ q, setQ, placeholder = "Search videos", className }:
   const run = (term: string) => {
     setQ(term)
     save([term, ...recent.filter((r) => r !== term)].slice(0, 8))
-    setOpen(false)
+    setFocused(false)
     input.current?.blur()
   }
+  const showRecent = !sorting && focused && q === "" && recent.length > 0
+  const open = sorting || showRecent
+  const sorted = sort && (sort.measure !== DEFAULT_SORT.measure || sort.dir !== DEFAULT_SORT.dir)
+  // Open, bar and panel share one border: pax blue on the landing's dressed bar, slate otherwise.
+  const edge = className ? "border-pax2-blue" : "border-slate-200"
   return (
     <div
+      ref={root}
       className="relative w-full"
-      onFocusCapture={() => setOpen(true)}
+      onFocusCapture={() => setFocused(true)}
       onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpen(false)
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocused(false)
       }}
       onKeyDown={(e) => {
-        if (e.key === "Escape") setOpen(false)
+        if (e.key !== "Escape") return
+        setFocused(false)
+        setSorting(false)
       }}
     >
       <form
@@ -408,52 +415,110 @@ export function SearchBar({ q, setQ, placeholder = "Search videos", className }:
           e.preventDefault()
           submit()
         }}
-        className={cn("flex items-center overflow-hidden rounded-full border bg-white transition-[box-shadow,border-color,background-color]", className ?? "h-11 border-slate-200 shadow-e1 focus-within:shadow-e2")}
+        className={cn(
+          "flex items-center rounded-[28px] border bg-white transition-[box-shadow,border-color,background-color]",
+          className ?? "h-11 border-slate-200 shadow-e1 focus-within:shadow-e2",
+          open && cn("rounded-b-none hover:bg-white", edge),
+        )}
       >
+        <Search aria-hidden className="ml-5 size-4 shrink-0 text-slate-400" />
         <input
           ref={input}
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder={placeholder}
           aria-label={placeholder}
-          className="h-full min-w-0 flex-1 bg-transparent px-5 text-[15px] text-slate-900 outline-none placeholder:text-slate-400"
+          enterKeyHint="search"
+          className="h-full min-w-0 flex-1 bg-transparent px-3 text-[15px] text-slate-900 outline-none placeholder:text-slate-400"
         />
         {q !== "" && (
           <button type="button" aria-label="Clear search" onClick={() => setQ("")} className="flex h-full items-center px-2 text-slate-400 hover:text-slate-700">
             <X className="size-4" />
           </button>
         )}
-        <button type="submit" aria-label="Search" className="flex h-full items-center border-l border-slate-200 bg-pax2-mist px-5 text-slate-500">
-          <Search className="size-4" />
-        </button>
+        {sort && setSort ? (
+          <button
+            type="button"
+            aria-label="Sort"
+            aria-expanded={sorting}
+            onClick={() => setSorting((o) => !o)}
+            className={cn(
+              "relative mr-2 flex size-10 shrink-0 items-center justify-center rounded-full transition-colors",
+              sorting ? "bg-[#dbe7fa] text-[#033882]" : "text-slate-500 hover:bg-slate-100 hover:text-[#033882]",
+            )}
+          >
+            <SlidersHorizontal className="size-5" />
+            {sorted && !sorting && <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-pax2-blue ring-2 ring-white" />}
+          </button>
+        ) : (
+          <span className="w-3" />
+        )}
       </form>
-      {open && q === "" && recent.length > 0 && (
-        <div className="absolute inset-x-0 top-full z-50 mt-2 overflow-hidden rounded-xl border bg-white text-left shadow-lg" onMouseDown={(e) => e.preventDefault()}>
-          <div className="max-h-[min(28rem,60svh)] overflow-y-auto p-4">
-            <h2 className="text-sm font-medium text-muted-foreground">
-              Recent searches <span className="tabular">({recent.length})</span>
-            </h2>
-            <ul className="mt-2 flex flex-col">
-              {recent.map((term) => (
-                <li key={term} className="group border-b py-0.5 last:border-0">
-                  <div className="-mx-2 flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-muted hover:text-foreground">
-                    <button type="button" onClick={() => run(term)} className="flex min-w-0 flex-1 items-center gap-2.5 text-left text-sm">
-                      <Clock className="size-4 shrink-0 text-muted-foreground" />
-                      <span className="truncate">{term}</span>
-                    </button>
+      {open && (
+        <div
+          className={cn("absolute inset-x-0 top-full z-50 -mt-px overflow-hidden rounded-b-[28px] border border-t-0 bg-white text-left shadow-lg", edge)}
+          onMouseDown={(e) => e.preventDefault()}
+        >
+          <div className="mx-5 border-t border-slate-200" />
+          {sorting && sort && setSort ? (
+            <div className="px-5 pb-5 pt-4">
+              <div className="flex h-6 items-center justify-between">
+                <h2 className="text-sm font-medium text-slate-500">Sort by</h2>
+                {sorted && (
+                  <button type="button" onClick={() => setSort(DEFAULT_SORT)} className="text-sm font-medium text-pax2-blue hover:underline">
+                    Reset
+                  </button>
+                )}
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {SORTS.map(({ measure }) => {
+                  const on = measure === sort.measure
+                  const Arrow = sort.dir === "up" ? ArrowUp : ArrowDown
+                  return (
                     <button
+                      key={measure}
                       type="button"
-                      aria-label={`Forget ${term}`}
-                      onClick={() => save(recent.filter((r) => r !== term))}
-                      className="shrink-0 rounded p-1 text-muted-foreground opacity-0 hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100 sm:opacity-100"
+                      aria-pressed={on}
+                      onClick={() => setSort({ measure, dir: on ? (sort.dir === "up" ? "down" : "up") : measure === "Title" ? "up" : "down" })}
+                      className={cn(
+                        "flex h-9 items-center gap-1.5 rounded-full border px-4 text-sm font-medium transition-colors",
+                        on ? "border-pax2-blue bg-pax2-blue text-white" : "border-slate-200 text-slate-700 hover:border-pax2-blue hover:text-pax2-blue",
+                      )}
                     >
-                      <X className="size-3.5" />
+                      {measure}
+                      {on && <Arrow aria-label={sort.dir === "up" ? "ascending" : "descending"} className="size-3.5" />}
                     </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+                  )
+                })}
+              </div>
+            </div>
+          ) : (
+            <div className="max-h-[min(28rem,60svh)] overflow-y-auto px-5 pb-4 pt-3">
+              <h2 className="text-sm font-medium text-muted-foreground">
+                Recent searches <span className="tabular">({recent.length})</span>
+              </h2>
+              <ul className="mt-2 flex flex-col">
+                {recent.map((term) => (
+                  <li key={term} className="group border-b py-0.5 last:border-0">
+                    <div className="-mx-2 flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-muted hover:text-foreground">
+                      <button type="button" onClick={() => run(term)} className="flex min-w-0 flex-1 items-center gap-2.5 text-left text-sm">
+                        <Clock className="size-4 shrink-0 text-muted-foreground" />
+                        <span className="truncate">{term}</span>
+                      </button>
+                      <button
+                        type="button"
+                        aria-label={`Forget ${term}`}
+                        onClick={() => save(recent.filter((r) => r !== term))}
+                        className="shrink-0 rounded p-1 text-muted-foreground opacity-0 hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100 sm:opacity-100"
+                      >
+                        <X className="size-3.5" />
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -462,7 +527,7 @@ export function SearchBar({ q, setQ, placeholder = "Search videos", className }:
 
 export function Feed({ videos }: { videos: FeedVideo[] }) {
   const [q, setQ] = React.useState("")
-  const [sort, setSort] = React.useState<FeedSort>({ measure: "Date", dir: "down" })
+  const [sort, setSort] = React.useState<FeedSort>(DEFAULT_SORT)
   // A drawer's channel name searches this feed (take-panel.tsx); a ?q= in the address does the same on arrival.
   React.useEffect(() => {
     document.documentElement.dataset.feed = "1"
@@ -525,12 +590,15 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   return (
     <section ref={section} onClickCapture={remember} className="mx-auto w-full max-w-6xl px-6 pb-16">
       {/* Sticks just beneath the 4rem header, never inside it. */}
-      <div className="sticky top-[4.75rem] z-40 flex w-full items-center justify-between gap-4">
-        <div className="w-full min-w-0 max-w-2xl">
-          {/* Dressed as section two's Try it. */}
-          <SearchBar q={q} setQ={setQ} className="h-14 border-slate-400 shadow-md hover:border-pax2-blue hover:bg-slate-50 focus-within:border-pax2-blue" />
-        </div>
-        <FeedSortMenu sort={sort} setSort={setSort} />
+      <div className="sticky top-[4.75rem] z-40 w-full max-w-2xl">
+        {/* Dressed as section two's Try it. */}
+        <SearchBar
+          q={q}
+          setQ={setQ}
+          sort={sort}
+          setSort={setSort}
+          className="h-14 border-slate-400 shadow-md hover:border-pax2-blue hover:bg-slate-50 focus-within:border-pax2-blue"
+        />
       </div>
 
       <div className="flex flex-col gap-10 pt-10">
