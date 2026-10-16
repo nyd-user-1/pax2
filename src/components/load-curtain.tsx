@@ -5,6 +5,8 @@ import { motion, useReducedMotion } from "motion/react"
 
 import StrokeText from "@/components/stroke-text"
 
+import "./load-curtain.css"
+
 // The govblock page curtain (apps/web/components/page-curtain.tsx, Brendan's
 // 2026-09-12 build for /unite-2), cut down to its reveal half for the initial
 // load: the page arrives already under two skewed sheets — ink leading with the
@@ -75,8 +77,7 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
               strokeColor="currentColor"
               fillColor="currentColor"
               fontSize={144}
-              fontWeight={760}
-              fontFamily="'SFMono-Regular', 'Roboto Mono', 'Cascadia Code', 'Liberation Mono', Menlo, monospace"
+              fontFamily="'PAX Curtain', monospace"
               letterSpacing={0}
               drawDuration={0.9}
               fillDelay={0.1}
