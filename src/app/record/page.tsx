@@ -74,7 +74,7 @@ export default async function RecordLanding() {
                   Learn more <BookOpen className="size-5" />
                 </Link>
               </div>
-              <p className="text-sm text-muted-foreground">Powered by Resonant Amplification &copy;</p>
+              <p className="text-sm text-slate-800">Powered by Resonant Amplification &copy;</p>
             </div>
             <PhoneMock videoId={`yt-${top.id}`} timer={timerOf(top.duration)} />
           </div>
