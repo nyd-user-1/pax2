@@ -18,6 +18,7 @@ const CHARSETS: Record<string, string> = {
 // emoji rides a single tile.
 const segmenter = typeof Intl !== "undefined" && "Segmenter" in Intl ? new Intl.Segmenter() : null
 const chars = (value: string) => (segmenter ? Array.from(segmenter.segment(value), (part) => part.segment) : Array.from(value))
+export const graphemes = chars
 
 type Align = "left" | "center" | "right"
 type Order = "left" | "right" | "center" | "random"
