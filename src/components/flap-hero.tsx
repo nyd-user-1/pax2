@@ -10,9 +10,9 @@ import SplitFlapText from "@/components/split-flap-text"
 // they can never drift. The scroll cue belongs to the board, not the viewport:
 // it fades in beneath it once PAX AMERICANA has landed.
 const STEPS: { rows: [string, string]; tile: string; text: string }[] = [
-  { rows: ["STOP", "ENGAGING"], tile: "var(--pax2-blue)", text: "#f8fafc" },
-  { rows: ["START", "RESONATING"], tile: "var(--pax2-red)", text: "#f8fafc" },
-  { rows: ["PAX", "AMERICANA 🇺🇸"], tile: "#ffffff", text: "#000000" },
+  { rows: ["STOP", "ENGAGING"], tile: "var(--pax2-red)", text: "#f8fafc" },
+  { rows: ["START", "RESONATING"], tile: "#ffffff", text: "#000000" },
+  { rows: ["PAX", "AMERICANA 🇺🇸"], tile: "var(--pax2-blue)", text: "#f8fafc" },
 ]
 /** Boards per row. Words start in box 1; the board itself stays centered on the page. */
 const WIDTH = 11
