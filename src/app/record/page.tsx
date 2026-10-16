@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Video } from "lucide-react"
 
 import homeFeed from "../../../data/generated/home-feed.json"
 import shorts from "../../../data/raw/yt-shorts.json"
@@ -63,7 +63,7 @@ export default async function RecordLanding() {
               <h1 className="font-display text-5xl font-bold leading-[1.05] text-pax2-blue lg:text-[4.25rem]">Video built for Resonance.</h1>
               <p className="max-w-md text-lg leading-relaxed text-slate-900">We help you choose what to say, how to say it and share it. Because your voice is the difference.</p>
               <Link href="/record/start" className="flex w-fit items-center gap-2 rounded-full border border-slate-200 bg-white px-7 py-4 text-base font-medium text-slate-500 shadow-md transition-colors hover:bg-slate-50">
-                Let&apos;s go <ArrowRight className="size-4" />
+                <Video className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} /> Let&apos;s go <ArrowRight className="size-4" />
               </Link>
               <p className="text-sm text-muted-foreground">Powered by Resonant Amplification &copy;</p>
             </div>
