@@ -43,12 +43,12 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
       ) : (
         <>
           {/* The curtain's PAX in small, drawing once the curtain has cleared. */}
-          <Link href="/" aria-label="Home" className="block h-[26px] w-14 [&_svg]:ml-0">
+          <Link href="/" aria-label="Home" className="block h-[26px] w-14 text-pax2-blue [&_svg]:ml-0">
             {curtainDone && (
               <StrokeText
                 text="PAX"
-                strokeColor="var(--pax2-blue)"
-                fillColor="var(--pax2-blue)"
+                strokeColor="currentColor"
+                fillColor="currentColor"
                 strokeWidth={1}
                 fontSize={28}
                 fontFamily="'PAX Curtain', monospace"
