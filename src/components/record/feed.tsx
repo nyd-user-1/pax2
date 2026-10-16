@@ -126,7 +126,7 @@ function Avatar({ id }: { id: string }) {
  *  the first line of the description. */
 export function ListRow({ v }: { v: FeedVideo }) {
   return (
-    <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-black/10 before:bg-black/5 before:opacity-0 before:transition-opacity before:duration-200 hover:before:opacity-100 flex flex-col gap-3 sm:flex-row sm:gap-5">
+    <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:opacity-0 before:transition-opacity before:duration-200 hover:before:opacity-100 flex flex-col gap-3 sm:flex-row sm:gap-5">
       <div className="relative w-full shrink-0 overflow-hidden rounded-xl bg-slate-200 sm:w-[340px] md:w-[400px]">
         <HoverThumb v={v} aspect="aspect-video" />
         <Score v={v} />
@@ -140,7 +140,7 @@ export function ListRow({ v }: { v: FeedVideo }) {
           <Avatar id={v.channelId} />
           <span className="text-sm text-slate-600">{v.channel}</span>
         </span>
-        {v.description && <p className="hidden pt-1 text-sm leading-relaxed text-slate-500 sm:line-clamp-2">{v.description}</p>}
+        {v.description && <p className="hidden pt-1 text-sm leading-relaxed text-slate-800 sm:line-clamp-2">{v.description}</p>}
       </div>
     </Link>
   )
@@ -164,7 +164,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
 /** One medium landscape card, as in the three-across band. */
 export function LandscapeCard({ v }: { v: FeedVideo }) {
   return (
-    <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-black/10 before:bg-black/5 before:opacity-0 before:transition-opacity before:duration-200 hover:before:opacity-100 flex flex-col gap-2">
+    <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:opacity-0 before:transition-opacity before:duration-200 hover:before:opacity-100 flex flex-col gap-2">
       <div className="relative overflow-hidden rounded-xl bg-slate-200">
         <HoverThumb v={v} aspect="aspect-video" />
         <Score v={v} />
