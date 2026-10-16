@@ -3,7 +3,7 @@ import { Geist_Mono, Plus_Jakarta_Sans } from "next/font/google"
 
 import "@/ui/styles/globals.css"
 import { DevInspector } from "@/components/dev/inspector"
-import { LoadCurtain } from "@/components/load-curtain"
+import { Opening } from "@/components/opening"
 import { Shell } from "@/components/shell"
 import { currentUser } from "@/lib/auth"
 
@@ -20,7 +20,7 @@ export default async function RootLayout({ children, drawer }: LayoutProps<"/">)
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body className="min-h-dvh font-sans text-foreground antialiased">
-        <LoadCurtain />
+        <Opening />
         <Shell drawer={drawer} signedIn={signedIn}>
           {children}
         </Shell>

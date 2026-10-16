@@ -20,14 +20,25 @@ const OFF = "-140vw"
 /** A paint beat under the sheets before they lift, in ms. */
 const HOLD = 350
 
-export function LoadCurtain() {
+export function LoadCurtain({ onDone }: { onDone?: () => void }) {
   const reduced = useReducedMotion()
   const [revealing, setRevealing] = React.useState(false)
   const [gone, setGone] = React.useState(false)
+  const done = React.useRef(false)
+  const finish = () => {
+    if (done.current) return
+    done.current = true
+    setGone(true)
+    onDone?.()
+  }
   React.useEffect(() => {
     const t = window.setTimeout(() => setRevealing(true), HOLD)
     return () => window.clearTimeout(t)
   }, [])
+  // Reduced motion skips the sheets but still owes the caller its cue.
+  React.useEffect(() => {
+    if (reduced) finish()
+  }, [reduced])
   if (reduced || gone) return null
   const sheet = "absolute top-[-20%] left-[-20vw] h-[140%] w-[140vw]"
   return (
@@ -39,7 +50,7 @@ export function LoadCurtain() {
         initial={{ x: "0vw" }}
         animate={{ x: revealing ? OFF : "0vw" }}
         transition={{ duration: SWEEP, ease: EASE, delay: TRAIL }}
-        onAnimationComplete={() => revealing && setGone(true)}
+        onAnimationComplete={() => revealing && finish()}
       />
       {/* The first sheet, carrying the name. */}
       <motion.div
