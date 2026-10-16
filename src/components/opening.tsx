@@ -11,7 +11,7 @@ import SplitFlapText from "@/components/split-flap-text"
 // remembered in localStorage, so the board never plays twice.
 
 const SEEN = "pax:intro-seen"
-const MESSAGES = ["stop engaging", "start resonating", "pax Americana"]
+const MESSAGES = ["STOP ENGAGING", "START RESONATING", "PAX AMERICANA"]
 /** The three messages' full run — flips, holds, and the final beat — in ms. */
 const RUNTIME = 9800
 
@@ -21,16 +21,19 @@ export function Opening() {
   const [leaving, setLeaving] = React.useState(false)
   const [gone, setGone] = React.useState(false)
 
+  // Development plays the board on every reload; only deployed builds hold it to the first visit.
   React.useEffect(() => {
+    if (process.env.NODE_ENV === "development") return setFirst(true)
     try {
       if (!window.localStorage.getItem(SEEN)) setFirst(true)
     } catch {}
   }, [])
 
   const dismiss = React.useCallback(() => {
-    try {
-      window.localStorage.setItem(SEEN, "1")
-    } catch {}
+    if (process.env.NODE_ENV !== "development")
+      try {
+        window.localStorage.setItem(SEEN, "1")
+      } catch {}
     setLeaving(true)
     window.setTimeout(() => setGone(true), 600)
   }, [])
