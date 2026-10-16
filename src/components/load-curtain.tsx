@@ -23,22 +23,6 @@ const ANGLE = 9
 const OFF = "-140vw"
 /** A paint beat under the sheets before they lift — long enough for PAX's outline to draw and fill, in ms. */
 const HOLD = 1600
-/** Fired on window when the sheets have cleared; the header's PAX waits for it. */
-export const CURTAIN_DONE = "pax:curtain-done"
-/** Module state, so it resets with each full load — the only time the curtain plays. */
-let cleared = false
-
-/** True once this load's curtain has cleared; at once on client navigations after it. */
-export function useCurtainDone() {
-  const [done, setDone] = React.useState(cleared)
-  React.useEffect(() => {
-    if (cleared) return setDone(true)
-    const on = () => setDone(true)
-    window.addEventListener(CURTAIN_DONE, on)
-    return () => window.removeEventListener(CURTAIN_DONE, on)
-  }, [])
-  return done
-}
 
 export function LoadCurtain({ onDone }: { onDone?: () => void }) {
   const reduced = useReducedMotion()
@@ -49,8 +33,6 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
     if (done.current) return
     done.current = true
     setGone(true)
-    cleared = true
-    window.dispatchEvent(new Event(CURTAIN_DONE))
     onDone?.()
   }
   React.useEffect(() => {

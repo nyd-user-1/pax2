@@ -5,7 +5,7 @@ import Link from "next/link"
 
 import { MessagesSquare, PanelLeftClose, PanelLeftOpen } from "lucide-react"
 
-import { useCurtainDone } from "@/components/load-curtain"
+import { SEQUENCE_MS } from "@/components/flap-hero"
 import { useShellPanel } from "@/components/shell"
 import StrokeText from "@/components/stroke-text"
 import { cn } from "@/ui/lib/utils"
@@ -17,7 +17,12 @@ import { cn } from "@/ui/lib/utils"
 export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
   const [scrolled, setScrolled] = React.useState(false)
   const { sidebarOpen, toggleSidebar, discuss, toggleDiscuss } = useShellPanel()
-  const curtainDone = useCurtainDone()
+  const [drawPax, setDrawPax] = React.useState(false)
+  React.useEffect(() => {
+    // Once the cue has faded in, so PAX is the page's last thing to move.
+    const t = window.setTimeout(() => setDrawPax(true), SEQUENCE_MS + 600)
+    return () => window.clearTimeout(t)
+  }, [])
   React.useEffect(() => {
     const on = () => setScrolled(window.scrollY > (signedIn ? 8 : window.innerHeight - 140))
     on()
@@ -42,9 +47,13 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
         </>
       ) : (
         <>
-          {/* The curtain's PAX in small, drawing once the curtain has cleared. */}
-          <Link href="/" aria-label="Home" className="block h-[26px] w-14 text-pax2-blue [&_svg]:ml-0">
-            {curtainDone && (
+          {/* The curtain's PAX in small, the A in red. */}
+          <Link
+            href="/"
+            aria-label="Home"
+            className="block h-[26px] w-14 text-pax2-blue [&_[data-fill-char]:nth-child(2)]:fill-pax2-red [&_[data-stroke-char]:nth-child(2)]:stroke-pax2-red [&_svg]:ml-0"
+          >
+            {drawPax && (
               <StrokeText
                 text="PAX"
                 strokeColor="currentColor"
