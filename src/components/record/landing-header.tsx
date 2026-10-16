@@ -47,11 +47,11 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
         </>
       ) : (
         <>
-          {/* The curtain's PAX in small. */}
+          {/* The curtain's PAX in small, the A in red. */}
           <Link
             href="/"
             aria-label="Home"
-            className="block h-[26px] w-14 text-white [&_svg]:ml-0"
+            className="block h-[26px] w-14 text-pax2-blue [&_[data-fill-char]:nth-child(2)]:fill-pax2-red [&_[data-stroke-char]:nth-child(2)]:stroke-pax2-red [&_svg]:ml-0"
           >
             {drawPax && (
               <StrokeText

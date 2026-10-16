@@ -67,7 +67,7 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
         {/* Un-skewed, so the word stands upright on the tilted sheet. */}
         <div className="absolute inset-0 flex items-center justify-center" style={{ transform: `skewX(${ANGLE}deg)` }}>
           <motion.div
-            className="flex h-[46vh] w-[80vw] items-center text-white"
+            className="flex h-[46vh] w-[80vw] items-center text-white [&_[data-fill-char]]:fill-pax2-blue [&_[data-fill-char]:nth-child(2)]:fill-pax2-red"
             initial={{ x: "0vw", opacity: 1 }}
             animate={revealing ? { x: "-24vw", opacity: 0 } : { x: "0vw", opacity: 1 }}
             transition={{ duration: SWEEP, ease: EASE }}
