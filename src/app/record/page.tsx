@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react"
 import homeFeed from "../../../data/generated/home-feed.json"
 import shorts from "../../../data/raw/yt-shorts.json"
 import { FlapHero } from "@/components/flap-hero"
+import GradualBlur from "@/components/gradual-blur"
 import { LandingGrid } from "@/components/landing-grid"
 import { Feed, type FeedVideo } from "@/components/record/feed"
 import { LandingHeader } from "@/components/record/landing-header"
@@ -46,6 +47,10 @@ export default async function RecordLanding() {
     <div className="bg-pax2-mist">
       <LandingOnly>
         <LandingGrid />
+        {/* Videos soften as they scroll in and out: blur bands at the viewport's edges,
+            each hiding when there is nothing beyond it. Under the header's z-30. */}
+        <GradualBlur position="top" target="page" autoHide height="5rem" zIndex={20} />
+        <GradualBlur position="bottom" target="page" autoHide height="5rem" zIndex={20} />
         <LandingHeader />
         {/* Not positioned: the gradient must paint beneath the fixed grid layer, while
             FlapHero (positioned itself) paints above it. */}
