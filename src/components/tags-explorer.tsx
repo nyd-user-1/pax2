@@ -90,7 +90,7 @@ function TagVideos({ videos }: { videos: FeedVideo[] }) {
         ) : (
           <div key={i} className="flex flex-col gap-3">
             <RunLabel shorts />
-            <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5">
+            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
               {run.map((v) => (
                 <ShortCard key={v.id} v={v} />
               ))}

@@ -229,12 +229,12 @@ function ShortsShelf({ items }: { items: FeedVideo[] }) {
       <span className="flex items-center gap-2 text-sm font-semibold text-slate-900">
         <img src="/logos/youtube-shorts.svg" alt="" className="h-5 w-auto" /> Shorts
       </span>
-      <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5">
-        {items.slice(0, more ? items.length : 5).map((v) => (
+      <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        {items.slice(0, more ? items.length : 4).map((v) => (
           <ShortCard key={v.id} v={v} />
         ))}
       </div>
-      {items.length > 5 && (
+      {items.length > 4 && (
         <div className="relative mt-3 flex justify-center">
           <span className="absolute inset-x-0 top-1/2 h-px bg-black/10" />
           <button
@@ -323,9 +323,9 @@ function Cycle({ items }: { items: FeedVideo[] }) {
   let p = 0
   while (i < items.length) {
     const kind = pattern[p % pattern.length]
-    if (kind === "shorts" && items.length - i >= 10) {
-      blocks.push(<ShortsShelf key={i} items={items.slice(i, i + 10)} />)
-      i += 10
+    if (kind === "shorts" && items.length - i >= 8) {
+      blocks.push(<ShortsShelf key={i} items={items.slice(i, i + 8)} />)
+      i += 8
     } else if (kind === "trio" && items.length - i >= 3) {
       blocks.push(<Trio key={i} items={items.slice(i, i + 3)} />)
       i += 3
