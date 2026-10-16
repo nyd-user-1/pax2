@@ -56,7 +56,7 @@ export default async function ReviewsPage() {
   return (
     <div className="flex flex-col gap-10">
       <header className="flex flex-col gap-2">
-        <p className="max-w-3xl text-sm text-muted-foreground">Every test the partner approved, every call made before results came in, and what each new round of results changed.</p>
+        <p className="max-w-3xl text-sm text-slate-800">Every test the partner approved, every call made before results came in, and what each new round of results changed.</p>
       </header>
 
       <section className="flex flex-col gap-3">
@@ -65,12 +65,12 @@ export default async function ReviewsPage() {
           {history.map((h) => (
             <li key={h.fileHash} className="flex flex-wrap items-baseline justify-between gap-2 surface px-4 py-2 text-sm">
               <span className="font-medium text-pax2-blue">{h.dataset === "upload" ? "Uploaded export" : h.dataset === "round-1" ? "Round 1" : "Round 2"}</span>
-              <span className="text-muted-foreground" title={`File fingerprint ${h.fileHash}`}>
+              <span className="text-slate-800" title={`File fingerprint ${h.fileHash}`}>
                 {h.rows} ads · results as of {h.asOf} · loaded {new Date(h.at).toLocaleString()}
               </span>
             </li>
           ))}
-          {!history.length && <li className="text-sm text-muted-foreground">Nothing loaded yet.</li>}
+          {!history.length && <li className="text-sm text-slate-800">Nothing loaded yet.</li>}
         </ol>
         <LoadData standIn={!loaded.has("round-1") ? "round-1" : !r2 ? "round-2" : undefined} />
       </section>
@@ -99,10 +99,10 @@ export default async function ReviewsPage() {
             {sent.map((s) => (
               <li key={s.sk} data-find className="flex flex-col gap-1 rounded-xl border px-4 py-3 text-sm">
                 <span className="font-medium text-pax2-blue">{s.title ?? "Uploaded video"}</span>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-slate-800">
                   {[s.name, s.role, s.town].filter(Boolean).join(" · ") || "No description"} · {s.seconds}s · sent {new Date(s.at).toLocaleString()}
                 </span>
-                <span className="w-fit rounded-full bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">{s.status}</span>
+                <span className="w-fit rounded-full bg-muted px-2 py-0.5 text-[11px] text-slate-800">{s.status}</span>
               </li>
             ))}
           </ul>
@@ -133,11 +133,11 @@ export default async function ReviewsPage() {
           <div className="grid gap-3 md:grid-cols-2">
             {carried.map(({ t, e, finding }) => (
               <Link key={e.stepId} data-find href={`/v/${t.take.id}`} className="flex flex-col gap-1 surface p-4 hover:bg-pax2-mist">
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-slate-800">
                   {scriptById(t.take.scriptId)!.title} — {takeLabel(t.take)}
                 </span>
                 <span className="font-medium text-pax2-blue">{e.change}</span>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-slate-800">
                   {e.status === "made" ? "Made" : e.status === "approved" ? "Approved, not yet made" : e.status === "revised" ? "Revised, not yet made" : "Saved for later"} · decided {new Date(e.at).toLocaleDateString()} against score {finding?.score.value?.toFixed(0) ?? "—"} ({e.formula}, {e.reference})
                 </span>
                 {e.measure && <span className="text-xs text-foreground/80">How to tell: {e.measure}</span>}
@@ -153,7 +153,7 @@ export default async function ReviewsPage() {
         <OrderedBlock id="changes" label="What changed with the later results">
           <ChartBlock title="What changed with the later results">
           <div className="flex flex-col gap-3">
-          <p className="max-w-3xl text-sm text-muted-foreground">
+          <p className="max-w-3xl text-sm text-slate-800">
             Same formula ({"resonance-1"}), same reference ({ref?.id}). “The score changed” means the number moved. “The conclusion changed” means the take moved across the line: above, below, or not distinguishable from the reference average.
           </p>
           <SlopeChart
@@ -272,7 +272,7 @@ export default async function ReviewsPage() {
             {resolved.some((r) => r.right != null) && (
               <p className="text-sm">
                 Partner: {resolved.filter((r) => r.right).length} of {resolved.filter((r) => r.right != null).length} right.{" "}
-                <span className="text-muted-foreground">The “no change” baseline: {resolved.filter((r) => r.actual === "same").length} of {resolved.filter((r) => r.right != null).length}.</span>
+                <span className="text-slate-800">The “no change” baseline: {resolved.filter((r) => r.actual === "same").length} of {resolved.filter((r) => r.right != null).length}.</span>
               </p>
             )}
             <ul className="flex flex-col gap-2">
@@ -282,7 +282,7 @@ export default async function ReviewsPage() {
                   <span>
                     {takeLabel(t.take)}: {c.by} called <b>{c.predicted}</b> than {c.baseline?.toFixed(0)}
                   </span>
-                  {actual ? <span className={cn("font-medium", right ? "text-observed" : "text-destructive")}>{right ? "Right" : "Wrong"} — it came in {actual}</span> : <span className="text-muted-foreground">Awaiting {c.target === "round-1" ? "Round 1" : "Round 2"}</span>}
+                  {actual ? <span className={cn("font-medium", right ? "text-observed" : "text-destructive")}>{right ? "Right" : "Wrong"} — it came in {actual}</span> : <span className="text-slate-800">Awaiting {c.target === "round-1" ? "Round 1" : "Round 2"}</span>}
                 </li>
               ))}
             </ul>

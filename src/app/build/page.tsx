@@ -28,7 +28,7 @@ type Item = { title: string; detail?: string }
 type Build = { updated: string; budget: { cap: number; spent: { item: string; usd: number }[] }; columns: { id: string; title: string; items: Item[] }[]; resources: { name: string; id: string }[] }
 
 const when = (iso: string) => new Date(iso).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })
-const STATUS_TONE: Record<SourceRow["status"], string> = { Loaded: "text-pax2-light-blue", "Stand-in": "text-pax2-red-deep", "Not connected": "text-muted-foreground" }
+const STATUS_TONE: Record<SourceRow["status"], string> = { Loaded: "text-pax2-light-blue", "Stand-in": "text-pax2-red-deep", "Not connected": "text-slate-800" }
 
 /** Analysis runs on record: the videos' analysis times, split wherever twenty minutes pass with none. */
 function runs(cost: Record<string, number>) {
@@ -73,7 +73,7 @@ export default async function BuildPage() {
   return (
     <div className="flex flex-col">
       <header className="mb-5 flex flex-col gap-1">
-        <p className="text-sm text-muted-foreground">Updated {b.updated}</p>
+        <p className="text-sm text-slate-800">Updated {b.updated}</p>
       </header>
 
       {/* GovBlock's Stat2 (its Sales page), the stat card Brendan chose on 2026-10-06. */}
@@ -114,7 +114,7 @@ export default async function BuildPage() {
                         </Link>
                       )}
                     </TableCell>
-                    <TableCell className="truncate text-muted-foreground" title={s.publisher}>
+                    <TableCell className="truncate text-slate-800" title={s.publisher}>
                       {s.publisher}
                     </TableCell>
                     <TableCell className="truncate" title={s.kind}>

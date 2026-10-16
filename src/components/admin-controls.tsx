@@ -67,17 +67,17 @@ export function AdminControls({ admin, poller: initial, queue }: { admin: boolea
           <div className="flex flex-col overflow-hidden rounded-xl border bg-white shadow-sm">
             <DialogHeader className="flex h-14 shrink-0 flex-row items-center gap-3 border-b px-5 pr-12">
               <DialogTitle className="text-base font-medium">Run the pipeline</DialogTitle>
-              {queue && <span className="rounded-md border px-1.5 py-0.5 text-xs text-muted-foreground">Worker box {queue.box}</span>}
+              {queue && <span className="rounded-md border px-1.5 py-0.5 text-xs text-slate-800">Worker box {queue.box}</span>}
               <DialogDescription className="sr-only">Analyze every queued video on the worker box.</DialogDescription>
             </DialogHeader>
             <div className="flex flex-col gap-4 p-5">
               <div className="grid grid-cols-2 overflow-hidden rounded-xl border">
                 <div className="border-r p-4">
-                  <p className="text-xs text-muted-foreground">Queued</p>
+                  <p className="text-xs text-slate-800">Queued</p>
                   <p className="text-lg font-semibold">{queue?.queued.length ?? "-"}</p>
                 </div>
                 <div className="p-4">
-                  <p className="text-xs text-muted-foreground">Estimated cost</p>
+                  <p className="text-xs text-slate-800">Estimated cost</p>
                   <p className="text-lg font-semibold">{queue ? `$${queue.cost.toFixed(2)}` : "-"}</p>
                 </div>
               </div>

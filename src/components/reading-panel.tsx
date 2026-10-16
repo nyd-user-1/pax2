@@ -22,7 +22,7 @@ function Evidence({ refs, index }: { refs: string[]; index: Map<string, Ev> }) {
         const e = index.get(r)
         if (!e) return null
         return (
-          <span key={r} className="inline-flex max-w-full items-center gap-1 rounded-md border bg-background px-1.5 py-0.5 text-[11px] text-muted-foreground">
+          <span key={r} className="inline-flex max-w-full items-center gap-1 rounded-md border bg-background px-1.5 py-0.5 text-[11px] text-slate-800">
             {e.t != null && <At t={e.t} className="px-1 py-0 text-[10px]" />}
             <span className="truncate">{e.label}</span>
           </span>
@@ -47,19 +47,19 @@ function StepCard({ p, i, takeId, saved, events }: { p: Proposal; i: number; tak
     <div className="flex flex-col gap-3 rounded-xl border bg-card p-4">
       <div className="flex items-start justify-between gap-3">
         {editing ? <Textarea value={text} onChange={(e) => setText(e.target.value)} className="min-h-16 text-sm" /> : <p className="font-medium leading-snug text-pax2-blue">{latest?.change ?? p.change}</p>}
-        <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", latest ? "bg-pax2-light-blue text-white" : "bg-muted text-muted-foreground")}>{STATUS_LABEL[latest?.status ?? "proposed"]}</span>
+        <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", latest ? "bg-pax2-light-blue text-white" : "bg-muted text-slate-800")}>{STATUS_LABEL[latest?.status ?? "proposed"]}</span>
       </div>
       <dl className="grid gap-2 text-sm sm:grid-cols-3">
         <div>
-          <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">What prompted it</dt>
+          <dt className="text-[11px] uppercase tracking-wide text-slate-800">What prompted it</dt>
           <dd className="text-foreground/85">{p.prompted}</dd>
         </div>
         <div>
-          <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">What remains uncertain</dt>
+          <dt className="text-[11px] uppercase tracking-wide text-slate-800">What remains uncertain</dt>
           <dd className="text-foreground/85">{p.uncertain}</dd>
         </div>
         <div>
-          <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">How to tell</dt>
+          <dt className="text-[11px] uppercase tracking-wide text-slate-800">How to tell</dt>
           <dd className="text-foreground/85">{p.measure}</dd>
         </div>
       </dl>
@@ -86,10 +86,10 @@ function StepCard({ p, i, takeId, saved, events }: { p: Proposal; i: number; tak
             ) : null}
           </>
         )}
-        {pending && <Loader2 className="size-4 animate-spin text-muted-foreground" />}
+        {pending && <Loader2 className="size-4 animate-spin text-slate-800" />}
       </div>
       {mine.length > 0 && (
-        <ol className="flex flex-col gap-0.5 border-t pt-2 text-[11px] text-muted-foreground">
+        <ol className="flex flex-col gap-0.5 border-t pt-2 text-[11px] text-slate-800">
           {mine.map((e) => (
             <li key={e.at}>
               {new Date(e.at).toLocaleString()} · {STATUS_LABEL[e.status]} · linked to score {saved.scoreValue?.toFixed(0) ?? "—"} ({saved.formula}, {saved.reference}), results as of {saved.snapshotId.split("~").pop()}
@@ -120,7 +120,7 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
         {pending && <Loader2 className="size-4 animate-spin" />}
         Assessment
       </Button>
-      {saved && <span className="text-xs text-muted-foreground">Saved {new Date(saved.at).toLocaleString()} · results as of {saved.snapshotId.split("~").pop()}</span>}
+      {saved && <span className="text-xs text-slate-800">Saved {new Date(saved.at).toLocaleString()} · results as of {saved.snapshotId.split("~").pop()}</span>}
       {error && <span className="text-xs text-destructive">{error}</span>}
     </div>
   )
@@ -134,11 +134,11 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <h3 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">What happened</h3>
+              <h3 className="text-xs font-medium uppercase tracking-wider text-slate-800">What happened</h3>
               <p className="mt-1 text-sm leading-relaxed">{r.whatHappened}</p>
             </div>
             <div>
-              <h3 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">What the score means</h3>
+              <h3 className="text-xs font-medium uppercase tracking-wider text-slate-800">What the score means</h3>
               <p className="mt-1 text-sm leading-relaxed">{r.scoreMeaning}</p>
             </div>
           </div>
@@ -148,11 +148,11 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
               <h3 className="text-sm font-medium text-pax2-blue">The last review, checked against the new results</h3>
               {r.priorChecks.map((p, i) => (
                 <div key={i} className="text-sm">
-                  <span className={cn("mr-2 rounded-full px-2 py-0.5 text-[11px] font-medium", p.status === "supported" ? "bg-observed/15 text-observed" : p.status === "challenged" ? "bg-destructive/10 text-destructive" : "bg-muted text-muted-foreground")}>
+                  <span className={cn("mr-2 rounded-full px-2 py-0.5 text-[11px] font-medium", p.status === "supported" ? "bg-observed/15 text-observed" : p.status === "challenged" ? "bg-destructive/10 text-destructive" : "bg-muted text-slate-800")}>
                     {p.status === "supported" ? "Supported" : p.status === "challenged" ? "Challenged" : "Unresolved"}
                   </span>
                   <span className="text-foreground/90">{p.finding}</span>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{p.why}</p>
+                  <p className="mt-0.5 text-xs text-slate-800">{p.why}</p>
                   <Evidence refs={p.evidence} index={index} />
                 </div>
               ))}
@@ -160,7 +160,7 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
           )}
 
           <div className="flex flex-col gap-3">
-            <h3 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Evidence</h3>
+            <h3 className="text-xs font-medium uppercase tracking-wider text-slate-800">Evidence</h3>
             {(["observed", "interpretation", "hypothesis"] as const).map((k) =>
               r.findings
                 .filter((f) => f.kind === k)
@@ -174,12 +174,12 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
                   </div>
                 )),
             )}
-            {r.dropped > 0 && <p className="text-[11px] text-muted-foreground">{r.dropped} statement{r.dropped > 1 ? "s" : ""} removed because {r.dropped > 1 ? "they" : "it"} cited no record.</p>}
+            {r.dropped > 0 && <p className="text-[11px] text-slate-800">{r.dropped} statement{r.dropped > 1 ? "s" : ""} removed because {r.dropped > 1 ? "they" : "it"} cited no record.</p>}
           </div>
 
           {r.insufficient?.length > 0 && (
             <div className="rounded-xl bg-muted/60 p-4">
-              <h3 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Not enough evidence yet — the next useful measurement</h3>
+              <h3 className="text-xs font-medium uppercase tracking-wider text-slate-800">Not enough evidence yet — the next useful measurement</h3>
               <ul className="mt-1 list-disc pl-5 text-sm">
                 {r.insufficient.map((x) => (
                   <li key={x}>{x}</li>
@@ -212,7 +212,7 @@ function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapsh
     <div className={cn("flex flex-col gap-3", !bare && "surface px-5 pb-5 pt-4")}>
       {!bare && <h3 className="font-semibold text-slate-900">Forecast</h3>}
       <div>
-        <p className="text-sm text-muted-foreground">A guess, written down before the numbers come in: will this video do better or worse than usual? When the numbers arrive, PAX2 checks the guess against them, and every check makes the next guess sharper.</p>
+        <p className="text-sm text-slate-800">A guess, written down before the numbers come in: will this video do better or worse than usual? When the numbers arrive, PAX2 checks the guess against them, and every check makes the next guess sharper.</p>
       </div>
       {calls.length > 0 && (
         <ul className="flex flex-col gap-1 text-sm">
@@ -222,7 +222,7 @@ function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapsh
               <span>
                 {c.by}: {c.predicted} than {c.baseline?.toFixed(0) ?? "—"} by {c.target === "round-1" ? "Round 1" : "Round 2"}
               </span>
-              <span className="text-xs text-muted-foreground">“{c.reason}”</span>
+              <span className="text-xs text-slate-800">“{c.reason}”</span>
             </li>
           ))}
         </ul>
@@ -244,10 +244,10 @@ function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapsh
           })}>
             Log the forecast
           </Button>
-          {msg && <span className="text-xs text-muted-foreground">{msg}</span>}
+          {msg && <span className="text-xs text-slate-800">{msg}</span>}
         </div>
       ) : (
-        <p className="text-xs text-muted-foreground">Every round on file is already loaded; forecasting reopens when a new round is expected.</p>
+        <p className="text-xs text-slate-800">Every round on file is already loaded; forecasting reopens when a new round is expected.</p>
       )}
       {action}
     </div>

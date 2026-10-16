@@ -54,7 +54,7 @@ export function RefreshButton() {
   const router = useRouter()
   const [pending, start] = React.useTransition()
   return (
-    <button type="button" aria-label="Refresh" title="Refresh" onClick={() => start(() => router.refresh())} className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground">
+    <button type="button" aria-label="Refresh" title="Refresh" onClick={() => start(() => router.refresh())} className="inline-flex size-8 items-center justify-center rounded-md text-slate-800 hover:bg-muted hover:text-foreground">
       <RefreshCwIcon className={cn("size-3.5", pending && "animate-spin")} />
     </button>
   )
@@ -104,7 +104,7 @@ export function CardTools({
     <div className={cn("flex items-center gap-1", className)}>
       {children}
       <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Card options" className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-muted hover:text-foreground">
+        <DropdownMenuTrigger aria-label="Card options" className="inline-flex size-8 items-center justify-center rounded-md text-slate-800 outline-none hover:bg-muted hover:text-foreground">
           <EllipsisVerticalIcon className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-max min-w-52">

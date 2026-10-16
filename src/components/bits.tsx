@@ -29,7 +29,7 @@ export function SourceBadge({ source, className }: { source: Provenance; classNa
         source === "stand-in" && "bg-pax2-red-soft text-pax2-red-deep",
         source === "ai" && "bg-hypothesis/10 text-hypothesis",
         source === "platform" && "bg-observed/10 text-observed",
-        (source === "derived" || source === "coded" || source === "library") && "bg-muted text-muted-foreground",
+        (source === "derived" || source === "coded" || source === "library") && "bg-muted text-slate-800",
         className,
       )}
     >
@@ -51,11 +51,11 @@ export function RangeBar({ value, low, high, className }: { value: number | null
 }
 
 export function ScoreFigure({ value, low, high, status, size = "lg" }: { value: number | null; low: number | null; high: number | null; status: string; size?: "lg" | "sm" }) {
-  if (status === "unscorable" || value == null) return <span className={cn("text-muted-foreground", size === "lg" ? "text-2xl" : "text-sm")}>Not scored</span>
+  if (status === "unscorable" || value == null) return <span className={cn("text-slate-800", size === "lg" ? "text-2xl" : "text-sm")}>Not scored</span>
   return (
     <span className="tabular inline-flex items-baseline gap-1.5">
       <span className={cn("font-display text-pax2-blue", size === "lg" ? "text-5xl" : "text-2xl")}>{value.toFixed(0)}</span>
-      <span className={cn("text-muted-foreground", size === "lg" ? "text-sm" : "text-xs")}>
+      <span className={cn("text-slate-800", size === "lg" ? "text-sm" : "text-xs")}>
         {low!.toFixed(0)}–{high!.toFixed(0)}
       </span>
     </span>

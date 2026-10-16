@@ -17,7 +17,7 @@ export default function GuidePage() {
           {SECTIONS.map((s) => (
             <section key={s.t} className="surface p-6">
               <h2 className="mb-3 text-lg font-semibold text-pax2-blue">{s.t}</h2>
-              <ul className="flex list-disc flex-col gap-2 pl-5 text-muted-foreground">
+              <ul className="flex list-disc flex-col gap-2 pl-5 text-slate-800">
                 {s.items.map((i) => (
                   <li key={i}>{i}</li>
                 ))}

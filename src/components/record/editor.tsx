@@ -75,7 +75,7 @@ export function Editor({ research }: { research: Record<string, Research> }) {
             className="h-80 w-full resize-y bg-transparent p-7 text-lg leading-relaxed text-pax2-blue outline-none"
           />
           <div className="flex items-center justify-between border-t bg-pax2-mist px-7 py-3 text-sm">
-            <span className="text-muted-foreground">{words(text)} words</span>
+            <span className="text-slate-800">{words(text)} words</span>
             <span className="flex items-center gap-1.5 font-medium text-pax2-blue">
               <Mic className="size-4" /> About {secondsAt(text)} seconds to say
             </span>
@@ -91,17 +91,17 @@ export function Editor({ research }: { research: Record<string, Research> }) {
         </div>
       </div>
       <aside className="flex h-fit flex-col gap-3 surface p-6">
-        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Before you record</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-800">Before you record</p>
         {cs.map((c) => (
           <div key={c.title} className="flex gap-3">
-            <span className={cn("mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full", c.ok ? "bg-primary text-white" : "border text-muted-foreground")}>{c.ok ? <Check className="size-3" /> : <Circle className="size-2" />}</span>
+            <span className={cn("mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full", c.ok ? "bg-primary text-white" : "border text-slate-800")}>{c.ok ? <Check className="size-3" /> : <Circle className="size-2" />}</span>
             <span className="flex flex-col">
-              <span className={cn("text-sm font-medium", c.ok ? "text-pax2-blue" : "text-muted-foreground")}>{c.title}</span>
-              <span className="text-xs leading-relaxed text-muted-foreground">{c.detail}</span>
+              <span className={cn("text-sm font-medium", c.ok ? "text-pax2-blue" : "text-slate-800")}>{c.title}</span>
+              <span className="text-xs leading-relaxed text-slate-800">{c.detail}</span>
             </span>
           </div>
         ))}
-        <p className="border-t pt-3 text-[11px] leading-relaxed text-muted-foreground">Research figures come from 617 campaign ads tested against control groups. They are priors, not promises: style alone predicts little, which is why every take is measured.</p>
+        <p className="border-t pt-3 text-[11px] leading-relaxed text-slate-800">Research figures come from 617 campaign ads tested against control groups. They are priors, not promises: style alone predicts little, which is why every take is measured.</p>
       </aside>
     </div>
   )

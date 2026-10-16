@@ -248,7 +248,7 @@ type Resolved = {
 /**
  * ⚠ SCOPE TO A FILE OR SAY NOTHING (Brendan, 2026-09-12). A span on /docs came
  * back as `app/(records)/forms/[id]/page.tsx:98` because both files carry
- * `text-sm text-muted-foreground` and the global search took whichever came
+ * `text-sm text-slate-800` and the global search took whichever came
  * first. A confident wrong file is worse than no answer from a tool whose
  * whole job is leaving no ambiguity about what to edit.
  *

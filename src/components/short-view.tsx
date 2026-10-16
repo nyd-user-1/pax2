@@ -266,11 +266,11 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="tabular flex items-baseline gap-2">
               <span className="font-display text-4xl text-pax2-blue">{res?.score ?? DASH}</span>
-              <span className="text-xs text-muted-foreground">{res ? `${res.low}–${res.high}` : DASH}</span>
+              <span className="text-xs text-slate-800">{res ? `${res.low}–${res.high}` : DASH}</span>
             </div>
             <div className="min-w-0 flex-1 basis-56">
               <RangeBar value={res?.score ?? null} low={res?.low ?? null} high={res?.high ?? null} />
-              <div className="mt-1 flex justify-between text-[10px] text-muted-foreground">
+              <div className="mt-1 flex justify-between text-[10px] text-slate-800">
                 <span>0</span>
                 <span>50 = reference average</span>
                 <span>100</span>
@@ -286,7 +286,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 </div>
                 <div className="tabular flex items-baseline gap-1.5">
                   <span className="font-display text-3xl text-pax2-blue">{res?.components[meta.key]?.score ?? DASH}</span>
-                  <span className="text-xs text-muted-foreground">{res ? `${res.components[meta.key].low}–${res.components[meta.key].high}` : DASH}</span>
+                  <span className="text-xs text-slate-800">{res ? `${res.components[meta.key].low}–${res.components[meta.key].high}` : DASH}</span>
                 </div>
                 <RangeBar value={res?.components[meta.key]?.score ?? null} low={res?.components[meta.key]?.low ?? null} high={res?.components[meta.key]?.high ?? null} />
               </div>
@@ -333,7 +333,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
           <div className="grid gap-x-6 text-xs @md:grid-cols-2">
             {adRows.map(([label, value]) => (
               <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
-                <span className="text-muted-foreground">{label}</span>
+                <span className="text-slate-800">{label}</span>
                 <span className="tabular">{value}</span>
               </div>
             ))}
@@ -347,7 +347,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 ] as const
               ).map(([label, value]) => (
                 <div key={label} className="rounded-lg bg-muted/50 px-2 py-1.5">
-                  <div className="text-[10px] text-muted-foreground">{label}</div>
+                  <div className="text-[10px] text-slate-800">{label}</div>
                   <div className="tabular text-sm text-pax2-blue">{value}</div>
                 </div>
               ))}
@@ -357,14 +357,14 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         <div className="grid gap-x-6 text-xs @md:grid-cols-2">
           {WINDOW_ROWS.map((label) => (
             <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
-              <span className="text-muted-foreground">{label}</span>
+              <span className="text-slate-800">{label}</span>
               <span className="tabular">{paid?.[label] ?? DASH}</span>
             </div>
           ))}
           <div className="col-span-full mt-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
             {["Spend", "Impressions (1k)", "3s play", "Per Person"].map((label) => (
               <div key={label} className="rounded-lg bg-muted/50 px-2 py-1.5">
-                <div className="text-[10px] text-muted-foreground">{label}</div>
+                <div className="text-[10px] text-slate-800">{label}</div>
                 <div className="tabular text-sm text-pax2-blue">{paid?.tiles[label] ?? DASH}</div>
               </div>
             ))}

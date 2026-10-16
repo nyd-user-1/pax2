@@ -38,7 +38,7 @@ export function WhatIf({ options, reference }: { options: { label: string; take:
         </select>
         {KNOBS.map((k) => (
           <label key={k.key} className="flex flex-col gap-1 text-xs">
-            <span className="flex justify-between text-muted-foreground">
+            <span className="flex justify-between text-slate-800">
               <span>{k.label}</span>
               <span className="tabular">
                 ×{(mult[k.key] ?? 1).toFixed(2)} = {((base.snapshot.metrics[k.key].value ?? 0) * (mult[k.key] ?? 1)).toLocaleString(undefined, { maximumFractionDigits: 1 })}
@@ -47,7 +47,7 @@ export function WhatIf({ options, reference }: { options: { label: string; take:
             <input type="range" min={0.1} max={3} step={0.05} value={mult[k.key] ?? 1} onChange={(e) => setMult((m) => ({ ...m, [k.key]: Number(e.target.value) }))} className="accent-[var(--pax2-light-blue)]" />
           </label>
         ))}
-        <p className="text-xs text-muted-foreground">Spend moves nothing: it is a delivery condition. Doubling impressions and plays together leaves the rates alone and only narrows the range.</p>
+        <p className="text-xs text-slate-800">Spend moves nothing: it is a delivery condition. Doubling impressions and plays together leaves the rates alone and only narrows the range.</p>
       </div>
       <div className="flex flex-col gap-4">
         {[
@@ -56,7 +56,7 @@ export function WhatIf({ options, reference }: { options: { label: string; take:
         ].map(({ l, s }) => (
           <div key={l} className="flex flex-col gap-2">
             <div className="flex items-baseline justify-between">
-              <span className="text-xs text-muted-foreground">{l}</span>
+              <span className="text-xs text-slate-800">{l}</span>
               <span className="tabular font-display text-3xl text-pax2-blue">{s.value?.toFixed(1) ?? "Not scored"}</span>
             </div>
             {s.value != null && <RangeBar value={s.value} low={s.low} high={s.high} />}
@@ -67,10 +67,10 @@ export function WhatIf({ options, reference }: { options: { label: string; take:
                 </div>
               ))}
             </div>
-            {s.status !== "scored" && <p className="text-xs text-muted-foreground">{s.reasons.at(-1)}</p>}
+            {s.status !== "scored" && <p className="text-xs text-slate-800">{s.reasons.at(-1)}</p>}
           </div>
         ))}
-        <p className="text-xs text-muted-foreground">Formula {FORMULA_V1.version}, reference {reference.id}.</p>
+        <p className="text-xs text-slate-800">Formula {FORMULA_V1.version}, reference {reference.id}.</p>
       </div>
     </div>
   )

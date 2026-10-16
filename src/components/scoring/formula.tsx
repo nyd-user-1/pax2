@@ -53,7 +53,7 @@ export default async function MethodPage() {
         <p className="max-w-3xl text-lg leading-relaxed text-foreground/85">
           How well a paid video earned and kept the attention of the people it was shown to, and how often they did something with it, compared with a frozen reference set. 50 is the reference average. Higher means more of each, per person reached, not more people reached.
         </p>
-        <p className="max-w-3xl text-sm text-muted-foreground">It is an experimental method. A score built from observed delivery is not a forecast for an unpublished video, a measure of belief change, or proof of what caused the result. Persuasion needs a controlled test; the Reference model page shows what those tests have found.</p>
+        <p className="max-w-3xl text-sm text-slate-800">It is an experimental method. A score built from observed delivery is not a forecast for an unpublished video, a measure of belief change, or proof of what caused the result. Persuasion needs a controlled test; the Reference model page shows what those tests have found.</p>
       </header>
 
       <section className="grid gap-3 md:grid-cols-3">
@@ -61,13 +61,13 @@ export default async function MethodPage() {
           <div key={c.key} className="surface p-4">
             <div className="flex items-baseline justify-between">
               <span className="font-display text-xl text-slate-900">{c.name}</span>
-              <span className="text-xs text-muted-foreground">{(FORMULA_V1.weights[c.key] * 100).toFixed(0)}%</span>
+              <span className="text-xs text-slate-800">{(FORMULA_V1.weights[c.key] * 100).toFixed(0)}%</span>
             </div>
             <p className="mt-1 text-sm">{c.question}</p>
-            <p className="mt-2 font-mono text-xs text-muted-foreground">
+            <p className="mt-2 font-mono text-xs text-slate-800">
               {c.num} ÷ {c.den}
             </p>
-            {ref && <p className="mt-1 text-xs text-muted-foreground">Reference average {pct(ref.pooled[c.key], 2)}</p>}
+            {ref && <p className="mt-1 text-xs text-slate-800">Reference average {pct(ref.pooled[c.key], 2)}</p>}
           </div>
         ))}
       </section>
@@ -83,7 +83,7 @@ export default async function MethodPage() {
                   <span className={cn("h-fit shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium", c.kind === "design" ? "bg-pax2-lavender text-pax2-light-blue" : "bg-observed/10 text-observed")}>{c.kind === "design" ? "Design choice" : "From the data"}</span>
                   <div>
                     <p className="text-sm font-medium text-pax2-blue">{c.what}</p>
-                    <p className="text-xs text-muted-foreground">{c.detail}</p>
+                    <p className="text-xs text-slate-800">{c.detail}</p>
                   </div>
                 </div>
               ))}
@@ -134,13 +134,13 @@ export default async function MethodPage() {
                         const r = rank(grid.map((x) => x.values[i]))[gi]
                         return (
                           <td key={i} className={cn(i > 0 && Math.abs(r - baseRank[gi]) >= 3 && "text-pax2-light-blue")}>
-                            {v.toFixed(0)} <span className="text-[10px] text-muted-foreground">#{r}</span>
+                            {v.toFixed(0)} <span className="text-[10px] text-slate-800">#{r}</span>
                           </td>
                         )
                       })}
                     </tr>
                   ))}
-                  <tr className="text-xs text-muted-foreground">
+                  <tr className="text-xs text-slate-800">
                     <td>Rank agreement with Resonance 1</td>
                     {variants.map((v, i) => (
                       <td key={v.id}>{i === 0 ? "—" : spearman(base, grid.map((g) => g.values[i]))?.toFixed(2)}</td>
@@ -148,7 +148,7 @@ export default async function MethodPage() {
                   </tr>
                 </tbody>
               </table>
-              <p className="mt-3 max-w-3xl text-xs text-muted-foreground">Rank agreement is 1 when every alternative orders the takes the same way. Ranks that move three or more places are marked.</p>
+              <p className="mt-3 max-w-3xl text-xs text-slate-800">Rank agreement is 1 when every alternative orders the takes the same way. Ranks that move three or more places are marked.</p>
             </TableBlock>
           </OrderedBlock>
         )}
@@ -169,7 +169,7 @@ export default async function MethodPage() {
           <OrderedBlock id="scale" label="Reference scale ref-1">
             <MainBlock title="Reference scale ref-1" rows={COMPONENTS.map((c) => ({ component: c.name, pooled: ref.pooled[c.key], centre: ref.mean[c.key], spread: ref.sd[c.key] }))} name="ref-1">
               <div className="flex flex-col gap-3">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-slate-800">
                   Built {new Date(ref.createdAt).toLocaleString()} from {ref.n} flights in {ref.dataset}. Frozen: later rounds are scored against these numbers, and a revised formula would be published as Resonance 2 beside this one, never in its place.
                 </p>
                 <div className="tabular grid gap-2 text-xs sm:grid-cols-3">
@@ -192,9 +192,9 @@ export default async function MethodPage() {
 function Stat({ label, value, note }: { label: string; value: number | null; note: string }) {
   return (
     <div className="surface p-4">
-      <p className="text-xs text-muted-foreground">{label}</p>
+      <p className="text-xs text-slate-800">{label}</p>
       <p className="tabular font-display text-4xl text-pax2-blue">{value == null ? "—" : value.toFixed(2)}</p>
-      <p className="text-xs text-muted-foreground">{note}</p>
+      <p className="text-xs text-slate-800">{note}</p>
     </div>
   )
 }

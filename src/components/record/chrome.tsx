@@ -10,7 +10,7 @@ export function StepBar({ step, back }: { step: 1 | 2 | 3; back: { href: string;
   return (
     <div className="border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-5 py-4">
-        <Link href={back.href} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-pax2-blue">
+        <Link href={back.href} className="flex items-center gap-1.5 text-sm text-slate-800 hover:text-pax2-blue">
           <ArrowLeft className="size-4" /> {back.label}
         </Link>
         <ol className="flex items-center gap-2 text-sm">
@@ -21,10 +21,10 @@ export function StepBar({ step, back }: { step: 1 | 2 | 3; back: { href: string;
             return (
               <li key={s} className="flex items-center gap-2">
                 {i > 0 && <span className="h-px w-6 bg-border sm:w-10" />}
-                <span className={cn("flex size-6 items-center justify-center rounded-full text-xs font-medium", done ? "bg-primary/80 text-white" : on ? "bg-pax2-blue text-white ring-4 ring-primary/15" : "border text-muted-foreground")}>
+                <span className={cn("flex size-6 items-center justify-center rounded-full text-xs font-medium", done ? "bg-primary/80 text-white" : on ? "bg-pax2-blue text-white ring-4 ring-primary/15" : "border text-slate-800")}>
                   {done ? <Check className="size-3.5" /> : n}
                 </span>
-                <span className={cn("hidden sm:inline", on ? "font-medium text-pax2-blue" : "text-muted-foreground")}>{s}</span>
+                <span className={cn("hidden sm:inline", on ? "font-medium text-pax2-blue" : "text-slate-800")}>{s}</span>
               </li>
             )
           })}
@@ -40,7 +40,7 @@ export function FlowPage({ title, lead, children, wide, className }: { title?: s
       {title && (
         <header className="flex flex-col gap-3">
           <h1 className="font-display text-4xl font-semibold leading-tight text-pax2-blue md:text-5xl">{title}</h1>
-          {lead && <p className="text-lg text-muted-foreground">{lead}</p>}
+          {lead && <p className="text-lg text-slate-800">{lead}</p>}
         </header>
       )}
       {children}

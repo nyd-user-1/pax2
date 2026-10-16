@@ -149,7 +149,7 @@ export function Chart2({ title = "Weekly Traffic", data, columns = SLOTS, unit =
           <CardAnchor>{title}</CardAnchor>
         </div>
         <CardTools className="gap-2">
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-slate-800">
             L<span className="max-sm:hidden">ow</span>
           </span>
           <div className="flex gap-1">
@@ -157,7 +157,7 @@ export function Chart2({ title = "Weekly Traffic", data, columns = SLOTS, unit =
               <div key={o} className="size-2.5 rounded-xs bg-primary" style={{ opacity: o / 100 }} />
             ))}
           </div>
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-slate-800">
             H<span className="max-sm:hidden">igh</span>
           </span>
         </CardTools>
@@ -172,7 +172,7 @@ export function Chart2({ title = "Weekly Traffic", data, columns = SLOTS, unit =
             }}
           >
             {columns.map((slot) => (
-              <span key={slot.label} className="truncate px-0.5 text-[9px] text-muted-foreground">
+              <span key={slot.label} className="truncate px-0.5 text-[9px] text-slate-800">
                 {slot.label}
               </span>
             ))}
@@ -181,7 +181,7 @@ export function Chart2({ title = "Weekly Traffic", data, columns = SLOTS, unit =
         <div className="flex min-h-0 grow gap-2">
           <div className="flex w-8 shrink-0 flex-col justify-between gap-1">
             {rows.map((r) => (
-              <span key={r.day} className="flex h-full items-center text-xs/none text-muted-foreground">
+              <span key={r.day} className="flex h-full items-center text-xs/none text-slate-800">
                 {r.day}
               </span>
             ))}
@@ -278,7 +278,7 @@ export function Chart3({
           <React.Fragment key={f.label}>
             {i > 0 && <div className={cn("h-10 w-px bg-border", i >= 2 && "max-sm:hidden")} />}
             <div className={cn("space-y-1.5", i >= 2 && "max-sm:hidden")}>
-              <p className="text-sm font-medium whitespace-nowrap text-muted-foreground">{f.label}</p>
+              <p className="text-sm font-medium whitespace-nowrap text-slate-800">{f.label}</p>
               <p className="text-lg leading-none font-bold sm:text-2xl">{f.value}</p>
             </div>
           </React.Fragment>
@@ -346,7 +346,7 @@ export function Chart4({
             <div key={item.title} className="flex flex-col items-center justify-center text-center">
               <div className="mb-1 flex items-center gap-1.5">
                 <div className="size-1.5 rounded-full" style={{ backgroundColor: item.fill }} />
-                <span className="text-xs whitespace-nowrap text-muted-foreground">{item.title}</span>
+                <span className="text-xs whitespace-nowrap text-slate-800">{item.title}</span>
               </div>
               <span className="text-lg font-semibold">{item.value.toLocaleString()}</span>
             </div>

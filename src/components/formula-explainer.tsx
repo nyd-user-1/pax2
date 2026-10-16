@@ -32,7 +32,7 @@ export function FormulaExplainer({ title, html, pill, facts, rows }: FormulaExpl
           <div className="flex max-h-[82vh] min-h-0 flex-col overflow-hidden rounded-xl border bg-white shadow-sm">
             <DialogHeader className="flex h-14 shrink-0 flex-row items-center gap-3 border-b px-5 pr-12">
               <DialogTitle className="text-base font-medium">{title}</DialogTitle>
-              {pill && <span className="rounded-md border px-1.5 py-0.5 text-xs text-muted-foreground">{pill}</span>}
+              {pill && <span className="rounded-md border px-1.5 py-0.5 text-xs text-slate-800">{pill}</span>}
               <DialogDescription className="sr-only">What the {title} formula computes and why.</DialogDescription>
             </DialogHeader>
             <div className="min-h-0 flex-1 overflow-y-auto p-5">
@@ -40,7 +40,7 @@ export function FormulaExplainer({ title, html, pill, facts, rows }: FormulaExpl
               <div className="mt-5 grid grid-cols-2 overflow-hidden rounded-xl border sm:grid-cols-4">
                 {facts.map(([label, value]) => (
                   <div key={label} className="border-r border-b p-4 last:border-r-0 sm:border-b-0">
-                    <p className="text-xs text-muted-foreground">{label}</p>
+                    <p className="text-xs text-slate-800">{label}</p>
                     <p className="text-lg font-semibold">{value}</p>
                   </div>
                 ))}
@@ -48,7 +48,7 @@ export function FormulaExplainer({ title, html, pill, facts, rows }: FormulaExpl
               <dl className="mt-5 grid grid-cols-[5.5rem_1fr] gap-x-4 gap-y-3 text-sm">
                 {rows.map(([label, value]) => (
                   <React.Fragment key={label}>
-                    <dt className="font-medium text-muted-foreground">{label}</dt>
+                    <dt className="font-medium text-slate-800">{label}</dt>
                     <dd className="m-0 min-w-0">{value}</dd>
                   </React.Fragment>
                 ))}

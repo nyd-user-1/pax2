@@ -58,7 +58,7 @@ export default function PersonalPage() {
             {pending ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />} Write my script <ArrowRight className="size-4" />
           </button>
           {err && <p className="text-sm text-destructive">{err}</p>}
-          <p className="text-xs text-muted-foreground">What you share here is used to write your script and to describe the messenger in results. Nothing is guessed from your face or voice.</p>
+          <p className="text-xs text-slate-800">What you share here is used to write your script and to describe the messenger in results. Nothing is guessed from your face or voice.</p>
         </form>
       </FlowPage>
     </>

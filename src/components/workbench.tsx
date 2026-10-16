@@ -90,7 +90,7 @@ export function Loudness({ f }: { f: NonNullable<Features["audio"]> }) {
         ))}
         <rect x={(now / f.durationSec) * 100} y={0} width={0.35} height={24} className="fill-foreground" />
       </svg>
-      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-slate-800">
         <span className="flex items-center gap-1"><span className="size-2 rounded-sm bg-pax2-light-blue" />loudest</span>
         <span className="flex items-center gap-1"><span className="size-2 rounded-sm bg-pax2-red" />quietest</span>
         <span>{f.pauses.length} pauses ≥ 0.3s</span>
@@ -101,13 +101,13 @@ export function Loudness({ f }: { f: NonNullable<Features["audio"]> }) {
 
 export function Observations({ f, part }: { f: Features; part: "summary" | "detail" }) {
   const p = f.pegasus?.result
-  if (!p) return part === "summary" ? <p className="text-sm text-muted-foreground">The video review has not run on this take yet.</p> : null
+  if (!p) return part === "summary" ? <p className="text-sm text-slate-800">The video review has not run on this take yet.</p> : null
   if (part === "detail")
     return p.characteristics ? (
       <dl className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
         {Object.entries(p.characteristics).map(([k, v]) => (
           <div key={k} className="flex flex-col border-t py-1">
-            <dt className="text-muted-foreground">{k.replace(/_/g, " ")}</dt>
+            <dt className="text-slate-800">{k.replace(/_/g, " ")}</dt>
             <dd className="text-foreground/90">{v}</dd>
           </div>
         ))}

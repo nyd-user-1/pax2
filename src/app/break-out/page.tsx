@@ -41,11 +41,11 @@ function Change({ d, lowerIsBetter = false }: { d: { n: number } | null; lowerIs
   const good = lowerIsBetter ? d.n < 0 : d.n > 0
   return (
     <span className="tabular inline-flex items-center gap-1">
-      <span className={cn("inline-flex items-center gap-0.5 font-medium", d.n === 0 ? "text-muted-foreground" : good ? "text-green-600" : "text-destructive")}>
+      <span className={cn("inline-flex items-center gap-0.5 font-medium", d.n === 0 ? "text-slate-800" : good ? "text-green-600" : "text-destructive")}>
         <Icon className="size-3.5" />
         {Math.abs(d.n).toLocaleString()}
       </span>
-      <span className="text-muted-foreground">vs. prior</span>
+      <span className="text-slate-800">vs. prior</span>
     </span>
   )
 }
@@ -57,7 +57,7 @@ export default async function BreakoutPage() {
   const { at, cards } = await statCards()
   return (
     <div className="flex flex-col">
-      <div className="mb-3 flex items-center justify-end gap-1 text-xs text-muted-foreground">
+      <div className="mb-3 flex items-center justify-end gap-1 text-xs text-slate-800">
         {at && <span>Snapshot: {apStamp(at)}</span>}
         <SnapshotRefresh />
       </div>

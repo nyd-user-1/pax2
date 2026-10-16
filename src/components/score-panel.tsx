@@ -41,13 +41,13 @@ export function ScorePanel({ take, snapshot, score, reference, part }: { take: T
     <div className="flex flex-col gap-5">
       <div className="flex items-center gap-5">
         {score.status === "unscorable" || score.value == null ? (
-          <span className="text-2xl text-muted-foreground">Not scored</span>
+          <span className="text-2xl text-slate-800">Not scored</span>
         ) : (
           <span className="tabular font-display text-6xl leading-none text-pax2-blue">{score.value.toFixed(0)}</span>
         )}
         <div className="min-w-0 flex-1">
           {score.value != null && <RangeBar value={score.value} low={score.low} high={score.high} />}
-          <div className="mt-1 flex justify-between text-[10px] text-muted-foreground">
+          <div className="mt-1 flex justify-between text-[10px] text-slate-800">
             <span>0</span>
             <span>50 = reference average</span>
             <span>100</span>
@@ -66,7 +66,7 @@ export function ScorePanel({ take, snapshot, score, reference, part }: { take: T
                   <RangeBar value={c.score} low={c.low} high={c.high} />
                 </>
               ) : (
-                <span className="text-xs text-muted-foreground">Missing</span>
+                <span className="text-xs text-slate-800">Missing</span>
               )}
             </div>
           ))}
@@ -96,7 +96,7 @@ export function ScorePanel({ take, snapshot, score, reference, part }: { take: T
                 </p>
                 {rows.map(([label, v, total]) => (
                   <div key={label} className={cn("tabular grid grid-cols-2 border-t py-2 text-sm", total ? "font-semibold text-pax2-blue" : "")}>
-                    <span className={total ? "" : "text-muted-foreground"}>{label}</span>
+                    <span className={total ? "" : "text-slate-800"}>{label}</span>
                     <span>{v}</span>
                   </div>
                 ))}
@@ -111,7 +111,7 @@ export function ScorePanel({ take, snapshot, score, reference, part }: { take: T
         <div className="grid grid-cols-2 gap-x-6 text-sm">
           {ROWS.map(([label, m]) => (
             <div key={label} className="flex items-center justify-between gap-2 border-t py-2">
-              <span className="text-muted-foreground">{label}</span>
+              <span className="text-slate-800">{label}</span>
               <span className="tabular">{fmt(snapshot.metrics[m].value, m === "avgWatchSec" || m === "spend" ? 1 : 0)}</span>
             </div>
           ))}
@@ -130,7 +130,7 @@ export function ScorePanel({ take, snapshot, score, reference, part }: { take: T
 function Cond({ label, v }: { label: string; v: string }) {
   return (
     <div className="rounded-xl bg-muted/50 px-3 py-2">
-      <div className="text-xs text-muted-foreground">{label}</div>
+      <div className="text-xs text-slate-800">{label}</div>
       <div className="tabular text-base text-pax2-blue">{v}</div>
     </div>
   )

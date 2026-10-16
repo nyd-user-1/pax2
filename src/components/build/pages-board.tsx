@@ -27,7 +27,7 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
       name="pages"
       actions={
         <>
-          <div className="mr-2 hidden flex-wrap gap-3 text-xs text-muted-foreground lg:flex">
+          <div className="mr-2 hidden flex-wrap gap-3 text-xs text-slate-800 lg:flex">
             {Object.values(DOT).map((d) => (
               <span key={d.label} className="flex items-center gap-1.5">
                 <span className={cn("size-2 rounded-full", d.dot)} />
@@ -46,8 +46,8 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
                 <span className="font-medium">{p.name}</span>
                 <span title={DOT[p.state].label} className={cn("size-2.5 shrink-0 rounded-full", DOT[p.state].dot)} />
               </span>
-              <span className="font-mono text-[11px] text-muted-foreground">{p.href}</span>
-              <span className="text-xs leading-snug text-muted-foreground">{p.data}</span>
+              <span className="font-mono text-[11px] text-slate-800">{p.href}</span>
+              <span className="text-xs leading-snug text-slate-800">{p.data}</span>
             </button>
           ))}
         </div>
@@ -59,14 +59,14 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
               <DialogHeader className="flex h-14 shrink-0 flex-row items-center gap-3 border-b px-5 pr-12">
                 <span className={cn("size-3 shrink-0 rounded-full", DOT[open.state].dot)} />
                 <DialogTitle className="text-base font-medium">{open.name}</DialogTitle>
-                <span className="rounded-md border px-1.5 py-0.5 text-xs text-muted-foreground">{DOT[open.state].label}</span>
+                <span className="rounded-md border px-1.5 py-0.5 text-xs text-slate-800">{DOT[open.state].label}</span>
                 <DialogDescription className="sr-only">What the {open.name} page does and what it runs on.</DialogDescription>
               </DialogHeader>
               <div className="min-h-0 flex-1 overflow-y-auto p-5">
                 <div className="grid grid-cols-2 overflow-hidden rounded-xl border sm:grid-cols-4">
                   {open.facts.map(([label, value]) => (
                     <div key={label} className="border-r border-b p-4 last:border-r-0 sm:border-b-0">
-                      <p className="text-xs text-muted-foreground">{label}</p>
+                      <p className="text-xs text-slate-800">{label}</p>
                       <p className="text-lg font-semibold">{value}</p>
                     </div>
                   ))}
@@ -81,7 +81,7 @@ export function PagesBoard({ pages }: { pages: PageTile[] }) {
                     ] as const
                   ).map(([label, value]) => (
                     <React.Fragment key={label}>
-                      <dt className="font-medium text-muted-foreground">{label}</dt>
+                      <dt className="font-medium text-slate-800">{label}</dt>
                       <dd className="m-0 min-w-0">{value}</dd>
                     </React.Fragment>
                   ))}

@@ -64,7 +64,7 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
           <CardAction>
             <CardTools rows={rows} name={name ?? title.toLowerCase()} views={views} view={view} onView={onView} collapsed={!open} onCollapse={() => setOpen(!open)} menuItems={menuItems}>
               {actions}
-              <button type="button" aria-label={open ? `Collapse ${title}` : `Expand ${title}`} onClick={() => setOpen(!open)} className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground">
+              <button type="button" aria-label={open ? `Collapse ${title}` : `Expand ${title}`} onClick={() => setOpen(!open)} className="inline-flex size-8 items-center justify-center rounded-md text-slate-800 hover:bg-muted hover:text-foreground">
                 <ChevronDown className={cn("size-4 transition-transform", open && "rotate-180")} />
               </button>
             </CardTools>
@@ -72,7 +72,7 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
         </CardHeader>
         {!open && peek && <CardContent>{peek}</CardContent>}
         {open && <CardContent className="min-h-0 flex-1 overflow-y-auto [&_[data-slot=table-container]]:overflow-visible [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10 [&_thead]:bg-card">{children}</CardContent>}
-        {open && footer && <CardFooter className="bg-transparent py-3 text-xs text-muted-foreground">{footer}</CardFooter>}
+        {open && footer && <CardFooter className="bg-transparent py-3 text-xs text-slate-800">{footer}</CardFooter>}
       </Card>
     </PAX2Table2>
   )

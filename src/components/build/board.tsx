@@ -38,7 +38,7 @@ export function Volume({ spend, videos }: { spend: SpendItem[]; videos: VideoCos
         actions={
           <div className="flex rounded-lg bg-muted p-0.5 text-xs">
             {(["spend", "videos"] as const).map((v) => (
-              <button key={v} type="button" onClick={() => setView(v)} className={cn("rounded-md px-2.5 py-1", view === v ? "bg-white font-medium shadow-e1" : "text-muted-foreground")}>
+              <button key={v} type="button" onClick={() => setView(v)} className={cn("rounded-md px-2.5 py-1", view === v ? "bg-white font-medium shadow-e1" : "text-slate-800")}>
                 {v === "spend" ? "Spend by Item" : "Cost by Video"}
               </button>
             ))}
@@ -64,9 +64,9 @@ export function Volume({ spend, videos }: { spend: SpendItem[]; videos: VideoCos
                   <span className="flex min-w-0 flex-1 flex-col gap-1">
                     <span className="flex items-baseline justify-between gap-2 text-sm">
                       <span className="truncate font-medium">
-                        {v.title} <span className="font-normal text-muted-foreground">· {v.label}</span>
+                        {v.title} <span className="font-normal text-slate-800">· {v.label}</span>
                       </span>
-                      <span className="tabular shrink-0 text-muted-foreground">{money(v.cost)}</span>
+                      <span className="tabular shrink-0 text-slate-800">{money(v.cost)}</span>
                     </span>
                     <span className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
                       <span className="block h-full rounded-full bg-[var(--chart-1)]" style={{ width: `${Math.max(2, (v.cost / ranked[0].cost) * 100)}%` }} />
@@ -112,9 +112,9 @@ export function BudgetAndLimits({ spent, cap, facts, limits }: { spent: number; 
         <div className="mt-3 grid grid-cols-2 gap-2">
           {facts.map((m) => (
             <div key={m.label} className="rounded-lg border px-3 py-2">
-              <p className="text-xs text-muted-foreground">{m.label}</p>
+              <p className="text-xs text-slate-800">{m.label}</p>
               <p className="truncate font-semibold">{m.value}</p>
-              <p className="truncate text-xs text-muted-foreground">{m.note}</p>
+              <p className="truncate text-xs text-slate-800">{m.note}</p>
             </div>
           ))}
         </div>
@@ -128,9 +128,9 @@ export function BudgetAndLimits({ spent, cap, facts, limits }: { spent: number; 
                   <div className="flex items-center justify-between gap-3">
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium">{q.label}</p>
-                      <p className="truncate text-xs text-muted-foreground">{q.sub}</p>
+                      <p className="truncate text-xs text-slate-800">{q.sub}</p>
                     </div>
-                    <span className="w-32 shrink-0 text-right font-mono text-[10px] text-muted-foreground">
+                    <span className="w-32 shrink-0 text-right font-mono text-[10px] text-slate-800">
                       {q.used.toLocaleString()} / {q.limit.toLocaleString()} {q.unit}
                     </span>
                   </div>
@@ -154,14 +154,14 @@ function LessonRow({ l }: { l: Lesson }) {
     <div data-find className="rounded-md border bg-card">
       <button type="button" onClick={() => setOpen(!open)} className="flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left">
         <span title={l.outcome} className={cn("size-4 shrink-0 rounded-[3px] border", OUTCOME[l.outcome])} />
-        <ChevronRight className={cn("size-3.5 shrink-0 text-muted-foreground transition-transform", open && "rotate-90")} />
+        <ChevronRight className={cn("size-3.5 shrink-0 text-slate-800 transition-transform", open && "rotate-90")} />
         <span className="min-w-0 flex-1 truncate text-sm">{l.title}</span>
-        <span className="tabular shrink-0 text-xs text-muted-foreground">{l.headline}</span>
-        <span className="shrink-0 font-mono text-xs text-muted-foreground">{l.when}</span>
+        <span className="tabular shrink-0 text-xs text-slate-800">{l.headline}</span>
+        <span className="shrink-0 font-mono text-xs text-slate-800">{l.when}</span>
       </button>
       {open && (
         <div className="flex flex-col gap-3 border-t px-3.5 py-3">
-          <pre className="m-0 font-mono text-[11px] leading-relaxed whitespace-pre-wrap text-muted-foreground">{l.ran.join("\n")}</pre>
+          <pre className="m-0 font-mono text-[11px] leading-relaxed whitespace-pre-wrap text-slate-800">{l.ran.join("\n")}</pre>
           <ol className="m-0 flex list-decimal flex-col gap-1.5 pl-5 text-sm leading-relaxed">
             {l.lessons.map((x) => (
               <li key={x}>{x}</li>

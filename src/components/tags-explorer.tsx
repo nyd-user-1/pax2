@@ -36,7 +36,7 @@ function LetterHeading({ letter }: { letter: string }) {
         className="group/letter flex items-center gap-2"
       >
         {letter}
-        {copied ? <Check className="size-4 text-emerald-600" /> : <Copy className="size-4 text-muted-foreground opacity-0 transition-opacity group-hover/letter:opacity-100" />}
+        {copied ? <Check className="size-4 text-emerald-600" /> : <Copy className="size-4 text-slate-800 opacity-0 transition-opacity group-hover/letter:opacity-100" />}
       </button>
     </h2>
   )
@@ -135,7 +135,7 @@ export function TagsExplorer({ sections }: { sections: TagSection[] }) {
               type="button"
               disabled={empty}
               onClick={() => setLetter(l)}
-              className={cn("min-w-8 rounded-md px-2 py-1 text-sm font-medium tabular-nums transition-colors", on ? "bg-muted text-foreground" : "text-muted-foreground hover:text-foreground", empty && "pointer-events-none opacity-35")}
+              className={cn("min-w-8 rounded-md px-2 py-1 text-sm font-medium tabular-nums transition-colors", on ? "bg-muted text-foreground" : "text-slate-800 hover:text-foreground", empty && "pointer-events-none opacity-35")}
             >
               {l ?? "ALL"}
             </button>

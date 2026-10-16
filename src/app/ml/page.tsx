@@ -100,7 +100,7 @@ export default function MlPage() {
             <div className="flex flex-col gap-2">
               {limits.map((l, i) => (
                 <div key={l} data-find className="flex items-start gap-2.5 rounded-md border bg-card px-3 py-2">
-                  <span className="shrink-0 pt-px font-mono text-xs text-muted-foreground">{i + 1}.</span>
+                  <span className="shrink-0 pt-px font-mono text-xs text-slate-800">{i + 1}.</span>
                   <span className="min-w-0 flex-1 text-sm">{l}</span>
                 </div>
               ))}

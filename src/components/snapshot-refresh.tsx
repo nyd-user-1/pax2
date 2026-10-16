@@ -21,7 +21,7 @@ export function SnapshotRefresh() {
         await refreshSnapshot()
         router.refresh()
       })}
-      className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-60"
+      className="inline-flex size-8 items-center justify-center rounded-md text-slate-800 hover:bg-muted hover:text-foreground disabled:opacity-60"
     >
       <RefreshCwIcon className={cn("size-3.5", pending && "animate-spin")} />
     </button>

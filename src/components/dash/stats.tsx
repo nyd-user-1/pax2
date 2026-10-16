@@ -27,7 +27,7 @@ export function Stat1({ title, value, changeValue, direction = "up" }: Stat1Prop
   const variants = {
     up: { Icon: ArrowUpRightIcon, color: "text-green-500" },
     down: { Icon: ArrowDownRightIcon, color: "text-destructive" },
-    neutral: { Icon: MinusIcon, color: "text-muted-foreground" },
+    neutral: { Icon: MinusIcon, color: "text-slate-800" },
   }
   const { Icon, color } = variants[direction]
   return (
@@ -75,7 +75,7 @@ export function Stat2({ title, value, trendValue, footer }: Stat2Props) {
       </CardHeader>
       {footer && (
         <CardFooter className="max-sm:px-4">
-          <div className="line-clamp-1 flex items-center gap-1.5 text-sm text-muted-foreground">
+          <div className="line-clamp-1 flex items-center gap-1.5 text-sm text-slate-800">
             {hasTrend && !isNeutral && <Icon className={cn("size-3.5 shrink-0", isPositive ? "text-green-500" : "text-destructive")} />}
             <span>{footer}</span>
           </div>
@@ -101,7 +101,7 @@ export function StatCustomer({ title, value, trend, note }: { title: string; val
             {trend}
           </Badge>
         </div>
-        <p className="text-xs text-muted-foreground">{note}</p>
+        <p className="text-xs text-slate-800">{note}</p>
       </CardContent>
     </Card>
   )
@@ -117,7 +117,7 @@ export function StatOrder({ label, value, target, change }: { label: string; val
         <CardTitle className="text-2xl font-semibold">{value}</CardTitle>
       </CardHeader>
       <CardFooter className="flex items-center justify-between pt-4 text-xs">
-        <span className="text-muted-foreground">{target}</span>
+        <span className="text-slate-800">{target}</span>
         <span className={cn("flex items-center gap-1 font-medium", down ? "text-destructive" : "text-green-600")}>
           {down ? <ArrowDownRightIcon className="size-3.5" /> : <ArrowUpRightIcon className="size-3.5" />}
           {change}
@@ -159,7 +159,7 @@ export function StatEducation({ title, period, value, badge, note, options = ["V
           <TrendingUpIcon className="size-3" />
           {badge}
         </Badge>
-        {note ? <span className="mb-1 text-xs text-muted-foreground">{note}</span> : null}
+        {note ? <span className="mb-1 text-xs text-slate-800">{note}</span> : null}
       </CardContent>
     </Card>
   )
@@ -167,7 +167,7 @@ export function StatEducation({ title, period, value, badge, note, options = ["V
 
 /** AI Tokens: title with a badge, a value with a unit, and a note. */
 export function StatAi({ title, badge, prefix, value, unit, note, badgeTone = "up" }: { title: string; badge: string; prefix?: string; value: React.ReactNode; unit?: string; note: string; badgeTone?: "up" | "down" | "neutral" }) {
-  const tone = badgeTone === "up" ? "text-green-600" : badgeTone === "down" ? "text-destructive" : "text-muted-foreground"
+  const tone = badgeTone === "up" ? "text-green-600" : badgeTone === "down" ? "text-destructive" : "text-slate-800"
   return (
     <Card className="gap-3">
       <CardHeader className="flex items-center justify-between gap-2">
@@ -178,11 +178,11 @@ export function StatAi({ title, badge, prefix, value, unit, note, badgeTone = "u
       </CardHeader>
       <CardContent className="flex flex-col gap-1">
         <p className="text-2xl font-semibold">
-          {prefix && <span className="text-lg text-muted-foreground">{prefix}</span>}
+          {prefix && <span className="text-lg text-slate-800">{prefix}</span>}
           {value}
-          {unit && <span className="ms-1 text-base font-medium text-muted-foreground">{unit}</span>}
+          {unit && <span className="ms-1 text-base font-medium text-slate-800">{unit}</span>}
         </p>
-        <p className="text-xs text-muted-foreground">{note}</p>
+        <p className="text-xs text-slate-800">{note}</p>
       </CardContent>
     </Card>
   )
@@ -198,12 +198,12 @@ export function StatCrypto({ title, description, value, of, percent, note }: { t
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <p className="text-2xl font-semibold">
-          {value} <span className="text-sm font-normal text-muted-foreground">of {of}</span>
+          {value} <span className="text-sm font-normal text-slate-800">of {of}</span>
         </p>
         <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
           <div className="h-full rounded-full bg-primary" style={{ width: `${Math.min(100, Math.max(0, percent))}%` }} />
         </div>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-slate-800">
           <span className="font-medium text-foreground">{percent}%</span> {note}
         </p>
       </CardContent>
@@ -232,17 +232,17 @@ export function StatDatabaseGrid({ stats }: { stats: DbStat[] }) {
             const Icon = d === "up" ? ArrowUpRightIcon : d === "down" ? ArrowDownRightIcon : MinusIcon
             return (
               <div key={s.title} className="flex flex-col gap-1.5 bg-card p-4 first:rounded-l-xl last:rounded-r-xl">
-                <p className="text-sm text-muted-foreground">{s.title}</p>
+                <p className="text-sm text-slate-800">{s.title}</p>
                 <div className="flex items-center gap-2">
                   <span className="text-2xl font-semibold">{s.value}</span>
                   {s.change && (
-                    <span title={s.hint} className={cn("flex items-center gap-0.5 text-xs font-medium", d === "up" ? "text-green-600" : d === "down" ? "text-destructive" : "text-muted-foreground")}>
+                    <span title={s.hint} className={cn("flex items-center gap-0.5 text-xs font-medium", d === "up" ? "text-green-600" : d === "down" ? "text-destructive" : "text-slate-800")}>
                       <Icon className="size-3.5" />
                       {s.change}
                     </span>
                   )}
                 </div>
-                {s.note && <p className="text-xs text-muted-foreground">{s.note}</p>}
+                {s.note && <p className="text-xs text-slate-800">{s.note}</p>}
               </div>
             )
           })}

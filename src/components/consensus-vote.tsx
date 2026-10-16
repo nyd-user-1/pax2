@@ -27,7 +27,7 @@ export function ConsensusVote({ slug, statements, voted }: { slug: string; state
   }
   return (
     <div className="flex flex-col gap-3 rounded-2xl border bg-pax2-mist p-5">
-      <div className="flex items-center justify-between text-xs text-muted-foreground">
+      <div className="flex items-center justify-between text-xs text-slate-800">
         <span>
           {done.length} of {statements.length} judged
         </span>
@@ -56,7 +56,7 @@ export function ConsensusVote({ slug, statements, voted }: { slug: string; state
           </div>
         </>
       ) : (
-        <p className="text-sm text-muted-foreground">Every statement judged. Hand it to the next person to add another voice.</p>
+        <p className="text-sm text-slate-800">Every statement judged. Hand it to the next person to add another voice.</p>
       )}
     </div>
   )

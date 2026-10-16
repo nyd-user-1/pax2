@@ -58,7 +58,7 @@ export function CampaignMap() {
       actions={
         <div className="flex rounded-lg bg-muted p-0.5 text-xs">
           {MODES.map((m) => (
-            <button key={m.id} type="button" disabled={!!m.none} title={m.none ? `${m.label}: ${m.none}` : m.label} onClick={() => setId(m.id)} className={cn("rounded-md px-2.5 py-1 whitespace-nowrap disabled:opacity-40", id === m.id ? "bg-white font-medium shadow-e1" : "text-muted-foreground")}>
+            <button key={m.id} type="button" disabled={!!m.none} title={m.none ? `${m.label}: ${m.none}` : m.label} onClick={() => setId(m.id)} className={cn("rounded-md px-2.5 py-1 whitespace-nowrap disabled:opacity-40", id === m.id ? "bg-white font-medium shadow-e1" : "text-slate-800")}>
               {m.short}
             </button>
           ))}

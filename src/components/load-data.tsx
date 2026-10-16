@@ -65,7 +65,7 @@ export function LoadData({ standIn, className }: { standIn?: string; className?:
         </TooltipContent>
       </Tooltip>
       {r && (
-        <p className="max-w-sm text-xs text-muted-foreground">
+        <p className="max-w-sm text-xs text-slate-800">
           {r.alreadyLoaded ? "Already loaded; nothing counted twice." : `${r.added} rows added, ${r.duplicates} already held.`}
           {r.unmatched.length > 0 && ` ${r.unmatched.length} rows matched no video.`}
           {r.missingColumns.length > 0 && ` Missing columns: ${r.missingColumns.join(", ")}.`}

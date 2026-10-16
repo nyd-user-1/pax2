@@ -1348,7 +1348,7 @@ function Pop({
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="shrink-0 rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          className="shrink-0 rounded-lg p-1.5 text-slate-800 transition-colors hover:bg-accent hover:text-foreground"
         >
           <span style={{ fontSize: 14, lineHeight: 1 }}>✕</span>
         </button>
@@ -1920,7 +1920,7 @@ function Panel({
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="shrink-0 rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          className="shrink-0 rounded-lg p-1.5 text-slate-800 transition-colors hover:bg-accent hover:text-foreground"
         >
           <span style={{ fontSize: 14, lineHeight: 1 }}>✕</span>
         </button>
@@ -2145,7 +2145,7 @@ function Switch({ on, onChange, label }: { on: boolean; onChange: (v: boolean) =
 function Cell({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="border-r border-b border-border px-3 py-2">
-      <p className="text-[9px] tracking-[0.18em] text-muted-foreground uppercase" style={{ margin: 0 }}>
+      <p className="text-[9px] tracking-[0.18em] text-slate-800 uppercase" style={{ margin: 0 }}>
         {label}
       </p>
       <p

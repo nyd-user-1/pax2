@@ -28,7 +28,7 @@ function NativeSelect({
         {...props}
       />
       <ChevronDownIcon
-        className="pointer-events-none absolute top-1/2 right-2.5 size-4 -translate-y-1/2 text-muted-foreground select-none"
+        className="pointer-events-none absolute top-1/2 right-2.5 size-4 -translate-y-1/2 text-slate-800 select-none"
         aria-hidden="true"
         data-slot="native-select-icon"
       />

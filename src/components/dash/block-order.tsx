@@ -48,7 +48,7 @@ export function OrderedBlock({ id, label, children }: { id: string; label: strin
   const ctx = React.useContext(OrderContext)
   const at = ctx ? ctx.order.indexOf(id) : 0
   const last = ctx ? ctx.order.length - 1 : 0
-  const arrow = "inline-flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-30 [&_svg]:size-3.5"
+  const arrow = "inline-flex size-6 items-center justify-center rounded-md text-slate-800 transition-colors hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-30 [&_svg]:size-3.5"
   return (
     <div style={{ order: at }} className="group/block relative mt-5">
       {ctx && (

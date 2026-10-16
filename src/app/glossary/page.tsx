@@ -23,7 +23,7 @@ export default function GlossaryPage() {
                 {t.short !== t.full && <p className="text-xs text-slate-400">Shown as “{t.short}”</p>}
               </TableCell>
               <TableCell className="align-top text-sm leading-relaxed whitespace-normal text-slate-600">{t.definition}</TableCell>
-              <TableCell className="align-top text-muted-foreground">{t.group}</TableCell>
+              <TableCell className="align-top text-slate-800">{t.group}</TableCell>
             </TableRow>
           ))}
         </TableBody>

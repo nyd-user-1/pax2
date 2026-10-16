@@ -661,7 +661,7 @@ export function SearchBar({
             </div>
           ) : (
             <div className="max-h-[min(28rem,60svh)] overflow-y-auto rounded-b-[28px] px-5 pb-4 pt-3">
-              <h2 className="text-sm font-medium text-muted-foreground">
+              <h2 className="text-sm font-medium text-slate-800">
                 Recent searches <span className="tabular">({recent.length})</span>
               </h2>
               <ul className="mt-2 flex flex-col">
@@ -669,14 +669,14 @@ export function SearchBar({
                   <li key={term} className="group border-b py-0.5 last:border-0">
                     <div className="-mx-2 flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-muted hover:text-foreground">
                       <button type="button" onClick={() => run(term)} className="flex min-w-0 flex-1 items-center gap-2.5 text-left text-sm">
-                        <Clock className="size-4 shrink-0 text-muted-foreground" />
+                        <Clock className="size-4 shrink-0 text-slate-800" />
                         <span className="truncate">{term}</span>
                       </button>
                       <button
                         type="button"
                         aria-label={`Forget ${term}`}
                         onClick={() => save(recent.filter((r) => r !== term))}
-                        className="shrink-0 rounded p-1 text-muted-foreground opacity-0 hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100 sm:opacity-100"
+                        className="shrink-0 rounded p-1 text-slate-800 opacity-0 hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100 sm:opacity-100"
                       >
                         <X className="size-3.5" />
                       </button>
