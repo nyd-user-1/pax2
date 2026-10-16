@@ -132,10 +132,15 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
   { label: "Share", icon: Forward },
 ]
 
-/** Paid media's mark, in the card's bottom-right corner: 6px in from the halo's edge. */
-function PaidMark({ v }: { v: FeedVideo }) {
+/** Paid media's mark: the three-dot button's box mirrored into the bottom-right corner,
+ *  so it sits as far from the bottom and right as the dots do from the top and right. */
+function PaidMark({ v, className }: { v: FeedVideo; className?: string }) {
   if (!v.paid) return null
-  return <DollarSign role="img" aria-label="Paid media" className="absolute -bottom-1.5 -right-1.5 size-5 text-green-600" />
+  return (
+    <span className={cn("absolute bottom-0 right-0 flex size-9 items-center justify-center", className)}>
+      <DollarSign role="img" aria-label="Paid media" className="size-5 text-green-600" />
+    </span>
+  )
 }
 
 /** A card's three-dot menu. Its items are built but not yet wired. Clicks stay out of
@@ -208,7 +213,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <RowMenu className="-mr-1.5 size-8" />
       </div>
       <p className="tabular text-xs text-pax2-blue">{fmt.format(v.views)} views</p>
-      <PaidMark v={v} />
+      <PaidMark v={v} className="-bottom-1.5 -right-1.5 size-8" />
     </Link>
   )
 }
