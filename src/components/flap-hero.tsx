@@ -12,7 +12,8 @@ import SplitFlapText, { graphemes } from "@/components/split-flap-text"
 const STEPS: { rows: [string, string]; tile: string; text: string }[] = [
   { rows: ["STOP", "ENGAGING"], tile: "var(--pax2-red)", text: "#f8fafc" },
   { rows: ["START", "RESONATING"], tile: "#ffffff", text: "#000000" },
-  { rows: ["PAX", "AMERICANA 🇺🇸"], tile: "var(--pax2-blue)", text: "#f8fafc" },
+  // The leading space is deliberate: one extra empty box in front of AMERICANA🇺🇸.
+  { rows: ["PAX", " AMERICANA🇺🇸"], tile: "var(--pax2-blue)", text: "#f8fafc" },
 ]
 /** Boards per row: the longest row plus flanks — the first and last box never carry a character,
  *  and every row sits on the same grid. */
