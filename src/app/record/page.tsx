@@ -46,7 +46,7 @@ export default async function RecordLanding() {
   return (
     <div className="bg-pax2-mist">
       <LandingOnly>
-        <LandingGrid thumbs={feed.map((v) => v.id)} />
+        <LandingGrid />
         {/* Videos soften as they scroll in and out: blur bands at the viewport's edges,
             each hiding when there is nothing beyond it. Under the header's z-30. */}
         <GradualBlur position="top" target="page" autoHide height="5rem" zIndex={20} />
