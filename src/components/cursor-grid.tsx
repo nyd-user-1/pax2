@@ -636,7 +636,8 @@ const CursorGrid = ({
       gl.deleteTexture(stateTexture)
       gl.deleteVertexArray(vao)
       gl.deleteProgram(shader.program)
-      gl.getExtension("WEBGL_lose_context")?.loseContext()
+      // No loseContext here: React StrictMode remounts reuse this canvas's context,
+      // and a deliberately lost context would leave the second mount dead.
     }
   }, [])
 
