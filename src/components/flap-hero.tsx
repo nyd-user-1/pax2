@@ -2,7 +2,6 @@
 
 import * as React from "react"
 
-import CursorGrid from "@/components/cursor-grid"
 import { ScrollCue } from "@/components/record/scroll-cue"
 import SplitFlapText from "@/components/split-flap-text"
 
@@ -25,6 +24,8 @@ const STEP_MS = 2800
 const FLAG_LANDS = 2500
 /** VIDEO's flips, before the cue appears. */
 const VIDEO_RUN = 1400
+/** The whole opening, start to cue — the moment the page-wide grid may wake. */
+export const SEQUENCE_MS = CURTAIN + 2 * STEP_MS + FLAG_LANDS + VIDEO_RUN
 
 const ROW = {
   loop: false,
@@ -59,13 +60,6 @@ export function FlapHero() {
   const s = STEPS[Math.min(Math.max(0, step), 2)]
   return (
     <div className="relative flex w-full flex-col items-center px-4" style={{ fontSize: "clamp(15px, 6.2vw, 162px)" }}>
-      {/* The grid wakes only after the whole board sequence has finished. */}
-      {cue && (
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-dvh w-screen -translate-x-1/2 -translate-y-1/2">
-          {/* Literal hex: these feed WebGL uniforms, which cannot read CSS variables. Pax blue. */}
-          <CursorGrid color="#1e3a8a" gridColor="#1e3a8a" gridOpacity={0.16} fillOpacity={0.08} spotlight={0.8} />
-        </div>
-      )}
       {step >= 0 ? (
         <div className="relative z-10 flex flex-col items-center gap-[0.22em]">
           {[step >= 3 ? "PAX VIDEO" : s.rows[0], s.rows[1]].map((word, i) => (

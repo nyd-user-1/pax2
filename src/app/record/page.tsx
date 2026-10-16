@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react"
 import homeFeed from "../../../data/generated/home-feed.json"
 import shorts from "../../../data/raw/yt-shorts.json"
 import { FlapHero } from "@/components/flap-hero"
+import { LandingGrid } from "@/components/landing-grid"
 import { Feed, type FeedVideo } from "@/components/record/feed"
 import { LandingHeader } from "@/components/record/landing-header"
 import { LandingOnly, LandingSurface } from "@/components/record/landing-only"
@@ -44,8 +45,11 @@ export default async function RecordLanding() {
   return (
     <div className="bg-pax2-mist">
       <LandingOnly>
+        <LandingGrid />
         <LandingHeader />
-        <section className="relative -mt-16 flex min-h-dvh flex-col justify-center bg-gradient-to-b from-pax2-lavender to-pax2-mist">
+        {/* Not positioned: the gradient must paint beneath the fixed grid layer, while
+            FlapHero (positioned itself) paints above it. */}
+        <section className="-mt-16 flex min-h-dvh flex-col justify-center bg-gradient-to-b from-pax2-lavender to-pax2-mist">
           <FlapHero />
         </section>
         <section className="relative flex min-h-dvh flex-col justify-center">
@@ -66,7 +70,10 @@ export default async function RecordLanding() {
           </div>
         </section>
       </LandingOnly>
-      <Feed videos={feed} />
+      {/* Positioned, so the feed paints above the fixed grid layer. */}
+      <div className="relative">
+        <Feed videos={feed} />
+      </div>
       <LandingOnly>
         <ScrollTop />
       </LandingOnly>
