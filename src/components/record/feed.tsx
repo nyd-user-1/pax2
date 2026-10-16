@@ -5,9 +5,10 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ChevronDown, ChevronUp, Clock, Search, Star, X } from "lucide-react"
+import { ArrowUpDown, Check, ChevronDown, ChevronUp, Clock, Search, Star, X } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
 import { cn } from "@/ui/lib/utils"
 
 export type FeedVideo = {
@@ -22,6 +23,8 @@ export type FeedVideo = {
   duration: string
   description: string
   playable: boolean
+  likes?: number | null
+  comments?: number | null
 }
 
 const fmt = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 })
@@ -218,6 +221,53 @@ function Trio({ items }: { items: FeedVideo[] }) {
   )
 }
 
+/** Missing counts sort last in either direction. */
+const by = (pick: (v: FeedVideo) => number | null | undefined, dir: 1 | -1) => (a: FeedVideo, b: FeedVideo) => {
+  const x = pick(a)
+  const y = pick(b)
+  if (x == null) return y == null ? 0 : 1
+  if (y == null) return -1
+  return (x - y) * dir
+}
+const posted = (v: FeedVideo) => new Date(v.published).getTime()
+
+const SORTS = [
+  { value: "newest", label: "Newest", order: by(posted, -1) },
+  { value: "oldest", label: "Oldest", order: by(posted, 1) },
+  { value: "views", label: "Most views", order: by((v) => v.views, -1) },
+  { value: "fewest-views", label: "Fewest views", order: by((v) => v.views, 1) },
+  { value: "likes", label: "Most liked", order: by((v) => v.likes, -1) },
+  { value: "fewest-likes", label: "Least liked", order: by((v) => v.likes, 1) },
+  { value: "comments", label: "Most comments", order: by((v) => v.comments, -1) },
+  { value: "fewest-comments", label: "Fewest comments", order: by((v) => v.comments, 1) },
+  { value: "breakout", label: "Biggest breakout", order: by((v) => v.ratio, -1) },
+  { value: "az", label: "A–Z", order: (a: FeedVideo, b: FeedVideo) => a.title.localeCompare(b.title) },
+  { value: "za", label: "Z–A", order: (a: FeedVideo, b: FeedVideo) => b.title.localeCompare(a.title) },
+] as const
+
+type FeedSort = (typeof SORTS)[number]["value"]
+
+/** Same menu anatomy as VelocitySortMenu — one dropdown look everywhere. */
+function FeedSortMenu({ sort, setSort }: { sort: FeedSort; setSort: (s: FeedSort) => void }) {
+  const current = SORTS.find((s) => s.value === sort) ?? SORTS[0]
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger aria-label="Sort videos" className="inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-white px-4 text-sm text-slate-700 shadow-e1 outline-none transition-shadow hover:shadow-e2 data-[popup-open]:shadow-e2">
+        <ArrowUpDown className="size-3.5 text-slate-400" />
+        {current.label}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="min-w-48 rounded-xl">
+        {SORTS.map((s) => (
+          <DropdownMenuItem key={s.value} onClick={() => setSort(s.value)} className="flex items-center justify-between gap-6 whitespace-nowrap rounded-lg text-sm">
+            {s.label}
+            {s.value === sort && <Check className="size-4 text-pax2-light-blue" />}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
 const rotate = <T,>(xs: T[], n: number) => {
   const k = xs.length ? n % xs.length : 0
   return xs.slice(k).concat(xs.slice(0, k))
@@ -345,6 +395,7 @@ export function SearchBar({ q, setQ, placeholder = "Search videos" }: { q: strin
 
 export function Feed({ videos }: { videos: FeedVideo[] }) {
   const [q, setQ] = React.useState("")
+  const [sort, setSort] = React.useState<FeedSort>("newest")
   // A drawer's channel name searches this feed (take-panel.tsx); a ?q= in the address does the same on arrival.
   React.useEffect(() => {
     document.documentElement.dataset.feed = "1"
@@ -382,7 +433,11 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   }, [landing])
 
   const needle = q.trim().toLowerCase()
-  const shown = needle ? videos.filter((v) => matches(v, needle)) : videos
+  const order = (SORTS.find((s) => s.value === sort) ?? SORTS[0]).order
+  const shown = React.useMemo(
+    () => (needle ? videos.filter((v) => matches(v, needle)) : videos).toSorted(order),
+    [videos, needle, order],
+  )
   // With a video's drawer open beside the feed, search results lay out as a grid: three across beside
   // the half-page panel, two beside the third-of-a-page one.
   const { panelOpen, size } = useShellPanel()
@@ -402,8 +457,11 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
 
   return (
     <section ref={section} onClickCapture={remember} className="mx-auto w-full max-w-6xl px-6 pb-16">
-      <div className="sticky top-2.5 z-40 mx-auto w-full max-w-2xl">
-        <SearchBar q={q} setQ={setQ} />
+      <div className="sticky top-2.5 z-40 flex w-full items-center justify-between gap-4">
+        <div className="w-full max-w-2xl">
+          <SearchBar q={q} setQ={setQ} />
+        </div>
+        <FeedSortMenu sort={sort} setSort={setSort} />
       </div>
 
       <div className="flex flex-col gap-10 pt-10">
