@@ -2,6 +2,7 @@
 
 import * as React from "react"
 
+import CursorGrid from "@/components/cursor-grid"
 import { ScrollCue } from "@/components/record/scroll-cue"
 import SplitFlapText from "@/components/split-flap-text"
 
@@ -58,8 +59,14 @@ export function FlapHero() {
   const s = STEPS[Math.min(Math.max(0, step), 2)]
   return (
     <div className="relative flex w-full flex-col items-center px-4" style={{ fontSize: "clamp(15px, 6.2vw, 162px)" }}>
+      {/* The grid wakes only after the whole board sequence has finished. */}
+      {cue && (
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-dvh w-screen -translate-x-1/2 -translate-y-1/2">
+          <CursorGrid lightMode />
+        </div>
+      )}
       {step >= 0 ? (
-        <div className="flex flex-col items-center gap-[0.22em]">
+        <div className="relative z-10 flex flex-col items-center gap-[0.22em]">
           {[step >= 3 ? "PAX VIDEO" : s.rows[0], s.rows[1]].map((word, i) => (
             <SplitFlapText
               key={i}
@@ -75,8 +82,8 @@ export function FlapHero() {
         <div style={{ height: "2.38em" }} />
       )}
       {/* Below the board without displacing it: the board alone decides the hero's centring. */}
-      <div className="absolute inset-x-0 top-full flex flex-col items-center">
-        <div className={`mt-10 flex flex-col items-center gap-2 px-6 text-center transition-opacity duration-700 ${cue ? "opacity-100" : "opacity-0"}`}>
+      <div className="absolute inset-x-0 top-full z-10 flex flex-col items-center">
+        <div className={`mt-20 flex flex-col items-center gap-2 px-6 text-center transition-opacity duration-700 ${cue ? "opacity-100" : "opacity-0"}`}>
           <p className="text-xl font-semibold text-pax2-blue md:text-2xl">Your voice matters. Fine tune it with PAX.</p>
           <p className="text-base text-slate-500 md:text-lg">Video built for Resonance.</p>
         </div>
