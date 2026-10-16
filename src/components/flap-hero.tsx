@@ -3,7 +3,7 @@
 import * as React from "react"
 
 import { ScrollCue } from "@/components/record/scroll-cue"
-import SplitFlapText, { graphemes } from "@/components/split-flap-text"
+import SplitFlapText from "@/components/split-flap-text"
 
 // The hero board, two rows in lockstep: one word per row, every row the same
 // eleven boards, both rows driven through the three messages by one clock so
@@ -14,11 +14,8 @@ const STEPS: { rows: [string, string]; tile: string; text: string }[] = [
   { rows: ["START", "RESONATING"], tile: "#ffffff", text: "#000000" },
   { rows: ["PAX", "AMERICANA🇺🇸"], tile: "var(--pax2-blue)", text: "#f8fafc" },
 ]
-/** Boards per row: the longest row plus flanks — the first and last box never carry a character,
- *  and every row sits on the same grid. */
+/** Boards per row. Words start in box 1; the board itself stays centered on the page. */
 const WIDTH = 13
-
-const centered = (word: string) => " ".repeat(Math.floor((WIDTH - graphemes(word).length) / 2)) + word
 /** The curtain's hold plus its sweep, in ms. */
 const CURTAIN = 1200
 /** One message's flips plus its hold. */
@@ -59,7 +56,7 @@ export function FlapHero() {
       {step >= 0 ? (
         <div className="flex flex-col items-center gap-[0.22em]">
           {s.rows.map((word, i) => (
-            <SplitFlapText key={i} {...ROW} words={[centered(word)]} tileColor={s.tile} textColor={s.text} />
+            <SplitFlapText key={i} {...ROW} words={[word]} tileColor={s.tile} textColor={s.text} />
           ))}
         </div>
       ) : (
