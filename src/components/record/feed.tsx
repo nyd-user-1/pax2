@@ -559,9 +559,23 @@ export function SearchBar({
           className="h-full min-w-0 flex-1 bg-transparent px-3 text-[15px] text-slate-900 outline-none placeholder:text-slate-400"
         />
         {q !== "" && (
-          <button type="button" aria-label="Clear search" onClick={() => setQ("")} className="flex h-full items-center px-2 text-slate-400 hover:text-slate-700">
-            <X className="size-4" />
+          <button
+            type="button"
+            aria-label="Clear search"
+            onClick={() => {
+              setQ("")
+              input.current?.focus()
+            }}
+            className="flex size-10 shrink-0 items-center justify-center rounded-full text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+          >
+            <X className="size-5" />
           </button>
+        )}
+        {/* Google's AI Mode pill: the question goes to the chat instead. */}
+        {refine && (
+          <Link href="/chat" className="ml-1 flex h-10 shrink-0 items-center whitespace-nowrap rounded-full bg-slate-100 px-4 text-sm font-medium text-slate-800 transition-colors hover:bg-slate-200">
+            AI Mode
+          </Link>
         )}
         {refine ? (
           <button
@@ -570,7 +584,7 @@ export function SearchBar({
             aria-expanded={sorting}
             onClick={() => setSorting((o) => !o)}
             className={cn(
-              "relative mr-2 flex size-10 shrink-0 items-center justify-center rounded-full transition-colors",
+              "relative ml-1 mr-2 flex size-10 shrink-0 items-center justify-center rounded-full transition-colors",
               sorting ? "bg-[#dbe7fa] text-[#033882]" : "text-slate-500 hover:bg-slate-100 hover:text-[#033882]",
             )}
           >
