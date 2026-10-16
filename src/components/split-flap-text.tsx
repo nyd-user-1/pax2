@@ -22,9 +22,9 @@ export const graphemes = chars
 
 type Align = "left" | "center" | "right"
 type Order = "left" | "right" | "center" | "random"
-type Tile = { current: string; next: string; flipping: boolean; tick: number }
-type Plan = { index: number; from: string; target: string; sequence: string[]; start: number; step: number; done: boolean }
-type Update = { index: number; current: string; next: string; done: boolean }
+type Tile = { current: string; next: string; flipping: boolean; tick: number; slow?: boolean }
+type Plan = { index: number; from: string; target: string; sequence: string[]; start: number; step: number; done: boolean; flipMs: number; slow: boolean }
+type Update = { index: number; current: string; next: string; done: boolean; slow: boolean }
 
 export interface SplitFlapTextProps extends React.HTMLAttributes<HTMLDivElement> {
   words?: string[]
@@ -51,6 +51,9 @@ export interface SplitFlapTextProps extends React.HTMLAttributes<HTMLDivElement>
   depth?: number
   order?: Order
   tileStyle?: "board" | "minimal"
+  /** A glyph that waits: it starts flipping delayMs after every other tile has finished,
+   *  and each of its flips runs scale times the normal duration. */
+  delayedChar?: { char: string; delayMs: number; scale: number }
 }
 
 const toCssUnit = (value: number | string) => (typeof value === "number" ? `${value}px` : value)
@@ -156,6 +159,7 @@ const SplitFlapText = ({
   depth = 0.5,
   order = "left",
   tileStyle = "board",
+  delayedChar,
   className = "",
   style = {},
   ...props
@@ -189,8 +193,9 @@ const SplitFlapText = ({
       flips: Math.max(0, Math.floor(Number(flipsPerChar) || 0)),
       glyphs: resolveCharset(charset),
       order,
+      special: delayedChar,
     }),
-    [flipDuration, stagger, cycleDelay, flipsPerChar, charset, order],
+    [flipDuration, stagger, cycleDelay, flipsPerChar, charset, order, delayedChar?.char, delayedChar?.delayMs, delayedChar?.scale],
   )
   const timingRef = useRef(timing)
 
@@ -211,7 +216,7 @@ const SplitFlapText = ({
     }
 
     const animateTo = (target: string) => {
-      const { flipMs, staggerMs, flips, glyphs, order: cascade } = timingRef.current
+      const { flipMs, staggerMs, flips, glyphs, order: cascade, special } = timingRef.current
       const targetChars = chars(target)
       const from = normalizePhrase(shownRef.current ?? target, targetChars.length)
       const fromChars = chars(from)
@@ -225,6 +230,7 @@ const SplitFlapText = ({
       if (!prefersReducedMotion) {
         for (let index = 0; index < targetChars.length; index += 1) {
           if (fromChars[index] === targetChars[index]) continue
+          const slow = special != null && targetChars[index] === special.char
           plans.push({
             index,
             from: fromChars[index],
@@ -233,7 +239,14 @@ const SplitFlapText = ({
             start: cascadeStep(index, targetChars.length, cascade, randomOrder) * staggerMs,
             step: -1,
             done: false,
+            flipMs: slow ? flipMs * special.scale : flipMs,
+            slow,
           })
+        }
+        // The delayed glyph starts only after every ordinary tile has finished.
+        if (special) {
+          const base = plans.reduce((max, plan) => (plan.slow ? max : Math.max(max, plan.start + plan.sequence.length * plan.flipMs)), 0)
+          for (const plan of plans) if (plan.slow) plan.start = base + special.delayMs
         }
       }
 
@@ -245,7 +258,7 @@ const SplitFlapText = ({
       fromRef.current = from
       setTiles(createTiles(from))
 
-      const totalDuration = plans.reduce((max, plan) => Math.max(max, plan.start + plan.sequence.length * flipMs), 0)
+      const totalDuration = plans.reduce((max, plan) => Math.max(max, plan.start + plan.sequence.length * plan.flipMs), 0)
       const startedAt = performance.now()
 
       const tick = (now: number) => {
@@ -263,7 +276,7 @@ const SplitFlapText = ({
             return
           }
 
-          const step = Math.floor(localElapsed / flipMs)
+          const step = Math.floor(localElapsed / plan.flipMs)
 
           if (step < plan.sequence.length) {
             running = true
@@ -275,6 +288,7 @@ const SplitFlapText = ({
                 current: step === 0 ? plan.from : plan.sequence[step - 1],
                 next: plan.sequence[step],
                 done: false,
+                slow: plan.slow,
               })
             }
           } else if (!plan.done) {
@@ -284,6 +298,7 @@ const SplitFlapText = ({
               current: plan.target,
               next: plan.target,
               done: true,
+              slow: plan.slow,
             })
           }
         })
@@ -300,6 +315,7 @@ const SplitFlapText = ({
                 next: update.next,
                 flipping: !update.done,
                 tick: tile.tick + 1,
+                slow: update.slow,
               }
             })
             return nextTiles
@@ -419,6 +435,11 @@ const SplitFlapText = ({
           className={`split-flap-text__tile${tile.flipping ? " is-flipping" : ""}`}
           aria-hidden="true"
           key={`${index}-${tiles.length}`}
+          style={
+            tile.flipping && tile.slow && delayedChar
+              ? ({ "--split-flap-flip-duration": `${Math.max(0.04, Number(flipDuration) || 0.12) * delayedChar.scale}s` } as React.CSSProperties)
+              : undefined
+          }
         >
           <span className="split-flap-text__half split-flap-text__half--top" key={minimal ? `top-${tile.tick}` : "top"}>
             <span className="split-flap-text__char">{toGlyph(tile.flipping ? tile.next : tile.current)}</span>

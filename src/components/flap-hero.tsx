@@ -20,8 +20,8 @@ const WIDTH = 11
 const CURTAIN = 1200
 /** One message's flips plus its hold. */
 const STEP_MS = 2800
-/** The last message's flips, before the cue appears. */
-const SETTLE = 1600
+/** The last message's flips plus the flag's late, slow run, before the cue appears. */
+const SETTLE = 2800
 
 const ROW = {
   loop: false,
@@ -36,6 +36,8 @@ const ROW = {
   // Em-based gap and radius so the whole board scales as one shape, nothing fixed in px.
   gap: "0.09em",
   tileRadius: "0.12em",
+  // The flag waits half a second after the letters finish, then flips 30% slower.
+  delayedChar: { char: "🇺🇸", delayMs: 500, scale: 1.3 },
 } as const
 
 export function FlapHero() {
