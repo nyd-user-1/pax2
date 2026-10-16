@@ -79,8 +79,8 @@ export function FlapHero() {
       {/* Below the board without displacing it: the board alone decides the hero's centring. */}
       <div className="absolute inset-x-0 top-full z-10 flex flex-col items-center">
         <div className={`mt-20 flex flex-col items-center gap-2 px-6 text-center transition-opacity duration-700 ${cue ? "opacity-100" : "opacity-0"}`}>
-          <p className="text-xl font-semibold text-pax2-blue md:text-2xl">Your voice matters. Fine tune it with PAX.</p>
-          <p className="text-base text-slate-500 md:text-lg">Video built for Resonance.</p>
+          <p className="text-xl font-semibold text-pax2-blue md:text-2xl">Your voice matters.</p>
+          <p className="text-base text-slate-500 md:text-lg">Fine tune it with PAX.</p>
         </div>
         <div className={`relative mt-8 h-11 transition-opacity duration-700 ${cue ? "opacity-100" : "pointer-events-none opacity-0"}`}>
           <ScrollCue className="static translate-x-0" />

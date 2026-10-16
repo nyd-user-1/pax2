@@ -60,13 +60,9 @@ export default async function RecordLanding() {
         <section className="relative flex min-h-dvh flex-col justify-center">
           <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 pb-10 md:grid-cols-[1.4fr_1fr]">
             <div className="flex flex-col gap-6">
-              <h1 className="font-display text-5xl font-bold leading-[1.05] text-pax2-blue lg:text-[4.25rem]">
-                Voice.
-                <br />
-                Amplified.
-              </h1>
+              <h1 className="font-display text-5xl font-bold leading-[1.05] text-pax2-blue lg:text-[4.25rem]">Video built for Resonance.</h1>
               <p className="max-w-md text-lg leading-relaxed text-slate-900">We help you choose what to say, how to say it and share it. Because your voice is the difference.</p>
-              <Link href="/record/start" className="relative isolate flex w-fit items-center gap-2 rounded-xl bg-pax2-blue px-7 py-4 text-base font-medium text-white before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-black/10 before:bg-black/5 before:opacity-0 before:transition-opacity before:duration-200 hover:before:opacity-100">
+              <Link href="/record/start" className="flex w-fit items-center gap-2 rounded-md border border-slate-200 bg-white px-7 py-4 text-base font-medium text-slate-900 shadow-sm transition-[background-color,box-shadow] hover:bg-slate-100 hover:ring-2 hover:ring-slate-300">
                 Let&apos;s go <ArrowRight className="size-4" />
               </Link>
               <p className="text-sm text-muted-foreground">Powered by Resonant Amplification &copy;</p>
