@@ -62,7 +62,8 @@ export function FlapHero() {
       {/* The grid wakes only after the whole board sequence has finished. */}
       {cue && (
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-dvh w-screen -translate-x-1/2 -translate-y-1/2">
-          <CursorGrid lightMode />
+          {/* Literal hex: these feed WebGL uniforms, which cannot read CSS variables. Pax blue. */}
+          <CursorGrid color="#1e3a8a" gridColor="#1e3a8a" gridOpacity={0.16} fillOpacity={0.08} spotlight={0.8} />
         </div>
       )}
       {step >= 0 ? (

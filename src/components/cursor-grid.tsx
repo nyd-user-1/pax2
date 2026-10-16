@@ -585,7 +585,14 @@ const CursorGrid = ({
       raf = 0
       canvas.style.display = "none"
     }
+    const onContextRestored = () => {
+      canvas.style.display = ""
+      rebuild()
+      draw()
+      wake()
+    }
     canvas.addEventListener("webglcontextlost", onContextLost)
+    canvas.addEventListener("webglcontextrestored", onContextRestored)
 
     const resizeObserver = new ResizeObserver(() => {
       rebuild()
@@ -618,6 +625,7 @@ const CursorGrid = ({
       cancelAnimationFrame(raf)
       wakeRef.current = null
       canvas.removeEventListener("webglcontextlost", onContextLost)
+      canvas.removeEventListener("webglcontextrestored", onContextRestored)
       canvas.style.display = ""
       resizeObserver.disconnect()
       intersection.disconnect()
