@@ -700,11 +700,11 @@ export function SearchBar({
                       <li key={v.id} className="border-b py-0.5 last:border-0">
                         <Link
                           href={`/v/yt-${v.id}`}
-                          className="-mx-2 flex items-center gap-2.5 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-muted hover:text-pax2-blue"
+                          className="group/trend -mx-2 flex items-center gap-2.5 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-muted hover:text-pax2-blue"
                         >
                           <TrendingUp className="size-4 shrink-0 text-pax2-blue" />
                           <span className="min-w-0 flex-1 truncate">{v.title}</span>
-                          <span className="hidden shrink-0 text-xs text-slate-500 sm:inline">{v.channel}</span>
+                          <span className="hidden shrink-0 text-xs text-slate-500 transition-colors group-hover/trend:text-pax2-blue sm:inline">{v.channel}</span>
                         </Link>
                       </li>
                     ))}
