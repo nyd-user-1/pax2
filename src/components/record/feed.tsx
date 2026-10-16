@@ -292,7 +292,7 @@ function FeedSortMenu({ sort, setSort }: { sort: FeedSort; setSort: (s: FeedSort
   const current = SORTS.find((s) => s.value === sort) ?? SORTS[0]
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger aria-label="Sort videos" className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-white px-3.5 text-sm sm:px-4 text-slate-700 shadow-e1 outline-none transition-shadow hover:shadow-e2 data-[popup-open]:shadow-e2">
+      <DropdownMenuTrigger aria-label="Sort videos" className="inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-white px-4 text-sm sm:px-5 text-slate-700 shadow-e1 outline-none transition-shadow hover:shadow-e2 data-[popup-open]:shadow-e2">
         <ArrowUpDown className="size-3.5 text-slate-400" />
         {/* Icon-only on phones, so the search keeps the row. */}
         <span className="hidden sm:inline">{current.label}</span>
@@ -346,7 +346,7 @@ const RECENT = "pax2:recent-searches"
 
 /** The search bar, with the reader's recent searches dropping down beneath it while it's empty
  *  (govblock's search drop-down). A search is remembered on Enter. */
-export function SearchBar({ q, setQ, placeholder = "Search videos" }: { q: string; setQ: (q: string) => void; placeholder?: string }) {
+export function SearchBar({ q, setQ, placeholder = "Search videos", className }: { q: string; setQ: (q: string) => void; placeholder?: string; className?: string }) {
   const [open, setOpen] = React.useState(false)
   const [recent, setRecent] = React.useState<string[]>([])
   const input = React.useRef<HTMLInputElement>(null)
@@ -382,7 +382,7 @@ export function SearchBar({ q, setQ, placeholder = "Search videos" }: { q: strin
           e.preventDefault()
           submit()
         }}
-        className="flex h-11 items-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-e1 transition-shadow focus-within:shadow-e2"
+        className={cn("flex h-11 items-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-e1 transition-shadow focus-within:shadow-e2", className)}
       >
         <input
           ref={input}
@@ -499,11 +499,15 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   return (
     <section ref={section} onClickCapture={remember} className="mx-auto w-full max-w-6xl px-6 pb-16">
       {/* Sticks just beneath the 4rem header, never inside it. */}
-      <div className="sticky top-[4.75rem] z-40 flex w-full items-center justify-between gap-4">
-        <div className="w-full min-w-0 max-w-2xl">
-          <SearchBar q={q} setQ={setQ} />
+      {/* The pipeline node's build: a grey band around a white core with a hairline ring and
+          soft shadow — rounded to the pills it holds. Both pills stand as tall as section two's buttons. */}
+      <div className="sticky top-[4.75rem] z-40 rounded-full border border-black/15 bg-slate-50 p-1">
+        <div className="flex items-center justify-between gap-4 rounded-full bg-white p-1.5 shadow-md shadow-black/[0.07] ring-1 ring-black/15">
+          <div className="w-full min-w-0 max-w-2xl">
+            <SearchBar q={q} setQ={setQ} className="h-14" />
+          </div>
+          <FeedSortMenu sort={sort} setSort={setSort} />
         </div>
-        <FeedSortMenu sort={sort} setSort={setSort} />
       </div>
 
       <div className="flex flex-col gap-10 pt-10">
