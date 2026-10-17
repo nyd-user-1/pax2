@@ -32,6 +32,7 @@ uniform sampler2D uState;
 uniform ivec2 uCells;
 uniform vec3 uColor;
 uniform vec3 uGridColor;
+uniform vec3 uPulseColor;
 uniform float uLineWidth;
 uniform float uMaxOpacity;
 uniform float uFillOpacity;
@@ -48,10 +49,20 @@ uniform float uReveal;
 
 out vec4 outColor;
 
+// The state texture: red holds the hover light, green the pulses' waves.
 float level(vec2 cell) {
   if (cell.x < 0.0 || cell.y < 0.0 || cell.x >= float(uCells.x) || cell.y >= float(uCells.y)) return 0.0;
-  float v = texelFetch(uState, ivec2(cell), 0).r;
+  vec2 t = texelFetch(uState, ivec2(cell), 0).rg;
+  float v = max(t.r, t.g);
   return v * v * (3.0 - 2.0 * v);
+}
+
+// How much of a cell's light is pulse rather than hover, so the pulse can wear its own colour.
+float pulseShare(vec2 cell) {
+  if (cell.x < 0.0 || cell.y < 0.0 || cell.x >= float(uCells.x) || cell.y >= float(uCells.y)) return 0.0;
+  vec2 t = texelFetch(uState, ivec2(cell), 0).rg;
+  float m = max(t.r, t.g);
+  return m > 0.0 ? t.g / m : 0.0;
 }
 
 float line(float d, float width) {
@@ -141,7 +152,8 @@ void main() {
 
   float cellAlpha = clamp(max(litAlpha, fillAlpha), 0.0, 1.0);
   float alpha = cellAlpha + gridAlpha * (1.0 - cellAlpha);
-  vec3 premul = uColor * cellAlpha + uGridColor * gridAlpha * (1.0 - cellAlpha);
+  vec3 tint = mix(uColor, uPulseColor, pulseShare(cell));
+  vec3 premul = tint * cellAlpha + uGridColor * gridAlpha * (1.0 - cellAlpha);
   outColor = vec4(premul, alpha);
 }`
 
@@ -212,6 +224,10 @@ export interface CursorGridProps {
   cellSize?: number
   color?: string
   gridColor?: string
+  /** The pulses' colour; the cells' colour by default. */
+  pulseColor?: string
+  /** Change it to send one pulse out from the centre. */
+  pulseKey?: number
   radius?: number
   falloff?: "linear" | "smooth" | "sharp"
   highlight?: "area" | "cell"
@@ -241,6 +257,8 @@ const CursorGrid = ({
   cellSize = 60,
   color,
   gridColor,
+  pulseColor,
+  pulseKey = 0,
   radius = 140,
   falloff = "smooth",
   highlight = "area",
@@ -268,11 +286,13 @@ const CursorGrid = ({
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const wakeRef = useRef<(() => void) | null>(null)
+  const pulseRef = useRef<(() => void) | null>(null)
   const ink = lightMode ? "#18181b" : "#ffffff"
   const settings = {
     cellSize: Math.max(8, cellSize),
     color: color || ink,
     gridColor: gridColor || ink,
+    pulseColor: pulseColor || color || ink,
     radius: Math.max(1, radius),
     falloff,
     highlight,
@@ -366,9 +386,9 @@ const CursorGrid = ({
         waves = new Float32Array(cols * rows)
         targets = new Float32Array(cols * rows)
         touched = new Float32Array(cols * rows).fill(-1e9)
-        pixels = new Uint8Array(cols * rows)
+        pixels = new Uint8Array(cols * rows * 2)
         gl.bindTexture(gl.TEXTURE_2D, stateTexture)
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.R8, cols, rows, 0, gl.RED, gl.UNSIGNED_BYTE, pixels)
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RG8, cols, rows, 0, gl.RG, gl.UNSIGNED_BYTE, pixels)
       }
       dirty = true
     }
@@ -452,8 +472,11 @@ const CursorGrid = ({
       gl.activeTexture(gl.TEXTURE0)
       gl.bindTexture(gl.TEXTURE_2D, stateTexture)
       if (dirty) {
-        for (let i = 0; i < levels.length; i++) pixels[i] = Math.round(clamp(Math.max(levels[i], waves[i]), 0, 1) * 255)
-        gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, grid.cols, grid.rows, gl.RED, gl.UNSIGNED_BYTE, pixels)
+        for (let i = 0; i < levels.length; i++) {
+          pixels[i * 2] = Math.round(clamp(levels[i], 0, 1) * 255)
+          pixels[i * 2 + 1] = Math.round(clamp(waves[i], 0, 1) * 255)
+        }
+        gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, grid.cols, grid.rows, gl.RG, gl.UNSIGNED_BYTE, pixels)
         dirty = false
       }
       const lineDevice = s.lineWidth * ratio
@@ -465,6 +488,7 @@ const CursorGrid = ({
       gl.uniform2i(u.uCells, grid.cols, grid.rows)
       gl.uniform3fv(u.uColor, hexToRgb(s.color))
       gl.uniform3fv(u.uGridColor, hexToRgb(s.gridColor))
+      gl.uniform3fv(u.uPulseColor, hexToRgb(s.pulseColor))
       gl.uniform1f(u.uLineWidth, lineDevice)
       gl.uniform1f(u.uMaxOpacity, s.maxOpacity)
       gl.uniform1f(u.uFillOpacity, s.fillOpacity)
@@ -613,6 +637,11 @@ const CursorGrid = ({
     if (introClock < 1) pulses.push({ x: view.width / 2, y: view.height / 2, t0: 0.15, strength: 0.6 })
     draw()
     wake()
+    pulseRef.current = () => {
+      if (reduce) return
+      pulses.push({ x: view.width / 2, y: view.height / 2, t0: clock, strength: 1 })
+      wake()
+    }
     wakeRef.current = () => {
       const s = settingsRef.current
       if (s.cellSize !== view.cellSize) rebuild()
@@ -624,6 +653,7 @@ const CursorGrid = ({
     return () => {
       cancelAnimationFrame(raf)
       wakeRef.current = null
+      pulseRef.current = null
       canvas.removeEventListener("webglcontextlost", onContextLost)
       canvas.removeEventListener("webglcontextrestored", onContextRestored)
       canvas.style.display = ""
@@ -644,6 +674,10 @@ const CursorGrid = ({
   useEffect(() => {
     wakeRef.current?.()
   })
+
+  useEffect(() => {
+    if (pulseKey) pulseRef.current?.()
+  }, [pulseKey])
 
   return (
     <div ref={containerRef} className={`cursor-grid${className ? ` ${className}` : ""}`} style={style}>

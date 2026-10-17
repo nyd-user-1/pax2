@@ -6,22 +6,23 @@ import CursorGrid from "@/components/cursor-grid"
 import { SEQUENCE_MS } from "@/components/flap-hero"
 
 // The page-wide grid: one viewport-sized layer fixed behind every section, so the
-// effect rides along wherever the reader scrolls. It wakes when the hero's board
-// sequence finishes. The colours feed WebGL uniforms, which cannot read CSS
-// variables, so the pax blue token is resolved to its hex as the grid wakes.
+// effect rides along wherever the reader scrolls. It's there from the first paint; when
+// the hero's board sequence finishes, one red pulse runs out through it. The colours feed
+// WebGL uniforms, which cannot read CSS variables, so the tokens are resolved to their hex. No
+// opening reveal: the curtain covers the grid's first moments, and its ripple would run red.
 export function LandingGrid() {
-  const [blue, setBlue] = React.useState<string | null>(null)
+  const [tokens, setTokens] = React.useState<{ blue: string; red: string } | null>(null)
+  const [pulse, setPulse] = React.useState(0)
   React.useEffect(() => {
-    const t = window.setTimeout(
-      () => setBlue(getComputedStyle(document.documentElement).getPropertyValue("--pax2-blue").trim()),
-      SEQUENCE_MS,
-    )
+    const css = getComputedStyle(document.documentElement)
+    setTokens({ blue: css.getPropertyValue("--pax2-blue").trim(), red: css.getPropertyValue("--pax2-red").trim() })
+    const t = window.setTimeout(() => setPulse(1), SEQUENCE_MS)
     return () => window.clearTimeout(t)
   }, [])
-  if (!blue) return null
+  if (!tokens) return null
   return (
     <div className="pointer-events-none fixed inset-0">
-      <CursorGrid color={blue} gridColor={blue} gridOpacity={0.16} fillOpacity={0.08} spotlight={0.8} />
+      <CursorGrid color={tokens.blue} gridColor={tokens.blue} pulseColor={tokens.red} pulseKey={pulse} intro={false} gridOpacity={0.16} fillOpacity={0.08} spotlight={0.8} />
     </div>
   )
 }
