@@ -19,7 +19,6 @@ import { FormulaExplainer } from "@/components/formula-explainer"
 import { ReadingPanel } from "@/components/reading-panel"
 import { Term } from "@/components/term"
 import { SignupGate } from "@/components/signup-gate"
-import { StickyAside } from "@/components/sticky-aside"
 import { TagChip } from "@/components/tag-chip"
 import { ScoreInfo } from "@/components/ui-pax2"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
@@ -29,6 +28,7 @@ import { EXPLAIN, FORMULAS } from "@/lib/formulas"
 import { channelById, secs } from "@/lib/channels"
 import { labVideos, type Tier } from "@/lib/lab"
 import { COMPONENTS } from "@/lib/resonance"
+import { paidResonance } from "@/lib/paid-resonance"
 import { tagsFor } from "@/lib/tags"
 import { cn } from "@/ui/lib/utils"
 
@@ -69,11 +69,6 @@ function transcriptLines(f: Features | undefined) {
 /** A campaign short in the take panel's exact shape; counts PAX2 does not hold read as a dash. */
 type PaidRow = Record<string, string>
 type Creative = { creativeId: string; cut: "exact" | "edit"; videoId: string; rows: PaidRow[] }
-const MONTHS = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."]
-const day = (iso: string) => {
-  const d = new Date(`${iso}T12:00:00Z`)
-  return `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}`
-}
 
 /** A paid video's real ad figures from the batch (data/generated/voter-freedom-paid.json). Only the
  *  creatives that are exact cuts of the upload count — an ad-only edit's plays must not pose as the
@@ -86,17 +81,43 @@ function adFigures(ytId: string) {
   const rows = used.flatMap((c) => c.rows)
   const sum = (k: string) => rows.reduce((t, r) => t + (Number(r[k]) || 0), 0)
   const depth = (k: string) => rows.reduce((t, r) => t + ((Number(r.video_starts) || 0) * (Number(r[k]) || 0)) / 100, 0)
-  const dates = [...new Set(rows.map((r) => r.report_date))].sort()
   const spend = sum("spend_usd")
   const impressions = sum("impressions")
   const clicks = sum("clicks")
   const starts = sum("video_starts")
   const thruplays = sum("views_15s_thruplays_reported")
   const completions = sum("video_completions_reported")
-  const edits = all.length - exact.length
-  const ran = dates.length > 1 ? `${day(dates[0])} and ${day(dates[dates.length - 1])}` : day(dates[0])
-  const footer = `${used.length} ad creative${used.length === 1 ? "" : "s"}${!exact.length ? (used.length === 1 ? ", an ad-only edit" : ", all ad-only edits") : ""} · reported ${ran} ${dates[0].slice(0, 4)}${exact.length && edits ? ` · ${edits} ad-only edit${edits === 1 ? "" : "s"} not counted` : ""}`
-  return { spend, impressions, clicks, starts, thruplays, completions, views30: sum("views_30s_reported"), p25: depth("views_25pct_reported_pct"), p50: depth("views_50pct_reported_pct"), p75: depth("views_75pct_reported_pct"), footer }
+  return { spend, impressions, clicks, starts, thruplays, completions, views30: sum("views_30s_reported"), p25: depth("views_25pct_reported_pct"), p50: depth("views_50pct_reported_pct"), p75: depth("views_75pct_reported_pct") }
+}
+
+type YtComment = { id: string; author: string; avatar: string; text: string; likes: number; published: string }
+
+/** The video's top comments from YouTube (commentThreads, by relevance), cached an hour. Null when
+ *  there's no key, comments are off, or YouTube won't answer — the block then says so. */
+async function topComments(ytId: string): Promise<YtComment[] | null> {
+  const key = process.env.YOUTUBE_API_KEY
+  if (!key) return null
+  try {
+    const r = await fetch(`https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&order=relevance&maxResults=20&textFormat=plainText&videoId=${ytId}&key=${key}`, {
+      next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(5000),
+    })
+    if (!r.ok) return null
+    const j = (await r.json()) as { items?: { id: string; snippet: { topLevelComment: { snippet: { authorDisplayName: string; authorProfileImageUrl: string; textDisplay: string; likeCount: number; publishedAt: string } } } }[] }
+    return (j.items ?? []).map((t) => {
+      const c = t.snippet.topLevelComment.snippet
+      return { id: t.id, author: c.authorDisplayName, avatar: c.authorProfileImageUrl, text: c.textDisplay, likes: c.likeCount, published: c.publishedAt }
+    })
+  } catch {
+    return null
+  }
+}
+
+const ago = (iso: string) => {
+  const days = Math.max(1, Math.round((Date.now() - new Date(iso).getTime()) / 86_400_000))
+  if (days < 30) return `${days}d ago`
+  if (days < 365) return `${Math.round(days / 30)}mo ago`
+  return `${Math.round(days / 365)}y ago`
 }
 
 export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
@@ -149,21 +170,20 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const per = (x: number, of: number) => (of ? usd(x / of) : DASH)
   const adRows: [string, string][] = ads
     ? [
-        ["Spend", usd(ads.spend)],
-        ["Impressions", n(ads.impressions)],
         ["Starts", n(ads.starts)],
-        ["ThruPlays (15s)", n(ads.thruplays)],
+        ["Thru (15s)", n(ads.thruplays)],
         ["30s views", n(ads.views30)],
         ["25% play", n(Math.round(ads.p25))],
         ["50% play", n(Math.round(ads.p50))],
         ["75% play", n(Math.round(ads.p75))],
         ["100% play", n(ads.completions)],
-        ["Clicks", n(ads.clicks)],
-        ["CTR", rate(ads.clicks, ads.impressions)],
-        ["Cost / ThruPlay", per(ads.spend, ads.thruplays)],
+        ["Cost/Thru", per(ads.spend, ads.thruplays)],
       ]
     : []
   const res = sample?.resonance
+  // A paid video's Resonance and KPIs come from its ad figures, scored against the paid batch.
+  const pr = paidResonance(ytId)
+  const span = (low?: number | null, high?: number | null) => (low == null || high == null ? DASH : `${low}–${high}`)
   const realTags = tagsFor(id)
   const tags = realTags.length ? realTags : (sample?.tags ?? [])
   /** YouTube returned no like count; a sample video fills it, and the Stats block says so. */
@@ -184,38 +204,34 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   ]
   const statGrid = (rs: [string, string][]) => <div className="grid grid-cols-2 gap-4">{rs.map(([label, value]) => <React.Fragment key={label}>{stat(label, value)}</React.Fragment>)}</div>
 
+  const comments = await topComments(ytId)
   const left: [string, string, ReactNode][] = [
     [
-      "stats",
-      "Stats",
-      <CardBlock key="stats" title="Stats" height="auto" defaultOpen={false} footer={sampleLikes != null ? SAMPLE : undefined} peek={statGrid(statRows.slice(0, 4))} rows={statRows.map(([stat, value]) => ({ stat, value }))} name={`stats-${ytId}`}>
-        {statGrid(statRows)}
-      </CardBlock>,
+      "comments",
+      "Comments",
+      <ListBlock key="comments" title="Comments" height="auto">
+        {comments?.length ? (
+          <ul className="flex flex-col divide-y divide-slate-100">
+            {comments.map((c) => (
+              <li key={c.id} className="flex gap-3 py-3 first:pt-0 last:pb-0">
+                <img src={c.avatar} alt="" className="size-8 shrink-0 rounded-full bg-slate-100 object-cover" referrerPolicy="no-referrer" />
+                <div className="flex min-w-0 flex-col gap-1">
+                  <div className="flex items-baseline gap-2 text-xs">
+                    <span className="truncate font-medium text-slate-900">{c.author}</span>
+                    <span className="shrink-0 text-slate-500">{ago(c.published)}</span>
+                  </div>
+                  <p className="line-clamp-4 whitespace-pre-line break-words text-sm leading-relaxed text-slate-800">{c.text}</p>
+                  {c.likes > 0 && <span className="tabular text-xs text-pax2-blue">{COMPACT.format(c.likes)} likes</span>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm text-slate-800">{comments ? "No comments yet." : "Comments couldn't be loaded."}</p>
+        )}
+      </ListBlock>,
     ],
   ]
-  left.push([
-    "analytics",
-    "Analytics",
-    <Locked key="analytics" locked={locked}>
-      <CardBlock title="Analytics" height="auto" footer={ads ? ads.footer : paid ? SAMPLE : undefined}>
-        {ads ? (
-          <div className="grid grid-cols-2 gap-4">
-            {stat("Spend", usd(ads.spend))}
-            {stat("Impressions", n(ads.impressions))}
-            {stat("ThruPlays (15s)", n(ads.thruplays))}
-            {stat("Completion", rate(ads.completions, ads.starts))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 gap-4">
-            {stat("Reach", paid?.analytics.Reach ?? DASH)}
-            {stat("3s+", paid?.analytics["3s+"] ?? DASH)}
-            {stat("Avg.", paid?.analytics["Avg."] ?? DASH)}
-            {stat("Spend", paid?.analytics.Spend ?? DASH)}
-          </div>
-        )}
-      </CardBlock>
-    </Locked>,
-  ])
   if (f?.audio && !f.audio.error)
     left.push([
       "audio",
@@ -259,17 +275,45 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
 
   const right: [string, string, ReactNode][] = [
     [
+      "stats",
+      "Stats",
+      <CardBlock key="stats" title="Stats" height="auto" defaultOpen={false} footer={sampleLikes != null ? SAMPLE : undefined} peek={statGrid(statRows.slice(0, 4))} rows={statRows.map(([stat, value]) => ({ stat, value }))} name={`stats-${ytId}`}>
+        {statGrid(statRows)}
+      </CardBlock>,
+    ],
+    [
+      "analytics",
+      "Analytics",
+      <CardBlock key="analytics" title="Analytics" height="auto" footer={ads ? undefined : paid ? SAMPLE : undefined}>
+        {ads ? (
+          <div className="grid grid-cols-2 gap-4">
+            {stat("Spend", usd(ads.spend))}
+            {stat("Impressions", n(ads.impressions))}
+            {stat("ThruPlays (15s)", n(ads.thruplays))}
+            {stat("Completion", rate(ads.completions, ads.starts))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-4">
+            {stat("Reach", paid?.analytics.Reach ?? DASH)}
+            {stat("3s+", paid?.analytics["3s+"] ?? DASH)}
+            {stat("Avg.", paid?.analytics["Avg."] ?? DASH)}
+            {stat("Spend", paid?.analytics.Spend ?? DASH)}
+          </div>
+        )}
+      </CardBlock>,
+    ],
+    [
       "resonance",
       "Resonance",
-      <CardBlock key="resonance" title="Resonance" tools={<ScoreInfo />} height="auto" footer={sample ? SAMPLE : undefined}>
+      <CardBlock key="resonance" title="Resonance" tools={<ScoreInfo />} height="auto" footer={!pr && sample ? SAMPLE : undefined}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="tabular flex items-baseline gap-2">
-              <span className="font-display text-4xl text-pax2-blue">{res?.score ?? DASH}</span>
-              <span className="text-xs text-slate-800">{res ? `${res.low}–${res.high}` : DASH}</span>
+              <span className="font-display text-4xl text-pax2-blue">{(pr ? pr.score : res?.score) ?? DASH}</span>
+              <span className="text-xs text-slate-800">{pr ? pr.range : span(res?.low, res?.high)}</span>
             </div>
             <div className="min-w-0 flex-1 basis-56">
-              <RangeBar value={res?.score ?? null} low={res?.low ?? null} high={res?.high ?? null} />
+              <RangeBar value={(pr ? pr.score : res?.score) ?? null} low={(pr ? pr.low : res?.low) ?? null} high={(pr ? pr.high : res?.high) ?? null} />
               <div className="mt-1 flex justify-between text-[10px] text-slate-800">
                 <span>0</span>
                 <span>50 = reference average</span>
@@ -285,10 +329,14 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                   <Term id={meta.key} label={false} />
                 </div>
                 <div className="tabular flex items-baseline gap-1.5">
-                  <span className="font-display text-3xl text-pax2-blue">{res?.components[meta.key]?.score ?? DASH}</span>
-                  <span className="text-xs text-slate-800">{res ? `${res.components[meta.key].low}–${res.components[meta.key].high}` : DASH}</span>
+                  <span className="font-display text-3xl text-pax2-blue">{(pr ? pr.components[meta.key].score : res?.components[meta.key]?.score) ?? DASH}</span>
+                  <span className="text-xs text-slate-800">{pr ? pr.components[meta.key].range : span(res?.components[meta.key]?.low, res?.components[meta.key]?.high)}</span>
                 </div>
-                <RangeBar value={res?.components[meta.key]?.score ?? null} low={res?.components[meta.key]?.low ?? null} high={res?.components[meta.key]?.high ?? null} />
+                <RangeBar
+                  value={(pr ? pr.components[meta.key].score : res?.components[meta.key]?.score) ?? null}
+                  low={(pr ? pr.components[meta.key].low : res?.components[meta.key]?.low) ?? null}
+                  high={(pr ? pr.components[meta.key].high : res?.components[meta.key]?.high) ?? null}
+                />
               </div>
             ))}
           </div>
@@ -298,7 +346,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "kpis",
       "KPIs",
-      <TableBlock key="kpis" title="KPIs" tools={<Term id="kpis" label={false} />} height="auto" footer={sample ? SAMPLE : undefined}>
+      <TableBlock key="kpis" title="KPIs" tools={<Term id="kpis" label={false} />} height="auto" footer={!pr && sample ? SAMPLE : undefined}>
         <div className="overflow-x-auto">
           <table className="tabular w-full text-sm">
             <thead className="text-left text-xs text-slate-500">
@@ -316,7 +364,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 <tr key={label}>
                   <td className="text-slate-500">{label}</td>
                   {COMPONENTS.map((meta) => (
-                    <td key={meta.key}>{(sample?.kpis[label] as Record<string, string> | undefined)?.[meta.key] ?? DASH}</td>
+                    <td key={meta.key}>{(pr ? pr.kpis[label]?.[meta.key] : (sample?.kpis[label] as Record<string, string> | undefined)?.[meta.key]) ?? DASH}</td>
                   ))}
                 </tr>
               ))}
@@ -328,21 +376,15 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "paid",
       "Paid",
-      <ListBlock key="paid" title="Paid" tools={<Term id="paid" label={false} />} height="auto" footer={ads ? ads.footer : paid ? SAMPLE : undefined}>
+      <ListBlock key="paid" title="Spend" tools={<Term id="paid" label={false} />} height="auto" footer={ads ? undefined : paid ? SAMPLE : undefined}>
         {ads ? (
           <div className="grid gap-x-6 text-xs @md:grid-cols-2">
-            {adRows.map(([label, value]) => (
-              <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
-                <span className="text-slate-800">{label}</span>
-                <span className="tabular">{value}</span>
-              </div>
-            ))}
-            <div className="col-span-full mt-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
+            <div className="col-span-full mb-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
               {(
                 [
-                  ["Spend", usd(ads.spend)],
+                  ["Spend", `$${Math.round(ads.spend).toLocaleString("en-US")}`],
                   ["Impressions (1k)", per(ads.spend * 1000, ads.impressions)],
-                  ["ThruPlay rate", rate(ads.thruplays, ads.starts)],
+                  ["Thru", rate(ads.thruplays, ads.starts)],
                   ["Per start", per(ads.spend, ads.starts)],
                 ] as const
               ).map(([label, value]) => (
@@ -352,6 +394,12 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 </div>
               ))}
             </div>
+            {adRows.map(([label, value]) => (
+              <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
+                <span className="text-slate-800">{label}</span>
+                <span className="tabular">{value}</span>
+              </div>
+            ))}
           </div>
         ) : (
         <div className="grid gap-x-6 text-xs @md:grid-cols-2">
@@ -426,6 +474,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "formula",
       "Formula",
       <FormulaBlock key="formula" title="Formula" tools={<Term id="formula" label={false} />} height="auto">
+        <div className="@container pb-4">
         <div className="grid gap-3 @2xl:grid-cols-2 @5xl:grid-cols-3">
           {FORMULAS.map(([step, tex]) => (
             <div key={step} className="surface @container flex min-w-0 flex-col gap-2 p-4">
@@ -436,6 +485,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
               </div>
             </div>
           ))}
+        </div>
         </div>
       </FormulaBlock>,
     ],
@@ -462,7 +512,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     <SeekProvider>
       {locked && <SignupGate />}
       <div className={cn("grid gap-8", inDrawer ? "@xl:grid-cols-[280px_1fr]" : "@4xl:grid-cols-[320px_1fr]")}>
-        <StickyAside className={cn("flex flex-col", inDrawer ? "@xl:sticky @xl:top-0 @xl:self-start" : "@4xl:sticky @4xl:top-0 @4xl:self-start")}>
+        <div className="flex min-w-0 flex-col">
           {real ? (
             <div className={cn("relative aspect-video overflow-hidden rounded-2xl bg-black shadow-e2", inDrawer ? "@xl:aspect-auto @xl:overflow-visible @xl:rounded-none @xl:bg-transparent @xl:shadow-none" : "@4xl:aspect-auto @4xl:overflow-visible @4xl:rounded-none @4xl:bg-transparent @4xl:shadow-none")}>
               <Player src={`/api/video/${id}`} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} className={cn("absolute inset-0 h-full w-full max-w-none rounded-none object-contain", inDrawer ? "@xl:static @xl:h-auto @xl:w-full @xl:max-w-[300px] @xl:rounded-2xl @xl:object-cover" : "@4xl:static @4xl:h-auto @4xl:w-full @4xl:max-w-[300px] @4xl:rounded-2xl @4xl:object-cover")} />
@@ -479,9 +529,9 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
             </div>
           )}
           {column("video-left", left, () => false)}
-        </StickyAside>
+        </div>
 
-        <div className={cn("min-w-0", inDrawer ? "@xl:-mt-5" : "@4xl:-mt-5")}>{column("video-right", right, () => true)}</div>
+        <div className={cn("min-w-0", inDrawer ? "@xl:-mt-5" : "@4xl:-mt-5")}>{column("video-right", right, (key) => key !== "stats")}</div>
       </div>
     </SeekProvider>
   )
