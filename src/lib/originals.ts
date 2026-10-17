@@ -37,7 +37,13 @@ export type OriginalInput = {
   publishAt?: string
   /** Made off the platform and entered after the fact (scripts/backfill-voter-freedom.mjs). */
   provenance?: "backfilled"
+  /** A backfilled video's YouTube upload: the video itself for version 1, the source a paid edit was cut from. */
+  sourceYoutubeId?: string
+  /** A backfilled cut's paid runs, one per creative, from data/generated/voter-freedom-paid.json. */
+  paid?: PaidRun[]
 }
+
+export type PaidRun = { creativeId: string; creativeSet: string; name: string; seconds: number; reportDate: string; spend_usd: number; impressions: number; video_starts: number; views_15s_thruplays_reported: number; video_completions_reported: number; clicks: number }
 
 export type Original = Item & OriginalInput & { at: string }
 

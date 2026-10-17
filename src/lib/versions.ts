@@ -22,6 +22,8 @@ export type VersionRow = {
   ratio72: number | null
   current: boolean
   backfilled: boolean
+  /** A backfilled cut's paid runs summed: spend, impressions and ThruPlays. */
+  paid: { runs: number; spend: number; impressions: number; thruplays: number } | null
 }
 
 const watchOf = (r: OriginalRow) => r.events.filter((e) => e.kind === "watching").at(-1)
@@ -58,6 +60,9 @@ export async function versions(id: string) {
         ratio72: views != null && hour != null && hour >= 71 && median ? views / median : null,
         current: r.id === id,
         backfilled: r.provenance === "backfilled",
+        paid: r.paid?.length
+          ? { runs: r.paid.length, spend: r.paid.reduce((t, p) => t + p.spend_usd, 0), impressions: r.paid.reduce((t, p) => t + p.impressions, 0), thruplays: r.paid.reduce((t, p) => t + p.views_15s_thruplays_reported, 0) }
+          : null,
       }
     }),
   )

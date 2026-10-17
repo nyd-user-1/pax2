@@ -75,7 +75,10 @@ function Table({ rows, admin }: { rows: (OriginalRow & { of: number })[]; admin:
                 {r.name && <span className="text-slate-500"> · {r.name}</span>}
               </td>
               <td className="tabular">{r.of > 1 ? `v${r.version} of ${r.of}` : r.version}</td>
-              <td>{STAGE_LABEL[r.stage]}</td>
+              <td>
+                {STAGE_LABEL[r.stage]}
+                {r.provenance === "backfilled" && <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">Backfilled</span>}
+              </td>
               <td className="tabular">{when(r.at)}</td>
               {admin && <td className="text-slate-500">{r.owner}</td>}
             </tr>

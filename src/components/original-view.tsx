@@ -8,7 +8,7 @@ import { Player } from "@/components/workbench"
 import { currentUser } from "@/lib/auth"
 import { outbox } from "@/lib/mail"
 import { gainOf, STAGE_LABEL, type Evaluation, type OriginalRow } from "@/lib/originals"
-import { recentPolls } from "@/lib/velocity-store"
+import { pollsFrom, recentPolls } from "@/lib/velocity-store"
 import { versions } from "@/lib/versions"
 import { cn } from "@/ui/lib/utils"
 
@@ -23,6 +23,7 @@ const when = (iso: string) => new Date(iso).toLocaleString("en-US", { month: "sh
 const pts = (x: number) => `${x > 0 ? "+" : x < 0 ? "−" : ""}${Math.abs(x).toFixed(2)}`
 const pp = (x: number) => `${x > 0 ? "+" : x < 0 ? "−" : ""}${Math.abs(x).toFixed(1)}`
 const pct = (x: number) => `${Math.round(x * 100)}%`
+const compact = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 })
 
 /** One page per original video, from the recording to the wild; each stage is a tab on the rail,
  *  open once the video has reached it. */
@@ -47,6 +48,7 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
         <h1 className="font-display text-3xl text-slate-900">{row.title ?? "Untitled video"}</h1>
         <p className="text-sm text-slate-500">
           {[row.name, row.role, row.town].filter(Boolean).join(", ") || row.owner} · version {row.version} · {STAGE_LABEL[row.stage]}
+          {row.provenance === "backfilled" && <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">Backfilled</span>}
           {row.parent && (
             <>
               {" · "}
@@ -74,7 +76,13 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
 
       {active === "recorded" && (
         <div className="grid gap-6 @3xl:grid-cols-[300px_1fr]">
-          <Player src={`/api/video/${row.id}`} subject={row.id} className="shadow-e2" />
+          {row.sourceYoutubeId ? (
+            <div className="aspect-[9/16] w-full max-w-[300px] overflow-hidden rounded-2xl bg-slate-900 shadow-e2">
+              <iframe src={`https://www.youtube.com/embed/${row.sourceYoutubeId}`} title={row.title ?? "YouTube short"} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="size-full border-0" />
+            </div>
+          ) : (
+            <Player src={`/api/video/${row.id}`} subject={row.id} className="shadow-e2" />
+          )}
           <div className="flex min-w-0 flex-col gap-6">
             <CardBlock title="Recording" height="auto">
               <div className="grid grid-cols-2 gap-4 @lg:grid-cols-4">
@@ -246,6 +254,7 @@ async function Versions({ id }: { id: string }) {
               <th>Chance of a Hit</th>
               <th>Views at 72h</th>
               <th>Ratio at 72h</th>
+              {rows.some((r) => r.paid) && <th>Paid</th>}
             </tr>
           </thead>
           <tbody className="[&_td]:whitespace-nowrap [&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2 [&_td]:pr-6">
@@ -268,6 +277,7 @@ async function Versions({ id }: { id: string }) {
                 <td>{r.p == null ? "-" : pct(r.p)}</td>
                 <td>{r.views == null ? "-" : `${r.views.toLocaleString("en-US")}${r.hour != null && r.hour < 71 ? ` (h${r.hour})` : ""}`}</td>
                 <td>{r.ratio72 == null ? "-" : `${r.ratio72.toFixed(2)}x`}</td>
+                {rows.some((x) => x.paid) && <td>{r.paid ? `$${Math.round(r.paid.spend).toLocaleString("en-US")} · ${compact.format(r.paid.impressions)} impressions · ${compact.format(r.paid.thruplays)} ThruPlays${r.paid.runs > 1 ? ` · ${r.paid.runs} runs` : ""}` : "-"}</td>}
               </tr>
             ))}
           </tbody>
@@ -361,8 +371,11 @@ async function Published({ row, admin }: { row: OriginalRow; admin: boolean }) {
 }
 
 async function Polled({ row }: { row: OriginalRow }) {
-  const youtubeId = row.events.filter((e) => e.kind === "watching").at(-1)?.youtubeId
-  const readings = (await recentPolls(4)).filter((r) => r.id === youtubeId).sort((a, b) => a.hour - b.hour)
+  const watching = row.events.filter((e) => e.kind === "watching").at(-1)
+  const youtubeId = watching?.youtubeId
+  // A video PAX2 knows the publish time of reads its own first days; otherwise the last four.
+  const polls = watching?.published ? await pollsFrom(new Date(Date.parse(watching.published) - 864e5).toISOString(), 5) : await recentPolls(4)
+  const readings = polls.filter((r) => r.id === youtubeId).sort((a, b) => a.hour - b.hour)
   const last = readings.at(-1)
   return (
     <div className="flex flex-col gap-6">
