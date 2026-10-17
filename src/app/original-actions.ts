@@ -99,7 +99,8 @@ async function publish(row: OriginalRow, by: string) {
   await send([row.owner], "Your video is published", body, row.id)
 }
 
-/** The admin's three buttons. */
+/** The admin's three buttons. Any version of a chain may be approved, not only the newest, so two
+ *  versions can both go out and each be watched against the other. */
 export async function review(id: string, decision: "rerecord" | "approved" | "enhance", note: string) {
   const admin = await requireAdmin()
   const row = await must(id)
@@ -131,7 +132,7 @@ export async function review(id: string, decision: "rerecord" | "approved" | "en
   refresh(id)
 }
 
-/** The owner's answer to the findings: publish the video as it is. */
+/** The owner's answer to the findings: publish the video as it is, even after recording a newer version. */
 export async function ownerPublish(id: string) {
   const user = await currentUser()
   const row = await must(id)

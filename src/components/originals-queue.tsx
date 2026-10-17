@@ -19,8 +19,9 @@ const when = (iso: string) => new Date(iso).toLocaleDateString("en-US", { month:
 
 export async function OriginalsQueue({ queue }: { queue: "recording" | "scoring" | "publishing" }) {
   const user = await currentUser()
-  // A re-recorded or enhanced video hands its place in the queues to the version that replaced it.
-  const rows = (await originals(user)).filter((r) => !r.replacedBy)
+  // Every version keeps its place in the queues, so two versions can both be published and tracked.
+  const all = await originals(user)
+  const rows = all.map((r) => ({ ...r, of: chainLength(r, all) }))
   const q = QUEUES.find((x) => x.key === queue)!
   const shown = rows.filter((r) => q.stages.includes(r.stage))
   return (
@@ -37,7 +38,21 @@ export async function OriginalsQueue({ queue }: { queue: "recording" | "scoring"
   )
 }
 
-function Table({ rows, admin }: { rows: OriginalRow[]; admin: boolean }) {
+/** How many versions the row's chain has, counted from the rows the viewer can see. */
+function chainLength(r: OriginalRow, all: OriginalRow[]) {
+  const byId = new Map(all.map((x) => [x.id, x]))
+  let root = r
+  while (root.parent && byId.has(root.parent)) root = byId.get(root.parent)!
+  let n = 1
+  let at = root
+  while (at.replacedBy && byId.has(at.replacedBy)) {
+    at = byId.get(at.replacedBy)!
+    n += 1
+  }
+  return n
+}
+
+function Table({ rows, admin }: { rows: (OriginalRow & { of: number })[]; admin: boolean }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
@@ -59,7 +74,7 @@ function Table({ rows, admin }: { rows: OriginalRow[]; admin: boolean }) {
                 </Link>
                 {r.name && <span className="text-slate-500"> · {r.name}</span>}
               </td>
-              <td className="tabular">{r.version}</td>
+              <td className="tabular">{r.of > 1 ? `v${r.version} of ${r.of}` : r.version}</td>
               <td>{STAGE_LABEL[r.stage]}</td>
               <td className="tabular">{when(r.at)}</td>
               {admin && <td className="text-slate-500">{r.owner}</td>}

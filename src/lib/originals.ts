@@ -72,6 +72,8 @@ export type EventInput = {
   plan?: string[]
   destinations?: { platform: string; url: string | null }[]
   youtubeId?: string
+  /** On a watching event: when the video went live on YouTube, when PAX2 knows it. */
+  published?: string
 }
 
 export type OriginalEvent = Item & EventInput & { at: string }
@@ -155,4 +157,26 @@ export const canSee = (row: OriginalRow, viewer: { email: string; admin: boolean
 export function gainOf(r: Distribution): { points: number; low: number; high: number } {
   const flip = r.points < 0
   return flip ? { points: -r.points, low: -r.high, high: -r.low } : { points: r.points, low: r.low, high: r.high }
+}
+
+/** Every version of a video, root first: back along `parent`, then forward along `replacedBy`. */
+export async function chainOf(id: string): Promise<OriginalRow[]> {
+  let root = await originalRow(id)
+  if (!root) return []
+  const seen = new Set([root.id])
+  while (root.parent && !seen.has(root.parent)) {
+    const up = await originalRow(root.parent)
+    if (!up) break
+    seen.add(up.id)
+    root = up
+  }
+  const chain = [root]
+  let at = root
+  while (at.replacedBy && !chain.some((r) => r.id === at.replacedBy)) {
+    const next = await originalRow(at.replacedBy)
+    if (!next) break
+    chain.push(next)
+    at = next
+  }
+  return chain
 }

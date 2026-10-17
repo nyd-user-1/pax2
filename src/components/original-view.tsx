@@ -9,6 +9,7 @@ import { currentUser } from "@/lib/auth"
 import { outbox } from "@/lib/mail"
 import { gainOf, STAGE_LABEL, type Evaluation, type OriginalRow } from "@/lib/originals"
 import { recentPolls } from "@/lib/velocity-store"
+import { versions } from "@/lib/versions"
 import { cn } from "@/ui/lib/utils"
 
 // The PAX2 channels as they will appear; a video's own link replaces its channel once it is posted.
@@ -69,6 +70,8 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
 
       <TabRail tabs={tabs} active={active} />
 
+      <Versions id={row.id} />
+
       {active === "recorded" && (
         <div className="grid gap-6 @3xl:grid-cols-[300px_1fr]">
           <Player src={`/api/video/${row.id}`} subject={row.id} className="shadow-e2" />
@@ -104,8 +107,8 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
 
       {active === "scored" && row.evaluation && (
         <div className="flex flex-col gap-6">
-          {admin && row.stage === "scored" && !row.replacedBy && <OriginalAdmin id={row.id} enhancing={false} />}
-          {admin && row.stage === "enhancing" && !row.replacedBy && <OriginalAdmin id={row.id} enhancing plan={row.events.filter((e) => e.kind === "enhance").at(-1)?.plan ?? []} />}
+          {admin && row.stage === "scored" && <OriginalAdmin id={row.id} enhancing={false} />}
+          {admin && row.stage === "enhancing" && <OriginalAdmin id={row.id} enhancing plan={row.events.filter((e) => e.kind === "enhance").at(-1)?.plan ?? []} />}
 
           <CardBlock title="Evaluation" height="auto" footer={`Scored ${when(row.events.filter((e) => e.kind === "scored").at(-1)!.at)}`}>
             <div className="flex flex-col gap-5">
@@ -223,6 +226,54 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
       {active === "published" && <Published row={row} admin={admin} />}
       {active === "polled" && <Polled row={row} />}
     </div>
+  )
+}
+
+/** Every version of the video side by side, and the version delta once two of them have been read
+ *  at 72 hours. */
+async function Versions({ id }: { id: string }) {
+  const { rows, delta } = await versions(id)
+  if (rows.length < 2) return null
+  return (
+    <TableBlock title="Versions" height="auto" footer={delta ? `Version delta: ${pts(delta.mean)} in ratio to the channel's median over ${delta.n} measured ${delta.n === 1 ? "pair" : "pairs"}, 90% range ${pts(delta.low)} to ${pts(delta.high)}` : "No measured pair yet."}>
+      <div className="overflow-x-auto">
+        <table className="tabular w-full text-sm">
+          <thead className="text-left text-xs text-slate-500">
+            <tr className="[&_th]:whitespace-nowrap [&_th]:py-2 [&_th]:pr-6 [&_th]:font-medium">
+              <th>Version</th>
+              <th>Stage</th>
+              <th>Lean, pts</th>
+              <th>Chance of a Hit</th>
+              <th>Views at 72h</th>
+              <th>Ratio at 72h</th>
+            </tr>
+          </thead>
+          <tbody className="[&_td]:whitespace-nowrap [&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2 [&_td]:pr-6">
+            {rows.map((r) => (
+              <tr key={r.id} className={cn(r.current && "bg-pax2-mist")}>
+                <td>
+                  {r.current ? (
+                    <span className="font-semibold text-slate-900">v{r.version}</span>
+                  ) : (
+                    <Link href={`/v/${r.id}`} scroll={false} className="font-medium text-pax2-light-blue hover:underline">
+                      v{r.version}
+                    </Link>
+                  )}
+                </td>
+                <td>
+                  {r.stage}
+                  {r.backfilled && <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">Backfilled</span>}
+                </td>
+                <td>{r.lean == null ? "-" : pts(r.lean)}</td>
+                <td>{r.p == null ? "-" : pct(r.p)}</td>
+                <td>{r.views == null ? "-" : `${r.views.toLocaleString("en-US")}${r.hour != null && r.hour < 71 ? ` (h${r.hour})` : ""}`}</td>
+                <td>{r.ratio72 == null ? "-" : `${r.ratio72.toFixed(2)}x`}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </TableBlock>
   )
 }
 

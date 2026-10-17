@@ -28,6 +28,14 @@ export async function recentPolls(days = 7): Promise<PollRow[]> {
   return (await Promise.all(keys.map(getText))).flatMap((t) => lines<PollRow>(t))
 }
 
+/** Every reading from `days` UTC days starting at `from`, for a video whose first hours are older
+ *  than the last week. */
+export async function pollsFrom(from: string, days: number): Promise<PollRow[]> {
+  const start = Date.parse(from.slice(0, 10))
+  const keys = Array.from({ length: days }, (_, i) => `polls/${new Date(start + i * 864e5).toISOString().slice(0, 10)}.jsonl`)
+  return (await Promise.all(keys.map(getText))).flatMap((t) => lines<PollRow>(t))
+}
+
 export async function baselines(): Promise<Record<string, { median: number | null }>> {
   return JSON.parse((await getText("baselines.json")) ?? "{}")
 }
