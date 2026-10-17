@@ -4,17 +4,18 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
   addEdge, Background, Controls, Handle, Panel, Position, ReactFlow, ReactFlowProvider,
   useEdgesState, useNodesState, useReactFlow,
-  type Connection, type Edge, type Node, type NodeProps,
+  type Connection, type ConnectionLineType, type ConnectionMode, type Edge, type Node, type NodeProps, type PanOnScrollMode, type SelectionMode,
 } from "@xyflow/react"
 import dagre from "@dagrejs/dagre"
 import { toast } from "sonner"
 import {
   ArrowLeft, BookOpen, Boxes, Check, ChevronRight, Clapperboard, Crosshair, ExternalLink, FileText, GripVertical, Hash, History, Layers, Loader2,
-  MessageSquare, Minus, MoreHorizontal, Play, Plus, Save, Search, Tv, Users, X,
+  MessageSquare, Minus, MoreHorizontal, Play, Plus, Save, Search, Settings2, Tv, Users, X,
 } from "lucide-react"
 
 import { canvasUploadUrl, listCanvases, listCanvasFiles, loadCanvas, saveCanvas, type CanvasFile } from "@/app/graph-actions"
 import { ChatDock } from "@/components/graph/chat-dock"
+import { DEFAULT_FLOW_PROPS, FlowSettingsPanel, type FlowProps } from "@/components/graph/flow-settings"
 import { whiteButton } from "@/components/white-button"
 import { describeEntity, readDragEntity, setDragEntity, type DragEntity } from "@/lib/drag-entity"
 import { similarTo, type CanvasRow, type CanvasState, type GraphChannel, type GraphData, type GraphVideo, type SavedEdge } from "@/lib/graph-data"
@@ -206,6 +207,7 @@ function nodeHeight(g: GNode, R: Rels): number {
 }
 
 type LayoutMode = "none" | "dagre-lr" | "dagre-tb"
+const LAYOUT_MODES: LayoutMode[] = ["none", "dagre-lr", "dagre-tb"]
 
 function layout(nodes: Node[], edges: Edge[], R: Rels, rankdir: "LR" | "TB"): Node[] {
   const g = new dagre.graphlib.Graph()
@@ -664,6 +666,11 @@ type Props = { data: GraphData; email: string | null; admin: boolean; boot: { vi
 type TraceStep = { key: string; prompt: string; status: "running" | "done" | "error" | "skipped"; input?: string; output?: string; error?: string; startedAt: number; ms?: number }
 type RunTrace = { id: string; label: string; startedAt: number; finishedAt?: number; steps: TraceStep[] }
 const RUNS_KEY = "pax2-graph-runs"
+const PROPS_KEY = "pax2-graph-flow-props"
+const LAYOUT_KEY = "pax2-graph-layout"
+
+/** An undo step: the canvas's content, never pan, zoom or selection. */
+type Snap = { store: [string, GNode][]; expand: [string, { loaded: number; total: number }][]; edges: Edge[]; pos: [string, { x: number; y: number }][]; at: number }
 
 const PILL = whiteButton("md", "h-8 px-3.5 py-0 text-[13px] shadow-none")
 const PILL_ICON = whiteButton("circle", "size-8 shadow-none")
@@ -697,7 +704,14 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   const [searchFocused, setSearchFocused] = useState(false)
   const [visible, setVisible] = useState(15)
   const [joinKinds, setJoinKinds] = useState<Record<string, boolean>>({ channel: true, group: true, topic: true, tag: true })
-  const layoutModeRef = useRef<LayoutMode>("dagre-lr")
+  const [layoutMode, setLayoutMode] = useState<LayoutMode>("dagre-lr")
+  // syncNodes reads the mode through a ref so a change doesn't churn every callback built on it
+  const layoutModeRef = useRef<LayoutMode>(layoutMode)
+  layoutModeRef.current = layoutMode
+  const [flowProps, setFlowProps] = useState<FlowProps>(DEFAULT_FLOW_PROPS)
+  const propsLoaded = useRef(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [dataset, setDataset] = useState("top-reform-core")
   const [dockOpen, setDockOpen] = useState(false)
   const [attached, setAttached] = useState<DragEntity | null>(null)
   const [canvas, setCanvas] = useState<{ id?: string; name: string } | null>(null)
@@ -707,6 +721,69 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   const [railRefresh, setRailRefresh] = useState(0)
 
   const fit = useCallback(() => setTimeout(() => fitView({ padding: 0.15, duration: 400 }), 60), [fitView])
+
+  // The settings persist in the browser; read after mount so the server render matches.
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(PROPS_KEY) ?? "null")
+      if (saved && typeof saved === "object") setFlowProps({ ...DEFAULT_FLOW_PROPS, ...saved })
+      const m = localStorage.getItem(LAYOUT_KEY) as LayoutMode | null
+      if (m && LAYOUT_MODES.includes(m)) { setLayoutMode(m); layoutModeRef.current = m }
+    } catch { /* defaults */ }
+    propsLoaded.current = true
+  }, [])
+  useEffect(() => {
+    if (!propsLoaded.current) return
+    try { localStorage.setItem(PROPS_KEY, JSON.stringify(flowProps)) } catch { /* quota */ }
+  }, [flowProps])
+
+  /* ── undo and redo: every content mutation snapshots first; ⌘Z, ⌘⇧Z and ⌘Y walk the stacks.
+   *    Snapshots within 150 ms coalesce (an expansion adds its cards, then its "+N more"). ── */
+  const past = useRef<Snap[]>([])
+  const future = useRef<Snap[]>([])
+  const takeSnap = useCallback((): Snap => ({
+    store: [...store.current.entries()],
+    expand: [...expandState.current.entries()],
+    edges: edgesRef.current,
+    pos: nodesRef.current.map((n) => [n.id, n.position]),
+    at: Date.now(),
+  }), [])
+  const snapshot = useCallback(() => {
+    const last = past.current[past.current.length - 1]
+    if (last && Date.now() - last.at < 150) return
+    past.current = [...past.current.slice(-49), takeSnap()]
+    future.current = []
+  }, [takeSnap])
+  const restore = useCallback((snap: Snap) => {
+    store.current = new Map(snap.store)
+    expandState.current = new Map(snap.expand)
+    edgesRef.current = snap.edges
+    const pos = new Map(snap.pos)
+    setSelectedKey(null)
+    setEdgeInfo(null)
+    setEdges(snap.edges)
+    setNodes([...store.current.values()].map((g) => ({ id: keyOf(g), type: "entity", position: pos.get(keyOf(g)) ?? { x: 0, y: 0 }, data: { ...g } })))
+  }, [setEdges, setNodes])
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if (!(e.metaKey || e.ctrlKey)) return
+      const k = e.key.toLowerCase()
+      if (k !== "z" && k !== "y") return
+      const el = document.activeElement as HTMLElement | null
+      if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.tagName === "SELECT" || el.isContentEditable)) return
+      const redo = k === "y" || (k === "z" && e.shiftKey)
+      const from = redo ? future.current : past.current
+      if (!from.length) return
+      e.preventDefault()
+      const snap = from[from.length - 1]
+      const now = takeSnap()
+      if (redo) { future.current = from.slice(0, -1); past.current = [...past.current.slice(-49), now] }
+      else { past.current = from.slice(0, -1); future.current = [...future.current.slice(-49), now] }
+      restore(snap)
+    }
+    window.addEventListener("keydown", h)
+    return () => window.removeEventListener("keydown", h)
+  }, [restore, takeSnap])
 
   const syncNodes = useCallback((allEdges: Edge[], relayout: boolean) => {
     setNodes((prev) => {
@@ -742,6 +819,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
 
   const addNodes = useCallback((items: GNode[], from?: string, opts: { relayout?: boolean; kind?: EdgeMeta["kind"]; at?: { x: number; y: number } } = {}) => {
     const { relayout = true, kind, at } = opts
+    snapshot()
     for (const it of items) store.current.set(keyOf(it), { ...store.current.get(keyOf(it)), ...it })
     // an explicit drop point wins over layout: seed the position so syncNodes sees it placed
     if (at) setNodes((prev) => [
@@ -759,7 +837,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
       : []
     commitEdges([...prev, ...added], relayout)
     if (relayout) fit()
-  }, [setNodes, commitEdges, fit])
+  }, [setNodes, commitEdges, fit, snapshot])
 
   const patchNode = useCallback((key: string, patch: Partial<GNode>) => {
     const g = store.current.get(key)
@@ -769,18 +847,21 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   }, [setNodes])
 
   const removeNode = useCallback((key: string) => {
-    if (!store.current.delete(key)) return
+    if (!store.current.has(key)) return
+    snapshot()
+    store.current.delete(key)
     commitEdges(edgesRef.current.filter((e) => e.source !== key && e.target !== key), true)
-  }, [commitEdges])
+  }, [commitEdges, snapshot])
 
   const toggleGroup = useCallback((key: string, group: string) => {
     const g = store.current.get(key)
     if (!g) return
     const cur = g.openGroups ?? []
+    snapshot()
     patchNode(key, { openGroups: cur.includes(group) ? cur.filter((x) => x !== group) : [...cur, group] })
     // the card's height changed; dagre must see it
     syncNodes(edgesRef.current, true)
-  }, [patchNode, syncNodes])
+  }, [patchNode, syncNodes, snapshot])
 
   const expand = useCallback((node: GNode, rel: string) => {
     const r = relationsOf(node, R).find((x) => x.rel === rel)
@@ -856,13 +937,15 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
       .filter(([f, t]) => !have.has(`${f}->${t}`) && !have.has(`${t}->${f}`))
       .map(([f, t]) => ({ id: `${f}->${t}`, source: f, target: t }))
     if (!fresh.length && !added.length) return
+    snapshot()
     for (const a of added) store.current.set(keyOf(a), a)
     commitEdges([...prev, ...fresh], true)
     fit()
-  }, [R, joinKinds, commitEdges, fit])
+  }, [R, joinKinds, commitEdges, fit, snapshot])
 
   /** Replace the canvas with one entity, arriving with its first relation expanded. */
   const center = useCallback((g: GNode) => {
+    snapshot()
     store.current = new Map([[keyOf(g), g]])
     expandState.current = new Map()
     edgesRef.current = []
@@ -875,7 +958,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     const first = relationsOf(g, R)[0]
     if (first) expand(g, first.rel)
     else fit()
-  }, [R, setEdges, setNodes, expand, fit])
+  }, [R, setEdges, setNodes, expand, fit, snapshot])
 
   const addToCanvas = useCallback((g: GNode) => {
     if (store.current.has(keyOf(g))) { toast.info(`${g.label} is already on the canvas`); return }
@@ -894,6 +977,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   /* ── saved canvases ── */
 
   const applyState = useCallback((state: CanvasState) => {
+    snapshot()
     store.current = new Map(state.nodes.map(({ x: _x, y: _y, ...g }) => [keyOf(g), g as GNode]))
     expandState.current = new Map()
     const es = state.edges.filter((e) => store.current.has(e.s) && store.current.has(e.t)).map(toEdge)
@@ -903,7 +987,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     setSelectedKey(null)
     setEdgeInfo(null)
     fit()
-  }, [setEdges, setNodes, fit])
+  }, [setEdges, setNodes, fit, snapshot])
 
   /** A saved view replaces the canvas; nothing on /graph navigates away. */
   const loadView = useCallback(async (id: string) => {
@@ -950,16 +1034,57 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   useEffect(() => {
     if (booted.current) return
     booted.current = true
-    if (boot.view) { loadView(boot.view); return }
+    // the boot itself is not an undo step
+    if (boot.view) { loadView(boot.view).finally(() => { past.current = [] }); return }
     const c = boot.center
-    if (c?.includes(":")) {
-      const [type, ...rest] = c.split(":")
-      const found = findEntity(type, rest.join(":"))
-      if (found) { center(found); return }
-    }
+    const [type, ...rest] = c?.includes(":") ? c.split(":") : []
+    const found = type ? findEntity(type, rest.join(":")) : null
     const top = [...R.channel.values()].sort((a, b) => b.pushed - a.pushed)[0]
-    if (top) center(channelNode(top))
+    if (found) center(found)
+    else if (top) center(channelNode(top))
+    past.current = []
   }, [boot, R, center, findEntity, loadView])
+
+  /* ── the settings panel's two extra sections: seed datasets and the layout library ── */
+
+  const datasets = useMemo(() => {
+    const topOf = (group: string) => [...R.channel.values()].filter((c) => c.group === group).sort((a, b) => b.pushed - a.pushed || b.n - a.n)[0]
+    const core = topOf("reform-core"), reform = topOf("reform")
+    const topic = [...R.byTopic.entries()].sort((a, b) => b[1].length - a[1].length)[0]
+    const video = [...R.video.values()].sort((a, b) => (b.ratio ?? 0) - (a.ratio ?? 0))[0]
+    return [
+      ...(core ? [{ id: "top-reform-core", label: `${core.name} (reform-core)`, seed: channelNode(core) }] : []),
+      ...(reform ? [{ id: "top-reform", label: `${reform.name} (reform)`, seed: channelNode(reform) }] : []),
+      ...(topic ? [{ id: "top-topic", label: `${topic[0]} (topic)`, seed: topicOf(topic[0], R) }] : []),
+      ...(video ? [{ id: "top-video", label: `${video.title.slice(0, 40)} (video)`, seed: videoNode(video) }] : []),
+      { id: "empty", label: "Empty canvas", seed: null as GNode | null },
+    ]
+  }, [R])
+
+  const applyDataset = useCallback((id: string) => {
+    const d = datasets.find((x) => x.id === id)
+    if (!d) return
+    setDataset(id)
+    if (d.seed) { center(d.seed); return }
+    snapshot()
+    store.current = new Map()
+    expandState.current = new Map()
+    edgesRef.current = []
+    setEdges([])
+    setNodes([])
+    setSelectedKey(null)
+    setEdgeInfo(null)
+    setCanvas(null)
+  }, [datasets, center, snapshot, setEdges, setNodes])
+
+  const changeLayoutMode = useCallback((m: string) => {
+    if (!LAYOUT_MODES.includes(m as LayoutMode)) return
+    setLayoutMode(m as LayoutMode)
+    layoutModeRef.current = m as LayoutMode
+    try { localStorage.setItem(LAYOUT_KEY, m) } catch { /* quota */ }
+    syncNodes(edgesRef.current, true)
+    fit()
+  }, [syncNodes, fit])
 
   /** Citation chips in the chat center their video on the canvas instead of navigating. */
   useEffect(() => {
@@ -1115,17 +1240,19 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
 
   const addPromptNode = useCallback((screen: { x: number; y: number }) => {
     const g: GNode = { type: "prompt", id: Math.random().toString(36).slice(2, 8), label: "Prompt step", prompt: "" }
+    snapshot()
     store.current.set(keyOf(g), g)
     setNodes((prev) => [...prev, { id: keyOf(g), type: "entity", position: screenToFlowPosition(screen), data: { ...g } }])
-  }, [setNodes, screenToFlowPosition])
+  }, [setNodes, screenToFlowPosition, snapshot])
 
   /** Data edges are records; the only lines a reader draws go into prompt steps. */
   const onConnect = useCallback((c: Connection) => {
     if (!c.target?.startsWith("prompt:")) { toast.error("Draw connections into prompt steps; data edges are records, not drawings."); return }
+    snapshot()
     const all = addEdge({ ...c, id: `${c.source}->${c.target}`, data: { kind: "wired" } as EdgeMeta }, edgesRef.current)
     edgesRef.current = all
     setEdges(all)
-  }, [setEdges])
+  }, [setEdges, snapshot])
 
   /* ── drops: an entity lands where dropped; a file uploads, then lands ── */
 
@@ -1274,15 +1401,52 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
           onPaneClick={() => { setSelectedKey(null); setEdgeInfo(null) }}
           onPaneContextMenu={(e) => { e.preventDefault(); addPromptNode({ x: e.clientX, y: e.clientY }) }}
           onNodesDelete={(del) => del.forEach((n) => removeNode(n.id))}
-          onEdgesDelete={(del) => { const ids = new Set(del.map((x) => x.id)); commitEdges(edgesRef.current.filter((x) => !ids.has(x.id)), false) }}
+          onEdgesDelete={(del) => { snapshot(); const ids = new Set(del.map((x) => x.id)); commitEdges(edgesRef.current.filter((x) => !ids.has(x.id)), false) }}
           fitView
-          minZoom={0.15}
           proOptions={{ hideAttribution: true }}
+          colorMode={flowProps.colorMode}
+          selectionMode={flowProps.selectionMode as SelectionMode}
+          selectNodesOnDrag={flowProps.selectNodesOnDrag}
+          elevateNodesOnSelect={flowProps.elevateNodesOnSelect}
+          elevateEdgesOnSelect={flowProps.elevateEdgesOnSelect}
+          paneClickDistance={flowProps.paneClickDistance}
+          preventScrolling={flowProps.preventScrolling}
+          selectionOnDrag={flowProps.selectionOnDrag}
+          panOnDrag={flowProps.panOnDrag}
+          panOnScroll={flowProps.panOnScroll}
+          panOnScrollSpeed={flowProps.panOnScrollSpeed}
+          panOnScrollMode={flowProps.panOnScrollMode as PanOnScrollMode}
+          zoomOnScroll={flowProps.zoomOnScroll}
+          zoomOnPinch={flowProps.zoomOnPinch}
+          zoomOnDoubleClick={flowProps.zoomOnDoubleClick}
+          nodesDraggable={flowProps.nodesDraggable}
+          nodeDragThreshold={flowProps.nodeDragThreshold}
+          nodesConnectable={flowProps.nodesConnectable}
+          elementsSelectable={flowProps.elementsSelectable}
+          autoPanOnConnect={flowProps.autoPanOnConnect}
+          autoPanOnNodeDrag={flowProps.autoPanOnNodeDrag}
+          autoPanSpeed={flowProps.autoPanSpeed}
+          minZoom={flowProps.minZoom}
+          maxZoom={flowProps.maxZoom}
+          onlyRenderVisibleElements={flowProps.onlyRenderVisibleElements}
+          snapToGrid={flowProps.snapToGrid}
+          snapGrid={[flowProps.snapGridX || 1, flowProps.snapGridY || 1]}
+          connectionMode={flowProps.connectionMode as ConnectionMode}
+          connectionRadius={flowProps.connectionRadius}
+          connectionLineType={flowProps.connectionLineType as ConnectionLineType}
+          connectOnClick={flowProps.connectOnClick}
+          nodesFocusable={flowProps.nodesFocusable}
+          edgesFocusable={flowProps.edgesFocusable}
+          deleteKeyCode={flowProps.deleteKeyCode || null}
+          selectionKeyCode={flowProps.selectionKeyCode || null}
+          multiSelectionKeyCode={flowProps.multiSelectionKeyCode || null}
+          zoomActivationKeyCode={flowProps.zoomActivationKeyCode || null}
+          panActivationKeyCode={flowProps.panActivationKeyCode || null}
         >
           <Background gap={18} color="#e2e8f0" />
           <Controls showInteractive={false} />
-          <Panel position="top-left">
-            <div className="relative">
+          <Panel position="top-left" className="pointer-events-none !right-0 flex flex-wrap items-start justify-between gap-2">
+            <div className="pointer-events-auto relative">
               <div className="rounded-full border border-slate-200 bg-white/90 p-1 shadow-e1 backdrop-blur-sm">
                 <div className="flex h-8 w-96 max-w-[calc(100vw-3rem)] items-center gap-2 overflow-hidden rounded-full border border-slate-200 bg-white px-3">
                   <Search className="h-4 w-4 shrink-0 text-slate-400" />
@@ -1321,9 +1485,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
                 </div>
               )}
             </div>
-          </Panel>
-          <Panel position="top-right">
-            <div className="flex flex-col items-end gap-2">
+            <div className="pointer-events-auto ml-auto flex flex-col items-end gap-2">
               <div className={GROUP_BAR}>
                 <button className={PILL} onClick={() => addPromptNode(paneCenter())}><Plus className="h-3.5 w-3.5" /> Prompt</button>
                 <button className={PILL} onClick={runAll} disabled={!hasPrompts || !!running}>
@@ -1335,6 +1497,9 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
                     <History className="h-4 w-4" />
                   </button>
                 )}
+                <button className={cn(PILL_ICON, settingsOpen && "border-pax2-blue bg-slate-50")} aria-pressed={settingsOpen} aria-label="Canvas settings" title="Canvas settings" onClick={() => setSettingsOpen((v) => !v)}>
+                  <Settings2 className="h-4 w-4" />
+                </button>
               </div>
               <div className={cn(GROUP_BAR, "pl-3")}>
                 <span className="text-xs text-slate-500">Join on select</span>
@@ -1354,7 +1519,20 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
         <ChatDock context={canvasContext} open={dockOpen} onOpenChange={setDockOpen} attached={attached} onAttach={setAttached} />
       </div>
 
-      {sel && sel.type !== "more" && (
+      {settingsOpen && (
+        <FlowSettingsPanel
+          value={flowProps}
+          onChange={setFlowProps}
+          dataset={dataset}
+          onDataset={applyDataset}
+          datasets={datasets.map(({ id, label }) => ({ id, label }))}
+          layoutMode={layoutMode}
+          onLayoutMode={changeLayoutMode}
+          onClose={() => setSettingsOpen(false)}
+          onReset={() => setFlowProps(DEFAULT_FLOW_PROPS)}
+        />
+      )}
+      {!settingsOpen && sel && sel.type !== "more" && (
         <div className={SIDE}>
           <SideHeader badge={sel.type} onClose={() => setSelectedKey(null)} />
           {sel.type === "prompt" ? (
@@ -1382,7 +1560,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
           )}
         </div>
       )}
-      {!sel && edgeInfo && (() => {
+      {!settingsOpen && !sel && edgeInfo && (() => {
         const r = receipt(edgeInfo.source, edgeInfo.target, edgeInfo.meta)
         return (
           <div className={SIDE}>
@@ -1401,7 +1579,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
           </div>
         )
       })()}
-      {!sel && !edgeInfo && run && (() => {
+      {!settingsOpen && !sel && !edgeInfo && run && (() => {
         const step = traceStep != null ? run.steps[traceStep] : null
         return (
           <div className={SIDE}>
