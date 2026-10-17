@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { RevealFx } from "@/components/reveal-fx"
@@ -74,13 +74,20 @@ const TITLES: [string, string][] = [
 
 const PANEL_THIRD = "md:w-[clamp(420px,34vw,620px)]"
 const PANEL_HALF = "md:w-[50vw]"
+// A dragged split: the panel's width as a share of the viewport, carried in --split.
+const PANEL_CUSTOM = "md:w-(--split)"
+const SPLIT_KEY = "pax2:split"
+const MIN_PANE = 320
+const GAP = 18
 
 type PanelState = {
   setOpen: (open: boolean) => void
   wide: boolean
   setWide: (wide: boolean) => void
-  /** The right panel's three sizes: a third, half, or the whole content area. */
+  /** The right panel's three sizes: a third, half, or the whole content area; custom once the divider is dragged. */
   size: PanelSize
+  /** Where the size button goes next. */
+  nextSize: PanelSize
   cycleSize: () => void
   panelOpen: boolean
   sidebarOpen: boolean
@@ -88,16 +95,22 @@ type PanelState = {
   discuss: boolean
   toggleDiscuss: () => void
 }
-export type PanelSize = "third" | "half" | "full"
-const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {}, size: "third", cycleSize: () => {}, panelOpen: false, sidebarOpen: false, toggleSidebar: () => {}, discuss: false, toggleDiscuss: () => {} })
+export type PanelSize = "third" | "half" | "full" | "custom"
+const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {}, size: "third", nextSize: "half", cycleSize: () => {}, panelOpen: false, sidebarOpen: false, toggleSidebar: () => {}, discuss: false, toggleDiscuss: () => {} })
 export const useShellPanel = () => React.useContext(PanelCtx)
 
 export function Shell({ children, drawer, signedIn = false }: { children: React.ReactNode; drawer: React.ReactNode; signedIn?: boolean }) {
   const path = usePathname()
+  const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = React.useState(false)
   const [panelOpen, setPanelOpen] = React.useState(false)
   const [size, setSize] = React.useState<PanelSize>("third")
   const wide = size !== "third"
+  const [split, setSplit] = React.useState(0.34)
+  const [dragging, setDragging] = React.useState(false)
+  // The size to return to once the panel that took the page closes.
+  const restore = React.useRef<PanelSize | null>(null)
+  const nextSize: PanelSize = size === "third" ? "half" : size === "half" ? "full" : size === "full" ? "third" : split < 0.5 ? "half" : "full"
   const [scrolled, setScrolled] = React.useState(false)
   const [discuss, setDiscuss] = React.useState(false)
   const animKey = React.useRef("Scored")
@@ -107,15 +120,57 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
       wide,
       setWide: (w: boolean) => setSize(w ? "half" : "third"),
       size,
-      cycleSize: () => setSize((s) => (s === "third" ? "half" : s === "half" ? "full" : "third")),
+      nextSize,
+      cycleSize: () => ((restore.current = null), setSize(nextSize)),
       panelOpen,
       sidebarOpen,
       toggleSidebar: () => setSidebarOpen((v) => !v),
       discuss,
       toggleDiscuss: () => setDiscuss((v) => !v),
     }),
-    [wide, size, panelOpen, sidebarOpen, discuss],
+    [wide, size, nextSize, panelOpen, sidebarOpen, discuss],
   )
+  // The split is remembered between visits; a takeover of the whole page is not.
+  React.useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(SPLIT_KEY) ?? "null") as { size?: PanelSize; split?: number } | null
+      if (typeof saved?.split === "number") setSplit(saved.split)
+      if (saved?.size && saved.size !== "full") setSize(saved.size)
+    } catch {}
+  }, [])
+  React.useEffect(() => {
+    if (dragging || size === "full") return
+    localStorage.setItem(SPLIT_KEY, JSON.stringify({ size, split }))
+  }, [size, split, dragging])
+  // Closing the panel after the page was closed beside it brings the page back at its old split.
+  const open = panelOpen || discuss
+  React.useEffect(() => {
+    if (open || !restore.current) return
+    setSize(restore.current)
+    restore.current = null
+  }, [open])
+  React.useEffect(() => {
+    if (!dragging) return
+    const s = document.body.style
+    const prev = [s.cursor, s.userSelect]
+    s.cursor = "col-resize"
+    s.userSelect = "none"
+    return () => {
+      s.cursor = prev[0]
+      s.userSelect = prev[1]
+    }
+  }, [dragging])
+  const mainRef = React.useRef<HTMLDivElement>(null)
+  const drawerRef = React.useRef<HTMLDivElement>(null)
+  // Sets the panel's width from where the divider sits, leaving each pane at least MIN_PANE.
+  const resizeTo = (x: number) => {
+    const right = drawerRef.current?.getBoundingClientRect().right
+    const left = mainRef.current?.getBoundingClientRect().left
+    if (right == null || left == null) return
+    const w = Math.max(MIN_PANE, Math.min(right - x - GAP / 2, right - left - GAP - MIN_PANE))
+    setSplit(w / window.innerWidth)
+    setSize("custom")
+  }
   const active = (href: string) => (href === "/scoring" ? path === "/scoring" : path.startsWith(href))
   // The front door (landing, record entry, sign-in) is full bleed; every step from /record/start on sits in the shell.
   const home = path === "/"
@@ -186,9 +241,12 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
   const title = TITLES.find(([p]) => path.startsWith(p))?.[1] ?? (path === "/" ? "Scored" : path.slice(1).split("/")[0].replace(/^./, (c) => c.toUpperCase()))
   // The take panel must not remount (and re-fade) the page beneath it.
   if (!path.startsWith("/v/")) animKey.current = title
-  const panelW = size === "half" ? PANEL_HALF : PANEL_THIRD
+  const panelW = size === "half" ? PANEL_HALF : size === "custom" ? PANEL_CUSTOM : PANEL_THIRD
   // Full: the panel takes the whole content area and the page beneath folds away.
-  const takeover = (panelOpen || discuss) && size === "full"
+  const takeover = open && size === "full"
+  // Both panes side by side: the divider and the corner closes show.
+  const paired = open && !takeover
+  const closePanel = () => (panelOpen ? router.back() : setDiscuss(false))
   // /chat fills the content card edge to edge, as solar's chat fills its main area.
   const full = path.startsWith("/chat") || path.startsWith("/graph")
   return (
@@ -197,51 +255,111 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
         <div className={cn("hidden shrink-0 overflow-hidden transition-[width,margin] duration-300 ease-in-out md:block", sidebarOpen ? "md:mr-[18px] md:w-60" : "md:w-0")}>
           {sidebar}
         </div>
-        <div className={cn("flex min-w-0 flex-1 flex-col md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:bg-pax2-mist md:shadow-e2", takeover && "md:hidden")}>
-          <header className="sticky top-0 z-20 flex items-center gap-3 border-b bg-white/90 px-4 py-2.5 backdrop-blur md:hidden">
-            <Link href="/" aria-label="Home"><Wordmark size={18} /></Link>
-            <nav className="no-scrollbar flex flex-1 gap-1 overflow-x-auto">
-              {NAV.map(({ href, label }) => (
-                <Link key={href} href={href} className={cn("whitespace-nowrap rounded-full px-3 py-1 text-xs", active(href) ? "bg-pax2-lavender font-semibold text-pax2-blue" : "text-slate-500")}>
-                  {label}
-                </Link>
-              ))}
-            </nav>
-            <Link href="/record" className="flex shrink-0 items-center gap-1.5 rounded-full bg-pax2-blue px-3 py-1.5 text-xs font-semibold text-white">
-              <Video className="size-3.5" /> Record
-            </Link>
-          </header>
-          <div className={cn("relative z-10 hidden shrink-0 items-center gap-3 px-5 py-4 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)] md:flex")}>
-            <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className={whiteButton("circle")}>
-              {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
-            </button>
-            <PageSwitcher title={title} />
-            <div className="flex-1" />
-            {/* A page's own header controls (the dashboard's poller switch and pipeline run) portal in here. */}
-            <div id="page-actions" className="flex items-center gap-3" />
-            <Link href="/record" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-pax2-blue text-white shadow-md transition-shadow hover:shadow-e3">
-              <Video className="size-4" />
-            </Link>
-            {/* 44b's DiscussionHeaderButton: the discussion panel opens from every page. */}
-            <button type="button" onClick={() => setDiscuss((v) => !v)} aria-pressed={discuss} aria-label="Open the discussion" className={whiteButton("circle")}>
-              <MessagesSquare className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
-            </button>
+        <div ref={mainRef} className={cn("relative flex min-w-0 flex-1 flex-col", takeover && "md:hidden")}>
+          <div className="flex min-w-0 flex-1 flex-col md:min-h-0 md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:bg-pax2-mist md:shadow-e2">
+            <header className="sticky top-0 z-20 flex items-center gap-3 border-b bg-white/90 px-4 py-2.5 backdrop-blur md:hidden">
+              <Link href="/" aria-label="Home"><Wordmark size={18} /></Link>
+              <nav className="no-scrollbar flex flex-1 gap-1 overflow-x-auto">
+                {NAV.map(({ href, label }) => (
+                  <Link key={href} href={href} className={cn("whitespace-nowrap rounded-full px-3 py-1 text-xs", active(href) ? "bg-pax2-lavender font-semibold text-pax2-blue" : "text-slate-500")}>
+                    {label}
+                  </Link>
+                ))}
+              </nav>
+              <Link href="/record" className="flex shrink-0 items-center gap-1.5 rounded-full bg-pax2-blue px-3 py-1.5 text-xs font-semibold text-white">
+                <Video className="size-3.5" /> Record
+              </Link>
+            </header>
+            <div className={cn("relative z-10 hidden shrink-0 items-center gap-3 px-5 py-4 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)] md:flex")}>
+              <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className={whiteButton("circle")}>
+                {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
+              </button>
+              <PageSwitcher title={title} />
+              <div className="flex-1" />
+              {/* A page's own header controls (the dashboard's poller switch and pipeline run) portal in here. */}
+              <div id="page-actions" className="flex items-center gap-3" />
+              <Link href="/record" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-pax2-blue text-white shadow-md transition-shadow hover:shadow-e3">
+                <Video className="size-4" />
+              </Link>
+              {/* 44b's DiscussionHeaderButton: the discussion panel opens from every page. */}
+              <button type="button" onClick={() => setDiscuss((v) => !v)} aria-pressed={discuss} aria-label="Open the discussion" className={whiteButton("circle")}>
+                <MessagesSquare className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
+              </button>
+            </div>
+            <main className={cn("flex-1", full ? "flex min-h-0 flex-col md:overflow-hidden" : "md:overflow-y-auto")} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
+              {/* Each page arrives with RevealFx's wipe; the front door has its curtain instead. */}
+              <RevealFx key={animKey.current} translateY={4} className={cn("@container w-full", full ? "flex min-h-0 flex-1 flex-col" : "px-5 py-6 md:px-10 md:py-9")}>
+                {children}
+              </RevealFx>
+            </main>
           </div>
-          <main className={cn("flex-1", full ? "flex min-h-0 flex-col md:overflow-hidden" : "md:overflow-y-auto")} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
-            {/* Each page arrives with RevealFx's wipe; the front door has its curtain instead. */}
-            <RevealFx key={animKey.current} translateY={4} className={cn("@container w-full", full ? "flex min-h-0 flex-1 flex-col" : "px-5 py-6 md:px-10 md:py-9")}>
-              {children}
-            </RevealFx>
-          </main>
+          {/* Closing the page hands the panel the whole area. */}
+          {paired && <CornerClose label="Close the page" onClose={() => ((restore.current = size), setSize("full"))} />}
         </div>
-        <div className={cn("w-0 shrink-0 overflow-hidden transition-[width,margin] duration-300 ease-in-out", (panelOpen || discuss) && (takeover ? "md:w-auto md:flex-1" : cn("md:ml-[18px]", panelW)))}>
-          <div className={cn("h-full", takeover ? "w-full" : panelW)}>
+        {/* Chrome's split-view divider: drag to resize, double-click for the default third. */}
+        <div className={cn("hidden w-0 shrink-0 items-center justify-center transition-[width] duration-300 ease-in-out md:flex", paired && "md:w-[18px]", dragging && "transition-none")}>
+          {paired && (
+            <div
+              role="separator"
+              aria-orientation="vertical"
+              aria-label="Resize the panels"
+              tabIndex={0}
+              onPointerDown={(e) => {
+                if (e.button !== 0) return
+                e.preventDefault()
+                e.currentTarget.setPointerCapture(e.pointerId)
+                setDragging(true)
+              }}
+              onPointerMove={(e) => e.currentTarget.hasPointerCapture(e.pointerId) && resizeTo(e.clientX)}
+              onPointerUp={() => setDragging(false)}
+              onPointerCancel={() => setDragging(false)}
+              onLostPointerCapture={() => setDragging(false)}
+              onDoubleClick={() => setSize("third")}
+              onKeyDown={(e) => {
+                if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return
+                e.preventDefault()
+                const left = drawerRef.current?.getBoundingClientRect().left ?? 0
+                resizeTo(left - GAP / 2 + (e.key === "ArrowLeft" ? -24 : 24))
+              }}
+              className="group flex h-16 w-[18px] cursor-col-resize touch-none items-center justify-center outline-none"
+            >
+              <span className={cn("h-8 w-1 rounded-full transition-colors group-hover:bg-pax2-blue group-focus-visible:bg-pax2-blue", dragging ? "bg-pax2-blue" : "bg-slate-300")} />
+            </div>
+          )}
+        </div>
+        <div
+          ref={drawerRef}
+          style={{ "--split": `${split * 100}vw` } as React.CSSProperties}
+          className={cn("w-0 shrink-0 overflow-hidden transition-[width] duration-300 ease-in-out", open && (takeover ? "md:w-auto md:flex-1" : panelW), dragging && "transition-none")}
+        >
+          <div className={cn("relative h-full", takeover ? "w-full" : panelW)}>
             {drawer}
             {discuss && !panelOpen && <DiscussionPanel onClose={() => setDiscuss(false)} />}
+            {paired && <CornerClose label="Close" onClose={closePanel} />}
           </div>
         </div>
       </div>
     </PanelCtx.Provider>
+  )
+}
+
+// Chrome's split-view tab: a bite out of the pane's bottom-right corner holding its close. The pane's
+// border runs around the bite, rounded out where it leaves the edges and in at its inner corner; the
+// bite is painted the shell's ground (white under slate-200/60) so the pane reads as cut.
+const BITE_EDGE = "M43.5 0V0.5A8 8 0 0 1 35.5 8.5H18.5A10 10 0 0 0 8.5 18.5V35.5A8 8 0 0 1 0.5 43.5H0"
+const BITE_FILL = `${BITE_EDGE}V44H44V0Z`
+function CornerClose({ label, onClose }: { label: string; onClose: () => void }) {
+  return (
+    <div className="pointer-events-none absolute bottom-0 right-0 z-30 hidden size-11 md:block">
+      <svg aria-hidden viewBox="0 0 44 44" className="absolute inset-0 size-full">
+        <path d={BITE_FILL} className="fill-background" />
+        <path d={BITE_FILL} className="fill-slate-200/60" />
+        <path d={BITE_EDGE} fill="none" strokeWidth={1} className="stroke-slate-500" />
+      </svg>
+      <button type="button" onClick={onClose} aria-label={label} className="pointer-events-auto absolute bottom-1.5 right-1.5 flex size-6 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-300/70 hover:text-pax2-blue">
+        <X className="size-3.5" strokeWidth={2.25} />
+      </button>
+    </div>
   )
 }
 

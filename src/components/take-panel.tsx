@@ -12,7 +12,7 @@ import { whiteButton } from "@/components/white-button"
  *  its channel: pressing it searches the feed for that channel. */
 export function TakePanel({ title, search, children }: { title: string; search?: string; children: React.ReactNode }) {
   const router = useRouter()
-  const { setOpen, size, cycleSize } = useShellPanel()
+  const { setOpen, nextSize, cycleSize } = useShellPanel()
   const [scrolled, setScrolled] = React.useState(false)
   React.useEffect(() => {
     setOpen(true)
@@ -44,9 +44,9 @@ export function TakePanel({ title, search, children }: { title: string; search?:
           <p className="truncate font-display text-xl text-slate-900">{title}</p>
         )}
         <div className="flex shrink-0 items-center gap-2">
-          {/* The icon shows the size the next press goes to: a third, half, then the whole area. */}
-          <button type="button" onClick={cycleSize} className={whiteButton("circle", "hidden md:inline-flex")} aria-label={size === "third" ? "Half the page" : size === "half" ? "Full page" : "A third of the page"}>
-            {size === "third" ? <Columns2 className="size-4" /> : size === "half" ? <Maximize2 className="size-4" /> : <Columns3 className="size-4" />}
+          {/* The icon shows the size the next press goes to: a third, half, then the whole area; a dragged split goes to whichever is wider. */}
+          <button type="button" onClick={cycleSize} className={whiteButton("circle", "hidden md:inline-flex")} aria-label={nextSize === "half" ? "Half the page" : nextSize === "full" ? "Full page" : "A third of the page"}>
+            {nextSize === "half" ? <Columns2 className="size-4" /> : nextSize === "full" ? <Maximize2 className="size-4" /> : <Columns3 className="size-4" />}
           </button>
           <button type="button" onClick={() => router.back()} className={whiteButton("circle")} aria-label="Close">
             <X className="size-4" />

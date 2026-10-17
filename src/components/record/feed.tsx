@@ -787,10 +787,10 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
         .toSorted(orderOf(sorts)),
     [videos, needle, channel, tag, sorts],
   )
-  // With a video's drawer open beside the feed, search results lay out as a grid: three across beside
-  // the half-page panel, two beside the third-of-a-page one.
-  const { panelOpen, size } = useShellPanel()
-  const resultCols = panelOpen && size === "half" ? "sm:grid-cols-3" : panelOpen && size === "third" ? "sm:grid-cols-2" : null
+  // With a video's drawer open beside the feed, search results lay out as a grid sized to the feed's
+  // own width — three, two or one across — so a dragged split works the same as a preset one.
+  const { panelOpen } = useShellPanel()
+  const resultCols = panelOpen ? "@xl:grid-cols-2 @4xl:grid-cols-3" : null
 
   // The catalog is finite; the page isn't. Each time the spinner comes into
   // view another rotated pass appends, so the feed reads as endless.
