@@ -11,6 +11,7 @@ import { featuresFor, scriptById, takeById, takeLabel } from "@/lib/catalog"
 import { evidenceIndex, type Reading } from "@/lib/pax2"
 import { board, DATASETS, findings, forecasts, loads, steps, workspace } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
+import { UsageOpen } from "@/components/usage-beacon"
 
 /** One take: the video, its number, PAX2' read, and the detail a tap away. */
 export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
@@ -35,10 +36,11 @@ export async function TakeView({ id, inDrawer = false }: { id: string; inDrawer?
 
   return (
     <SeekProvider>
+      <UsageOpen subject={id} />
       <div className={cn("grid gap-8", inDrawer ? "@xl:grid-cols-[280px_1fr]" : "@4xl:grid-cols-[320px_1fr]")}>
         <aside className={cn("flex flex-col gap-4", inDrawer ? "@xl:sticky @xl:top-0 @xl:self-start" : "@4xl:sticky @4xl:top-0 @4xl:self-start")}>
           <div className={cn("relative aspect-video overflow-hidden rounded-2xl bg-black shadow-e2", inDrawer ? "@xl:aspect-auto @xl:overflow-visible @xl:rounded-none @xl:bg-transparent @xl:shadow-none" : "@4xl:aspect-auto @4xl:overflow-visible @4xl:rounded-none @4xl:bg-transparent @4xl:shadow-none")}>
-            <Player src={take.video!.src} poster={take.video!.poster} className={cn("absolute inset-0 h-full w-full max-w-none rounded-none object-contain", inDrawer ? "@xl:static @xl:h-auto @xl:w-full @xl:max-w-[300px] @xl:rounded-2xl @xl:object-cover" : "@4xl:static @4xl:h-auto @4xl:w-full @4xl:max-w-[300px] @4xl:rounded-2xl @4xl:object-cover")} />
+            <Player src={take.video!.src} subject={id} poster={take.video!.poster} className={cn("absolute inset-0 h-full w-full max-w-none rounded-none object-contain", inDrawer ? "@xl:static @xl:h-auto @xl:w-full @xl:max-w-[300px] @xl:rounded-2xl @xl:object-cover" : "@4xl:static @4xl:h-auto @4xl:w-full @4xl:max-w-[300px] @4xl:rounded-2xl @4xl:object-cover")} />
           </div>
           {f?.audio && !f.audio.error && (
             <div className="surface p-4">

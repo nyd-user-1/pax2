@@ -14,6 +14,8 @@ import { forecastMetrics } from "@/lib/measures"
 import { board, findings, forecasts, loads, picks, steps, submissions, votes, workspace } from "@/lib/review"
 import { SAMPLE_ACTIVITY, SAMPLE_COUNTS, SAMPLE_FEED, SAMPLE_SENT } from "@/lib/sample"
 import { toneOf } from "@/lib/tone"
+import { USAGE_KINDS, usageSince } from "@/lib/usage"
+import homeFeed from "../../../data/generated/home-feed.json"
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Dashboard" }
@@ -22,6 +24,23 @@ export const metadata = { title: "Dashboard" }
 // decided, and how the calls are going. Every number comes from the ledger or the loaded results.
 
 const day = (iso: string) => iso.slice(0, 10)
+
+const KIND_LABEL: Record<string, string> = { open: "Opens", play: "Plays", watched75: "Watched 75%", search: "Searches", filter: "Filters", sort: "Sorts", boost: "Boosts", bookmark: "Bookmarks", share: "Shares", queue: "Queued" }
+const SAMPLE_READERS = {
+  kinds: [
+    { kind: "open", n: 412 },
+    { kind: "play", n: 268 },
+    { kind: "watched75", n: 97 },
+    { kind: "search", n: 54 },
+    { kind: "filter", n: 21 },
+    { kind: "sort", n: 33 },
+    { kind: "boost", n: 12 },
+    { kind: "bookmark", n: 18 },
+    { kind: "share", n: 9 },
+    { kind: "queue", n: 14 },
+  ],
+  opened: (homeFeed as { id: string; title: string }[]).slice(0, 10).map((v, i) => ({ subject: `yt-${v.id}`, title: v.title, n: 40 - i * 3 })),
+}
 
 export default async function DashboardPage() {
   const ws = await workspace()
@@ -96,7 +115,20 @@ export default async function DashboardPage() {
   const fmaxShown = Math.max(1, ...funnel.map((f) => f.n))
   const activityRows = show.activity.length ? show.activity : [{ date: new Date().toISOString().slice(0, 10), item1: 0, item2: 0 }]
 
-  const [user, poller, queue] = await Promise.all([currentUser(), pollerStatus().catch(() => null), pipelineQueue().catch(() => null)])
+  const [user, poller, queue, usage] = await Promise.all([currentUser(), pollerStatus().catch(() => null), pipelineQueue().catch(() => null), usageSince(7).catch(() => [])])
+
+  // Readers: what people did on PAX2 in the last 7 days, from the usage log.
+  const titleOf = (subject: string) => (homeFeed as { id: string; title: string }[]).find((v) => `yt-${v.id}` === subject || v.id === subject)?.title ?? subject
+  const readersDemo = usage.length === 0
+  const byKind = readersDemo ? SAMPLE_READERS.kinds : USAGE_KINDS.map((kind) => ({ kind, n: usage.filter((e) => e.kind === kind).length }))
+  const opens = new Map<string, number>()
+  for (const e of usage) if (e.kind === "open") opens.set(e.subject, (opens.get(e.subject) ?? 0) + 1)
+  const mostOpened = readersDemo
+    ? SAMPLE_READERS.opened
+    : [...opens]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+        .map(([subject, n]) => ({ subject, title: titleOf(subject), n }))
 
   return (
     <div className="flex flex-col gap-10">
@@ -112,7 +144,7 @@ export default async function DashboardPage() {
         <Stat2 title="Forecast Metrics" value={forecastMetrics().total} footer="Unique variables & data points" />
       </section>
 
-      <BlockOrder page="dashboard" initial={["activity", "funnel", "scripts"]}>
+      <BlockOrder page="dashboard" initial={["activity", "funnel", "scripts", "readers"]}>
         <OrderedBlock id="activity" label="Activity by day">
           <TwoThirdBlock>
             <ChartBlock title="Activity by day" className="xl:col-span-2" tools={<RefreshButton />} rows={activityRows.map((r) => ({ date: r.date, "Readings and decisions": r.item1, "Volunteer input": r.item2 }))} name="pax2-activity">
@@ -198,6 +230,37 @@ export default async function DashboardPage() {
               })}
             </div>
           </ChartBlock>
+        </OrderedBlock>
+
+        <OrderedBlock id="readers" label="Readers">
+          <TwoHalfBlock>
+            <MainBlock title="Readers" tools={readersDemo ? <span className="rounded-full bg-pax2-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax2-red-deep">Sample data</span> : undefined} rows={byKind.map(({ kind, n }) => ({ kind, count: n }))} footer="Last 7 days">
+              <div className="grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-5">
+                {byKind.map(({ kind, n }) => (
+                  <div key={kind} className="flex flex-col">
+                    <span className="tabular text-lg font-semibold text-slate-900">{n.toLocaleString("en-US")}</span>
+                    <span className="text-xs text-slate-500">{KIND_LABEL[kind] ?? kind}</span>
+                  </div>
+                ))}
+              </div>
+            </MainBlock>
+            <ListBlock title="Most opened" rows={mostOpened.map(({ title, n }) => ({ video: title, opens: n }))} footer="Last 7 days">
+              {mostOpened.length ? (
+                <ol className="flex flex-col">
+                  {mostOpened.map((v) => (
+                    <li key={v.subject} className="flex items-baseline gap-3 border-b border-slate-100 py-2 text-sm last:border-0">
+                      <Link href={`/v/${v.subject}`} scroll={false} className="min-w-0 flex-1 truncate text-slate-800 hover:text-pax2-blue">
+                        {v.title}
+                      </Link>
+                      <span className="tabular shrink-0 text-xs text-slate-500">{v.n}</span>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p className="text-sm text-slate-500">Nothing opened yet.</p>
+              )}
+            </ListBlock>
+          </TwoHalfBlock>
         </OrderedBlock>
       </BlockOrder>
     </div>

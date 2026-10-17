@@ -33,6 +33,7 @@ import { COMPONENTS } from "@/lib/resonance"
 import { paidResonance } from "@/lib/paid-resonance"
 import { tagsFor } from "@/lib/tags"
 import { cn } from "@/ui/lib/utils"
+import { UsageOpen } from "@/components/usage-beacon"
 
 type Yt = { fetchedAt: string; videos: { id: string; channelId: string; channel: string; title: string; published: string; duration: string; views: number | null; likes: number | null; comments: number | null }[] }
 
@@ -509,6 +510,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
 
   return (
     <SeekProvider>
+      <UsageOpen subject={id} />
       {locked && <SignupGate />}
       <SplitColumns
         at={inDrawer ? "xl" : "4xl"}
@@ -519,7 +521,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
             {/* Portrait while the column is narrow; past 28rem the video turns landscape. */}
             {real ? (
               <div className="mx-auto aspect-[9/16] max-h-[80svh] w-full overflow-hidden rounded-2xl bg-black shadow-e2 @md/video:aspect-video">
-                <Player src={`/api/video/${id}`} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} className="aspect-auto size-full max-w-none rounded-none object-cover shadow-none @md/video:object-contain" />
+                <Player src={`/api/video/${id}`} subject={id} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} className="aspect-auto size-full max-w-none rounded-none object-cover shadow-none @md/video:object-contain" />
               </div>
             ) : (
               <div className="mx-auto aspect-[9/16] max-h-[80svh] w-full overflow-hidden rounded-2xl bg-slate-900 shadow-e2 @md/video:aspect-video">

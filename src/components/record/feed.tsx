@@ -7,8 +7,12 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, EllipsisVertical, Forward, ListPlus, MessageCircle, Play, Rocket, Search, SlidersHorizontal, TrendingUp, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
 
+import { viewer } from "@/app/original-actions"
+import { usageSince } from "@/app/usage-actions"
 import { useShellPanel } from "@/components/shell"
+import { useUsage } from "@/components/usage-beacon"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
+import { rankFeed, type RankEvent } from "@/lib/feed-rank"
 import { cn } from "@/ui/lib/utils"
 import { whiteButton } from "@/components/white-button"
 
@@ -103,11 +107,6 @@ function Avatar({ id, className }: { id: string; className?: string }) {
   return <img src={`/logos/channels/${id}.jpg`} alt="" className={cn("size-8 shrink-0 rounded-full object-cover", className)} />
 }
 
-const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
-  { label: "Add to queue", icon: ListPlus },
-  { label: "Save to playlist", icon: Bookmark },
-  { label: "Share", icon: Forward },
-]
 
 /** A card's counts in one icon style — views, likes, comments — each sized
  *  and hovered like the three-dot button, a muted disc beneath, on the card's right. The landscape
@@ -115,21 +114,26 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
 const CORNER_ITEM = "flex h-9 min-w-9 items-center justify-center gap-1.5 rounded-full px-2 transition-colors hover:bg-slate-200/70"
 
 function CardFoot({ v, boost }: { v: FeedVideo; boost?: boolean }) {
+  const log = useUsage()
+  const [boosted, setBoosted] = React.useState(false)
   return (
     <div className="tabular mt-auto flex items-center justify-between gap-2 text-sm text-pax2-blue">
       {boost ? (
-        // Built, not yet wired; a press stays out of the card's link.
+        // A press stays out of the card's link.
         <button
           type="button"
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
+            setBoosted((b) => !b)
+            log("boost", v.id, { on: !boosted })
           }}
           aria-label="Boost"
+          aria-pressed={boosted}
           title="Boost"
-          className={whiteButton("md", "px-2.5 shadow-none hover:shadow-md")}
+          className={whiteButton("md", cn("px-2.5 shadow-none hover:shadow-md", boosted && "border-pax2-blue bg-[#dbe7fa]"))}
         >
-          <Rocket className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
+          <Rocket className="size-4" style={{ color: "#033882", fill: boosted ? "#033882" : "#dbe7fa" }} />
         </button>
       ) : (
         <span />
@@ -153,13 +157,35 @@ function CardFoot({ v, boost }: { v: FeedVideo; boost?: boolean }) {
   )
 }
 
-/** A card's three-dot menu. Its items are built but not yet wired. Clicks stay out of
- *  the card's link — the menu portals out of it, but React events still bubble through. */
-function RowMenu({ className }: { className?: string }) {
+/** A card's three-dot menu: queue, save and share, each logged. Clicks stay out of the card's
+ *  link — the menu portals out of it, but React events still bubble through. */
+function RowMenu({ v, className }: { v: FeedVideo; className?: string }) {
+  const log = useUsage()
+  const [saved, setSaved] = React.useState(false)
   const hold = (e: React.SyntheticEvent) => {
     e.preventDefault()
     e.stopPropagation()
   }
+  const actions: { label: string; icon: LucideIcon; on?: boolean; run: () => void }[] = [
+    { label: "Add to queue", icon: ListPlus, run: () => log("queue", v.id) },
+    {
+      label: saved ? "Saved to playlist" : "Save to playlist",
+      icon: Bookmark,
+      on: saved,
+      run: () => {
+        setSaved(!saved)
+        log("bookmark", v.id, { on: !saved })
+      },
+    },
+    {
+      label: "Share",
+      icon: Forward,
+      run: () => {
+        navigator.clipboard?.writeText(`${window.location.origin}/v/yt-${v.id}`).catch(() => {})
+        log("share", v.id)
+      },
+    },
+  ]
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -170,9 +196,9 @@ function RowMenu({ className }: { className?: string }) {
         <EllipsisVertical className="size-5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" onClick={hold} className="min-w-52 rounded-xl p-1.5">
-        {ROW_ACTIONS.map(({ label, icon: Icon }) => (
-          <DropdownMenuItem key={label} className="gap-3 rounded-lg px-2.5 py-2 text-sm text-slate-800">
-            <Icon className="size-5! text-[#033882]! transition-colors group-focus/dropdown-menu-item:fill-[#dbe7fa]" />
+        {actions.map(({ label, icon: Icon, on, run }) => (
+          <DropdownMenuItem key={label} onClick={run} className="gap-3 rounded-lg px-2.5 py-2 text-sm text-slate-800">
+            <Icon className={cn("size-5! text-[#033882]! transition-colors group-focus/dropdown-menu-item:fill-[#dbe7fa]", on && "fill-[#033882]!")} />
             {label}
           </DropdownMenuItem>
         ))}
@@ -194,7 +220,7 @@ export function ListRow({ v }: { v: FeedVideo }) {
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
         <div className="flex items-start justify-between gap-3">
           <p className="font-display text-lg leading-snug text-slate-900">{v.title}</p>
-          <RowMenu />
+          <RowMenu v={v} />
         </div>
         <p className="tabular text-sm text-pax2-blue">{age(v.published)}</p>
         <span className="flex items-center gap-2 pt-1">
@@ -236,7 +262,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
       </div>
       <div className="flex items-start justify-between gap-1 pt-1">
         <p className="line-clamp-2 min-h-[2lh] min-w-0 text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
-        <RowMenu className="-mr-1.5 size-8" />
+        <RowMenu v={v} className="-mr-1.5 size-8" />
       </div>
       <CardFoot v={v} />
     </Link>
@@ -259,7 +285,7 @@ export function LandscapeCard({ v }: { v: FeedVideo }) {
       <div className="flex flex-col gap-1 pt-1">
         <div className="flex items-start justify-between gap-2">
           <p className="line-clamp-2 min-w-0 font-display text-lg font-semibold leading-snug text-slate-900">{v.title}</p>
-          <RowMenu className="-mr-2 -mt-1" />
+          <RowMenu v={v} className="-mr-2 -mt-1" />
         </div>
         {v.description && <p className="line-clamp-2 text-[15px] leading-relaxed text-slate-800">{v.description}</p>}
       </div>
@@ -381,6 +407,8 @@ export type Refine = {
   setTag: (t: string) => void
   channels: string[]
   tags: string[]
+  /** Signed in: the For you order (src/lib/feed-rank.ts), which stands in for the chips while on. */
+  forYou?: { on: boolean; toggle: () => void }
 }
 
 const rotate = <T,>(xs: T[], n: number) => {
@@ -536,12 +564,15 @@ export function SearchBar({
     setRecent(next)
     localStorage.setItem(RECENT, JSON.stringify(next))
   }
+  const log = useUsage()
   const submit = () => {
     const term = q.trim()
     if (term.length >= 2) save([term, ...recent.filter((r) => r !== term)].slice(0, 8))
+    if (term) log("search", term)
     input.current?.blur()
   }
   const run = (term: string) => {
+    log("search", term, { from: "recent" })
     setQ(term)
     save([term, ...recent.filter((r) => r !== term)].slice(0, 8))
     setFocused(false)
@@ -549,7 +580,7 @@ export function SearchBar({
   }
   const showRecent = !sorting && focused && q === "" && (recent.length > 0 || !!trending?.length)
   const open = sorting || showRecent
-  const refined = !!refine && (refine.sorts.length > 0 || refine.channel !== "" || refine.tag !== "")
+  const refined = !!refine && (refine.sorts.length > 0 || refine.channel !== "" || refine.tag !== "" || !!refine.forYou?.on)
   // Open, bar and panel share one border: pax blue on the landing's dressed bar, slate otherwise.
   const edge = className ? "border-pax2-blue" : "border-slate-200"
   return (
@@ -650,6 +681,7 @@ export function SearchBar({
                         refine.setSorts([])
                         refine.setChannel("")
                         refine.setTag("")
+                        if (refine.forYou?.on) refine.forYou.toggle()
                       }}
                       className="text-sm font-medium text-pax2-blue hover:underline"
                     >
@@ -658,6 +690,19 @@ export function SearchBar({
                   )}
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {refine.forYou && (
+                    <button
+                      type="button"
+                      aria-pressed={refine.forYou.on}
+                      onClick={refine.forYou.toggle}
+                      className={cn(
+                        "flex h-9 w-full items-center justify-center gap-1.5 rounded-full border px-3 text-sm font-medium transition-colors",
+                        refine.forYou.on ? "border-pax2-blue bg-pax2-blue text-white" : "border-slate-200 text-slate-700 hover:border-pax2-blue hover:text-pax2-blue",
+                      )}
+                    >
+                      For you
+                    </button>
+                  )}
                   {SORT_KEYS.map((k) => {
                     const at = refine.sorts.findIndex((x) => x.key === k.key)
                     const on = at >= 0 ? refine.sorts[at] : null
@@ -743,9 +788,35 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   // In local development the feed opens on the paid media: Voter Freedom, paid first, then most viewed.
   const dev = process.env.NODE_ENV === "development"
   const [q, setQ] = React.useState(dev ? "Voter Freedom" : "")
-  const [sorts, setSorts] = React.useState<FeedSort>(dev ? [{ key: "media", dir: "down" }, { key: "views", dir: "down" }] : [])
-  const [channel, setChannel] = React.useState("")
-  const [tag, setTag] = React.useState("")
+  const [sorts, setSortsState] = React.useState<FeedSort>(dev ? [{ key: "media", dir: "down" }, { key: "views", dir: "down" }] : [])
+  const [channel, setChannelState] = React.useState("")
+  const [tag, setTagState] = React.useState("")
+  const log = useUsage()
+  const setSorts = (next: FeedSort) => {
+    setSortsState(next)
+    log("sort", next.map((x) => `${x.key}:${x.dir}`).join(",") || "none")
+  }
+  const setChannel = (c: string) => {
+    setChannelState(c)
+    log("filter", c || "none", { field: "channel" })
+  }
+  const setTag = (t: string) => {
+    setTagState(t)
+    log("filter", t || "none", { field: "tag" })
+  }
+  // Signed in, the For you chip orders the feed by recency, ratio and what PAX2's readers opened.
+  const [signedIn, setSignedIn] = React.useState(false)
+  const [forYou, setForYou] = React.useState(false)
+  const [events, setEvents] = React.useState<RankEvent[]>([])
+  React.useEffect(() => {
+    viewer().then((u) => setSignedIn(!!u)).catch(() => {})
+  }, [])
+  const toggleForYou = () => {
+    const on = !forYou
+    setForYou(on)
+    log("sort", on ? "foryou" : "none")
+    if (on) usageSince(7).then(setEvents).catch(() => {})
+  }
   const channels = React.useMemo(() => [...new Set(videos.map((v) => v.channel))].sort((a, b) => a.localeCompare(b)), [videos])
   const tags = React.useMemo(() => [...new Set(videos.flatMap((v) => v.tags ?? []))].sort((a, b) => a.localeCompare(b)), [videos])
   const trending = React.useMemo(() => videos.toSorted(by(perDay, -1)).slice(0, 6), [videos])
@@ -795,6 +866,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
         .toSorted(orderOf(sorts)),
     [videos, needle, channel, tag, sorts],
   )
+  const ordered = React.useMemo(() => (forYou ? rankFeed(shown, events) : shown), [forYou, shown, events])
   // With a video's drawer open beside the feed, search results lay out as a grid sized to the feed's
   // own width — three, two or one across — so a dragged split works the same as a preset one.
   const { panelOpen } = useShellPanel()
@@ -821,31 +893,31 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
         <SearchBar
           q={q}
           setQ={setQ}
-          refine={{ sorts, setSorts, channel, setChannel, tag, setTag, channels, tags }}
+          refine={{ sorts, setSorts, channel, setChannel, tag, setTag, channels, tags, forYou: signedIn ? { on: forYou, toggle: toggleForYou } : undefined }}
           trending={trending}
           className="h-14 border-slate-400 shadow-md hover:border-pax2-blue hover:bg-slate-50 focus-within:border-pax2-blue"
         />
       </div>
 
       <div className="flex flex-col gap-10 pt-10">
-        {shown.length === 0 ? (
+        {ordered.length === 0 ? (
           <p className="py-16 text-center text-slate-500">{needle ? <>Nothing matches &ldquo;{q}&rdquo;.</> : "Nothing matches these filters."}</p>
         ) : narrowed ? (
           resultCols ? (
             <div className={cn("grid gap-8", resultCols)}>
-              {shown.map((v) => (
+              {ordered.map((v) => (
                 <LandscapeCard key={v.id} v={v} />
               ))}
             </div>
           ) : (
-            <Cycle items={shown} />
+            <Cycle items={ordered} />
           )
         ) : (
-          Array.from({ length: cycles }, (_, c) => <Cycle key={c} items={rotate(shown, c * 7)} />)
+          Array.from({ length: cycles }, (_, c) => <Cycle key={c} items={rotate(ordered, c * 7)} />)
         )}
       </div>
 
-      {!narrowed && shown.length > 0 && (
+      {!narrowed && ordered.length > 0 && (
         <div ref={sentinel} className="flex justify-center py-12">
           <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-pax2-blue" />
         </div>

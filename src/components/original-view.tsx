@@ -3,6 +3,8 @@ import Link from "next/link"
 import { CardBlock, ListBlock, TableBlock } from "@/components/blocks"
 import { OriginalAdmin, OwnerPublish, ScoreButton, WatchForm } from "@/components/original-admin"
 import { TabRail, type RailTab } from "@/components/tab-rail"
+import { UsageOpen } from "@/components/usage-beacon"
+import { Player } from "@/components/workbench"
 import { currentUser } from "@/lib/auth"
 import { outbox } from "@/lib/mail"
 import { gainOf, STAGE_LABEL, type Evaluation, type OriginalRow } from "@/lib/originals"
@@ -39,6 +41,7 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
 
   return (
     <div className="flex flex-col gap-6">
+      <UsageOpen subject={row.id} />
       <div className="flex flex-col gap-1">
         <h1 className="font-display text-3xl text-slate-900">{row.title ?? "Untitled video"}</h1>
         <p className="text-sm text-slate-500">
@@ -68,7 +71,7 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
 
       {active === "recorded" && (
         <div className="grid gap-6 @3xl:grid-cols-[300px_1fr]">
-          <video src={`/api/video/${row.id}`} controls playsInline className="aspect-[9/16] w-full max-w-[300px] rounded-2xl bg-black object-cover shadow-e2" />
+          <Player src={`/api/video/${row.id}`} subject={row.id} className="shadow-e2" />
           <div className="flex min-w-0 flex-col gap-6">
             <CardBlock title="Recording" height="auto">
               <div className="grid grid-cols-2 gap-4 @lg:grid-cols-4">

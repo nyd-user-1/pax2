@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import { ts } from "@/components/bits"
+import { useUsage } from "@/components/usage-beacon"
 import type { Features } from "@/lib/catalog"
 import { cn } from "@/ui/lib/utils"
 
@@ -41,8 +42,33 @@ export function At({ t, children, className }: { t: number; children?: React.Rea
   )
 }
 
-export function Player({ src, poster, className }: { src: string; poster?: string; className?: string }) {
-  return <video id="pax2-video" src={src} poster={poster} controls playsInline preload="metadata" className={cn("aspect-[9/16] w-full max-w-[300px] rounded-2xl bg-black object-cover shadow-lg", className)} />
+/** The video, logging its first play and the moment three quarters of it has been watched. */
+export function Player({ src, poster, className, subject }: { src: string; poster?: string; className?: string; subject?: string }) {
+  const log = useUsage()
+  const id = subject ?? src.split("/").pop() ?? src
+  const seen = React.useRef({ play: false, deep: false })
+  return (
+    <video
+      id="pax2-video"
+      src={src}
+      poster={poster}
+      controls
+      playsInline
+      preload="metadata"
+      onPlay={() => {
+        if (seen.current.play) return
+        seen.current.play = true
+        log("play", id)
+      }}
+      onTimeUpdate={(e) => {
+        const v = e.currentTarget
+        if (seen.current.deep || !v.duration || v.currentTime < v.duration * 0.75) return
+        seen.current.deep = true
+        log("watched75", id, { sec: Math.round(v.duration) })
+      }}
+      className={cn("aspect-[9/16] w-full max-w-[300px] rounded-2xl bg-black object-cover shadow-lg", className)}
+    />
+  )
 }
 
 export function ScriptTimeline({ lines, duration }: { lines: { t: number; text: string }[]; duration: number }) {
