@@ -138,10 +138,9 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
 /** The card's bottom-right corner: like, comment and view counts, then paid media's mark in the
  *  three-dot button's box mirrored from the top-right — as far from the bottom and right as the
  *  dots sit from the top and right. */
-function CardFoot({ v, box, lead }: { v: FeedVideo; box?: string; lead?: React.ReactNode }) {
+function CardFoot({ v, box }: { v: FeedVideo; box?: string }) {
   return (
     <div className="tabular mt-auto flex h-9 items-center justify-end gap-3 text-xs text-pax2-blue">
-      {lead && <span className="mr-auto min-w-0 truncate">{lead}</span>}
       {v.likes != null && (
         <span className="flex items-center gap-1" aria-label={`${v.likes} likes`}>
           <ThumbsUp className="size-3.5" /> {fmt.format(v.likes)}
@@ -210,7 +209,7 @@ export function ListRow({ v }: { v: FeedVideo }) {
           <p className="font-display text-lg leading-snug text-slate-900">{v.title}</p>
           <RowMenu />
         </div>
-        <p className="tabular text-sm text-pax2-blue">{fmt.format(v.views)} views · {age(v.published)}</p>
+        <p className="tabular text-sm text-pax2-blue">{age(v.published)}</p>
         <span className="flex items-center gap-2 pt-1">
           <Avatar id={v.channelId} />
           <span className="text-sm font-medium text-slate-800">{v.channel}</span>
@@ -240,7 +239,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <span className="truncate text-xs font-medium text-slate-800">{v.channel}</span>
       </span>
       {/* Shorts' dots are a size-8 box pulled 6px right; the corner mirrors that. */}
-      <CardFoot v={v} box="-mb-1.5 -mr-1.5 size-8" lead={`${fmt.format(v.views)} views`} />
+      <CardFoot v={v} box="-mb-1.5 -mr-1.5 size-8" />
     </Link>
   )
 }
@@ -256,7 +255,7 @@ export function LandscapeCard({ v }: { v: FeedVideo }) {
         <span className="tabular pointer-events-none absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
       </div>
       <p className="line-clamp-2 min-h-[2lh] text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
-      <p className="tabular text-xs text-pax2-blue">{v.channel} · {fmt.format(v.views)} views</p>
+      <p className="tabular text-xs text-pax2-blue">{v.channel}</p>
       <CardFoot v={v} />
     </Link>
   )
