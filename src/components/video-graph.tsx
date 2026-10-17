@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
-  addEdge, Background, Controls, Handle, Panel, Position, ReactFlow, ReactFlowProvider,
+  addEdge, Background, Controls, Handle, MarkerType, Panel, Position, ReactFlow, ReactFlowProvider,
   useEdgesState, useNodesState, useReactFlow,
   type Connection, type ConnectionLineType, type ConnectionMode, type Edge, type Node, type NodeProps, type PanOnScrollMode, type SelectionMode,
 } from "@xyflow/react"
@@ -16,9 +16,11 @@ import {
 import { canvasUploadUrl, listCanvases, listCanvasFiles, loadCanvas, saveCanvas, type CanvasFile } from "@/app/graph-actions"
 import { ChatDock } from "@/components/graph/chat-dock"
 import { DEFAULT_FLOW_PROPS, FlowSettingsPanel, type FlowProps } from "@/components/graph/flow-settings"
+import { RECIPE_DEFAULTS, RECIPE_H, RECIPE_W, RecipeForm, RecipeNode } from "@/components/graph/recipe-nodes"
 import { whiteButton } from "@/components/white-button"
 import { describeEntity, readDragEntity, setDragEntity, type DragEntity } from "@/lib/drag-entity"
-import { similarTo, type CanvasRow, type CanvasState, type GraphChannel, type GraphData, type GraphVideo, type SavedEdge } from "@/lib/graph-data"
+import { isRecipeType, similarTo, type CanvasRow, type CanvasState, type GraphChannel, type GraphData, type GraphVideo, type RecipeType, type SavedEdge } from "@/lib/graph-data"
+import { TEMPLATES, type RecipeTemplate } from "@/lib/recipes/memorable"
 import { fmtCompact } from "@/lib/velocity-meta"
 import { Dialog, DialogContent, DialogTitle } from "@/ui/components/nova/dialog"
 import { cn } from "@/ui/lib/utils"
@@ -31,7 +33,7 @@ export type { GraphChannel, GraphData, GraphVideo } from "@/lib/graph-data"
 // relation PAX2 holds: channel-published-video, the uploader's tags, YouTube's topic annotations,
 // channel groups. The one inference, "similar", is drawn dashed and says so.
 
-type GType = "channel" | "video" | "tag" | "topic" | "group" | "more" | "prompt" | "file"
+type GType = "channel" | "video" | "tag" | "topic" | "group" | "more" | "prompt" | "file" | RecipeType
 type GNode = {
   type: GType
   id: string
@@ -50,16 +52,20 @@ type GNode = {
   /** Files dropped on the canvas: the S3 key, and the first 4,000 characters of a text file. */
   fileKey?: string
   fileText?: string
+  /** Recipe cards: their fields (name, status, and the rest by type). */
+  r?: Record<string, string>
 }
-/** Edge provenance. Absent kind = a record PAX2 holds; "wired" = drawn into a prompt step. */
-type EdgeMeta = { kind?: "similar" | "wired"; score?: number }
+/** Edge provenance. Absent kind = a record PAX2 holds; "wired" = drawn into a prompt step;
+ *  "drawn" = a line on a model recipe, by an admin or from a template. */
+type EdgeMeta = { kind?: "similar" | "wired" | "drawn"; score?: number; by?: string; at?: string; tpl?: string }
 const edgeKind = (e: Edge) => (e.data as EdgeMeta | undefined)?.kind
 const keyOf = (n: { type: string; id: string }) => `${n.type}:${n.id}`
 const rx = (r: number) => `${(r >= 10 ? r.toFixed(0) : r.toFixed(1)).replace(/^0\./, ".")}x`
 const TIER_COLOR = { breakout: "#16a34a", baseline: "#94a3b8", killed: "#dc2626" } as const
 const BLUE = "#2563eb" // pax2-light-blue
 
-const NODE_W: Record<GType, number> = { channel: 210, video: 240, tag: 150, topic: 160, group: 170, more: 130, prompt: 260, file: 180 }
+const NODE_W: Record<GType, number> = { channel: 210, video: 240, tag: 150, topic: 160, group: 170, more: 130, prompt: 260, file: 180, ingredient: RECIPE_W, step: RECIPE_W, model: RECIPE_W, output: RECIPE_W }
+const rfType = (t: string) => (isRecipeType(t) ? "recipe" : "entity")
 const PAGE = 8
 
 /* ── relations, computed from the dataset we ship ────────────────────────── */
@@ -179,6 +185,8 @@ function related(a: GNode, b: GNode, R: Rels): boolean {
 /** The record behind an edge. Every data edge is one PAX2 holds, named plainly. */
 function receipt(a: GNode, b: GNode, meta?: EdgeMeta): { text: string; record: boolean } {
   if (meta?.kind === "similar") return { text: "Computed from shared tags and topics. Not a record.", record: false }
+  if (meta?.kind === "drawn" || isRecipeType(a.type) || isRecipeType(b.type))
+    return { text: meta?.tpl ? `From the ${meta.tpl} template. A plan, not a record.` : `Drawn by ${meta?.by ?? "an admin"}${meta?.at ? ` on ${new Date(meta.at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}` : ""}. A plan, not a record.`, record: false }
   if (meta?.kind === "wired" || a.type === "prompt" || b.type === "prompt") return { text: "Drawn into a prompt step: the step reads this as context. A wiring, not a record.", record: false }
   const pair = (t1: GType, t2: GType) => (a.type === t1 && b.type === t2) || (a.type === t2 && b.type === t1)
   const of = (t: GType) => (a.type === t ? a : b)
@@ -198,6 +206,7 @@ function nodeHeight(g: GNode, R: Rels): number {
   if (g.type === "more") return 40
   if (g.type === "prompt") return g.output ? 170 : 126
   if (g.type === "file") return 64
+  if (isRecipeType(g.type)) return RECIPE_H
   let h = g.type === "video" ? 88 : g.type === "channel" ? 80 : 66
   for (const grp of cardGroups(g, R)) {
     h += 22
@@ -368,7 +377,7 @@ function EntityNode({ data: d, selected }: NodeProps<Node<CardData>>) {
   )
 }
 
-const nodeTypes = { entity: EntityNode }
+const nodeTypes = { entity: EntityNode, recipe: RecipeNode }
 
 /* ── rail ────────────────────────────────────────────────────────────────── */
 
@@ -558,6 +567,46 @@ function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad
   )
 }
 
+/** The recipe builder's rail: the templates (constants) and the saved recipes (the ledger). */
+function RecipeRail({ refresh, onTemplate, onLoad }: { refresh: number; onTemplate: (t: RecipeTemplate) => void; onLoad: (id: string) => void }) {
+  const [browse, setBrowse] = useState<"templates" | "saved" | null>(null)
+  const [filter, setFilter] = useState("")
+  const [saved, setSaved] = useState<CanvasRow[] | null>(null)
+  const back = () => { setBrowse(null); setFilter("") }
+  useEffect(() => {
+    if (browse === "saved") listCanvases().then((rows) => setSaved(rows.filter((r) => r.kind === "recipe"))).catch(() => setSaved([]))
+  }, [browse, refresh])
+  if (browse === "templates")
+    return (
+      <div className={RAIL}>
+        <RailHeader label="Templates" count={TEMPLATES.length} onBack={back} />
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          {TEMPLATES.map((t) => (
+            <button key={t.id} onClick={() => onTemplate(t)} className="flex w-full items-baseline justify-between gap-2 border-b border-slate-100 px-3 py-2 text-left transition-colors hover:bg-slate-50">
+              <span className="truncate text-xs font-semibold text-slate-900">{t.name}</span>
+              <span className="tabular shrink-0 text-[10px] text-slate-400">{t.nodes.length} nodes</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    )
+  if (browse === "saved")
+    return (
+      <div className={RAIL}>
+        <RailHeader label="Saved recipes" count={saved?.length} onBack={back} />
+        <RailFilter value={filter} onChange={setFilter} />
+        <div className="min-h-0 flex-1 overflow-y-auto"><SavedRows rows={saved} filter={filter} onLoad={onLoad} /></div>
+      </div>
+    )
+  return (
+    <div className={RAIL}>
+      <p className="px-3 pb-1 pt-3 text-[10px] uppercase tracking-wide text-slate-400">Recipes</p>
+      <button onClick={() => setBrowse("templates")} className={RAIL_ROW}><Layers className="h-3.5 w-3.5 text-slate-400" /><span>Templates</span><span className="tabular ml-auto text-xs text-slate-400">{TEMPLATES.length}</span></button>
+      <button onClick={() => setBrowse("saved")} className={RAIL_ROW}><BookOpen className="h-3.5 w-3.5 text-slate-400" /><span>Saved recipes</span></button>
+    </div>
+  )
+}
+
 /* ── detail panel ────────────────────────────────────────────────────────── */
 
 const SIDE = "hidden w-80 shrink-0 overflow-y-auto border-l border-slate-200 bg-white p-4 md:block"
@@ -669,6 +718,10 @@ const RUNS_KEY = "pax2-graph-runs"
 const PROPS_KEY = "pax2-graph-flow-props"
 const LAYOUT_KEY = "pax2-graph-layout"
 
+type Mode = "networks" | "recipes"
+type Stash = { store: Map<string, GNode>; expand: Map<string, { loaded: number; total: number }>; edges: Edge[]; nodes: Node[]; canvas: { id?: string; name: string } | null }
+const RECIPE_TOOLS: [RecipeType, string][] = [["ingredient", "Ingredient"], ["step", "Step"], ["model", "Model"], ["output", "Output"]]
+
 /** An undo step: the canvas's content, never pan, zoom or selection. */
 type Snap = { store: [string, GNode][]; expand: [string, { loaded: number; total: number }][]; edges: Edge[]; pos: [string, { x: number; y: number }][]; at: number }
 
@@ -678,12 +731,12 @@ const GROUP_BAR = "flex items-center gap-1.5 rounded-full border border-slate-20
 
 const toEdge = (e: SavedEdge): Edge => ({
   id: `${e.s}->${e.t}`, source: e.s, target: e.t,
-  ...(e.k ? { data: { kind: e.k, score: e.score } as EdgeMeta } : {}),
+  ...(e.k ? { data: { kind: e.k, score: e.score, by: e.by, at: e.at, tpl: e.tpl } as EdgeMeta } : {}),
   ...(e.k === "similar" && e.score != null ? { label: e.score.toFixed(2) } : {}),
 })
 const fromEdge = (e: Edge): SavedEdge => {
   const m = e.data as EdgeMeta | undefined
-  return { s: e.source, t: e.target, ...(m?.kind ? { k: m.kind } : {}), ...(m?.score != null ? { score: m.score } : {}) }
+  return { s: e.source, t: e.target, ...(m?.kind ? { k: m.kind } : {}), ...(m?.score != null ? { score: m.score } : {}), ...(m?.by ? { by: m.by } : {}), ...(m?.at ? { at: m.at } : {}), ...(m?.tpl ? { tpl: m.tpl } : {}) }
 }
 
 function VideoGraphInner({ data, email, admin, boot }: Props) {
@@ -719,6 +772,14 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   const [saveName, setSaveName] = useState("")
   const [saving, setSaving] = useState(false)
   const [railRefresh, setRailRefresh] = useState(0)
+  // Admins switch the canvas between the record graph and the model recipe builder; each mode
+  // keeps its own canvas while the other is showing.
+  const [mode, setMode] = useState<Mode>("networks")
+  const modeRef = useRef<Mode>(mode)
+  modeRef.current = mode
+  const canvasRef = useRef(canvas)
+  canvasRef.current = canvas
+  const stash = useRef<Partial<Record<Mode, Stash>>>({})
 
   const fit = useCallback(() => setTimeout(() => fitView({ padding: 0.15, duration: 400 }), 60), [fitView])
 
@@ -762,7 +823,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     setSelectedKey(null)
     setEdgeInfo(null)
     setEdges(snap.edges)
-    setNodes([...store.current.values()].map((g) => ({ id: keyOf(g), type: "entity", position: pos.get(keyOf(g)) ?? { x: 0, y: 0 }, data: { ...g } })))
+    setNodes([...store.current.values()].map((g) => ({ id: keyOf(g), type: rfType(g.type), position: pos.get(keyOf(g)) ?? { x: 0, y: 0 }, data: { ...g } })))
   }, [setEdges, setNodes])
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
@@ -788,13 +849,13 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   const syncNodes = useCallback((allEdges: Edge[], relayout: boolean) => {
     setNodes((prev) => {
       const prevPos = new Map(prev.map((n) => [n.id, n.position]))
-      const mode = layoutModeRef.current
+      const lm = layoutModeRef.current
       // "none": nothing moves; new nodes land beside their edge source, stacked
       const fresh = new Map<string, number>()
       let next: Node[] = [...store.current.values()].map((g) => {
         const k = keyOf(g)
         let position = prevPos.get(k)
-        if (!position && mode === "none") {
+        if (!position && lm === "none") {
           const e = allEdges.find((x) => x.target === k) ?? allEdges.find((x) => x.source === k)
           const anchor = e ? (e.source === k ? e.target : e.source) : null
           const src = anchor ? prevPos.get(anchor) : undefined
@@ -804,9 +865,9 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
             position = { x: src.x + (NODE_W[store.current.get(anchor)?.type ?? "video"] ?? 160) + 70, y: src.y + i * 96 }
           }
         }
-        return { id: k, type: "entity", position: position ?? { x: 0, y: 0 }, data: { ...g } }
+        return { id: k, type: rfType(g.type), position: position ?? { x: 0, y: 0 }, data: { ...g } }
       })
-      if (relayout && mode !== "none") next = layout(next, allEdges, R, mode === "dagre-tb" ? "TB" : "LR")
+      if (relayout && lm !== "none") next = layout(next, allEdges, R, lm === "dagre-tb" ? "TB" : "LR")
       return next
     })
   }, [setNodes, R])
@@ -824,7 +885,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     // an explicit drop point wins over layout: seed the position so syncNodes sees it placed
     if (at) setNodes((prev) => [
       ...prev.filter((n) => !items.some((it) => keyOf(it) === n.id)),
-      ...items.map((it, i) => ({ id: keyOf(it), type: "entity", position: { x: at.x, y: at.y + i * 96 }, data: { ...it } })),
+      ...items.map((it, i) => ({ id: keyOf(it), type: rfType(it.type), position: { x: at.x, y: at.y + i * 96 }, data: { ...it } })),
     ])
     const prev = edgesRef.current
     const have = new Set(prev.map((e) => e.id))
@@ -850,7 +911,8 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     if (!store.current.has(key)) return
     snapshot()
     store.current.delete(key)
-    commitEdges(edgesRef.current.filter((e) => e.source !== key && e.target !== key), true)
+    // a recipe is arranged by hand; only the record graph relays out on a delete
+    commitEdges(edgesRef.current.filter((e) => e.source !== key && e.target !== key), modeRef.current === "networks")
   }, [commitEdges, snapshot])
 
   const toggleGroup = useCallback((key: string, group: string) => {
@@ -950,7 +1012,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     expandState.current = new Map()
     edgesRef.current = []
     setEdges([])
-    setNodes([{ id: keyOf(g), type: "entity", position: { x: 0, y: 0 }, data: { ...g } }])
+    setNodes([{ id: keyOf(g), type: rfType(g.type), position: { x: 0, y: 0 }, data: { ...g } }])
     setSelectedKey(keyOf(g))
     setEdgeInfo(null)
     setCanvas(null)
@@ -974,6 +1036,25 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     return null
   }, [R])
 
+  const enterMode = useCallback((m: Mode) => {
+    if (modeRef.current === m) return
+    stash.current[modeRef.current] = { store: new Map(store.current), expand: new Map(expandState.current), edges: edgesRef.current, nodes: nodesRef.current, canvas: canvasRef.current }
+    const next = stash.current[m]
+    store.current = new Map(next?.store ?? [])
+    expandState.current = new Map(next?.expand ?? [])
+    edgesRef.current = next?.edges ?? []
+    setEdges(edgesRef.current)
+    setNodes(next?.nodes ?? [])
+    setCanvas(next?.canvas ?? null)
+    setSelectedKey(null)
+    setEdgeInfo(null)
+    past.current = []
+    future.current = []
+    modeRef.current = m
+    setMode(m)
+    fit()
+  }, [setEdges, setNodes, fit])
+
   /* ── saved canvases ── */
 
   const applyState = useCallback((state: CanvasState) => {
@@ -983,7 +1064,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     const es = state.edges.filter((e) => store.current.has(e.s) && store.current.has(e.t)).map(toEdge)
     edgesRef.current = es
     setEdges(es)
-    setNodes(state.nodes.map(({ x, y, ...g }) => ({ id: keyOf(g), type: "entity", position: { x, y }, data: { ...g } })))
+    setNodes(state.nodes.map(({ x, y, ...g }) => ({ id: keyOf(g), type: rfType(g.type), position: { x, y }, data: { ...g } })))
     setSelectedKey(null)
     setEdgeInfo(null)
     fit()
@@ -993,13 +1074,14 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   const loadView = useCallback(async (id: string) => {
     try {
       const v = await loadCanvas(id)
+      enterMode(v.kind === "recipe" ? "recipes" : "networks")
       applyState(v.state)
       setCanvas({ id: v.id, name: v.name })
       toast.success(`Loaded ${v.name}`)
     } catch {
       toast.error("That canvas was not found")
     }
-  }, [applyState])
+  }, [applyState, enterMode])
 
   const serialize = useCallback((): CanvasState => ({
     nodes: nodesRef.current.flatMap((n) => {
@@ -1007,7 +1089,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
       if (!g) return []
       return [{
         type: g.type, id: g.id, label: g.label, sub: g.sub, tier: g.tier, openGroups: g.openGroups?.length ? g.openGroups : undefined,
-        prompt: g.prompt, output: g.output ? g.output.slice(0, 2000) : undefined, fileKey: g.fileKey, fileText: g.fileText,
+        prompt: g.prompt, output: g.output ? g.output.slice(0, 2000) : undefined, fileKey: g.fileKey, fileText: g.fileText, r: g.r,
         x: Math.round(n.position.x), y: Math.round(n.position.y),
       }]
     }),
@@ -1065,6 +1147,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     const d = datasets.find((x) => x.id === id)
     if (!d) return
     setDataset(id)
+    enterMode("networks")
     if (d.seed) { center(d.seed); return }
     snapshot()
     store.current = new Map()
@@ -1075,7 +1158,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     setSelectedKey(null)
     setEdgeInfo(null)
     setCanvas(null)
-  }, [datasets, center, snapshot, setEdges, setNodes])
+  }, [datasets, center, snapshot, setEdges, setNodes, enterMode])
 
   const changeLayoutMode = useCallback((m: string) => {
     if (!LAYOUT_MODES.includes(m as LayoutMode)) return
@@ -1093,11 +1176,12 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
       const g = type && id ? findEntity(type, id) : null
       if (!g) return
       e.preventDefault()
+      enterMode("networks")
       center(g)
     }
     window.addEventListener("open-entity", h)
     return () => window.removeEventListener("open-entity", h)
-  }, [center, findEntity])
+  }, [center, findEntity, enterMode])
 
   /* ── prompt steps and traced runs ── */
 
@@ -1106,6 +1190,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   const [traceOpen, setTraceOpen] = useState<string | null>(null)
   const [traceStep, setTraceStep] = useState<number | null>(null)
   const activeRun = useRef<RunTrace | null>(null)
+  useEffect(() => { setTraceOpen(null) }, [mode])
   useEffect(() => {
     try { setRuns(JSON.parse(localStorage.getItem(RUNS_KEY) ?? "[]")) } catch { /* none kept */ }
   }, [])
@@ -1245,14 +1330,61 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     setNodes((prev) => [...prev, { id: keyOf(g), type: "entity", position: screenToFlowPosition(screen), data: { ...g } }])
   }, [setNodes, screenToFlowPosition, snapshot])
 
-  /** Data edges are records; the only lines a reader draws go into prompt steps. */
+  /* ── the model recipe builder ── */
+
+  const addRecipeNode = (type: RecipeType) => {
+    const r = { ...RECIPE_DEFAULTS[type] }
+    const g: GNode = { type, id: `${type[0]}-${Math.random().toString(36).slice(2, 8)}`, label: r.name, r }
+    snapshot()
+    store.current.set(keyOf(g), g)
+    setNodes((prev) => [...prev, { id: keyOf(g), type: "recipe", position: screenToFlowPosition(paneCenter()), data: { ...g } }])
+    setSelectedKey(keyOf(g))
+    setEdgeInfo(null)
+  }
+
+  const editRecipe = (key: string, field: string, value: string) => {
+    const g = store.current.get(key)
+    if (!g) return
+    const r = { ...g.r, [field]: value }
+    patchNode(key, field === "name" ? { r, label: value } : { r })
+  }
+
+  /** A template loads as an unsaved recipe; Save writes the copy, never the constant. */
+  const loadTemplate = useCallback((t: RecipeTemplate) => {
+    enterMode("recipes")
+    snapshot()
+    const gs: GNode[] = t.nodes.map((n) => ({ type: n.type, id: n.id, label: n.fields.name ?? n.id, r: { ...n.fields } }))
+    store.current = new Map(gs.map((g) => [keyOf(g), g]))
+    expandState.current = new Map()
+    const k = new Map(gs.map((g) => [g.id, keyOf(g)]))
+    const es: Edge[] = t.edges.filter(([a, b]) => k.has(a) && k.has(b)).map(([a, b]) => ({ id: `${k.get(a)}->${k.get(b)}`, source: k.get(a)!, target: k.get(b)!, data: { kind: "drawn", tpl: t.name } as EdgeMeta }))
+    edgesRef.current = es
+    setEdges(es)
+    setNodes(layout(gs.map((g) => ({ id: keyOf(g), type: "recipe", position: { x: 0, y: 0 }, data: { ...g } })), es, R, layoutModeRef.current === "dagre-tb" ? "TB" : "LR"))
+    setSelectedKey(null)
+    setEdgeInfo(null)
+    setCanvas({ name: t.name })
+    fit()
+  }, [enterMode, snapshot, setEdges, setNodes, R, fit])
+
+  /** Data edges are records; the only lines a reader draws go into prompt steps, or between the
+   *  cards of a recipe, where every line is a plan. */
   const onConnect = useCallback((c: Connection) => {
+    if (modeRef.current === "recipes") {
+      const a = store.current.get(c.source), b = store.current.get(c.target)
+      if (!a || !b || !isRecipeType(a.type) || !isRecipeType(b.type) || c.source === c.target) return
+      snapshot()
+      const all = addEdge({ ...c, id: `${c.source}->${c.target}`, data: { kind: "drawn", by: email ?? undefined, at: new Date().toISOString() } as EdgeMeta }, edgesRef.current)
+      edgesRef.current = all
+      setEdges(all)
+      return
+    }
     if (!c.target?.startsWith("prompt:")) { toast.error("Draw connections into prompt steps; data edges are records, not drawings."); return }
     snapshot()
     const all = addEdge({ ...c, id: `${c.source}->${c.target}`, data: { kind: "wired" } as EdgeMeta }, edgesRef.current)
     edgesRef.current = all
     setEdges(all)
-  }, [setEdges, snapshot])
+  }, [setEdges, snapshot, email])
 
   /* ── drops: an entity lands where dropped; a file uploads, then lands ── */
 
@@ -1260,13 +1392,16 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     e.preventDefault()
     const pos = screenToFlowPosition({ x: e.clientX, y: e.clientY })
     const ent = readDragEntity(e.dataTransfer)
+    const recipes = modeRef.current === "recipes"
     if (ent) {
+      if (recipes !== isRecipeType(ent.type)) { toast.info(recipes ? "Only recipe cards go on a recipe." : "Recipe cards stay on recipes."); return }
       if (store.current.has(keyOf(ent))) { toast.info(`${ent.label} is already on the canvas`); return }
       addNodes([ent as GNode], undefined, { relayout: false, at: pos })
       return
     }
     const files = [...(e.dataTransfer?.files ?? [])]
     if (!files.length) return
+    if (recipes) { toast.info("Files go on the Networks canvas."); return }
     if (!email) { toast.error("Sign in to drop files on the canvas."); return }
     for (const [i, f] of files.entries()) {
       try {
@@ -1341,11 +1476,13 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     const hot = !!selectedKey && (e.source === selectedKey || e.target === selectedKey)
     const sim = edgeKind(e) === "similar"
     const intoPrompt = e.target.startsWith("prompt:")
+    const drawn = edgeKind(e) === "drawn"
     return {
       ...e,
+      ...(drawn ? { markerEnd: { type: MarkerType.ArrowClosed, width: 14, height: 14, color: hot ? BLUE : "#94a3b8" } } : {}),
       animated: intoPrompt && running === e.target,
       style: {
-        stroke: hot || intoPrompt ? BLUE : sim ? "#94a3b8" : "#cbd5e1",
+        stroke: hot || intoPrompt ? BLUE : sim || drawn ? "#94a3b8" : "#cbd5e1",
         strokeWidth: hot ? 2 : 1,
         strokeDasharray: sim ? "6 3" : undefined,
         opacity: connected && !hot ? 0.15 : 1,
@@ -1375,7 +1512,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
 
   return (
     <div className="flex min-h-0 flex-1">
-      <RecordRail
+      {mode === "recipes" ? <RecipeRail refresh={railRefresh} onTemplate={loadTemplate} onLoad={loadView} /> : <RecordRail
         R={R}
         admin={admin}
         refresh={railRefresh}
@@ -1384,7 +1521,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
         onAsk={(g) => { setAttached(g); setDockOpen(true) }}
         onAddFile={(f) => addToCanvas({ type: "file", id: f.key, label: f.name, sub: kb(f.size), fileKey: f.key })}
         onLoad={loadView}
-      />
+      />}
 
       <div ref={paneRef} className="relative min-h-0 min-w-0 flex-1" onDragOver={(e) => e.preventDefault()} onDrop={onDrop}>
         <ReactFlow
@@ -1393,13 +1530,13 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
           nodeTypes={nodeTypes}
           onNodesChange={onNodesChange}
           onConnect={onConnect}
-          onNodeClick={(_, n) => { setSelectedKey(n.id); setEdgeInfo(null); surfaceJoins(n.id) }}
+          onNodeClick={(_, n) => { setSelectedKey(n.id); setEdgeInfo(null); if (modeRef.current === "networks") surfaceJoins(n.id) }}
           onEdgeClick={(_, e) => {
             const s = store.current.get(e.source), t = store.current.get(e.target)
             if (s && t) { setEdgeInfo({ source: s, target: t, meta: e.data as EdgeMeta | undefined }); setSelectedKey(null) }
           }}
           onPaneClick={() => { setSelectedKey(null); setEdgeInfo(null) }}
-          onPaneContextMenu={(e) => { e.preventDefault(); addPromptNode({ x: e.clientX, y: e.clientY }) }}
+          onPaneContextMenu={(e) => { e.preventDefault(); if (modeRef.current === "networks") addPromptNode({ x: e.clientX, y: e.clientY }) }}
           onNodesDelete={(del) => del.forEach((n) => removeNode(n.id))}
           onEdgesDelete={(del) => { snapshot(); const ids = new Set(del.map((x) => x.id)); commitEdges(edgesRef.current.filter((x) => !ids.has(x.id)), false) }}
           fitView
@@ -1446,7 +1583,17 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
           <Background gap={18} color="#e2e8f0" />
           <Controls showInteractive={false} />
           <Panel position="top-left" className="pointer-events-none !right-0 flex flex-wrap items-start justify-between gap-2">
-            <div className="pointer-events-auto relative">
+            <div className="pointer-events-auto flex flex-wrap items-start gap-2">
+            {admin && (
+              <div className={GROUP_BAR}>
+                {(["networks", "recipes"] as const).map((m) => (
+                  <button key={m} onClick={() => enterMode(m)} aria-pressed={mode === m} className={cn("h-8 rounded-full px-3.5 text-[13px] font-semibold transition-colors", mode === m ? "bg-pax2-lavender text-pax2-blue" : "text-slate-500 hover:text-pax2-blue")}>
+                    {m === "networks" ? "Networks" : "Recipes"}
+                  </button>
+                ))}
+              </div>
+            )}
+            {mode === "networks" && <div className="relative">
               <div className="rounded-full border border-slate-200 bg-white/90 p-1 shadow-e1 backdrop-blur-sm">
                 <div className="flex h-8 w-96 max-w-[calc(100vw-3rem)] items-center gap-2 overflow-hidden rounded-full border border-slate-200 bg-white px-3">
                   <Search className="h-4 w-4 shrink-0 text-slate-400" />
@@ -1484,15 +1631,20 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
                   ))}
                 </div>
               )}
+            </div>}
             </div>
             <div className="pointer-events-auto ml-auto flex flex-col items-end gap-2">
-              <div className={GROUP_BAR}>
+              <div className={cn(GROUP_BAR, "flex-wrap justify-end")}>
+                {mode === "recipes" ? RECIPE_TOOLS.map(([type, label]) => (
+                  <button key={type} className={PILL} onClick={() => addRecipeNode(type)}><Plus className="h-3.5 w-3.5" /> {label}</button>
+                )) : <>
                 <button className={PILL} onClick={() => addPromptNode(paneCenter())}><Plus className="h-3.5 w-3.5" /> Prompt</button>
                 <button className={PILL} onClick={runAll} disabled={!hasPrompts || !!running}>
                   {running ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5" />} Run
                 </button>
+                </>}
                 <button className={PILL} onClick={() => { if (!email) { toast.error("Sign in to save a canvas."); return } setSaveName(canvas?.name ?? ""); setSaveOpen(true) }}><Save className="h-3.5 w-3.5" /> Save</button>
-                {runs.length > 0 && (
+                {mode === "networks" && runs.length > 0 && (
                   <button className={PILL_ICON} aria-label="Run history" title="Run history" onClick={() => { setTraceOpen(runs[0].id); setTraceStep(null); setSelectedKey(null); setEdgeInfo(null) }}>
                     <History className="h-4 w-4" />
                   </button>
@@ -1501,7 +1653,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
                   <Settings2 className="h-4 w-4" />
                 </button>
               </div>
-              <div className={cn(GROUP_BAR, "pl-3")}>
+              {mode === "networks" && <div className={cn(GROUP_BAR, "pl-3")}>
                 <span className="text-xs text-slate-500">Join on select</span>
                 {(["channel", "group", "topic", "tag"] as const).map((k) => (
                   <button
@@ -1512,7 +1664,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
                     {k}
                   </button>
                 ))}
-              </div>
+              </div>}
             </div>
           </Panel>
         </ReactFlow>
@@ -1532,7 +1684,20 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
           onReset={() => setFlowProps(DEFAULT_FLOW_PROPS)}
         />
       )}
-      {!settingsOpen && sel && sel.type !== "more" && (
+      {!settingsOpen && sel && isRecipeType(sel.type) && (
+        <div className={SIDE}>
+          <SideHeader badge={sel.type} onClose={() => setSelectedKey(null)} />
+          <RecipeForm
+            key={keyOf(sel)}
+            type={sel.type}
+            values={sel.r ?? {}}
+            onFocus={snapshot}
+            onChange={(field, value) => editRecipe(keyOf(sel), field, value)}
+            onDelete={() => { removeNode(keyOf(sel)); setSelectedKey(null) }}
+          />
+        </div>
+      )}
+      {!settingsOpen && sel && sel.type !== "more" && !isRecipeType(sel.type) && (
         <div className={SIDE}>
           <SideHeader badge={sel.type} onClose={() => setSelectedKey(null)} />
           {sel.type === "prompt" ? (

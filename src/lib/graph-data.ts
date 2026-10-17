@@ -69,7 +69,7 @@ export type SavedNode = {
   x: number
   y: number
 }
-export type SavedEdge = { s: string; t: string; k?: "similar" | "wired" | "drawn"; score?: number; by?: string; at?: string }
+export type SavedEdge = { s: string; t: string; k?: "similar" | "wired" | "drawn"; score?: number; by?: string; at?: string; tpl?: string }
 export type CanvasState = { nodes: SavedNode[]; edges: SavedEdge[] }
 export type CanvasKind = "view" | "recipe"
 export type CanvasRow = { id: string; name: string; by: string; kind: CanvasKind; at: string; nodes: number }
