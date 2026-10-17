@@ -6,6 +6,7 @@ import { GripVertical } from "lucide-react"
 import { setDragEntity } from "@/lib/drag-entity"
 import type { RecipeType } from "@/lib/graph-data"
 import { cn } from "@/ui/lib/utils"
+import { linkParts } from "@/lib/recipes/links"
 
 // The model recipe's four cards: an ingredient (a data source), a step (a process), a model (an
 // artifact) and an output (a product surface). Each is 240px wide; its status chip and left
@@ -130,6 +131,17 @@ export function RecipeForm({ type, values, onChange, onFocus, onDelete }: {
             <textarea value={values[f.key] ?? ""} onFocus={onFocus} onChange={(e) => onChange(f.key, e.target.value)} rows={4} className={cn(control, "mt-0.5 resize-y py-1.5 leading-snug")} />
           ) : (
             <input value={values[f.key] ?? ""} onFocus={onFocus} onChange={(e) => onChange(f.key, e.target.value)} className={cn(control, "mt-0.5 h-8")} />
+          )}
+          {(f.key === "where" || f.key === "metrics") && linkParts(values[f.key]).some((p) => p.href) && (
+            <span className="mt-1 flex flex-wrap gap-x-2 gap-y-0.5 text-[11px]">
+              {linkParts(values[f.key])
+                .filter((p) => p.href)
+                .map((p) => (
+                  <a key={p.text} href={p.href!} target="_blank" rel="noreferrer" className="truncate text-pax2-light-blue hover:underline">
+                    {p.text}
+                  </a>
+                ))}
+            </span>
           )}
         </label>
       ))}

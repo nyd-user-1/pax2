@@ -1,15 +1,43 @@
 import katex from "katex"
 import "katex/dist/katex.min.css"
 
-import { FormulaBlock, ListBlock, OneThirdBlock } from "@/components/blocks"
+import agreement from "../../../data/generated/model/consensus-agreement.json"
+import { FormulaBlock, ListBlock, OneThirdBlock, TableBlock } from "@/components/blocks"
 import { FormulaExplainer } from "@/components/formula-explainer"
 import { EXPLAIN as explain, FORMULAS as math } from "@/lib/formulas"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { Stat2 } from "@/components/dash/stats"
 import { featureLift, labVideos } from "@/lib/lab"
+import { linkParts } from "@/lib/recipes/links"
+import { MEMORABLE } from "@/lib/recipes/memorable"
 import { cn } from "@/ui/lib/utils"
 
 export const metadata = { title: "ML" }
+
+// Every model PAX2 has or plans, read from the Memorable recipe so the inventory is kept once.
+const MODELS = MEMORABLE.nodes.filter((n) => n.type === "model").map((n) => n.fields)
+const KAPPA = (agreement as { pending?: boolean; meanKappa?: number | null; voters?: number; videos?: number }).meanKappa ?? null
+const K = agreement as { voters?: number; videos?: number }
+
+function Linked({ value }: { value?: string }) {
+  if (!value) return <>-</>
+  return (
+    <>
+      {linkParts(value).map((p, i) => (
+        <span key={p.text}>
+          {i > 0 && ", "}
+          {p.href ? (
+            <a href={p.href} target="_blank" rel="noreferrer" className="text-pax2-light-blue hover:underline">
+              {p.text}
+            </a>
+          ) : (
+            p.text
+          )}
+        </span>
+      ))}
+    </>
+  )
+}
 
 export default function MlPage() {
   const vids = labVideos()
@@ -75,7 +103,44 @@ export default function MlPage() {
         ))}
       </div>
 
-      <BlockOrder page="ml" initial={["workflow", "limits", "calc-1", "calc-2"]}>
+      <BlockOrder page="ml" initial={["models", "workflow", "limits", "calc-1", "calc-2"]}>
+        <OrderedBlock id="models" label="Models">
+          <TableBlock title="Models" height="auto" rows={MODELS.map((m) => ({ name: m.name, kind: m.kind, definition: m.definition, status: m.status, where: m.where ?? "", metrics: m.metrics ?? "" }))} name="ml-models">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="text-left text-xs text-slate-500">
+                  <tr className="[&_th]:whitespace-nowrap [&_th]:py-2 [&_th]:pr-6 [&_th]:font-medium">
+                    <th>Model</th>
+                    <th>Kind</th>
+                    <th>Definition</th>
+                    <th>Status</th>
+                    <th>Where</th>
+                    <th>Metrics</th>
+                  </tr>
+                </thead>
+                <tbody className="[&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2.5 [&_td]:pr-6 [&_td]:align-top">
+                  {MODELS.map((m) => (
+                    <tr key={m.name} data-find>
+                      <td className="whitespace-nowrap font-medium text-slate-900">{m.name}</td>
+                      <td className="whitespace-nowrap text-slate-600">{m.kind}</td>
+                      <td className="min-w-64 text-slate-700">{m.definition}</td>
+                      <td>
+                        <span className={cn("rounded-full px-2 py-0.5 text-[11px] font-semibold", m.status === "exists" ? "bg-above-soft text-above" : "bg-slate-100 text-slate-600")}>{m.status}</span>
+                      </td>
+                      <td className="text-slate-600">
+                        <Linked value={m.where} />
+                      </td>
+                      <td className="tabular text-slate-600">
+                        {m.name === "PAX2 Trait Labeler" && KAPPA != null ? `Mean kappa ${KAPPA.toFixed(2)} against ${K.voters} ${K.voters === 1 ? "person" : "people"} on ${K.videos} videos` : <Linked value={m.metrics} />}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </TableBlock>
+        </OrderedBlock>
+
         <OrderedBlock id="workflow" label="The workflow">
           <ListBlock title="The workflow" search="Search steps…" rows={steps.map(({ n, title, status, detail }) => ({ step: n, title, status, detail }))} name="ml-workflow">
             <div className="flex flex-col divide-y divide-slate-100">
