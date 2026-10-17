@@ -70,8 +70,8 @@ export default function CameraPage() {
           <div className="flex flex-col gap-4 surface p-7">
             <CheckCircle2 className="size-10 text-primary" />
             <div className="flex flex-wrap gap-4">
-              <Link href="/record/start" className="rounded-full bg-pax2-blue px-6 py-3 font-medium text-white">Record another</Link>
-              {me && <Link href="/recording" className="rounded-full border px-6 py-3 font-medium text-pax2-blue">Your videos</Link>}
+              <Link href="/recording" className="rounded-full bg-pax2-blue px-6 py-3 font-medium text-white">Record another</Link>
+              {me && <Link href="/drafts" className="rounded-full border px-6 py-3 font-medium text-pax2-blue">Your videos</Link>}
             </div>
           </div>
         </FlowPage>
@@ -145,7 +145,7 @@ export default function CameraPage() {
             </button>
             {ready && !draft.text && (
               <p className="text-sm text-slate-800">
-                No script yet. <Link href="/record/start" className="text-primary underline">Pick or write one first</Link>, or upload a video below.
+                No script yet. <Link href="/recording" className="text-primary underline">Pick or write one first</Link>, or upload a video below.
               </p>
             )}
           </div>

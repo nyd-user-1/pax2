@@ -2,7 +2,7 @@ import Link from "next/link"
 import { ArrowRight, Clapperboard, ListChecks, MessageSquareText, PencilLine, Upload } from "lucide-react"
 
 // The ways into recording: write in your own words, or choose, skip the camera, create or upload.
-// Shared by /record/start and the landing's third section.
+// Shared by /recording and the landing's third section.
 
 const OPTIONS = [
   { href: "/record/library", icon: ListChecks, title: "Choose a script", body: "Pick a ready-made campaign script and make it yours." },

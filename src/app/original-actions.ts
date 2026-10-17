@@ -14,7 +14,7 @@ import { addToWatch } from "@/lib/velocity-store"
 const link = (id: string, tab?: string) => `${SITE}/v/${id}${tab ? `?tab=${tab}` : ""}`
 const refresh = (id: string) => {
   revalidatePath(`/v/${id}`)
-  for (const p of ["/recording", "/scoring", "/publishing"]) revalidatePath(p)
+  for (const p of ["/drafts", "/scoring", "/publishing"]) revalidatePath(p)
 }
 
 async function must(id: string): Promise<OriginalRow> {
@@ -36,7 +36,7 @@ export async function againDraft(id: string) {
 }
 
 /** A recording lands. It is scored straight away when automatic scoring is on (PAX2_AUTOSCORE=1);
- *  otherwise it waits on /recording for an admin to press Score. */
+ *  otherwise it waits on /drafts for an admin to press Score. */
 export async function submitOriginal(input: { id: string; key: string; email?: string; scriptId?: string; title?: string; text?: string; name?: string; role?: string; town?: string; seconds: number; consent: boolean; parent?: string }) {
   const user = await currentUser()
   const owner = (user?.email ?? input.email ?? "").trim().toLowerCase()

@@ -73,7 +73,7 @@ export default async function RecordLanding() {
               </h1>
               <p className="max-w-md text-lg leading-relaxed text-slate-900">We help you choose what to say, how to say it and share it. Because your voice is the difference.</p>
               <div className="flex items-center gap-3">
-                <Link href="/record/start" className={whiteButton("lg", "w-44")}>
+                <Link href="/#record" className={whiteButton("lg", "w-44")}>
                   <Video className="size-5" style={{ color: "#033882", fill: "#dbe7fa" }} /> Create
                 </Link>
                 <Link href="#learn" className="press flex w-44 items-center justify-center gap-2 rounded-full bg-pax2-blue px-7 py-4 text-base font-medium text-white shadow-md transition-shadow hover:shadow-e3">
@@ -85,8 +85,8 @@ export default async function RecordLanding() {
             <PhoneMock videoId={`yt-${top.id}`} timer={timerOf(top.duration)} />
           </div>
         </section>
-        {/* Section three: the ways into recording, as on /record/start. Positioned, so it paints above the fixed grid. */}
-        <section className="relative flex min-h-dvh flex-col justify-center">
+        {/* Section three: the ways into recording, as on /recording. Positioned, so it paints above the fixed grid. */}
+        <section id="record" className="relative flex min-h-dvh scroll-mt-16 flex-col justify-center">
           <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-5 py-12">
             <RecordOptions />
             <HelpLine />

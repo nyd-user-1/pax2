@@ -35,7 +35,7 @@ export default function StudioPage() {
         <StepBar step={3} back={{ href: "/record", label: "Home" }} />
         <FlowPage title="Sent. Thank you." lead="The team has your design and renders it at full quality. If it runs, its results come back to the partner's Home with a score.">
           <div className="flex gap-4">
-            <Link href="/record/start" className="rounded-full bg-pax2-blue px-6 py-3 font-medium text-white">Make another</Link>
+            <Link href="/recording" className="rounded-full bg-pax2-blue px-6 py-3 font-medium text-white">Make another</Link>
             <Link href="/" className={whiteButton("lg")}>Open the partner view</Link>
           </div>
         </FlowPage>
@@ -48,7 +48,7 @@ export default function StudioPage() {
       <FlowPage title="Make it without a camera." lead="Your words, animated line by line. Pick a look and a motion; the preview plays as you choose." wide>
         {ready && !lines.length ? (
           <p className="text-slate-500">
-            No script yet. <Link href="/record/start" className="text-pax2-light-blue underline">Pick or write one first</Link>.
+            No script yet. <Link href="/recording" className="text-pax2-light-blue underline">Pick or write one first</Link>.
           </p>
         ) : (
           <div className="grid gap-8 lg:grid-cols-[360px_1fr]">

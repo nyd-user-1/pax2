@@ -11,7 +11,7 @@ const SECTIONS = [
 export default function GuidePage() {
   return (
     <>
-      <StepBar step={1} back={{ href: "/record/start", label: "Start" }} />
+      <StepBar step={1} back={{ href: "/recording", label: "Start" }} />
       <FlowPage title="The volunteer guide" lead="Five minutes, a phone, and your own words. Here's everything that helps.">
         <div className="flex flex-col gap-4">
           {SECTIONS.map((s) => (

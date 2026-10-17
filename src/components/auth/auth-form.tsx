@@ -18,7 +18,7 @@ const post = async (action: string, body: object) => {
 /** Where to land after signing in: the page the reader came from (?next=), else the record flow. */
 const nextPath = () => {
   const n = new URLSearchParams(window.location.search).get("next")
-  return n && n.startsWith("/") && !n.startsWith("//") ? n : "/record/start"
+  return n && n.startsWith("/") && !n.startsWith("//") ? n : "/recording"
 }
 
 const FIELD = "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-shadow placeholder:text-slate-400 focus:ring-2 focus:ring-pax2-light-blue/40"

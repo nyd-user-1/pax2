@@ -1,13 +1,6 @@
-import { FlowPage, HelpLine } from "@/components/record/chrome"
-import { RecordOptions } from "@/components/record/record-options"
+import { redirect } from "next/navigation"
 
-export const metadata = { title: "How would you like to start?" }
-
+// The flow's start moved to /recording; old links land there.
 export default function StartPage() {
-  return (
-    <FlowPage className="min-h-[calc(100dvh-11.5rem)] justify-center py-0">
-      <RecordOptions />
-      <HelpLine />
-    </FlowPage>
-  )
+  redirect("/recording")
 }

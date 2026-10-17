@@ -26,7 +26,7 @@ export default function PersonalPage() {
   const [err, setErr] = React.useState<string | null>(null)
   return (
     <>
-      <StepBar step={1} back={{ href: "/record/start", label: "Start" }} />
+      <StepBar step={1} back={{ href: "/recording", label: "Start" }} />
       <FlowPage title="Tell us a little about you." lead="Three short answers. PAX2 writes a script that sounds like you, and you can change every word.">
         <form
           className="flex flex-col gap-5 surface p-7 shadow-sm"

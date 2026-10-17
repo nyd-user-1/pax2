@@ -1,8 +1,14 @@
-import { OriginalsQueue } from "@/components/originals-queue"
+import { FlowPage, HelpLine } from "@/components/record/chrome"
+import { RecordOptions } from "@/components/record/record-options"
 
-export const dynamic = "force-dynamic"
-export const metadata = { title: "Recording" }
+export const metadata = { title: "How would you like to start?" }
 
+/** Where the recording flow begins. */
 export default function RecordingPage() {
-  return <OriginalsQueue queue="recording" />
+  return (
+    <FlowPage className="min-h-[calc(100dvh-11.5rem)] justify-center py-0">
+      <RecordOptions />
+      <HelpLine />
+    </FlowPage>
+  )
 }

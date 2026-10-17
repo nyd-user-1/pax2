@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, FilePen, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { RevealFx } from "@/components/reveal-fx"
@@ -35,6 +35,10 @@ const WIP = [
   { href: "/ml", label: "ML", icon: Brain },
   { href: "/scoring/method", label: "Score method", icon: FlaskConical },
 ]
+// Pages that branch off a sidebar item, drawn hanging from it on the branched menu's tree lines.
+const BRANCHES: Record<string, { href: string; label: string; icon: typeof Gauge }[]> = {
+  "/recording": [{ href: "/drafts", label: "Drafts", icon: FilePen }],
+}
 // Off the sidebar and the page switcher: early pages kept for reference, under the account menu's Lab.
 const LAB = [{ href: "/campaigns", label: "Campaigns", icon: Clapperboard }]
 const MORE = [
@@ -47,6 +51,7 @@ const MORE = [
 // The header names the page; the first match wins, so a deeper route comes before its parent.
 const TITLES: [string, string][] = [
   ["/recording", "Recording"],
+  ["/drafts", "Drafts"],
   ["/scoring/method", "Score method"],
   ["/scoring", "Scoring"],
   ["/publishing", "Publishing"],
@@ -172,7 +177,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
     setSize("custom")
   }
   const active = (href: string) => (href === "/scoring" ? path === "/scoring" : path.startsWith(href))
-  // The front door (landing, record entry, sign-in) is full bleed; every step from /record/start on sits in the shell.
+  // The front door (landing, record entry, sign-in) is full bleed; the recording flow, from /recording on, sits in the shell.
   const home = path === "/"
   if (path === "/record" || path.startsWith("/sign"))
     return (
@@ -204,6 +209,43 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
       </Link>
     )
   }
+  const branch = (kids: { href: string; label: string; icon: typeof Gauge }[]) => {
+    const ROW = 32
+    const PAD = 2
+    /** Under the parent's 18px icon, which sits 12px in. */
+    const TRUNK = 21
+    const R = 8
+    const END = 34
+    const y = (k: number) => PAD + k * ROW + ROW / 2
+    const arc = (k: number) => `A ${R} ${R} 0 0 0 ${TRUNK + R} ${y(k)} H ${END}`
+    const length = (k: number) => y(k) - R + (Math.PI * R) / 2 + (END - TRUNK - R)
+    const h = PAD * 2 + kids.length * ROW
+    return (
+      <div className="relative" style={{ height: h }}>
+        <svg aria-hidden width={END} height={h} className="pointer-events-none absolute left-0 top-0 overflow-visible fill-none [stroke-linecap:round] [stroke-linejoin:round]" strokeWidth={1.5}>
+          <path className="stroke-slate-300" d={`M ${TRUNK} 0 V ${y(kids.length - 1) - R}`} />
+          {kids.map((k, i) => (
+            <path key={k.href} className="stroke-slate-300" d={`M ${TRUNK} ${y(i) - R} ${arc(i)}`} />
+          ))}
+          {kids.map((k, i) => (
+            <path
+              key={`${k.href}-reach`}
+              className="stroke-pax2-light-blue transition-[stroke-dashoffset] duration-400 ease-[cubic-bezier(0.23,1,0.32,1)]"
+              d={`M ${TRUNK} 0 V ${y(i) - R} ${arc(i)}`}
+              style={{ strokeDasharray: length(i), strokeDashoffset: active(k.href) ? 0 : length(i) }}
+            />
+          ))}
+        </svg>
+        <div className="flex flex-col pl-9" style={{ paddingTop: PAD }}>
+          {kids.map((k) => (
+            <div key={k.href} className="flex items-center" style={{ height: ROW }}>
+              <div className="w-full">{item(k.href, k.label, k.icon, true)}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
   const sidebar = (
     <div className="flex h-full w-60 flex-col rounded-2xl border border-slate-500 bg-pax2-mist px-3 py-4 shadow-e2">
       <Link href="/" aria-label="Home" className="mb-4 flex px-3 pt-1">
@@ -212,7 +254,14 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
       <nav className="flex flex-col gap-0.5">{NAV.map((n) => item(n.href, n.label, n.icon))}</nav>
       <div className="mt-3 min-h-0 flex-1 overflow-y-auto border-t border-slate-200/70 pt-3">
         <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Work in progress</p>
-        <nav className="flex flex-col gap-0.5">{WIP.map((n) => item(n.href, n.label, n.icon))}</nav>
+        <nav className="flex flex-col gap-0.5">
+          {WIP.map((n) => (
+            <React.Fragment key={n.href}>
+              {item(n.href, n.label, n.icon)}
+              {BRANCHES[n.href] && branch(BRANCHES[n.href])}
+            </React.Fragment>
+          ))}
+        </nav>
         <p className="mt-3 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">More</p>
         <nav className="flex flex-col gap-0.5">{MORE.map((n) => item(n.href, n.label, n.icon))}</nav>
       </div>
@@ -227,14 +276,13 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
     return (
       <PanelCtx.Provider value={panel}>
         <div className="min-h-dvh bg-pax2-mist">{children}</div>
+        {/* The sidebar slides in for everyone (PAX in the landing header calls it); the discussion is for the signed in. */}
+        <div aria-hidden onClick={() => (setSidebarOpen(false), setDiscuss(false))} className={cn("fixed inset-0 z-[60] bg-slate-900/20 transition-opacity duration-300", sidebarOpen || discuss ? "opacity-100" : "pointer-events-none opacity-0")} />
+        <div className={cn("fixed inset-y-[18px] left-[18px] z-[61] transition-transform duration-300 ease-in-out", sidebarOpen ? "translate-x-0" : "-translate-x-[calc(100%+18px)]")}>{sidebar}</div>
         {signedIn && (
-          <>
-            <div aria-hidden onClick={() => (setSidebarOpen(false), setDiscuss(false))} className={cn("fixed inset-0 z-[60] bg-slate-900/20 transition-opacity duration-300", sidebarOpen || discuss ? "opacity-100" : "pointer-events-none opacity-0")} />
-            <div className={cn("fixed inset-y-[18px] left-[18px] z-[61] transition-transform duration-300 ease-in-out", sidebarOpen ? "translate-x-0" : "-translate-x-[calc(100%+18px)]")}>{sidebar}</div>
-            <div className={cn("fixed inset-y-[18px] right-[18px] z-[61] w-[min(620px,calc(100vw-36px))] transition-transform duration-300 ease-in-out", discuss ? "translate-x-0" : "translate-x-[calc(100%+18px)]")}>
-              {discuss && <DiscussionPanel onClose={() => setDiscuss(false)} />}
-            </div>
-          </>
+          <div className={cn("fixed inset-y-[18px] right-[18px] z-[61] w-[min(620px,calc(100vw-36px))] transition-transform duration-300 ease-in-out", discuss ? "translate-x-0" : "translate-x-[calc(100%+18px)]")}>
+            {discuss && <DiscussionPanel onClose={() => setDiscuss(false)} />}
+          </div>
         )}
       </PanelCtx.Provider>
     )
@@ -393,7 +441,7 @@ function PageSwitcher({ title }: { title: string }) {
     router.push(href)
   }
   const needle = q.trim().toLowerCase()
-  const all = [...NAV, ...WIP, ...MORE]
+  const all = [...NAV, ...WIP, ...Object.values(BRANCHES).flat(), ...MORE]
   const filtered = needle ? all.filter((d) => d.label.toLowerCase().includes(needle)) : all
 
   return (

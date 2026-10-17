@@ -6,11 +6,11 @@ import { WaveHero } from "@/components/wave-hero"
 import { currentUser } from "@/lib/auth"
 import { originals, STAGE_LABEL, type OriginalRow, type Stage } from "@/lib/originals"
 
-// /recording, /scoring and /publishing: the three queues of original videos, on one tab rail.
+// /drafts, /scoring and /publishing: the three queues of original videos, on one tab rail.
 // Each video lives at /v/[id]; these pages only list where each one stands.
 
 const QUEUES = [
-  { key: "recording", label: "Recording", href: "/recording", stages: ["recorded", "with-owner"] as Stage[] },
+  { key: "recording", label: "Drafts", href: "/drafts", stages: ["recorded", "with-owner"] as Stage[] },
   { key: "scoring", label: "Scoring", href: "/scoring", stages: ["scored", "enhancing"] as Stage[] },
   { key: "publishing", label: "Publishing", href: "/publishing", stages: ["published", "polled"] as Stage[] },
 ]
