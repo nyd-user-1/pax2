@@ -5,7 +5,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, DollarSign, EllipsisVertical, Forward, ListPlus, MessageCircle, Search, SlidersHorizontal, TrendingUp, Star, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
+import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, EllipsisVertical, Forward, ListPlus, MessageCircle, Rocket, Search, SlidersHorizontal, TrendingUp, Star, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
@@ -94,8 +94,8 @@ function Score({ v }: { v: FeedVideo }) {
 
 const FAVORITES = "pax2:favorites"
 
-/** A star in the thumbnail's top-right corner on hover; once favorited it stays, filled.
- *  Favorites live in this browser. */
+/** The favorite star, last in a card's counts and styled like them; pressed, it fills amber.
+ *  Favorites live in this browser. It sits inside the card's link, so a press stays out of it. */
 function Favorite({ id }: { id: string }) {
   const [on, setOn] = React.useState(false)
   React.useEffect(() => setOn((JSON.parse(localStorage.getItem(FAVORITES) ?? "[]") as string[]).includes(id)), [id])
@@ -109,18 +109,8 @@ function Favorite({ id }: { id: string }) {
     setOn(ids.has(id))
   }
   return (
-    <button
-      type="button"
-      aria-label={on ? "Remove from favorites" : "Add to favorites"}
-      aria-pressed={on}
-      onClick={toggle}
-      className={whiteButton(
-        "circle",
-        "absolute right-2 top-2 z-10 transition-[opacity,color,background-color,border-color]",
-        on ? "opacity-100" : "opacity-0 group-hover:opacity-100 focus-visible:opacity-100",
-      )}
-    >
-      <Star className={cn("size-4", on && "fill-amber-400 text-amber-400")} />
+    <button type="button" aria-label={on ? "Remove from favorites" : "Add to favorites"} aria-pressed={on} onClick={toggle} className={CORNER_ITEM}>
+      <Star className={cn("size-5", on && "fill-amber-400 text-amber-400")} />
     </button>
   )
 }
@@ -135,38 +125,46 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
   { label: "Share", icon: Forward },
 ]
 
-/** A card's counts in one icon style: views, likes, comments — each sized and hovered like the
- *  three-dot button, a muted disc beneath. Shorts keep them in the bottom-right corner; the
- *  landscape cards lead with them on the left. */
+/** A card's counts in one icon style — views, likes, comments, then the favorite star — each sized
+ *  and hovered like the three-dot button, a muted disc beneath, on the card's right. The landscape
+ *  cards add Boost on the left. */
 const CORNER_ITEM = "flex h-9 min-w-9 items-center justify-center gap-1.5 rounded-full px-2 transition-colors hover:bg-slate-200/70"
 
-function CardFoot({ v, start }: { v: FeedVideo; start?: boolean }) {
+function CardFoot({ v, boost }: { v: FeedVideo; boost?: boolean }) {
   return (
-    <div className={cn("tabular mt-auto flex items-center gap-0.5 text-sm text-pax2-blue", start ? "-ml-2 justify-start" : "justify-end")}>
-      <span className={CORNER_ITEM} aria-label={`${v.views} views`}>
-        <TrendingUp className="size-5" /> {fmt.format(v.views)}
-      </span>
-      {v.likes != null && (
-        <span className={CORNER_ITEM} aria-label={`${v.likes} likes`}>
-          <ThumbsUp className="size-5" /> {fmt.format(v.likes)}
-        </span>
+    <div className="tabular mt-auto flex items-center justify-between gap-2 text-sm text-pax2-blue">
+      {boost ? (
+        // Built, not yet wired; a press stays out of the card's link.
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+          }}
+          className={whiteButton("md")}
+        >
+          <Rocket className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} /> Boost
+        </button>
+      ) : (
+        <span />
       )}
-      {v.comments != null && (
-        <span className={CORNER_ITEM} aria-label={`${v.comments} comments`}>
-          <MessageCircle className="size-5" /> {fmt.format(v.comments)}
+      <div className="-mr-2 flex items-center gap-0.5">
+        <span className={CORNER_ITEM} aria-label={`${v.views} views`}>
+          <TrendingUp className="size-5" /> {fmt.format(v.views)}
         </span>
-      )}
+        {v.likes != null && (
+          <span className={CORNER_ITEM} aria-label={`${v.likes} likes`}>
+            <ThumbsUp className="size-5" /> {fmt.format(v.likes)}
+          </span>
+        )}
+        {v.comments != null && (
+          <span className={CORNER_ITEM} aria-label={`${v.comments} comments`}>
+            <MessageCircle className="size-5" /> {fmt.format(v.comments)}
+          </span>
+        )}
+        <Favorite id={v.id} />
+      </div>
     </div>
-  )
-}
-
-/** Paid media's mark: a green dollar on the thumbnail's top-left, the favorite star's opposite. */
-function PaidMark({ v }: { v: FeedVideo }) {
-  if (!v.paid) return null
-  return (
-    <span role="img" aria-label="Paid media" className={whiteButton("circle", "pointer-events-none absolute left-2 top-2 z-10")}>
-      <DollarSign className="size-5 text-green-600" />
-    </span>
   )
 }
 
@@ -206,8 +204,6 @@ export function ListRow({ v }: { v: FeedVideo }) {
       <div className="relative w-full shrink-0 overflow-hidden rounded-xl bg-slate-200 sm:w-[380px] md:w-[448px]">
         <HoverThumb v={v} aspect="aspect-video" />
         <Score v={v} />
-        <Favorite id={v.id} />
-        <PaidMark v={v} />
         <span className="tabular pointer-events-none absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
       </div>
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
@@ -234,8 +230,6 @@ export function ShortCard({ v }: { v: FeedVideo }) {
       <div className="relative overflow-hidden rounded-xl bg-slate-200">
         <HoverThumb v={v} aspect="aspect-[9/16]" />
         <Score v={v} />
-        <Favorite id={v.id} />
-        <PaidMark v={v} />
       </div>
       <div className="flex items-start justify-between gap-1">
         <p className="line-clamp-2 min-h-[2lh] min-w-0 text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
@@ -260,8 +254,6 @@ export function LandscapeCard({ v }: { v: FeedVideo }) {
         <div className="relative overflow-hidden">
           <HoverThumb v={v} aspect="aspect-video" />
           <Score v={v} />
-          <Favorite id={v.id} />
-          <PaidMark v={v} />
         </div>
         <div className="flex items-center justify-between gap-2 px-2.5 py-2">
           <span className="flex min-w-0 items-center gap-2.5">
@@ -271,12 +263,14 @@ export function LandscapeCard({ v }: { v: FeedVideo }) {
           <span className="tabular shrink-0 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
         </div>
       </div>
-      <div className="flex items-start justify-between gap-2 pt-1">
-        <p className="line-clamp-2 min-w-0 font-display text-lg font-semibold leading-snug text-slate-900">{v.title}</p>
-        <RowMenu className="-mr-2 -mt-1" />
+      <div className="flex flex-col gap-1 pt-1">
+        <div className="flex items-start justify-between gap-2">
+          <p className="line-clamp-2 min-w-0 font-display text-lg font-semibold leading-snug text-slate-900">{v.title}</p>
+          <RowMenu className="-mr-2 -mt-1" />
+        </div>
+        {v.description && <p className="line-clamp-2 text-[15px] leading-relaxed text-slate-800">{v.description}</p>}
       </div>
-      {v.description && <p className="line-clamp-2 text-[15px] leading-relaxed text-slate-800">{v.description}</p>}
-      <CardFoot v={v} start />
+      <CardFoot v={v} boost />
     </Link>
   )
 }
