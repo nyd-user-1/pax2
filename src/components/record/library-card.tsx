@@ -7,7 +7,9 @@ import { useDraft } from "@/components/record/draft"
 
 export type CardData = { id: string; title: string; framing: string; text: string; seconds: number; place: string; notes: { label: string; tone: "good" | "neutral" | "caution" }[] }
 
-export function LibraryCard({ s }: { s: CardData }) {
+/** A script's card. `compact` keeps the title, the opening lines and the length and place, for the
+ *  landing's slider; the library shows the framing and the notes as well. */
+export function LibraryCard({ s, compact = false }: { s: CardData; compact?: boolean }) {
   const router = useRouter()
   const { update } = useDraft()
   const flat = s.text.replace(/\s+/g, " ")
@@ -27,9 +29,9 @@ export function LibraryCard({ s }: { s: CardData }) {
           <ArrowRight className="size-4" />
         </span>
       </span>
-      <span className="text-slate-800">{s.framing}</span>
+      {!compact && <span className="text-slate-800">{s.framing}</span>}
       <span className="border-l-2 border-primary/30 pl-4 italic text-slate-800">“{excerpt}”</span>
-      <span className="flex flex-wrap gap-2">
+      <span className={compact ? "mt-auto flex flex-wrap gap-2 border-t pt-5" : "flex flex-wrap gap-2"}>
         <span className="flex items-center gap-1.5 rounded-full bg-pax2-mist px-3 py-1 text-sm text-pax2-blue">
           <Mic className="size-3.5" /> About {s.seconds} seconds
         </span>
@@ -37,7 +39,7 @@ export function LibraryCard({ s }: { s: CardData }) {
           <MapPin className="size-3.5" /> {s.place}
         </span>
       </span>
-      {s.notes.length > 0 && (
+      {!compact && s.notes.length > 0 && (
         <span className="flex flex-col gap-1 border-t pt-3">
           {s.notes.map((n) => (
             <span key={n.label} className={n.tone === "good" ? "text-sm font-medium text-pax2-blue" : n.tone === "caution" ? "text-sm font-medium text-pax2-red-deep" : "text-sm text-slate-800"}>

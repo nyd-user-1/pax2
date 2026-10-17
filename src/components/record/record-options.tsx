@@ -2,12 +2,12 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { ArrowRight, ChevronDown, Clapperboard, ListChecks, MessageSquareText, PencilLine, Upload } from "lucide-react"
+import { ArrowRight, ChevronLeft, ChevronRight, Clapperboard, ListChecks, MessageSquareText, PencilLine, Upload } from "lucide-react"
 
 import { loadLibraryCards } from "@/app/library-actions"
 import { LibraryCard, type CardData } from "@/components/record/library-card"
 import { RevealFx } from "@/components/reveal-fx"
-import { cn } from "@/ui/lib/utils"
+import { whiteButton } from "@/components/white-button"
 
 // The ways into recording: write in your own words, or choose, skip the camera, create or upload.
 // Shared by /recording and the landing's third section, where Choose a script opens the scripts in place.
@@ -20,7 +20,7 @@ const OPTIONS = [
 ]
 
 /** With `onChoose`, Choose a script opens the scripts in place instead of going to /record/library. */
-export function RecordOptions({ onChoose, choosing = false }: { onChoose?: () => void; choosing?: boolean }) {
+export function RecordOptions({ onChoose }: { onChoose?: () => void }) {
   return (
     <div className="flex flex-col gap-4">
       <Link href="/record/personal" className="lift group surface flex cursor-pointer flex-col gap-3 p-6">
@@ -44,18 +44,14 @@ export function RecordOptions({ onChoose, choosing = false }: { onChoose?: () =>
                   <Icon className="size-[18px] text-pax2-blue" />
                 </span>
                 <span className="flex size-8 items-center justify-center rounded-full bg-pax2-mist transition-colors group-hover:bg-primary group-hover:text-white">
-                  {inPlace ? (
-                    <ChevronDown className={cn("size-4 transition-transform duration-200", choosing && "rotate-180")} />
-                  ) : (
-                    <ArrowRight className="size-4 transition-transform duration-200 group-hover:-rotate-45" />
-                  )}
+                  <ArrowRight className="size-4 transition-transform duration-200 group-hover:-rotate-45" />
                 </span>
               </span>
               <span className="text-lg font-semibold text-pax2-blue">{title}</span>
             </>
           )
           return inPlace ? (
-            <button key={href} type="button" onClick={onChoose} aria-expanded={choosing} className="lift group surface flex flex-col gap-3 p-5 text-left">
+            <button key={href} type="button" onClick={onChoose} className="lift group surface flex flex-col gap-3 p-5 text-left">
               {body}
             </button>
           ) : (
@@ -69,33 +65,86 @@ export function RecordOptions({ onChoose, choosing = false }: { onChoose?: () =>
   )
 }
 
-/** The landing's recording section: the options, and under them — once Choose a script is pressed —
- *  the library's scripts, fetched then and revealed with the page transition's wipe. */
+/** The landing's recording section. Choose a script swaps the options for the scripts in place,
+ *  wiping in with the page transition: a horizontal slider, four cards a page, paged by chevrons
+ *  opposite the heading (right alone at first, left joining after the first step). The cards are
+ *  fetched when the reader reaches for Choose a script, not on every load. */
 export function RecordChooser({ children }: { children?: React.ReactNode }) {
   const [open, setOpen] = React.useState(false)
   const [cards, setCards] = React.useState<CardData[] | null>(null)
-  const [loading, startLoading] = React.useTransition()
-  const toggle = () => {
-    setOpen((o) => !o)
+  const [, startLoading] = React.useTransition()
+  const [stepped, setStepped] = React.useState(false)
+  const track = React.useRef<HTMLDivElement>(null)
+  const fetchCards = () => {
     if (!cards) startLoading(async () => setCards(await loadLibraryCards()))
   }
+  const pages = cards ? Array.from({ length: Math.ceil(cards.length / 4) }, (_, i) => cards.slice(i * 4, i * 4 + 4)) : []
+  // One page either way, wrapping round at the ends.
+  const page = (by: 1 | -1) => {
+    const el = track.current
+    if (!el) return
+    const at = Math.round(el.scrollLeft / el.clientWidth)
+    const next = (at + by + pages.length) % pages.length
+    el.scrollTo({ left: next * el.clientWidth, behavior: "smooth" })
+  }
   return (
-    <div className="flex w-full flex-col gap-8">
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-8">
-        <RecordOptions onChoose={toggle} choosing={open} />
-        {children}
-      </div>
-      {open && (loading || !cards ? (
-        <p className="text-center text-sm text-slate-800">Loading the scripts…</p>
-      ) : (
-        <RevealFx translateY={4}>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {cards.map((c) => (
-              <LibraryCard key={c.id} s={c} />
-            ))}
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-8">
+      {open && cards ? (
+        <RevealFx translateY={4} className="flex flex-col gap-8">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between gap-4">
+              <h2 className="font-display text-2xl font-semibold text-pax2-blue">By Polling and Narrative Style</h2>
+              {pages.length > 1 && (
+                <div className="flex shrink-0 gap-2">
+                  {stepped && (
+                    <button type="button" aria-label="Previous scripts" onClick={() => page(-1)} className={whiteButton("circle", "size-8")}>
+                      <ChevronLeft className="size-4" />
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    aria-label="More scripts"
+                    onClick={() => {
+                      page(1)
+                      setStepped(true)
+                    }}
+                    className={whiteButton("circle", "size-8")}
+                  >
+                    <ChevronRight className="size-4" />
+                  </button>
+                </div>
+              )}
+            </div>
+            {/* The slider: whole pages side by side, snapping, its scrollbar hidden; padded so the cards' shadows aren't clipped. */}
+            <div ref={track} className="no-scrollbar -m-2 flex snap-x snap-mandatory overflow-x-auto scroll-smooth">
+              {pages.map((group, i) => (
+                <div key={i} className="grid w-full shrink-0 snap-start auto-rows-fr gap-4 p-2 sm:grid-cols-2">
+                  {group.map((c) => (
+                    <LibraryCard key={c.id} s={c} compact />
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
+          <p className="text-sm">
+            <Link href="/record/library" className="font-medium text-primary underline underline-offset-4">
+              Full Library
+            </Link>
+          </p>
         </RevealFx>
-      ))}
+      ) : (
+        <>
+          <div onPointerEnter={fetchCards} onFocusCapture={fetchCards}>
+            <RecordOptions
+              onChoose={() => {
+                fetchCards()
+                setOpen(true)
+              }}
+            />
+          </div>
+          {children}
+        </>
+      )}
     </div>
   )
 }
