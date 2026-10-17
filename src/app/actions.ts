@@ -3,7 +3,11 @@
 import { cookies } from "next/headers"
 import { revalidatePath } from "next/cache"
 
+import feed from "../../data/generated/home-feed.json"
+import channels from "../../data/velocity/channels.json"
 import { takeById } from "@/lib/catalog"
+import { recommendations } from "@/lib/forecast"
+import { nextWeekdayNine } from "@/lib/post-time"
 import { read, type Reading } from "@/lib/pax2"
 import { FORMULA_V1 } from "@/lib/resonance"
 import { board, DATASETS, findings, loadExport, recordForecast, recordPick, recordStep, recordVote, saveFinding, steps, workspace, type LoadResult } from "@/lib/review"
@@ -85,7 +89,24 @@ export async function freshReview() {
   return id
 }
 
-/** Write a volunteer's script from their own answers, on the framing that is scoring best so far. */
+// What travels on the reform channels, for PAX2GPT's prompt: the ten reform-core shorts with the
+// highest iWAR (views over the channel's median) in the home feed.
+const REFORM_CORE = new Set((channels as { id: string; group: string }[]).filter((c) => c.group === "reform-core").map((c) => c.id))
+const TRAVELLED = (feed as { title: string; channel: string; channelId: string; ratio: number }[])
+  .filter((v) => REFORM_CORE.has(v.channelId))
+  .sort((a, b) => b.ratio - a.ratio)
+  .slice(0, 10)
+
+/** The top three distribution changes for a video of this script's length posted at the default
+ *  time, as constraints for the writer. */
+function travelConstraints(title: string, text: string) {
+  const seconds = Math.round((text.split(/\s+/).filter(Boolean).length / 130) * 60)
+  const { changes } = recommendations({ title, description: text, tags: [], durationSec: seconds, published: nextWeekdayNine(), group: "reform-core", channelMedian: null })
+  return changes.slice(0, 3).map((c) => `${c.action![0].toLowerCase()}${c.action!.slice(1)} (${c.points > 0 ? "+" : ""}${c.points} points of breakout rate on ${c.scope})`)
+}
+
+/** PAX2GPT writes a volunteer's script from their own answers, on the framing that is scoring best
+ *  so far, told what travels on the reform channels. */
 export async function writeScript(input: { name: string; role: string; town: string; why: string; moment: string }) {
   const { BedrockRuntimeClient, ConverseCommand } = await import("@aws-sdk/client-bedrock-runtime")
   const { SCRIPTS } = await import("@/lib/catalog")
@@ -102,6 +123,12 @@ export async function writeScript(input: { name: string; role: string; town: str
 Build it on this argument (keep its core claim and framing): "${base.s.title}" — ${base.s.framing}
 Reference text of that argument:
 ${base.s.text}
+
+Observed patterns on the reform channels, not rules: weigh them, don't obey them blindly.
+The titles of the ten reform-channel shorts with the highest iWAR (views against their channel's median):
+${TRAVELLED.map((v) => `- "${v.title}" (${v.channel}, ${v.ratio.toFixed(1)}x)`).join("\n")}
+What measurably travels further for a video like this one:
+${travelConstraints(base.s.title, base.s.text).map((c) => `- ${c}`).join("\n") || "- (nothing measured clears zero)"}
 
 About the volunteer, in their words:
 - Name: ${input.name || "(not given)"}

@@ -7,8 +7,9 @@ import { ArrowRight, CheckCircle2, Loader2, RotateCcw, Upload, Video } from "luc
 import { uploadUrl } from "@/app/actions"
 import { againDraft, submitOriginal, viewer } from "@/app/original-actions"
 import { FlowPage, StepBar } from "@/components/record/chrome"
-import { fromEasternLocal, nextWeekdayNine, toEasternLocal, useDraft } from "@/components/record/draft"
+import { useDraft } from "@/components/record/draft"
 import { Teleprompter } from "@/components/record/teleprompter"
+import { fromEasternLocal, nextWeekdayNine, toEasternLocal } from "@/lib/post-time"
 import { RevealFx } from "@/components/reveal-fx"
 import { cn } from "@/ui/lib/utils"
 
