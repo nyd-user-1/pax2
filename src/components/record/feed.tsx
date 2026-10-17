@@ -125,9 +125,11 @@ function CardFoot({ v, boost }: { v: FeedVideo; boost?: boolean }) {
             e.preventDefault()
             e.stopPropagation()
           }}
-          className={whiteButton("md", "shadow-none hover:shadow-md")}
+          aria-label="Boost"
+          title="Boost"
+          className={whiteButton("md", "px-2.5 shadow-none hover:shadow-md")}
         >
-          <Rocket className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} /> Boost
+          <Rocket className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
         </button>
       ) : (
         <span />
@@ -206,22 +208,36 @@ export function ListRow({ v }: { v: FeedVideo }) {
   )
 }
 
-/** One vertical Shorts card. */
+/** The grey ribbon under a thumbnail, inside its box: the channel, and opposite it the velocity score. */
+function Ribbon({ v, compact }: { v: FeedVideo; compact?: boolean }) {
+  return (
+    <div className={cn("flex items-center justify-between gap-2", compact ? "px-2 py-1.5" : "px-2.5 py-2")}>
+      <span className={cn("flex min-w-0 items-center", compact ? "gap-1.5" : "gap-2.5")}>
+        <Avatar id={v.channelId} className={compact ? "size-6" : undefined} />
+        <span className={cn("truncate text-slate-800", compact ? "text-sm" : "text-[15px]")}>{v.channel}</span>
+      </span>
+      <span aria-label="Views over the channel's median" className={cn("tabular shrink-0 rounded-md px-1.5 py-0.5 text-xs font-bold", SCORE[v.tier])}>
+        {v.ratio >= 10 ? v.ratio.toFixed(0) : v.ratio.toFixed(1)}×
+      </span>
+    </div>
+  )
+}
+
+/** One vertical Shorts card, laid out like the landscape one: the thumbnail with a play button on
+ *  hover, the channel ribbon at its foot, then the title and the counts. */
 export function ShortCard({ v }: { v: FeedVideo }) {
   return (
     <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:transition-colors before:duration-200 hover:before:border-pax2-blue flex flex-col gap-1.5">
-      <div className="relative overflow-hidden rounded-xl bg-slate-200">
-        <HoverThumb v={v} aspect="aspect-[9/16]" />
-        <Score v={v} />
+      <div className="overflow-hidden rounded-xl bg-slate-200">
+        <div className="relative overflow-hidden">
+          <HoverThumb v={v} aspect="aspect-[9/16]" playButton />
+        </div>
+        <Ribbon v={v} compact />
       </div>
-      <div className="flex items-start justify-between gap-1">
+      <div className="flex items-start justify-between gap-1 pt-1">
         <p className="line-clamp-2 min-h-[2lh] min-w-0 text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
         <RowMenu className="-mr-1.5 size-8" />
       </div>
-      <span className="flex min-w-0 items-center gap-1.5">
-        <Avatar id={v.channelId} className="size-5" />
-        <span className="truncate text-xs font-medium text-slate-800">{v.channel}</span>
-      </span>
       <CardFoot v={v} />
     </Link>
   )
@@ -238,15 +254,7 @@ export function LandscapeCard({ v }: { v: FeedVideo }) {
           <HoverThumb v={v} aspect="aspect-video" playButton />
           <span className="tabular pointer-events-none absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
         </div>
-        <div className="flex items-center justify-between gap-2 px-2.5 py-2">
-          <span className="flex min-w-0 items-center gap-2.5">
-            <Avatar id={v.channelId} />
-            <span className="truncate text-[15px] text-slate-800">{v.channel}</span>
-          </span>
-          <span aria-label="Views over the channel's median" className={cn("tabular shrink-0 rounded-md px-1.5 py-0.5 text-xs font-bold", SCORE[v.tier])}>
-            {v.ratio >= 10 ? v.ratio.toFixed(0) : v.ratio.toFixed(1)}×
-          </span>
-        </div>
+        <Ribbon v={v} />
       </div>
       <div className="flex flex-col gap-1 pt-1">
         <div className="flex items-start justify-between gap-2">
@@ -380,11 +388,11 @@ const rotate = <T,>(xs: T[], n: number) => {
   return xs.slice(k).concat(xs.slice(0, k))
 }
 
-/** One pass through the catalog as a mixed layout: pairs, a Shorts shelf, pairs,
- *  a trio, until the items run out. */
+/** One pass through the catalog as a mixed layout: a trio and a Shorts shelf first, then pairs,
+ *  until the items run out. */
 function Cycle({ items }: { items: FeedVideo[] }) {
   const blocks: React.ReactNode[] = []
-  const pattern = ["list", "list", "shorts", "list", "trio", "list"] as const
+  const pattern = ["trio", "shorts", "list", "list", "list", "list"] as const
   let i = 0
   let p = 0
   while (i < items.length) {
