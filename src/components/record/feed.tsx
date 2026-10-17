@@ -136,22 +136,28 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
 ]
 
 /** The card's bottom-right corner, in one icon style: paid media's mark (green), then view, like
- *  and comment counts. */
+ *  and comment counts — each sized and hovered like the three-dot button, a muted disc beneath. */
+const CORNER_ITEM = "flex h-9 min-w-9 items-center justify-center gap-1.5 rounded-full px-2 transition-colors hover:bg-slate-200/70"
+
 function CardFoot({ v }: { v: FeedVideo }) {
   return (
-    <div className="tabular mt-auto flex h-9 items-center justify-end gap-3 pr-2 text-xs text-pax2-blue">
-      {v.paid && <DollarSign role="img" aria-label="Paid media" className="size-3.5 text-green-600" />}
-      <span className="flex items-center gap-1" aria-label={`${v.views} views`}>
-        <TrendingUp className="size-3.5" /> {fmt.format(v.views)}
+    <div className="tabular mt-auto flex items-center justify-end gap-0.5 text-sm text-pax2-blue">
+      {v.paid && (
+        <span className={CORNER_ITEM} role="img" aria-label="Paid media">
+          <DollarSign className="size-5 text-green-600" />
+        </span>
+      )}
+      <span className={CORNER_ITEM} aria-label={`${v.views} views`}>
+        <TrendingUp className="size-5" /> {fmt.format(v.views)}
       </span>
       {v.likes != null && (
-        <span className="flex items-center gap-1" aria-label={`${v.likes} likes`}>
-          <ThumbsUp className="size-3.5" /> {fmt.format(v.likes)}
+        <span className={CORNER_ITEM} aria-label={`${v.likes} likes`}>
+          <ThumbsUp className="size-5" /> {fmt.format(v.likes)}
         </span>
       )}
       {v.comments != null && (
-        <span className="flex items-center gap-1" aria-label={`${v.comments} comments`}>
-          <MessageCircle className="size-3.5" /> {fmt.format(v.comments)}
+        <span className={CORNER_ITEM} aria-label={`${v.comments} comments`}>
+          <MessageCircle className="size-5" /> {fmt.format(v.comments)}
         </span>
       )}
     </div>
