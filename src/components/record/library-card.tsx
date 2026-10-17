@@ -8,8 +8,9 @@ import { useDraft } from "@/components/record/draft"
 export type CardData = { id: string; title: string; framing: string; text: string; seconds: number; place: string; notes: { label: string; tone: "good" | "neutral" | "caution" }[] }
 
 /** A script's card. `compact` keeps the title, the opening lines and the length and place, for the
- *  landing's slider; the library shows the framing and the notes as well. */
-export function LibraryCard({ s, compact = false }: { s: CardData; compact?: boolean }) {
+ *  landing's slider; the library shows the framing and the notes as well. With `onPick`, choosing
+ *  the card stays on the page (the landing opens the script in place) instead of going to /record/script. */
+export function LibraryCard({ s, compact = false, onPick }: { s: CardData; compact?: boolean; onPick?: (s: CardData) => void }) {
   const router = useRouter()
   const { update } = useDraft()
   const flat = s.text.replace(/\s+/g, " ")
@@ -19,7 +20,8 @@ export function LibraryCard({ s, compact = false }: { s: CardData; compact?: boo
       type="button"
       onClick={() => {
         update({ mode: "library", scriptId: s.id, title: s.title, text: s.text })
-        router.push("/record/script")
+        if (onPick) onPick(s)
+        else router.push("/record/script")
       }}
       className="lift group flex flex-col gap-4 surface p-6 text-left"
     >

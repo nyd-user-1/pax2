@@ -5,6 +5,9 @@ import Link from "next/link"
 import { ArrowRight, ChevronLeft, ChevronRight, Clapperboard, ListChecks, MessageSquareText, PencilLine, Upload } from "lucide-react"
 
 import { loadLibraryCards } from "@/app/library-actions"
+import { useDraft } from "@/components/record/draft"
+import { CameraFlow } from "@/components/record/camera-flow"
+import { ScriptBox } from "@/components/record/editor"
 import { LibraryCard, type CardData } from "@/components/record/library-card"
 import { RevealFx } from "@/components/reveal-fx"
 import { whiteButton } from "@/components/white-button"
@@ -74,6 +77,12 @@ export function RecordChooser({ children }: { children?: React.ReactNode }) {
   const [cards, setCards] = React.useState<CardData[] | null>(null)
   const [, startLoading] = React.useTransition()
   const [stepped, setStepped] = React.useState(false)
+  // A picked script opens here, in place of the slider, as /record/script's editor would show it.
+  const [picked, setPicked] = React.useState<CardData | null>(null)
+  const [text, setText] = React.useState("")
+  // Looks good, let's record: the camera step follows here too, in place of the script.
+  const [recording, setRecording] = React.useState(false)
+  const { update } = useDraft()
   const track = React.useRef<HTMLDivElement>(null)
   const fetchCards = () => {
     if (!cards) startLoading(async () => setCards(await loadLibraryCards()))
@@ -89,7 +98,25 @@ export function RecordChooser({ children }: { children?: React.ReactNode }) {
   }
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-8">
-      {open && cards ? (
+      {picked && recording ? (
+        <CameraFlow embedded={{ onBack: () => setRecording(false) }} />
+      ) : picked ? (
+        <RevealFx key={picked.id} translateY={4} className="flex flex-col gap-8">
+          <header className="flex flex-col gap-3">
+            <h2 className="font-display text-4xl font-semibold leading-tight text-pax2-blue md:text-5xl">Make it yours.</h2>
+            <p className="text-lg text-slate-800">Change anything you&apos;d like. It should sound like you.</p>
+          </header>
+          <ScriptBox
+            text={text}
+            onText={(t) => {
+              setText(t)
+              update({ text: t })
+            }}
+            onPickDifferent={() => setPicked(null)}
+            onRecord={() => setRecording(true)}
+          />
+        </RevealFx>
+      ) : open && cards ? (
         <RevealFx translateY={4} className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between gap-4">
@@ -120,7 +147,15 @@ export function RecordChooser({ children }: { children?: React.ReactNode }) {
               {pages.map((group, i) => (
                 <div key={i} className="grid w-full shrink-0 snap-start auto-rows-fr gap-4 p-2 sm:grid-cols-2">
                   {group.map((c) => (
-                    <LibraryCard key={c.id} s={c} compact />
+                    <LibraryCard
+                      key={c.id}
+                      s={c}
+                      compact
+                      onPick={(s) => {
+                        setText(s.text)
+                        setPicked(s)
+                      }}
+                    />
                   ))}
                 </div>
               ))}

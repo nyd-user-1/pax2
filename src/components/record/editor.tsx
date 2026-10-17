@@ -48,7 +48,6 @@ function checks(text: string, research: Record<string, Research>): CheckResult[]
 }
 
 export function Editor({ research }: { research: Record<string, Research> }) {
-  const router = useRouter()
   const own = useSearchParams().has("own")
   const { draft, update, ready } = useDraft()
   const [text, setText] = React.useState("")
@@ -63,33 +62,13 @@ export function Editor({ research }: { research: Record<string, Research> }) {
   const cs = checks(text, research)
   return (
     <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-      <div className="flex flex-col gap-6">
-        <div className="overflow-hidden surface shadow-sm">
-          <textarea
-            value={text}
-            onChange={(e) => {
-              setText(e.target.value)
-              update({ text: e.target.value })
-            }}
-            placeholder="Say it the way you'd say it to a neighbor."
-            className="h-80 w-full resize-y bg-transparent p-7 text-lg leading-relaxed text-pax2-blue outline-none"
-          />
-          <div className="flex items-center justify-between border-t bg-pax2-mist px-7 py-3 text-sm">
-            <span className="text-slate-800">{words(text)} words</span>
-            <span className="flex items-center gap-1.5 font-medium text-pax2-blue">
-              <Mic className="size-4" /> About {secondsAt(text)} seconds to say
-            </span>
-          </div>
-        </div>
-        <div className="flex flex-wrap items-center gap-6">
-          <button type="button" disabled={!words(text)} onClick={() => router.push("/record/camera")} className="flex items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
-            Looks good, let&apos;s record <ArrowRight className="size-4" />
-          </button>
-          <Link href="/record/library" className="font-medium text-primary">
-            Pick a different script
-          </Link>
-        </div>
-      </div>
+      <ScriptBox
+        text={text}
+        onText={(t) => {
+          setText(t)
+          update({ text: t })
+        }}
+      />
       <aside className="flex h-fit flex-col gap-3 surface p-6">
         <p className="text-xs font-semibold uppercase tracking-wider text-slate-800">Before you record</p>
         {cs.map((c) => (
@@ -103,6 +82,45 @@ export function Editor({ research }: { research: Record<string, Research> }) {
         ))}
         <p className="border-t pt-3 text-[11px] leading-relaxed text-slate-800">Research figures come from 617 campaign ads tested against control groups. They are priors, not promises: style alone predicts little, which is why every take is measured.</p>
       </aside>
+    </div>
+  )
+}
+
+/** The script's text box with its word count and length, and the two ways on: record, or pick a
+ *  different script. Shared by /record/script and the landing, where a picked script opens in
+ *  place; there `onPickDifferent` returns to the scripts instead of going to /record/library. */
+export function ScriptBox({ text, onText, onPickDifferent, onRecord }: { text: string; onText: (t: string) => void; onPickDifferent?: () => void; onRecord?: () => void }) {
+  const router = useRouter()
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="overflow-hidden surface shadow-sm">
+        <textarea
+          value={text}
+          onChange={(e) => onText(e.target.value)}
+          placeholder="Say it the way you'd say it to a neighbor."
+          className="h-80 w-full resize-y bg-transparent p-7 text-lg leading-relaxed text-pax2-blue outline-none"
+        />
+        <div className="flex items-center justify-between border-t bg-pax2-mist px-7 py-3 text-sm">
+          <span className="text-slate-800">{words(text)} words</span>
+          <span className="flex items-center gap-1.5 font-medium text-pax2-blue">
+            <Mic className="size-4" /> About {secondsAt(text)} seconds to say
+          </span>
+        </div>
+      </div>
+      <div className="flex flex-wrap items-center gap-6">
+        <button type="button" disabled={!words(text)} onClick={() => (onRecord ? onRecord() : router.push("/record/camera"))} className="flex items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
+          Looks good, let&apos;s record <ArrowRight className="size-4" />
+        </button>
+        {onPickDifferent ? (
+          <button type="button" onClick={onPickDifferent} className="font-medium text-primary">
+            Pick a different script
+          </button>
+        ) : (
+          <Link href="/record/library" className="font-medium text-primary">
+            Pick a different script
+          </Link>
+        )}
+      </div>
     </div>
   )
 }
