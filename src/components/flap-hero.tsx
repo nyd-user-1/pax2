@@ -16,6 +16,22 @@ const STEPS: { rows: [string, string]; tile: string; text: string }[] = [
 ]
 /** Boards per row. Words start in box 1; the board itself stays centered on the page. */
 const WIDTH = 10
+/** Once the opening is done, each hover over row 2 flips it to the next of the product's parts. */
+const PARTS: [string, string][] = [
+  ["RECORDING", "🎬"],
+  ["SCORING", "🎯"],
+  ["PUBLISHING", "📣"],
+  ["SCRIPTS", "📝"],
+  ["TRACKING", "📈"],
+  ["PATTERNS", "🧩"],
+  ["VELOCITY", "🚀"],
+  ["GRAPH", "🕸️"],
+  ["LIBRARY", "📚"],
+]
+/** The word from box 1, a blank board, its emoji, then empty boards; tighter words drop the blank, and
+ *  a word that fills the row drops its emoji. */
+const lay = ([word, emoji]: [string, string]) => (word.length + 2 <= WIDTH ? `${word} ${emoji}` : word.length + 1 <= WIDTH ? `${word}${emoji}` : word)
+const ROW_TWO = ["AMERICANA🇺🇸", ...PARTS.map(lay)]
 /** The curtain's hold plus its sweep, in ms. */
 const CURTAIN = 2400
 /** One message's flips plus its hold. */
@@ -47,6 +63,7 @@ const ROW = {
 export function FlapHero() {
   const [step, setStep] = React.useState(-1)
   const [cue, setCue] = React.useState(false)
+  const [part, setPart] = React.useState(0)
   React.useEffect(() => {
     const timers = [
       window.setTimeout(() => setStep(0), CURTAIN),
@@ -62,11 +79,12 @@ export function FlapHero() {
     <div className="relative flex w-full flex-col items-center px-4" style={{ fontSize: "clamp(15px, 6.2vw, 162px)" }}>
       {step >= 0 ? (
         <div className="relative z-10 flex flex-col items-center gap-[0.22em]">
-          {[step >= 3 ? "PAX VIDEO" : s.rows[0], s.rows[1]].map((word, i) => (
+          {[step >= 3 ? "PAX VIDEO" : s.rows[0], cue ? ROW_TWO[part] : s.rows[1]].map((word, i) => (
             <SplitFlapText
               key={i}
               {...ROW}
               words={[word]}
+              onMouseEnter={i === 1 && cue ? () => setPart((p) => (p + 1) % ROW_TWO.length) : undefined}
               tileColor={s.tile}
               textColor={s.text}
               charBg={i === 0 && step >= 3 ? { chars: "VIDEO", bg: "var(--pax2-red)" } : undefined}
