@@ -5,7 +5,7 @@ import Link from "next/link"
 
 import { MessagesSquare, PanelLeftClose, PanelLeftOpen } from "lucide-react"
 
-import { SEQUENCE_MS } from "@/components/flap-hero"
+import { CURTAIN } from "@/components/flap-hero"
 import { useShellPanel } from "@/components/shell"
 import StrokeText from "@/components/stroke-text"
 import { cn } from "@/ui/lib/utils"
@@ -18,12 +18,16 @@ import { whiteButton } from "@/components/white-button"
 export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
   const [scrolled, setScrolled] = React.useState(false)
   const { sidebarOpen, toggleSidebar, discuss, toggleDiscuss } = useShellPanel()
+  // As the curtain clears and the board begins: the header's two white buttons dissolve into place,
+  // then PAX draws itself on the first, as on a canvas.
+  const [arrived, setArrived] = React.useState(false)
   const [drawPax, setDrawPax] = React.useState(false)
   React.useEffect(() => {
-    // Once the cue has faded in, so PAX is the page's last thing to move.
-    const t = window.setTimeout(() => setDrawPax(true), SEQUENCE_MS + 600)
-    return () => window.clearTimeout(t)
+    const timers = [window.setTimeout(() => setArrived(true), CURTAIN), window.setTimeout(() => setDrawPax(true), CURTAIN + 450)]
+    return () => timers.forEach((t) => window.clearTimeout(t))
   }, [])
+  /** The dissolve both buttons arrive with: up from a faint blur and a touch small. */
+  const arrive = cn("transition-[opacity,filter,scale,color,background-color,border-color] duration-500 ease-out", arrived ? "scale-100 opacity-100 blur-0" : "scale-95 opacity-0 blur-sm")
   React.useEffect(() => {
     const on = () => setScrolled(window.scrollY > (signedIn ? 8 : window.innerHeight - 140))
     on()
@@ -48,30 +52,32 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
         </>
       ) : (
         <>
-          {/* The curtain's PAX in small, the A in red; it opens the sidebar. Its SVG is the font's full line box with the
-              capitals centred in it, so centring the box lines PAX up with Sign up. */}
+          {/* The curtain's PAX in small, the A in red, drawn on a white button the height of Sign up; it
+              opens the sidebar. Its SVG is the font's full line box with the capitals centred in it. */}
           <button
             type="button"
             onClick={toggleSidebar}
             aria-label="Open the menu"
-            className="flex w-14 items-center text-pax2-blue [&_[data-fill-char]:nth-child(2)]:fill-pax2-red [&_[data-stroke-char]:nth-child(2)]:stroke-pax2-red [&_svg]:ml-0"
+            className={whiteButton("md", "h-[42px] px-4 py-0 [&_[data-fill-char]:nth-child(2)]:fill-pax2-red [&_[data-stroke-char]:nth-child(2)]:stroke-pax2-red [&_svg]:ml-0", arrive)}
           >
-            {drawPax && (
-              <StrokeText
-                text="PAX"
-                strokeColor="currentColor"
-                fillColor="currentColor"
-                strokeWidth={1}
-                fontSize={28}
-                fontFamily="'PAX Curtain', monospace"
-                letterSpacing={0}
-                drawDuration={0.9}
-                fillDelay={0.1}
-                stagger={0.08}
-              />
-            )}
+            <span className="flex h-full w-14 items-center text-pax2-blue">
+              {drawPax && (
+                <StrokeText
+                  text="PAX"
+                  strokeColor="currentColor"
+                  fillColor="currentColor"
+                  strokeWidth={1}
+                  fontSize={28}
+                  fontFamily="'PAX Curtain', monospace"
+                  letterSpacing={0}
+                  drawDuration={0.9}
+                  fillDelay={0.1}
+                  stagger={0.08}
+                />
+              )}
+            </span>
           </button>
-          <Link href="/signup" className={whiteButton("md")}>
+          <Link href="/signup" className={whiteButton("md", arrive)}>
             Sign up
           </Link>
         </>

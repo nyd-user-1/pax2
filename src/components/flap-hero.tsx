@@ -33,7 +33,7 @@ const PARTS: [string, string][] = [
 const lay = ([word, emoji]: [string, string]) => (word.length + 2 <= WIDTH ? `${word} ${emoji}` : word.length + 1 <= WIDTH ? `${word}${emoji}` : word)
 const ROW_TWO = ["AMERICANA🇺🇸", ...PARTS.map(lay)]
 /** The curtain's hold plus its sweep, in ms. */
-const CURTAIN = 2400
+export const CURTAIN = 2400
 /** One message's flips plus its hold. */
 const STEP_MS = 2800
 /** The flag lands this long after the third message starts; VIDEO then flips in on row 1. */
