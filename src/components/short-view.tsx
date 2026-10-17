@@ -16,7 +16,9 @@ import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/compo
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { HitsScatter, TIER } from "@/components/hits-scatter"
 import { FormulaExplainer } from "@/components/formula-explainer"
+import { CommentThread, type Thread, type ThreadComment } from "@/components/comment-thread"
 import { ReadingPanel } from "@/components/reading-panel"
+import { SplitColumns } from "@/components/split-columns"
 import { Term } from "@/components/term"
 import { SignupGate } from "@/components/signup-gate"
 import { TagChip } from "@/components/tag-chip"
@@ -90,34 +92,30 @@ function adFigures(ytId: string) {
   return { spend, impressions, clicks, starts, thruplays, completions, views30: sum("views_30s_reported"), p25: depth("views_25pct_reported_pct"), p50: depth("views_50pct_reported_pct"), p75: depth("views_75pct_reported_pct") }
 }
 
-type YtComment = { id: string; author: string; avatar: string; text: string; likes: number; published: string }
+type YtSnippet = { authorDisplayName: string; authorProfileImageUrl: string; textDisplay: string; likeCount: number; publishedAt: string }
+const toComment = (id: string, c: YtSnippet): ThreadComment => ({ id, author: c.authorDisplayName, avatar: c.authorProfileImageUrl, text: c.textDisplay, likes: c.likeCount, published: c.publishedAt })
 
-/** The video's top comments from YouTube (commentThreads, by relevance), cached an hour. Null when
- *  there's no key, comments are off, or YouTube won't answer — the block then says so. */
-async function topComments(ytId: string): Promise<YtComment[] | null> {
+/** The video's top comment threads from YouTube (by relevance) with the replies YouTube sends along,
+ *  cached an hour. Null when there's no key, comments are off, or YouTube won't answer. */
+async function topComments(ytId: string): Promise<Thread[] | null> {
   const key = process.env.YOUTUBE_API_KEY
   if (!key) return null
   try {
-    const r = await fetch(`https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&order=relevance&maxResults=20&textFormat=plainText&videoId=${ytId}&key=${key}`, {
+    const r = await fetch(`https://www.googleapis.com/youtube/v3/commentThreads?part=snippet,replies&order=relevance&maxResults=20&textFormat=plainText&videoId=${ytId}&key=${key}`, {
       next: { revalidate: 3600 },
       signal: AbortSignal.timeout(5000),
     })
     if (!r.ok) return null
-    const j = (await r.json()) as { items?: { id: string; snippet: { topLevelComment: { snippet: { authorDisplayName: string; authorProfileImageUrl: string; textDisplay: string; likeCount: number; publishedAt: string } } } }[] }
-    return (j.items ?? []).map((t) => {
-      const c = t.snippet.topLevelComment.snippet
-      return { id: t.id, author: c.authorDisplayName, avatar: c.authorProfileImageUrl, text: c.textDisplay, likes: c.likeCount, published: c.publishedAt }
-    })
+    const j = (await r.json()) as { items?: { id: string; snippet: { totalReplyCount: number; topLevelComment: { snippet: YtSnippet } }; replies?: { comments: { id: string; snippet: YtSnippet }[] } }[] }
+    return (j.items ?? []).map((t) => ({
+      ...toComment(t.id, t.snippet.topLevelComment.snippet),
+      // YouTube lists a thread's replies newest first; read them oldest first, as a conversation.
+      replies: (t.replies?.comments ?? []).map((c) => toComment(c.id, c.snippet)).reverse(),
+      replyCount: t.snippet.totalReplyCount,
+    }))
   } catch {
     return null
   }
-}
-
-const ago = (iso: string) => {
-  const days = Math.max(1, Math.round((Date.now() - new Date(iso).getTime()) / 86_400_000))
-  if (days < 30) return `${days}d ago`
-  if (days < 365) return `${Math.round(days / 30)}mo ago`
-  return `${Math.round(days / 365)}y ago`
 }
 
 export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
@@ -202,6 +200,23 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     ["Length", v ? `${Math.floor(secs(v.duration) / 60)}:${String(secs(v.duration) % 60).padStart(2, "0")}` : DASH],
     ["Date", v ? new Date(v.published).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : DASH],
   ]
+  // Stats and the analytics in one block. The ad figures stay behind sign-in, as their own block did.
+  const analyticsRows: [string, string][] = ads
+    ? [
+        ["Spend", usd(ads.spend)],
+        ["Impressions", n(ads.impressions)],
+        ["ThruPlays (15s)", n(ads.thruplays)],
+        ["Completion", rate(ads.completions, ads.starts)],
+      ]
+    : paid
+      ? [
+          ["Reach", paid.analytics.Reach ?? DASH],
+          ["3s+", paid.analytics["3s+"] ?? DASH],
+          ["Avg.", paid.analytics["Avg."] ?? DASH],
+          ["Spend", paid.analytics.Spend ?? DASH],
+        ]
+      : []
+  const allStats = locked ? statRows : [...statRows, ...analyticsRows]
   const statGrid = (rs: [string, string][]) => <div className="grid grid-cols-2 gap-4">{rs.map(([label, value]) => <React.Fragment key={label}>{stat(label, value)}</React.Fragment>)}</div>
 
   const comments = await topComments(ytId)
@@ -211,21 +226,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "Comments",
       <ListBlock key="comments" title="Comments" height="auto">
         {comments?.length ? (
-          <ul className="flex flex-col divide-y divide-slate-100">
-            {comments.map((c) => (
-              <li key={c.id} className="flex gap-3 py-3 first:pt-0 last:pb-0">
-                <img src={c.avatar} alt="" className="size-8 shrink-0 rounded-full bg-slate-100 object-cover" referrerPolicy="no-referrer" />
-                <div className="flex min-w-0 flex-col gap-1">
-                  <div className="flex items-baseline gap-2 text-xs">
-                    <span className="truncate font-medium text-slate-900">{c.author}</span>
-                    <span className="shrink-0 text-slate-500">{ago(c.published)}</span>
-                  </div>
-                  <p className="line-clamp-4 whitespace-pre-line break-words text-sm leading-relaxed text-slate-800">{c.text}</p>
-                  {c.likes > 0 && <span className="tabular text-xs text-pax2-blue">{COMPACT.format(c.likes)} likes</span>}
-                </div>
-              </li>
-            ))}
-          </ul>
+          <CommentThread videoId={ytId} threads={comments} />
         ) : (
           <p className="text-sm text-slate-800">{comments ? "No comments yet." : "Comments couldn't be loaded."}</p>
         )}
@@ -277,29 +278,8 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "stats",
       "Stats",
-      <CardBlock key="stats" title="Stats" height="auto" defaultOpen={false} footer={sampleLikes != null ? SAMPLE : undefined} peek={statGrid(statRows.slice(0, 4))} rows={statRows.map(([stat, value]) => ({ stat, value }))} name={`stats-${ytId}`}>
-        {statGrid(statRows)}
-      </CardBlock>,
-    ],
-    [
-      "analytics",
-      "Analytics",
-      <CardBlock key="analytics" title="Analytics" height="auto" footer={ads ? undefined : paid ? SAMPLE : undefined}>
-        {ads ? (
-          <div className="grid grid-cols-2 gap-4">
-            {stat("Spend", usd(ads.spend))}
-            {stat("Impressions", n(ads.impressions))}
-            {stat("ThruPlays (15s)", n(ads.thruplays))}
-            {stat("Completion", rate(ads.completions, ads.starts))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 gap-4">
-            {stat("Reach", paid?.analytics.Reach ?? DASH)}
-            {stat("3s+", paid?.analytics["3s+"] ?? DASH)}
-            {stat("Avg.", paid?.analytics["Avg."] ?? DASH)}
-            {stat("Spend", paid?.analytics.Spend ?? DASH)}
-          </div>
-        )}
+      <CardBlock key="stats" title="Stats" height="auto" defaultOpen={false} footer={sampleLikes != null || (!ads && paid && !locked) ? SAMPLE : undefined} peek={statGrid(statRows.slice(0, 4))} rows={allStats.map(([stat, value]) => ({ stat, value }))} name={`stats-${ytId}`}>
+        {statGrid(allStats)}
       </CardBlock>,
     ],
     [
@@ -511,28 +491,33 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   return (
     <SeekProvider>
       {locked && <SignupGate />}
-      <div className={cn("grid gap-8", inDrawer ? "@xl:grid-cols-[280px_1fr]" : "@4xl:grid-cols-[320px_1fr]")}>
-        <div className="flex min-w-0 flex-col">
-          {real ? (
-            <div className={cn("relative aspect-video overflow-hidden rounded-2xl bg-black shadow-e2", inDrawer ? "@xl:aspect-auto @xl:overflow-visible @xl:rounded-none @xl:bg-transparent @xl:shadow-none" : "@4xl:aspect-auto @4xl:overflow-visible @4xl:rounded-none @4xl:bg-transparent @4xl:shadow-none")}>
-              <Player src={`/api/video/${id}`} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} className={cn("absolute inset-0 h-full w-full max-w-none rounded-none object-contain", inDrawer ? "@xl:static @xl:h-auto @xl:w-full @xl:max-w-[300px] @xl:rounded-2xl @xl:object-cover" : "@4xl:static @4xl:h-auto @4xl:w-full @4xl:max-w-[300px] @4xl:rounded-2xl @4xl:object-cover")} />
-            </div>
-          ) : (
-            <div className={cn("aspect-video overflow-hidden rounded-2xl bg-slate-900 shadow-e2", inDrawer ? "@xl:aspect-[9/16]" : "@4xl:aspect-[9/16]")}>
-              <iframe
-                src={`https://www.youtube.com/embed/${ytId}`}
-                title={v?.title ?? "YouTube short"}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="size-full border-0"
-              />
-            </div>
-          )}
-          {column("video-left", left, () => false)}
-        </div>
-
-        <div className={cn("min-w-0", inDrawer ? "@xl:-mt-5" : "@4xl:-mt-5")}>{column("video-right", right, (key) => key !== "stats")}</div>
-      </div>
+      <SplitColumns
+        at={inDrawer ? "xl" : "4xl"}
+        initial={inDrawer ? 280 : 320}
+        rightClassName={inDrawer ? "@xl:-mt-5" : "@4xl:-mt-5"}
+        left={
+          <>
+            {/* Portrait while the column is narrow; past 28rem the video turns landscape. */}
+            {real ? (
+              <div className="mx-auto aspect-[9/16] max-h-[80svh] w-full overflow-hidden rounded-2xl bg-black shadow-e2 @md/video:aspect-video">
+                <Player src={`/api/video/${id}`} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} className="aspect-auto size-full max-w-none rounded-none object-cover shadow-none @md/video:object-contain" />
+              </div>
+            ) : (
+              <div className="mx-auto aspect-[9/16] max-h-[80svh] w-full overflow-hidden rounded-2xl bg-slate-900 shadow-e2 @md/video:aspect-video">
+                <iframe
+                  src={`https://www.youtube.com/embed/${ytId}`}
+                  title={v?.title ?? "YouTube short"}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="size-full border-0"
+                />
+              </div>
+            )}
+            {column("video-left", left, () => false)}
+          </>
+        }
+        right={column("video-right", right, (key) => key !== "stats")}
+      />
     </SeekProvider>
   )
 }
