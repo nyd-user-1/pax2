@@ -11,7 +11,7 @@ import { LandingHeader } from "@/components/record/landing-header"
 import { LandingOnly, LandingSurface } from "@/components/record/landing-only"
 import { HelpLine } from "@/components/record/chrome"
 import { PhoneMock } from "@/components/record/phone-mock"
-import { RecordOptions } from "@/components/record/record-options"
+import { RecordChooser } from "@/components/record/record-options"
 import { ScrollCue, ScrollTop } from "@/components/record/scroll-cue"
 import { currentUser } from "@/lib/auth"
 import { tagsFor } from "@/lib/tags"
@@ -87,12 +87,14 @@ export default async function RecordLanding() {
           {/* As high as the hero's, clear of the bottom blur band. */}
           <ScrollCue next="record" className="bottom-[171px]" />
         </section>
-        {/* Section three: the ways into recording, as on /recording. Positioned, so it paints above the fixed grid. */}
+        {/* Section three: the ways into recording, as on /recording; Choose a script opens the scripts here. Positioned, so it paints above the fixed grid. */}
         <section id="record" className="relative flex min-h-dvh scroll-mt-16 flex-col justify-center">
-          <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-5 py-12">
-            <RecordOptions />
-            <HelpLine />
+          <div className="mx-auto w-full max-w-6xl px-5 pb-60 pt-12">
+            <RecordChooser>
+              <HelpLine />
+            </RecordChooser>
           </div>
+          <ScrollCue next="learn" className="bottom-[171px]" />
         </section>
       </LandingOnly>
       {/* Positioned, so the feed paints above the fixed grid layer. */}

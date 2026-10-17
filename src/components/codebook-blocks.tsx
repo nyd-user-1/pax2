@@ -95,31 +95,52 @@ export function WesleyanBlock({ goal, footer }: { goal: string; footer?: string 
   )
 }
 
-/** Upworthy: what wins the click. The video's title read against the wording patterns of
- *  Upworthy's randomized headline tests: how often each shows up in winners and in losers. */
+/** Upworthy's headline tests read against this video's title: each pattern's lift — its share of winning
+ *  headlines minus its share of losing ones, in points — on a bar centred at zero, strongest first, the
+ *  patterns this title carries picked out. */
 export function UpworthyBlock({ title }: { title: string }) {
   const patterns = titlePatterns(title)
+    .map((p) => ({ ...p, lift: Number(p.won) - Number(p.lost) }))
+    .sort((a, b) => b.lift - a.lift)
+  const reach = Math.max(...patterns.map((p) => Math.abs(p.lift)), 0.1)
+  const carried = patterns.filter((p) => p.has)
+  const net = carried.reduce((t, p) => t + p.lift, 0)
   return (
-    <ListBlock title="Upworthy" tools={<Term id="upworthy" label={false} />} height="auto">
-      <div className="flex flex-col gap-6">
-        <div className="grid grid-cols-2 gap-4">
+    <ListBlock title="Upworthy" tools={<Term id="upworthy" label={false} />} height="auto" footer="The same story under different headlines, shown at random, 2013–2015.">
+      <div className="@container flex flex-col gap-6 pb-2">
+        <div className="grid grid-cols-2 gap-4 @lg:grid-cols-3">
           <Figure value={`${upworthy.swing}×`} label="Clicks, best headline over worst" />
           <Figure value={upworthy.counts.tests.toLocaleString("en-US")} label="Headline tests" />
+          <Figure value={carried.length ? `${net >= 0 ? "+" : ""}${net.toFixed(1)} pts` : "None"} label={`This title: ${carried.length} of ${patterns.length} patterns`} />
         </div>
-        <div className="flex flex-col divide-y divide-slate-100">
-          {patterns.map((p) => (
-            <div key={p.key} className={cn("flex flex-wrap items-center justify-between gap-x-4 gap-y-1 py-2.5", !p.has && "text-slate-400")}>
-              <span className="flex items-center gap-2 text-sm">
-                <span className={cn("size-2 shrink-0 rounded-full", p.has ? "bg-pax2-light-blue" : "border border-slate-300")} />
-                <span className={cn(p.has && "font-medium text-slate-900")}>{p.label}</span>
-              </span>
-              <span className={cn("tabular text-xs", p.has ? "text-slate-600" : "text-slate-400")}>
-                {p.won}% of winners · {p.lost}% of losers
-              </span>
-            </div>
-          ))}
-        </div>
-        <p className="text-xs text-slate-500">The same story under different headlines, shown at random, 2013–2015.</p>
+        <ul className="flex flex-col gap-1">
+          {patterns.map((p) => {
+            const tone = p.lift > 0.05 ? "bg-green-600" : p.lift < -0.05 ? "bg-red-600" : "bg-slate-300"
+            const width = `${(Math.abs(p.lift) / reach) * 50}%`
+            return (
+              <li key={p.key} className={cn("grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1.5 rounded-lg px-2.5 py-2 @lg:grid-cols-[minmax(0,1fr)_8rem_4.5rem]", p.has && "bg-pax2-lavender/60")}>
+                <span className="flex min-w-0 items-center gap-2 text-sm">
+                  <span className={cn("size-2 shrink-0 rounded-full", p.has ? "bg-pax2-blue" : "border border-slate-300")} />
+                  <span className={cn("truncate", p.has ? "font-medium text-slate-900" : "text-slate-800")}>{p.label}</span>
+                </span>
+                {/* The lift, from a centre line: right for patterns more common among winners, left for losers. */}
+                <span aria-hidden className="relative col-span-2 h-1.5 rounded-full bg-slate-100 @lg:col-span-1 @lg:col-start-2 @lg:row-start-1">
+                  <span className="absolute inset-y-[-3px] left-1/2 w-px bg-slate-300" />
+                  <span className={cn("absolute inset-y-0 rounded-full", tone)} style={p.lift >= 0 ? { left: "50%", width } : { right: "50%", width }} />
+                </span>
+                <span className="tabular row-start-1 text-right @lg:col-start-3">
+                  <span className={cn("block text-sm font-semibold", p.lift > 0.05 ? "text-green-700" : p.lift < -0.05 ? "text-red-700" : "text-slate-800")}>
+                    {p.lift > 0 ? "+" : ""}
+                    {p.lift.toFixed(1)} pts
+                  </span>
+                  <span className="block text-[11px] text-slate-500">
+                    {p.won}% vs {p.lost}%
+                  </span>
+                </span>
+              </li>
+            )
+          })}
+        </ul>
       </div>
     </ListBlock>
   )

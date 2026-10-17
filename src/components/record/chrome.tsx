@@ -50,7 +50,7 @@ export function FlowPage({ title, lead, children, wide, className }: { title?: s
 
 export function HelpLine() {
   return (
-    <p className="text-center text-sm">
+    <p className="text-sm">
       <Link href="/record/guide" className="font-medium text-primary underline underline-offset-4">
         Volunteer Guide
       </Link>

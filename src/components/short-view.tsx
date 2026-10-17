@@ -93,7 +93,17 @@ function adFigures(ytId: string) {
 }
 
 type YtSnippet = { authorDisplayName: string; authorProfileImageUrl: string; textDisplay: string; likeCount: number; publishedAt: string }
-const toComment = (id: string, c: YtSnippet): ThreadComment => ({ id, author: c.authorDisplayName, avatar: c.authorProfileImageUrl, text: c.textDisplay, likes: c.likeCount, published: c.publishedAt })
+/** For now the comments read as lorem ipsum: the threads, authors and counts are YouTube's, the words are placeholders. */
+const LOREM = [
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+  "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+  "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
+]
+let loremAt = 0
+const toComment = (id: string, c: YtSnippet): ThreadComment => ({ id, author: c.authorDisplayName, avatar: c.authorProfileImageUrl, text: LOREM[loremAt++ % LOREM.length], likes: c.likeCount, published: c.publishedAt })
 
 /** The video's top comment threads from YouTube (by relevance) with the replies YouTube sends along,
  *  cached an hour. Null when there's no key, comments are off, or YouTube won't answer. */
@@ -217,6 +227,9 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         ]
       : []
   const allStats = locked ? statRows : [...statRows, ...analyticsRows]
+  /** The eight up front: views, median, likes and like rate, then the four ad figures. */
+  const core = [...statRows.slice(0, 4), ...(locked ? [] : analyticsRows)]
+  const advanced = statRows.slice(4)
   const statGrid = (rs: [string, string][]) => <div className="grid grid-cols-2 gap-4">{rs.map(([label, value]) => <React.Fragment key={label}>{stat(label, value)}</React.Fragment>)}</div>
 
   const comments = await topComments(ytId)
@@ -277,17 +290,23 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const right: [string, string, ReactNode][] = [
     [
       "stats",
-      "Stats",
-      <CardBlock key="stats" title="Stats" height="auto" defaultOpen={false} footer={sampleLikes != null || (!ads && paid && !locked) ? SAMPLE : undefined} peek={statGrid(statRows.slice(0, 4))} rows={allStats.map(([stat, value]) => ({ stat, value }))} name={`stats-${ytId}`}>
-        {statGrid(allStats)}
+      "Analytics",
+      <CardBlock key="stats" title="Analytics" height="auto" defaultOpen={false} footer={sampleLikes != null || (!ads && paid && !locked) ? SAMPLE : undefined} peek={statGrid(core)} rows={allStats.map(([stat, value]) => ({ stat, value }))} name={`analytics-${ytId}`}>
+        <div className="flex flex-col gap-6">
+          {statGrid(core)}
+          <div className="flex flex-col gap-4 border-t border-slate-100 pt-4">
+            <h3 className="text-sm font-medium text-slate-900">Advanced analytics</h3>
+            {statGrid(advanced)}
+          </div>
+        </div>
       </CardBlock>,
     ],
     [
       "resonance",
       "Resonance",
       <CardBlock key="resonance" title="Resonance" tools={<ScoreInfo />} height="auto" footer={!pr && sample ? SAMPLE : undefined}>
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="@container flex flex-col gap-3 pb-4">
+          <div className="surface flex flex-wrap items-end justify-between gap-4 p-4">
             <div className="tabular flex items-baseline gap-2">
               <span className="font-display text-4xl text-pax2-blue">{(pr ? pr.score : res?.score) ?? DASH}</span>
               <span className="text-xs text-slate-800">{pr ? pr.range : span(res?.low, res?.high)}</span>
@@ -301,7 +320,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
               </div>
             </div>
           </div>
-          <div className="grid gap-3 @2xl:grid-cols-3">
+          <div className="grid gap-3 @lg:grid-cols-3">
             {COMPONENTS.map((meta) => (
               <div key={meta.key} className="surface flex flex-col gap-2 p-3">
                 <div className="flex items-baseline justify-between">
