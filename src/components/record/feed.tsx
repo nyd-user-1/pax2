@@ -135,11 +135,10 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
   { label: "Share", icon: Forward },
 ]
 
-/** The card's bottom-right corner: like and comment counts, then paid media's mark in the
+/** The card's bottom-right corner: like, comment and view counts, then paid media's mark in the
  *  three-dot button's box mirrored from the top-right — as far from the bottom and right as the
  *  dots sit from the top and right. */
 function CardFoot({ v, box, lead }: { v: FeedVideo; box?: string; lead?: React.ReactNode }) {
-  if (!lead && v.likes == null && v.comments == null && !v.paid) return null
   return (
     <div className="tabular mt-auto flex h-9 items-center justify-end gap-3 text-xs text-pax2-blue">
       {lead && <span className="mr-auto min-w-0 truncate">{lead}</span>}
@@ -153,6 +152,9 @@ function CardFoot({ v, box, lead }: { v: FeedVideo; box?: string; lead?: React.R
           <MessageCircle className="size-3.5" /> {fmt.format(v.comments)}
         </span>
       )}
+      <span className="flex items-center gap-1" aria-label={`${v.views} views`}>
+        <TrendingUp className="size-3.5" /> {fmt.format(v.views)}
+      </span>
       {v.paid ? (
         <span className={cn("flex size-9 shrink-0 items-center justify-center", box)}>
           <DollarSign role="img" aria-label="Paid media" className="size-5 text-green-600" />
