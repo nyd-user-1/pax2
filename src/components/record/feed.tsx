@@ -135,18 +135,14 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
   { label: "Share", icon: Forward },
 ]
 
-/** The card's bottom-right corner, in one icon style: paid media's mark (green), then view, like
- *  and comment counts — each sized and hovered like the three-dot button, a muted disc beneath. */
+/** A card's counts in one icon style: views, likes, comments — each sized and hovered like the
+ *  three-dot button, a muted disc beneath. Shorts keep them in the bottom-right corner; the
+ *  landscape cards lead with them on the left. */
 const CORNER_ITEM = "flex h-9 min-w-9 items-center justify-center gap-1.5 rounded-full px-2 transition-colors hover:bg-slate-200/70"
 
-function CardFoot({ v }: { v: FeedVideo }) {
+function CardFoot({ v, start }: { v: FeedVideo; start?: boolean }) {
   return (
-    <div className="tabular mt-auto flex items-center justify-end gap-0.5 text-sm text-pax2-blue">
-      {v.paid && (
-        <span className={CORNER_ITEM} role="img" aria-label="Paid media">
-          <DollarSign className="size-5 text-green-600" />
-        </span>
-      )}
+    <div className={cn("tabular mt-auto flex items-center gap-0.5 text-sm text-pax2-blue", start ? "-ml-2 justify-start" : "justify-end")}>
       <span className={CORNER_ITEM} aria-label={`${v.views} views`}>
         <TrendingUp className="size-5" /> {fmt.format(v.views)}
       </span>
@@ -161,6 +157,16 @@ function CardFoot({ v }: { v: FeedVideo }) {
         </span>
       )}
     </div>
+  )
+}
+
+/** Paid media's mark: a green dollar on the thumbnail's top-left, the favorite star's opposite. */
+function PaidMark({ v }: { v: FeedVideo }) {
+  if (!v.paid) return null
+  return (
+    <span role="img" aria-label="Paid media" className={whiteButton("circle", "pointer-events-none absolute left-2 top-2 z-10")}>
+      <DollarSign className="size-5 text-green-600" />
+    </span>
   )
 }
 
@@ -201,6 +207,7 @@ export function ListRow({ v }: { v: FeedVideo }) {
         <HoverThumb v={v} aspect="aspect-video" />
         <Score v={v} />
         <Favorite id={v.id} />
+        <PaidMark v={v} />
         <span className="tabular pointer-events-none absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
       </div>
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
@@ -228,6 +235,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <HoverThumb v={v} aspect="aspect-[9/16]" />
         <Score v={v} />
         <Favorite id={v.id} />
+        <PaidMark v={v} />
       </div>
       <div className="flex items-start justify-between gap-1">
         <p className="line-clamp-2 min-h-[2lh] min-w-0 text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
@@ -242,19 +250,33 @@ export function ShortCard({ v }: { v: FeedVideo }) {
   )
 }
 
-/** One medium landscape card, as in the three-across band. */
+/** One landscape card, two or three across: the thumbnail in its own box — the hover video, score
+ *  and star stay inside it — then a grey ribbon with the channel and the running time, then the
+ *  title, the description's first lines and the counts. */
 export function LandscapeCard({ v }: { v: FeedVideo }) {
   return (
-    <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:transition-colors before:duration-200 hover:before:border-pax2-blue flex flex-col gap-2">
-      <div className="relative overflow-hidden rounded-xl bg-slate-200">
-        <HoverThumb v={v} aspect="aspect-video" />
-        <Score v={v} />
-        <Favorite id={v.id} />
-        <span className="tabular pointer-events-none absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
+    <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:transition-colors before:duration-200 hover:before:border-pax2-blue flex flex-col gap-3">
+      <div className="overflow-hidden rounded-xl bg-slate-200">
+        <div className="relative overflow-hidden">
+          <HoverThumb v={v} aspect="aspect-video" />
+          <Score v={v} />
+          <Favorite id={v.id} />
+          <PaidMark v={v} />
+        </div>
+        <div className="flex items-center justify-between gap-2 px-2.5 py-2">
+          <span className="flex min-w-0 items-center gap-2.5">
+            <Avatar id={v.channelId} />
+            <span className="truncate text-[15px] text-slate-800">{v.channel}</span>
+          </span>
+          <span className="tabular shrink-0 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
+        </div>
       </div>
-      <p className="line-clamp-2 min-h-[2lh] text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
-      <p className="tabular text-xs text-pax2-blue">{v.channel}</p>
-      <CardFoot v={v} />
+      <div className="flex items-start justify-between gap-2 pt-1">
+        <p className="line-clamp-2 min-w-0 font-display text-lg font-semibold leading-snug text-slate-900">{v.title}</p>
+        <RowMenu className="-mr-2 -mt-1" />
+      </div>
+      {v.description && <p className="line-clamp-2 text-[15px] leading-relaxed text-slate-800">{v.description}</p>}
+      <CardFoot v={v} start />
     </Link>
   )
 }
@@ -285,6 +307,17 @@ function ShortsShelf({ items }: { items: FeedVideo[] }) {
           </button>
         </div>
       )}
+    </div>
+  )
+}
+
+/** Two landscape cards across, where the full-width rows used to stand. */
+function Duo({ items }: { items: FeedVideo[] }) {
+  return (
+    <div className="grid gap-8 sm:grid-cols-2">
+      {items.map((v) => (
+        <LandscapeCard key={v.id} v={v} />
+      ))}
     </div>
   )
 }
@@ -368,7 +401,7 @@ const rotate = <T,>(xs: T[], n: number) => {
   return xs.slice(k).concat(xs.slice(0, k))
 }
 
-/** One pass through the catalog as a mixed layout: rows, a Shorts shelf, rows,
+/** One pass through the catalog as a mixed layout: pairs, a Shorts shelf, pairs,
  *  a trio, until the items run out. */
 function Cycle({ items }: { items: FeedVideo[] }) {
   const blocks: React.ReactNode[] = []
@@ -384,8 +417,9 @@ function Cycle({ items }: { items: FeedVideo[] }) {
       blocks.push(<Trio key={i} items={items.slice(i, i + 3)} />)
       i += 3
     } else {
-      blocks.push(<ListRow key={i} v={items[i]} />)
-      i += 1
+      const take = Math.min(2, items.length - i)
+      blocks.push(<Duo key={i} items={items.slice(i, i + take)} />)
+      i += take
     }
     p += 1
   }
