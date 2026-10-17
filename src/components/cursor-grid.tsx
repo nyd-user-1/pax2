@@ -226,8 +226,10 @@ export interface CursorGridProps {
   gridColor?: string
   /** The pulses' colour; the cells' colour by default. */
   pulseColor?: string
-  /** Change it to send one pulse out from the centre. */
+  /** Change it to send one pulse, in the pulse colour, out from the centre. */
   pulseKey?: number
+  /** One pulse in the cells' own colour as the grid first appears. */
+  startPulse?: boolean
   radius?: number
   falloff?: "linear" | "smooth" | "sharp"
   highlight?: "area" | "cell"
@@ -259,6 +261,7 @@ const CursorGrid = ({
   gridColor,
   pulseColor,
   pulseKey = 0,
+  startPulse = false,
   radius = 140,
   falloff = "smooth",
   highlight = "area",
@@ -293,6 +296,7 @@ const CursorGrid = ({
     color: color || ink,
     gridColor: gridColor || ink,
     pulseColor: pulseColor || color || ink,
+    startPulse,
     radius: Math.max(1, radius),
     falloff,
     highlight,
@@ -351,9 +355,11 @@ const CursorGrid = ({
     const grid = { cols: 0, rows: 0, offX: 0, offY: 0 }
     const pointer = { x: 0, y: 0, inside: false }
     const mouse = { x: 0, y: 0 }
-    const pulses: { x: number; y: number; t0: number; strength: number }[] = []
+    const pulses: { x: number; y: number; t0: number; strength: number; tint: boolean }[] = []
     let levels = new Float32Array(0)
     let waves = new Float32Array(0)
+    /** Untinted pulses' waves, lit in the cells' own colour. */
+    let calm = new Float32Array(0)
     let targets = new Float32Array(0)
     let touched = new Float32Array(0)
     let pixels = new Uint8Array(0)
@@ -384,6 +390,7 @@ const CursorGrid = ({
       if (resized) {
         levels = new Float32Array(cols * rows)
         waves = new Float32Array(cols * rows)
+        calm = new Float32Array(cols * rows)
         targets = new Float32Array(cols * rows)
         touched = new Float32Array(cols * rows).fill(-1e9)
         pixels = new Uint8Array(cols * rows * 2)
@@ -431,6 +438,7 @@ const CursorGrid = ({
       const behind = size * 1.4
       const far = Math.hypot(view.width, view.height)
       waves.fill(0)
+      calm.fill(0)
       for (let k = pulses.length - 1; k >= 0; k--) {
         const pulse = pulses[k]
         const ringR = (clock - pulse.t0) * s.pulseSpeed
@@ -454,7 +462,8 @@ const CursorGrid = ({
             const t = off > 0 ? off / ahead : off / behind
             const value = envelope * Math.exp(-t * t)
             const index = row * grid.cols + col
-            if (value > waves[index]) waves[index] = value
+            const into = pulse.tint ? waves : calm
+            if (value > into[index]) into[index] = value
           }
         }
       }
@@ -473,7 +482,7 @@ const CursorGrid = ({
       gl.bindTexture(gl.TEXTURE_2D, stateTexture)
       if (dirty) {
         for (let i = 0; i < levels.length; i++) {
-          pixels[i * 2] = Math.round(clamp(levels[i], 0, 1) * 255)
+          pixels[i * 2] = Math.round(clamp(Math.max(levels[i], calm[i]), 0, 1) * 255)
           pixels[i * 2 + 1] = Math.round(clamp(waves[i], 0, 1) * 255)
         }
         gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, grid.cols, grid.rows, gl.RG, gl.UNSIGNED_BYTE, pixels)
@@ -527,8 +536,9 @@ const CursorGrid = ({
         while (spawns-- > 0) light(Math.floor(Math.random() * levels.length), 0.25 + Math.random() * 0.45)
       }
       if (pulses.length) sweepPulses(s)
-      else if (waves.length && waves.some((value) => value > 0)) {
+      else if (waves.length && (waves.some((value) => value > 0) || calm.some((value) => value > 0))) {
         waves.fill(0)
+        calm.fill(0)
         dirty = true
       }
 
@@ -590,7 +600,7 @@ const CursorGrid = ({
       const s = settingsRef.current
       const { x, y, inside } = locate(event)
       if (!inside || !s.clickPulse || reduce) return
-      pulses.push({ x, y, t0: clock, strength: 1 })
+      pulses.push({ x, y, t0: clock, strength: 1, tint: true })
       wake()
     }
 
@@ -634,12 +644,13 @@ const CursorGrid = ({
     document.documentElement.addEventListener("pointerleave", onPointerLeave)
     document.addEventListener("visibilitychange", onVisibility)
     rebuild()
-    if (introClock < 1) pulses.push({ x: view.width / 2, y: view.height / 2, t0: 0.15, strength: 0.6 })
+    if (introClock < 1) pulses.push({ x: view.width / 2, y: view.height / 2, t0: 0.15, strength: 0.6, tint: false })
+    if (settingsRef.current.startPulse && !reduce) pulses.push({ x: view.width / 2, y: view.height / 2, t0: 0.1, strength: 1, tint: false })
     draw()
     wake()
     pulseRef.current = () => {
       if (reduce) return
-      pulses.push({ x: view.width / 2, y: view.height / 2, t0: clock, strength: 1 })
+      pulses.push({ x: view.width / 2, y: view.height / 2, t0: clock, strength: 1, tint: true })
       wake()
     }
     wakeRef.current = () => {

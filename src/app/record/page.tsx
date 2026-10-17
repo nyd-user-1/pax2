@@ -84,7 +84,8 @@ export default async function RecordLanding() {
             </div>
             <PhoneMock videoId={`yt-${top.id}`} timer={timerOf(top.duration)} />
           </div>
-          <ScrollCue next="record" />
+          {/* As high as the hero's, clear of the bottom blur band. */}
+          <ScrollCue next="record" className="bottom-[171px]" />
         </section>
         {/* Section three: the ways into recording, as on /recording. Positioned, so it paints above the fixed grid. */}
         <section id="record" className="relative flex min-h-dvh scroll-mt-16 flex-col justify-center">
