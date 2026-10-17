@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, FilePen, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, FilePen, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { RevealFx } from "@/components/reveal-fx"
@@ -25,6 +25,7 @@ const WIP = [
   { href: "/scripts", label: "Scripts", icon: NotebookPen },
   { href: "/polling", label: "Polling", icon: ChartColumn },
   { href: "/evals", label: "Evals", icon: Target },
+  { href: "/labeling", label: "Labeling", icon: ListChecks },
   { href: "/break-out", label: "iWAR", icon: Rocket },
   { href: "/feature-lift", label: "Feature lift", icon: TrendingUp },
   { href: "/velocity-tracker", label: "Velocity", icon: Activity },
@@ -61,6 +62,7 @@ const TITLES: [string, string][] = [
   ["/scripts", "Scripts"],
   ["/polling", "Polling"],
   ["/evals", "Evals"],
+  ["/labeling", "Labeling"],
   ["/campaigns", "Campaigns"],
   ["/glossary", "Glossary"],
   ["/library", "Library"],
