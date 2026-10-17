@@ -157,6 +157,28 @@
     ]
   },
   {
+    "slug": "meta-ad-library",
+    "title": "Reform campaigns in Meta's political ad library",
+    "publisher": "Meta Ad Library Report",
+    "summary": "Every US advertiser's Facebook and Instagram spend on social-issue, election and political ads since 2019, with the election-reform movement's 178 advertisers drawn out: spend and ad counts, lifelong and the last 90 days, by state.",
+    "kind": "Ad libraries",
+    "tags": [
+      "ads",
+      "spend",
+      "reform",
+      "meta"
+    ],
+    "license": "Meta transparency data",
+    "link": "https://www.facebook.com/ads/library/report",
+    "can": [
+      "Who is spending on reform advertising on Facebook and Instagram, and in which states"
+    ],
+    "cannot": [
+      "Individual ads, impressions, audiences or results (the report is spend totals; the Ad Library API awaits Meta's clearance)"
+    ],
+    "usedIn": []
+  },
+  {
     "slug": "yt-reform-shorts",
     "title": "Reform campaign shorts",
     "publisher": "YouTube Data API · Oct 3, 2026",

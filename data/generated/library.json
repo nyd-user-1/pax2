@@ -2973,5 +2973,241 @@
   "fileCount": 56,
   "bytes": 6816786,
   "tables": []
+ },
+ "meta-ad-library": {
+  "files": [
+   {
+    "key": "raw/meta-ad-library/lifelong/FacebookAdLibraryReport_2026-10-01_US_lifelong_regions.zip",
+    "bytes": 173789473
+   },
+   {
+    "key": "raw/meta-ad-library/lifelong/FacebookAdLibraryReport_2026-10-01_US_lifelong_advertisers.csv",
+    "bytes": 42400273
+   },
+   {
+    "key": "curated/meta-ad-library/reform-advertisers.csv",
+    "bytes": 14543
+   },
+   {
+    "key": "raw/meta-ad-library/lifelong/README.txt",
+    "bytes": 2105
+   },
+   {
+    "key": "raw/meta-ad-library/lifelong/FacebookAdLibraryReport_2026-10-01_US_lifelong_locations.csv",
+    "bytes": 1143
+   }
+  ],
+  "fileCount": 5,
+  "bytes": 216207537,
+  "tables": [
+   {
+    "key": "curated/meta-ad-library/reform-advertisers.csv",
+    "name": "reform-advertisers",
+    "rows": 178,
+    "columns": [
+     {
+      "name": "page_id",
+      "type": "int64"
+     },
+     {
+      "name": "page_name",
+      "type": "object"
+     },
+     {
+      "name": "disclaimer",
+      "type": "object"
+     },
+     {
+      "name": "lifelong_usd",
+      "type": "object"
+     },
+     {
+      "name": "lifelong_ads",
+      "type": "int64"
+     },
+     {
+      "name": "last90_usd",
+      "type": "float64"
+     },
+     {
+      "name": "last90_ads",
+      "type": "float64"
+     },
+     {
+      "name": "states_reached",
+      "type": "int64"
+     }
+    ],
+    "columnCount": 8,
+    "sample": [
+     {
+      "page_id": 518194348194441,
+      "page_name": "RepresentUs",
+      "disclaimer": "RepresentUs",
+      "lifelong_usd": "1025834",
+      "lifelong_ads": 4923,
+      "last90_usd": null,
+      "last90_ads": null,
+      "states_reached": 53
+     },
+     {
+      "page_id": 993590410515486,
+      "page_name": "Save Democracy PAC",
+      "disclaimer": "Save Democracy PAC",
+      "lifelong_usd": "690573",
+      "lifelong_ads": 228,
+      "last90_usd": 499522.0,
+      "last90_ads": 173.0,
+      "states_reached": 54
+     },
+     {
+      "page_id": 236346249566038,
+      "page_name": "Voters First Colorado",
+      "disclaimer": "Colorado Voters First",
+      "lifelong_usd": "426917",
+      "lifelong_ads": 32,
+      "last90_usd": null,
+      "last90_ads": null,
+      "states_reached": 2
+     },
+     {
+      "page_id": 107258988442129,
+      "page_name": "YES on Question 3 NV",
+      "disclaimer": "Nevada Voters First",
+      "lifelong_usd": "418099",
+      "lifelong_ads": 204,
+      "last90_usd": null,
+      "last90_ads": null,
+      "states_reached": 56
+     },
+     {
+      "page_id": 105641344285593,
+      "page_name": "The Honest Elections Project",
+      "disclaimer": "The Honest Elections Project",
+      "lifelong_usd": "290026",
+      "lifelong_ads": 643,
+      "last90_usd": null,
+      "last90_ads": null,
+      "states_reached": 55
+     },
+     {
+      "page_id": 308506536540046,
+      "page_name": "Alaskans for Better Elections",
+      "disclaimer": "Alaskans for Better Elections",
+      "lifelong_usd": "249591",
+      "lifelong_ads": 683,
+      "last90_usd": 3499.0,
+      "last90_ads": 1.0,
+      "states_reached": 52
+     },
+     {
+      "page_id": 111581113532778,
+      "page_name": "Voter Choice Massachusetts",
+      "disclaimer": "Ranked Choice Voting 2020 Committee",
+      "lifelong_usd": "206923",
+      "lifelong_ads": 815,
+      "last90_usd": null,
+      "last90_ads": null,
+      "states_reached": 52
+     },
+     {
+      "page_id": 70373038195,
+      "page_name": "FairVote Minnesota",
+      "disclaimer": "Fairvote Minnesota",
+      "lifelong_usd": "145327",
+      "lifelong_ads": 861,
+      "last90_usd": null,
+      "last90_ads": null,
+      "states_reached": 51
+     }
+    ]
+   },
+   {
+    "key": "raw/meta-ad-library/lifelong/FacebookAdLibraryReport_2026-10-01_US_lifelong_advertisers.csv",
+    "name": "FacebookAdLibraryReport_2026-10-01_US_lifelong_advertisers",
+    "rows": 523733,
+    "columns": [
+     {
+      "name": "Page ID",
+      "type": "int64"
+     },
+     {
+      "name": "Page name",
+      "type": "object"
+     },
+     {
+      "name": "Disclaimer",
+      "type": "object"
+     },
+     {
+      "name": "Amount spent (USD)",
+      "type": "object"
+     },
+     {
+      "name": "Number of ads in Library",
+      "type": "int64"
+     }
+    ],
+    "columnCount": 5,
+    "sample": [
+     {
+      "Page ID": 7860876103,
+      "Page name": "Joe Biden",
+      "Disclaimer": "BIDEN VICTORY FUND",
+      "Amount spent (USD)": "79741106",
+      "Number of ads in Library": 72551
+     },
+     {
+      "Page ID": 6756153498,
+      "Page name": "Mike Bloomberg",
+      "Disclaimer": "Mike Bloomberg 2020 Inc",
+      "Amount spent (USD)": "63326609",
+      "Number of ads in Library": 181199
+     },
+     {
+      "Page ID": 153080620724,
+      "Page name": "Donald J. Trump",
+      "Disclaimer": "TRUMP MAKE AMERICA GREAT AGAIN COMMITTEE",
+      "Amount spent (USD)": "58272160",
+      "Number of ads in Library": 312233
+     },
+     {
+      "Page ID": 7860876103,
+      "Page name": "Joe Biden",
+      "Disclaimer": "BIDEN FOR PRESIDENT",
+      "Amount spent (USD)": "53021585",
+      "Number of ads in Library": 54401
+     },
+     {
+      "Page ID": 24413227922,
+      "Page name": "Kamala Harris",
+      "Disclaimer": "HARRIS FOR PRESIDENT",
+      "Amount spent (USD)": "45387840",
+      "Number of ads in Library": 49107
+     },
+     {
+      "Page ID": 107483817554072,
+      "Page name": "WorkMoney",
+      "Disclaimer": "WorkMoney",
+      "Amount spent (USD)": "44603494",
+      "Number of ads in Library": 18491
+     },
+     {
+      "Page ID": 127225910653607,
+      "Page name": "PragerU",
+      "Disclaimer": "PragerU",
+      "Amount spent (USD)": "37593174",
+      "Number of ads in Library": 43025
+     },
+     {
+      "Page ID": 12301006942,
+      "Page name": "Democrats",
+      "Disclaimer": "DNC SERVICES CORP./DEM. NAT'L COMMITTEE",
+      "Amount spent (USD)": "34289219",
+      "Number of ads in Library": 104889
+     }
+    ]
+   }
+  ]
  }
 }

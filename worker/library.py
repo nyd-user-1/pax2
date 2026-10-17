@@ -20,6 +20,7 @@ DATASETS = {
     "polis-opendata": {"prefixes": ["raw/polis-opendata/"], "tables": []},
     "hewitt-reproduction": {"prefixes": ["raw/hewitt-repro/"], "tables": []},
     "google-reform-ads": {"prefixes": ["athena/govblock/"], "tables": []},
+    "meta-ad-library": {"prefixes": ["raw/meta-ad-library/", "curated/meta-ad-library/"], "tables": ["curated/meta-ad-library/reform-advertisers.csv", "raw/meta-ad-library/lifelong/FacebookAdLibraryReport_2026-10-01_US_lifelong_advertisers.csv"]},
     "pax2-takes": {"prefixes": ["videos/", "features/", "transcribe/", "takes/"], "tables": []},
 }
 
