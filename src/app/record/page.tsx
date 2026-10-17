@@ -9,7 +9,9 @@ import { LandingGrid } from "@/components/landing-grid"
 import { Feed, type FeedVideo } from "@/components/record/feed"
 import { LandingHeader } from "@/components/record/landing-header"
 import { LandingOnly, LandingSurface } from "@/components/record/landing-only"
+import { HelpLine } from "@/components/record/chrome"
 import { PhoneMock } from "@/components/record/phone-mock"
+import { RecordOptions } from "@/components/record/record-options"
 import { ScrollTop } from "@/components/record/scroll-cue"
 import { currentUser } from "@/lib/auth"
 import { tagsFor } from "@/lib/tags"
@@ -81,6 +83,13 @@ export default async function RecordLanding() {
               <p className="text-sm text-slate-800">Powered by Resonant Amplification &copy;</p>
             </div>
             <PhoneMock videoId={`yt-${top.id}`} timer={timerOf(top.duration)} />
+          </div>
+        </section>
+        {/* Section three: the ways into recording, as on /record/start. Positioned, so it paints above the fixed grid. */}
+        <section className="relative flex min-h-dvh flex-col justify-center">
+          <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-5 py-12">
+            <RecordOptions />
+            <HelpLine />
           </div>
         </section>
       </LandingOnly>
