@@ -1,0 +1,227 @@
+{
+ "builtAt": "2026-10-17T22:55:51.705Z",
+ "source": {
+  "catalog": "2026-10-15T15:22:02.105Z",
+  "catalogSource": "YouTube Data API v3, shorts playlists, 18-month lookback"
+ },
+ "rows": 18455,
+ "labeled": 18455,
+ "skipped": {
+  "unsettled": 410,
+  "unmappedGroup": 76
+ },
+ "channels": 64,
+ "positives": 2739,
+ "baseRate": 0.148,
+ "byTier": {
+  "killed": 3656,
+  "baseline": 12060,
+  "breakout": 2739
+ },
+ "byFamily": {
+  "Partisan media": 9942,
+  "Candidates & officials": 4950,
+  "Voting rights": 816,
+  "Nonpartisan media": 1453,
+  "Reform": 1196,
+  "UK": 98
+ },
+ "withContent": 35,
+ "paidAds": {
+  "file": true,
+  "status": "client-rendered: under half of the first 100 creative pages carry a YouTube id in their HTML; stopped",
+  "resolved": 0,
+  "joined": 0,
+  "added": 0
+ },
+ "published": {
+  "first": "2025-04-15T15:34:49Z",
+  "last": "2026-10-08T15:00:16Z"
+ },
+ "label": "breakout = 1 when lifetime views are at least 3x the channel's median of settled shorts (7+ days old); killed at 0.5x or less; baseline between.",
+ "features": [
+  {
+   "key": "question",
+   "label": "Title asks a question",
+   "kind": "binary"
+  },
+  {
+   "key": "exclaim",
+   "label": "Exclamation mark in the title",
+   "kind": "binary"
+  },
+  {
+   "key": "number",
+   "label": "A number in the title",
+   "kind": "binary"
+  },
+  {
+   "key": "firstPerson",
+   "label": "First person in the title",
+   "kind": "binary"
+  },
+  {
+   "key": "you",
+   "label": "Addresses the viewer",
+   "kind": "binary"
+  },
+  {
+   "key": "caps",
+   "label": "A word in all caps",
+   "kind": "binary"
+  },
+  {
+   "key": "anger",
+   "label": "Combative words in the title",
+   "kind": "binary"
+  },
+  {
+   "key": "quote",
+   "label": "Quotation in the title",
+   "kind": "binary"
+  },
+  {
+   "key": "shortTitle",
+   "label": "Title of six words or fewer",
+   "kind": "binary"
+  },
+  {
+   "key": "longTitle",
+   "label": "Title of fifteen words or more",
+   "kind": "binary"
+  },
+  {
+   "key": "emoji",
+   "label": "Emoji in the title",
+   "kind": "binary"
+  },
+  {
+   "key": "hashtagTitle",
+   "label": "Hashtag in the title",
+   "kind": "binary"
+  },
+  {
+   "key": "trump",
+   "label": "Names Trump",
+   "kind": "binary"
+  },
+  {
+   "key": "titleWords",
+   "label": "Title length (log words)",
+   "kind": "continuous"
+  },
+  {
+   "key": "cta",
+   "label": "Call to action in the description",
+   "kind": "binary"
+  },
+  {
+   "key": "link",
+   "label": "Link in the description",
+   "kind": "binary"
+  },
+  {
+   "key": "noDescription",
+   "label": "No description",
+   "kind": "binary"
+  },
+  {
+   "key": "descWords",
+   "label": "Description length (log words)",
+   "kind": "continuous"
+  },
+  {
+   "key": "tags",
+   "label": "Has tags",
+   "kind": "binary"
+  },
+  {
+   "key": "tagCount",
+   "label": "Tag count (log)",
+   "kind": "continuous"
+  },
+  {
+   "key": "under20",
+   "label": "20 seconds or shorter",
+   "kind": "binary"
+  },
+  {
+   "key": "under35",
+   "label": "35 seconds or shorter",
+   "kind": "binary"
+  },
+  {
+   "key": "over60",
+   "label": "Longer than a minute",
+   "kind": "binary"
+  },
+  {
+   "key": "logDuration",
+   "label": "Length (log seconds)",
+   "kind": "continuous"
+  },
+  {
+   "key": "weekend",
+   "label": "Posted on a weekend",
+   "kind": "binary"
+  },
+  {
+   "key": "morning",
+   "label": "Posted 6 to 11am Eastern",
+   "kind": "binary"
+  },
+  {
+   "key": "evening",
+   "label": "Posted 6 to 11pm Eastern",
+   "kind": "binary"
+  },
+  {
+   "key": "night",
+   "label": "Posted midnight to 5am Eastern",
+   "kind": "binary"
+  },
+  {
+   "key": "logMedian",
+   "label": "Channel size (log median views)",
+   "kind": "continuous"
+  },
+  {
+   "key": "family:Reform",
+   "label": "Reform",
+   "kind": "family"
+  },
+  {
+   "key": "family:Voting rights",
+   "label": "Voting rights",
+   "kind": "family"
+  },
+  {
+   "key": "family:Nonpartisan media",
+   "label": "Nonpartisan media",
+   "kind": "family"
+  },
+  {
+   "key": "family:Candidates & officials",
+   "label": "Candidates & officials",
+   "kind": "family"
+  },
+  {
+   "key": "family:Partisan media",
+   "label": "Partisan media",
+   "kind": "family"
+  },
+  {
+   "key": "family:UK",
+   "label": "UK",
+   "kind": "family"
+  }
+ ],
+ "fields": {
+  "id, channelId, channel, group, family, published": "YouTube ids and the channel's group (lambda/velocity/channels.json) and family (video-features.ts)",
+  "title, description, tags, durationSec, channelMedian": "the raw pre-publish inputs; description is the first 600 characters",
+  "views, likes, comments, ratio, tier, breakout": "the outcome as of the catalog fetch",
+  "x": "pre-publish features from src/lib/video-features.ts",
+  "paid": "for rows a Google political video ad resolved to (scripts/google-video-ads.mjs): impression and spend bands, days, advertiser; rows with group paid-ad have no breakout label",
+  "content": "measured content features for analyzed shorts (Transcribe, ffmpeg, Pegasus, delivery coding, Swayable codes); null otherwise"
+ }
+}
