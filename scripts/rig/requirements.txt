@@ -1,0 +1,13 @@
+# The PAX2 rig's Python, CPU only. launch-cpu.sh installs torch and torchvision from the CPU wheel
+# index first (https://download.pytorch.org/whl/cpu), so the lines below find them satisfied and pip
+# never pulls the CUDA build from PyPI.
+torch
+torchvision
+open_clip_torch
+resmem
+numpy
+pandas
+pyarrow
+pillow
+boto3
+scikit-learn
