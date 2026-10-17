@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache"
 import { currentUser, requireAdmin } from "@/lib/auth"
 import { evaluate } from "@/lib/evaluate"
 import { ADMINS, layout, send, SITE } from "@/lib/mail"
-import { addEvent, createOriginal, latestEvaluation, originalRow, type OriginalRow } from "@/lib/originals"
+import { addEvent, createOriginal, gainOf, latestEvaluation, originalRow, type Evaluation, type OriginalRow } from "@/lib/originals"
 import { addToWatch } from "@/lib/velocity-store"
 
 // Every step of an original video's way from the recording to the wild. Admin-only steps check the
@@ -15,6 +15,21 @@ const link = (id: string, tab?: string) => `${SITE}/v/${id}${tab ? `?tab=${tab}`
 const refresh = (id: string) => {
   revalidatePath(`/v/${id}`)
   for (const p of ["/drafts", "/scoring", "/publishing"]) revalidatePath(p)
+}
+
+const signed = (x: number, digits: number) => `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(digits)}`
+
+/** The findings as the owner reads them: each change with its measured range in plain words. */
+function findings(e: Evaluation): string[] {
+  const persuasion = e.recommendations
+    .filter((r) => r.axis === "persuasion")
+    .map((r) => (r.diff != null && r.low != null && r.high != null ? `${r.change} (about ${signed(r.diff, 1)} points of vote choice, somewhere between ${signed(r.low, 1)} and ${signed(r.high, 1)})` : r.change))
+  const distribution = (e.distribution?.changes ?? []).slice(0, 3).map((r) => {
+    const g = gainOf(r)
+    return `${r.action} (about ${signed(g.points, 1)} points of the chance of a Hit, somewhere between ${signed(g.low, 1)} and ${signed(g.high, 1)}, on ${r.scope})`
+  })
+  const virality = e.recommendations.filter((r) => r.axis === "virality").map((r) => r.change)
+  return [...distribution, ...persuasion, ...virality]
 }
 
 async function must(id: string): Promise<OriginalRow> {
@@ -37,12 +52,12 @@ export async function againDraft(id: string) {
 
 /** A recording lands. It is scored straight away when automatic scoring is on (PAX2_AUTOSCORE=1);
  *  otherwise it waits on /drafts for an admin to press Score. */
-export async function submitOriginal(input: { id: string; key: string; email?: string; scriptId?: string; title?: string; text?: string; name?: string; role?: string; town?: string; seconds: number; consent: boolean; parent?: string }) {
+export async function submitOriginal(input: { id: string; key: string; email?: string; scriptId?: string; title?: string; text?: string; name?: string; role?: string; town?: string; seconds: number; consent: boolean; parent?: string; publishAt?: string }) {
   const user = await currentUser()
   const owner = (user?.email ?? input.email ?? "").trim().toLowerCase()
   if (!/^\S+@\S+\.\S+$/.test(owner)) throw new Error("An email address is needed, so PAX2 can send the link.")
   const parent = input.parent ? await originalRow(input.parent) : null
-  await createOriginal({ id: input.id, owner, key: input.key, version: parent ? parent.version + 1 : 1, parent: parent?.id, title: input.title, text: input.text, name: input.name, role: input.role, town: input.town, seconds: input.seconds, consent: input.consent })
+  await createOriginal({ id: input.id, owner, key: input.key, version: parent ? parent.version + 1 : 1, parent: parent?.id, title: input.title, text: input.text, name: input.name, role: input.role, town: input.town, seconds: input.seconds, consent: input.consent, publishAt: input.publishAt && !Number.isNaN(Date.parse(input.publishAt)) ? new Date(input.publishAt).toISOString() : undefined })
   if (parent) await addEvent(parent.id, { kind: "replaced", by: owner, child: input.id })
   if (process.env.PAX2_AUTOSCORE === "1") await score(input.id)
   refresh(input.id)
@@ -97,10 +112,10 @@ export async function review(id: string, decision: "rerecord" | "approved" | "en
     const body = layout({
       heading: "Findings",
       paragraphs: [
-        `Great video! Wanna do it again? The following recommendations are shown to increase the Virality and Persuasion potential of your video by as much as ${evaluation.upliftPct}%.`,
+        "Great video! Wanna do it again? Here is what PAX2 measured would help it travel and persuade, each with the range the evidence allows.",
         ...(note.trim() ? [note.trim()] : []),
       ],
-      list: evaluation.recommendations.map((r) => r.change),
+      list: findings(evaluation),
       buttons: [
         { label: "Re-record", href: `${SITE}/record/camera?again=${id}` },
         { label: "Nah, publish it", href: `${SITE}/v/${id}?publish=1` },

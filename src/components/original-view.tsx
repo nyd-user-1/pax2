@@ -5,7 +5,7 @@ import { OriginalAdmin, OwnerPublish, ScoreButton, WatchForm } from "@/component
 import { TabRail, type RailTab } from "@/components/tab-rail"
 import { currentUser } from "@/lib/auth"
 import { outbox } from "@/lib/mail"
-import { STAGE_LABEL, type OriginalRow } from "@/lib/originals"
+import { gainOf, STAGE_LABEL, type Evaluation, type OriginalRow } from "@/lib/originals"
 import { recentPolls } from "@/lib/velocity-store"
 import { cn } from "@/ui/lib/utils"
 
@@ -18,6 +18,8 @@ const TAB_LABEL: Record<Tab, string> = { recorded: "Recorded", scored: "Scored",
 
 const when = (iso: string) => new Date(iso).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })
 const pts = (x: number) => `${x > 0 ? "+" : x < 0 ? "−" : ""}${Math.abs(x).toFixed(2)}`
+const pp = (x: number) => `${x > 0 ? "+" : x < 0 ? "−" : ""}${Math.abs(x).toFixed(1)}`
+const pct = (x: number) => `${Math.round(x * 100)}%`
 
 /** One page per original video, from the recording to the wild; each stage is a tab on the rail,
  *  open once the video has reached it. */
@@ -122,6 +124,8 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
             </div>
           </CardBlock>
 
+          {row.evaluation.forecast && <ForecastCard f={row.evaluation.forecast} />}
+
           <ListBlock title="Recommendations" height="auto">
             <div className="flex flex-col divide-y divide-slate-100">
               {row.evaluation.recommendations.map((r) => (
@@ -136,7 +140,39 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
                   </span>
                 </div>
               ))}
+              {row.evaluation.distribution?.changes.map((r) => {
+                const g = gainOf(r)
+                return (
+                  <div key={r.key} className="flex flex-col gap-1 py-3">
+                    <span className="flex flex-wrap items-baseline justify-between gap-2">
+                      <span className="text-sm font-medium text-slate-900">{r.action}</span>
+                      <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">Distribution</span>
+                    </span>
+                    <span className="tabular text-xs text-slate-500">
+                      {pp(g.points)} pts ({pp(g.low)} to {pp(g.high)}), measured on {r.scope}
+                    </span>
+                  </div>
+                )
+              })}
             </div>
+            {!!row.evaluation.distribution?.keeps.length && (
+              <details className="group mt-2 border-t border-slate-100 pt-3">
+                <summary className="cursor-pointer text-sm font-medium text-slate-700">Already in place</summary>
+                <div className="mt-2 flex flex-col gap-2">
+                  {row.evaluation.distribution.keeps.map((r) => {
+                    const g = gainOf(r)
+                    return (
+                      <span key={r.key} className="flex flex-wrap items-baseline justify-between gap-2 text-sm">
+                        <span className="text-slate-800">{r.points > 0 ? r.label : `Not: ${r.label.toLowerCase()}`}</span>
+                        <span className="tabular text-xs text-slate-500">
+                          {pp(g.points)} pts ({pp(g.low)} to {pp(g.high)}), {r.scope}
+                        </span>
+                      </span>
+                    )
+                  })}
+                </div>
+              </details>
+            )}
           </ListBlock>
 
           <TableBlock title="Traits" height="auto">
@@ -184,6 +220,36 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
       {active === "published" && <Published row={row} admin={admin} />}
       {active === "polled" && <Polled row={row} />}
     </div>
+  )
+}
+
+/** PAX2 Classifier's chance of a Hit, with its measured strength and the six strongest pulls. */
+function ForecastCard({ f }: { f: NonNullable<Evaluation["forecast"]> }) {
+  const s = f.strength
+  return (
+    <CardBlock title="Forecast" height="auto">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
+          <span className="font-display text-5xl text-pax2-blue">{pct(f.p)}</span>
+          {f.base.family != null && (
+            <span className="tabular text-sm text-slate-600">
+              {f.base.familyName} channels: {pct(f.base.family)}
+            </span>
+          )}
+        </div>
+        <p className="text-sm text-slate-600">
+          Trained on {s.n.toLocaleString("en-US")} shorts{s.channels ? ` from ${s.channels} channels` : ""}; ranks new videos at AUC {s.auc.toFixed(2)} across channels{s.withinChannelAuc != null && ` and ${s.withinChannelAuc.toFixed(2)} within a channel`}.
+        </p>
+        <ul className="flex flex-col gap-1.5">
+          {f.contributions.map((c) => (
+            <li key={c.key} className="flex items-baseline justify-between gap-4 text-sm">
+              <span className="text-slate-800">{c.label}</span>
+              <span className={cn("tabular text-xs", c.pull > 0 ? "text-pax2-light-blue" : "text-slate-500")}>{pts(c.pull)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </CardBlock>
   )
 }
 

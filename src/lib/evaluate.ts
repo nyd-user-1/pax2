@@ -1,6 +1,9 @@
 import "server-only"
 
+import feed from "../../data/generated/home-feed.json"
+import model from "../../data/generated/model/var-model.json"
 import patterns from "../../data/generated/swayable-patterns.json"
+import { forecast, recommendations, type VideoInput } from "@/lib/forecast"
 import { titlePatterns } from "@/lib/headline-patterns"
 import type { Evaluation, Original, Recommendation, Trait } from "@/lib/originals"
 
@@ -11,10 +14,34 @@ import type { Evaluation, Original, Recommendation, Trait } from "@/lib/original
 //   persuasion  each trait's lean from Swayable's tests: its ads against the other ads in the same
 //               study (data/generated/swayable-patterns.json)
 //   virality    the title against Upworthy's headline tests (won vs. lost)
+//   forecast    PAX2 Classifier's chance of a Hit from what the video will carry at publish, and
+//               the distribution recommendations from the measured within-channel lifts
+//               (src/lib/forecast.ts)
 // The script stands in for what was said until the recording itself is transcribed.
 
 const MODEL = process.env.PAX2_MODEL ?? "us.anthropic.claude-sonnet-4-6"
 const TRAITS = patterns.traits as { key: string; label: string; ads: number; diff: number; low: number; high: number }[]
+
+// An original goes out on a reform channel; until PAX2 has its own, Vote YES on 3 is the stand-in.
+// Its median is the catalog's (data/velocity/catalog.json), carried on every row of the home feed,
+// which the app already bundles; the 12 MB catalog stays out of the server bundle.
+const STAND_IN = "UC-rKSUWdEqPmP-UM7yV6Ssw"
+const CHANNEL_MEDIAN: number | null = (feed as { channelId: string; channelMedian?: number }[]).find((v) => v.channelId === STAND_IN)?.channelMedian ?? null
+const CHANNELS = Number((model as { method: string }).method.match(/from (\d+) channels/)?.[1]) || null
+
+/** What PAX2 Classifier reads from an original. The script stands in for the description. */
+export function videoInputOf(o: Original): VideoInput {
+  const firstLine = (o.text ?? "").split("\n").map((l) => l.trim()).find(Boolean) ?? ""
+  return {
+    title: o.title?.trim() || firstLine,
+    description: o.text ?? "",
+    tags: [],
+    durationSec: o.seconds,
+    published: o.publishAt ?? new Date().toISOString(),
+    group: "reform-core",
+    channelMedian: CHANNEL_MEDIAN,
+  }
+}
 
 type Coded = { summary: string; traits: { key: string; present: boolean; quote?: string; change?: string }[]; title?: string }
 
@@ -74,7 +101,9 @@ export async function evaluate(o: Original): Promise<Evaluation> {
       ? [{ axis: "virality", change: `Retitle it: "${coded.title.trim()}"`, why: "In Upworthy's tests the same story under its best headline drew a median 1.9 times the clicks of its worst.", source: "Upworthy" }]
       : []
 
-  const best = persuasion[0]?.diff ?? 0
+  const input = videoInputOf(o)
+  const f = forecast(input)
+  const d = recommendations(input)
   return {
     model: MODEL,
     summary: coded.summary,
@@ -82,6 +111,7 @@ export async function evaluate(o: Original): Promise<Evaluation> {
     lean,
     title,
     recommendations: [...persuasion, ...virality],
-    upliftPct: Math.round((best / patterns.score.mean) * 100),
+    forecast: { p: f.p, base: f.base, anchor: f.anchor, strength: { ...f.strength, channels: CHANNELS }, contributions: f.contributions.slice(0, 6) },
+    distribution: { changes: d.changes, keeps: d.keeps },
   }
 }

@@ -7,7 +7,7 @@ import { ArrowRight, CheckCircle2, Loader2, RotateCcw, Upload, Video } from "luc
 import { uploadUrl } from "@/app/actions"
 import { againDraft, submitOriginal, viewer } from "@/app/original-actions"
 import { FlowPage, StepBar } from "@/components/record/chrome"
-import { useDraft } from "@/components/record/draft"
+import { fromEasternLocal, nextWeekdayNine, toEasternLocal, useDraft } from "@/components/record/draft"
 import { Teleprompter } from "@/components/record/teleprompter"
 import { RevealFx } from "@/components/reveal-fx"
 import { cn } from "@/ui/lib/utils"
@@ -57,7 +57,7 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
       const u = await uploadUrl(clip.mime.split(";")[0])
       const r = await fetch(u.url, { method: "PUT", body: clip.blob, headers: { "Content-Type": clip.mime.split(";")[0] } })
       if (!r.ok) throw new Error(`Upload failed (${r.status})`)
-      await submitOriginal({ id: u.id, key: u.key, email: me ? undefined : email, scriptId: draft.scriptId, title: draft.title, text: draft.text, name: draft.name, role: draft.role, town: draft.town, seconds: Math.round(clip.seconds), consent, parent: draft.again })
+      await submitOriginal({ id: u.id, key: u.key, email: me ? undefined : email, scriptId: draft.scriptId, title: draft.title, text: draft.text, name: draft.name, role: draft.role, town: draft.town, seconds: Math.round(clip.seconds), consent, parent: draft.again, publishAt: draft.publishAt ?? nextWeekdayNine() })
       update({ again: undefined })
       setState("sent")
     } catch (e) {
@@ -98,6 +98,14 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
                     </label>
                   ))}
                 </div>
+                <input
+                  type="datetime-local"
+                  aria-label="Post when"
+                  placeholder="Post when"
+                  value={toEasternLocal(draft.publishAt ?? nextWeekdayNine())}
+                  onChange={(e) => e.target.value && update({ publishAt: fromEasternLocal(e.target.value) })}
+                  className="mt-4 w-full rounded-lg border bg-pax2-mist px-3 py-2 outline-none focus:border-primary sm:w-auto"
+                />
                 {me === null && (
                   <label className="mt-4 flex flex-col gap-1">
                     <span className="text-xs text-slate-800">Email, for the link to your video</span>

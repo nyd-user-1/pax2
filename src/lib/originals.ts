@@ -1,5 +1,6 @@
 import "server-only"
 
+import type { Contribution, Recommendation as Distribution } from "@/lib/forecast"
 import { get, now, putOnce, query, type Item } from "@/lib/ledger"
 
 // Original content: a video a user records for PAX2, from the recording to the wild.
@@ -32,6 +33,10 @@ export type OriginalInput = {
   town?: string
   seconds: number
   consent: boolean
+  /** When the owner means it to go out, ISO; the forecast reads its day and hour. */
+  publishAt?: string
+  /** Made off the platform and entered after the fact (scripts/backfill-voter-freedom.mjs). */
+  provenance?: "backfilled"
 }
 
 export type Original = Item & OriginalInput & { at: string }
@@ -46,8 +51,16 @@ export type Evaluation = {
   lean: number
   title: { key: string; label: string; has: boolean; won: number; lost: number }[]
   recommendations: Recommendation[]
-  /** The best single change's lean as a share of the typical ad's effect, for the findings email. */
-  upliftPct: number
+  /** PAX2 Classifier: the chance of a Hit from what the video will carry at publish, with its measured strength. */
+  forecast?: {
+    p: number
+    base: { all: number; family: number | null; familyName: string | null }
+    anchor: { median: number | null; breakoutViews: number | null }
+    strength: { auc: number; withinChannelAuc: number | null; topDecileLift: number; familyAuc: number | null; n: number; channels: number | null; version: string; builtAt: string }
+    contributions: Contribution[]
+  }
+  /** The measured within-channel lifts read against this video: changes to make and traits already in place. */
+  distribution?: { changes: Distribution[]; keeps: Distribution[] }
 }
 
 export type EventInput = {
@@ -136,3 +149,10 @@ export const isOriginalId = (id: string) => /^(sub|orig)-[\w-]+$/.test(id)
 
 /** An original before it is published is its owner's and the admins' only. */
 export const canSee = (row: OriginalRow, viewer: { email: string; admin: boolean } | null) => !!viewer && (viewer.admin || viewer.email === row.owner)
+
+/** A distribution change's measured gain, signed for the change: dropping a trait that costs
+ *  points gains them. Percentage points of breakout rate with the 90% range. */
+export function gainOf(r: Distribution): { points: number; low: number; high: number } {
+  const flip = r.points < 0
+  return flip ? { points: -r.points, low: -r.high, high: -r.low } : { points: r.points, low: r.low, high: r.high }
+}
