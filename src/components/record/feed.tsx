@@ -135,12 +135,15 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
   { label: "Share", icon: Forward },
 ]
 
-/** The card's bottom-right corner: like, comment and view counts, then paid media's mark in the
- *  three-dot button's box mirrored from the top-right — as far from the bottom and right as the
- *  dots sit from the top and right. */
-function CardFoot({ v, box }: { v: FeedVideo; box?: string }) {
+/** The card's bottom-right corner, in one icon style: paid media's mark (green), then view, like
+ *  and comment counts. */
+function CardFoot({ v }: { v: FeedVideo }) {
   return (
-    <div className="tabular mt-auto flex h-9 items-center justify-end gap-3 text-xs text-pax2-blue">
+    <div className="tabular mt-auto flex h-9 items-center justify-end gap-3 pr-2 text-xs text-pax2-blue">
+      {v.paid && <DollarSign role="img" aria-label="Paid media" className="size-3.5 text-green-600" />}
+      <span className="flex items-center gap-1" aria-label={`${v.views} views`}>
+        <TrendingUp className="size-3.5" /> {fmt.format(v.views)}
+      </span>
       {v.likes != null && (
         <span className="flex items-center gap-1" aria-label={`${v.likes} likes`}>
           <ThumbsUp className="size-3.5" /> {fmt.format(v.likes)}
@@ -150,16 +153,6 @@ function CardFoot({ v, box }: { v: FeedVideo; box?: string }) {
         <span className="flex items-center gap-1" aria-label={`${v.comments} comments`}>
           <MessageCircle className="size-3.5" /> {fmt.format(v.comments)}
         </span>
-      )}
-      <span className="flex items-center gap-1" aria-label={`${v.views} views`}>
-        <TrendingUp className="size-3.5" /> {fmt.format(v.views)}
-      </span>
-      {v.paid ? (
-        <span className={cn("flex size-9 shrink-0 items-center justify-center", box)}>
-          <DollarSign role="img" aria-label="Paid media" className="size-5 text-green-600" />
-        </span>
-      ) : (
-        <span className="h-9 w-2" />
       )}
     </div>
   )
@@ -238,8 +231,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <Avatar id={v.channelId} className="size-5" />
         <span className="truncate text-xs font-medium text-slate-800">{v.channel}</span>
       </span>
-      {/* Shorts' dots are a size-8 box pulled 6px right; the corner mirrors that. */}
-      <CardFoot v={v} box="-mb-1.5 -mr-1.5 size-8" />
+      <CardFoot v={v} />
     </Link>
   )
 }
