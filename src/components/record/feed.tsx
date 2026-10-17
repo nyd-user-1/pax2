@@ -5,7 +5,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, EllipsisVertical, Forward, ListPlus, MessageCircle, Rocket, Search, SlidersHorizontal, TrendingUp, Star, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
+import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, EllipsisVertical, Forward, ListPlus, MessageCircle, Play, Rocket, Search, SlidersHorizontal, TrendingUp, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
 
 import { useShellPanel } from "@/components/shell"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
@@ -48,7 +48,7 @@ const thumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
 
 /** Hover a moment and the real video plays in place, muted — only for the
  *  shorts whose file we actually hold. */
-function HoverThumb({ v, aspect }: { v: FeedVideo; aspect: string }) {
+function HoverThumb({ v, aspect, playButton }: { v: FeedVideo; aspect: string; playButton?: boolean }) {
   const [play, setPlay] = React.useState(false)
   const timer = React.useRef<ReturnType<typeof setTimeout> | null>(null)
   const enter = () => {
@@ -65,6 +65,13 @@ function HoverThumb({ v, aspect }: { v: FeedVideo; aspect: string }) {
         <video src={`/api/video/yt-${v.id}`} poster={thumb(v.id)} autoPlay muted loop playsInline className="size-full object-cover" />
       ) : (
         <img src={thumb(v.id)} alt="" loading="lazy" className={cn("size-full object-cover", aspect !== "aspect-video" && "transition-transform duration-300 group-hover:scale-[1.02]")} />
+      )}
+      {playButton && !play && (
+        <span aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/25 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          <span className="flex size-14 scale-90 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition-transform duration-200 group-hover:scale-100">
+            <Play className="ml-0.5 size-6 fill-white" />
+          </span>
+        </span>
       )}
     </span>
   )
@@ -92,29 +99,6 @@ function Score({ v }: { v: FeedVideo }) {
   )
 }
 
-const FAVORITES = "pax2:favorites"
-
-/** The favorite star, last in a card's counts and styled like them; pressed, it fills amber.
- *  Favorites live in this browser. It sits inside the card's link, so a press stays out of it. */
-function Favorite({ id }: { id: string }) {
-  const [on, setOn] = React.useState(false)
-  React.useEffect(() => setOn((JSON.parse(localStorage.getItem(FAVORITES) ?? "[]") as string[]).includes(id)), [id])
-  const toggle = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    const ids = new Set(JSON.parse(localStorage.getItem(FAVORITES) ?? "[]") as string[])
-    if (ids.has(id)) ids.delete(id)
-    else ids.add(id)
-    localStorage.setItem(FAVORITES, JSON.stringify([...ids]))
-    setOn(ids.has(id))
-  }
-  return (
-    <button type="button" aria-label={on ? "Remove from favorites" : "Add to favorites"} aria-pressed={on} onClick={toggle} className={CORNER_ITEM}>
-      <Star className={cn("size-5", on && "fill-amber-400 text-amber-400")} />
-    </button>
-  )
-}
-
 function Avatar({ id, className }: { id: string; className?: string }) {
   return <img src={`/logos/channels/${id}.jpg`} alt="" className={cn("size-8 shrink-0 rounded-full object-cover", className)} />
 }
@@ -125,7 +109,7 @@ const ROW_ACTIONS: { label: string; icon: LucideIcon }[] = [
   { label: "Share", icon: Forward },
 ]
 
-/** A card's counts in one icon style — views, likes, comments, then the favorite star — each sized
+/** A card's counts in one icon style — views, likes, comments — each sized
  *  and hovered like the three-dot button, a muted disc beneath, on the card's right. The landscape
  *  cards add Boost on the left. */
 const CORNER_ITEM = "flex h-9 min-w-9 items-center justify-center gap-1.5 rounded-full px-2 transition-colors hover:bg-slate-200/70"
@@ -141,14 +125,14 @@ function CardFoot({ v, boost }: { v: FeedVideo; boost?: boolean }) {
             e.preventDefault()
             e.stopPropagation()
           }}
-          className={whiteButton("md")}
+          className={whiteButton("md", "shadow-none hover:shadow-md")}
         >
           <Rocket className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} /> Boost
         </button>
       ) : (
         <span />
       )}
-      <div className="-mr-2 flex items-center gap-0.5">
+      <div className="flex items-center gap-0.5">
         <span className={CORNER_ITEM} aria-label={`${v.views} views`}>
           <TrendingUp className="size-5" /> {fmt.format(v.views)}
         </span>
@@ -162,7 +146,6 @@ function CardFoot({ v, boost }: { v: FeedVideo; boost?: boolean }) {
             <MessageCircle className="size-5" /> {fmt.format(v.comments)}
           </span>
         )}
-        <Favorite id={v.id} />
       </div>
     </div>
   )
@@ -244,23 +227,25 @@ export function ShortCard({ v }: { v: FeedVideo }) {
   )
 }
 
-/** One landscape card, two or three across: the thumbnail in its own box — the hover video, score
- *  and star stay inside it — then a grey ribbon with the channel and the running time, then the
- *  title, the description's first lines and the counts. */
+/** One landscape card, two or three across: the thumbnail in its own box, its running time in the
+ *  corner and a play button on hover (the hover video plays inside it), then a grey ribbon with the
+ *  channel and its velocity score, then the title, the description's first lines and the counts. */
 export function LandscapeCard({ v }: { v: FeedVideo }) {
   return (
     <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:transition-colors before:duration-200 hover:before:border-pax2-blue flex flex-col gap-3">
       <div className="overflow-hidden rounded-xl bg-slate-200">
         <div className="relative overflow-hidden">
-          <HoverThumb v={v} aspect="aspect-video" />
-          <Score v={v} />
+          <HoverThumb v={v} aspect="aspect-video" playButton />
+          <span className="tabular pointer-events-none absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
         </div>
         <div className="flex items-center justify-between gap-2 px-2.5 py-2">
           <span className="flex min-w-0 items-center gap-2.5">
             <Avatar id={v.channelId} />
             <span className="truncate text-[15px] text-slate-800">{v.channel}</span>
           </span>
-          <span className="tabular shrink-0 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
+          <span aria-label="Views over the channel's median" className={cn("tabular shrink-0 rounded-md px-1.5 py-0.5 text-xs font-bold", SCORE[v.tier])}>
+            {v.ratio >= 10 ? v.ratio.toFixed(0) : v.ratio.toFixed(1)}×
+          </span>
         </div>
       </div>
       <div className="flex flex-col gap-1 pt-1">
@@ -284,7 +269,7 @@ function ShortsShelf({ items }: { items: FeedVideo[] }) {
       <span className="flex items-center gap-2 text-sm font-semibold text-slate-900">
         <img src="/logos/youtube-shorts.svg" alt="" className="h-5 w-auto" /> Shorts
       </span>
-      <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-8 @3xl:grid-cols-4">
         {items.slice(0, more ? items.length : 4).map((v) => (
           <ShortCard key={v.id} v={v} />
         ))}
@@ -308,7 +293,7 @@ function ShortsShelf({ items }: { items: FeedVideo[] }) {
 /** Two landscape cards across, where the full-width rows used to stand. */
 function Duo({ items }: { items: FeedVideo[] }) {
   return (
-    <div className="grid gap-8 sm:grid-cols-2">
+    <div className="grid gap-8 @xl:grid-cols-2">
       {items.map((v) => (
         <LandscapeCard key={v.id} v={v} />
       ))}
@@ -319,7 +304,7 @@ function Duo({ items }: { items: FeedVideo[] }) {
 /** Three medium cards across — the shape of YouTube's related-videos band. */
 function Trio({ items }: { items: FeedVideo[] }) {
   return (
-    <div className="grid gap-8 sm:grid-cols-3">
+    <div className="grid gap-8 @xl:grid-cols-2 @4xl:grid-cols-3">
       {items.map((v) => (
         <LandscapeCard key={v.id} v={v} />
       ))}
@@ -820,7 +805,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   }, [narrowed])
 
   return (
-    <section ref={section} onClickCapture={remember} className="mx-auto w-full max-w-6xl px-6 pb-16">
+    <section ref={section} onClickCapture={remember} className="@container mx-auto w-full max-w-6xl px-6 pb-16">
       {/* On the landing it sticks just beneath the 4rem header, never inside it; inside the
           shell's scroll pane (a video's page) there is no such header, so it sticks at the top. */}
       <div className={cn("sticky z-40 mx-auto w-full max-w-2xl", landing ? "top-[4.75rem]" : "top-3")}>
