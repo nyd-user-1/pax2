@@ -48,11 +48,12 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
         </>
       ) : (
         <>
-          {/* The curtain's PAX in small, the A in red. */}
+          {/* The curtain's PAX in small, the A in red. Its SVG is the font's full line box with the
+              capitals centred in it, so centring the box lines PAX up with Sign up. */}
           <Link
             href="/"
             aria-label="Home"
-            className="block h-[26px] w-14 text-pax2-blue [&_[data-fill-char]:nth-child(2)]:fill-pax2-red [&_[data-stroke-char]:nth-child(2)]:stroke-pax2-red [&_svg]:ml-0"
+            className="flex w-14 items-center text-pax2-blue [&_[data-fill-char]:nth-child(2)]:fill-pax2-red [&_[data-stroke-char]:nth-child(2)]:stroke-pax2-red [&_svg]:ml-0"
           >
             {drawPax && (
               <StrokeText

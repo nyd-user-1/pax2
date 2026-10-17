@@ -720,8 +720,10 @@ export function SearchBar({
 }
 
 export function Feed({ videos }: { videos: FeedVideo[] }) {
-  const [q, setQ] = React.useState("")
-  const [sorts, setSorts] = React.useState<FeedSort>([])
+  // In local development the feed opens on the paid media: Voter Freedom, paid first.
+  const dev = process.env.NODE_ENV === "development"
+  const [q, setQ] = React.useState(dev ? "Voter Freedom" : "")
+  const [sorts, setSorts] = React.useState<FeedSort>(dev ? [{ key: "media", dir: "down" }] : [])
   const [channel, setChannel] = React.useState("")
   const [tag, setTag] = React.useState("")
   const channels = React.useMemo(() => [...new Set(videos.map((v) => v.channel))].sort((a, b) => a.localeCompare(b)), [videos])
