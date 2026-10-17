@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
-  addEdge, Background, Controls, Handle, MarkerType, Panel, Position, ReactFlow, ReactFlowProvider,
+  addEdge, Background, BackgroundVariant, Controls, Handle, MarkerType, Panel, Position, ReactFlow, ReactFlowProvider,
   useEdgesState, useNodesState, useReactFlow,
   type Connection, type ConnectionLineType, type ConnectionMode, type Edge, type Node, type NodeProps, type PanOnScrollMode, type SelectionMode,
 } from "@xyflow/react"
@@ -10,13 +10,13 @@ import dagre from "@dagrejs/dagre"
 import { toast } from "sonner"
 import {
   ArrowLeft, BookOpen, Boxes, Check, ChevronRight, Clapperboard, Crosshair, ExternalLink, FileText, GripVertical, Hash, History, Layers, Loader2,
-  MessageSquare, Minus, MoreHorizontal, Play, Plus, Save, Search, Settings2, Tv, Users, X,
+  MessageSquare, Minus, MoreHorizontal, PanelLeftClose, PanelLeftOpen, Play, Plus, Save, Search, Settings2, Tv, Users, X,
 } from "lucide-react"
 
 import { canvasUploadUrl, listCanvases, listCanvasFiles, loadCanvas, saveCanvas, type CanvasFile } from "@/app/graph-actions"
 import { ChatDock } from "@/components/graph/chat-dock"
 import { DEFAULT_FLOW_PROPS, FlowSettingsPanel, type FlowProps } from "@/components/graph/flow-settings"
-import { RECIPE_DEFAULTS, RECIPE_H, RECIPE_W, RecipeForm, RecipeNode } from "@/components/graph/recipe-nodes"
+import { RECIPE_DEFAULTS, RECIPE_H, RECIPE_LABEL, RECIPE_W, RecipeForm, RecipeNode } from "@/components/graph/recipe-nodes"
 import { whiteButton } from "@/components/white-button"
 import { describeEntity, readDragEntity, setDragEntity, type DragEntity } from "@/lib/drag-entity"
 import { isRecipeType, similarTo, type CanvasRow, type CanvasState, type GraphChannel, type GraphData, type GraphVideo, type RecipeType, type SavedEdge } from "@/lib/graph-data"
@@ -717,10 +717,11 @@ type RunTrace = { id: string; label: string; startedAt: number; finishedAt?: num
 const RUNS_KEY = "pax2-graph-runs"
 const PROPS_KEY = "pax2-graph-flow-props"
 const LAYOUT_KEY = "pax2-graph-layout"
+const RAIL_KEY = "pax2-graph-rail"
 
 type Mode = "networks" | "recipes"
 type Stash = { store: Map<string, GNode>; expand: Map<string, { loaded: number; total: number }>; edges: Edge[]; nodes: Node[]; canvas: { id?: string; name: string } | null }
-const RECIPE_TOOLS: [RecipeType, string][] = [["ingredient", "Ingredient"], ["step", "Step"], ["model", "Model"], ["output", "Output"]]
+const RECIPE_TOOLS: [RecipeType, string][] = [["ingredient", "Ingredient"], ["step", "Process"], ["model", "Model"], ["output", "Output"]]
 
 /** An undo step: the canvas's content, never pan, zoom or selection. */
 type Snap = { store: [string, GNode][]; expand: [string, { loaded: number; total: number }][]; edges: Edge[]; pos: [string, { x: number; y: number }][]; at: number }
@@ -780,6 +781,10 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   const canvasRef = useRef(canvas)
   canvasRef.current = canvas
   const stash = useRef<Partial<Record<Mode, Stash>>>({})
+  // The left rail folds away for more canvas; the button at the toolbar's left end brings it back.
+  const [railOpen, setRailOpen] = useState(true)
+  useEffect(() => { if (localStorage.getItem(RAIL_KEY) === "0") setRailOpen(false) }, [])
+  const toggleRail = () => setRailOpen((o) => { try { localStorage.setItem(RAIL_KEY, o ? "0" : "1") } catch { /* quota */ } return !o })
 
   const fit = useCallback(() => setTimeout(() => fitView({ padding: 0.15, duration: 400 }), 60), [fitView])
 
@@ -1512,7 +1517,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
 
   return (
     <div className="flex min-h-0 flex-1">
-      {mode === "recipes" ? <RecipeRail refresh={railRefresh} onTemplate={loadTemplate} onLoad={loadView} /> : <RecordRail
+      {!railOpen ? null : mode === "recipes" ? <RecipeRail refresh={railRefresh} onTemplate={loadTemplate} onLoad={loadView} /> : <RecordRail
         R={R}
         admin={admin}
         refresh={railRefresh}
@@ -1580,10 +1585,15 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
           zoomActivationKeyCode={flowProps.zoomActivationKeyCode || null}
           panActivationKeyCode={flowProps.panActivationKeyCode || null}
         >
-          <Background gap={18} color="#e2e8f0" />
+          <Background variant={BackgroundVariant.Dots} gap={24} size={1.2} color="#94a3b8" />
           <Controls showInteractive={false} />
           <Panel position="top-left" className="pointer-events-none !right-0 flex flex-wrap items-start justify-between gap-2">
             <div className="pointer-events-auto flex flex-wrap items-start gap-2">
+            <div className={cn(GROUP_BAR, "hidden lg:flex")}>
+              <button className={PILL_ICON} onClick={toggleRail} aria-label={railOpen ? "Hide the rail" : "Show the rail"} title={railOpen ? "Hide the rail" : "Show the rail"}>
+                {railOpen ? <PanelLeftClose className="h-4 w-4" /> : <PanelLeftOpen className="h-4 w-4" />}
+              </button>
+            </div>
             {admin && (
               <div className={GROUP_BAR}>
                 {(["networks", "recipes"] as const).map((m) => (
@@ -1686,7 +1696,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
       )}
       {!settingsOpen && sel && isRecipeType(sel.type) && (
         <div className={SIDE}>
-          <SideHeader badge={sel.type} onClose={() => setSelectedKey(null)} />
+          <SideHeader badge={RECIPE_LABEL[sel.type]} onClose={() => setSelectedKey(null)} />
           <RecipeForm
             key={keyOf(sel)}
             type={sel.type}

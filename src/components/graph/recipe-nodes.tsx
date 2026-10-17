@@ -52,7 +52,7 @@ export const RECIPE_FIELDS: Record<RecipeType, FieldSpec[]> = {
 
 export const RECIPE_DEFAULTS: Record<RecipeType, Record<string, string>> = {
   ingredient: { name: "New ingredient", status: "lack" },
-  step: { name: "New step", status: "planned" },
+  step: { name: "New process", status: "planned" },
   model: { name: "New model", kind: "other", status: "planned" },
   output: { name: "New output", status: "planned" },
 }
@@ -67,6 +67,9 @@ export const statusColor = (s?: string) => STATUS_COLOR[s ?? ""] ?? SLATE
 
 /** The one line under the name, and the smaller line under that. */
 const LINE: Record<RecipeType, [string, string]> = { ingredient: ["what", "where"], step: ["does", "tool"], model: ["definition", "where"], output: ["surface", "note"] }
+
+/** What each card type is called on screen. "step" stays the stored type; it reads as a process. */
+export const RECIPE_LABEL: Record<RecipeType, string> = { ingredient: "ingredient", step: "process", model: "model", output: "output" }
 
 export const RECIPE_W = 240
 export const RECIPE_H = 108
@@ -95,7 +98,7 @@ export function RecipeNode({ data: d, selected }: NodeProps<Node<RecipeCardData>
         <GripVertical className="h-3 w-3" />
       </span>
       <div className="flex items-center gap-1.5 pr-4">
-        <span className="text-[9px] uppercase tracking-wide text-slate-400">{d.type === "model" && r.kind ? `model · ${r.kind}` : d.type}</span>
+        <span className="text-[9px] uppercase tracking-wide text-slate-400">{d.type === "model" && r.kind ? `model · ${r.kind}` : RECIPE_LABEL[d.type]}</span>
         {r.status && <span className="ml-auto rounded-full px-1.5 py-px text-[9px] font-semibold text-white" style={{ background: color }}>{r.status}</span>}
       </div>
       <p className="mt-0.5 line-clamp-2 font-semibold leading-snug text-slate-900">{r.name || d.label}</p>
