@@ -5,30 +5,43 @@ import { ArrowUp, ChevronDown } from "lucide-react"
 
 import { whiteButton, FLOAT } from "@/components/white-button"
 
-/** The classic circled down-arrow at the hero's foot: one tap scrolls a full
- *  viewport to whatever comes next. It leaves as soon as the reader scrolls, and
- *  only comes back once they've returned to the very top and paused there. */
-export function ScrollCue({ className }: { className?: string }) {
-  const [shown, setShown] = React.useState(true)
+/** The classic circled down-arrow at a section's foot: one tap moves on to what comes next. It leaves
+ *  as soon as the reader scrolls. The hero's (no `next`) scrolls a full viewport and comes back once
+ *  the reader returns to the very top and pauses there; a later section's names the section it leads
+ *  to, and shows whenever the reader comes to rest with its own section at the top of the view. */
+export function ScrollCue({ className, next }: { className?: string; next?: string }) {
+  const ref = React.useRef<HTMLButtonElement>(null)
+  const [shown, setShown] = React.useState(!next)
   React.useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | undefined
+    // At rest on its own section: the section's top within a header's reach of the view's top.
+    const settled = () => {
+      if (!next) return window.scrollY === 0
+      const top = ref.current?.closest("section")?.getBoundingClientRect().top
+      return top != null && Math.abs(top) < 120
+    }
     const on = () => {
       clearTimeout(timer)
-      if (window.scrollY > 0) setShown(false)
-      else timer = setTimeout(() => setShown(true), 1500)
+      if (!next && window.scrollY === 0) {
+        timer = setTimeout(() => setShown(true), 1500)
+        return
+      }
+      setShown(false)
+      if (next) timer = setTimeout(() => setShown(settled()), 600)
     }
-    if (window.scrollY > 0) setShown(false)
+    setShown(settled())
     window.addEventListener("scroll", on, { passive: true })
     return () => {
       clearTimeout(timer)
       window.removeEventListener("scroll", on)
     }
-  }, [])
+  }, [next])
   return (
     <button
+      ref={ref}
       type="button"
       aria-label="Scroll down"
-      onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
+      onClick={() => (next ? document.getElementById(next)?.scrollIntoView({ behavior: "smooth" }) : window.scrollTo({ top: window.innerHeight, behavior: "smooth" }))}
       className={whiteButton(
         "circle",
         FLOAT,

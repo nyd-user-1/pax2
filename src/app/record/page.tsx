@@ -12,7 +12,7 @@ import { LandingOnly, LandingSurface } from "@/components/record/landing-only"
 import { HelpLine } from "@/components/record/chrome"
 import { PhoneMock } from "@/components/record/phone-mock"
 import { RecordOptions } from "@/components/record/record-options"
-import { ScrollTop } from "@/components/record/scroll-cue"
+import { ScrollCue, ScrollTop } from "@/components/record/scroll-cue"
 import { currentUser } from "@/lib/auth"
 import { tagsFor } from "@/lib/tags"
 import { whiteButton } from "@/components/white-button"
@@ -84,6 +84,7 @@ export default async function RecordLanding() {
             </div>
             <PhoneMock videoId={`yt-${top.id}`} timer={timerOf(top.duration)} />
           </div>
+          <ScrollCue next="record" />
         </section>
         {/* Section three: the ways into recording, as on /recording. Positioned, so it paints above the fixed grid. */}
         <section id="record" className="relative flex min-h-dvh scroll-mt-16 flex-col justify-center">
