@@ -39,7 +39,9 @@ const SKIN = {
 
 const ask = (v: VideoChip) => `What explains the score on ${v.label}?`
 
-export function Chat({ scripts = [], videos = [], compact = false }: { scripts?: ScriptChip[]; videos?: VideoChip[]; compact?: boolean }) {
+/** `context` supplies extra system context per message (the graph canvas's dock passes what is on
+ *  the canvas); `attachment` renders above the input box (the dock's attached-entity banner). */
+export function Chat({ scripts = [], videos = [], compact = false, context, attachment }: { scripts?: ScriptChip[]; videos?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode }) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -140,7 +142,7 @@ export function Chat({ scripts = [], videos = [], compact = false }: { scripts?:
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: allMessages.map(m => ({ role: m.role, content: m.content })), ...(selectedAddress ? { address: selectedAddress.description, place: placeInsight } : {}) }),
+        body: JSON.stringify({ messages: allMessages.map(m => ({ role: m.role, content: m.content })), ...(selectedAddress ? { address: selectedAddress.description, place: placeInsight } : {}), ...(context ? { systemContext: context() } : {}) }),
         signal: controller.signal,
       })
       if (!res.ok || !res.body) {
@@ -185,6 +187,7 @@ export function Chat({ scripts = [], videos = [], compact = false }: { scripts?:
     try {
       const body: Record<string, unknown> = { messages: [{ role: 'user', content: text }], address: addr.description }
       if (insight) body.place = insight
+      if (context) body.systemContext = context()
       const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
       if (!res.ok || !res.body) { setLoading(false); return }
       const assistantId = crypto.randomUUID()
@@ -413,7 +416,8 @@ export function Chat({ scripts = [], videos = [], compact = false }: { scripts?:
           ))}
         </div>
       )}
-      <div className={`flex flex-col rounded-2xl border ${addressMode ? 'border-pax2-light-blue' : recordingState !== 'idle' ? 'border-blue-500' : 'border-[var(--border)]'} bg-[var(--inp-bg)] px-4 pt-3 pb-3 transition-all gap-1 shadow-[0_1px_3px_rgba(0,0,0,0.04)] ${isFocused ? 'shadow-[0_8px_24px_rgba(0,0,0,0.08)]' : ''}`}>
+      {attachment}
+      <div className={`relative flex flex-col rounded-2xl border ${addressMode ? 'border-pax2-light-blue' : recordingState !== 'idle' ? 'border-blue-500' : 'border-[var(--border)]'} bg-[var(--inp-bg)] px-4 pt-3 pb-3 transition-all gap-1 shadow-[0_1px_3px_rgba(0,0,0,0.04)] ${isFocused ? 'shadow-[0_8px_24px_rgba(0,0,0,0.08)]' : ''}`}>
 
         {selectedAddress && (
           <div className="flex items-center gap-2 pb-2.5 mb-1 border-b border-[var(--border)]">

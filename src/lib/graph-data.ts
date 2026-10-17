@@ -45,3 +45,32 @@ export function similarTo(video: GraphVideo, pool: GraphVideo[], k = 6): { id: s
   }
   return out.sort((x, y) => y.score - x.score).slice(0, k)
 }
+
+/* ── saved canvases ──────────────────────────────────────────────────────────
+ * A view or recipe as the ledger keeps it. A state holding any recipe node is a recipe. */
+
+export const RECIPE_TYPES = ["ingredient", "step", "model", "output"] as const
+export type RecipeType = (typeof RECIPE_TYPES)[number]
+export const isRecipeType = (t: string): t is RecipeType => (RECIPE_TYPES as readonly string[]).includes(t)
+
+export type SavedNode = {
+  type: string
+  id: string
+  label: string
+  sub?: string
+  tier?: GraphVideo["tier"]
+  prompt?: string
+  output?: string
+  fileKey?: string
+  fileText?: string
+  openGroups?: string[]
+  /** Recipe nodes: their fields. */
+  r?: Record<string, string>
+  x: number
+  y: number
+}
+export type SavedEdge = { s: string; t: string; k?: "similar" | "wired" | "drawn"; score?: number; by?: string; at?: string }
+export type CanvasState = { nodes: SavedNode[]; edges: SavedEdge[] }
+export type CanvasKind = "view" | "recipe"
+export type CanvasRow = { id: string; name: string; by: string; kind: CanvasKind; at: string; nodes: number }
+export const canvasKind = (s: CanvasState): CanvasKind => (s.nodes.some((n) => isRecipeType(n.type)) ? "recipe" : "view")

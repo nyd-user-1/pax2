@@ -93,7 +93,13 @@ export function MarkdownContent({ content, isStreaming }: Props) {
     ),
     a: ({ href, children }) => {
       if (href?.startsWith('/')) {
-        return <Link href={href} className="text-pax2-light-blue hover:underline">{children}</Link>
+        // A cited video is a chip: on /graph the canvas answers the open-entity event by centering
+        // the video and cancels the navigation; anywhere else the link opens the video page.
+        const yt = href.match(/^\/v\/yt-([\w-]+)$/)?.[1]
+        const onClick = yt ? (e: React.MouseEvent) => {
+          if (!window.dispatchEvent(new CustomEvent('open-entity', { detail: { type: 'video', id: yt }, cancelable: true }))) e.preventDefault()
+        } : undefined
+        return <Link href={href} onClick={onClick} className="text-pax2-light-blue hover:underline">{children}</Link>
       }
       return <a href={href} target="_blank" rel="noopener noreferrer" className="text-pax2-light-blue hover:underline">{children}</a>
     },

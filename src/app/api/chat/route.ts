@@ -62,11 +62,13 @@ function addressContext(address?: string, place?: Place | null): string {
 }
 
 export async function POST(req: Request) {
-  const { messages, address, place } = (await req.json()) as { messages: { role: "user" | "assistant"; content: string }[]; address?: string; place?: Place | null }
+  const { messages, address, place, systemContext } = (await req.json()) as { messages: { role: "user" | "assistant"; content: string }[]; address?: string; place?: Place | null; systemContext?: string }
+  // Extra context from the caller (the graph canvas: what is on it, an attached entity, a prompt step's wiring), after the record.
+  const extra = typeof systemContext === "string" && systemContext.trim() ? `\n\n${systemContext.slice(0, 40_000)}` : ""
   const r = await client.send(
     new ConverseStreamCommand({
       modelId: MODEL,
-      system: [{ text: BASE_SYSTEM_PROMPT + (await record()) + addressContext(address, place) }],
+      system: [{ text: BASE_SYSTEM_PROMPT + (await record()) + extra + addressContext(address, place) }],
       messages: messages.filter((m) => m.content.trim()).map((m): Message => ({ role: m.role, content: [{ text: m.content }] })),
       inferenceConfig: { maxTokens: 2000, temperature: 0.3 },
     }),
