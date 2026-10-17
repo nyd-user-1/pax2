@@ -32,7 +32,8 @@ export function ScrollCue({ className }: { className?: string }) {
       className={whiteButton(
         "circle",
         FLOAT,
-        "absolute bottom-7 left-1/2 -translate-x-1/2 transition-[opacity,color,background-color,border-color] duration-500",
+        // Block-level: inline, it would sit on a text line of the hero's huge font size and drop.
+        "absolute bottom-7 left-1/2 flex -translate-x-1/2 transition-[opacity,color,background-color,border-color] duration-500",
         shown ? "opacity-100" : "pointer-events-none opacity-0 duration-150",
         className,
       )}
