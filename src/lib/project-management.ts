@@ -41,12 +41,10 @@ export const REQUIREMENTS: Item[] = [
       { what: "The editor's sixth check reads the delivery patterns of the coded reform shorts, which need the draft coded on Swayable's features; today it reads only what a script's words and length carry.", share: 70, effort: "half a day, a Bedrock call per check" },
       { what: "A ruling on the writer's 80-to-110-word rule, about 37 to 51 seconds, against the 20-seconds-or-shorter lift on reform channels.", share: 30, effort: "a decision" },
     ] },
-  { id: "3", name: "3. A pre-release prediction", start: "2026-10-17", end: "2026-11-07", progress: 60, next: "PAX2 Classifier v2 with transcripts once the caption run merges, 1 hour and a 17-cent box.",
+  { id: "3", name: "3. A pre-release prediction", start: "2026-10-17", end: "2026-11-07", progress: 72, next: "The chain in scripts/classifier/when-captions-land.sh fires when the caption run reaches the 3,465 priority shorts, about 17:00 UTC on 2026-10-18, and launches PAX2 Classifier v2's box; Gate C decides whether originals read it.",
     steps: [
-      { what: "Merge the caption run and rerun scripts/training-set.mjs so transcripts join the Model Training Library.", share: 30, effort: "30 minutes, after about 19:00 UTC on 2026-10-18" },
-      { what: "PAX2 Classifier v2 with transcript features on one c7i.xlarge box, leave-one-channel-out.", share: 40, effort: "an hour and about 17 cents; needs approval" },
-      { what: "The Scored tab reads v2 and states its strength.", share: 15, effort: "30 minutes" },
-      { what: "Expected views beside the probability: the breakout chance times the channel's median.", share: 15, effort: "an hour" },
+      { what: "The chain merges the captions and reruns scripts/training-set.mjs so transcripts join the Model Training Library; running detached on the Mac since 05:50 UTC on 2026-10-18.", share: 43, effort: "automatic, about 17:00 UTC on 2026-10-18" },
+      { what: "PAX2 Classifier v2 with transcript features on one c7i.xlarge box, leave-one-channel-out, Gate C at pooled AUC 0.624 and within-channel 0.55, rescored on the Mac.", share: 57, effort: "automatic after the merge; about 15 minutes and 5 cents, ceiling $1" },
     ] },
   { id: "4", name: "4. Every available factor", start: "2026-10-06", end: "2026-11-30", progress: 60, next: "The worker's replacement on the S3 upload event; audio and frames through the proxy.",
     steps: [
@@ -109,9 +107,8 @@ const MODEL_PLAN: Record<string, Plan> = {
     { what: "A retrain script that reads the S3 readings directly.", share: 17, effort: "an hour" },
   ] },
   "m-classifier": { start: "2026-10-17", end: "2026-11-07", importance: 5, utility: 3, ease: 4, steps: [
-    { what: "v2 with transcript features from the caption run.", share: 50, effort: "an hour and a 17-cent box; after the merge" },
-    { what: "Audio and frame features once files exist.", share: 30, effort: "after the proxy" },
-    { what: "Expected views as an output beside the probability.", share: 20, effort: "an hour" },
+    { what: "v2 with transcript features from the caption run; its chain is running and launches the box itself when the priority families land.", share: 62, effort: "automatic, about 17:00 UTC on 2026-10-18; about 5 cents" },
+    { what: "Audio and frame features once files exist.", share: 38, effort: "after the proxy" },
   ] },
   "m-headline": { start: "2026-10-17", end: "2026-11-07", importance: 3, utility: 3, ease: 4, steps: [
     { what: "v1, a BERT-class fine-tune on the 41,175 Upworthy pairs on one g6.xlarge.", share: 60, effort: "one GPU hour, about $1; needs approval" },

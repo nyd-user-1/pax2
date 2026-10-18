@@ -24,7 +24,9 @@ Gap: the sixth check reads only what a draft's words and length carry, not the c
 
 ### 3. A pre-release prediction — Partial
 
-Built today (2026-10-17): the VAR forecast, Value Above Replacement: the chance of a Hit, at least 3x the channel median. `src/lib/forecast.ts` gives P(views at least 3x the channel's median) from the metadata a video will have at publish, trained on 18,455 settled shorts from 64 channels (`scripts/train-var.py`, `data/generated/model/var-model.json`). Not yet on any screen.
+Status 2026-10-18 06:00 UTC: PAX2 Classifier's chance of a Hit and the views to expect show on the Scored tab and in the findings email, with the strength of the model that answered. PAX2 Classifier v2, with transcript features, is not trained yet: `scripts/classifier/when-captions-land.sh` runs detached on the Mac and, when the caption run reaches the 3,465 reform, voting-rights and nonpartisan shorts (about 17:00 UTC on 2026-10-18), merges the captions, rebuilds the Model Training Library, launches one c7i.xlarge (about 5 cents, ceiling $1) and rescores its output on the Mac; its progress is in `data/raw/captions/chain.log`. Originals read v2, with the script as the transcript, only if Gate C passes: pooled leave-one-channel-out AUC at least 0.624 and within-channel AUC not below 0.55. Until then they read the metadata model.
+
+Built 2026-10-17: the VAR forecast, Value Above Replacement: the chance of a Hit, at least 3x the channel median. `src/lib/forecast.ts` gives P(views at least 3x the channel's median) from the metadata a video will have at publish, trained on 18,455 settled shorts from 64 channels (`scripts/rig/train_var.py`, `data/generated/model/var-model.json`).
 
 Built before: `src/lib/evaluate.ts` codes the script on Swayable's traits and sums their leans (persuasion), and reads the title against Upworthy's headline tests (virality). It runs when an original is scored.
 
@@ -37,7 +39,7 @@ Measured strength of the metadata forecast, leave-one-channel-out:
 | Top decile breakout rate | 21% against a 14.8% base, 1.4x |
 | Reform family AUC | 0.47 on 1,196 shorts |
 
-Reading: metadata is a weak prior and, within one channel, nearly none. The signal has to come from the video (requirement 4b) and from the first hours of the curve. Resonance as built is a paid-attention score that needs impressions from Ads Manager; it cannot be forecast for an organic short and is not the pre-release target. The targets, in order: P(breakout), then expected views as the breakout probability times the channel's median, then the paid Resonance components once a video has a flight.
+Reading: metadata is a weak prior and, within one channel, nearly none. The signal has to come from the video (requirement 4b) and from the first hours of the curve. Resonance as built is a paid-attention score that needs impressions from Ads Manager; it cannot be forecast for an organic short and is not the pre-release target. The targets, in order: P(breakout), then expected views (built 2026-10-18 as the channel's median times p of a Hit's median ratio, 5.8, plus 1 - p of the rest's, 0.86; the breakout probability times the median alone would put a typical video far below its channel's median), then the paid Resonance components once a video has a flight.
 
 ### 4. Every available factor — Partial
 
