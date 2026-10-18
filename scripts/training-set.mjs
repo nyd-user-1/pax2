@@ -21,6 +21,10 @@ const catalog = read("data/velocity/catalog.json")
 const features = read("data/generated/features.json")
 const delivery = read("data/generated/delivery.json").videos
 const codes = read("data/generated/model/organic-codes.json").scripts ?? {}
+// Velocity features (scripts/velocity-features.mjs) when that file exists: views at 1, 6, 24 and 72 hours
+// for every short the poller has read; null for the rest of the catalog, which predates the poller.
+const velocityPath = path.join(root, "data/generated/model/velocity-features.json")
+const velocity = fs.existsSync(velocityPath) ? read("data/generated/model/velocity-features.json") : null
 
 const rows = []
 let skippedGroup = 0
@@ -36,6 +40,7 @@ for (const v of catalog.videos) {
   const f = features[`yt-${v.id}`]
   const d = delivery[`yt-${v.id}`]
   const c = codes[`yt-${v.id}`]
+  const vel = velocity?.byId?.[v.id]
   const row = {
     id: v.id,
     channelId: v.channelId,
@@ -58,6 +63,8 @@ for (const v of catalog.videos) {
     breakout: v.tier === "breakout" ? 1 : 0,
     // Pre-publish features.
     x,
+    // Velocity, for shorts the poller read in their first 72 hours; null elsewhere.
+    velocity: vel ? { views1h: vel.views1h, views6h: vel.views6h, views24h: vel.views24h, views72h: vel.views72h, firstHour: vel.firstHour, lastHour: vel.lastHour, readings: vel.readings } : null,
     // Content features, for the 40 analyzed shorts; null elsewhere.
     content: f
       ? {
@@ -131,6 +138,8 @@ const manifest = {
   byTier: by("tier"),
   byFamily: by("family"),
   withContent: rows.filter((r) => r.content).length,
+  withVelocity: rows.filter((r) => r.velocity).length,
+  velocitySource: velocity ? { builtAt: velocity.builtAt, days: velocity.days, videos: velocity.videos } : null,
   paidAds,
   published: { first: rows[0]?.published, last: rows.at(-1)?.published },
   label: "breakout = 1 when lifetime views are at least 3x the channel's median of settled shorts (7+ days old); killed at 0.5x or less; baseline between.",
@@ -141,6 +150,7 @@ const manifest = {
     "title, description, tags, durationSec, channelMedian": "the raw pre-publish inputs; description is the first 600 characters",
     "views, likes, comments, ratio, tier, breakout": "the outcome as of the catalog fetch",
     x: "pre-publish features from src/lib/video-features.ts",
+    velocity: "for shorts the poller read in their first 72 hours (scripts/velocity-features.mjs): views at 1, 6, 24 and 72 hours off the running maximum of the readings, the first and last hour read, and the count; null otherwise",
     paid: "for rows a Google political video ad resolved to (scripts/google-video-ads.mjs): impression and spend bands, days, advertiser; rows with group paid-ad have no breakout label",
     content: "measured content features for analyzed shorts (Transcribe, ffmpeg, Pegasus, delivery coding, Swayable codes); null otherwise",
   },

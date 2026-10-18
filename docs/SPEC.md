@@ -41,7 +41,7 @@ Reading: metadata is a weak prior and, within one channel, nearly none. The sign
 
 ### 4. Every available factor — Partial
 
-a. Tracking and polling. Built: the velocity poller (`lambda/velocity`), 15-minute readings for 72 hours per short, 65 channels, daily baselines, the 18-month catalog with breakout labels, each video's tags, category, topics, captions and length (`meta.json`). Ten days of readings sit in S3 (2026-10-06 to 10-15). The EventBridge rule is DISABLED as of 2026-10-15 13:25 UTC. Within-channel lifts for 23 pre-publish traits are computed (`scripts/metadata-lift.mjs`).
+a. Tracking and polling. Built: the velocity poller (`lambda/velocity`), 15-minute readings for 72 hours per short, 65 channels, daily baselines, the 18-month catalog with breakout labels, each video's tags, category, topics, captions and length (`meta.json`). Ten days of readings sit in S3 (2026-10-06 to 10-15). The EventBridge rule is DISABLED as of 2026-10-15 13:25 UTC. Within-channel lifts for 23 pre-publish traits are computed (`scripts/metadata-lift.mjs`). Since 2026-10-18 the readings are joined to the Model Training Library as views at 1, 6, 24 and 72 hours (`scripts/velocity-features.mjs`; 815 shorts, 236 settled rows), and PAX2 Velocity Classifier's chance of a Hit shows on `/live-tracking` for every watched short.
 
 b. Content analysis. Built: the worker (`worker/analyze_organic.py`): Transcribe word timings, Pegasus timestamped notes, measured loudness, pitch, pauses; delivery coding (energy, tone, mode, frame); Swayable coding of transcripts. 40 campaign shorts and 11 synthetic takes have it. Missing: the worker box `i-029959fd31bba9a75` no longer exists; nothing analyzes a new upload; the content model needs hundreds of analyzed shorts, not 40.
 
@@ -79,7 +79,7 @@ Missing: a comparison of versions side by side (evaluation deltas now, polled cu
 
 Built: `scripts/training-set.mjs` assembles one row per settled short: raw inputs, pre-publish features, outcome, and the content features where a short has them. 18,455 rows, 2,739 breakouts, 35 with content. The manifest documents every field. The first model trains in 1.4 seconds on a laptop.
 
-Missing: velocity curves joined as early-hour features (the data is in S3); content features for hundreds of shorts; the dataset and model published to Hugging Face under NYSgpt with a card and a frozen benchmark, the way `/Code/nsr` published NSR-CPT (`docs/NSR-CPT-REPORT.md` there is the template: pre-registered gates, held-out benchmark, private repos until redistribution terms are clear). Script writing stays Claude on Bedrock with this dataset as its evidence; a fine-tune is a later question once there are enough scored originals to learn from.
+Missing: content features for hundreds of shorts; the dataset and model published to Hugging Face under NYSgpt with a card and a frozen benchmark, the way `/Code/nsr` published NSR-CPT (`docs/NSR-CPT-REPORT.md` there is the template: pre-registered gates, held-out benchmark, private repos until redistribution terms are clear). Script writing stays Claude on Bedrock with this dataset as its evidence; a fine-tune is a later question once there are enough scored originals to learn from.
 
 ### 11. Platform usage — Missing
 

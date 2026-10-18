@@ -48,12 +48,11 @@ export const REQUIREMENTS: Item[] = [
       { what: "The Scored tab reads v2 and states its strength.", share: 15, effort: "30 minutes" },
       { what: "Expected views beside the probability: the breakout chance times the channel's median.", share: 15, effort: "an hour" },
     ] },
-  { id: "4", name: "4. Every available factor", start: "2026-10-06", end: "2026-11-30", progress: 50, next: "The worker's replacement on the S3 upload event; velocity curves joined; audio and frames through the proxy.",
+  { id: "4", name: "4. Every available factor", start: "2026-10-06", end: "2026-11-30", progress: 60, next: "The worker's replacement on the S3 upload event; audio and frames through the proxy.",
     steps: [
-      { what: "The worker's replacement: a Lambda on the S3 upload event running ffmpeg, Transcribe and the Pegasus call, writing features for every original.", share: 35, effort: "a day; needs approval to deploy", blocker: true },
-      { what: "Join the velocity readings in S3 to the training set as views at 1, 6, 24 and 72 hours.", share: 20, effort: "2 hours" },
-      { what: "The residential proxy on an EC2 box, then yt-dlp for the catalog's audio and 360p video.", share: 30, effort: "Brendan opens the account; then a day" },
-      { what: "The library's archives feed one combined prediction instead of separate displays.", share: 15, effort: "after PAX2 Classifier v2" },
+      { what: "The worker's replacement: a Lambda on the S3 upload event running ffmpeg, Transcribe and the Pegasus call, writing features for every original.", share: 44, effort: "a day; needs approval to deploy", blocker: true },
+      { what: "The residential proxy on an EC2 box, then yt-dlp for the catalog's audio and 360p video.", share: 37, effort: "Brendan opens the account; then a day" },
+      { what: "The library's archives feed one combined prediction instead of separate displays.", share: 19, effort: "after PAX2 Classifier v2" },
     ] },
   { id: "5", name: "5. Automatic on save", start: "2026-10-10", end: "2026-11-14", progress: 50, next: "The S3 upload event starts the analysis; the same Lambda as 4.", waits: ["4"],
     steps: [
@@ -83,12 +82,11 @@ export const REQUIREMENTS: Item[] = [
       { what: "The first publish writes velocity/watch.json.", share: 70, effort: "comes with 7" },
       { what: "The poller reads it on its next run.", share: 30, effort: "nothing to build" },
     ] },
-  { id: "10", name: "10. The Model Training Library and the model", start: "2026-10-17", end: "2026-11-30", progress: 55, next: "Transcripts and velocity joined to the training set; Hugging Face once a new token is in SSM.",
+  { id: "10", name: "10. The Model Training Library and the model", start: "2026-10-17", end: "2026-11-30", progress: 60, next: "Transcripts joined after the caption merge; Hugging Face once a new token is in SSM.",
     steps: [
-      { what: "Transcripts joined for the 3,465 priority shorts, then the rest of the 18,455.", share: 25, effort: "after the caption merge; about four days for all" },
-      { what: "Velocity features joined.", share: 25, effort: "2 hours" },
-      { what: "The dataset and benchmark published to Hugging Face under NYSgpt, private, with their cards.", share: 30, effort: "a new token in SSM from Brendan, then publish.sh twice" },
-      { what: "Content features for hundreds of shorts.", share: 20, effort: "after the proxy" },
+      { what: "Transcripts joined for the 3,465 priority shorts, then the rest of the 18,455.", share: 33, effort: "after the caption merge; about four days for all" },
+      { what: "The dataset and benchmark published to Hugging Face under NYSgpt, private, with their cards.", share: 40, effort: "a new token in SSM from Brendan, then publish.sh twice" },
+      { what: "Content features for hundreds of shorts.", share: 27, effort: "after the proxy" },
     ] },
   { id: "11", name: "11. Platform usage", start: "2026-10-17", end: "2026-10-31", progress: 70, next: "Confirm one event lands end to end, 15 minutes; then readers.",
     steps: [
@@ -116,9 +114,8 @@ type Plan = { start: string; end: string; importance: number; utility: number; e
 const MODEL_PLAN: Record<string, Plan> = {
   "m-writer": { start: "2026-10-03", end: "2026-10-17", importance: 5, utility: 5, ease: 5, steps: [] },
   "m-velocity": { start: "2026-10-17", end: "2026-11-30", importance: 4, utility: 5, ease: 5, steps: [
-    { what: "On /live-tracking: each watched short's chance at its current hour.", share: 40, effort: "2 hours" },
-    { what: "v1 at about 1,000 settled curves; 316 today, the poller adds about 180 shorts a week.", share: 50, effort: "weeks of polling, then an hour" },
-    { what: "A retrain script that reads the S3 readings directly.", share: 10, effort: "an hour" },
+    { what: "v1 at about 1,000 settled curves; 442 today, the poller adds about 180 shorts a week.", share: 83, effort: "weeks of polling, then an hour" },
+    { what: "A retrain script that reads the S3 readings directly.", share: 17, effort: "an hour" },
   ] },
   "m-classifier": { start: "2026-10-17", end: "2026-11-07", importance: 5, utility: 3, ease: 4, steps: [
     { what: "v2 with transcript features from the caption run.", share: 50, effort: "an hour and a 17-cent box; after the merge" },

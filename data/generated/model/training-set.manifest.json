@@ -1,5 +1,5 @@
 {
- "builtAt": "2026-10-18T00:06:33.222Z",
+ "builtAt": "2026-10-18T05:47:37.567Z",
  "source": {
   "catalog": "2026-10-15T15:22:02.105Z",
   "catalogSource": "YouTube Data API v3, shorts playlists, 18-month lookback"
@@ -26,7 +26,17 @@
   "Reform": 1196,
   "UK": 98
  },
- "withContent": 35,
+ "withContent": 50,
+ "withVelocity": 236,
+ "velocitySource": {
+  "builtAt": "2026-10-18T05:47:36.944Z",
+  "days": {
+   "count": 11,
+   "first": "2026-10-06",
+   "last": "2026-10-18"
+  },
+  "videos": 815
+ },
  "paidAds": {
   "file": true,
   "status": "client-rendered: under half of the first 100 creative pages carry a YouTube id in their HTML; stopped",
@@ -238,6 +248,7 @@
   "title, description, tags, durationSec, channelMedian": "the raw pre-publish inputs; description is the first 600 characters",
   "views, likes, comments, ratio, tier, breakout": "the outcome as of the catalog fetch",
   "x": "pre-publish features from src/lib/video-features.ts",
+  "velocity": "for shorts the poller read in their first 72 hours (scripts/velocity-features.mjs): views at 1, 6, 24 and 72 hours off the running maximum of the readings, the first and last hour read, and the count; null otherwise",
   "paid": "for rows a Google political video ad resolved to (scripts/google-video-ads.mjs): impression and spend bands, days, advertiser; rows with group paid-ad have no breakout label",
   "content": "measured content features for analyzed shorts (Transcribe, ffmpeg, Pegasus, delivery coding, Swayable codes); null otherwise"
  }
