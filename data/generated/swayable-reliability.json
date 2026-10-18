@@ -1,0 +1,167 @@
+{
+  "source": "Hewitt et al. (APSR 2024), Dataverse appendix Table DA35: ICC(C,k), three ratings per video in 2018, two in 2020",
+  "traits": {
+    "technique_plain_folks": [
+      {
+        "year": 2018,
+        "icc": 0.58,
+        "lower": 0.47,
+        "upper": 0.67
+      },
+      {
+        "year": 2020,
+        "icc": 0.23,
+        "lower": 0.08,
+        "upper": 0.35
+      }
+    ],
+    "technique_pos_testimonial": [
+      {
+        "year": 2018,
+        "icc": 0.83,
+        "lower": 0.78,
+        "upper": 0.86
+      },
+      {
+        "year": 2020,
+        "icc": 0.74,
+        "lower": 0.69,
+        "upper": 0.78
+      }
+    ],
+    "technique_neg_testimonial": [
+      {
+        "year": 2018,
+        "icc": 0.69,
+        "lower": 0.61,
+        "upper": 0.76
+      },
+      {
+        "year": 2020,
+        "icc": 0.8,
+        "lower": 0.76,
+        "upper": 0.83
+      }
+    ],
+    "messenger_every_people": [
+      {
+        "year": 2020,
+        "icc": 0.75,
+        "lower": 0.7,
+        "upper": 0.79
+      }
+    ],
+    "messenger_politician": [
+      {
+        "year": 2018,
+        "icc": 0.93,
+        "lower": 0.91,
+        "upper": 0.95
+      },
+      {
+        "year": 2020,
+        "icc": 0.85,
+        "lower": 0.82,
+        "upper": 0.87
+      }
+    ],
+    "policy_facts": [
+      {
+        "year": 2018,
+        "icc": 0.68,
+        "lower": 0.59,
+        "upper": 0.75
+      },
+      {
+        "year": 2020,
+        "icc": 0.66,
+        "lower": 0.6,
+        "upper": 0.72
+      }
+    ],
+    "emotion_anger": [
+      {
+        "year": 2018,
+        "icc": 0.26,
+        "lower": 0.06,
+        "upper": 0.42
+      },
+      {
+        "year": 2020,
+        "icc": 0.46,
+        "lower": 0.36,
+        "upper": 0.55
+      }
+    ],
+    "emotion_enthusiasm": [
+      {
+        "year": 2018,
+        "icc": 0.76,
+        "lower": 0.7,
+        "upper": 0.81
+      },
+      {
+        "year": 2020,
+        "icc": 0.8,
+        "lower": 0.77,
+        "upper": 0.84
+      }
+    ],
+    "tone_positive": [
+      {
+        "year": 2018,
+        "icc": 0.9,
+        "lower": 0.87,
+        "upper": 0.92
+      },
+      {
+        "year": 2020,
+        "icc": 0.93,
+        "lower": 0.92,
+        "upper": 0.94
+      }
+    ],
+    "tone_contrast": [
+      {
+        "year": 2018,
+        "icc": 0.83,
+        "lower": 0.79,
+        "upper": 0.87
+      },
+      {
+        "year": 2020,
+        "icc": 0.75,
+        "lower": 0.7,
+        "upper": 0.79
+      }
+    ],
+    "explicit_vote_for": [
+      {
+        "year": 2018,
+        "icc": 0.73,
+        "lower": 0.66,
+        "upper": 0.79
+      },
+      {
+        "year": 2020,
+        "icc": 0.62,
+        "lower": 0.55,
+        "upper": 0.68
+      }
+    ],
+    "production_value_high": [
+      {
+        "year": 2018,
+        "icc": 0.78,
+        "lower": 0.72,
+        "upper": 0.83
+      },
+      {
+        "year": 2020,
+        "icc": 0.56,
+        "lower": 0.47,
+        "upper": 0.63
+      }
+    ]
+  }
+}
