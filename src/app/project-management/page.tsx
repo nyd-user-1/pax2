@@ -1,7 +1,7 @@
 import { Check } from "lucide-react"
 
-import { ProgressBlock } from "@/components/blocks"
-import { ModelsViews } from "@/components/models-views"
+import { ProgressBlock, TableBlock } from "@/components/blocks"
+import { TabRail } from "@/components/tab-rail"
 import { MODEL_TERMS } from "@/lib/model-terms"
 import { MODELS, REQUIREMENTS, blockedBy, type Item } from "@/lib/project-management"
 import { cn } from "@/ui/lib/utils"
@@ -98,8 +98,8 @@ function Rows({ list, rated, today }: { list: Item[]; rated: boolean; today: str
   )
 }
 
-/** The Architecture view: for each model PAX2 trains or plans to train, what it predicts, the loss it minimizes and the algorithm that runs. */
-function Terms() {
+/** Specs: for each model PAX2 trains or plans to train, what it predicts, the loss it minimizes and the algorithm that runs. */
+function Specs() {
   return (
     <div className="overflow-x-auto">
       <table className="w-full min-w-[900px] text-xs">
@@ -128,15 +128,37 @@ function Terms() {
 
 const summary = (list: Item[]) => `${list.filter((b) => b.progress >= 100).length} of ${list.length} complete · ${Math.round(list.reduce((s, b) => s + b.progress, 0) / list.length)}% on average`
 
-export default function ProjectManagementPage() {
+const VIEWS = ["requirements", "models", "specs"] as const
+type View = (typeof VIEWS)[number]
+
+export default async function ProjectManagementPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
+  const { view } = await searchParams
+  const active: View = VIEWS.includes(view as View) ? (view as View) : "requirements"
   const today = new Date().toISOString().slice(0, 10)
   const rows = (list: Item[]) => list.map((b) => ({ item: b.name, progress: b.progress, start: b.start, end: b.end, next: b.next, importance: b.importance, utility: b.utility, ease: b.ease }))
+  const tabs = [
+    { key: "requirements", label: "Requirements", href: "/project-management", count: REQUIREMENTS.length },
+    { key: "models", label: "Models", href: "/project-management?view=models", count: MODELS.length },
+    { key: "specs", label: "Specs", href: "/project-management?view=specs", count: MODEL_TERMS.length },
+  ]
   return (
-    <div className="flex flex-col gap-4">
-      <ProgressBlock title="Requirements" search="Search requirements…" rows={rows(REQUIREMENTS)} name="requirements" height="auto" footer={summary(REQUIREMENTS)}>
-        <Rows list={REQUIREMENTS} rated={false} today={today} />
-      </ProgressBlock>
-      <ModelsViews progress={<Rows list={MODELS} rated today={today} />} terms={<Terms />} progressRows={rows(MODELS)} termsRows={MODEL_TERMS.map(({ name, target, loss, algorithm }) => ({ name, target, loss, algorithm }))} />
+    <div className="flex flex-col gap-6">
+      <TabRail tabs={tabs} active={active} />
+      {active === "requirements" && (
+        <ProgressBlock title="Requirements" search="Search requirements…" rows={rows(REQUIREMENTS)} name="requirements" height="auto" footer={summary(REQUIREMENTS)}>
+          <Rows list={REQUIREMENTS} rated={false} today={today} />
+        </ProgressBlock>
+      )}
+      {active === "models" && (
+        <ProgressBlock title="Models" search="Search models…" rows={rows(MODELS)} name="models" height="auto" footer={summary(MODELS)}>
+          <Rows list={MODELS} rated today={today} />
+        </ProgressBlock>
+      )}
+      {active === "specs" && (
+        <TableBlock title="Specs" search="Search specs…" rows={MODEL_TERMS.map(({ name, target, loss, algorithm }) => ({ name, target, loss, algorithm }))} name="model-specs" height="auto">
+          <Specs />
+        </TableBlock>
+      )}
     </div>
   )
 }
