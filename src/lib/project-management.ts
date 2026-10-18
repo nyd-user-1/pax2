@@ -75,10 +75,8 @@ export const REQUIREMENTS: Item[] = [
       { what: "Transcripts joined for the 3,465 priority shorts, then the rest of the 18,455.", share: 55, effort: "after the caption merge; about four days for all" },
       { what: "Content features for hundreds of shorts.", share: 45, effort: "after the proxy" },
     ] },
-  { id: "11", name: "11. Platform usage", start: "2026-10-17", end: "2026-10-31", progress: 85, next: "Nothing to build; rows accumulate as people use the feed and the courses.",
-    steps: [
-      { what: "The Readers block on /dashboard shows real rows as they arrive; the first landed 2026-10-18 04:46 UTC.", share: 100, effort: "nothing to build" },
-    ] },
+  { id: "11", name: "11. Platform usage", start: "2026-10-17", end: "2026-10-31", progress: 100, next: "", note: "Every reader act writes one row to the DynamoDB table; the first landed 2026-10-18 04:46 UTC and the Readers block on /dashboard reads them.",
+    steps: [] },
   { id: "12", name: "12. Platform data trains the model", start: "2026-11-01", end: "2026-12-15", progress: 0, next: "Usage events accumulate first.", waits: ["11"],
     steps: [
       { what: "A usage feature per video, opens, plays and finishes, joined to the training set.", share: 50, effort: "2 hours once events exist", blocker: true },
@@ -122,9 +120,8 @@ const MODEL_PLAN: Record<string, Plan> = {
     { what: "Gate E again; publish the weights if it passes.", share: 20, effort: "an hour" },
   ] },
   "m-vision": { start: "2026-10-17", end: "2026-12-15", importance: 2, utility: 2, ease: 3, steps: [
-    { what: "Frames from downloaded video, not only the thumbnail.", share: 50, effort: "after the proxy" },
-    { what: "Frame embeddings as features of PAX2 Classifier.", share: 30, effort: "an hour and a c7i box" },
-    { what: "ResMem memorability measured for lift on its own.", share: 20, effort: "an hour" },
+    { what: "Frames from downloaded video, not only the thumbnail.", share: 62, effort: "after the proxy" },
+    { what: "Frame embeddings as features of PAX2 Classifier.", share: 38, effort: "an hour and a c7i box" },
   ] },
   "m-retention": { start: "2026-10-17", end: "2026-12-31", importance: 3, utility: 2, ease: 2, waitsOn: "requirement 7", steps: [
     { what: "Retention curves from YouTube Analytics on a connected PAX2 channel.", share: 50, effort: "after requirement 7" },

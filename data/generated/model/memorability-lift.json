@@ -1,0 +1,36 @@
+{
+ "builtAt": "2026-10-18T07:50:43.088Z",
+ "rows": 18455,
+ "positives": 2739,
+ "features": {
+  "mem": {
+   "pooledAuc": 0.484,
+   "withinChannelAuc": 0.4871,
+   "channels": 51,
+   "topDecileBreakoutRate": 0.1309,
+   "baseRate": 0.1484
+  },
+  "bright": {
+   "pooledAuc": 0.4787,
+   "withinChannelAuc": 0.4802,
+   "channels": 51,
+   "topDecileBreakoutRate": 0.1111,
+   "baseRate": 0.1484
+  },
+  "contrast": {
+   "pooledAuc": 0.484,
+   "withinChannelAuc": 0.4804,
+   "channels": 51,
+   "topDecileBreakoutRate": 0.1272,
+   "baseRate": 0.1484
+  },
+  "color": {
+   "pooledAuc": 0.489,
+   "withinChannelAuc": 0.4907,
+   "channels": 51,
+   "topDecileBreakoutRate": 0.1191,
+   "baseRate": 0.1484
+  }
+ },
+ "method": "AUC of the thumbnail feature alone against the breakout label over every settled catalog row with thumbnail features; within-channel AUC is the mean of per-channel AUCs weighted by row count over channels with both labels; top decile is the breakout rate among rows at or above the feature's 90th percentile. mem is ResMem's memorability score, bright, contrast and color are the thumbnail's mean brightness, contrast and colorfulness (scripts/rig/encode_images.py)."
+}

@@ -18,11 +18,11 @@ Built 2026-10-18: a webm upload becomes an mp4 beside it. The `pax2-transcode` L
 
 Gap: the Studio's render has not run in a browser yet (no dev server on the Mac) and goes live with the next push; Remotion's licence wants a ruling, the free licence or a company key in `NEXT_PUBLIC_REMOTION_LICENSE_KEY`.
 
-### 2. Scripts — Built, with a gap
+### 2. Scripts — Built
 
 Built: seven library scripts, each line annotated with the Swayable evidence behind it; a personal script written by Claude from three answers, on the framing scoring best so far; an editor with six research checks; a research prior per script (`data/generated/model/script-codes.json`). Since 2026-10-18 the writer, the editor and the prior also know what travels on the campaigns' own channels, read from one file, `src/lib/organic-evidence.ts` (the within-channel lifts in `data/velocity/metadata-lift.json` and the coded shorts in `organic-patterns.json`): the writer's prompt carries a Swayable section and then "What travels on these channels"; the sixth check names each trait that lifts or sinks on reform channels, its lift and range, and the line that carries it or "not present"; each library script's prior carries a channel half beside the Swayable one (`scripts/script-organic.mjs`), shown per line on the Scripts page. Before and after: `docs/briefs/evidence/brief-6-writer.md`.
 
-Gap: the sixth check reads only what a draft's words and length carry, not the coded shorts' delivery patterns, which need the draft coded on Bedrock; and the writer's 80-to-110-word rule (about 37 to 51 seconds) stands against the 20-seconds-or-shorter lift on reform channels, unruled.
+Closed 2026-10-18: a seventh editor check codes the draft on Bedrock on request and sets it against the coded reform shorts' delivery patterns (`src/app/draft-actions.ts`, `patternCheck` in `src/lib/organic-evidence.ts`); the writer asks for 45 to 60 words, about 20 seconds, ruled from the reform channels' under-20-second lift of +6.5 points (90% range 1 to 13, 6 channels, 56 shorts).
 
 ### 3. A pre-release prediction — Partial
 
@@ -85,7 +85,7 @@ Built: `scripts/training-set.mjs` assembles one row per settled short: raw input
 
 Published 2026-10-18: the training set and the frozen benchmark on Hugging Face under NYSgpt, private, with their cards (`NYSgpt/pax2-shorts-training-set`, `NYSgpt/pax2-breakout-benchmark`), the way `/Code/nsr` published NSR-CPT. Missing: content features for hundreds of shorts; model weights go up the same way when a model passes its gate. Script writing stays Claude on Bedrock with this dataset as its evidence; a fine-tune is a later question once there are enough scored originals to learn from.
 
-### 11. Platform usage — Built, accumulating
+### 11. Platform usage — Built
 
 Since 2026-10-17 every reader act writes one row to the DynamoDB table `pax2-ledger` under `USAGE#<day>` (`src/lib/usage.ts`): open, play, watched75, search, filter, sort, boost, bookmark, share, queue, and Teach a Model's course events. The first row landed 2026-10-18 04:46 UTC. The Readers block on `/dashboard` reads them. Nothing left to build; the rows accumulate.
 
