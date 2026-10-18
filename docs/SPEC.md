@@ -83,7 +83,7 @@ Built 2026-10-17, confirmed 2026-10-18: the Versions card compares the chain, le
 
 Built: `scripts/training-set.mjs` assembles one row per settled short: raw inputs, pre-publish features, outcome, and the content features where a short has them. 18,455 rows, 2,739 breakouts, 35 with content. The manifest documents every field. The first model trains in 1.4 seconds on a laptop.
 
-Missing: content features for hundreds of shorts; the dataset and model published to Hugging Face under NYSgpt with a card and a frozen benchmark, the way `/Code/nsr` published NSR-CPT (`docs/NSR-CPT-REPORT.md` there is the template: pre-registered gates, held-out benchmark, private repos until redistribution terms are clear). Script writing stays Claude on Bedrock with this dataset as its evidence; a fine-tune is a later question once there are enough scored originals to learn from.
+Published 2026-10-18: the training set and the frozen benchmark on Hugging Face under NYSgpt, private, with their cards (`NYSgpt/pax2-shorts-training-set`, `NYSgpt/pax2-breakout-benchmark`), the way `/Code/nsr` published NSR-CPT. Missing: content features for hundreds of shorts; model weights go up the same way when a model passes its gate. Script writing stays Claude on Bedrock with this dataset as its evidence; a fine-tune is a later question once there are enough scored originals to learn from.
 
 ### 11. Platform usage — Built, accumulating
 

@@ -73,11 +73,10 @@ export const REQUIREMENTS: Item[] = [
       { what: "The first publish writes velocity/watch.json.", share: 70, effort: "comes with 7" },
       { what: "The poller reads it on its next run.", share: 30, effort: "nothing to build" },
     ] },
-  { id: "10", name: "10. The Model Training Library and the model", start: "2026-10-17", end: "2026-11-30", progress: 60, next: "Transcripts joined after the caption merge; Hugging Face once a new token is in SSM.",
+  { id: "10", name: "10. The Model Training Library and the model", start: "2026-10-17", end: "2026-11-30", progress: 75, next: "Transcripts joined after the caption merge; content features for hundreds of shorts after the proxy.",
     steps: [
-      { what: "Transcripts joined for the 3,465 priority shorts, then the rest of the 18,455.", share: 33, effort: "after the caption merge; about four days for all" },
-      { what: "The dataset and benchmark published to Hugging Face under NYSgpt, private, with their cards.", share: 40, effort: "a new token in SSM from Brendan, then publish.sh twice" },
-      { what: "Content features for hundreds of shorts.", share: 27, effort: "after the proxy" },
+      { what: "Transcripts joined for the 3,465 priority shorts, then the rest of the 18,455.", share: 55, effort: "after the caption merge; about four days for all" },
+      { what: "Content features for hundreds of shorts.", share: 45, effort: "after the proxy" },
     ] },
   { id: "11", name: "11. Platform usage", start: "2026-10-17", end: "2026-10-31", progress: 85, next: "Nothing to build; rows accumulate as people use the feed and the courses.",
     steps: [
