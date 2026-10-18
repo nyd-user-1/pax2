@@ -93,7 +93,6 @@ export const REQUIREMENTS: Item[] = [
 // strength. ease: how little stands between today and a finished version (data, compute, approvals).
 type Plan = { start: string; end: string; importance: number; utility: number; ease: number; steps: Step[]; waits?: string[]; waitsOn?: string }
 const MODEL_PLAN: Record<string, Plan> = {
-  "m-writer": { start: "2026-10-03", end: "2026-10-17", importance: 5, utility: 5, ease: 5, steps: [] },
   "m-velocity": { start: "2026-10-17", end: "2026-11-30", importance: 4, utility: 5, ease: 5, steps: [
     { what: "v1 at about 1,000 settled curves; 332 qualify today, the poller adds about 180 shorts a week; the refresh runs with MODE=full PREFIX=model/<name>/ JOBS=velocity ./scripts/rig/launch-cpu.sh.", share: 100, effort: "weeks of polling, then 3 cents and ten minutes" },
   ] },
