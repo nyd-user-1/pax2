@@ -15,6 +15,7 @@ import { TRAIT_NAMES, TRAIT_RELIABILITY } from "@/lib/trait-definitions"
 //   pk                          sk              item
 //   COURSE#classifier           <email>         { videoId, at }: the learner's video, written once
 //   COURSE#classifier#<email>   EVENT#<iso>     { kind: "chapter" | "finished", chapter, at }
+// The other courses (src/lib/courses.ts) keep the same events under COURSE#<course>#<email>.
 
 export const COURSE = "classifier"
 
@@ -82,14 +83,15 @@ export async function assignment(email: string): Promise<{ videoId: string; fres
   return { videoId: again!.videoId, fresh: false }
 }
 
-export type CourseEvent = Item & { kind: "chapter" | "finished"; chapter: number; at: string }
-export const courseEvents = (email: string) => query<CourseEvent>(`COURSE#${COURSE}#${email}`, "EVENT#")
+export type CourseEvent = Item & { kind: "started" | "chapter" | "finished"; chapter: number; at: string }
+export const courseEvents = (email: string, course = COURSE) => query<CourseEvent>(`COURSE#${course}#${email}`, "EVENT#")
 
-/** Write a chapter or finished event unless one is already held. True when written. */
-export async function markOnce(email: string, kind: CourseEvent["kind"], chapter: number) {
-  if ((await courseEvents(email)).some((e) => e.kind === kind && e.chapter === chapter)) return false
+/** Write a started, chapter or finished event unless one is already held. True when written. Every
+ *  course keeps its events under COURSE#<course>#<email>. */
+export async function markOnce(email: string, kind: CourseEvent["kind"], chapter: number, course = COURSE) {
+  if ((await courseEvents(email, course)).some((e) => e.kind === kind && e.chapter === chapter)) return false
   const at = now()
-  return putOnce({ pk: `COURSE#${COURSE}#${email}`, sk: `EVENT#${at}`, kind, chapter, at })
+  return putOnce({ pk: `COURSE#${course}#${email}`, sk: `EVENT#${at}`, kind, chapter, at })
 }
 
 /** The learner's latest answer per trait key on their video. */
