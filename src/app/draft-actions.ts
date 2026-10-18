@@ -42,3 +42,13 @@ Reply with JSON only: {"traits": [{"key": "...", "present": true, "quote": "..."
   }
   return { codes, quotes, model: MODEL, at: new Date().toISOString() }
 }
+
+/** PAX2 Headline Ranker v1 on a draft's opening line: its score read against the held-out Upworthy
+ *  headlines as a percentile; null when the serving Lambda is absent. */
+export async function scoreOpeningLine(text: string): Promise<{ percentile: number; accuracy: number } | null> {
+  const first = (text.trim().split(/(?<=[.!?])\s+/)[0] ?? "").trim()
+  if (first.split(/\s+/).filter(Boolean).length < 3) return null
+  const { scoreHeadlinesV1 } = await import("@/lib/headline-v1")
+  const r = await scoreHeadlinesV1([first])
+  return r?.[0] ? { percentile: r[0].percentile, accuracy: r[0].accuracy } : null
+}

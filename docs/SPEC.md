@@ -47,13 +47,13 @@ Reading: metadata is a weak prior and, within one channel, nearly none. The sign
 
 a. Tracking and polling. Built: the velocity poller (`lambda/velocity`), 15-minute readings for 72 hours per short, 65 channels, daily baselines, the 18-month catalog with breakout labels, each video's tags, category, topics, captions and length (`meta.json`). Ten days of readings sit in S3 (2026-10-06 to 10-15). The EventBridge rule is DISABLED as of 2026-10-15 13:25 UTC. Within-channel lifts for 23 pre-publish traits are computed (`scripts/metadata-lift.mjs`). Since 2026-10-18 the readings are joined to the Model Training Library as views at 1, 6, 24 and 72 hours (`scripts/velocity-features.mjs`; 815 shorts, 236 settled rows), and PAX2 Velocity Classifier's chance of a Hit shows on `/live-tracking` for every watched short.
 
-b. Content analysis. Built: the worker (`worker/analyze_organic.py`): Transcribe word timings, Pegasus timestamped notes, measured loudness, pitch, pauses; delivery coding (energy, tone, mode, frame); Swayable coding of transcripts. 40 campaign shorts and 11 synthetic takes have it. Missing: the worker box `i-029959fd31bba9a75` no longer exists; nothing analyzes a new upload; the content model needs hundreds of analyzed shorts, not 40.
+b. Content analysis. Built: the worker (`worker/analyze_organic.py`) measured the 40 campaign shorts and 11 synthetic takes (Transcribe, Pegasus notes, loudness, pitch, pauses, delivery coding, Swayable coding); since 2026-10-18 every new upload is measured by the `pax2-analyze` chain (Whisper, the same audio measures, CLIP frames, memorability) on a box that starts itself and stops itself. Missing: Pegasus notes and delivery coding for uploads; the content model needs hundreds of analyzed shorts, which wait on the catalog's audio and video through the proxy.
 
 c. The library. Built: Swayable reference model, Upworthy headline patterns, Wesleyan 2022 Meta coding, Google and Meta ad library spend, Coppock 2020, emotional-ads replication data, Polis, MA district returns, polling. Shown per video on the Swayable, Upworthy and Wesleyan blocks of the video page. Gap: these inform display and the persuasion lean; none of them feeds one combined prediction.
 
-### 5. Automatic on save — Partial
+### 5. Automatic on save — Built
 
-Built: every submit scores the original the moment the button is pressed (since 2026-10-18; `PAX2_AUTOSCORE=0` turns it off for a dev session), and emails the admins. Missing: the scoring is script-only; no video analysis runs; no S3 event starts anything; the box it would start is gone.
+Built: every submit scores the original the moment the button is pressed (since 2026-10-18; `PAX2_AUTOSCORE=0` turns it off for a dev session), and emails the admins. Since 2026-10-18: the upload's webm becomes an mp4 (`pax2-transcode`), the mp4 starts one self-terminating c7i.large through `pax2-analyze` (`lambda/analyze`, `scripts/rig/analyze_upload.py`), and four minutes later the original carries an `analyzed` event: Whisper transcript with word timings, loudness, pitch, pauses, CLIP frame embeddings and memorability, about a cent a video; the video page shows them and the next score reads the measured transcript. Tested on a real original at 08:04 UTC.
 
 ### 6. Specific recommendations — Built
 

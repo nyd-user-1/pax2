@@ -5,6 +5,7 @@ import model from "../../data/generated/model/var-model.json"
 import patterns from "../../data/generated/swayable-patterns.json"
 import { forecast, recommendations, type VideoInput } from "@/lib/forecast"
 import { titlePatterns } from "@/lib/headline-patterns"
+import { scoreHeadlinesV1 } from "@/lib/headline-v1"
 import type { Evaluation, Original, Recommendation, Trait } from "@/lib/originals"
 
 // The PAX2 evaluation of an original video. One model pass reads the script the messenger recorded
@@ -100,9 +101,12 @@ export async function evaluate(o: Original): Promise<Evaluation> {
 
   // Virality: the title against Upworthy's headline tests.
   const title = titlePatterns(o.title ?? "")
+  // PAX2 Headline Ranker v1 reads both titles when its Lambda answers; the retitle stands either way.
+  const v1 = coded.title && o.title && coded.title.trim() !== o.title.trim() ? await scoreHeadlinesV1([o.title.trim(), coded.title.trim()]) : null
+  const v1Note = v1 && v1.length === 2 ? ` PAX2 Headline Ranker v1 puts the current title above ${v1[0].percentile}% of Upworthy's tested headlines and the proposed one above ${v1[1].percentile}%.` : ""
   const virality: Recommendation[] =
     coded.title && o.title && coded.title.trim() !== o.title.trim()
-      ? [{ axis: "virality", change: `Retitle it: "${coded.title.trim()}"`, why: "In Upworthy's tests the same story under its best headline drew a median 1.9 times the clicks of its worst.", source: "Upworthy" }]
+      ? [{ axis: "virality", change: `Retitle it: "${coded.title.trim()}"`, why: `In Upworthy's tests the same story under its best headline drew a median 1.9 times the clicks of its worst.${v1Note}`, source: "Upworthy" }]
       : []
 
   const input = videoInputOf(o)

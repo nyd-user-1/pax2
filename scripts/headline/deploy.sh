@@ -30,10 +30,14 @@ parity() {
   node -e '
     const want = require("./'"$checks"'"); const got = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8"))
     if (!got.scores) { console.log("no scores:", JSON.stringify(got).slice(0, 300)); process.exit(1) }
+    // The box scored its checks under bf16 autocast; the ONNX graph runs in fp32, so scores agree to about
+    // 0.02 (measured 0.015 on 2026-10-18), and the order of the eight must match exactly.
     let worst = 0
-    want.forEach((c, i) => { const d = Math.abs(c.score - got.scores[i]); worst = Math.max(worst, d); console.log(`  ${got.scores[i].toFixed(4)} vs ${c.score.toFixed(4)}  ${d < 5e-4 ? "ok " : "BAD"}  ${c.text.slice(0, 70)}`) })
-    console.log(`parity: worst gap ${worst.toFixed(5)} over ${want.length} held-out headlines: ${worst < 5e-4 ? "AGREE" : "DISAGREE"}`)
-    process.exit(worst < 5e-4 ? 0 : 1)' "$out"
+    want.forEach((c, i) => { const d = Math.abs(c.score - got.scores[i]); worst = Math.max(worst, d); console.log(`  ${got.scores[i].toFixed(4)} vs ${c.score.toFixed(4)}  ${d < 0.02 ? "ok " : "BAD"}  ${c.text.slice(0, 70)}`) })
+    const rank = (xs) => xs.map((v, i) => [v, i]).sort((p, q) => q[0] - p[0]).map((p) => p[1]).join(",")
+    const sameOrder = rank(want.map((c) => c.score)) === rank(got.scores)
+    console.log(`parity: worst gap ${worst.toFixed(5)} over ${want.length} held-out headlines (bf16 on the box, fp32 here), order ${sameOrder ? "identical" : "DIFFERS"}: ${worst < 0.02 && sameOrder ? "AGREE" : "DISAGREE"}`)
+    process.exit(worst < 0.02 && sameOrder ? 0 : 1)' "$out"
 }
 if [ $MODE = test ]; then parity; exit $?; fi
 

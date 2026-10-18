@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { ArrowRight, Check, Circle, Mic } from "lucide-react"
 
-import { codeDraft, type DraftCodes } from "@/app/draft-actions"
+import { codeDraft, scoreOpeningLine, type DraftCodes } from "@/app/draft-actions"
 import { secondsAt, useDraft, words } from "@/components/record/draft"
 import { CAMPAIGN_FAMILY, organicCheck, organicEvidence, patternCheck } from "@/lib/organic-evidence"
 import { cn } from "@/ui/lib/utils"
@@ -51,7 +51,7 @@ function patternResult(coded: DraftCodes | null, stale: boolean): CheckResult {
   }
 }
 
-function checks(text: string, research: Record<string, Research>): CheckResult[] {
+function checks(text: string, research: Record<string, Research>, opening: { percentile: number; accuracy: number } | null): CheckResult[] {
   const first = (text.trim().split(/(?<=[.!?])\s+/)[0] ?? "").trim()
   const fw = words(first)
   const lower = text.toLowerCase()
@@ -61,7 +61,7 @@ function checks(text: string, research: Record<string, Research>): CheckResult[]
     {
       ok: fw > 0 && fw <= 12,
       title: fw ? `Opening line: ${fw} words` : "No opening line yet",
-      detail: `The first line is what Engage measures: whether the scroll stops. “${first.slice(0, 80)}${first.length > 80 ? "…" : ""}”`,
+      detail: `The first line is what Engage measures: whether the scroll stops. “${first.slice(0, 80)}${first.length > 80 ? "…" : ""}”${opening ? ` PAX2 Headline Ranker v1 scores it above ${opening.percentile}% of Upworthy's tested headlines (pairwise accuracy ${opening.accuracy} held out).` : ""}`,
     },
     {
       ok: /\bvote (yes|for)\b|\byes on (question )?3\b/.test(lower),
@@ -115,7 +115,19 @@ export function Editor({ research }: { research: Record<string, Research> }) {
       setCoding(false)
     }
   }
-  const cs = [...checks(text, research), patternResult(coded, !!coded && codedText !== text)]
+  const [opening, setOpening] = React.useState<{ percentile: number; accuracy: number } | null>(null)
+  React.useEffect(() => {
+    const first = (text.trim().split(/(?<=[.!?])\s+/)[0] ?? "").trim()
+    if (first.split(/\s+/).filter(Boolean).length < 3) {
+      setOpening(null)
+      return
+    }
+    const t = setTimeout(() => {
+      scoreOpeningLine(text).then(setOpening).catch(() => setOpening(null))
+    }, 1200)
+    return () => clearTimeout(t)
+  }, [text])
+  const cs = [...checks(text, research, opening), patternResult(coded, !!coded && codedText !== text)]
   return (
     <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
       <ScriptBox
