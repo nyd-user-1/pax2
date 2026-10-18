@@ -43,7 +43,7 @@ ROLE_ARN=$(aws iam get-role --role-name $ROLE --query Role.Arn --output text 2>/
 FN_ARN=$(aws lambda get-function --function-name $FN --query Configuration.FunctionArn --output text 2>/dev/null || true)
 echo "role:     ${ROLE_ARN:-(would create $ROLE)}"
 echo "function: ${FN_ARN:-(would create $FN)}"
-echo "box:      c7i.large under the $BOX_ROLE profile, 30-minute watchdog, about 7 minutes a video, about \$0.01 at \$0.085/h; no Transcribe, no Pegasus"
+echo "box:      c7i.large under the $BOX_ROLE profile, 30-minute watchdog, about 5 minutes a video, about \$0.01 at \$0.085/h, plus Pegasus 1.2 on Bedrock reading the video, about \$0.04"
 echo "trigger:  s3://$BUCKET uploads/*.mp4, notification $NOTIFY_ID (pax2-transcode's webm trigger stays)"
 [ $MODE = dry ] && { echo "dry run; --apply writes"; exit 0; }
 
@@ -52,8 +52,9 @@ trap 'rm -rf "$STAGE"' EXIT
 
 # The box's extra rights: the event in DynamoDB and the features file.
 aws iam put-role-policy --role-name $BOX_ROLE --policy-name pax2-analyze --policy-document "{\"Version\":\"2012-10-17\",\"Statement\":[
-  {\"Effect\":\"Allow\",\"Action\":\"dynamodb:PutItem\",\"Resource\":\"arn:aws:dynamodb:$REGION:$ACCOUNT:table/$TABLE\"}]}"
-echo "box role $BOX_ROLE: inline pax2-analyze (dynamodb PutItem $TABLE); S3 comes from its pax2-rig policy"
+  {\"Effect\":\"Allow\",\"Action\":\"dynamodb:PutItem\",\"Resource\":\"arn:aws:dynamodb:$REGION:$ACCOUNT:table/$TABLE\"},
+  {\"Effect\":\"Allow\",\"Action\":\"bedrock:InvokeModel\",\"Resource\":[\"arn:aws:bedrock:*::foundation-model/twelvelabs.pegasus-1-2-v1:0\",\"arn:aws:bedrock:$REGION:$ACCOUNT:inference-profile/us.twelvelabs.pegasus-1-2-v1:0\"]}]}"
+echo "box role $BOX_ROLE: inline pax2-analyze (dynamodb PutItem $TABLE, bedrock InvokeModel Pegasus 1.2); S3 comes from its pax2-rig policy"
 
 # The rig code the box pulls.
 aws s3 cp --only-show-errors scripts/rig/analyze_common.py s3://$BUCKET/code/rig/analyze_common.py

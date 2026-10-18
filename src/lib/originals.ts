@@ -152,7 +152,7 @@ export const latestEvaluation = (evs: OriginalEvent[]) => evs.filter((e) => e.ki
 export type Analysis = {
   at: string
   key: string | null
-  summary: { durationSec: number | null; words: number | null; wpm: number | null; firstWordSec: number | null; language: string | null; pauses: number | null; longestPauseSec: number | null; loudnessRangeDb: number | null; pitchMedianHz: number | null; pitchRangeHz: [number, number] | null; memorability: number | null; frames: number | null }
+  summary: { durationSec: number | null; words: number | null; wpm: number | null; firstWordSec: number | null; language: string | null; pauses: number | null; longestPauseSec: number | null; loudnessRangeDb: number | null; pitchMedianHz: number | null; pitchRangeHz: [number, number] | null; memorability: number | null; frames: number | null; delivery?: { energy: string | null; vocalTone: string[] | null; directAddress: boolean | null; frame: string | null; firstPerson: boolean | null; questionLed: boolean | null; coreClaim: string | null; hook: string | null; hookAt: number | null; pace: string | null; captions: string | null; callToAction: string | null; visualVariety: string | null; summary: string | null } }
   transcript: string | null
   words: { t: number; w: string }[]
   errors: string[]

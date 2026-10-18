@@ -125,6 +125,28 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
                     </div>
                   ))}
                 </div>
+                {row.analysis.summary.delivery && (
+                  <div className="mt-4 grid grid-cols-2 gap-4 @lg:grid-cols-4">
+                    {(
+                      [
+                        ["Energy", row.analysis.summary.delivery.energy],
+                        ["Tone", (row.analysis.summary.delivery.vocalTone ?? []).join(", ") || null],
+                        ["Frame", row.analysis.summary.delivery.frame],
+                        ["Pace", row.analysis.summary.delivery.pace],
+                        ["First person", row.analysis.summary.delivery.firstPerson == null ? null : row.analysis.summary.delivery.firstPerson ? "Yes" : "No"],
+                        ["Opens with a question", row.analysis.summary.delivery.questionLed == null ? null : row.analysis.summary.delivery.questionLed ? "Yes" : "No"],
+                        ["Captions", row.analysis.summary.delivery.captions],
+                        ["Call to action", row.analysis.summary.delivery.callToAction],
+                      ] as [string, string | null | undefined][]
+                    ).map(([label, value]) => (
+                      <div key={label} className="flex min-w-0 flex-col">
+                        <span className="truncate text-sm font-semibold text-slate-900">{value || "-"}</span>
+                        <span className="text-xs text-slate-500">{label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {row.analysis.summary.delivery?.hook && <p className="mt-3 text-sm text-slate-700">Hook at {row.analysis.summary.delivery.hookAt ?? 0}s: “{row.analysis.summary.delivery.hook}”</p>}
                 {row.analysis.transcript && <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-slate-700">{row.analysis.transcript}</p>}
               </ListBlock>
             )}

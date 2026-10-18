@@ -14,7 +14,7 @@ import json, os, sys, tempfile, time
 
 import boto3
 
-from analyze_common import audio_features, frame_features, load_models, log, transcribe
+from analyze_common import audio_features, frame_features, load_models, log, pegasus, transcribe
 
 BUCKET = os.environ["BUCKET"]
 KEY = os.environ["KEY"]
@@ -50,6 +50,16 @@ try:
 except Exception as e:
     feat["frames"] = {"error": str(e)[:200]}
     errors.append("frames")
+# Pegasus reads the video itself, as the worker did for the 40 campaign shorts: about 4 cents a video.
+if os.environ.get("PEGASUS", "1") != "0":
+    try:
+        tp = time.time()
+        feat["pegasus"] = {"source": "ai", **pegasus(BUCKET, KEY)}
+        log(f"analyze: pegasus {'ok' if feat['pegasus'].get('ok') else 'unparsed'} in {time.time() - tp:.0f}s")
+    except Exception as e:
+        feat["pegasus"] = {"error": str(e)[:300]}
+        errors.append("pegasus")
+        log(f"analyze: pegasus failed: {str(e)[:200]}")
 
 out_key = f"features/{ORIGINAL}.json"
 s3.put_object(Bucket=BUCKET, Key=out_key, Body=json.dumps(feat).encode(), ContentType="application/json")
@@ -75,6 +85,25 @@ summary = {
     "memorability": f.get("memorability"),
     "frames": f.get("n"),
 }
+pg = (feat.get("pegasus") or {}).get("result") or {}
+if pg:
+    d, s, ch, hk = pg.get("delivery") or {}, pg.get("semantics") or {}, pg.get("characteristics") or {}, pg.get("hook") or {}
+    summary["delivery"] = {
+        "energy": d.get("energy"),
+        "vocalTone": d.get("vocal_tone"),
+        "directAddress": d.get("direct_address"),
+        "frame": s.get("frame"),
+        "firstPerson": s.get("first_person"),
+        "questionLed": s.get("question_led"),
+        "coreClaim": s.get("core_claim"),
+        "hook": hk.get("text"),
+        "hookAt": hk.get("t"),
+        "pace": ch.get("pace"),
+        "captions": ch.get("captions"),
+        "callToAction": ch.get("call_to_action"),
+        "visualVariety": ch.get("visual_variety"),
+        "summary": pg.get("summary"),
+    }
 at = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime()) + f".{int((time.time() % 1) * 1000):03d}Z"
 item = {
     "pk": {"S": f"ORIG#{ORIGINAL}"},

@@ -7,10 +7,43 @@ produced for the 40 campaign shorts, so content features compare across every vi
   frame_features(mp4, work, clip, preprocess, resmem)   CLIP ViT-B-32 on one frame every five seconds,
                                                         ResMem memorability of the first frame
   transcribe(whisper, mp4)    faster-whisper small, word timings, words a minute, first word's second
+  pegasus(bucket, key)        Pegasus 1.2 on Bedrock reading the video itself: hook, observations, delivery
+                              (energy, tone), semantics (frame, first person, question-led); the worker's
+                              prompt, moved here verbatim
 """
-import os, re, subprocess, time, wave
+import json, os, re, subprocess, time, wave
 
 import numpy as np
+
+# The prompt worker/analyze_organic.py put to Pegasus for the 40 campaign shorts, unchanged, so every
+# video PAX2 has is read the same way.
+PEGASUS_PROMPT = """You are reviewing a short vertical advocacy video for a partner organization.
+Return JSON only, no prose, with this shape:
+{"summary": str,
+ "hook": {"t": number, "text": str, "assessment": str},
+ "observations": [{"t": number, "end": number, "what": str}],
+ "characteristics": {"setting": str, "on_screen_people": str, "captions": str, "text_overlays": str, "music": str, "pace": str, "call_to_action": str, "visual_variety": str},
+ "delivery": {"vocal_tone": [str], "energy": "low"|"medium"|"high", "energy_arc": str, "facial_affect_on_hook": str, "direct_address": bool, "sarcasm_or_irony": {"present": bool, "cue": str}},
+ "semantics": {"frame": "personal-story"|"explainer"|"call-out"|"news-reaction"|"stat-led"|"testimonial"|"montage", "first_person": bool, "question_led": bool, "core_claim": str},
+ "accessibility": [str]}
+Rules: describe only what is visible or audible, with times in seconds. Do not guess anyone's race, ethnicity, age or gender. Delivery labels describe the performance, never the person; when the speaker is off-screen or the tone is ambiguous, write "unclear" rather than guessing. vocal_tone uses 1-3 words like urgent, conversational, earnest, deadpan, upbeat, angry, wry. Keep each field under 30 words."""
+
+PEGASUS_MODEL = "us.twelvelabs.pegasus-1-2-v1:0"
+
+
+def pegasus(bucket, key, owner="638175140432", region="us-east-1"):
+    """Pegasus 1.2 on Bedrock over the video in S3; the parsed JSON when it parses, the raw text either way."""
+    import boto3
+    br = boto3.client("bedrock-runtime", region_name=region)
+    body = {"inputPrompt": PEGASUS_PROMPT, "mediaSource": {"s3Location": {"uri": f"s3://{bucket}/{key}", "bucketOwner": owner}}, "temperature": 0}
+    r = br.invoke_model(modelId=PEGASUS_MODEL, body=json.dumps(body))
+    j = json.loads(r["body"].read())
+    text = j.get("message") or j.get("output") or json.dumps(j)
+    m = re.search(r"\{.*\}", text, re.S)
+    try:
+        return {"ok": True, "model": PEGASUS_MODEL, "result": json.loads(m.group(0)) if m else None, "raw": text[:4000]}
+    except Exception:
+        return {"ok": False, "model": PEGASUS_MODEL, "raw": text[:4000]}
 
 
 def log(*a):

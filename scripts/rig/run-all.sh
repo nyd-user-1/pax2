@@ -38,6 +38,7 @@ run velocity velocity.py velocity-model.json
 run platform_sim platform_sim.py platform-sim.json
 run headline headline_v0.py headline-model.json
 run retention retention_v0.py retention-v0.json
+run feed feed_v0.py feed-v0.json
 # Uploaded originals, Frame.io files copied to S3 by hand: transcribed only when asked for by name.
 run transcribe transcribe.py transcripts-voter-freedom.json
 echo "ALL JOBS ENDED $(date -u +%FT%TZ)"
