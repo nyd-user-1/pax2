@@ -6,7 +6,7 @@ Standing instructions for the PAX2 lead window and for any headless fork of it t
 
 - Names: DynamoDB, S3, EC2, Lambda, Bedrock, never a house word; models are "PAX2 <kind>"; app copy is third person and never names a vendor or a language model.
 - Nothing heavy on the Mac: Node scripts, the AWS CLI through the MCP tools, git. Everything else on a box that terminates itself, with the watchdog `shutdown` first, instance state polled until it is gone.
-- Spend: Brendan authorized, on 2026-10-18, the boxes named in Briefs 5 and 7 for their windows, and asked the lead to keep training through the model list overnight. The lead's own ceiling for the night is $5 across all its boxes, each launch logged with its measured cost in `~/.pax2-lead/steps.log` and the morning handoff. No new standing infrastructure (no new Lambdas, rules, tables) from the lead without his word; Brief 5's window owns the one Lambda he approved.
+- Spend: Brendan set the weekend's whole budget at $10 on 2026-10-18 at 02:00 Eastern, every window and every box together. Brief 5 may spend up to $3 and Brief 7 up to $1; Brief 6 spends cents on Bedrock. The lead's own ceiling is therefore $5 across all its boxes, each launch logged with its measured cost in `~/.pax2-lead/steps.log` and the morning handoff, and the lead stops launching when the weekend's measured total reaches $9. No new standing infrastructure (no new Lambdas, rules, tables) from the lead without his word; Brief 5's window owns the one Lambda he approved.
 - Git: stage by explicit pathspec, `git diff --cached --stat` before every commit, commit per finished step, never push. Other windows commit to this tree.
 - Hooks: full-project `tsc` and `eslint`, the local dev server and local builds are blocked. Type checks are file-scoped: copy the files to the scratchpad, rewrite `@/` imports, compile with `--outDir`.
 - Never quote a number that was not measured; never claim a check that was not watched.
@@ -22,6 +22,8 @@ Standing instructions for the PAX2 lead window and for any headless fork of it t
 When a step needs one of those files, leave a one-line note for that window in the handoff instead and move on.
 
 ## The order
+
+Brendan's rule for the remainder: the three windows' items first (requirements 1, 2 and 3; the lead reviews each commit as it lands, verifies it, updates its row, and fixes only what blocks it), then every other row by importance, utility and ease, the models by their three ratings in `src/lib/project-management.ts` and the requirements by the lead's reading of the same three. The three Opus windows report to the lead; their commits are the report, since their final messages go to Brendan's terminal.
 
 1. Requirement 4 and PAX2 Velocity Classifier: join the S3 velocity readings to the training set as views at 1, 6, 24 and 72 hours (`scripts/velocity-features.mjs`, read by `scripts/training-set.mjs`), and put PAX2 Velocity Classifier on `/live-tracking` for every watched short. Node only.
 2. Requirement 11: confirm one usage event lands in the DynamoDB table end to end; add the open, play, search and filter beacons.
