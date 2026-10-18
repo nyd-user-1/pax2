@@ -104,6 +104,30 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
                 <p className="whitespace-pre-line text-sm leading-relaxed text-slate-700">{row.text}</p>
               </ListBlock>
             )}
+            {row.analysis && (
+              <ListBlock title="Content" height="auto" footer={`Measured ${when(row.analysis.at)} from the upload: Whisper transcript, audio by second, one frame every five seconds.${row.analysis.errors.length ? ` Failed: ${row.analysis.errors.join(", ")}.` : ""}`}>
+                <div className="grid grid-cols-2 gap-4 @lg:grid-cols-4">
+                  {(
+                    [
+                      ["Words", row.analysis.summary.words],
+                      ["Words a minute", row.analysis.summary.wpm],
+                      ["First word", row.analysis.summary.firstWordSec == null ? null : `${row.analysis.summary.firstWordSec}s`],
+                      ["Pauses", row.analysis.summary.pauses],
+                      ["Longest pause", row.analysis.summary.longestPauseSec == null ? null : `${row.analysis.summary.longestPauseSec}s`],
+                      ["Loudness range", row.analysis.summary.loudnessRangeDb == null ? null : `${row.analysis.summary.loudnessRangeDb} dB`],
+                      ["Pitch", row.analysis.summary.pitchMedianHz == null ? null : `${row.analysis.summary.pitchMedianHz} Hz`],
+                      ["Memorability", row.analysis.summary.memorability],
+                    ] as [string, string | number | null | undefined][]
+                  ).map(([label, value]) => (
+                    <div key={label} className="flex min-w-0 flex-col">
+                      <span className="truncate text-sm font-semibold text-slate-900">{value ?? "-"}</span>
+                      <span className="text-xs text-slate-500">{label}</span>
+                    </div>
+                  ))}
+                </div>
+                {row.analysis.transcript && <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-slate-700">{row.analysis.transcript}</p>}
+              </ListBlock>
+            )}
             <ListBlock title="History" height="auto">
               <div className="flex flex-col divide-y divide-slate-100">
                 {row.events.map((e) => (
@@ -250,6 +274,7 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
 const HISTORY: Record<OriginalEvent["kind"], string> = {
   recorded: "Recorded",
   transcoded: "Converted to MP4",
+  analyzed: "Content measured from the upload",
   scored: "Scored by PAX2",
   note: "Note added",
   rerecord: "Sent back to re-record",

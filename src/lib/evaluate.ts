@@ -42,7 +42,8 @@ export function videoInputOf(o: Original): VideoInput & { transcript: string | n
     published: o.publishAt ?? new Date().toISOString(),
     group: "reform-core",
     channelMedian: CHANNEL_MEDIAN,
-    transcript: o.text?.trim() || null,
+    // The measured transcript once the upload has been analyzed (an analyzed event on the row); the script until then.
+    transcript: (o as { analysis?: { transcript?: string | null } | null }).analysis?.transcript?.trim() || o.text?.trim() || null,
   }
 }
 

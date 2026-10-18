@@ -74,13 +74,20 @@ export type Evaluation = {
 }
 
 export type EventInput = {
-  kind: "recorded" | "transcoded" | "scored" | "note" | "rerecord" | "approved" | "enhance" | "replaced" | "owner-publish" | "published" | "watching"
+  kind: "recorded" | "transcoded" | "analyzed" | "scored" | "note" | "rerecord" | "approved" | "enhance" | "replaced" | "owner-publish" | "published" | "watching"
   by: string
   /** On a transcoded event, written by the pax2-transcode Lambda: the mp4's S3 key, ffmpeg's run
    *  time in seconds, and the mp4's size in bytes. */
   key?: string
   seconds?: number
   bytes?: number
+  /** On an analyzed event, written by the box the pax2-analyze Lambda starts (scripts/rig/analyze_upload.py):
+   *  the content summary as JSON, the Whisper transcript, its words with their seconds as JSON, and which
+   *  measurements failed, if any. */
+  summary?: string
+  transcript?: string
+  transcriptWords?: string
+  errors?: string
   note?: string
   evaluation?: Evaluation
   child?: string
@@ -141,10 +148,33 @@ export const playableKey = (o: { key: string }, evs: OriginalEvent[]) => evs.fil
 
 export const latestEvaluation = (evs: OriginalEvent[]) => evs.filter((e) => e.kind === "scored").at(-1)?.evaluation ?? null
 
-/** A video that was re-recorded or enhanced points at the version that replaced it. */
-export type OriginalRow = Original & { stage: Stage; events: OriginalEvent[]; evaluation: Evaluation | null; replacedBy: string | null }
+/** What the content pipeline measured on the upload: the numbers the Scored tab shows and the transcript the next score reads. */
+export type Analysis = {
+  at: string
+  key: string | null
+  summary: { durationSec: number | null; words: number | null; wpm: number | null; firstWordSec: number | null; language: string | null; pauses: number | null; longestPauseSec: number | null; loudnessRangeDb: number | null; pitchMedianHz: number | null; pitchRangeHz: [number, number] | null; memorability: number | null; frames: number | null }
+  transcript: string | null
+  words: { t: number; w: string }[]
+  errors: string[]
+}
 
-const rowOf = (o: Original, evs: OriginalEvent[]): OriginalRow => ({ ...o, stage: stageOf(evs), events: evs, evaluation: latestEvaluation(evs), replacedBy: evs.filter((e) => e.kind === "replaced").at(-1)?.child ?? null })
+export function latestAnalysis(evs: OriginalEvent[]): Analysis | null {
+  const e = evs.filter((x) => x.kind === "analyzed").at(-1)
+  if (!e) return null
+  const parse = <T,>(s: string | undefined, fallback: T): T => {
+    try {
+      return s ? (JSON.parse(s) as T) : fallback
+    } catch {
+      return fallback
+    }
+  }
+  return { at: e.at, key: e.key ?? null, summary: parse(e.summary, {} as Analysis["summary"]), transcript: e.transcript?.trim() || null, words: parse(e.transcriptWords, []), errors: e.errors ? e.errors.split(",") : [] }
+}
+
+/** A video that was re-recorded or enhanced points at the version that replaced it. */
+export type OriginalRow = Original & { stage: Stage; events: OriginalEvent[]; evaluation: Evaluation | null; analysis: Analysis | null; replacedBy: string | null }
+
+const rowOf = (o: Original, evs: OriginalEvent[]): OriginalRow => ({ ...o, stage: stageOf(evs), events: evs, evaluation: latestEvaluation(evs), analysis: latestAnalysis(evs), replacedBy: evs.filter((e) => e.kind === "replaced").at(-1)?.child ?? null })
 
 /** Every original with its stage, newest first; owners see their own, admins see all. */
 export async function originals(viewer: { email: string; admin: boolean } | null): Promise<OriginalRow[]> {

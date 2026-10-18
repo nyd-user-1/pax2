@@ -14,6 +14,7 @@ cd "$(dirname "$0")/../.."
 REGION=us-east-1
 BUCKET=pax-2-638175140432
 MODE=${MODE:-full}
+PREFIX_OVERRIDE=${PREFIX:-}
 JOBS=${JOBS:-}   # e.g. JOBS=transcribe runs one job; empty runs every model job
 TS=$(date -u +%Y%m%dT%H%M%SZ)
 case $MODE in
@@ -21,6 +22,9 @@ case $MODE in
   full) PREFIX=model/; LIMIT=1; WATCHDOG=${WATCHDOG:-150}; LOG_KEY=logs/rig-$TS.log ;;
   *) echo "MODE must be rehearse or full"; exit 1 ;;
 esac
+# PREFIX=model/<name>/ in the environment writes a refresh beside the originals; run-all.sh skips a job
+# whose outputs already exist under the prefix, so the default prefix only ever runs a job once.
+PREFIX=${PREFIX_OVERRIDE:-$PREFIX}
 MENU=(${TYPES:-c7i.xlarge c6i.xlarge m7i.xlarge})
 
 # Rule 6: time and money together, this box and the next rung. On-demand Linux, us-east-1.
