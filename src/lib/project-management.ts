@@ -110,10 +110,10 @@ const MODEL_PLAN: Record<string, Plan> = {
     { what: "v2 with transcript features from the caption run; its chain is running and launches the box itself when the priority families land.", share: 62, effort: "automatic, about 17:00 UTC on 2026-10-18; about 5 cents" },
     { what: "Audio and frame features once files exist.", share: 38, effort: "after the proxy" },
   ] },
-  "m-headline": { start: "2026-10-17", end: "2026-11-07", importance: 3, utility: 3, ease: 4, steps: [
-    { what: "v1, a BERT-class fine-tune on the 41,175 Upworthy pairs on one g6.xlarge.", share: 60, effort: "one GPU hour, about $1; needs approval" },
-    { what: "In the script editor: the title and opening line scored as written.", share: 30, effort: "2 hours" },
-    { what: "The retitle suggestion in the findings scored by it.", share: 10, effort: "an hour" },
+  "m-headline": { start: "2026-10-17", end: "2026-11-07", importance: 3, utility: 3, ease: 4, waitsOn: "a serving Lambda, Brendan's call", steps: [
+    { what: "Serve v1 at request time: a Lambda with ONNX Runtime reading model-v1.onnx from S3, or a SageMaker endpoint.", share: 50, effort: "half a day; new infrastructure, Brendan's call", blocker: true },
+    { what: "In the script editor: the title and opening line scored as written.", share: 35, effort: "2 hours once served" },
+    { what: "The retitle suggestion in the findings scored by it.", share: 15, effort: "an hour" },
   ] },
   "m-labeler": { start: "2026-10-10", end: "2026-12-15", importance: 4, utility: 3, ease: 3, steps: [
     { what: "Three labelers per video from Teach a Model, 40 videos.", share: 40, effort: "weeks of learners" },

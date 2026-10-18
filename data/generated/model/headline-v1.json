@@ -1,0 +1,54 @@
+{
+ "builtAt": "2026-10-18T06:11:04Z",
+ "name": "PAX2 Headline Ranker",
+ "version": "headline-1",
+ "rehearsal": false,
+ "base": "bert-base-uncased",
+ "source": "s3://pax-2-638175140432/curated/upworthy/upworthy-archive-confirmatory-packages-03.12.2020.parquet",
+ "method": "bert-base-uncased with one linear unit on the pooled output, scoring one headline; trained 3 epochs, batch 64 pairs, lr 2e-05, max length 40, on -log sigmoid(score(winner) - score(loser)); pairs and the 80/20 split by test exactly as v0 (scripts/rig/headline_v0.py)",
+ "counts": {
+  "tests": 12454,
+  "pairs": 41175,
+  "trainPairs": 32935,
+  "heldOutPairs": 8240,
+  "heldOutTests": 2490
+ },
+ "heldOutAccuracy": 0.6722,
+ "bestEpoch": 1,
+ "history": [
+  {
+   "epoch": 0,
+   "heldOutAccuracy": 0.5159
+  },
+  {
+   "epoch": 1,
+   "trainLoss": 0.5852,
+   "heldOutAccuracy": 0.6722,
+   "seconds": 66
+  },
+  {
+   "epoch": 2,
+   "trainLoss": 0.3535,
+   "heldOutAccuracy": 0.6695,
+   "seconds": 60
+  },
+  {
+   "epoch": 3,
+   "trainLoss": 0.2232,
+   "heldOutAccuracy": 0.6688,
+   "seconds": 61
+  }
+ ],
+ "v0HeldOutAccuracy": 0.6101,
+ "v0FlagsOnlyAccuracy": 0.59,
+ "baseline": 0.5,
+ "gateH": {
+  "rule": "held-out pairwise accuracy at least 0.6301, v0 plus 0.02, on the same held-out tests",
+  "threshold": 0.6301,
+  "passed": true
+ },
+ "device": "cuda",
+ "gpu": "NVIDIA L4",
+ "onnx": true,
+ "seconds": 215
+}
