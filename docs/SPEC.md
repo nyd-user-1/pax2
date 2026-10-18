@@ -51,13 +51,13 @@ c. The library. Built: Swayable reference model, Upworthy headline patterns, Wes
 
 Built: every submit scores the original the moment the button is pressed (since 2026-10-18; `PAX2_AUTOSCORE=0` turns it off for a dev session), and emails the admins. Missing: the scoring is script-only; no video analysis runs; no S3 event starts anything; the box it would start is gone.
 
-### 6. Specific recommendations — Partial
+### 6. Specific recommendations — Built
 
 Built: per original, up to three persuasion changes (add or drop a Swayable trait, with the line to change) and a retitle; per synthetic take with paid results, PAX2's cited findings and one to three next tests with what prompted each, what stays uncertain and how to measure it.
 
 Built today, not on screen: `recommendations()` in `src/lib/forecast.ts` turns every measured within-channel lift for the video's family into a concrete change or a trait to keep: posting day and hour, length, description call to action and link, tags, title traits.
 
-Missing: the findings email claims "as much as N% increase" from the best persuasion change (`upliftPct`). The reference model's own leave-one-study-out R² is about 0, as the paper found, so that line overstates. Recommendations should carry their range, not a promised uplift.
+Done 2026-10-17, confirmed 2026-10-18: the findings email carries each change with its measured range, points of vote choice or of the chance of a Hit, and no promised uplift; the old `upliftPct` line is gone.
 
 ### 7. Publish — Stub
 
@@ -65,11 +65,11 @@ The admin's Approved, and the owner's "publish it", record a published event wit
 
 Needs: a PAX2 YouTube channel, a Google Cloud OAuth client with the upload scope, and a stored refresh token; then `videos.insert` from the publish step, the returned id written to the watch list.
 
-### 8. Versions and A/B — Partial
+### 8. Versions and A/B — Built
 
 Built: version, parent and replaced-by in the ledger; re-record from the findings email as version N+1; the Enrichment Engine's upload as the next version.
 
-Missing: a comparison of versions side by side (evaluation deltas now, polled curves later); the queues hide a replaced parent, so two versions cannot both be published and tracked against each other.
+Built 2026-10-17, confirmed 2026-10-18: the Versions card compares the chain, lean, chance of a Hit and the 72-hour reading per version with version delta between neighbors; every version keeps its place in the queues, so two versions can both be published and tracked.
 
 ### 9. Tracked on publish — Built, dormant
 

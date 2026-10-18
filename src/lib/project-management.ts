@@ -60,23 +60,16 @@ export const REQUIREMENTS: Item[] = [
       { what: "The score runs again once the content features land, so the Scored tab shows both.", share: 30, effort: "2 hours" },
       { what: "The findings email carries the content result.", share: 10, effort: "an hour" },
     ] },
-  { id: "6", name: "6. Specific recommendations", start: "2026-10-17", end: "2026-10-24", progress: 85, next: "Confirm the uplift line carries a range, 30 minutes.",
-    steps: [
-      { what: "Confirm the findings email's best-change line carries its range and no promised uplift.", share: 60, effort: "30 minutes" },
-      { what: "Each distribution change in the email shows its lift range.", share: 40, effort: "an hour" },
-    ] },
+  { id: "6", name: "6. Specific recommendations", start: "2026-10-17", end: "2026-10-24", progress: 100, next: "", note: "Every change in the findings email carries its measured range, points of vote choice or of the chance of a Hit, and no promised uplift; confirmed 2026-10-18.",
+    steps: [] },
   { id: "7", name: "7. Publish", start: "2026-10-08", end: "2026-11-07", progress: 10, next: "Brendan creates the YouTube channel and OAuth client; then the upload wiring, half a day.",
     steps: [
       { what: "A PAX2 YouTube channel, a Google Cloud OAuth client with the upload scope, and a refresh token in SSM.", share: 40, effort: "Brendan, an hour", blocker: true },
       { what: "videos.insert from the publish step; the returned id stored on the original.", share: 40, effort: "half a day" },
       { what: "The id written to the watch list automatically.", share: 20, effort: "an hour" },
     ] },
-  { id: "8", name: "8. Versions and A/B", start: "2026-10-17", end: "2026-10-31", progress: 70, next: "Both versions publishable and the queues showing the chain, 2 hours.",
-    steps: [
-      { what: "Both versions of a chain publishable, not only the head.", share: 40, effort: "an hour" },
-      { what: "The queues show the chain instead of hiding a replaced parent.", share: 40, effort: "an hour" },
-      { what: "Polled curves compared side by side once both are tracked.", share: 20, effort: "after requirement 9" },
-    ] },
+  { id: "8", name: "8. Versions and A/B", start: "2026-10-17", end: "2026-10-31", progress: 100, next: "", note: "Every version keeps its place in the three queues as v2 of 3, any version waiting on its owner can be published, and the Versions card sets each version's lean, chance and 72-hour reading beside the next; confirmed 2026-10-18.",
+    steps: [] },
   { id: "9", name: "9. Tracked on publish", start: "2026-10-15", end: "2026-11-07", progress: 90, next: "Nothing to build; closes with the first publish.", waits: ["7"],
     steps: [
       { what: "The first publish writes velocity/watch.json.", share: 70, effort: "comes with 7" },
