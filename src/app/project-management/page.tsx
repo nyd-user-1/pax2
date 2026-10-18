@@ -1,6 +1,8 @@
 import { Check } from "lucide-react"
 
 import { ProgressBlock } from "@/components/blocks"
+import { ModelsViews } from "@/components/models-views"
+import { MODEL_TERMS } from "@/lib/model-terms"
 import { MODELS, REQUIREMENTS, blockedBy, type Item } from "@/lib/project-management"
 import { cn } from "@/ui/lib/utils"
 
@@ -96,6 +98,34 @@ function Rows({ list, rated, today }: { list: Item[]; rated: boolean; today: str
   )
 }
 
+/** The Terms view: for each model PAX2 trains or plans to train, what it predicts, the loss it minimizes and the algorithm that runs. */
+function Terms() {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[900px] text-xs">
+        <thead className="text-left text-[10px] uppercase tracking-wide text-slate-400">
+          <tr className="[&_th]:py-1 [&_th]:pr-4 [&_th]:font-medium [&_th]:align-bottom">
+            <th className="w-[160px]">Name</th>
+            <th>Target variable and bounds</th>
+            <th>Loss function</th>
+            <th>Algorithm or class</th>
+          </tr>
+        </thead>
+        <tbody>
+          {MODEL_TERMS.map((m) => (
+            <tr key={m.id} data-find className="border-t border-slate-100 align-top [&_td]:py-2 [&_td]:pr-4 [&_td]:leading-snug">
+              <td className="font-medium text-slate-900">{m.name}</td>
+              <td className="text-slate-700">{m.target}</td>
+              <td className="text-slate-700">{m.loss}</td>
+              <td className="text-slate-700">{m.algorithm}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
 const summary = (list: Item[]) => `${list.filter((b) => b.progress >= 100).length} of ${list.length} complete · ${Math.round(list.reduce((s, b) => s + b.progress, 0) / list.length)}% on average`
 
 export default function ProjectManagementPage() {
@@ -106,9 +136,7 @@ export default function ProjectManagementPage() {
       <ProgressBlock title="Requirements" search="Search requirements…" rows={rows(REQUIREMENTS)} name="requirements" height="auto" footer={summary(REQUIREMENTS)}>
         <Rows list={REQUIREMENTS} rated={false} today={today} />
       </ProgressBlock>
-      <ProgressBlock title="Models" search="Search models…" rows={rows(MODELS)} name="models" height="auto" footer={summary(MODELS)}>
-        <Rows list={MODELS} rated today={today} />
-      </ProgressBlock>
+      <ModelsViews progress={<Rows list={MODELS} rated today={today} />} terms={<Terms />} progressRows={rows(MODELS)} termsRows={MODEL_TERMS.map(({ name, target, loss, algorithm }) => ({ name, target, loss, algorithm }))} />
     </div>
   )
 }
