@@ -48,3 +48,4 @@ Required reading for every brief that launches a box, scrapes, or trains. Each r
 
 28. Stage by explicit pathspec, never `git add -A` or `commit -a`; other windows commit to the same tree. `git diff --cached --stat` before every commit.
 29. Never quote a number that was not measured. Never claim a check that was not watched.
+30. Name the paths on the commit itself: `git commit -m "..." -- <paths>`, never a bare `git commit` after `git add`. The index is shared by every window on the tree, so a bare commit takes whatever another window has staged; on 2026-10-18 the lead's commit swept in seven of Brief 5's files that way.
