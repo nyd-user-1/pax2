@@ -1,0 +1,183 @@
+import { MEMORABLE } from "@/lib/recipes/memorable"
+
+// The schedule behind /project-management. Requirements are Brendan's thirteen from docs/SPEC.md,
+// each with the day its work began (from the commit history), the day it is planned to close, how
+// much of it stands, and the steps that close the gap, each step's share of what remains and a
+// rough effort. Models take their name, progress and next step from the Memorable recipe, the one
+// model inventory, and add here their dates, steps and three ratings on a 1 to 5 scale: importance
+// to the loop, utility of what exists today, and ease of finishing. An item that others wait on is
+// a blocker, and so is the step inside it that they wait on. Dates are absolute; finish dates and
+// efforts are estimates, not measurements. Updated 2026-10-18.
+
+export type Step = { what: string; share: number; effort: string; blocker?: boolean }
+export type Item = {
+  id: string
+  name: string
+  start: string
+  end: string
+  progress: number
+  next: string
+  steps: Step[]
+  /** Ids in the same list this item waits on. */
+  waits?: string[]
+  /** Things outside this list it waits on, in words. */
+  waitsOn?: string
+  note?: string
+  importance?: number
+  utility?: number
+  ease?: number
+}
+
+export const REQUIREMENTS: Item[] = [
+  { id: "1", name: "1. Record a video, or have one made", start: "2026-10-03", end: "2026-10-31", progress: 60, next: "webm to mp4 in the upload path, a Lambda with an ffmpeg layer, half a day; the Studio render after.",
+    steps: [
+      { what: "webm to mp4 on the S3 upload event: a Lambda with an ffmpeg layer, the mp4 written beside the upload.", share: 50, effort: "half a day; needs approval to deploy" },
+      { what: "The Studio renders a file from its Remotion preview and uploads it like a recording.", share: 40, effort: "a day" },
+      { what: "submitTake records the video's key, not the style name.", share: 10, effort: "an hour" },
+    ] },
+  { id: "2", name: "2. Scripts", start: "2026-10-03", end: "2026-10-24", progress: 80, next: "Feed the organic lifts and the 40 coded shorts into the writer's and editor's prompts, 2 hours.",
+    steps: [
+      { what: "The writer's prompt carries the within-channel lifts from metadata-lift.json for the script's family.", share: 50, effort: "an hour" },
+      { what: "The editor's checks read the 40 coded shorts in organic-patterns.json beside the Swayable priors.", share: 40, effort: "an hour" },
+      { what: "Each library script's research prior is refreshed from both.", share: 10, effort: "30 minutes" },
+    ] },
+  { id: "3", name: "3. A pre-release prediction", start: "2026-10-17", end: "2026-11-07", progress: 60, next: "PAX2 Classifier v2 with transcripts once the caption run merges, 1 hour and a 17-cent box.",
+    steps: [
+      { what: "Merge the caption run and rerun scripts/training-set.mjs so transcripts join the Model Training Library.", share: 30, effort: "30 minutes, after about 19:00 UTC on 2026-10-18" },
+      { what: "PAX2 Classifier v2 with transcript features on one c7i.xlarge box, leave-one-channel-out.", share: 40, effort: "an hour and about 17 cents; needs approval" },
+      { what: "The Scored tab reads v2 and states its strength.", share: 15, effort: "30 minutes" },
+      { what: "Expected views beside the probability: the breakout chance times the channel's median.", share: 15, effort: "an hour" },
+    ] },
+  { id: "4", name: "4. Every available factor", start: "2026-10-06", end: "2026-11-30", progress: 50, next: "The worker's replacement on the S3 upload event; velocity curves joined; audio and frames through the proxy.",
+    steps: [
+      { what: "The worker's replacement: a Lambda on the S3 upload event running ffmpeg, Transcribe and the Pegasus call, writing features for every original.", share: 35, effort: "a day; needs approval to deploy", blocker: true },
+      { what: "Join the velocity readings in S3 to the training set as views at 1, 6, 24 and 72 hours.", share: 20, effort: "2 hours" },
+      { what: "The residential proxy on an EC2 box, then yt-dlp for the catalog's audio and 360p video.", share: 30, effort: "Brendan opens the account; then a day" },
+      { what: "The library's archives feed one combined prediction instead of separate displays.", share: 15, effort: "after PAX2 Classifier v2" },
+    ] },
+  { id: "5", name: "5. Automatic on save", start: "2026-10-10", end: "2026-11-14", progress: 50, next: "The S3 upload event starts the analysis; the same Lambda as 4.", waits: ["4"],
+    steps: [
+      { what: "The S3 upload event starts the analysis, the same Lambda as requirement 4.", share: 60, effort: "comes with 4" },
+      { what: "The score runs again once the content features land, so the Scored tab shows both.", share: 30, effort: "2 hours" },
+      { what: "The findings email carries the content result.", share: 10, effort: "an hour" },
+    ] },
+  { id: "6", name: "6. Specific recommendations", start: "2026-10-17", end: "2026-10-24", progress: 85, next: "Confirm the uplift line carries a range, 30 minutes.",
+    steps: [
+      { what: "Confirm the findings email's best-change line carries its range and no promised uplift.", share: 60, effort: "30 minutes" },
+      { what: "Each distribution change in the email shows its lift range.", share: 40, effort: "an hour" },
+    ] },
+  { id: "7", name: "7. Publish", start: "2026-10-08", end: "2026-11-07", progress: 10, next: "Brendan creates the YouTube channel and OAuth client; then the upload wiring, half a day.",
+    steps: [
+      { what: "A PAX2 YouTube channel, a Google Cloud OAuth client with the upload scope, and a refresh token in SSM.", share: 40, effort: "Brendan, an hour", blocker: true },
+      { what: "videos.insert from the publish step; the returned id stored on the original.", share: 40, effort: "half a day" },
+      { what: "The id written to the watch list automatically.", share: 20, effort: "an hour" },
+    ] },
+  { id: "8", name: "8. Versions and A/B", start: "2026-10-17", end: "2026-10-31", progress: 70, next: "Both versions publishable and the queues showing the chain, 2 hours.",
+    steps: [
+      { what: "Both versions of a chain publishable, not only the head.", share: 40, effort: "an hour" },
+      { what: "The queues show the chain instead of hiding a replaced parent.", share: 40, effort: "an hour" },
+      { what: "Polled curves compared side by side once both are tracked.", share: 20, effort: "after requirement 9" },
+    ] },
+  { id: "9", name: "9. Tracked on publish", start: "2026-10-15", end: "2026-11-07", progress: 90, next: "Nothing to build; closes with the first publish.", waits: ["7"],
+    steps: [
+      { what: "The first publish writes velocity/watch.json.", share: 70, effort: "comes with 7" },
+      { what: "The poller reads it on its next run.", share: 30, effort: "nothing to build" },
+    ] },
+  { id: "10", name: "10. The Model Training Library and the model", start: "2026-10-17", end: "2026-11-30", progress: 55, next: "Transcripts and velocity joined to the training set; Hugging Face once a new token is in SSM.",
+    steps: [
+      { what: "Transcripts joined for the 3,465 priority shorts, then the rest of the 18,455.", share: 25, effort: "after the caption merge; about four days for all" },
+      { what: "Velocity features joined.", share: 25, effort: "2 hours" },
+      { what: "The dataset and benchmark published to Hugging Face under NYSgpt, private, with their cards.", share: 30, effort: "a new token in SSM from Brendan, then publish.sh twice" },
+      { what: "Content features for hundreds of shorts.", share: 20, effort: "after the proxy" },
+    ] },
+  { id: "11", name: "11. Platform usage", start: "2026-10-17", end: "2026-10-31", progress: 70, next: "Confirm one event lands end to end, 15 minutes; then readers.",
+    steps: [
+      { what: "Confirm one event lands in the DynamoDB table end to end.", share: 30, effort: "15 minutes", blocker: true },
+      { what: "Beacons for open, play, search and filter; Boost, bookmark, share and queue already write.", share: 50, effort: "2 hours" },
+      { what: "The Readers block on /dashboard reads real rows.", share: 20, effort: "nothing to build once events exist" },
+    ] },
+  { id: "12", name: "12. Platform data trains the model", start: "2026-11-01", end: "2026-12-15", progress: 0, next: "Usage events accumulate first.", waits: ["11"],
+    steps: [
+      { what: "A usage feature per video, opens, plays and finishes, joined to the training set.", share: 50, effort: "2 hours once events exist", blocker: true },
+      { what: "PAX2 Classifier retrained with it.", share: 30, effort: "an hour and a c7i box" },
+      { what: "Measure whether it adds to the held-out AUC.", share: 20, effort: "30 minutes" },
+    ] },
+  { id: "13", name: "13. Per-user recommendations", start: "2026-11-15", end: "2026-12-31", progress: 0, next: "PAX2 Feed Ranker over usage events.", waits: ["11", "12"],
+    steps: [
+      { what: "PAX2 Feed Ranker v0, learning to rank over usage events.", share: 50, effort: "a day once events exist" },
+      { what: "The home feed built per reader instead of one static file.", share: 40, effort: "half a day" },
+      { what: "A holdout of readers to measure it.", share: 10, effort: "an hour" },
+    ] },
+]
+
+// importance: how much the loop depends on it. utility: what it delivers today, at its measured
+// strength. ease: how little stands between today and a finished version (data, compute, approvals).
+type Plan = { start: string; end: string; importance: number; utility: number; ease: number; steps: Step[]; waits?: string[]; waitsOn?: string }
+const MODEL_PLAN: Record<string, Plan> = {
+  "m-writer": { start: "2026-10-03", end: "2026-10-17", importance: 5, utility: 5, ease: 5, steps: [] },
+  "m-velocity": { start: "2026-10-17", end: "2026-11-30", importance: 4, utility: 5, ease: 5, steps: [
+    { what: "On /live-tracking: each watched short's chance at its current hour.", share: 40, effort: "2 hours" },
+    { what: "v1 at about 1,000 settled curves; 316 today, the poller adds about 180 shorts a week.", share: 50, effort: "weeks of polling, then an hour" },
+    { what: "A retrain script that reads the S3 readings directly.", share: 10, effort: "an hour" },
+  ] },
+  "m-classifier": { start: "2026-10-17", end: "2026-11-07", importance: 5, utility: 3, ease: 4, steps: [
+    { what: "v2 with transcript features from the caption run.", share: 50, effort: "an hour and a 17-cent box; after the merge" },
+    { what: "Audio and frame features once files exist.", share: 30, effort: "after the proxy" },
+    { what: "Expected views as an output beside the probability.", share: 20, effort: "an hour" },
+  ] },
+  "m-headline": { start: "2026-10-17", end: "2026-11-07", importance: 3, utility: 3, ease: 4, steps: [
+    { what: "v1, a BERT-class fine-tune on the 41,175 Upworthy pairs on one g6.xlarge.", share: 60, effort: "one GPU hour, about $1; needs approval" },
+    { what: "In the script editor: the title and opening line scored as written.", share: 30, effort: "2 hours" },
+    { what: "The retitle suggestion in the findings scored by it.", share: 10, effort: "an hour" },
+  ] },
+  "m-labeler": { start: "2026-10-10", end: "2026-12-15", importance: 4, utility: 3, ease: 3, steps: [
+    { what: "Three labelers per video from Teach a Model, 40 videos.", share: 40, effort: "weeks of learners" },
+    { what: "Agreement between the labelers and the Bedrock codes, per trait.", share: 20, effort: "the script exists; run it" },
+    { what: "A trained multi-label classifier at a few hundred labeled videos.", share: 40, effort: "an hour and a c7i box, once the labels exist" },
+  ] },
+  "m-encoder": { start: "2026-10-17", end: "2026-11-21", importance: 4, utility: 2, ease: 2, steps: [
+    { what: "Transcripts into the corpus; 35 of 18,455 documents had one.", share: 30, effort: "30 minutes after the caption merge" },
+    { what: "Retrain on one g6e.xlarge and benchmark on the same held-out channels.", share: 50, effort: "about 35 minutes and $1", blocker: true },
+    { what: "Gate E again; publish the weights if it passes.", share: 20, effort: "an hour" },
+  ] },
+  "m-vision": { start: "2026-10-17", end: "2026-12-15", importance: 2, utility: 2, ease: 3, steps: [
+    { what: "Frames from downloaded video, not only the thumbnail.", share: 50, effort: "after the proxy" },
+    { what: "Frame embeddings as features of PAX2 Classifier.", share: 30, effort: "an hour and a c7i box" },
+    { what: "ResMem memorability measured for lift on its own.", share: 20, effort: "an hour" },
+  ] },
+  "m-retention": { start: "2026-10-17", end: "2026-12-31", importance: 3, utility: 2, ease: 2, waitsOn: "requirement 7", steps: [
+    { what: "Retention curves from YouTube Analytics on a connected PAX2 channel.", share: 50, effort: "after requirement 7" },
+    { what: "Fine-tune v0 on PAX2's own retention.", share: 40, effort: "an hour and a c7i box" },
+    { what: "On the video page.", share: 10, effort: "an hour" },
+  ] },
+  "m-reranker": { start: "2026-10-17", end: "2026-11-21", importance: 2, utility: 1, ease: 2, waits: ["m-encoder"], steps: [
+    { what: "PAX2 Encoder passes its gate first.", share: 60, effort: "waits on the encoder" },
+    { what: "Retrain on the new pairs, same box.", share: 30, effort: "about 20 minutes and under $1" },
+    { what: "Gate R again.", share: 10, effort: "30 minutes" },
+  ] },
+  "m-simulator": { start: "2026-10-17", end: "2026-12-15", importance: 2, utility: 1, ease: 2, steps: [
+    { what: "Fit a seed-test model to the velocity curves.", share: 60, effort: "a day, after about 1,000 curves" },
+    { what: "Simulate a short's path from its first hour.", share: 30, effort: "half a day" },
+    { what: "On /live-tracking beside the measured curve.", share: 10, effort: "2 hours" },
+  ] },
+  "m-cpc": { start: "2026-11-01", end: "2026-12-15", importance: 3, utility: 1, ease: 1, steps: [
+    { what: "The catalog's audio through the proxy, about 9 GB.", share: 40, effort: "Brendan opens the account; then a day" },
+    { what: "Self-supervised training on a GPU box.", share: 40, effort: "a few GPU hours, estimate $5 to $10" },
+    { what: "Its features into PAX2 Classifier.", share: 20, effort: "an hour and a c7i box" },
+  ] },
+  "m-ranker": { start: "2026-11-15", end: "2026-12-31", importance: 3, utility: 1, ease: 2, waitsOn: "requirement 11", steps: [
+    { what: "Usage events accumulate.", share: 40, effort: "after requirement 11" },
+    { what: "v0, learning to rank over them.", share: 40, effort: "a day" },
+    { what: "Serve the home feed from it.", share: 20, effort: "half a day" },
+  ] },
+}
+
+export const MODELS: Item[] = Object.entries(MODEL_PLAN).map(([id, d]) => {
+  const node = MEMORABLE.nodes.find((n) => n.id === id)
+  if (!node) throw new Error(`project-management: no model ${id} in the Memorable recipe`)
+  const f = node.fields
+  return { id, name: f.name, start: d.start, end: d.end, progress: Number(f.progress ?? 0), next: f.next ?? "", note: f.metrics, steps: d.steps, waits: d.waits, waitsOn: d.waitsOn, importance: d.importance, utility: d.utility, ease: d.ease }
+})
+
+/** The names of the items in the same list that wait on this one. */
+export const blockedBy = (list: Item[], id: string) => list.filter((x) => x.waits?.includes(id)).map((x) => x.name.replace(/^\d+\. /, "").replace(/^PAX2 /, ""))

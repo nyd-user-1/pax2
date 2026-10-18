@@ -98,6 +98,12 @@ export function ChartBlock(props: BlockProps) {
   return <MainBlock {...props} />
 }
 
+/** MainBlock with progress rows in it, each a bar to 100 that expands in place to the steps that
+ *  close its gap; tag each row data-find. */
+export function ProgressBlock(props: BlockProps) {
+  return <MainBlock {...props} />
+}
+
 /** MainBlock with a list in it; tag each row data-find. */
 export function ListBlock(props: BlockProps) {
   return <MainBlock {...props} />
