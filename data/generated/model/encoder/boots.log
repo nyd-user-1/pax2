@@ -11,3 +11,5 @@
 2026-10-18T02:05:10Z no g6e.xlarge in subnet-0aeeab33ec7ee352e: Unsupported
 2026-10-18T02:05:12Z launched i-06553194149b4f17c g6e.xlarge subnet-06b1914b54fc3e0c5 run=20261018-020459-train mode=train
 2026-10-18T02:39Z i-06553194149b4f17c g6e.xlarge train OK 34.4 min: batch 16 fit with expandable_segments alone (no gradient checkpointing), 910 steps in 823 s at 17.7 pairs/s; reranker 2 epochs 703 s; Gate E FAIL, Gate R FAIL
+2026-10-18T02:47:29Z launched i-0bff341cfd37d0cf3 t3.small publish NYSgpt/pax2-breakout-benchmark
+2026-10-18T02:47:33Z launched i-0be1d247936aea940 t3.small publish NYSgpt/pax2-shorts-training-set
