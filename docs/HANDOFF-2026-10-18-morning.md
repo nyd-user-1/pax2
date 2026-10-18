@@ -30,7 +30,11 @@ For Brendan and the next lead window. Read `docs/SPEC.md`, then `docs/LEAD-LOOP.
 - PAX2 Classifier: v2 trains tonight from the caption chain. PAX2 Encoder and PAX2 Reranker: retrain after the merge, about $1.40.
 - Datasets: `NYSgpt/pax2-breakout-benchmark` and `NYSgpt/pax2-shorts-training-set`, private, every file checked against the source.
 
-## Running at 08:30 UTC
+## Stopped at 08:33 UTC, at Brendan's word
+
+The caption run (2,211 of 3,465 extracted, 2,149 files on disk), Brief 7's chain, the lead's waiter, the watchdog and caffeinate were all stopped; no AWS box is running. The encoder retrain and PAX2 Classifier v2 wait on a resumed caption run. Resume steps are in `docs/LEAD-LOOP.md`.
+
+## What was running until then
 
 - The caption run on this Mac: 1,473 of 3,465 priority shorts, about 3.7 a minute, done about 17:30 UTC. Brief 7's chain (`data/raw/captions/chain.log`) then merges, rebuilds the training set, launches one c7i.xlarge for PAX2 Classifier v2 and re-scores.
 - The lead's waiter on that log starts the PAX2 Encoder retrain after the merge; the hourly launchd fork is the fallback.

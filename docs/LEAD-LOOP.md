@@ -41,13 +41,10 @@ Update the row: `src/lib/recipes/memorable.ts` (progress, next, status, note) an
 
 ## Current state (the lead keeps this current; a fork reads it first)
 
-Updated 2026-10-18 08:25 UTC. Brendan's standing order since 03:45 Eastern: finish everything on both boards that needs nobody, publish what is publishable, run the tests, no check-ins; the weekend's budget is $10 in all.
+Updated 2026-10-18 08:35 UTC. **Everything is stopped at Brendan's word**: the caption run (2,211 of 3,465 priority shorts extracted, 2,149 caption files on disk), Brief 7's chain, the lead's waiter, the hourly watchdog and caffeinate (both unloaded from launchd). No AWS box is running. Nothing resumes until Brendan says so.
 
-- Done since 06:30 UTC: requirements 2, 5, 6, 8 and 11 at 100; requirement 4 at 85 (the pax2-analyze chain: Lambda, box, Whisper, audio, CLIP frames, memorability, Pegasus on Bedrock, an analyzed event, the Content block); 12 has its join; PAX2 Headline Ranker v1 trained, gated, published (NYSgpt/pax2-headline-ranker), served from the pax2-headline Lambda and wired into the editor and the retitle; the two datasets published; PAX2 Velocity Classifier and PAX2 Platform Simulator refreshed on 332 and 442 curves; memorability measured; the usage join.
-- In flight: PAX2 Feed Ranker v0 pretrain on KuaiRand-1K, box i-0a0293638e5b1fae5 (log logs/rig-20261018T081723Z.log, watchdog 75 min; pull model/feed-v0.json into data/generated/model/, add the row and a card); the third analysis test with Pegasus, original orig-vf-3lfeAG7U1mw-v1 (check its analyzed event has a delivery block; if Pegasus failed on permissions, fix the bedrock policy in scripts/analyze/deploy.sh and re-run --apply and the test); Brief 7's chain waiting on the captions (1,473 of 3,465 at 08:20 UTC).
-- After the caption merge: step 6, the PAX2 Encoder retrain (marker data/generated/model/encoder/retrain.launched), about $1.40.
-- Waits on Brendan: the push to GitHub (requirement 1's last step), the YouTube channel (7, 9, PAX2 Retention Regressor), the proxy (4's last step, 10's content features, PAX2 Vision Encoder frames, PAX2 Audio Encoder), labels (PAX2 Trait Labeler), reader rows (12, 13).
-- Spend by the lead: about $0.65 (two L4 runs $0.31, five CPU boxes about $0.08, three publish boxes under 3 cents, three analysis boxes about 3 cents plus Pegasus, the feed box pending about $0.15). The weekend so far about $2.4 including Brief 3.
+- To resume: `./scripts/yt-captions.sh` on the ids not yet fetched (filter `data/raw/captions/ids-priority.txt` against the `.en.json3` files on disk), then `nohup ./scripts/classifier/when-captions-land.sh >/dev/null 2>&1 &`, then `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.pax2.lead-watchdog.plist` and the caffeinate plist if the lead is to run unattended again. After the merge: step 6, the PAX2 Encoder retrain.
+- The boards are current as of this time; `docs/HANDOFF-2026-10-18-morning.md` has the night.
 
 ## Stopping
 
