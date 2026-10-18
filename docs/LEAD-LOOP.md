@@ -39,6 +39,17 @@ Brendan's rule for the remainder: the three windows' items first (requirements 1
 
 Update the row: `src/lib/recipes/memorable.ts` (progress, next, status, note) and `src/lib/project-management.ts` (progress, next, steps), and the requirement's status line in `docs/SPEC.md`. Commit the step and the row update together. Run the heartbeat.
 
+## Current state (the lead keeps this current; a fork reads it first)
+
+Updated 2026-10-18 06:15 UTC.
+
+- Briefs 5 and 6 are complete and their rows are current. Brief 7 stands at 72: its chain (`scripts/classifier/when-captions-land.sh`, pid in `data/raw/captions/chain.log`) waits for 3,465 extracted captions, expected about 19:00 UTC, then merges, rebuilds the training set, launches one c7i.xlarge and re-scores. Do not launch a second.
+- PAX2 Headline Ranker v1: the rehearsal passed (run 20261018-055447-rehearse, 9.7 minutes, about $0.13); the full run is box i-003fcfebf7af38ccb, run 20261018-060508-train, launched 06:05 UTC, watchdog 60 minutes. When it has terminated: `node scripts/headline/rescore.mjs 20261018-060508-train`, pull `headline-v1.json` from `s3://nsr-embed-v2/pax2/headline/runs/20261018-060508-train/` into `data/generated/model/`, write `docs/cards/pax2-headline-ranker-v1.md`, update `m-headline` in the recipe and Project Management, commit with named paths.
+- After the caption merge (`chain.log` holds "EXIT=0 node scripts/captions-merge.mjs"): step 6 of the order, the PAX2 Encoder retrain, about $1.40.
+- PAX2 Velocity Classifier v1 waits for data: 332 qualifying curves at 06:10 UTC against 316 for v0; about 1,000 wanted. PAX2 Platform Simulator's fit waits with it.
+- Everything else on both lists waits on Brendan: the worker's replacement Lambda (requirement 4), the YouTube channel (7, 9, PAX2 Retention Regressor), the Hugging Face token (10), the proxy (PAX2 Audio Encoder, frames), usage rows (12, 13, PAX2 Feed Ranker), labels (PAX2 Trait Labeler).
+- Spend by the lead so far: about $0.13. The weekend's ceiling is $10 across everything.
+
 ## Stopping
 
 Stop when every item is done or waits on Brendan. Before stopping, write `docs/HANDOFF-<date>.md`: what closed, what is running, every box and its cost, the decisions that are his, and anything a window left unfinished.
