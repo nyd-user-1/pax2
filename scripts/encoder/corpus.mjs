@@ -3,8 +3,10 @@
 // One document per row of the Model Training Library. This file is the only definition of a document's
 // text (rig rule 15): the GPU box reads corpus.jsonl and never rebuilds text.
 //
-//   text   = title, then description, then the transcript's text when the row has content features,
-//            each non-empty part on its own line, capped at 1,200 characters
+//   text   = title, then description, then the transcript's text: the analyzed transcript when the row
+//            has content features, else YouTube's auto-captions from data/generated/transcripts.json
+//            (scripts/captions-merge.mjs) when the short has them; each non-empty part on its own line,
+//            capped at 1,200 characters
 //   fields = id, channelId, family, tier, breakout, group, text
 //
 // Held-out channels, fixed by rule: within each family, sort the family's channel ids by their last
@@ -13,7 +15,7 @@
 // held out and never positives.
 //
 // Usage: node scripts/encoder/corpus.mjs [--upload]
-// Reads  data/generated/model/training-set.jsonl, data/generated/features.json
+// Reads  data/generated/model/training-set.jsonl, data/generated/features.json, data/generated/transcripts.json
 // Writes data/generated/model/encoder/corpus.jsonl (gitignored, 7.7 MB) and holdout.json;
 //        --upload copies both to s3://nsr-embed-v2/pax2/corpus/
 import fs from "node:fs"
@@ -33,11 +35,13 @@ const rows = fs
   .filter(Boolean)
   .map((l) => JSON.parse(l))
 const features = JSON.parse(fs.readFileSync(path.join(root, "data/generated/features.json"), "utf8"))
+const transcriptsPath = path.join(root, "data/generated/transcripts.json")
+const transcripts = fs.existsSync(transcriptsPath) ? JSON.parse(fs.readFileSync(transcriptsPath, "utf8")) : {}
 
 // Well-formed and cut by character, not by UTF-16 unit: the training set's 600-character description cut
 // splits emoji in 21 rows, and a lone surrogate is invalid JSON to TEI (HTTP 400, rehearsal of 2026-10-18).
 export function docText(row) {
-  const transcript = row.content ? (features[`yt-${row.id}`]?.transcript?.text ?? "") : ""
+  const transcript = (row.content ? features[`yt-${row.id}`]?.transcript?.text : null) ?? transcripts[row.id]?.text ?? ""
   const joined = [row.title, row.description, transcript]
     .map((s) => (s ?? "").toWellFormed().replace(/�/g, "").trim())
     .filter(Boolean)
@@ -95,7 +99,7 @@ const holdout = {
     file: "corpus.jsonl",
     rows: docs.length,
     sha256: createHash("sha256").update(corpusText).digest("hex"),
-    textRecipe: "title, description, transcript text when content is present; non-empty parts joined by newlines; first 1,200 characters (scripts/encoder/corpus.mjs)",
+    textRecipe: "title, description, transcript text (the analyzed transcript when content is present, else YouTube's auto-captions from transcripts.json); non-empty parts joined by newlines; first 1,200 characters (scripts/encoder/corpus.mjs)",
   },
   paidRows: docs.filter((d) => d.group === PAID).length,
   heldOutChannels: heldChannels.size,
