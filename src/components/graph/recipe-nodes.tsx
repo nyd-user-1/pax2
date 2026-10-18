@@ -1,7 +1,7 @@
 "use client"
 
 import { Handle, Position, type Node, type NodeProps } from "@xyflow/react"
-import { GripVertical } from "lucide-react"
+import { Check, GripVertical } from "lucide-react"
 
 import { setDragEntity } from "@/lib/drag-entity"
 import type { RecipeType } from "@/lib/graph-data"
@@ -11,6 +11,9 @@ import { linkParts } from "@/lib/recipes/links"
 // The model recipe's four cards: an ingredient (a data source), a step (a process), a model (an
 // artifact) and an output (a product surface). Each is 240px wide; its status chip and left
 // border share one color, so the diagram reads as progress at a glance. Nothing on it executes.
+// Every card also carries a progress figure and the next step that closes its gap: at 100 the card
+// shows a green check, below it the percent and the next step, so the diagram doubles as the
+// project's schedule.
 
 export type FieldSpec = { key: string; label: string; options?: string[]; long?: boolean }
 
@@ -22,6 +25,8 @@ export const RECIPE_FIELDS: Record<RecipeType, FieldSpec[]> = {
     { key: "size", label: "Size" },
     { key: "license", label: "License" },
     { key: "status", label: "Status", options: ["hold", "partial", "lack"] },
+    { key: "progress", label: "Progress %" },
+    { key: "next", label: "Next", long: true },
     { key: "note", label: "Note", long: true },
   ],
   step: [
@@ -31,6 +36,8 @@ export const RECIPE_FIELDS: Record<RecipeType, FieldSpec[]> = {
     { key: "cost", label: "Cost" },
     { key: "status", label: "Status", options: ["done", "running", "planned", "blocked"] },
     { key: "owner", label: "Owner", options: ["", "PAX2", "Brendan"] },
+    { key: "progress", label: "Progress %" },
+    { key: "next", label: "Next", long: true },
     { key: "note", label: "Note", long: true },
   ],
   model: [
@@ -41,12 +48,16 @@ export const RECIPE_FIELDS: Record<RecipeType, FieldSpec[]> = {
     { key: "status", label: "Status", options: ["exists", "planned"] },
     { key: "metrics", label: "Metrics" },
     { key: "where", label: "Where" },
+    { key: "progress", label: "Progress %" },
+    { key: "next", label: "Next", long: true },
     { key: "note", label: "Note", long: true },
   ],
   output: [
     { key: "name", label: "Name" },
     { key: "surface", label: "Surface" },
     { key: "status", label: "Status", options: ["live", "planned"] },
+    { key: "progress", label: "Progress %" },
+    { key: "next", label: "Next", long: true },
     { key: "note", label: "Note", long: true },
   ],
 }
@@ -73,7 +84,7 @@ const LINE: Record<RecipeType, [string, string]> = { ingredient: ["what", "where
 export const RECIPE_LABEL: Record<RecipeType, string> = { ingredient: "ingredient", step: "process", model: "model", output: "output" }
 
 export const RECIPE_W = 240
-export const RECIPE_H = 108
+export const RECIPE_H = 132
 
 export type RecipeCardData = { type: RecipeType; id: string; label: string; r?: Record<string, string>; dimmed: boolean } & Record<string, unknown>
 
@@ -101,10 +112,16 @@ export function RecipeNode({ data: d, selected }: NodeProps<Node<RecipeCardData>
       <div className="flex items-center gap-1.5 pr-4">
         <span className="text-[9px] uppercase tracking-wide text-slate-400">{d.type === "model" && r.kind ? `model · ${r.kind}` : RECIPE_LABEL[d.type]}</span>
         {r.status && <span className="ml-auto rounded-full px-1.5 py-px text-[9px] font-semibold text-white" style={{ background: color }}>{r.status}</span>}
+        {r.progress === "100" ? (
+          <Check className="h-3.5 w-3.5 shrink-0 text-green-600" strokeWidth={3} aria-label="Complete" />
+        ) : r.progress ? (
+          <span className="tabular rounded-full bg-slate-100 px-1.5 py-px text-[9px] font-semibold text-slate-700">{r.progress}%</span>
+        ) : null}
       </div>
       <p className="mt-0.5 line-clamp-2 font-semibold leading-snug text-slate-900">{r.name || d.label}</p>
       {r[main] && <p className="mt-0.5 line-clamp-2 text-[10px] leading-snug text-slate-600">{r[main]}</p>}
       {r[small] && r[small] !== "none" && <p className="mt-0.5 truncate text-[10px] text-slate-400">{r[small]}</p>}
+      {r.next && r.progress !== "100" && <p className="mt-0.5 line-clamp-2 text-[10px] leading-snug text-slate-500">{r.next}</p>}
     </div>
   )
 }

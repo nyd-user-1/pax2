@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, FilePen, Flag, FlaskConical, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, FilePen, Flag, FlaskConical, GanttChart, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { RevealFx } from "@/components/reveal-fx"
@@ -32,6 +32,7 @@ const WIP = [
   { href: "/live-tracking", label: "Live tracking", icon: Radio },
   { href: "/patterns", label: "Patterns", icon: ChartColumn },
   { href: "/graph", label: "Graph", icon: Workflow },
+  { href: "/gantt", label: "Gantt", icon: GanttChart },
   { href: "/endgame", label: "Endgame", icon: Flag },
   { href: "/ml", label: "ML", icon: Brain },
   { href: "/scoring/method", label: "Score method", icon: FlaskConical },
