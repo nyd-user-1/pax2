@@ -1,0 +1,17 @@
+{
+ "builtAt": "2026-10-18T08:21:07.372Z",
+ "rows": 1,
+ "byKind": {
+  "course-start": 1
+ },
+ "videos": 0,
+ "days": [
+  "2026-10-18"
+ ],
+ "fields": {
+  "opens, plays, watched75, boosts, bookmarks, shares, queues": "counts of reader acts on the video, every reader, all time",
+  "readers": "distinct readers (signed-in email or the browser's anonymous id)",
+  "first, last": "the first and last act"
+ },
+ "byId": {}
+}

@@ -27,6 +27,10 @@ const transcripts = fs.existsSync(path.join(root, "data/generated/transcripts.js
 // for every short the poller has read; null for the rest of the catalog, which predates the poller.
 const velocityPath = path.join(root, "data/generated/model/velocity-features.json")
 const velocity = fs.existsSync(velocityPath) ? read("data/generated/model/velocity-features.json") : null
+// Platform usage (scripts/usage-features.mjs) when that file exists: what PAX2's own readers did with the
+// short; null for shorts no reader has touched.
+const usagePath = path.join(root, "data/generated/model/usage-features.json")
+const usage = fs.existsSync(usagePath) ? read("data/generated/model/usage-features.json") : null
 
 const rows = []
 let skippedGroup = 0
@@ -43,6 +47,7 @@ for (const v of catalog.videos) {
   const d = delivery[`yt-${v.id}`]
   const c = codes[`yt-${v.id}`]
   const vel = velocity?.byId?.[v.id]
+  const use = usage?.byId?.[v.id]
   const row = {
     id: v.id,
     channelId: v.channelId,
@@ -69,6 +74,8 @@ for (const v of catalog.videos) {
     x,
     // Velocity, for shorts the poller read in their first 72 hours; null elsewhere.
     velocity: vel ? { views1h: vel.views1h, views6h: vel.views6h, views24h: vel.views24h, views72h: vel.views72h, firstHour: vel.firstHour, lastHour: vel.lastHour, readings: vel.readings } : null,
+    // Platform usage, for shorts PAX2's readers opened, played, boosted, bookmarked, shared or queued; null elsewhere.
+    usage: use ? { opens: use.opens, plays: use.plays, watched75: use.watched75, boosts: use.boosts, bookmarks: use.bookmarks, shares: use.shares, queues: use.queues, readers: use.readers } : null,
     // Content features, for the 40 analyzed shorts; null elsewhere.
     content: f
       ? {
@@ -144,6 +151,8 @@ const manifest = {
   withContent: rows.filter((r) => r.content).length,
   withTranscript: rows.filter((r) => r.transcript).length,
   withVelocity: rows.filter((r) => r.velocity).length,
+  withUsage: rows.filter((r) => r.usage).length,
+  usageSource: usage ? { builtAt: usage.builtAt, rows: usage.rows, videos: usage.videos } : null,
   velocitySource: velocity ? { builtAt: velocity.builtAt, days: velocity.days, videos: velocity.videos } : null,
   paidAds,
   published: { first: rows[0]?.published, last: rows.at(-1)?.published },
@@ -155,6 +164,7 @@ const manifest = {
     "title, description, tags, durationSec, channelMedian": "the raw pre-publish inputs; description is the first 600 characters",
     "views, likes, comments, ratio, tier, breakout": "the outcome as of the catalog fetch",
     x: "pre-publish features from src/lib/video-features.ts",
+    usage: "for shorts PAX2's own readers touched (scripts/usage-features.mjs): opens, plays, watched75, boosts, bookmarks, shares, queues and distinct readers; null otherwise",
     velocity: "for shorts the poller read in their first 72 hours (scripts/velocity-features.mjs): views at 1, 6, 24 and 72 hours off the running maximum of the readings, the first and last hour read, and the count; null otherwise",
     paid: "for rows a Google political video ad resolved to (scripts/google-video-ads.mjs): impression and spend bands, days, advertiser; rows with group paid-ad have no breakout label",
     transcript: "YouTube's auto-captions as text (data/generated/transcripts.json); null when there are none yet",

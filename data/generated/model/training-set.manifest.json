@@ -1,5 +1,5 @@
 {
- "builtAt": "2026-10-18T05:47:37.567Z",
+ "builtAt": "2026-10-18T08:21:08.370Z",
  "source": {
   "catalog": "2026-10-15T15:22:02.105Z",
   "catalogSource": "YouTube Data API v3, shorts playlists, 18-month lookback"
@@ -27,7 +27,14 @@
   "UK": 98
  },
  "withContent": 50,
+ "withTranscript": 855,
  "withVelocity": 236,
+ "withUsage": 0,
+ "usageSource": {
+  "builtAt": "2026-10-18T08:21:07.372Z",
+  "rows": 1,
+  "videos": 0
+ },
  "velocitySource": {
   "builtAt": "2026-10-18T05:47:36.944Z",
   "days": {
@@ -248,8 +255,10 @@
   "title, description, tags, durationSec, channelMedian": "the raw pre-publish inputs; description is the first 600 characters",
   "views, likes, comments, ratio, tier, breakout": "the outcome as of the catalog fetch",
   "x": "pre-publish features from src/lib/video-features.ts",
+  "usage": "for shorts PAX2's own readers touched (scripts/usage-features.mjs): opens, plays, watched75, boosts, bookmarks, shares, queues and distinct readers; null otherwise",
   "velocity": "for shorts the poller read in their first 72 hours (scripts/velocity-features.mjs): views at 1, 6, 24 and 72 hours off the running maximum of the readings, the first and last hour read, and the count; null otherwise",
   "paid": "for rows a Google political video ad resolved to (scripts/google-video-ads.mjs): impression and spend bands, days, advertiser; rows with group paid-ad have no breakout label",
+  "transcript": "YouTube's auto-captions as text (data/generated/transcripts.json); null when there are none yet",
   "content": "measured content features for analyzed shorts (Transcribe, ffmpeg, Pegasus, delivery coding, Swayable codes); null otherwise"
  }
 }
