@@ -120,8 +120,10 @@ export async function uploadUrl(contentType: string) {
   return { id, key, url }
 }
 
-/** Record a sent video with its script and the messenger's own description; PAX2 reviews it next. */
-export async function submitTake(input: { id: string; key: string; scriptId?: string; title?: string; text?: string; name?: string; role?: string; town?: string; seconds: number; consent: boolean }) {
+/** Record a sent video with its script and the messenger's own description; PAX2 reviews it next.
+ *  `key` is the video's S3 key under uploads/; a Studio video's look and motion go in `style`. */
+export async function submitTake(input: { id: string; key: string; style?: string; scriptId?: string; title?: string; text?: string; name?: string; role?: string; town?: string; seconds: number; consent: boolean }) {
+  if (!/^uploads\/[\w-]+\/[\w-]+\.(mp4|webm|mov)$/.test(input.key)) throw new Error("A take needs the video's S3 key.")
   const ws = await workspace()
   const { putOnce, now } = await import("@/lib/ledger")
   await putOnce({ pk: `${ws}#SUBMIT`, sk: input.id, at: now(), status: "awaiting review", ...input })
