@@ -121,4 +121,3 @@ export function revealRows(videoId: string, keys: string[], a: Record<string, 1 
     return { key, name: TRAIT_NAMES[key], answer: a[key] ?? 0, present: code == null ? null : code >= 0.5, lean: l ? { diff: l.diff, low: l.low, high: l.high } : null, icc: r ? { year: r.year, icc: r.icc } : null }
   })
 }
-export const agrees = (r: RevealRow) => r.present != null && r.answer !== 0 && (r.answer === 1) === r.present

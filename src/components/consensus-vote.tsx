@@ -10,7 +10,7 @@ const newVoter = () => `v-${Math.random().toString(36).slice(2, 8)}`
 
 /** One statement at a time; the person passes the phone on when done. Given a `voter` (a signed-in
  *  labeler), the phone stays with them and `cast` records the vote under their session instead. */
-export function ConsensusVote({ slug, statements, voted, voter: fixed, cast, finished }: { slug: string; statements: { tid: number; text: string; detail?: string }[]; voted: Record<string, number[]>; voter?: string; cast?: (slug: string, tid: number, vote: 1 | -1 | 0) => Promise<void>; finished?: string }) {
+export function ConsensusVote({ slug, statements, voted, voter: fixed, cast, finished }: { slug: string; statements: { tid: number; text: string; detail?: string; label?: string }[]; voted: Record<string, number[]>; voter?: string; cast?: (slug: string, tid: number, vote: 1 | -1 | 0) => Promise<void>; finished?: string }) {
   const [voter, setVoter] = React.useState<string | null>(fixed ?? null)
   const [done, setDone] = React.useState<number[]>([])
   const [pending, start] = React.useTransition()
@@ -45,6 +45,7 @@ export function ConsensusVote({ slug, statements, voted, voter: fixed, cast, fin
       </div>
       {next ? (
         <>
+          {next.label && <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">{next.label}</span>}
           <p className="font-display text-2xl leading-snug text-pax2-blue">{next.text}</p>
           {next.detail && <p className="text-sm leading-relaxed text-slate-700">{next.detail}</p>}
           <div className="flex gap-2">
