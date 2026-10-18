@@ -3,7 +3,7 @@
 # earlier one failed (set +e), logs its real exit code as EXIT=<code> as the last line of its
 # section, and uploads its outputs and the log the moment it ends (rule 14). A job whose outputs are
 # already in S3 is skipped, so a relaunch resumes (rule 11).
-#   env: BUCKET RIG_PREFIX RIG_MODE RIG_LIMIT LOG_KEY PY
+#   env: BUCKET RIG_PREFIX RIG_MODE RIG_LIMIT LOG_KEY PY RIG_JOBS (space-separated job names; empty runs every model job)
 set +e
 cd "$(dirname "$0")"
 LOG=/var/log/rig.log
@@ -12,6 +12,7 @@ have() { for k in "$@"; do aws s3api head-object --bucket "$BUCKET" --key "$RIG_
 
 run() {
   local job=$1 script=$2; shift 2
+  if [ -n "${RIG_JOBS:-}" ] && ! echo " $RIG_JOBS " | grep -q " $job "; then return; fi
   echo "===== $job ($script) $(date -u +%FT%TZ)"
   if have "$@"; then
     echo "skip: $* already in s3://$BUCKET/$RIG_PREFIX"
@@ -37,6 +38,8 @@ run velocity velocity.py velocity-model.json
 run platform_sim platform_sim.py platform-sim.json
 run headline headline_v0.py headline-model.json
 run retention retention_v0.py retention-v0.json
+# Uploaded originals, Frame.io files copied to S3 by hand: transcribed only when asked for by name.
+run transcribe transcribe.py transcripts-voter-freedom.json
 echo "ALL JOBS ENDED $(date -u +%FT%TZ)"
 grep -E "^(=====|EXIT=)" "$LOG" | paste - - 
 up_log

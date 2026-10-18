@@ -6,13 +6,14 @@ import { ConsensusVote } from "@/components/consensus-vote"
 import { WaveHero } from "@/components/wave-hero"
 import { currentUser } from "@/lib/auth"
 import { conversationOf, LABEL_VIDEOS, LABELING_WS, TRAITS } from "@/lib/labeling"
+import { SOURCE_NOTE, TRAIT_DEFINITIONS } from "@/lib/trait-definitions"
 import { votes } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Labeling" }
 
-const STATEMENTS = TRAITS.map((t) => ({ tid: t.tid, text: `This video has: ${t.label.charAt(0).toLowerCase()}${t.label.slice(1)}.` }))
+const STATEMENTS = TRAITS.map((t) => ({ tid: t.tid, text: `This video has: ${t.label.charAt(0).toLowerCase()}${t.label.slice(1)}.`, detail: TRAIT_DEFINITIONS[t.key] }))
 
 /** People label the forty coded campaign shorts on Swayable's traits, one video at a time, so
  *  PAX2 Trait Labeler's codes can be measured against them. The model's own codes stay hidden. */
@@ -51,7 +52,7 @@ export default async function LabelingPage({ searchParams }: { searchParams: Pro
           </div>
         </div>
         <div className="flex min-w-0 flex-col gap-6">
-          <CardBlock title={v.title} height="auto" footer={v.channel ?? undefined}>
+          <CardBlock title={v.title} height="auto" footer={[v.channel, SOURCE_NOTE].filter(Boolean).join(" · ")}>
             <ConsensusVote key={v.id} slug={conversationOf(v.id)} statements={STATEMENTS} voted={{ [user.email]: [...mine[i]] }} voter={user.email} cast={labelTrait} finished="Every trait judged for this video." />
           </CardBlock>
           <ListBlock title="Transcript" height="auto">

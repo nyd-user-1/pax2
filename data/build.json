@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-04 5:00 AM ET",
+  "updated": "2026-10-17 10:30 AM ET",
   "budget": {
     "cap": 10,
     "spent": [
@@ -161,6 +161,18 @@
         {
           "title": "Video analysis runs on Pegasus",
           "detail": "The shot-and-text detection service is out of the pipeline. Pegasus notes captions, text on screen, pace and visual variety; a video costs about $0.04."
+        },
+        {
+          "title": "Specification",
+          "detail": "Brendan's 13-requirement brief of 2026-10-17 as docs/SPEC.md: each requirement's status, what stands, what is missing, the decisions his, and the order the gaps close in."
+        },
+        {
+          "title": "Model Training Library, first cut",
+          "detail": "scripts/training-set.mjs: one row per settled short in the 18-month catalog with its pre-publish features (src/lib/video-features.ts), outcome, and content features where analyzed. 18,455 rows, 2,739 breakouts, 64 channels; manifest committed, rows rebuilt locally."
+        },
+        {
+          "title": "VAR model v0",
+          "detail": "L2 logistic regression on pre-publish metadata, leave-one-channel-out: AUC 0.60 (0.56 knowing only the channel's family and size), within a channel 0.55, top decile 1.4x the base rate; Reform family 0.47. Metadata is a weak prior; the signal has to come from the video and the first hours of the curve. src/lib/forecast.ts applies it and turns the measured within-channel lifts into distribution advice; parity with the trainer checked."
         }
       ]
     },
@@ -182,16 +194,32 @@
           "detail": "Not available from the partner yet (2026-10-04). When they arrive: upload the export on Reviews; drop videos in s3://pax-2-638175140432/videos/ and run worker/analyze.py"
         },
         {
-          "title": "The Question 3 campaign's shorts",
-          "detail": "YouTube blocks downloads from AWS; downloading on the Mac is free. Analysis is about $0.04 a video."
-        },
-        {
           "title": "Meta Ad Library access",
           "detail": "Brendan is setting it up (2026-10-04): confirm identity at facebook.com/ID, then a developer account at developers.facebook.com; the deliverable is an access token for the ads_archive endpoint"
         },
         {
           "title": "Ask the partner the four questions",
           "detail": "Asked; the partner has no answers yet (2026-10-04). The questions stand: what Resonance measures, how many labeled pieces, holdout accuracy, any control-group validation"
+        },
+        {
+          "title": "Turn the poller back on",
+          "detail": "The EventBridge rule pax2-velocity-poll has been DISABLED since 2026-10-15 13:25 UTC. Ten days of readings exist; the curves only grow while it runs. Cents a day."
+        },
+        {
+          "title": "The worker's replacement",
+          "detail": "The box i-029959fd31bba9a75 no longer exists; /dashboard's Run pipeline will fail. Proposed: a Lambda (ffmpeg layer, Transcribe, Pegasus) fired by the S3 upload event, converting webm to mp4 and writing features/ for every original. Needs approval to deploy."
+        },
+        {
+          "title": "A PAX2 YouTube channel and OAuth client",
+          "detail": "Publishing is a stub until a channel exists and a Google Cloud OAuth client with the upload scope has issued a refresh token. Then the publish step uploads and writes the watch list itself."
+        },
+        {
+          "title": "SES production access",
+          "detail": "The findings and publish emails only reach verified addresses until SES leaves its sandbox."
+        },
+        {
+          "title": "Two product calls",
+          "detail": "Whether the findings email keeps its best-change gain line or carries the range (the reference model's own out-of-sample fit is about zero), and whether P(breakout) goes on the Scored tab now with its strength stated, or waits for the content model."
         }
       ]
     },
@@ -200,24 +228,32 @@
       "title": "Next",
       "items": [
         {
-          "title": "Revisit workspaces and \"Start a fresh review\"",
-          "detail": "Removed from /build on 2026-10-03. The button pointed this browser at a new, empty workspace; since empty workspaces now load both stand-in rounds, it no longer starts the loop from the top. Decide whether workspaces stay as plumbing only (for separate campaigns) and how a clean demo run is set up.\n\nThe exchange: Claude Code session a6314df4-8879-4936-8a67-b7368f9b797e, 2026-10-03 about 4:40 PM ET, starting at Brendan's question \"Start a fresh review -- what is this?\". Transcript: ~/.claude/projects/-Users-brendanstanton-Code-govblock/a6314df4-8879-4936-8a67-b7368f9b797e.jsonl"
+          "title": "Forecast on screen",
+          "detail": "evaluate() calls forecast() and recommendations() on the original's title, script, length and planned publish time; the Scored tab and the findings email show them with the strength stated."
         },
         {
-          "title": "Start the pipeline from an upload",
-          "detail": "An S3 upload event starts the worker box, which runs the checks and stops itself. Today every run is started by hand."
+          "title": "Versions side by side",
+          "detail": "A Versions block on the video page comparing the chain's evaluations; both versions publishable and tracked against each other; the queues show the chain."
+        },
+        {
+          "title": "Usage events",
+          "detail": "A USAGE key in the ledger and a client beacon for open, play, search, filter, boost and bookmark; a dashboard block reading it. The feed's Boost, queue, playlist and share controls get wired."
+        },
+        {
+          "title": "Publishing to YouTube",
+          "detail": "videos.insert from the publish step once the channel and client exist; the returned id written to velocity/watch.json."
+        },
+        {
+          "title": "Velocity features",
+          "detail": "Readings from S3 joined to the training set as views at 1, 6, 24 and 72 hours; the Velocity forecast on /live-tracking."
+        },
+        {
+          "title": "Publish the dataset and model",
+          "detail": "Hugging Face under NYSgpt, private, with cards and a frozen benchmark, the way NSR-CPT was published from /Code/nsr."
         },
         {
           "title": "Organic score from YouTube views",
           "detail": "Views, likes and comments per day against the channel median, for the campaigns' public shorts. Resonance as built needs impressions; this is its organic counterpart."
-        },
-        {
-          "title": "Upworthy hook prior on screen",
-          "detail": "Score each script's opening line against 32,487 randomized headline tests"
-        },
-        {
-          "title": "Resonance 2, published beside 1",
-          "detail": "Quartile retention curve as Hold; labeled as a new version, never in place of 1"
         },
         {
           "title": "Persuasion labels",
@@ -226,10 +262,6 @@
         {
           "title": "Meta Ad Library pull for Question 3 advertisers",
           "detail": "After access is granted"
-        },
-        {
-          "title": "Analyze volunteer uploads",
-          "detail": "Sent videos land in s3://pax-2-638175140432/uploads/; run worker/analyze.py on them (convert webm to mp4 first)"
         }
       ]
     }
@@ -248,12 +280,16 @@
       "id": "pax2-ledger"
     },
     {
-      "name": "Worker box",
-      "id": "i-029959fd31bba9a75"
-    },
-    {
       "name": "Worker role",
       "id": "pax2-worker"
+    },
+    {
+      "name": "Velocity bucket",
+      "id": "pax-2-velocity-638175140432"
+    },
+    {
+      "name": "Spec",
+      "id": "docs/SPEC.md"
     }
   ]
 }

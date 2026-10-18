@@ -27,6 +27,18 @@ const read = (p) => JSON.parse(fs.readFileSync(path.join(root, p), "utf8"))
 const args = process.argv.slice(2)
 const APPLY = args.includes("--apply")
 const SCORE = args.includes("--score")
+// --transcripts <file>: Whisper transcripts from the rig (transcripts-voter-freedom.json), keyed by file name with a
+// youtubeId inside; used as the text of any original that was written without one, so it can be scored now.
+const TRANSCRIPTS = args.includes("--transcripts") ? args[args.indexOf("--transcripts") + 1] : null
+// Several files can share one YouTube id (an upload and its paid cuts); each version takes the transcript whose
+// length is closest to its own seconds. --rescore <id,id> writes a fresh scored event for those originals.
+const byYoutube = {}
+if (TRANSCRIPTS) for (const v of Object.values(JSON.parse(fs.readFileSync(TRANSCRIPTS, "utf8")))) if (v.youtubeId && v.text) (byYoutube[v.youtubeId] ??= []).push(v)
+const RESCORE = new Set((args.includes("--rescore") ? args[args.indexOf("--rescore") + 1] : "").split(",").filter(Boolean))
+const transcriptFor = (o) => {
+  const list = byYoutube[o.youtubeId ?? o.id.replace(/^orig-vf-/, "").replace(/-v\d+$/, "")] ?? []
+  return [...list].sort((a, b) => Math.abs((a.durationSec ?? 0) - o.seconds) - Math.abs((b.durationSec ?? 0) - o.seconds))[0]?.text
+}
 const MAX = Number(args[args.indexOf("--max") + 1]) || 100
 const OWNER = (process.env.ADMIN_EMAILS ?? "brendan@nysgpt.com").split(",")[0].trim().toLowerCase()
 
@@ -79,7 +91,7 @@ if (!APPLY) {
 
 // The app's own ledger code, with its aliases.
 const jiti = createJiti(import.meta.url, { alias: { "@/": path.join(root, "src") + "/", "server-only": path.join(root, "scripts/lib/server-only-stub.mjs") } })
-const { createOriginal, addEvent, original } = await jiti.import(path.join(root, "src/lib/originals.ts"))
+const { createOriginal, addEvent, original, events } = await jiti.import(path.join(root, "src/lib/originals.ts"))
 const { evaluate } = SCORE ? await jiti.import(path.join(root, "src/lib/evaluate.ts")) : {}
 
 let written = 0
@@ -89,6 +101,17 @@ for (const c of chains) {
   for (const o of c.versions) {
     if (await original(o.id)) {
       skipped++
+      // Already written: score it now if it has no score yet and a transcript has arrived since.
+      const text = (TRANSCRIPTS && transcriptFor(o)) || o.text
+      if (SCORE && text && scored < MAX) {
+        const evs = await events(o.id)
+        if (!evs.some((e) => e.kind === "scored") || RESCORE.has(o.id)) {
+          const row = await original(o.id)
+          await addEvent(o.id, { kind: "scored", by: "pax2", evaluation: await evaluate({ ...row, text }) })
+          scored++
+          console.log(`scored ${o.id} (${text.split(/\s+/).length} words)`)
+        }
+      }
       continue
     }
     const { youtubeId, published, ...meta } = o

@@ -16,3 +16,9 @@ data/velocity/tiles.jsonl
 data/velocity/baselines.json
 data/velocity/state.json
 data/velocity/poll.log
+
+# The Model Training Library rows (24 MB, rebuilt by scripts/training-set.mjs); the manifest and model beside it are committed
+data/generated/model/training-set.jsonl
+
+# YouTube auto-captions pulled by scripts/yt-captions.sh (json3 per video); merged into data/generated/transcripts.json
+data/raw/captions

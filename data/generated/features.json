@@ -51535,5 +51535,11846 @@
    },
    "raw": "{\n  \"summary\": \"A woman advocates for the Ranked Choice Voting Act, promoting electoral reform and encouraging viewers to learn more at fairvote.org.\",\n  \"hook\": {\"t\": 0, \"text\": \"If you're like me, you want Congress to stop the toxic political games.\", \"assessment\": \"Engaging and relatable.\"},\n  \"observations\": [\n    {\"t\": 0, \"end\": 11, \"what\": \"Woman speaks directly to the camera, discussing political games and reform.\"},\n    {\"t\": 11, \"end\": 25, \"what\": \"On-screen text promotes the Ranked Choice Voting Act with key benefits.\"},\n    {\"t\": 25, \"end\": 28, \"what\": \"Woman invites viewers to join a Facebook group for further engagement.\"},\n    {\"t\": 28, \"end\": 30, \"what\": \"FairVote logo and website appear on screen with clear call to action.\"}\n  ],\n  \"characteristics\": {\n    \"setting\": \"Indoor, plain background\",\n    \"on_screen_people\": \"One woman\",\n    \"captions\": \"Yes\",\n    \"text_overlays\": \"Yes, promoting the Ranked Choice Voting Act\",\n    \"music\": \"None\",\n    \"pace\": \"Moderate\",\n    \"call_to_action\": \"Yes, join a Facebook group and visit the FairVote website\",\n    \"visual_variety\": \"Limited, focused on the speaker and text overlays\"\n  },\n  \"accessibility\": [\"Closed captions available\"]\n}"
   }
+ },
+ "yt-CUOjVuQ79HY": {
+  "take": "yt-CUOjVuQ79HY",
+  "analyzedAt": "2026-10-18T01:42:10Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 55.34,
+   "loudnessDb": [
+    -23.5,
+    -27.1,
+    -28.0,
+    -22.5,
+    -27.1,
+    -27.9,
+    -27.4,
+    -24.4,
+    -26.7,
+    -35.1,
+    -22.6,
+    -22.7,
+    -25.0,
+    -28.4,
+    -25.9,
+    -19.8,
+    -22.5,
+    -25.7,
+    -25.7,
+    -26.2,
+    -28.4,
+    -20.9,
+    -20.0,
+    -22.8,
+    -28.1,
+    -22.0,
+    -21.7,
+    -25.0,
+    -24.1,
+    -26.8,
+    -24.2,
+    -26.1,
+    -24.8,
+    -25.7,
+    -30.0,
+    -22.4,
+    -29.1,
+    -21.5,
+    -23.4,
+    -24.9,
+    -20.1,
+    -27.4,
+    -19.6,
+    -28.1,
+    -21.7,
+    -25.6,
+    -27.5,
+    -26.7,
+    -24.6,
+    -23.1,
+    -25.2,
+    -26.0,
+    -28.9,
+    -20.9,
+    -21.0
+   ],
+   "pitchHz": [
+    137.9,
+    271.2,
+    148.1,
+    139.9,
+    254.8,
+    115.1,
+    102.6,
+    104.2,
+    101.9,
+    144.2,
+    128.5,
+    117.2,
+    101.9,
+    90.4,
+    400.0,
+    142.2,
+    127.0,
+    140.4,
+    142.2,
+    107.4,
+    95.8,
+    119.8,
+    111.1,
+    110.2,
+    400.0,
+    256.6,
+    126.0,
+    99.4,
+    124.0,
+    91.0,
+    101.3,
+    117.6,
+    141.6,
+    97.1,
+    400.0,
+    113.9,
+    87.0,
+    114.3,
+    377.8,
+    400.0,
+    156.9,
+    400.0,
+    135.1,
+    390.2,
+    110.8,
+    98.2,
+    381.0,
+    200.7,
+    119.4,
+    400.0,
+    219.2,
+    228.7,
+    355.6,
+    151.7,
+    186.0,
+    390.5
+   ],
+   "pitchMedianHz": 128.0,
+   "pitchRangeHz": [
+    93.1,
+    400.0
+   ],
+   "pauses": [
+    {
+     "t": 9.3,
+     "sec": 0.3
+    }
+   ],
+   "loudestSec": [
+    15,
+    22,
+    42
+   ],
+   "quietestSec": [
+    9,
+    34,
+    36
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "The biggest challenge that voters feel is their elected officials are responsive to out of control extremes who are on their case in every medium every day all year. So if you're an elected official, there's typically only a few points at which you can lose power. And for the vast majority, that is in the primary. Whether it's crossing the aisle or going against an interest group on a piece of legislation that benefits the majority, there is risk in all of those areas. And that risk is magnified by a primary, particularly a closed primary. We've organized extremes, organized special interests, and frustrated disorganized majorities in this country. And the primary process, particularly a closed primary process exacerbates that time. That's great. Nice to meet you guys. Thank you.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "The"
+    },
+    {
+     "t": 0.18,
+     "w": "biggest"
+    },
+    {
+     "t": 0.54,
+     "w": "challenge"
+    },
+    {
+     "t": 1.12,
+     "w": "that"
+    },
+    {
+     "t": 1.46,
+     "w": "voters"
+    },
+    {
+     "t": 2.2,
+     "w": "feel"
+    },
+    {
+     "t": 2.76,
+     "w": "is"
+    },
+    {
+     "t": 3.2,
+     "w": "their"
+    },
+    {
+     "t": 3.32,
+     "w": "elected"
+    },
+    {
+     "t": 3.62,
+     "w": "officials"
+    },
+    {
+     "t": 4.02,
+     "w": "are"
+    },
+    {
+     "t": 4.84,
+     "w": "responsive"
+    },
+    {
+     "t": 5.44,
+     "w": "to"
+    },
+    {
+     "t": 6.18,
+     "w": "out"
+    },
+    {
+     "t": 6.94,
+     "w": "of"
+    },
+    {
+     "t": 7.06,
+     "w": "control"
+    },
+    {
+     "t": 7.68,
+     "w": "extremes"
+    },
+    {
+     "t": 8.64,
+     "w": "who"
+    },
+    {
+     "t": 9.8,
+     "w": "are"
+    },
+    {
+     "t": 9.96,
+     "w": "on"
+    },
+    {
+     "t": 10.36,
+     "w": "their"
+    },
+    {
+     "t": 10.62,
+     "w": "case"
+    },
+    {
+     "t": 11.0,
+     "w": "in"
+    },
+    {
+     "t": 11.32,
+     "w": "every"
+    },
+    {
+     "t": 11.68,
+     "w": "medium"
+    },
+    {
+     "t": 12.18,
+     "w": "every"
+    },
+    {
+     "t": 12.78,
+     "w": "day"
+    },
+    {
+     "t": 13.12,
+     "w": "all"
+    },
+    {
+     "t": 13.76,
+     "w": "year."
+    },
+    {
+     "t": 14.66,
+     "w": "So"
+    },
+    {
+     "t": 14.9,
+     "w": "if"
+    },
+    {
+     "t": 15.08,
+     "w": "you're"
+    },
+    {
+     "t": 15.22,
+     "w": "an"
+    },
+    {
+     "t": 15.28,
+     "w": "elected"
+    },
+    {
+     "t": 15.5,
+     "w": "official,"
+    },
+    {
+     "t": 16.14,
+     "w": "there's"
+    },
+    {
+     "t": 16.4,
+     "w": "typically"
+    },
+    {
+     "t": 16.76,
+     "w": "only"
+    },
+    {
+     "t": 17.7,
+     "w": "a"
+    },
+    {
+     "t": 17.88,
+     "w": "few"
+    },
+    {
+     "t": 18.06,
+     "w": "points"
+    },
+    {
+     "t": 18.46,
+     "w": "at"
+    },
+    {
+     "t": 18.96,
+     "w": "which"
+    },
+    {
+     "t": 19.18,
+     "w": "you"
+    },
+    {
+     "t": 19.78,
+     "w": "can"
+    },
+    {
+     "t": 20.04,
+     "w": "lose"
+    },
+    {
+     "t": 20.3,
+     "w": "power."
+    },
+    {
+     "t": 20.96,
+     "w": "And"
+    },
+    {
+     "t": 21.4,
+     "w": "for"
+    },
+    {
+     "t": 21.72,
+     "w": "the"
+    },
+    {
+     "t": 21.82,
+     "w": "vast"
+    },
+    {
+     "t": 22.08,
+     "w": "majority,"
+    },
+    {
+     "t": 22.96,
+     "w": "that"
+    },
+    {
+     "t": 23.4,
+     "w": "is"
+    },
+    {
+     "t": 23.58,
+     "w": "in"
+    },
+    {
+     "t": 23.76,
+     "w": "the"
+    },
+    {
+     "t": 23.9,
+     "w": "primary."
+    },
+    {
+     "t": 24.86,
+     "w": "Whether"
+    },
+    {
+     "t": 25.06,
+     "w": "it's"
+    },
+    {
+     "t": 25.24,
+     "w": "crossing"
+    },
+    {
+     "t": 25.64,
+     "w": "the"
+    },
+    {
+     "t": 25.86,
+     "w": "aisle"
+    },
+    {
+     "t": 26.26,
+     "w": "or"
+    },
+    {
+     "t": 27.1,
+     "w": "going"
+    },
+    {
+     "t": 27.64,
+     "w": "against"
+    },
+    {
+     "t": 27.88,
+     "w": "an"
+    },
+    {
+     "t": 28.0,
+     "w": "interest"
+    },
+    {
+     "t": 28.18,
+     "w": "group"
+    },
+    {
+     "t": 28.54,
+     "w": "on"
+    },
+    {
+     "t": 28.96,
+     "w": "a"
+    },
+    {
+     "t": 29.32,
+     "w": "piece"
+    },
+    {
+     "t": 29.66,
+     "w": "of"
+    },
+    {
+     "t": 29.78,
+     "w": "legislation"
+    },
+    {
+     "t": 30.32,
+     "w": "that"
+    },
+    {
+     "t": 30.66,
+     "w": "benefits"
+    },
+    {
+     "t": 31.08,
+     "w": "the"
+    },
+    {
+     "t": 31.34,
+     "w": "majority,"
+    },
+    {
+     "t": 32.34,
+     "w": "there"
+    },
+    {
+     "t": 32.72,
+     "w": "is"
+    },
+    {
+     "t": 32.94,
+     "w": "risk"
+    },
+    {
+     "t": 33.32,
+     "w": "in"
+    },
+    {
+     "t": 33.56,
+     "w": "all"
+    },
+    {
+     "t": 33.74,
+     "w": "of"
+    },
+    {
+     "t": 33.88,
+     "w": "those"
+    },
+    {
+     "t": 34.08,
+     "w": "areas."
+    },
+    {
+     "t": 34.92,
+     "w": "And"
+    },
+    {
+     "t": 35.06,
+     "w": "that"
+    },
+    {
+     "t": 35.22,
+     "w": "risk"
+    },
+    {
+     "t": 35.42,
+     "w": "is"
+    },
+    {
+     "t": 35.56,
+     "w": "magnified"
+    },
+    {
+     "t": 36.12,
+     "w": "by"
+    },
+    {
+     "t": 36.66,
+     "w": "a"
+    },
+    {
+     "t": 36.96,
+     "w": "primary,"
+    },
+    {
+     "t": 37.38,
+     "w": "particularly"
+    },
+    {
+     "t": 37.7,
+     "w": "a"
+    },
+    {
+     "t": 38.02,
+     "w": "closed"
+    },
+    {
+     "t": 38.28,
+     "w": "primary."
+    },
+    {
+     "t": 39.18,
+     "w": "We've"
+    },
+    {
+     "t": 39.5,
+     "w": "organized"
+    },
+    {
+     "t": 40.48,
+     "w": "extremes,"
+    },
+    {
+     "t": 41.84,
+     "w": "organized"
+    },
+    {
+     "t": 42.36,
+     "w": "special"
+    },
+    {
+     "t": 42.84,
+     "w": "interests,"
+    },
+    {
+     "t": 43.92,
+     "w": "and"
+    },
+    {
+     "t": 44.18,
+     "w": "frustrated"
+    },
+    {
+     "t": 44.82,
+     "w": "disorganized"
+    },
+    {
+     "t": 46.0,
+     "w": "majorities"
+    },
+    {
+     "t": 46.84,
+     "w": "in"
+    },
+    {
+     "t": 47.0,
+     "w": "this"
+    },
+    {
+     "t": 47.14,
+     "w": "country."
+    },
+    {
+     "t": 47.6,
+     "w": "And"
+    },
+    {
+     "t": 47.68,
+     "w": "the"
+    },
+    {
+     "t": 47.76,
+     "w": "primary"
+    },
+    {
+     "t": 48.04,
+     "w": "process,"
+    },
+    {
+     "t": 49.24,
+     "w": "particularly"
+    },
+    {
+     "t": 49.6,
+     "w": "a"
+    },
+    {
+     "t": 49.8,
+     "w": "closed"
+    },
+    {
+     "t": 49.96,
+     "w": "primary"
+    },
+    {
+     "t": 50.2,
+     "w": "process"
+    },
+    {
+     "t": 50.58,
+     "w": "exacerbates"
+    },
+    {
+     "t": 51.9,
+     "w": "that"
+    },
+    {
+     "t": 52.1,
+     "w": "time."
+    },
+    {
+     "t": 52.76,
+     "w": "That's"
+    },
+    {
+     "t": 53.32,
+     "w": "great."
+    },
+    {
+     "t": 53.8,
+     "w": "Nice"
+    },
+    {
+     "t": 53.92,
+     "w": "to"
+    },
+    {
+     "t": 53.94,
+     "w": "meet"
+    },
+    {
+     "t": 54.04,
+     "w": "you"
+    },
+    {
+     "t": 54.1,
+     "w": "guys."
+    },
+    {
+     "t": 54.28,
+     "w": "Thank"
+    },
+    {
+     "t": 54.48,
+     "w": "you."
+    }
+   ],
+   "wpm": 143.8,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-M8RZzdIooVk": {
+  "take": "yt-M8RZzdIooVk",
+  "analyzedAt": "2026-10-18T01:42:24Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 42.54,
+   "loudnessDb": [
+    -22.8,
+    -23.9,
+    -27.0,
+    -25.8,
+    -23.0,
+    -25.2,
+    -24.2,
+    -24.8,
+    -27.3,
+    -22.9,
+    -25.3,
+    -23.6,
+    -25.5,
+    -28.5,
+    -24.2,
+    -26.3,
+    -24.5,
+    -25.1,
+    -26.4,
+    -24.7,
+    -25.2,
+    -27.8,
+    -28.2,
+    -25.2,
+    -25.6,
+    -25.0,
+    -26.3,
+    -24.7,
+    -27.3,
+    -23.1,
+    -25.3,
+    -26.5,
+    -26.8,
+    -25.9,
+    -29.0,
+    -23.7,
+    -26.1,
+    -25.8,
+    -25.1,
+    -24.7,
+    -23.7,
+    -24.7
+   ],
+   "pitchHz": [
+    238.8,
+    238.8,
+    98.2,
+    238.9,
+    254.0,
+    101.8,
+    222.2,
+    124.2,
+    92.8,
+    283.8,
+    275.9,
+    133.3,
+    139.1,
+    225.4,
+    275.9,
+    89.4,
+    242.4,
+    262.6,
+    86.0,
+    213.3,
+    228.7,
+    84.4,
+    231.9,
+    299.3,
+    256.4,
+    132.8,
+    142.9,
+    131.1,
+    182.8,
+    275.9,
+    238.8,
+    96.8,
+    116.8,
+    197.5,
+    200.0,
+    320.0,
+    273.2,
+    337.1,
+    390.2,
+    97.0,
+    111.4,
+    108.1,
+    101.0
+   ],
+   "pitchMedianHz": 227.0,
+   "pitchRangeHz": [
+    85.1,
+    340.4
+   ],
+   "pauses": [],
+   "loudestSec": [
+    0,
+    4,
+    9
+   ],
+   "quietestSec": [
+    13,
+    22,
+    34
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "Here's something really interesting about Colorado's. Like me, over half of voters in the state don't identify as a Democrat or a Republican. And yet to vote on primary day, we have to pick a party's ballot to participate. There's a better way. Open all candidate primaries, allow all candidates to compete on the same ballot, and all voters to participate on that ballot. If I wanted to, I could choose a Republican for governor, a Democrat for senator, and so on, allowing me to have a lot more choice in who represents me and not forcing me to vote along party lines. Not only do we get more choices, but this system encourages candidates to appeal to more than just the partisan fringes.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "Here's"
+    },
+    {
+     "t": 0.52,
+     "w": "something"
+    },
+    {
+     "t": 0.7,
+     "w": "really"
+    },
+    {
+     "t": 1.06,
+     "w": "interesting"
+    },
+    {
+     "t": 1.62,
+     "w": "about"
+    },
+    {
+     "t": 1.98,
+     "w": "Colorado's."
+    },
+    {
+     "t": 3.16,
+     "w": "Like"
+    },
+    {
+     "t": 3.28,
+     "w": "me,"
+    },
+    {
+     "t": 3.98,
+     "w": "over"
+    },
+    {
+     "t": 4.14,
+     "w": "half"
+    },
+    {
+     "t": 4.6,
+     "w": "of"
+    },
+    {
+     "t": 4.74,
+     "w": "voters"
+    },
+    {
+     "t": 4.94,
+     "w": "in"
+    },
+    {
+     "t": 5.18,
+     "w": "the"
+    },
+    {
+     "t": 5.28,
+     "w": "state"
+    },
+    {
+     "t": 5.52,
+     "w": "don't"
+    },
+    {
+     "t": 6.02,
+     "w": "identify"
+    },
+    {
+     "t": 6.54,
+     "w": "as"
+    },
+    {
+     "t": 6.92,
+     "w": "a"
+    },
+    {
+     "t": 7.06,
+     "w": "Democrat"
+    },
+    {
+     "t": 7.38,
+     "w": "or"
+    },
+    {
+     "t": 7.86,
+     "w": "a"
+    },
+    {
+     "t": 8.08,
+     "w": "Republican."
+    },
+    {
+     "t": 9.0,
+     "w": "And"
+    },
+    {
+     "t": 9.14,
+     "w": "yet"
+    },
+    {
+     "t": 9.28,
+     "w": "to"
+    },
+    {
+     "t": 9.44,
+     "w": "vote"
+    },
+    {
+     "t": 9.6,
+     "w": "on"
+    },
+    {
+     "t": 9.72,
+     "w": "primary"
+    },
+    {
+     "t": 10.02,
+     "w": "day,"
+    },
+    {
+     "t": 10.62,
+     "w": "we"
+    },
+    {
+     "t": 10.72,
+     "w": "have"
+    },
+    {
+     "t": 11.08,
+     "w": "to"
+    },
+    {
+     "t": 11.28,
+     "w": "pick"
+    },
+    {
+     "t": 11.52,
+     "w": "a"
+    },
+    {
+     "t": 11.8,
+     "w": "party's"
+    },
+    {
+     "t": 12.42,
+     "w": "ballot"
+    },
+    {
+     "t": 12.72,
+     "w": "to"
+    },
+    {
+     "t": 13.04,
+     "w": "participate."
+    },
+    {
+     "t": 13.98,
+     "w": "There's"
+    },
+    {
+     "t": 14.52,
+     "w": "a"
+    },
+    {
+     "t": 14.62,
+     "w": "better"
+    },
+    {
+     "t": 14.76,
+     "w": "way."
+    },
+    {
+     "t": 15.62,
+     "w": "Open"
+    },
+    {
+     "t": 15.92,
+     "w": "all"
+    },
+    {
+     "t": 16.2,
+     "w": "candidate"
+    },
+    {
+     "t": 16.48,
+     "w": "primaries,"
+    },
+    {
+     "t": 17.28,
+     "w": "allow"
+    },
+    {
+     "t": 17.5,
+     "w": "all"
+    },
+    {
+     "t": 17.86,
+     "w": "candidates"
+    },
+    {
+     "t": 18.24,
+     "w": "to"
+    },
+    {
+     "t": 18.48,
+     "w": "compete"
+    },
+    {
+     "t": 18.84,
+     "w": "on"
+    },
+    {
+     "t": 19.08,
+     "w": "the"
+    },
+    {
+     "t": 19.22,
+     "w": "same"
+    },
+    {
+     "t": 19.46,
+     "w": "ballot,"
+    },
+    {
+     "t": 20.04,
+     "w": "and"
+    },
+    {
+     "t": 20.2,
+     "w": "all"
+    },
+    {
+     "t": 20.56,
+     "w": "voters"
+    },
+    {
+     "t": 20.92,
+     "w": "to"
+    },
+    {
+     "t": 21.34,
+     "w": "participate"
+    },
+    {
+     "t": 21.96,
+     "w": "on"
+    },
+    {
+     "t": 22.3,
+     "w": "that"
+    },
+    {
+     "t": 22.5,
+     "w": "ballot."
+    },
+    {
+     "t": 23.26,
+     "w": "If"
+    },
+    {
+     "t": 23.44,
+     "w": "I"
+    },
+    {
+     "t": 23.6,
+     "w": "wanted"
+    },
+    {
+     "t": 23.84,
+     "w": "to,"
+    },
+    {
+     "t": 24.26,
+     "w": "I"
+    },
+    {
+     "t": 24.36,
+     "w": "could"
+    },
+    {
+     "t": 24.5,
+     "w": "choose"
+    },
+    {
+     "t": 24.74,
+     "w": "a"
+    },
+    {
+     "t": 24.96,
+     "w": "Republican"
+    },
+    {
+     "t": 25.34,
+     "w": "for"
+    },
+    {
+     "t": 25.64,
+     "w": "governor,"
+    },
+    {
+     "t": 26.52,
+     "w": "a"
+    },
+    {
+     "t": 26.62,
+     "w": "Democrat"
+    },
+    {
+     "t": 26.98,
+     "w": "for"
+    },
+    {
+     "t": 27.34,
+     "w": "senator,"
+    },
+    {
+     "t": 27.72,
+     "w": "and"
+    },
+    {
+     "t": 28.32,
+     "w": "so"
+    },
+    {
+     "t": 28.56,
+     "w": "on,"
+    },
+    {
+     "t": 28.96,
+     "w": "allowing"
+    },
+    {
+     "t": 29.28,
+     "w": "me"
+    },
+    {
+     "t": 29.54,
+     "w": "to"
+    },
+    {
+     "t": 29.68,
+     "w": "have"
+    },
+    {
+     "t": 29.9,
+     "w": "a"
+    },
+    {
+     "t": 30.06,
+     "w": "lot"
+    },
+    {
+     "t": 30.26,
+     "w": "more"
+    },
+    {
+     "t": 30.44,
+     "w": "choice"
+    },
+    {
+     "t": 30.74,
+     "w": "in"
+    },
+    {
+     "t": 31.06,
+     "w": "who"
+    },
+    {
+     "t": 31.26,
+     "w": "represents"
+    },
+    {
+     "t": 31.7,
+     "w": "me"
+    },
+    {
+     "t": 32.1,
+     "w": "and"
+    },
+    {
+     "t": 32.3,
+     "w": "not"
+    },
+    {
+     "t": 32.5,
+     "w": "forcing"
+    },
+    {
+     "t": 32.9,
+     "w": "me"
+    },
+    {
+     "t": 33.16,
+     "w": "to"
+    },
+    {
+     "t": 33.34,
+     "w": "vote"
+    },
+    {
+     "t": 33.58,
+     "w": "along"
+    },
+    {
+     "t": 33.88,
+     "w": "party"
+    },
+    {
+     "t": 34.2,
+     "w": "lines."
+    },
+    {
+     "t": 35.18,
+     "w": "Not"
+    },
+    {
+     "t": 35.38,
+     "w": "only"
+    },
+    {
+     "t": 35.6,
+     "w": "do"
+    },
+    {
+     "t": 35.8,
+     "w": "we"
+    },
+    {
+     "t": 35.94,
+     "w": "get"
+    },
+    {
+     "t": 36.12,
+     "w": "more"
+    },
+    {
+     "t": 36.34,
+     "w": "choices,"
+    },
+    {
+     "t": 37.06,
+     "w": "but"
+    },
+    {
+     "t": 37.14,
+     "w": "this"
+    },
+    {
+     "t": 37.42,
+     "w": "system"
+    },
+    {
+     "t": 37.9,
+     "w": "encourages"
+    },
+    {
+     "t": 38.8,
+     "w": "candidates"
+    },
+    {
+     "t": 39.48,
+     "w": "to"
+    },
+    {
+     "t": 39.9,
+     "w": "appeal"
+    },
+    {
+     "t": 40.34,
+     "w": "to"
+    },
+    {
+     "t": 40.58,
+     "w": "more"
+    },
+    {
+     "t": 40.88,
+     "w": "than"
+    },
+    {
+     "t": 41.06,
+     "w": "just"
+    },
+    {
+     "t": 41.24,
+     "w": "the"
+    },
+    {
+     "t": 41.4,
+     "w": "partisan"
+    },
+    {
+     "t": 41.74,
+     "w": "fringes."
+    }
+   ],
+   "wpm": 176.0,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-UvZoiBFX868": {
+  "take": "yt-UvZoiBFX868",
+  "analyzedAt": "2026-10-18T01:42:39Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 63.51,
+   "loudnessDb": [
+    -19.0,
+    -32.3,
+    -23.3,
+    -22.7,
+    -26.6,
+    -28.6,
+    -19.3,
+    -26.8,
+    -28.8,
+    -20.8,
+    -25.9,
+    -23.1,
+    -27.9,
+    -18.4,
+    -29.2,
+    -25.7,
+    -26.3,
+    -26.7,
+    -22.9,
+    -23.5,
+    -26.8,
+    -24.9,
+    -23.7,
+    -24.4,
+    -27.7,
+    -25.4,
+    -21.2,
+    -28.0,
+    -28.1,
+    -22.4,
+    -24.6,
+    -30.6,
+    -22.6,
+    -22.6,
+    -21.3,
+    -26.4,
+    -19.8,
+    -35.1,
+    -24.7,
+    -21.6,
+    -31.3,
+    -24.2,
+    -25.3,
+    -27.6,
+    -28.9,
+    -23.6,
+    -26.6,
+    -24.1,
+    -29.6,
+    -21.9,
+    -31.2,
+    -19.1,
+    -27.2,
+    -27.3,
+    -20.5,
+    -19.9,
+    -21.0,
+    -18.9,
+    -20.1,
+    -19.0,
+    -22.9,
+    -24.9,
+    -29.9
+   ],
+   "pitchHz": [
+    149.5,
+    156.9,
+    183.9,
+    141.6,
+    150.9,
+    172.1,
+    144.1,
+    136.8,
+    142.9,
+    149.5,
+    131.1,
+    134.5,
+    138.6,
+    153.4,
+    148.9,
+    126.0,
+    122.1,
+    111.2,
+    137.0,
+    127.5,
+    118.0,
+    135.7,
+    136.2,
+    275.9,
+    183.9,
+    136.8,
+    153.8,
+    117.6,
+    151.2,
+    186.0,
+    144.1,
+    133.9,
+    166.7,
+    138.7,
+    196.3,
+    170.2,
+    153.8,
+    238.8,
+    164.9,
+    235.3,
+    164.9,
+    156.9,
+    129.0,
+    135.6,
+    158.4,
+    156.2,
+    155.3,
+    164.9,
+    128.0,
+    150.9,
+    146.8,
+    186.0,
+    135.6,
+    125.2,
+    202.5,
+    149.5,
+    172.2,
+    178.8,
+    152.4,
+    166.7,
+    144.1,
+    125.0,
+    109.6,
+    230.8
+   ],
+   "pitchMedianHz": 148.1,
+   "pitchRangeHz": [
+    113.5,
+    246.2
+   ],
+   "pauses": [],
+   "loudestSec": [
+    13,
+    57,
+    59
+   ],
+   "quietestSec": [
+    1,
+    37,
+    40
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "Let all Americans vote. If you're frustrated about the anger in our politics, feel like we're not living up to our best potential. Take a look at the incentive structures in our politics that are utterly screwed up. But when you realize that, you know, things get more polarized, they're less competitive general elections, independent voters of which there are 1 .1 million in New York City, 3 million across the state are effectively disenfranchised. That's just not right. If partisan primaries decide 90 % of elections and partisan primaries are determined by five, maximum 10 % of the electorate, and that's always gonna be the more activist group, the more extreme group. So it completely distorts our democracy and it creates a paralyzed Congress, a polarized Congress and makes democracy look bad. And the way to fix it is through open primaries and ranked choice voting. If you let everybody vote, you'll get more representative turnout, you'll get more representative results, and the candidates will have an incentive to do the right thing, which is to reason together across the aisle to solve problems on behalf of the American people.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "Let"
+    },
+    {
+     "t": 0.16,
+     "w": "all"
+    },
+    {
+     "t": 0.4,
+     "w": "Americans"
+    },
+    {
+     "t": 0.64,
+     "w": "vote."
+    },
+    {
+     "t": 1.52,
+     "w": "If"
+    },
+    {
+     "t": 1.78,
+     "w": "you're"
+    },
+    {
+     "t": 1.94,
+     "w": "frustrated"
+    },
+    {
+     "t": 2.42,
+     "w": "about"
+    },
+    {
+     "t": 3.28,
+     "w": "the"
+    },
+    {
+     "t": 3.62,
+     "w": "anger"
+    },
+    {
+     "t": 4.0,
+     "w": "in"
+    },
+    {
+     "t": 4.58,
+     "w": "our"
+    },
+    {
+     "t": 4.68,
+     "w": "politics,"
+    },
+    {
+     "t": 5.44,
+     "w": "feel"
+    },
+    {
+     "t": 5.88,
+     "w": "like"
+    },
+    {
+     "t": 6.16,
+     "w": "we're"
+    },
+    {
+     "t": 6.34,
+     "w": "not"
+    },
+    {
+     "t": 6.5,
+     "w": "living"
+    },
+    {
+     "t": 6.78,
+     "w": "up"
+    },
+    {
+     "t": 7.08,
+     "w": "to"
+    },
+    {
+     "t": 7.34,
+     "w": "our"
+    },
+    {
+     "t": 7.48,
+     "w": "best"
+    },
+    {
+     "t": 7.72,
+     "w": "potential."
+    },
+    {
+     "t": 8.64,
+     "w": "Take"
+    },
+    {
+     "t": 8.9,
+     "w": "a"
+    },
+    {
+     "t": 9.08,
+     "w": "look"
+    },
+    {
+     "t": 9.24,
+     "w": "at"
+    },
+    {
+     "t": 9.42,
+     "w": "the"
+    },
+    {
+     "t": 9.54,
+     "w": "incentive"
+    },
+    {
+     "t": 9.9,
+     "w": "structures"
+    },
+    {
+     "t": 10.3,
+     "w": "in"
+    },
+    {
+     "t": 10.58,
+     "w": "our"
+    },
+    {
+     "t": 10.7,
+     "w": "politics"
+    },
+    {
+     "t": 11.18,
+     "w": "that"
+    },
+    {
+     "t": 11.48,
+     "w": "are"
+    },
+    {
+     "t": 11.58,
+     "w": "utterly"
+    },
+    {
+     "t": 11.9,
+     "w": "screwed"
+    },
+    {
+     "t": 12.28,
+     "w": "up."
+    },
+    {
+     "t": 12.72,
+     "w": "But"
+    },
+    {
+     "t": 12.92,
+     "w": "when"
+    },
+    {
+     "t": 13.08,
+     "w": "you"
+    },
+    {
+     "t": 13.18,
+     "w": "realize"
+    },
+    {
+     "t": 13.62,
+     "w": "that,"
+    },
+    {
+     "t": 14.06,
+     "w": "you"
+    },
+    {
+     "t": 14.2,
+     "w": "know,"
+    },
+    {
+     "t": 14.72,
+     "w": "things"
+    },
+    {
+     "t": 14.88,
+     "w": "get"
+    },
+    {
+     "t": 15.12,
+     "w": "more"
+    },
+    {
+     "t": 15.32,
+     "w": "polarized,"
+    },
+    {
+     "t": 16.14,
+     "w": "they're"
+    },
+    {
+     "t": 16.24,
+     "w": "less"
+    },
+    {
+     "t": 16.42,
+     "w": "competitive"
+    },
+    {
+     "t": 16.78,
+     "w": "general"
+    },
+    {
+     "t": 17.16,
+     "w": "elections,"
+    },
+    {
+     "t": 17.82,
+     "w": "independent"
+    },
+    {
+     "t": 18.04,
+     "w": "voters"
+    },
+    {
+     "t": 18.44,
+     "w": "of"
+    },
+    {
+     "t": 18.62,
+     "w": "which"
+    },
+    {
+     "t": 18.74,
+     "w": "there"
+    },
+    {
+     "t": 18.88,
+     "w": "are"
+    },
+    {
+     "t": 18.96,
+     "w": "1"
+    },
+    {
+     "t": 19.14,
+     "w": ".1"
+    },
+    {
+     "t": 19.48,
+     "w": "million"
+    },
+    {
+     "t": 19.76,
+     "w": "in"
+    },
+    {
+     "t": 19.9,
+     "w": "New"
+    },
+    {
+     "t": 20.02,
+     "w": "York"
+    },
+    {
+     "t": 20.14,
+     "w": "City,"
+    },
+    {
+     "t": 20.4,
+     "w": "3"
+    },
+    {
+     "t": 20.54,
+     "w": "million"
+    },
+    {
+     "t": 20.76,
+     "w": "across"
+    },
+    {
+     "t": 21.0,
+     "w": "the"
+    },
+    {
+     "t": 21.18,
+     "w": "state"
+    },
+    {
+     "t": 21.34,
+     "w": "are"
+    },
+    {
+     "t": 21.44,
+     "w": "effectively"
+    },
+    {
+     "t": 21.86,
+     "w": "disenfranchised."
+    },
+    {
+     "t": 22.72,
+     "w": "That's"
+    },
+    {
+     "t": 22.9,
+     "w": "just"
+    },
+    {
+     "t": 22.98,
+     "w": "not"
+    },
+    {
+     "t": 23.14,
+     "w": "right."
+    },
+    {
+     "t": 23.8,
+     "w": "If"
+    },
+    {
+     "t": 24.0,
+     "w": "partisan"
+    },
+    {
+     "t": 24.62,
+     "w": "primaries"
+    },
+    {
+     "t": 25.28,
+     "w": "decide"
+    },
+    {
+     "t": 25.82,
+     "w": "90"
+    },
+    {
+     "t": 26.52,
+     "w": "%"
+    },
+    {
+     "t": 26.96,
+     "w": "of"
+    },
+    {
+     "t": 27.4,
+     "w": "elections"
+    },
+    {
+     "t": 28.38,
+     "w": "and"
+    },
+    {
+     "t": 28.7,
+     "w": "partisan"
+    },
+    {
+     "t": 29.0,
+     "w": "primaries"
+    },
+    {
+     "t": 29.66,
+     "w": "are"
+    },
+    {
+     "t": 30.18,
+     "w": "determined"
+    },
+    {
+     "t": 30.52,
+     "w": "by"
+    },
+    {
+     "t": 30.88,
+     "w": "five,"
+    },
+    {
+     "t": 32.06,
+     "w": "maximum"
+    },
+    {
+     "t": 32.54,
+     "w": "10"
+    },
+    {
+     "t": 32.78,
+     "w": "%"
+    },
+    {
+     "t": 33.04,
+     "w": "of"
+    },
+    {
+     "t": 33.18,
+     "w": "the"
+    },
+    {
+     "t": 33.26,
+     "w": "electorate,"
+    },
+    {
+     "t": 33.72,
+     "w": "and"
+    },
+    {
+     "t": 33.98,
+     "w": "that's"
+    },
+    {
+     "t": 34.16,
+     "w": "always"
+    },
+    {
+     "t": 34.34,
+     "w": "gonna"
+    },
+    {
+     "t": 34.48,
+     "w": "be"
+    },
+    {
+     "t": 34.62,
+     "w": "the"
+    },
+    {
+     "t": 34.72,
+     "w": "more"
+    },
+    {
+     "t": 34.84,
+     "w": "activist"
+    },
+    {
+     "t": 35.3,
+     "w": "group,"
+    },
+    {
+     "t": 36.04,
+     "w": "the"
+    },
+    {
+     "t": 36.24,
+     "w": "more"
+    },
+    {
+     "t": 36.42,
+     "w": "extreme"
+    },
+    {
+     "t": 36.84,
+     "w": "group."
+    },
+    {
+     "t": 37.86,
+     "w": "So"
+    },
+    {
+     "t": 38.32,
+     "w": "it"
+    },
+    {
+     "t": 38.7,
+     "w": "completely"
+    },
+    {
+     "t": 39.22,
+     "w": "distorts"
+    },
+    {
+     "t": 39.82,
+     "w": "our"
+    },
+    {
+     "t": 40.0,
+     "w": "democracy"
+    },
+    {
+     "t": 41.06,
+     "w": "and"
+    },
+    {
+     "t": 41.38,
+     "w": "it"
+    },
+    {
+     "t": 41.54,
+     "w": "creates"
+    },
+    {
+     "t": 41.92,
+     "w": "a"
+    },
+    {
+     "t": 42.26,
+     "w": "paralyzed"
+    },
+    {
+     "t": 43.0,
+     "w": "Congress,"
+    },
+    {
+     "t": 44.44,
+     "w": "a"
+    },
+    {
+     "t": 44.58,
+     "w": "polarized"
+    },
+    {
+     "t": 45.16,
+     "w": "Congress"
+    },
+    {
+     "t": 46.22,
+     "w": "and"
+    },
+    {
+     "t": 46.54,
+     "w": "makes"
+    },
+    {
+     "t": 46.8,
+     "w": "democracy"
+    },
+    {
+     "t": 47.64,
+     "w": "look"
+    },
+    {
+     "t": 48.44,
+     "w": "bad."
+    },
+    {
+     "t": 48.94,
+     "w": "And"
+    },
+    {
+     "t": 49.12,
+     "w": "the"
+    },
+    {
+     "t": 49.22,
+     "w": "way"
+    },
+    {
+     "t": 49.36,
+     "w": "to"
+    },
+    {
+     "t": 49.48,
+     "w": "fix"
+    },
+    {
+     "t": 49.78,
+     "w": "it"
+    },
+    {
+     "t": 49.98,
+     "w": "is"
+    },
+    {
+     "t": 50.76,
+     "w": "through"
+    },
+    {
+     "t": 50.92,
+     "w": "open"
+    },
+    {
+     "t": 51.24,
+     "w": "primaries"
+    },
+    {
+     "t": 52.24,
+     "w": "and"
+    },
+    {
+     "t": 52.56,
+     "w": "ranked"
+    },
+    {
+     "t": 52.74,
+     "w": "choice"
+    },
+    {
+     "t": 52.96,
+     "w": "voting."
+    },
+    {
+     "t": 53.54,
+     "w": "If"
+    },
+    {
+     "t": 53.7,
+     "w": "you"
+    },
+    {
+     "t": 53.76,
+     "w": "let"
+    },
+    {
+     "t": 53.92,
+     "w": "everybody"
+    },
+    {
+     "t": 54.2,
+     "w": "vote,"
+    },
+    {
+     "t": 55.06,
+     "w": "you'll"
+    },
+    {
+     "t": 55.22,
+     "w": "get"
+    },
+    {
+     "t": 55.34,
+     "w": "more"
+    },
+    {
+     "t": 55.52,
+     "w": "representative"
+    },
+    {
+     "t": 56.06,
+     "w": "turnout,"
+    },
+    {
+     "t": 56.42,
+     "w": "you'll"
+    },
+    {
+     "t": 56.64,
+     "w": "get"
+    },
+    {
+     "t": 56.76,
+     "w": "more"
+    },
+    {
+     "t": 56.94,
+     "w": "representative"
+    },
+    {
+     "t": 57.42,
+     "w": "results,"
+    },
+    {
+     "t": 57.94,
+     "w": "and"
+    },
+    {
+     "t": 58.0,
+     "w": "the"
+    },
+    {
+     "t": 58.06,
+     "w": "candidates"
+    },
+    {
+     "t": 58.26,
+     "w": "will"
+    },
+    {
+     "t": 58.48,
+     "w": "have"
+    },
+    {
+     "t": 58.6,
+     "w": "an"
+    },
+    {
+     "t": 58.68,
+     "w": "incentive"
+    },
+    {
+     "t": 59.02,
+     "w": "to"
+    },
+    {
+     "t": 59.24,
+     "w": "do"
+    },
+    {
+     "t": 59.44,
+     "w": "the"
+    },
+    {
+     "t": 59.58,
+     "w": "right"
+    },
+    {
+     "t": 59.8,
+     "w": "thing,"
+    },
+    {
+     "t": 60.16,
+     "w": "which"
+    },
+    {
+     "t": 60.3,
+     "w": "is"
+    },
+    {
+     "t": 60.44,
+     "w": "to"
+    },
+    {
+     "t": 60.54,
+     "w": "reason"
+    },
+    {
+     "t": 60.76,
+     "w": "together"
+    },
+    {
+     "t": 61.08,
+     "w": "across"
+    },
+    {
+     "t": 61.32,
+     "w": "the"
+    },
+    {
+     "t": 61.48,
+     "w": "aisle"
+    },
+    {
+     "t": 61.58,
+     "w": "to"
+    },
+    {
+     "t": 61.64,
+     "w": "solve"
+    },
+    {
+     "t": 61.78,
+     "w": "problems"
+    },
+    {
+     "t": 62.08,
+     "w": "on"
+    },
+    {
+     "t": 62.2,
+     "w": "behalf"
+    },
+    {
+     "t": 62.34,
+     "w": "of"
+    },
+    {
+     "t": 62.5,
+     "w": "the"
+    },
+    {
+     "t": 62.56,
+     "w": "American"
+    },
+    {
+     "t": 62.74,
+     "w": "people."
+    }
+   ],
+   "wpm": 182.0,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-E68tzfXFbJM": {
+  "take": "yt-E68tzfXFbJM",
+  "analyzedAt": "2026-10-18T01:42:54Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 44.31,
+   "loudnessDb": [
+    -25.1,
+    -29.1,
+    -31.9,
+    -27.6,
+    -31.8,
+    -27.0,
+    -26.2,
+    -26.8,
+    -28.3,
+    -27.2,
+    -29.2,
+    -28.3,
+    -27.8,
+    -23.3,
+    -26.8,
+    -27.3,
+    -24.1,
+    -30.1,
+    -24.2,
+    -25.6,
+    -27.9,
+    -30.2,
+    -30.2,
+    -31.1,
+    -28.0,
+    -26.4,
+    -24.4,
+    -28.4,
+    -26.6,
+    -31.5,
+    -25.4,
+    -27.9,
+    -26.5,
+    -26.5,
+    -25.1,
+    -29.8,
+    -26.0,
+    -25.5,
+    -28.4,
+    -21.2,
+    -25.9,
+    -31.5,
+    -25.6,
+    -27.7
+   ],
+   "pitchHz": [
+    170.6,
+    164.9,
+    127.5,
+    205.1,
+    140.4,
+    116.8,
+    200.0,
+    181.8,
+    197.5,
+    168.4,
+    131.2,
+    210.5,
+    235.3,
+    179.8,
+    130.1,
+    119.1,
+    139.1,
+    135.6,
+    210.5,
+    177.8,
+    149.5,
+    174.9,
+    122.1,
+    129.0,
+    123.2,
+    163.4,
+    148.1,
+    145.5,
+    191.7,
+    172.0,
+    155.3,
+    132.3,
+    167.8,
+    166.8,
+    187.2,
+    177.8,
+    181.8,
+    156.2,
+    113.9,
+    173.9,
+    144.9,
+    131.1,
+    151.7,
+    124.0,
+    400.0
+   ],
+   "pitchMedianHz": 156.9,
+   "pitchRangeHz": [
+    92.5,
+    210.5
+   ],
+   "pauses": [],
+   "loudestSec": [
+    13,
+    16,
+    39
+   ],
+   "quietestSec": [
+    2,
+    4,
+    41
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "You're going to want to see this. Somebody calls up and says, are you going to vote? And I say, well, I can't. I'm an independent. They say, well, you could register as a Democrat. You could. Yeah, but I'm not. I'm an independent. He's not alone. 47 % of voters now identify as independent, more than both parties combined. Yet in 16 states, over 23 million independent voters can't participate in taxpayer -funded primary elections. And because most districts are gerrymandered so red or so blue, the primary is the election. And the general election is a foregone conclusion, meaning these independent voters have no real say in who represents them. So what's the fix? Open all candidate primaries, where every voter gets one ballot with every candidate. It's time to give every voter a voice.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "You're"
+    },
+    {
+     "t": 0.18,
+     "w": "going"
+    },
+    {
+     "t": 0.3,
+     "w": "to"
+    },
+    {
+     "t": 0.38,
+     "w": "want"
+    },
+    {
+     "t": 0.48,
+     "w": "to"
+    },
+    {
+     "t": 0.58,
+     "w": "see"
+    },
+    {
+     "t": 0.76,
+     "w": "this."
+    },
+    {
+     "t": 1.24,
+     "w": "Somebody"
+    },
+    {
+     "t": 1.54,
+     "w": "calls"
+    },
+    {
+     "t": 1.9,
+     "w": "up"
+    },
+    {
+     "t": 2.2,
+     "w": "and"
+    },
+    {
+     "t": 2.34,
+     "w": "says,"
+    },
+    {
+     "t": 2.72,
+     "w": "are"
+    },
+    {
+     "t": 3.32,
+     "w": "you"
+    },
+    {
+     "t": 3.42,
+     "w": "going"
+    },
+    {
+     "t": 3.56,
+     "w": "to"
+    },
+    {
+     "t": 3.62,
+     "w": "vote?"
+    },
+    {
+     "t": 4.22,
+     "w": "And"
+    },
+    {
+     "t": 4.56,
+     "w": "I"
+    },
+    {
+     "t": 4.66,
+     "w": "say,"
+    },
+    {
+     "t": 4.84,
+     "w": "well,"
+    },
+    {
+     "t": 4.96,
+     "w": "I"
+    },
+    {
+     "t": 5.06,
+     "w": "can't."
+    },
+    {
+     "t": 5.44,
+     "w": "I'm"
+    },
+    {
+     "t": 5.5,
+     "w": "an"
+    },
+    {
+     "t": 5.62,
+     "w": "independent."
+    },
+    {
+     "t": 6.24,
+     "w": "They"
+    },
+    {
+     "t": 6.3,
+     "w": "say,"
+    },
+    {
+     "t": 6.5,
+     "w": "well,"
+    },
+    {
+     "t": 6.6,
+     "w": "you"
+    },
+    {
+     "t": 6.72,
+     "w": "could"
+    },
+    {
+     "t": 6.98,
+     "w": "register"
+    },
+    {
+     "t": 7.34,
+     "w": "as"
+    },
+    {
+     "t": 7.58,
+     "w": "a"
+    },
+    {
+     "t": 7.68,
+     "w": "Democrat."
+    },
+    {
+     "t": 8.36,
+     "w": "You"
+    },
+    {
+     "t": 8.44,
+     "w": "could."
+    },
+    {
+     "t": 8.96,
+     "w": "Yeah,"
+    },
+    {
+     "t": 9.22,
+     "w": "but"
+    },
+    {
+     "t": 9.62,
+     "w": "I'm"
+    },
+    {
+     "t": 9.9,
+     "w": "not."
+    },
+    {
+     "t": 10.56,
+     "w": "I'm"
+    },
+    {
+     "t": 10.9,
+     "w": "an"
+    },
+    {
+     "t": 11.0,
+     "w": "independent."
+    },
+    {
+     "t": 11.96,
+     "w": "He's"
+    },
+    {
+     "t": 12.14,
+     "w": "not"
+    },
+    {
+     "t": 12.26,
+     "w": "alone."
+    },
+    {
+     "t": 13.04,
+     "w": "47"
+    },
+    {
+     "t": 13.36,
+     "w": "%"
+    },
+    {
+     "t": 13.76,
+     "w": "of"
+    },
+    {
+     "t": 13.92,
+     "w": "voters"
+    },
+    {
+     "t": 14.12,
+     "w": "now"
+    },
+    {
+     "t": 14.4,
+     "w": "identify"
+    },
+    {
+     "t": 14.9,
+     "w": "as"
+    },
+    {
+     "t": 15.18,
+     "w": "independent,"
+    },
+    {
+     "t": 15.86,
+     "w": "more"
+    },
+    {
+     "t": 15.92,
+     "w": "than"
+    },
+    {
+     "t": 16.12,
+     "w": "both"
+    },
+    {
+     "t": 16.42,
+     "w": "parties"
+    },
+    {
+     "t": 16.84,
+     "w": "combined."
+    },
+    {
+     "t": 17.64,
+     "w": "Yet"
+    },
+    {
+     "t": 17.74,
+     "w": "in"
+    },
+    {
+     "t": 17.84,
+     "w": "16"
+    },
+    {
+     "t": 18.2,
+     "w": "states,"
+    },
+    {
+     "t": 18.84,
+     "w": "over"
+    },
+    {
+     "t": 18.94,
+     "w": "23"
+    },
+    {
+     "t": 19.4,
+     "w": "million"
+    },
+    {
+     "t": 19.74,
+     "w": "independent"
+    },
+    {
+     "t": 20.1,
+     "w": "voters"
+    },
+    {
+     "t": 20.56,
+     "w": "can't"
+    },
+    {
+     "t": 21.12,
+     "w": "participate"
+    },
+    {
+     "t": 21.64,
+     "w": "in"
+    },
+    {
+     "t": 22.02,
+     "w": "taxpayer"
+    },
+    {
+     "t": 22.44,
+     "w": "-funded"
+    },
+    {
+     "t": 22.94,
+     "w": "primary"
+    },
+    {
+     "t": 23.46,
+     "w": "elections."
+    },
+    {
+     "t": 24.34,
+     "w": "And"
+    },
+    {
+     "t": 24.48,
+     "w": "because"
+    },
+    {
+     "t": 24.7,
+     "w": "most"
+    },
+    {
+     "t": 25.0,
+     "w": "districts"
+    },
+    {
+     "t": 25.38,
+     "w": "are"
+    },
+    {
+     "t": 25.66,
+     "w": "gerrymandered"
+    },
+    {
+     "t": 26.3,
+     "w": "so"
+    },
+    {
+     "t": 26.64,
+     "w": "red"
+    },
+    {
+     "t": 26.94,
+     "w": "or"
+    },
+    {
+     "t": 27.12,
+     "w": "so"
+    },
+    {
+     "t": 27.38,
+     "w": "blue,"
+    },
+    {
+     "t": 28.08,
+     "w": "the"
+    },
+    {
+     "t": 28.16,
+     "w": "primary"
+    },
+    {
+     "t": 28.42,
+     "w": "is"
+    },
+    {
+     "t": 28.88,
+     "w": "the"
+    },
+    {
+     "t": 29.04,
+     "w": "election."
+    },
+    {
+     "t": 29.42,
+     "w": "And"
+    },
+    {
+     "t": 30.0,
+     "w": "the"
+    },
+    {
+     "t": 30.1,
+     "w": "general"
+    },
+    {
+     "t": 30.32,
+     "w": "election"
+    },
+    {
+     "t": 30.64,
+     "w": "is"
+    },
+    {
+     "t": 30.82,
+     "w": "a"
+    },
+    {
+     "t": 30.94,
+     "w": "foregone"
+    },
+    {
+     "t": 31.28,
+     "w": "conclusion,"
+    },
+    {
+     "t": 32.22,
+     "w": "meaning"
+    },
+    {
+     "t": 32.44,
+     "w": "these"
+    },
+    {
+     "t": 32.78,
+     "w": "independent"
+    },
+    {
+     "t": 33.06,
+     "w": "voters"
+    },
+    {
+     "t": 33.46,
+     "w": "have"
+    },
+    {
+     "t": 33.86,
+     "w": "no"
+    },
+    {
+     "t": 34.12,
+     "w": "real"
+    },
+    {
+     "t": 34.4,
+     "w": "say"
+    },
+    {
+     "t": 34.7,
+     "w": "in"
+    },
+    {
+     "t": 34.96,
+     "w": "who"
+    },
+    {
+     "t": 35.1,
+     "w": "represents"
+    },
+    {
+     "t": 35.52,
+     "w": "them."
+    },
+    {
+     "t": 36.18,
+     "w": "So"
+    },
+    {
+     "t": 36.28,
+     "w": "what's"
+    },
+    {
+     "t": 36.48,
+     "w": "the"
+    },
+    {
+     "t": 36.6,
+     "w": "fix?"
+    },
+    {
+     "t": 37.2,
+     "w": "Open"
+    },
+    {
+     "t": 37.46,
+     "w": "all"
+    },
+    {
+     "t": 37.74,
+     "w": "candidate"
+    },
+    {
+     "t": 38.06,
+     "w": "primaries,"
+    },
+    {
+     "t": 39.02,
+     "w": "where"
+    },
+    {
+     "t": 39.14,
+     "w": "every"
+    },
+    {
+     "t": 39.46,
+     "w": "voter"
+    },
+    {
+     "t": 39.78,
+     "w": "gets"
+    },
+    {
+     "t": 40.14,
+     "w": "one"
+    },
+    {
+     "t": 40.42,
+     "w": "ballot"
+    },
+    {
+     "t": 40.8,
+     "w": "with"
+    },
+    {
+     "t": 41.1,
+     "w": "every"
+    },
+    {
+     "t": 41.46,
+     "w": "candidate."
+    },
+    {
+     "t": 42.24,
+     "w": "It's"
+    },
+    {
+     "t": 42.28,
+     "w": "time"
+    },
+    {
+     "t": 42.42,
+     "w": "to"
+    },
+    {
+     "t": 42.58,
+     "w": "give"
+    },
+    {
+     "t": 42.7,
+     "w": "every"
+    },
+    {
+     "t": 43.02,
+     "w": "voter"
+    },
+    {
+     "t": 43.3,
+     "w": "a"
+    },
+    {
+     "t": 43.48,
+     "w": "voice."
+    }
+   ],
+   "wpm": 187.9,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-aL_D1KRXVyQ": {
+  "take": "yt-aL_D1KRXVyQ",
+  "analyzedAt": "2026-10-18T01:43:07Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 34.37,
+   "loudnessDb": [
+    -24.6,
+    -20.2,
+    -23.8,
+    -22.6,
+    -26.2,
+    -24.8,
+    -19.3,
+    -19.5,
+    -19.1,
+    -19.3,
+    -20.9,
+    -25.7,
+    -21.9,
+    -23.9,
+    -25.4,
+    -25.0,
+    -27.3,
+    -17.9,
+    -14.8,
+    -22.1,
+    -15.0,
+    -20.4,
+    -18.1,
+    -19.4,
+    -23.3,
+    -20.0,
+    -24.7,
+    -18.5,
+    -21.9,
+    -22.9,
+    -20.8,
+    -21.8,
+    -24.7,
+    -24.9
+   ],
+   "pitchHz": [
+    123.5,
+    111.1,
+    109.2,
+    107.0,
+    88.7,
+    92.8,
+    125.0,
+    126.0,
+    129.0,
+    152.4,
+    118.5,
+    120.3,
+    126.5,
+    127.5,
+    114.3,
+    94.1,
+    94.1,
+    131.1,
+    136.8,
+    133.3,
+    141.6,
+    125.0,
+    122.2,
+    111.1,
+    110.8,
+    115.1,
+    110.3,
+    140.2,
+    124.0,
+    133.9,
+    120.3,
+    112.7,
+    114.3,
+    112.7,
+    95.2
+   ],
+   "pitchMedianHz": 120.3,
+   "pitchRangeHz": [
+    97.6,
+    152.4
+   ],
+   "pauses": [],
+   "loudestSec": [
+    17,
+    18,
+    20
+   ],
+   "quietestSec": [
+    4,
+    11,
+    16
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "If I could kind of pick an analogy that would suit well with my children is we have a candy bucket at the house. You know, it's got sweets and some healthy, some less healthy. But the options are there. And to me, open primaries is the opportunity to look in the bucket. Who do we got? Who do we want to vote for? Who speaks to my values? Who speaks to what I'm interested in? And what's important to me? And also be aware that, you know, there's other people that are going to have different thoughts. And so like if I use the candy analogy, you know, I'm a big Reese's Cups person. My wife is a big Kit Kat person. Wouldn't it be sad if that was all we were given? Was two options. You know what? There's just times I'm not in the mood for Reese's Cup. And so I want to see what else is out there.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "If"
+    },
+    {
+     "t": 0.1,
+     "w": "I"
+    },
+    {
+     "t": 0.18,
+     "w": "could"
+    },
+    {
+     "t": 0.32,
+     "w": "kind"
+    },
+    {
+     "t": 0.52,
+     "w": "of"
+    },
+    {
+     "t": 0.68,
+     "w": "pick"
+    },
+    {
+     "t": 1.0,
+     "w": "an"
+    },
+    {
+     "t": 1.14,
+     "w": "analogy"
+    },
+    {
+     "t": 1.48,
+     "w": "that"
+    },
+    {
+     "t": 1.88,
+     "w": "would"
+    },
+    {
+     "t": 2.06,
+     "w": "suit"
+    },
+    {
+     "t": 2.28,
+     "w": "well"
+    },
+    {
+     "t": 2.46,
+     "w": "with"
+    },
+    {
+     "t": 2.6,
+     "w": "my"
+    },
+    {
+     "t": 2.7,
+     "w": "children"
+    },
+    {
+     "t": 2.96,
+     "w": "is"
+    },
+    {
+     "t": 3.24,
+     "w": "we"
+    },
+    {
+     "t": 3.56,
+     "w": "have"
+    },
+    {
+     "t": 3.66,
+     "w": "a"
+    },
+    {
+     "t": 3.76,
+     "w": "candy"
+    },
+    {
+     "t": 3.94,
+     "w": "bucket"
+    },
+    {
+     "t": 4.16,
+     "w": "at"
+    },
+    {
+     "t": 4.3,
+     "w": "the"
+    },
+    {
+     "t": 4.4,
+     "w": "house."
+    },
+    {
+     "t": 4.78,
+     "w": "You"
+    },
+    {
+     "t": 5.0,
+     "w": "know,"
+    },
+    {
+     "t": 5.14,
+     "w": "it's"
+    },
+    {
+     "t": 5.28,
+     "w": "got"
+    },
+    {
+     "t": 5.42,
+     "w": "sweets"
+    },
+    {
+     "t": 5.72,
+     "w": "and"
+    },
+    {
+     "t": 5.98,
+     "w": "some"
+    },
+    {
+     "t": 6.36,
+     "w": "healthy,"
+    },
+    {
+     "t": 6.76,
+     "w": "some"
+    },
+    {
+     "t": 6.9,
+     "w": "less"
+    },
+    {
+     "t": 7.24,
+     "w": "healthy."
+    },
+    {
+     "t": 7.64,
+     "w": "But"
+    },
+    {
+     "t": 7.68,
+     "w": "the"
+    },
+    {
+     "t": 7.78,
+     "w": "options"
+    },
+    {
+     "t": 8.06,
+     "w": "are"
+    },
+    {
+     "t": 8.26,
+     "w": "there."
+    },
+    {
+     "t": 8.82,
+     "w": "And"
+    },
+    {
+     "t": 8.82,
+     "w": "to"
+    },
+    {
+     "t": 9.3,
+     "w": "me,"
+    },
+    {
+     "t": 9.58,
+     "w": "open"
+    },
+    {
+     "t": 9.9,
+     "w": "primaries"
+    },
+    {
+     "t": 10.34,
+     "w": "is"
+    },
+    {
+     "t": 10.72,
+     "w": "the"
+    },
+    {
+     "t": 10.82,
+     "w": "opportunity"
+    },
+    {
+     "t": 11.12,
+     "w": "to"
+    },
+    {
+     "t": 11.54,
+     "w": "look"
+    },
+    {
+     "t": 12.0,
+     "w": "in"
+    },
+    {
+     "t": 12.12,
+     "w": "the"
+    },
+    {
+     "t": 12.2,
+     "w": "bucket."
+    },
+    {
+     "t": 12.64,
+     "w": "Who"
+    },
+    {
+     "t": 12.7,
+     "w": "do"
+    },
+    {
+     "t": 12.74,
+     "w": "we"
+    },
+    {
+     "t": 12.86,
+     "w": "got?"
+    },
+    {
+     "t": 13.32,
+     "w": "Who"
+    },
+    {
+     "t": 13.5,
+     "w": "do"
+    },
+    {
+     "t": 13.58,
+     "w": "we"
+    },
+    {
+     "t": 13.66,
+     "w": "want"
+    },
+    {
+     "t": 13.8,
+     "w": "to"
+    },
+    {
+     "t": 13.9,
+     "w": "vote"
+    },
+    {
+     "t": 13.98,
+     "w": "for?"
+    },
+    {
+     "t": 14.28,
+     "w": "Who"
+    },
+    {
+     "t": 14.38,
+     "w": "speaks"
+    },
+    {
+     "t": 14.66,
+     "w": "to"
+    },
+    {
+     "t": 14.82,
+     "w": "my"
+    },
+    {
+     "t": 14.94,
+     "w": "values?"
+    },
+    {
+     "t": 15.4,
+     "w": "Who"
+    },
+    {
+     "t": 15.48,
+     "w": "speaks"
+    },
+    {
+     "t": 15.76,
+     "w": "to"
+    },
+    {
+     "t": 15.96,
+     "w": "what"
+    },
+    {
+     "t": 16.16,
+     "w": "I'm"
+    },
+    {
+     "t": 16.36,
+     "w": "interested"
+    },
+    {
+     "t": 16.64,
+     "w": "in?"
+    },
+    {
+     "t": 17.0,
+     "w": "And"
+    },
+    {
+     "t": 17.06,
+     "w": "what's"
+    },
+    {
+     "t": 17.26,
+     "w": "important"
+    },
+    {
+     "t": 17.52,
+     "w": "to"
+    },
+    {
+     "t": 17.7,
+     "w": "me?"
+    },
+    {
+     "t": 18.08,
+     "w": "And"
+    },
+    {
+     "t": 18.38,
+     "w": "also"
+    },
+    {
+     "t": 18.8,
+     "w": "be"
+    },
+    {
+     "t": 18.98,
+     "w": "aware"
+    },
+    {
+     "t": 19.18,
+     "w": "that,"
+    },
+    {
+     "t": 19.74,
+     "w": "you"
+    },
+    {
+     "t": 19.88,
+     "w": "know,"
+    },
+    {
+     "t": 19.98,
+     "w": "there's"
+    },
+    {
+     "t": 20.12,
+     "w": "other"
+    },
+    {
+     "t": 20.28,
+     "w": "people"
+    },
+    {
+     "t": 20.54,
+     "w": "that"
+    },
+    {
+     "t": 20.72,
+     "w": "are"
+    },
+    {
+     "t": 20.82,
+     "w": "going"
+    },
+    {
+     "t": 20.94,
+     "w": "to"
+    },
+    {
+     "t": 21.0,
+     "w": "have"
+    },
+    {
+     "t": 21.1,
+     "w": "different"
+    },
+    {
+     "t": 21.34,
+     "w": "thoughts."
+    },
+    {
+     "t": 21.74,
+     "w": "And"
+    },
+    {
+     "t": 21.8,
+     "w": "so"
+    },
+    {
+     "t": 21.94,
+     "w": "like"
+    },
+    {
+     "t": 22.12,
+     "w": "if"
+    },
+    {
+     "t": 22.24,
+     "w": "I"
+    },
+    {
+     "t": 22.36,
+     "w": "use"
+    },
+    {
+     "t": 22.56,
+     "w": "the"
+    },
+    {
+     "t": 22.68,
+     "w": "candy"
+    },
+    {
+     "t": 22.92,
+     "w": "analogy,"
+    },
+    {
+     "t": 23.48,
+     "w": "you"
+    },
+    {
+     "t": 23.56,
+     "w": "know,"
+    },
+    {
+     "t": 23.68,
+     "w": "I'm"
+    },
+    {
+     "t": 23.96,
+     "w": "a"
+    },
+    {
+     "t": 24.04,
+     "w": "big"
+    },
+    {
+     "t": 24.22,
+     "w": "Reese's"
+    },
+    {
+     "t": 24.56,
+     "w": "Cups"
+    },
+    {
+     "t": 24.72,
+     "w": "person."
+    },
+    {
+     "t": 25.34,
+     "w": "My"
+    },
+    {
+     "t": 25.42,
+     "w": "wife"
+    },
+    {
+     "t": 25.7,
+     "w": "is"
+    },
+    {
+     "t": 25.84,
+     "w": "a"
+    },
+    {
+     "t": 25.94,
+     "w": "big"
+    },
+    {
+     "t": 26.04,
+     "w": "Kit"
+    },
+    {
+     "t": 26.22,
+     "w": "Kat"
+    },
+    {
+     "t": 26.36,
+     "w": "person."
+    },
+    {
+     "t": 26.9,
+     "w": "Wouldn't"
+    },
+    {
+     "t": 27.02,
+     "w": "it"
+    },
+    {
+     "t": 27.1,
+     "w": "be"
+    },
+    {
+     "t": 27.16,
+     "w": "sad"
+    },
+    {
+     "t": 27.42,
+     "w": "if"
+    },
+    {
+     "t": 27.58,
+     "w": "that"
+    },
+    {
+     "t": 27.7,
+     "w": "was"
+    },
+    {
+     "t": 27.86,
+     "w": "all"
+    },
+    {
+     "t": 28.34,
+     "w": "we"
+    },
+    {
+     "t": 28.48,
+     "w": "were"
+    },
+    {
+     "t": 28.58,
+     "w": "given?"
+    },
+    {
+     "t": 28.8,
+     "w": "Was"
+    },
+    {
+     "t": 29.1,
+     "w": "two"
+    },
+    {
+     "t": 29.28,
+     "w": "options."
+    },
+    {
+     "t": 30.1,
+     "w": "You"
+    },
+    {
+     "t": 30.12,
+     "w": "know"
+    },
+    {
+     "t": 30.18,
+     "w": "what?"
+    },
+    {
+     "t": 30.38,
+     "w": "There's"
+    },
+    {
+     "t": 30.52,
+     "w": "just"
+    },
+    {
+     "t": 30.62,
+     "w": "times"
+    },
+    {
+     "t": 30.84,
+     "w": "I'm"
+    },
+    {
+     "t": 31.02,
+     "w": "not"
+    },
+    {
+     "t": 31.12,
+     "w": "in"
+    },
+    {
+     "t": 31.22,
+     "w": "the"
+    },
+    {
+     "t": 31.3,
+     "w": "mood"
+    },
+    {
+     "t": 31.44,
+     "w": "for"
+    },
+    {
+     "t": 31.58,
+     "w": "Reese's"
+    },
+    {
+     "t": 31.88,
+     "w": "Cup."
+    },
+    {
+     "t": 32.3,
+     "w": "And"
+    },
+    {
+     "t": 32.42,
+     "w": "so"
+    },
+    {
+     "t": 32.58,
+     "w": "I"
+    },
+    {
+     "t": 32.84,
+     "w": "want"
+    },
+    {
+     "t": 32.98,
+     "w": "to"
+    },
+    {
+     "t": 33.06,
+     "w": "see"
+    },
+    {
+     "t": 33.16,
+     "w": "what"
+    },
+    {
+     "t": 33.3,
+     "w": "else"
+    },
+    {
+     "t": 33.46,
+     "w": "is"
+    },
+    {
+     "t": 33.58,
+     "w": "out"
+    },
+    {
+     "t": 33.72,
+     "w": "there."
+    }
+   ],
+   "wpm": 286.9,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-FQurRZMYXs4": {
+  "take": "yt-FQurRZMYXs4",
+  "analyzedAt": "2026-10-18T01:43:20Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 64.41,
+   "loudnessDb": [
+    -20.5,
+    -19.4,
+    -28.2,
+    -28.1,
+    -18.2,
+    -22.6,
+    -17.5,
+    -24.5,
+    -17.1,
+    -39.8,
+    -46.7,
+    -35.3,
+    -18.2,
+    -26.1,
+    -22.8,
+    -27.9,
+    -17.0,
+    -21.3,
+    -18.3,
+    -23.0,
+    -23.1,
+    -22.4,
+    -19.0,
+    -27.6,
+    -20.7,
+    -22.9,
+    -29.6,
+    -25.5,
+    -22.8,
+    -23.4,
+    -26.4,
+    -17.6,
+    -22.8,
+    -18.7,
+    -23.4,
+    -20.7,
+    -24.2,
+    -23.6,
+    -22.7,
+    -22.2,
+    -24.8,
+    -23.1,
+    -22.9,
+    -20.4,
+    -21.6,
+    -25.5,
+    -21.8,
+    -21.4,
+    -24.1,
+    -23.5,
+    -21.9,
+    -26.5,
+    -25.8,
+    -26.9,
+    -23.9,
+    -25.2,
+    -28.1,
+    -24.7,
+    -24.8,
+    -24.7,
+    -24.9,
+    -24.9,
+    -30.5,
+    -29.2
+   ],
+   "pitchHz": [
+    202.5,
+    134.5,
+    132.1,
+    158.4,
+    203.1,
+    219.2,
+    166.7,
+    136.8,
+    195.6,
+    214.8,
+    390.2,
+    192.8,
+    151.9,
+    197.5,
+    227.0,
+    204.1,
+    206.4,
+    216.2,
+    253.2,
+    132.8,
+    146.8,
+    222.2,
+    159.6,
+    125.0,
+    125.0,
+    113.9,
+    110.3,
+    144.8,
+    117.6,
+    122.6,
+    110.7,
+    217.7,
+    142.4,
+    180.9,
+    120.0,
+    178.9,
+    154.9,
+    142.9,
+    114.3,
+    155.3,
+    115.1,
+    118.0,
+    210.5,
+    139.1,
+    122.7,
+    179.8,
+    131.1,
+    125.0,
+    124.0,
+    234.2,
+    155.4,
+    122.1,
+    141.2,
+    124.0,
+    183.9,
+    130.1,
+    122.1,
+    111.1,
+    116.8,
+    129.0,
+    159.2,
+    168.4,
+    190.5,
+    95.2,
+    164.9
+   ],
+   "pitchMedianHz": 146.8,
+   "pitchRangeHz": [
+    108.8,
+    255.2
+   ],
+   "pauses": [
+    {
+     "t": 9.3,
+     "sec": 0.6
+    },
+    {
+     "t": 10.0,
+     "sec": 0.3
+    },
+    {
+     "t": 10.4,
+     "sec": 0.8
+    }
+   ],
+   "loudestSec": [
+    6,
+    8,
+    16
+   ],
+   "quietestSec": [
+    9,
+    10,
+    11
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "Real quick, name me another job on the planet where you can have a 13 % success rate and keep that job forever. Don't worry, I'll wait. Yeah, you can't. If a surgeon had a 13 % success rate, they would lose their license immediately. If a contractor built houses that collapsed 87 % of the time they'd be in handcuffs, but Congress gets to do this every single year, but why? Because newsflash to November elections are an illusion. Over 90 % of elections are decided months earlier in these low turnout primaries where party bosses get to pick the winners before everyday people have a chance to step into the booth. In other words, career politicians ain't scared of losing a job to you, they're afraid of party insiders running a primary challenger against them. They change the rules so that your frustration costs them nothing. Therefore, open primaries break the security system and put the power back in the hands of the folks who it's supposed to belong to in the first place, you, the everyday voter.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "Real"
+    },
+    {
+     "t": 0.46,
+     "w": "quick,"
+    },
+    {
+     "t": 1.1,
+     "w": "name"
+    },
+    {
+     "t": 1.24,
+     "w": "me"
+    },
+    {
+     "t": 1.46,
+     "w": "another"
+    },
+    {
+     "t": 1.7,
+     "w": "job"
+    },
+    {
+     "t": 2.16,
+     "w": "on"
+    },
+    {
+     "t": 2.82,
+     "w": "the"
+    },
+    {
+     "t": 2.96,
+     "w": "planet"
+    },
+    {
+     "t": 3.42,
+     "w": "where"
+    },
+    {
+     "t": 4.04,
+     "w": "you"
+    },
+    {
+     "t": 4.14,
+     "w": "can"
+    },
+    {
+     "t": 4.28,
+     "w": "have"
+    },
+    {
+     "t": 4.46,
+     "w": "a"
+    },
+    {
+     "t": 4.72,
+     "w": "13"
+    },
+    {
+     "t": 5.26,
+     "w": "%"
+    },
+    {
+     "t": 5.74,
+     "w": "success"
+    },
+    {
+     "t": 6.1,
+     "w": "rate"
+    },
+    {
+     "t": 6.44,
+     "w": "and"
+    },
+    {
+     "t": 6.56,
+     "w": "keep"
+    },
+    {
+     "t": 6.66,
+     "w": "that"
+    },
+    {
+     "t": 6.84,
+     "w": "job"
+    },
+    {
+     "t": 7.06,
+     "w": "forever."
+    },
+    {
+     "t": 7.86,
+     "w": "Don't"
+    },
+    {
+     "t": 8.4,
+     "w": "worry,"
+    },
+    {
+     "t": 8.76,
+     "w": "I'll"
+    },
+    {
+     "t": 8.88,
+     "w": "wait."
+    },
+    {
+     "t": 11.59,
+     "w": "Yeah,"
+    },
+    {
+     "t": 12.01,
+     "w": "you"
+    },
+    {
+     "t": 12.13,
+     "w": "can't."
+    },
+    {
+     "t": 12.59,
+     "w": "If"
+    },
+    {
+     "t": 12.63,
+     "w": "a"
+    },
+    {
+     "t": 12.81,
+     "w": "surgeon"
+    },
+    {
+     "t": 13.19,
+     "w": "had"
+    },
+    {
+     "t": 13.77,
+     "w": "a"
+    },
+    {
+     "t": 13.89,
+     "w": "13"
+    },
+    {
+     "t": 14.43,
+     "w": "%"
+    },
+    {
+     "t": 14.77,
+     "w": "success"
+    },
+    {
+     "t": 15.11,
+     "w": "rate,"
+    },
+    {
+     "t": 15.97,
+     "w": "they"
+    },
+    {
+     "t": 16.37,
+     "w": "would"
+    },
+    {
+     "t": 16.53,
+     "w": "lose"
+    },
+    {
+     "t": 16.71,
+     "w": "their"
+    },
+    {
+     "t": 16.85,
+     "w": "license"
+    },
+    {
+     "t": 17.11,
+     "w": "immediately."
+    },
+    {
+     "t": 17.89,
+     "w": "If"
+    },
+    {
+     "t": 18.09,
+     "w": "a"
+    },
+    {
+     "t": 18.35,
+     "w": "contractor"
+    },
+    {
+     "t": 19.03,
+     "w": "built"
+    },
+    {
+     "t": 19.39,
+     "w": "houses"
+    },
+    {
+     "t": 19.85,
+     "w": "that"
+    },
+    {
+     "t": 20.15,
+     "w": "collapsed"
+    },
+    {
+     "t": 20.65,
+     "w": "87"
+    },
+    {
+     "t": 21.45,
+     "w": "%"
+    },
+    {
+     "t": 22.07,
+     "w": "of"
+    },
+    {
+     "t": 22.25,
+     "w": "the"
+    },
+    {
+     "t": 22.35,
+     "w": "time"
+    },
+    {
+     "t": 22.59,
+     "w": "they'd"
+    },
+    {
+     "t": 22.77,
+     "w": "be"
+    },
+    {
+     "t": 22.87,
+     "w": "in"
+    },
+    {
+     "t": 22.99,
+     "w": "handcuffs,"
+    },
+    {
+     "t": 23.97,
+     "w": "but"
+    },
+    {
+     "t": 24.11,
+     "w": "Congress"
+    },
+    {
+     "t": 24.41,
+     "w": "gets"
+    },
+    {
+     "t": 24.63,
+     "w": "to"
+    },
+    {
+     "t": 24.79,
+     "w": "do"
+    },
+    {
+     "t": 24.89,
+     "w": "this"
+    },
+    {
+     "t": 25.05,
+     "w": "every"
+    },
+    {
+     "t": 25.31,
+     "w": "single"
+    },
+    {
+     "t": 25.53,
+     "w": "year,"
+    },
+    {
+     "t": 26.45,
+     "w": "but"
+    },
+    {
+     "t": 26.65,
+     "w": "why?"
+    },
+    {
+     "t": 27.39,
+     "w": "Because"
+    },
+    {
+     "t": 27.81,
+     "w": "newsflash"
+    },
+    {
+     "t": 28.71,
+     "w": "to"
+    },
+    {
+     "t": 29.23,
+     "w": "November"
+    },
+    {
+     "t": 29.47,
+     "w": "elections"
+    },
+    {
+     "t": 29.91,
+     "w": "are"
+    },
+    {
+     "t": 30.25,
+     "w": "an"
+    },
+    {
+     "t": 30.35,
+     "w": "illusion."
+    },
+    {
+     "t": 30.67,
+     "w": "Over"
+    },
+    {
+     "t": 31.17,
+     "w": "90"
+    },
+    {
+     "t": 31.67,
+     "w": "%"
+    },
+    {
+     "t": 31.97,
+     "w": "of"
+    },
+    {
+     "t": 32.19,
+     "w": "elections"
+    },
+    {
+     "t": 32.59,
+     "w": "are"
+    },
+    {
+     "t": 32.89,
+     "w": "decided"
+    },
+    {
+     "t": 33.21,
+     "w": "months"
+    },
+    {
+     "t": 33.57,
+     "w": "earlier"
+    },
+    {
+     "t": 34.17,
+     "w": "in"
+    },
+    {
+     "t": 34.63,
+     "w": "these"
+    },
+    {
+     "t": 34.79,
+     "w": "low"
+    },
+    {
+     "t": 34.99,
+     "w": "turnout"
+    },
+    {
+     "t": 35.27,
+     "w": "primaries"
+    },
+    {
+     "t": 36.03,
+     "w": "where"
+    },
+    {
+     "t": 36.51,
+     "w": "party"
+    },
+    {
+     "t": 36.95,
+     "w": "bosses"
+    },
+    {
+     "t": 37.43,
+     "w": "get"
+    },
+    {
+     "t": 37.67,
+     "w": "to"
+    },
+    {
+     "t": 37.79,
+     "w": "pick"
+    },
+    {
+     "t": 37.97,
+     "w": "the"
+    },
+    {
+     "t": 38.13,
+     "w": "winners"
+    },
+    {
+     "t": 38.33,
+     "w": "before"
+    },
+    {
+     "t": 38.67,
+     "w": "everyday"
+    },
+    {
+     "t": 39.13,
+     "w": "people"
+    },
+    {
+     "t": 39.51,
+     "w": "have"
+    },
+    {
+     "t": 39.69,
+     "w": "a"
+    },
+    {
+     "t": 39.85,
+     "w": "chance"
+    },
+    {
+     "t": 40.07,
+     "w": "to"
+    },
+    {
+     "t": 40.23,
+     "w": "step"
+    },
+    {
+     "t": 40.39,
+     "w": "into"
+    },
+    {
+     "t": 40.71,
+     "w": "the"
+    },
+    {
+     "t": 40.87,
+     "w": "booth."
+    },
+    {
+     "t": 41.55,
+     "w": "In"
+    },
+    {
+     "t": 41.65,
+     "w": "other"
+    },
+    {
+     "t": 41.79,
+     "w": "words,"
+    },
+    {
+     "t": 42.29,
+     "w": "career"
+    },
+    {
+     "t": 42.45,
+     "w": "politicians"
+    },
+    {
+     "t": 43.05,
+     "w": "ain't"
+    },
+    {
+     "t": 43.35,
+     "w": "scared"
+    },
+    {
+     "t": 43.59,
+     "w": "of"
+    },
+    {
+     "t": 43.73,
+     "w": "losing"
+    },
+    {
+     "t": 43.95,
+     "w": "a"
+    },
+    {
+     "t": 44.09,
+     "w": "job"
+    },
+    {
+     "t": 44.39,
+     "w": "to"
+    },
+    {
+     "t": 44.57,
+     "w": "you,"
+    },
+    {
+     "t": 45.41,
+     "w": "they're"
+    },
+    {
+     "t": 45.75,
+     "w": "afraid"
+    },
+    {
+     "t": 45.91,
+     "w": "of"
+    },
+    {
+     "t": 46.09,
+     "w": "party"
+    },
+    {
+     "t": 46.25,
+     "w": "insiders"
+    },
+    {
+     "t": 46.79,
+     "w": "running"
+    },
+    {
+     "t": 47.05,
+     "w": "a"
+    },
+    {
+     "t": 47.23,
+     "w": "primary"
+    },
+    {
+     "t": 47.55,
+     "w": "challenger"
+    },
+    {
+     "t": 48.25,
+     "w": "against"
+    },
+    {
+     "t": 48.79,
+     "w": "them."
+    },
+    {
+     "t": 49.35,
+     "w": "They"
+    },
+    {
+     "t": 49.61,
+     "w": "change"
+    },
+    {
+     "t": 50.11,
+     "w": "the"
+    },
+    {
+     "t": 50.41,
+     "w": "rules"
+    },
+    {
+     "t": 51.07,
+     "w": "so"
+    },
+    {
+     "t": 51.61,
+     "w": "that"
+    },
+    {
+     "t": 51.73,
+     "w": "your"
+    },
+    {
+     "t": 51.87,
+     "w": "frustration"
+    },
+    {
+     "t": 52.23,
+     "w": "costs"
+    },
+    {
+     "t": 52.69,
+     "w": "them"
+    },
+    {
+     "t": 52.93,
+     "w": "nothing."
+    },
+    {
+     "t": 53.81,
+     "w": "Therefore,"
+    },
+    {
+     "t": 54.83,
+     "w": "open"
+    },
+    {
+     "t": 55.45,
+     "w": "primaries"
+    },
+    {
+     "t": 56.13,
+     "w": "break"
+    },
+    {
+     "t": 56.55,
+     "w": "the"
+    },
+    {
+     "t": 56.73,
+     "w": "security"
+    },
+    {
+     "t": 57.11,
+     "w": "system"
+    },
+    {
+     "t": 57.57,
+     "w": "and"
+    },
+    {
+     "t": 57.75,
+     "w": "put"
+    },
+    {
+     "t": 57.85,
+     "w": "the"
+    },
+    {
+     "t": 58.01,
+     "w": "power"
+    },
+    {
+     "t": 58.35,
+     "w": "back"
+    },
+    {
+     "t": 58.73,
+     "w": "in"
+    },
+    {
+     "t": 58.91,
+     "w": "the"
+    },
+    {
+     "t": 59.01,
+     "w": "hands"
+    },
+    {
+     "t": 59.43,
+     "w": "of"
+    },
+    {
+     "t": 59.55,
+     "w": "the"
+    },
+    {
+     "t": 59.65,
+     "w": "folks"
+    },
+    {
+     "t": 59.91,
+     "w": "who"
+    },
+    {
+     "t": 60.09,
+     "w": "it's"
+    },
+    {
+     "t": 60.27,
+     "w": "supposed"
+    },
+    {
+     "t": 60.49,
+     "w": "to"
+    },
+    {
+     "t": 60.71,
+     "w": "belong"
+    },
+    {
+     "t": 60.91,
+     "w": "to"
+    },
+    {
+     "t": 61.21,
+     "w": "in"
+    },
+    {
+     "t": 61.33,
+     "w": "the"
+    },
+    {
+     "t": 61.41,
+     "w": "first"
+    },
+    {
+     "t": 61.65,
+     "w": "place,"
+    },
+    {
+     "t": 62.53,
+     "w": "you,"
+    },
+    {
+     "t": 63.11,
+     "w": "the"
+    },
+    {
+     "t": 63.39,
+     "w": "everyday"
+    },
+    {
+     "t": 63.63,
+     "w": "voter."
+    }
+   ],
+   "wpm": 168.7,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-dpKqCrIbBiM": {
+  "take": "yt-dpKqCrIbBiM",
+  "analyzedAt": "2026-10-18T01:43:46Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 133.4,
+   "loudnessDb": [
+    -22.2,
+    -26.5,
+    -22.7,
+    -22.3,
+    -28.7,
+    -25.6,
+    -25.5,
+    -24.1,
+    -25.2,
+    -26.3,
+    -28.7,
+    -25.5,
+    -25.6,
+    -22.3,
+    -25.2,
+    -26.2,
+    -31.1,
+    -29.2,
+    -29.8,
+    -30.4,
+    -30.7,
+    -25.9,
+    -25.1,
+    -25.6,
+    -43.5,
+    -26.8,
+    -24.0,
+    -27.1,
+    -21.3,
+    -28.4,
+    -28.3,
+    -27.3,
+    -31.6,
+    -29.6,
+    -24.3,
+    -32.3,
+    -35.9,
+    -29.4,
+    -25.7,
+    -27.0,
+    -27.7,
+    -29.3,
+    -34.3,
+    -28.1,
+    -29.2,
+    -33.1,
+    -25.5,
+    -27.1,
+    -29.4,
+    -29.1,
+    -29.3,
+    -33.4,
+    -23.4,
+    -29.6,
+    -30.5,
+    -25.2,
+    -24.4,
+    -27.6,
+    -27.3,
+    -27.5,
+    -26.4,
+    -26.9,
+    -22.5,
+    -23.6,
+    -22.4,
+    -21.0,
+    -23.1,
+    -28.4,
+    -22.7,
+    -28.3,
+    -33.4,
+    -23.9,
+    -23.4,
+    -27.7,
+    -28.6,
+    -24.7,
+    -26.3,
+    -27.0,
+    -31.0,
+    -33.1,
+    -21.3,
+    -26.4,
+    -23.4,
+    -29.2,
+    -28.7,
+    -25.1,
+    -26.8,
+    -24.0,
+    -34.7,
+    -24.0,
+    -27.4,
+    -25.3,
+    -27.5,
+    -29.3,
+    -35.1,
+    -26.8,
+    -33.3,
+    -27.3,
+    -27.7,
+    -29.9,
+    -37.1,
+    -27.9,
+    -27.9,
+    -26.4,
+    -26.3,
+    -30.3,
+    -28.5,
+    -24.4,
+    -27.9,
+    -26.1,
+    -29.7,
+    -28.0,
+    -25.6,
+    -27.4,
+    -30.0,
+    -29.8,
+    -24.9,
+    -23.8,
+    -24.6,
+    -27.2,
+    -26.8,
+    -23.6,
+    -23.9,
+    -25.0,
+    -25.4,
+    -22.7,
+    -24.8,
+    -26.4,
+    -25.2,
+    -27.8,
+    -29.1,
+    -23.2,
+    -28.0
+   ],
+   "pitchHz": [
+    183.9,
+    140.4,
+    178.9,
+    134.5,
+    139.4,
+    205.1,
+    138.0,
+    190.5,
+    164.4,
+    191.7,
+    129.0,
+    213.3,
+    139.1,
+    318.1,
+    211.9,
+    213.3,
+    200.0,
+    278.3,
+    169.3,
+    216.2,
+    128.0,
+    238.8,
+    223.8,
+    149.5,
+    193.5,
+    201.4,
+    157.6,
+    139.8,
+    141.0,
+    195.1,
+    163.3,
+    246.7,
+    248.1,
+    242.4,
+    219.2,
+    217.9,
+    242.4,
+    238.8,
+    290.9,
+    211.9,
+    213.3,
+    177.8,
+    273.5,
+    250.0,
+    188.2,
+    188.2,
+    205.1,
+    192.8,
+    197.5,
+    190.5,
+    190.5,
+    170.2,
+    159.6,
+    186.0,
+    254.2,
+    246.2,
+    250.0,
+    222.2,
+    200.8,
+    95.5,
+    242.5,
+    307.7,
+    113.5,
+    200.0,
+    108.1,
+    101.0,
+    400.0,
+    150.2,
+    137.9,
+    171.2,
+    181.7,
+    144.8,
+    127.5,
+    131.1,
+    170.2,
+    145.5,
+    130.1,
+    137.4,
+    216.2,
+    253.5,
+    175.8,
+    132.2,
+    139.1,
+    202.6,
+    114.3,
+    258.1,
+    258.1,
+    262.3,
+    219.2,
+    248.2,
+    258.1,
+    242.4,
+    228.6,
+    235.3,
+    293.6,
+    141.6,
+    131.1,
+    271.9,
+    293.6,
+    271.2,
+    250.0,
+    267.8,
+    127.0,
+    183.6,
+    222.2,
+    202.5,
+    290.9,
+    271.2,
+    254.0,
+    235.5,
+    183.9,
+    242.4,
+    313.7,
+    195.1,
+    181.5,
+    400.0,
+    151.7,
+    280.7,
+    238.8,
+    215.0,
+    202.5,
+    141.0,
+    161.6,
+    146.8,
+    147.5,
+    148.8,
+    125.0,
+    381.0,
+    246.2,
+    208.1,
+    381.0,
+    144.1,
+    115.1,
+    400.0
+   ],
+   "pitchMedianHz": 200.0,
+   "pitchRangeHz": [
+    116.8,
+    320.0
+   ],
+   "pauses": [
+    {
+     "t": 24.2,
+     "sec": 0.6
+    }
+   ],
+   "loudestSec": [
+    28,
+    65,
+    80
+   ],
+   "quietestSec": [
+    24,
+    36,
+    100
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "Football season is almost here. But imagine if the NFL announced something like this. Effective immediately, football is now available only to those who completed Form 17B pre -season fandom declaration. What? Only fans that declared their team loyalty before the season started are allowed to watch the Super Bowl. But what if you're like a casual fan? No football for you. No football for you! Undecided? Locked out. But what if you just moved and you're considering supporting your new home? Sorry! That would be ridiculous. Totally ridiculous. And yet, that's basically how American elections work. Okay, explain. In most elections, the real contest is not the general election in November. It's actually the party primary that's held months before. That is where the candidates are chosen, that's where the field gets narrowed, and that's where the teams are picked. So the primary is like the pre -season? Exactly. In many states, you have to be registered with a political party to vote in that party's primary. And in 16 states, independents or unaffiliated voters can be completely shut out. Hold on. So millions of voters help pay for the elections. They live under the laws, they deal with the consequences, but they can't participate in the election that often determines the winner. That is the problem. It feels like telling half the fans that can only show up to the game after it's basically over. Yeah, and worse yet, we don't have many fans showing up to begin with. In 2024, just 7 % of voters effectively elected 87 % of Congress. So what's the alternative? Open primaries. More specifically, all candidate primaries. Sounds cool, but what does that mean? One ballot, every candidate, every voter. Everyone gets the same ballot. No party gate, no separate stadium entrance. No, you picked the wrong jersey so you can't come in. Sold. Sold. So simple. It is, and it changes the incentives from the very beginning. So the football version is, don't let a few super fans decide the Super Bowl before the rest of the country even gets into the stadium. And make the candidates play for the whole crowd. Let everyone into the game.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "Football"
+    },
+    {
+     "t": 0.28,
+     "w": "season"
+    },
+    {
+     "t": 0.64,
+     "w": "is"
+    },
+    {
+     "t": 0.94,
+     "w": "almost"
+    },
+    {
+     "t": 1.28,
+     "w": "here."
+    },
+    {
+     "t": 2.16,
+     "w": "But"
+    },
+    {
+     "t": 2.32,
+     "w": "imagine"
+    },
+    {
+     "t": 2.6,
+     "w": "if"
+    },
+    {
+     "t": 2.8,
+     "w": "the"
+    },
+    {
+     "t": 2.92,
+     "w": "NFL"
+    },
+    {
+     "t": 3.22,
+     "w": "announced"
+    },
+    {
+     "t": 3.68,
+     "w": "something"
+    },
+    {
+     "t": 4.12,
+     "w": "like"
+    },
+    {
+     "t": 4.4,
+     "w": "this."
+    },
+    {
+     "t": 5.18,
+     "w": "Effective"
+    },
+    {
+     "t": 5.64,
+     "w": "immediately,"
+    },
+    {
+     "t": 6.36,
+     "w": "football"
+    },
+    {
+     "t": 6.58,
+     "w": "is"
+    },
+    {
+     "t": 6.88,
+     "w": "now"
+    },
+    {
+     "t": 7.12,
+     "w": "available"
+    },
+    {
+     "t": 7.54,
+     "w": "only"
+    },
+    {
+     "t": 8.0,
+     "w": "to"
+    },
+    {
+     "t": 8.2,
+     "w": "those"
+    },
+    {
+     "t": 8.44,
+     "w": "who"
+    },
+    {
+     "t": 8.68,
+     "w": "completed"
+    },
+    {
+     "t": 9.12,
+     "w": "Form"
+    },
+    {
+     "t": 9.48,
+     "w": "17B"
+    },
+    {
+     "t": 10.58,
+     "w": "pre"
+    },
+    {
+     "t": 11.24,
+     "w": "-season"
+    },
+    {
+     "t": 11.54,
+     "w": "fandom"
+    },
+    {
+     "t": 12.02,
+     "w": "declaration."
+    },
+    {
+     "t": 12.88,
+     "w": "What?"
+    },
+    {
+     "t": 13.62,
+     "w": "Only"
+    },
+    {
+     "t": 13.86,
+     "w": "fans"
+    },
+    {
+     "t": 14.18,
+     "w": "that"
+    },
+    {
+     "t": 14.5,
+     "w": "declared"
+    },
+    {
+     "t": 14.84,
+     "w": "their"
+    },
+    {
+     "t": 15.06,
+     "w": "team"
+    },
+    {
+     "t": 15.34,
+     "w": "loyalty"
+    },
+    {
+     "t": 15.76,
+     "w": "before"
+    },
+    {
+     "t": 16.42,
+     "w": "the"
+    },
+    {
+     "t": 16.7,
+     "w": "season"
+    },
+    {
+     "t": 16.96,
+     "w": "started"
+    },
+    {
+     "t": 17.4,
+     "w": "are"
+    },
+    {
+     "t": 17.8,
+     "w": "allowed"
+    },
+    {
+     "t": 18.1,
+     "w": "to"
+    },
+    {
+     "t": 18.4,
+     "w": "watch"
+    },
+    {
+     "t": 18.62,
+     "w": "the"
+    },
+    {
+     "t": 18.82,
+     "w": "Super"
+    },
+    {
+     "t": 19.0,
+     "w": "Bowl."
+    },
+    {
+     "t": 19.56,
+     "w": "But"
+    },
+    {
+     "t": 19.66,
+     "w": "what"
+    },
+    {
+     "t": 19.74,
+     "w": "if"
+    },
+    {
+     "t": 19.84,
+     "w": "you're"
+    },
+    {
+     "t": 20.0,
+     "w": "like"
+    },
+    {
+     "t": 20.14,
+     "w": "a"
+    },
+    {
+     "t": 20.24,
+     "w": "casual"
+    },
+    {
+     "t": 20.8,
+     "w": "fan?"
+    },
+    {
+     "t": 21.5,
+     "w": "No"
+    },
+    {
+     "t": 21.6,
+     "w": "football"
+    },
+    {
+     "t": 21.86,
+     "w": "for"
+    },
+    {
+     "t": 22.14,
+     "w": "you."
+    },
+    {
+     "t": 22.5,
+     "w": "No"
+    },
+    {
+     "t": 22.7,
+     "w": "football"
+    },
+    {
+     "t": 22.9,
+     "w": "for"
+    },
+    {
+     "t": 23.08,
+     "w": "you!"
+    },
+    {
+     "t": 23.52,
+     "w": "Undecided?"
+    },
+    {
+     "t": 24.84,
+     "w": "Locked"
+    },
+    {
+     "t": 25.4,
+     "w": "out."
+    },
+    {
+     "t": 25.78,
+     "w": "But"
+    },
+    {
+     "t": 25.88,
+     "w": "what"
+    },
+    {
+     "t": 25.96,
+     "w": "if"
+    },
+    {
+     "t": 26.04,
+     "w": "you"
+    },
+    {
+     "t": 26.12,
+     "w": "just"
+    },
+    {
+     "t": 26.32,
+     "w": "moved"
+    },
+    {
+     "t": 26.78,
+     "w": "and"
+    },
+    {
+     "t": 27.04,
+     "w": "you're"
+    },
+    {
+     "t": 27.2,
+     "w": "considering"
+    },
+    {
+     "t": 27.66,
+     "w": "supporting"
+    },
+    {
+     "t": 28.12,
+     "w": "your"
+    },
+    {
+     "t": 28.36,
+     "w": "new"
+    },
+    {
+     "t": 28.54,
+     "w": "home?"
+    },
+    {
+     "t": 28.72,
+     "w": "Sorry!"
+    },
+    {
+     "t": 29.02,
+     "w": "That"
+    },
+    {
+     "t": 29.66,
+     "w": "would"
+    },
+    {
+     "t": 29.8,
+     "w": "be"
+    },
+    {
+     "t": 30.02,
+     "w": "ridiculous."
+    },
+    {
+     "t": 31.16,
+     "w": "Totally"
+    },
+    {
+     "t": 31.54,
+     "w": "ridiculous."
+    },
+    {
+     "t": 32.66,
+     "w": "And"
+    },
+    {
+     "t": 32.88,
+     "w": "yet,"
+    },
+    {
+     "t": 33.42,
+     "w": "that's"
+    },
+    {
+     "t": 33.72,
+     "w": "basically"
+    },
+    {
+     "t": 34.2,
+     "w": "how"
+    },
+    {
+     "t": 34.44,
+     "w": "American"
+    },
+    {
+     "t": 34.78,
+     "w": "elections"
+    },
+    {
+     "t": 35.2,
+     "w": "work."
+    },
+    {
+     "t": 36.08,
+     "w": "Okay,"
+    },
+    {
+     "t": 36.92,
+     "w": "explain."
+    },
+    {
+     "t": 37.82,
+     "w": "In"
+    },
+    {
+     "t": 37.92,
+     "w": "most"
+    },
+    {
+     "t": 38.16,
+     "w": "elections,"
+    },
+    {
+     "t": 39.0,
+     "w": "the"
+    },
+    {
+     "t": 39.1,
+     "w": "real"
+    },
+    {
+     "t": 39.34,
+     "w": "contest"
+    },
+    {
+     "t": 39.76,
+     "w": "is"
+    },
+    {
+     "t": 40.22,
+     "w": "not"
+    },
+    {
+     "t": 40.56,
+     "w": "the"
+    },
+    {
+     "t": 40.92,
+     "w": "general"
+    },
+    {
+     "t": 41.2,
+     "w": "election"
+    },
+    {
+     "t": 41.7,
+     "w": "in"
+    },
+    {
+     "t": 42.0,
+     "w": "November."
+    },
+    {
+     "t": 42.74,
+     "w": "It's"
+    },
+    {
+     "t": 43.06,
+     "w": "actually"
+    },
+    {
+     "t": 43.44,
+     "w": "the"
+    },
+    {
+     "t": 43.62,
+     "w": "party"
+    },
+    {
+     "t": 43.88,
+     "w": "primary"
+    },
+    {
+     "t": 44.36,
+     "w": "that's"
+    },
+    {
+     "t": 44.74,
+     "w": "held"
+    },
+    {
+     "t": 44.92,
+     "w": "months"
+    },
+    {
+     "t": 45.28,
+     "w": "before."
+    },
+    {
+     "t": 46.12,
+     "w": "That"
+    },
+    {
+     "t": 46.32,
+     "w": "is"
+    },
+    {
+     "t": 46.6,
+     "w": "where"
+    },
+    {
+     "t": 46.72,
+     "w": "the"
+    },
+    {
+     "t": 46.82,
+     "w": "candidates"
+    },
+    {
+     "t": 47.1,
+     "w": "are"
+    },
+    {
+     "t": 47.34,
+     "w": "chosen,"
+    },
+    {
+     "t": 48.14,
+     "w": "that's"
+    },
+    {
+     "t": 48.54,
+     "w": "where"
+    },
+    {
+     "t": 48.66,
+     "w": "the"
+    },
+    {
+     "t": 48.76,
+     "w": "field"
+    },
+    {
+     "t": 48.96,
+     "w": "gets"
+    },
+    {
+     "t": 49.24,
+     "w": "narrowed,"
+    },
+    {
+     "t": 49.84,
+     "w": "and"
+    },
+    {
+     "t": 49.98,
+     "w": "that's"
+    },
+    {
+     "t": 50.32,
+     "w": "where"
+    },
+    {
+     "t": 50.44,
+     "w": "the"
+    },
+    {
+     "t": 50.54,
+     "w": "teams"
+    },
+    {
+     "t": 50.78,
+     "w": "are"
+    },
+    {
+     "t": 50.94,
+     "w": "picked."
+    },
+    {
+     "t": 51.58,
+     "w": "So"
+    },
+    {
+     "t": 51.76,
+     "w": "the"
+    },
+    {
+     "t": 51.9,
+     "w": "primary"
+    },
+    {
+     "t": 52.36,
+     "w": "is"
+    },
+    {
+     "t": 52.78,
+     "w": "like"
+    },
+    {
+     "t": 52.96,
+     "w": "the"
+    },
+    {
+     "t": 53.24,
+     "w": "pre"
+    },
+    {
+     "t": 53.44,
+     "w": "-season?"
+    },
+    {
+     "t": 54.16,
+     "w": "Exactly."
+    },
+    {
+     "t": 54.98,
+     "w": "In"
+    },
+    {
+     "t": 55.16,
+     "w": "many"
+    },
+    {
+     "t": 55.4,
+     "w": "states,"
+    },
+    {
+     "t": 55.9,
+     "w": "you"
+    },
+    {
+     "t": 56.02,
+     "w": "have"
+    },
+    {
+     "t": 56.18,
+     "w": "to"
+    },
+    {
+     "t": 56.3,
+     "w": "be"
+    },
+    {
+     "t": 56.42,
+     "w": "registered"
+    },
+    {
+     "t": 56.92,
+     "w": "with"
+    },
+    {
+     "t": 57.22,
+     "w": "a"
+    },
+    {
+     "t": 57.4,
+     "w": "political"
+    },
+    {
+     "t": 57.72,
+     "w": "party"
+    },
+    {
+     "t": 58.2,
+     "w": "to"
+    },
+    {
+     "t": 58.44,
+     "w": "vote"
+    },
+    {
+     "t": 58.74,
+     "w": "in"
+    },
+    {
+     "t": 58.96,
+     "w": "that"
+    },
+    {
+     "t": 59.1,
+     "w": "party's"
+    },
+    {
+     "t": 59.54,
+     "w": "primary."
+    },
+    {
+     "t": 60.3,
+     "w": "And"
+    },
+    {
+     "t": 60.4,
+     "w": "in"
+    },
+    {
+     "t": 60.56,
+     "w": "16"
+    },
+    {
+     "t": 60.98,
+     "w": "states,"
+    },
+    {
+     "t": 61.84,
+     "w": "independents"
+    },
+    {
+     "t": 62.64,
+     "w": "or"
+    },
+    {
+     "t": 62.78,
+     "w": "unaffiliated"
+    },
+    {
+     "t": 63.42,
+     "w": "voters"
+    },
+    {
+     "t": 63.8,
+     "w": "can"
+    },
+    {
+     "t": 64.06,
+     "w": "be"
+    },
+    {
+     "t": 64.22,
+     "w": "completely"
+    },
+    {
+     "t": 64.92,
+     "w": "shut"
+    },
+    {
+     "t": 65.36,
+     "w": "out."
+    },
+    {
+     "t": 66.34,
+     "w": "Hold"
+    },
+    {
+     "t": 66.82,
+     "w": "on."
+    },
+    {
+     "t": 67.62,
+     "w": "So"
+    },
+    {
+     "t": 67.7,
+     "w": "millions"
+    },
+    {
+     "t": 68.1,
+     "w": "of"
+    },
+    {
+     "t": 68.42,
+     "w": "voters"
+    },
+    {
+     "t": 68.68,
+     "w": "help"
+    },
+    {
+     "t": 69.02,
+     "w": "pay"
+    },
+    {
+     "t": 69.62,
+     "w": "for"
+    },
+    {
+     "t": 69.78,
+     "w": "the"
+    },
+    {
+     "t": 69.92,
+     "w": "elections."
+    },
+    {
+     "t": 71.04,
+     "w": "They"
+    },
+    {
+     "t": 71.14,
+     "w": "live"
+    },
+    {
+     "t": 71.52,
+     "w": "under"
+    },
+    {
+     "t": 71.72,
+     "w": "the"
+    },
+    {
+     "t": 71.9,
+     "w": "laws,"
+    },
+    {
+     "t": 72.32,
+     "w": "they"
+    },
+    {
+     "t": 72.4,
+     "w": "deal"
+    },
+    {
+     "t": 72.64,
+     "w": "with"
+    },
+    {
+     "t": 72.78,
+     "w": "the"
+    },
+    {
+     "t": 72.88,
+     "w": "consequences,"
+    },
+    {
+     "t": 74.04,
+     "w": "but"
+    },
+    {
+     "t": 74.64,
+     "w": "they"
+    },
+    {
+     "t": 74.76,
+     "w": "can't"
+    },
+    {
+     "t": 75.0,
+     "w": "participate"
+    },
+    {
+     "t": 75.4,
+     "w": "in"
+    },
+    {
+     "t": 75.72,
+     "w": "the"
+    },
+    {
+     "t": 75.82,
+     "w": "election"
+    },
+    {
+     "t": 76.16,
+     "w": "that"
+    },
+    {
+     "t": 76.32,
+     "w": "often"
+    },
+    {
+     "t": 76.78,
+     "w": "determines"
+    },
+    {
+     "t": 77.22,
+     "w": "the"
+    },
+    {
+     "t": 77.54,
+     "w": "winner."
+    },
+    {
+     "t": 78.16,
+     "w": "That"
+    },
+    {
+     "t": 78.56,
+     "w": "is"
+    },
+    {
+     "t": 79.14,
+     "w": "the"
+    },
+    {
+     "t": 79.28,
+     "w": "problem."
+    },
+    {
+     "t": 79.96,
+     "w": "It"
+    },
+    {
+     "t": 80.12,
+     "w": "feels"
+    },
+    {
+     "t": 80.3,
+     "w": "like"
+    },
+    {
+     "t": 80.44,
+     "w": "telling"
+    },
+    {
+     "t": 80.68,
+     "w": "half"
+    },
+    {
+     "t": 81.02,
+     "w": "the"
+    },
+    {
+     "t": 81.2,
+     "w": "fans"
+    },
+    {
+     "t": 81.54,
+     "w": "that"
+    },
+    {
+     "t": 81.74,
+     "w": "can"
+    },
+    {
+     "t": 81.84,
+     "w": "only"
+    },
+    {
+     "t": 82.2,
+     "w": "show"
+    },
+    {
+     "t": 82.4,
+     "w": "up"
+    },
+    {
+     "t": 82.54,
+     "w": "to"
+    },
+    {
+     "t": 82.64,
+     "w": "the"
+    },
+    {
+     "t": 82.74,
+     "w": "game"
+    },
+    {
+     "t": 83.64,
+     "w": "after"
+    },
+    {
+     "t": 83.98,
+     "w": "it's"
+    },
+    {
+     "t": 84.2,
+     "w": "basically"
+    },
+    {
+     "t": 84.58,
+     "w": "over."
+    },
+    {
+     "t": 85.18,
+     "w": "Yeah,"
+    },
+    {
+     "t": 85.68,
+     "w": "and"
+    },
+    {
+     "t": 85.84,
+     "w": "worse"
+    },
+    {
+     "t": 86.02,
+     "w": "yet,"
+    },
+    {
+     "t": 86.3,
+     "w": "we"
+    },
+    {
+     "t": 86.76,
+     "w": "don't"
+    },
+    {
+     "t": 86.92,
+     "w": "have"
+    },
+    {
+     "t": 87.08,
+     "w": "many"
+    },
+    {
+     "t": 87.28,
+     "w": "fans"
+    },
+    {
+     "t": 87.54,
+     "w": "showing"
+    },
+    {
+     "t": 87.78,
+     "w": "up"
+    },
+    {
+     "t": 87.94,
+     "w": "to"
+    },
+    {
+     "t": 88.08,
+     "w": "begin"
+    },
+    {
+     "t": 88.26,
+     "w": "with."
+    },
+    {
+     "t": 88.92,
+     "w": "In"
+    },
+    {
+     "t": 89.14,
+     "w": "2024,"
+    },
+    {
+     "t": 90.34,
+     "w": "just"
+    },
+    {
+     "t": 90.5,
+     "w": "7"
+    },
+    {
+     "t": 90.92,
+     "w": "%"
+    },
+    {
+     "t": 91.26,
+     "w": "of"
+    },
+    {
+     "t": 91.42,
+     "w": "voters"
+    },
+    {
+     "t": 91.62,
+     "w": "effectively"
+    },
+    {
+     "t": 92.24,
+     "w": "elected"
+    },
+    {
+     "t": 92.68,
+     "w": "87"
+    },
+    {
+     "t": 93.36,
+     "w": "%"
+    },
+    {
+     "t": 93.94,
+     "w": "of"
+    },
+    {
+     "t": 94.1,
+     "w": "Congress."
+    },
+    {
+     "t": 94.98,
+     "w": "So"
+    },
+    {
+     "t": 95.2,
+     "w": "what's"
+    },
+    {
+     "t": 95.82,
+     "w": "the"
+    },
+    {
+     "t": 95.92,
+     "w": "alternative?"
+    },
+    {
+     "t": 97.0,
+     "w": "Open"
+    },
+    {
+     "t": 97.26,
+     "w": "primaries."
+    },
+    {
+     "t": 98.24,
+     "w": "More"
+    },
+    {
+     "t": 98.36,
+     "w": "specifically,"
+    },
+    {
+     "t": 99.54,
+     "w": "all"
+    },
+    {
+     "t": 99.7,
+     "w": "candidate"
+    },
+    {
+     "t": 99.98,
+     "w": "primaries."
+    },
+    {
+     "t": 100.94,
+     "w": "Sounds"
+    },
+    {
+     "t": 101.18,
+     "w": "cool,"
+    },
+    {
+     "t": 101.5,
+     "w": "but"
+    },
+    {
+     "t": 102.18,
+     "w": "what"
+    },
+    {
+     "t": 102.7,
+     "w": "does"
+    },
+    {
+     "t": 102.9,
+     "w": "that"
+    },
+    {
+     "t": 103.06,
+     "w": "mean?"
+    },
+    {
+     "t": 103.6,
+     "w": "One"
+    },
+    {
+     "t": 103.82,
+     "w": "ballot,"
+    },
+    {
+     "t": 104.52,
+     "w": "every"
+    },
+    {
+     "t": 104.78,
+     "w": "candidate,"
+    },
+    {
+     "t": 105.6,
+     "w": "every"
+    },
+    {
+     "t": 105.82,
+     "w": "voter."
+    },
+    {
+     "t": 106.54,
+     "w": "Everyone"
+    },
+    {
+     "t": 106.86,
+     "w": "gets"
+    },
+    {
+     "t": 107.16,
+     "w": "the"
+    },
+    {
+     "t": 107.34,
+     "w": "same"
+    },
+    {
+     "t": 107.56,
+     "w": "ballot."
+    },
+    {
+     "t": 108.3,
+     "w": "No"
+    },
+    {
+     "t": 108.56,
+     "w": "party"
+    },
+    {
+     "t": 108.86,
+     "w": "gate,"
+    },
+    {
+     "t": 109.62,
+     "w": "no"
+    },
+    {
+     "t": 109.84,
+     "w": "separate"
+    },
+    {
+     "t": 110.2,
+     "w": "stadium"
+    },
+    {
+     "t": 110.52,
+     "w": "entrance."
+    },
+    {
+     "t": 111.5,
+     "w": "No,"
+    },
+    {
+     "t": 112.14,
+     "w": "you"
+    },
+    {
+     "t": 112.28,
+     "w": "picked"
+    },
+    {
+     "t": 112.52,
+     "w": "the"
+    },
+    {
+     "t": 112.7,
+     "w": "wrong"
+    },
+    {
+     "t": 112.86,
+     "w": "jersey"
+    },
+    {
+     "t": 113.24,
+     "w": "so"
+    },
+    {
+     "t": 113.48,
+     "w": "you"
+    },
+    {
+     "t": 113.68,
+     "w": "can't"
+    },
+    {
+     "t": 113.98,
+     "w": "come"
+    },
+    {
+     "t": 114.12,
+     "w": "in."
+    },
+    {
+     "t": 114.52,
+     "w": "Sold."
+    },
+    {
+     "t": 114.82,
+     "w": "Sold."
+    },
+    {
+     "t": 115.78,
+     "w": "So"
+    },
+    {
+     "t": 116.32,
+     "w": "simple."
+    },
+    {
+     "t": 117.04,
+     "w": "It"
+    },
+    {
+     "t": 117.24,
+     "w": "is,"
+    },
+    {
+     "t": 117.76,
+     "w": "and"
+    },
+    {
+     "t": 117.92,
+     "w": "it"
+    },
+    {
+     "t": 118.02,
+     "w": "changes"
+    },
+    {
+     "t": 118.32,
+     "w": "the"
+    },
+    {
+     "t": 118.56,
+     "w": "incentives"
+    },
+    {
+     "t": 118.96,
+     "w": "from"
+    },
+    {
+     "t": 119.34,
+     "w": "the"
+    },
+    {
+     "t": 119.5,
+     "w": "very"
+    },
+    {
+     "t": 119.8,
+     "w": "beginning."
+    },
+    {
+     "t": 120.52,
+     "w": "So"
+    },
+    {
+     "t": 120.7,
+     "w": "the"
+    },
+    {
+     "t": 120.82,
+     "w": "football"
+    },
+    {
+     "t": 121.08,
+     "w": "version"
+    },
+    {
+     "t": 121.48,
+     "w": "is,"
+    },
+    {
+     "t": 121.9,
+     "w": "don't"
+    },
+    {
+     "t": 122.16,
+     "w": "let"
+    },
+    {
+     "t": 122.3,
+     "w": "a"
+    },
+    {
+     "t": 122.42,
+     "w": "few"
+    },
+    {
+     "t": 122.56,
+     "w": "super"
+    },
+    {
+     "t": 122.88,
+     "w": "fans"
+    },
+    {
+     "t": 123.2,
+     "w": "decide"
+    },
+    {
+     "t": 123.74,
+     "w": "the"
+    },
+    {
+     "t": 123.98,
+     "w": "Super"
+    },
+    {
+     "t": 124.2,
+     "w": "Bowl"
+    },
+    {
+     "t": 124.46,
+     "w": "before"
+    },
+    {
+     "t": 125.04,
+     "w": "the"
+    },
+    {
+     "t": 125.38,
+     "w": "rest"
+    },
+    {
+     "t": 125.56,
+     "w": "of"
+    },
+    {
+     "t": 125.72,
+     "w": "the"
+    },
+    {
+     "t": 125.78,
+     "w": "country"
+    },
+    {
+     "t": 126.14,
+     "w": "even"
+    },
+    {
+     "t": 126.46,
+     "w": "gets"
+    },
+    {
+     "t": 126.68,
+     "w": "into"
+    },
+    {
+     "t": 126.9,
+     "w": "the"
+    },
+    {
+     "t": 127.06,
+     "w": "stadium."
+    },
+    {
+     "t": 127.76,
+     "w": "And"
+    },
+    {
+     "t": 128.04,
+     "w": "make"
+    },
+    {
+     "t": 128.26,
+     "w": "the"
+    },
+    {
+     "t": 128.46,
+     "w": "candidates"
+    },
+    {
+     "t": 128.82,
+     "w": "play"
+    },
+    {
+     "t": 129.22,
+     "w": "for"
+    },
+    {
+     "t": 129.9,
+     "w": "the"
+    },
+    {
+     "t": 130.02,
+     "w": "whole"
+    },
+    {
+     "t": 130.32,
+     "w": "crowd."
+    },
+    {
+     "t": 131.06,
+     "w": "Let"
+    },
+    {
+     "t": 131.28,
+     "w": "everyone"
+    },
+    {
+     "t": 131.88,
+     "w": "into"
+    },
+    {
+     "t": 132.36,
+     "w": "the"
+    },
+    {
+     "t": 132.56,
+     "w": "game."
+    }
+   ],
+   "wpm": 165.4,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-0chhhJcj6KU": {
+  "take": "yt-0chhhJcj6KU",
+  "analyzedAt": "2026-10-18T01:44:05Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 52.74,
+   "loudnessDb": [
+    -24.4,
+    -20.8,
+    -21.9,
+    -24.4,
+    -27.1,
+    -21.0,
+    -24.4,
+    -26.2,
+    -24.2,
+    -22.9,
+    -24.6,
+    -21.7,
+    -26.7,
+    -23.5,
+    -26.3,
+    -26.8,
+    -28.9,
+    -21.8,
+    -25.2,
+    -27.8,
+    -24.0,
+    -27.6,
+    -25.9,
+    -21.2,
+    -30.1,
+    -30.5,
+    -30.3,
+    -25.1,
+    -25.9,
+    -23.2,
+    -28.9,
+    -24.4,
+    -25.6,
+    -24.9,
+    -25.8,
+    -22.8,
+    -27.5,
+    -30.2,
+    -22.3,
+    -30.5,
+    -22.9,
+    -23.1,
+    -32.7,
+    -24.9,
+    -30.7,
+    -28.7,
+    -27.6,
+    -29.8,
+    -21.8,
+    -24.0,
+    -25.5,
+    -22.6
+   ],
+   "pitchHz": [
+    160.0,
+    142.9,
+    165.2,
+    155.3,
+    275.9,
+    178.8,
+    216.2,
+    174.9,
+    190.5,
+    192.8,
+    200.0,
+    202.5,
+    179.8,
+    229.1,
+    290.9,
+    390.2,
+    400.0,
+    186.0,
+    173.9,
+    400.0,
+    163.4,
+    400.0,
+    254.0,
+    237.2,
+    106.7,
+    168.6,
+    262.9,
+    179.8,
+    219.5,
+    246.2,
+    149.5,
+    174.9,
+    262.3,
+    183.9,
+    390.2,
+    381.8,
+    164.9,
+    137.9,
+    181.8,
+    121.2,
+    160.8,
+    299.1,
+    170.2,
+    163.6,
+    348.1,
+    296.3,
+    400.0,
+    89.6,
+    160.0,
+    172.0,
+    400.0,
+    373.9,
+    246.7
+   ],
+   "pitchMedianHz": 188.2,
+   "pitchRangeHz": [
+    133.6,
+    400.0
+   ],
+   "pauses": [],
+   "loudestSec": [
+    1,
+    5,
+    23
+   ],
+   "quietestSec": [
+    25,
+    42,
+    44
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "Look, our tax dollars were the ones paying for the balance, the polling places, the voting machines, but as an independent voter in a closed primary system, I'm told to either pick a party or sit out. That's actually taxation without choice. So, how do we solve this? It's simple. Open the primaries. Let voters in. Make it more competitive anyways. But I am so tired of political parties having these closed systems while they're using taxpayer funds. And me, as an independent, I can't participate. Open the primaries. Alright, that's all I got.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "Look,"
+    },
+    {
+     "t": 1.02,
+     "w": "our"
+    },
+    {
+     "t": 1.22,
+     "w": "tax"
+    },
+    {
+     "t": 1.52,
+     "w": "dollars"
+    },
+    {
+     "t": 1.9,
+     "w": "were"
+    },
+    {
+     "t": 2.64,
+     "w": "the"
+    },
+    {
+     "t": 2.84,
+     "w": "ones"
+    },
+    {
+     "t": 3.14,
+     "w": "paying"
+    },
+    {
+     "t": 3.46,
+     "w": "for"
+    },
+    {
+     "t": 3.66,
+     "w": "the"
+    },
+    {
+     "t": 3.76,
+     "w": "balance,"
+    },
+    {
+     "t": 4.72,
+     "w": "the"
+    },
+    {
+     "t": 5.12,
+     "w": "polling"
+    },
+    {
+     "t": 5.42,
+     "w": "places,"
+    },
+    {
+     "t": 6.52,
+     "w": "the"
+    },
+    {
+     "t": 6.68,
+     "w": "voting"
+    },
+    {
+     "t": 6.94,
+     "w": "machines,"
+    },
+    {
+     "t": 8.18,
+     "w": "but"
+    },
+    {
+     "t": 8.48,
+     "w": "as"
+    },
+    {
+     "t": 8.6,
+     "w": "an"
+    },
+    {
+     "t": 8.7,
+     "w": "independent"
+    },
+    {
+     "t": 9.04,
+     "w": "voter"
+    },
+    {
+     "t": 9.5,
+     "w": "in"
+    },
+    {
+     "t": 10.6,
+     "w": "a"
+    },
+    {
+     "t": 10.74,
+     "w": "closed"
+    },
+    {
+     "t": 11.1,
+     "w": "primary"
+    },
+    {
+     "t": 11.46,
+     "w": "system,"
+    },
+    {
+     "t": 12.56,
+     "w": "I'm"
+    },
+    {
+     "t": 13.04,
+     "w": "told"
+    },
+    {
+     "t": 13.22,
+     "w": "to"
+    },
+    {
+     "t": 13.38,
+     "w": "either"
+    },
+    {
+     "t": 13.6,
+     "w": "pick"
+    },
+    {
+     "t": 13.88,
+     "w": "a"
+    },
+    {
+     "t": 14.02,
+     "w": "party"
+    },
+    {
+     "t": 14.32,
+     "w": "or"
+    },
+    {
+     "t": 15.12,
+     "w": "sit"
+    },
+    {
+     "t": 15.34,
+     "w": "out."
+    },
+    {
+     "t": 16.84,
+     "w": "That's"
+    },
+    {
+     "t": 17.36,
+     "w": "actually"
+    },
+    {
+     "t": 18.0,
+     "w": "taxation"
+    },
+    {
+     "t": 19.18,
+     "w": "without"
+    },
+    {
+     "t": 20.24,
+     "w": "choice."
+    },
+    {
+     "t": 21.5,
+     "w": "So,"
+    },
+    {
+     "t": 22.84,
+     "w": "how"
+    },
+    {
+     "t": 23.54,
+     "w": "do"
+    },
+    {
+     "t": 23.62,
+     "w": "we"
+    },
+    {
+     "t": 23.76,
+     "w": "solve"
+    },
+    {
+     "t": 24.0,
+     "w": "this?"
+    },
+    {
+     "t": 25.22,
+     "w": "It's"
+    },
+    {
+     "t": 25.8,
+     "w": "simple."
+    },
+    {
+     "t": 26.86,
+     "w": "Open"
+    },
+    {
+     "t": 27.48,
+     "w": "the"
+    },
+    {
+     "t": 27.66,
+     "w": "primaries."
+    },
+    {
+     "t": 29.16,
+     "w": "Let"
+    },
+    {
+     "t": 29.56,
+     "w": "voters"
+    },
+    {
+     "t": 29.94,
+     "w": "in."
+    },
+    {
+     "t": 30.84,
+     "w": "Make"
+    },
+    {
+     "t": 31.24,
+     "w": "it"
+    },
+    {
+     "t": 31.36,
+     "w": "more"
+    },
+    {
+     "t": 31.52,
+     "w": "competitive"
+    },
+    {
+     "t": 31.96,
+     "w": "anyways."
+    },
+    {
+     "t": 33.28,
+     "w": "But"
+    },
+    {
+     "t": 33.7,
+     "w": "I"
+    },
+    {
+     "t": 33.84,
+     "w": "am"
+    },
+    {
+     "t": 33.94,
+     "w": "so"
+    },
+    {
+     "t": 34.3,
+     "w": "tired"
+    },
+    {
+     "t": 35.26,
+     "w": "of"
+    },
+    {
+     "t": 36.08,
+     "w": "political"
+    },
+    {
+     "t": 36.84,
+     "w": "parties"
+    },
+    {
+     "t": 37.32,
+     "w": "having"
+    },
+    {
+     "t": 38.28,
+     "w": "these"
+    },
+    {
+     "t": 38.5,
+     "w": "closed"
+    },
+    {
+     "t": 38.88,
+     "w": "systems"
+    },
+    {
+     "t": 39.54,
+     "w": "while"
+    },
+    {
+     "t": 40.56,
+     "w": "they're"
+    },
+    {
+     "t": 40.84,
+     "w": "using"
+    },
+    {
+     "t": 41.14,
+     "w": "taxpayer"
+    },
+    {
+     "t": 41.72,
+     "w": "funds."
+    },
+    {
+     "t": 42.64,
+     "w": "And"
+    },
+    {
+     "t": 42.9,
+     "w": "me,"
+    },
+    {
+     "t": 43.3,
+     "w": "as"
+    },
+    {
+     "t": 43.48,
+     "w": "an"
+    },
+    {
+     "t": 43.58,
+     "w": "independent,"
+    },
+    {
+     "t": 45.72,
+     "w": "I"
+    },
+    {
+     "t": 45.86,
+     "w": "can't"
+    },
+    {
+     "t": 46.12,
+     "w": "participate."
+    },
+    {
+     "t": 47.64,
+     "w": "Open"
+    },
+    {
+     "t": 48.38,
+     "w": "the"
+    },
+    {
+     "t": 49.04,
+     "w": "primaries."
+    },
+    {
+     "t": 50.74,
+     "w": "Alright,"
+    },
+    {
+     "t": 51.64,
+     "w": "that's"
+    },
+    {
+     "t": 51.86,
+     "w": "all"
+    },
+    {
+     "t": 51.98,
+     "w": "I"
+    },
+    {
+     "t": 52.1,
+     "w": "got."
+    }
+   ],
+   "wpm": 108.0,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-f5ZT7exidXs": {
+  "take": "yt-f5ZT7exidXs",
+  "analyzedAt": "2026-10-18T01:44:18Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 45.31,
+   "loudnessDb": [
+    -22.8,
+    -28.2,
+    -23.9,
+    -35.5,
+    -27.0,
+    -27.8,
+    -26.5,
+    -24.4,
+    -28.6,
+    -27.6,
+    -28.8,
+    -25.3,
+    -27.0,
+    -27.3,
+    -25.0,
+    -30.2,
+    -21.8,
+    -25.3,
+    -20.8,
+    -22.3,
+    -26.2,
+    -19.6,
+    -23.8,
+    -20.6,
+    -26.4,
+    -23.7,
+    -27.2,
+    -28.5,
+    -25.7,
+    -21.6,
+    -26.2,
+    -31.5,
+    -22.7,
+    -26.7,
+    -25.6,
+    -26.8,
+    -27.4,
+    -24.6,
+    -28.3,
+    -23.7,
+    -27.0,
+    -25.5,
+    -34.7,
+    -33.3,
+    -29.5
+   ],
+   "pitchHz": [
+    135.6,
+    117.2,
+    137.3,
+    119.0,
+    125.0,
+    136.6,
+    134.0,
+    123.1,
+    121.2,
+    112.3,
+    117.6,
+    113.5,
+    111.9,
+    114.3,
+    88.9,
+    89.8,
+    115.4,
+    188.2,
+    118.1,
+    113.1,
+    228.6,
+    158.4,
+    172.6,
+    137.9,
+    134.5,
+    95.8,
+    90.5,
+    91.0,
+    120.0,
+    131.1,
+    103.6,
+    90.5,
+    136.8,
+    98.5,
+    120.4,
+    143.8,
+    153.2,
+    135.1,
+    136.2,
+    124.0,
+    125.3,
+    120.8,
+    195.1,
+    104.5,
+    98.2,
+    132.2
+   ],
+   "pitchMedianHz": 121.2,
+   "pitchRangeHz": [
+    88.9,
+    190.5
+   ],
+   "pauses": [],
+   "loudestSec": [
+    18,
+    21,
+    23
+   ],
+   "quietestSec": [
+    3,
+    42,
+    43
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "I'm an independent and I'm paying for elections that independents can't participate in. That seems a little crazy to me. We fought so hard to get away from taxation without representation. It occurs to me now that is absolutely what's happening. I mean that's a pretty wild thing when you think about it. I mean if we were talking about there were two companies that dominated the the internet space for decades but now almost half people use other providers. We'd be talking about a pretty massive failure of those two businesses right? In the political space we're seeing massive exodus from the two -party system. Almost half of the Americans are political independents now. Is it fair that taxpayers pay for the two parties primaries that we aren't free to participate in? I don't think it's fair.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "I'm"
+    },
+    {
+     "t": 0.26,
+     "w": "an"
+    },
+    {
+     "t": 0.32,
+     "w": "independent"
+    },
+    {
+     "t": 0.52,
+     "w": "and"
+    },
+    {
+     "t": 1.48,
+     "w": "I'm"
+    },
+    {
+     "t": 1.88,
+     "w": "paying"
+    },
+    {
+     "t": 2.16,
+     "w": "for"
+    },
+    {
+     "t": 2.72,
+     "w": "elections"
+    },
+    {
+     "t": 3.02,
+     "w": "that"
+    },
+    {
+     "t": 4.04,
+     "w": "independents"
+    },
+    {
+     "t": 4.48,
+     "w": "can't"
+    },
+    {
+     "t": 4.78,
+     "w": "participate"
+    },
+    {
+     "t": 5.12,
+     "w": "in."
+    },
+    {
+     "t": 5.68,
+     "w": "That"
+    },
+    {
+     "t": 5.78,
+     "w": "seems"
+    },
+    {
+     "t": 5.94,
+     "w": "a"
+    },
+    {
+     "t": 6.06,
+     "w": "little"
+    },
+    {
+     "t": 6.14,
+     "w": "crazy"
+    },
+    {
+     "t": 6.4,
+     "w": "to"
+    },
+    {
+     "t": 6.56,
+     "w": "me."
+    },
+    {
+     "t": 6.92,
+     "w": "We"
+    },
+    {
+     "t": 7.02,
+     "w": "fought"
+    },
+    {
+     "t": 7.28,
+     "w": "so"
+    },
+    {
+     "t": 7.48,
+     "w": "hard"
+    },
+    {
+     "t": 7.78,
+     "w": "to"
+    },
+    {
+     "t": 8.0,
+     "w": "get"
+    },
+    {
+     "t": 8.12,
+     "w": "away"
+    },
+    {
+     "t": 8.32,
+     "w": "from"
+    },
+    {
+     "t": 8.56,
+     "w": "taxation"
+    },
+    {
+     "t": 9.42,
+     "w": "without"
+    },
+    {
+     "t": 9.8,
+     "w": "representation."
+    },
+    {
+     "t": 11.04,
+     "w": "It"
+    },
+    {
+     "t": 11.1,
+     "w": "occurs"
+    },
+    {
+     "t": 11.5,
+     "w": "to"
+    },
+    {
+     "t": 11.66,
+     "w": "me"
+    },
+    {
+     "t": 11.74,
+     "w": "now"
+    },
+    {
+     "t": 11.94,
+     "w": "that"
+    },
+    {
+     "t": 12.16,
+     "w": "is"
+    },
+    {
+     "t": 12.34,
+     "w": "absolutely"
+    },
+    {
+     "t": 12.98,
+     "w": "what's"
+    },
+    {
+     "t": 13.34,
+     "w": "happening."
+    },
+    {
+     "t": 13.82,
+     "w": "I"
+    },
+    {
+     "t": 13.9,
+     "w": "mean"
+    },
+    {
+     "t": 13.96,
+     "w": "that's"
+    },
+    {
+     "t": 14.14,
+     "w": "a"
+    },
+    {
+     "t": 14.26,
+     "w": "pretty"
+    },
+    {
+     "t": 14.38,
+     "w": "wild"
+    },
+    {
+     "t": 14.84,
+     "w": "thing"
+    },
+    {
+     "t": 15.1,
+     "w": "when"
+    },
+    {
+     "t": 15.24,
+     "w": "you"
+    },
+    {
+     "t": 15.34,
+     "w": "think"
+    },
+    {
+     "t": 15.48,
+     "w": "about"
+    },
+    {
+     "t": 15.74,
+     "w": "it."
+    },
+    {
+     "t": 15.96,
+     "w": "I"
+    },
+    {
+     "t": 15.96,
+     "w": "mean"
+    },
+    {
+     "t": 16.04,
+     "w": "if"
+    },
+    {
+     "t": 16.16,
+     "w": "we"
+    },
+    {
+     "t": 16.24,
+     "w": "were"
+    },
+    {
+     "t": 16.32,
+     "w": "talking"
+    },
+    {
+     "t": 16.54,
+     "w": "about"
+    },
+    {
+     "t": 16.78,
+     "w": "there"
+    },
+    {
+     "t": 17.38,
+     "w": "were"
+    },
+    {
+     "t": 17.48,
+     "w": "two"
+    },
+    {
+     "t": 17.66,
+     "w": "companies"
+    },
+    {
+     "t": 18.04,
+     "w": "that"
+    },
+    {
+     "t": 18.26,
+     "w": "dominated"
+    },
+    {
+     "t": 18.7,
+     "w": "the"
+    },
+    {
+     "t": 19.32,
+     "w": "the"
+    },
+    {
+     "t": 19.52,
+     "w": "internet"
+    },
+    {
+     "t": 19.74,
+     "w": "space"
+    },
+    {
+     "t": 20.16,
+     "w": "for"
+    },
+    {
+     "t": 20.66,
+     "w": "decades"
+    },
+    {
+     "t": 20.96,
+     "w": "but"
+    },
+    {
+     "t": 21.3,
+     "w": "now"
+    },
+    {
+     "t": 21.64,
+     "w": "almost"
+    },
+    {
+     "t": 22.5,
+     "w": "half"
+    },
+    {
+     "t": 22.76,
+     "w": "people"
+    },
+    {
+     "t": 23.04,
+     "w": "use"
+    },
+    {
+     "t": 23.34,
+     "w": "other"
+    },
+    {
+     "t": 23.56,
+     "w": "providers."
+    },
+    {
+     "t": 24.5,
+     "w": "We'd"
+    },
+    {
+     "t": 24.7,
+     "w": "be"
+    },
+    {
+     "t": 24.76,
+     "w": "talking"
+    },
+    {
+     "t": 24.98,
+     "w": "about"
+    },
+    {
+     "t": 25.24,
+     "w": "a"
+    },
+    {
+     "t": 25.36,
+     "w": "pretty"
+    },
+    {
+     "t": 25.5,
+     "w": "massive"
+    },
+    {
+     "t": 26.0,
+     "w": "failure"
+    },
+    {
+     "t": 26.76,
+     "w": "of"
+    },
+    {
+     "t": 27.08,
+     "w": "those"
+    },
+    {
+     "t": 27.26,
+     "w": "two"
+    },
+    {
+     "t": 27.42,
+     "w": "businesses"
+    },
+    {
+     "t": 27.76,
+     "w": "right?"
+    },
+    {
+     "t": 28.6,
+     "w": "In"
+    },
+    {
+     "t": 28.74,
+     "w": "the"
+    },
+    {
+     "t": 28.84,
+     "w": "political"
+    },
+    {
+     "t": 29.1,
+     "w": "space"
+    },
+    {
+     "t": 29.44,
+     "w": "we're"
+    },
+    {
+     "t": 29.76,
+     "w": "seeing"
+    },
+    {
+     "t": 29.92,
+     "w": "massive"
+    },
+    {
+     "t": 30.3,
+     "w": "exodus"
+    },
+    {
+     "t": 30.66,
+     "w": "from"
+    },
+    {
+     "t": 30.82,
+     "w": "the"
+    },
+    {
+     "t": 30.94,
+     "w": "two"
+    },
+    {
+     "t": 31.04,
+     "w": "-party"
+    },
+    {
+     "t": 31.24,
+     "w": "system."
+    },
+    {
+     "t": 32.14,
+     "w": "Almost"
+    },
+    {
+     "t": 32.3,
+     "w": "half"
+    },
+    {
+     "t": 32.6,
+     "w": "of"
+    },
+    {
+     "t": 32.7,
+     "w": "the"
+    },
+    {
+     "t": 32.78,
+     "w": "Americans"
+    },
+    {
+     "t": 33.12,
+     "w": "are"
+    },
+    {
+     "t": 33.8,
+     "w": "political"
+    },
+    {
+     "t": 34.3,
+     "w": "independents"
+    },
+    {
+     "t": 34.74,
+     "w": "now."
+    },
+    {
+     "t": 35.24,
+     "w": "Is"
+    },
+    {
+     "t": 35.34,
+     "w": "it"
+    },
+    {
+     "t": 35.44,
+     "w": "fair"
+    },
+    {
+     "t": 35.78,
+     "w": "that"
+    },
+    {
+     "t": 36.42,
+     "w": "taxpayers"
+    },
+    {
+     "t": 37.1,
+     "w": "pay"
+    },
+    {
+     "t": 37.72,
+     "w": "for"
+    },
+    {
+     "t": 38.7,
+     "w": "the"
+    },
+    {
+     "t": 38.98,
+     "w": "two"
+    },
+    {
+     "t": 39.16,
+     "w": "parties"
+    },
+    {
+     "t": 39.44,
+     "w": "primaries"
+    },
+    {
+     "t": 40.02,
+     "w": "that"
+    },
+    {
+     "t": 40.58,
+     "w": "we"
+    },
+    {
+     "t": 40.74,
+     "w": "aren't"
+    },
+    {
+     "t": 40.96,
+     "w": "free"
+    },
+    {
+     "t": 41.26,
+     "w": "to"
+    },
+    {
+     "t": 41.42,
+     "w": "participate"
+    },
+    {
+     "t": 41.76,
+     "w": "in?"
+    },
+    {
+     "t": 43.5,
+     "w": "I"
+    },
+    {
+     "t": 43.92,
+     "w": "don't"
+    },
+    {
+     "t": 44.04,
+     "w": "think"
+    },
+    {
+     "t": 44.1,
+     "w": "it's"
+    },
+    {
+     "t": 44.22,
+     "w": "fair."
+    }
+   ],
+   "wpm": 186.6,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-Ecwa3RKbO2Q": {
+  "take": "yt-Ecwa3RKbO2Q",
+  "analyzedAt": "2026-10-18T01:44:30Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 44.88,
+   "loudnessDb": [
+    -30.5,
+    -32.4,
+    -28.4,
+    -28.0,
+    -31.2,
+    -33.0,
+    -25.8,
+    -33.0,
+    -31.7,
+    -28.4,
+    -33.4,
+    -29.5,
+    -32.0,
+    -31.3,
+    -27.0,
+    -32.3,
+    -31.8,
+    -27.6,
+    -30.9,
+    -29.8,
+    -28.2,
+    -30.4,
+    -28.9,
+    -33.5,
+    -27.0,
+    -28.8,
+    -29.8,
+    -32.2,
+    -28.0,
+    -35.5,
+    -33.4,
+    -31.0,
+    -32.6,
+    -29.4,
+    -27.6,
+    -28.6,
+    -28.9,
+    -29.5,
+    -29.4,
+    -23.8,
+    -24.6,
+    -26.1,
+    -29.2,
+    -28.0
+   ],
+   "pitchHz": [
+    163.7,
+    117.0,
+    129.7,
+    120.3,
+    108.1,
+    141.6,
+    142.9,
+    114.9,
+    147.5,
+    120.3,
+    96.7,
+    141.6,
+    115.9,
+    141.6,
+    131.1,
+    109.6,
+    148.2,
+    150.9,
+    131.1,
+    126.0,
+    126.5,
+    144.9,
+    180.6,
+    108.2,
+    161.0,
+    131.1,
+    175.9,
+    243.2,
+    137.9,
+    231.9,
+    137.3,
+    130.5,
+    251.6,
+    126.2,
+    134.1,
+    122.4,
+    106.9,
+    302.0,
+    400.0,
+    183.9,
+    166.7,
+    115.1,
+    202.6,
+    195.1,
+    182.9
+   ],
+   "pitchMedianHz": 138.5,
+   "pitchRangeHz": [
+    101.0,
+    390.2
+   ],
+   "pauses": [],
+   "loudestSec": [
+    6,
+    39,
+    40
+   ],
+   "quietestSec": [
+    10,
+    23,
+    29
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "So now you have a situation in which 90 to 93 percent of members of Congress have one real election, and that's their primary. And unfortunately, the rules of primaries are, A, they shut out independent voters, let every American vote in every election, period. The primary is government funded, government administered, everybody should be able to vote in it. These are public elections, these primaries. So let the public participate. Everybody should be able to vote. But that's we have to change the culture. We have to educate and convince Americans that voting in primaries is not just something for the super parts, for the hyper part. Because the culture right now is wait till November, wait till November. But the decisions have all been made.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "So"
+    },
+    {
+     "t": 0.26,
+     "w": "now"
+    },
+    {
+     "t": 0.44,
+     "w": "you"
+    },
+    {
+     "t": 0.6,
+     "w": "have"
+    },
+    {
+     "t": 0.74,
+     "w": "a"
+    },
+    {
+     "t": 0.84,
+     "w": "situation"
+    },
+    {
+     "t": 1.18,
+     "w": "in"
+    },
+    {
+     "t": 1.62,
+     "w": "which"
+    },
+    {
+     "t": 1.88,
+     "w": "90"
+    },
+    {
+     "t": 2.5,
+     "w": "to"
+    },
+    {
+     "t": 2.76,
+     "w": "93"
+    },
+    {
+     "t": 3.3,
+     "w": "percent"
+    },
+    {
+     "t": 3.98,
+     "w": "of"
+    },
+    {
+     "t": 4.34,
+     "w": "members"
+    },
+    {
+     "t": 4.62,
+     "w": "of"
+    },
+    {
+     "t": 4.82,
+     "w": "Congress"
+    },
+    {
+     "t": 5.22,
+     "w": "have"
+    },
+    {
+     "t": 5.94,
+     "w": "one"
+    },
+    {
+     "t": 6.24,
+     "w": "real"
+    },
+    {
+     "t": 6.6,
+     "w": "election,"
+    },
+    {
+     "t": 7.3,
+     "w": "and"
+    },
+    {
+     "t": 7.42,
+     "w": "that's"
+    },
+    {
+     "t": 7.64,
+     "w": "their"
+    },
+    {
+     "t": 7.78,
+     "w": "primary."
+    },
+    {
+     "t": 8.58,
+     "w": "And"
+    },
+    {
+     "t": 8.7,
+     "w": "unfortunately,"
+    },
+    {
+     "t": 9.3,
+     "w": "the"
+    },
+    {
+     "t": 9.4,
+     "w": "rules"
+    },
+    {
+     "t": 9.62,
+     "w": "of"
+    },
+    {
+     "t": 9.78,
+     "w": "primaries"
+    },
+    {
+     "t": 10.28,
+     "w": "are,"
+    },
+    {
+     "t": 11.04,
+     "w": "A,"
+    },
+    {
+     "t": 11.38,
+     "w": "they"
+    },
+    {
+     "t": 11.5,
+     "w": "shut"
+    },
+    {
+     "t": 11.96,
+     "w": "out"
+    },
+    {
+     "t": 12.18,
+     "w": "independent"
+    },
+    {
+     "t": 12.58,
+     "w": "voters,"
+    },
+    {
+     "t": 13.64,
+     "w": "let"
+    },
+    {
+     "t": 13.88,
+     "w": "every"
+    },
+    {
+     "t": 14.24,
+     "w": "American"
+    },
+    {
+     "t": 14.6,
+     "w": "vote"
+    },
+    {
+     "t": 15.02,
+     "w": "in"
+    },
+    {
+     "t": 15.22,
+     "w": "every"
+    },
+    {
+     "t": 15.42,
+     "w": "election,"
+    },
+    {
+     "t": 16.02,
+     "w": "period."
+    },
+    {
+     "t": 16.76,
+     "w": "The"
+    },
+    {
+     "t": 16.84,
+     "w": "primary"
+    },
+    {
+     "t": 17.16,
+     "w": "is"
+    },
+    {
+     "t": 17.6,
+     "w": "government"
+    },
+    {
+     "t": 17.96,
+     "w": "funded,"
+    },
+    {
+     "t": 18.78,
+     "w": "government"
+    },
+    {
+     "t": 19.02,
+     "w": "administered,"
+    },
+    {
+     "t": 20.06,
+     "w": "everybody"
+    },
+    {
+     "t": 20.34,
+     "w": "should"
+    },
+    {
+     "t": 20.66,
+     "w": "be"
+    },
+    {
+     "t": 20.84,
+     "w": "able"
+    },
+    {
+     "t": 21.0,
+     "w": "to"
+    },
+    {
+     "t": 21.1,
+     "w": "vote"
+    },
+    {
+     "t": 21.3,
+     "w": "in"
+    },
+    {
+     "t": 21.44,
+     "w": "it."
+    },
+    {
+     "t": 21.66,
+     "w": "These"
+    },
+    {
+     "t": 21.78,
+     "w": "are"
+    },
+    {
+     "t": 21.88,
+     "w": "public"
+    },
+    {
+     "t": 22.38,
+     "w": "elections,"
+    },
+    {
+     "t": 23.5,
+     "w": "these"
+    },
+    {
+     "t": 23.62,
+     "w": "primaries."
+    },
+    {
+     "t": 24.2,
+     "w": "So"
+    },
+    {
+     "t": 24.36,
+     "w": "let"
+    },
+    {
+     "t": 24.5,
+     "w": "the"
+    },
+    {
+     "t": 24.6,
+     "w": "public"
+    },
+    {
+     "t": 24.84,
+     "w": "participate."
+    },
+    {
+     "t": 25.44,
+     "w": "Everybody"
+    },
+    {
+     "t": 25.68,
+     "w": "should"
+    },
+    {
+     "t": 26.0,
+     "w": "be"
+    },
+    {
+     "t": 26.16,
+     "w": "able"
+    },
+    {
+     "t": 26.28,
+     "w": "to"
+    },
+    {
+     "t": 26.42,
+     "w": "vote."
+    },
+    {
+     "t": 26.66,
+     "w": "But"
+    },
+    {
+     "t": 26.74,
+     "w": "that's"
+    },
+    {
+     "t": 26.96,
+     "w": "we"
+    },
+    {
+     "t": 27.62,
+     "w": "have"
+    },
+    {
+     "t": 28.4,
+     "w": "to"
+    },
+    {
+     "t": 28.54,
+     "w": "change"
+    },
+    {
+     "t": 28.78,
+     "w": "the"
+    },
+    {
+     "t": 29.4,
+     "w": "culture."
+    },
+    {
+     "t": 30.16,
+     "w": "We"
+    },
+    {
+     "t": 30.48,
+     "w": "have"
+    },
+    {
+     "t": 30.68,
+     "w": "to"
+    },
+    {
+     "t": 30.84,
+     "w": "educate"
+    },
+    {
+     "t": 31.42,
+     "w": "and"
+    },
+    {
+     "t": 32.48,
+     "w": "convince"
+    },
+    {
+     "t": 33.18,
+     "w": "Americans"
+    },
+    {
+     "t": 33.74,
+     "w": "that"
+    },
+    {
+     "t": 34.06,
+     "w": "voting"
+    },
+    {
+     "t": 34.56,
+     "w": "in"
+    },
+    {
+     "t": 34.84,
+     "w": "primaries"
+    },
+    {
+     "t": 35.4,
+     "w": "is"
+    },
+    {
+     "t": 35.6,
+     "w": "not"
+    },
+    {
+     "t": 35.9,
+     "w": "just"
+    },
+    {
+     "t": 36.14,
+     "w": "something"
+    },
+    {
+     "t": 36.54,
+     "w": "for"
+    },
+    {
+     "t": 36.74,
+     "w": "the"
+    },
+    {
+     "t": 36.86,
+     "w": "super"
+    },
+    {
+     "t": 37.26,
+     "w": "parts,"
+    },
+    {
+     "t": 37.9,
+     "w": "for"
+    },
+    {
+     "t": 38.38,
+     "w": "the"
+    },
+    {
+     "t": 38.5,
+     "w": "hyper"
+    },
+    {
+     "t": 38.78,
+     "w": "part."
+    },
+    {
+     "t": 39.08,
+     "w": "Because"
+    },
+    {
+     "t": 39.22,
+     "w": "the"
+    },
+    {
+     "t": 39.42,
+     "w": "culture"
+    },
+    {
+     "t": 39.78,
+     "w": "right"
+    },
+    {
+     "t": 40.1,
+     "w": "now"
+    },
+    {
+     "t": 40.46,
+     "w": "is"
+    },
+    {
+     "t": 41.04,
+     "w": "wait"
+    },
+    {
+     "t": 41.32,
+     "w": "till"
+    },
+    {
+     "t": 41.48,
+     "w": "November,"
+    },
+    {
+     "t": 41.94,
+     "w": "wait"
+    },
+    {
+     "t": 42.26,
+     "w": "till"
+    },
+    {
+     "t": 42.74,
+     "w": "November."
+    },
+    {
+     "t": 43.22,
+     "w": "But"
+    },
+    {
+     "t": 43.5,
+     "w": "the"
+    },
+    {
+     "t": 43.62,
+     "w": "decisions"
+    },
+    {
+     "t": 44.0,
+     "w": "have"
+    },
+    {
+     "t": 44.2,
+     "w": "all"
+    },
+    {
+     "t": 44.32,
+     "w": "been"
+    },
+    {
+     "t": 44.44,
+     "w": "made."
+    }
+   ],
+   "wpm": 170.5,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-3lfeAG7U1mw": {
+  "take": "yt-3lfeAG7U1mw",
+  "analyzedAt": "2026-10-18T01:44:41Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 41.81,
+   "loudnessDb": [
+    -23.0,
+    -28.0,
+    -23.9,
+    -29.1,
+    -23.3,
+    -33.7,
+    -23.6,
+    -27.3,
+    -26.8,
+    -24.8,
+    -25.7,
+    -27.8,
+    -22.8,
+    -24.3,
+    -29.6,
+    -29.5,
+    -23.5,
+    -25.8,
+    -26.8,
+    -25.6,
+    -25.0,
+    -29.6,
+    -24.9,
+    -25.1,
+    -23.7,
+    -25.4,
+    -23.1,
+    -25.1,
+    -21.1,
+    -26.8,
+    -27.6,
+    -21.4,
+    -24.9,
+    -25.5,
+    -26.4,
+    -28.2,
+    -27.3,
+    -27.0,
+    -25.7,
+    -26.5,
+    -28.6
+   ],
+   "pitchHz": [
+    183.9,
+    172.0,
+    132.9,
+    158.4,
+    134.5,
+    139.1,
+    129.1,
+    117.2,
+    123.1,
+    152.4,
+    146.8,
+    92.5,
+    145.7,
+    140.4,
+    138.5,
+    107.1,
+    150.9,
+    135.1,
+    141.0,
+    137.9,
+    130.8,
+    123.6,
+    136.8,
+    117.7,
+    123.7,
+    159.6,
+    149.5,
+    118.0,
+    177.8,
+    137.9,
+    119.9,
+    146.8,
+    124.0,
+    119.4,
+    107.0,
+    122.5,
+    132.2,
+    112.8,
+    113.1,
+    110.5,
+    110.3,
+    92.8
+   ],
+   "pitchMedianHz": 133.3,
+   "pitchRangeHz": [
+    97.9,
+    207.8
+   ],
+   "pauses": [],
+   "loudestSec": [
+    12,
+    28,
+    31
+   ],
+   "quietestSec": [
+    5,
+    14,
+    21
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "Every single week, 10 ,000 Americans change their voter registration from Democrat or Republican to independent. I don't think in a functioning democracy that you should require, you know, joining a private organization in order to vote. It's now 48 % of the country, fastest growing segment of the electorate. And yet our election system is set up where kind of independence are more, they're seen as interlopers and outsiders and they don't quite fit in the structure of the existing system. And that's something that's got to change if we want our democratic experiment to keep moving in a positive direction.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "Every"
+    },
+    {
+     "t": 0.38,
+     "w": "single"
+    },
+    {
+     "t": 0.78,
+     "w": "week,"
+    },
+    {
+     "t": 1.6,
+     "w": "10"
+    },
+    {
+     "t": 1.8,
+     "w": ",000"
+    },
+    {
+     "t": 2.36,
+     "w": "Americans"
+    },
+    {
+     "t": 3.1,
+     "w": "change"
+    },
+    {
+     "t": 4.06,
+     "w": "their"
+    },
+    {
+     "t": 4.32,
+     "w": "voter"
+    },
+    {
+     "t": 4.56,
+     "w": "registration"
+    },
+    {
+     "t": 5.26,
+     "w": "from"
+    },
+    {
+     "t": 6.2,
+     "w": "Democrat"
+    },
+    {
+     "t": 6.68,
+     "w": "or"
+    },
+    {
+     "t": 6.94,
+     "w": "Republican"
+    },
+    {
+     "t": 7.98,
+     "w": "to"
+    },
+    {
+     "t": 8.3,
+     "w": "independent."
+    },
+    {
+     "t": 9.16,
+     "w": "I"
+    },
+    {
+     "t": 9.3,
+     "w": "don't"
+    },
+    {
+     "t": 9.5,
+     "w": "think"
+    },
+    {
+     "t": 9.76,
+     "w": "in"
+    },
+    {
+     "t": 10.04,
+     "w": "a"
+    },
+    {
+     "t": 10.42,
+     "w": "functioning"
+    },
+    {
+     "t": 11.1,
+     "w": "democracy"
+    },
+    {
+     "t": 12.36,
+     "w": "that"
+    },
+    {
+     "t": 12.96,
+     "w": "you"
+    },
+    {
+     "t": 13.14,
+     "w": "should"
+    },
+    {
+     "t": 13.3,
+     "w": "require,"
+    },
+    {
+     "t": 14.18,
+     "w": "you"
+    },
+    {
+     "t": 15.66,
+     "w": "know,"
+    },
+    {
+     "t": 15.86,
+     "w": "joining"
+    },
+    {
+     "t": 16.14,
+     "w": "a"
+    },
+    {
+     "t": 16.34,
+     "w": "private"
+    },
+    {
+     "t": 16.72,
+     "w": "organization"
+    },
+    {
+     "t": 17.58,
+     "w": "in"
+    },
+    {
+     "t": 18.48,
+     "w": "order"
+    },
+    {
+     "t": 18.7,
+     "w": "to"
+    },
+    {
+     "t": 18.96,
+     "w": "vote."
+    },
+    {
+     "t": 19.52,
+     "w": "It's"
+    },
+    {
+     "t": 19.7,
+     "w": "now"
+    },
+    {
+     "t": 19.82,
+     "w": "48"
+    },
+    {
+     "t": 20.16,
+     "w": "%"
+    },
+    {
+     "t": 20.6,
+     "w": "of"
+    },
+    {
+     "t": 20.78,
+     "w": "the"
+    },
+    {
+     "t": 20.86,
+     "w": "country,"
+    },
+    {
+     "t": 22.0,
+     "w": "fastest"
+    },
+    {
+     "t": 22.4,
+     "w": "growing"
+    },
+    {
+     "t": 22.74,
+     "w": "segment"
+    },
+    {
+     "t": 24.06,
+     "w": "of"
+    },
+    {
+     "t": 24.34,
+     "w": "the"
+    },
+    {
+     "t": 24.44,
+     "w": "electorate."
+    },
+    {
+     "t": 25.32,
+     "w": "And"
+    },
+    {
+     "t": 25.6,
+     "w": "yet"
+    },
+    {
+     "t": 25.74,
+     "w": "our"
+    },
+    {
+     "t": 25.92,
+     "w": "election"
+    },
+    {
+     "t": 26.24,
+     "w": "system"
+    },
+    {
+     "t": 26.7,
+     "w": "is"
+    },
+    {
+     "t": 26.88,
+     "w": "set"
+    },
+    {
+     "t": 27.1,
+     "w": "up"
+    },
+    {
+     "t": 27.34,
+     "w": "where"
+    },
+    {
+     "t": 27.84,
+     "w": "kind"
+    },
+    {
+     "t": 28.06,
+     "w": "of"
+    },
+    {
+     "t": 28.14,
+     "w": "independence"
+    },
+    {
+     "t": 28.74,
+     "w": "are"
+    },
+    {
+     "t": 29.18,
+     "w": "more,"
+    },
+    {
+     "t": 30.88,
+     "w": "they're"
+    },
+    {
+     "t": 31.16,
+     "w": "seen"
+    },
+    {
+     "t": 31.34,
+     "w": "as"
+    },
+    {
+     "t": 31.5,
+     "w": "interlopers"
+    },
+    {
+     "t": 32.1,
+     "w": "and"
+    },
+    {
+     "t": 32.32,
+     "w": "outsiders"
+    },
+    {
+     "t": 32.78,
+     "w": "and"
+    },
+    {
+     "t": 33.18,
+     "w": "they"
+    },
+    {
+     "t": 33.28,
+     "w": "don't"
+    },
+    {
+     "t": 33.44,
+     "w": "quite"
+    },
+    {
+     "t": 33.62,
+     "w": "fit"
+    },
+    {
+     "t": 34.04,
+     "w": "in"
+    },
+    {
+     "t": 34.46,
+     "w": "the"
+    },
+    {
+     "t": 34.58,
+     "w": "structure"
+    },
+    {
+     "t": 34.9,
+     "w": "of"
+    },
+    {
+     "t": 35.16,
+     "w": "the"
+    },
+    {
+     "t": 35.26,
+     "w": "existing"
+    },
+    {
+     "t": 35.64,
+     "w": "system."
+    },
+    {
+     "t": 36.12,
+     "w": "And"
+    },
+    {
+     "t": 36.24,
+     "w": "that's"
+    },
+    {
+     "t": 36.48,
+     "w": "something"
+    },
+    {
+     "t": 36.66,
+     "w": "that's"
+    },
+    {
+     "t": 36.94,
+     "w": "got"
+    },
+    {
+     "t": 37.08,
+     "w": "to"
+    },
+    {
+     "t": 37.18,
+     "w": "change"
+    },
+    {
+     "t": 37.48,
+     "w": "if"
+    },
+    {
+     "t": 37.74,
+     "w": "we"
+    },
+    {
+     "t": 37.84,
+     "w": "want"
+    },
+    {
+     "t": 38.04,
+     "w": "our"
+    },
+    {
+     "t": 38.36,
+     "w": "democratic"
+    },
+    {
+     "t": 39.16,
+     "w": "experiment"
+    },
+    {
+     "t": 39.9,
+     "w": "to"
+    },
+    {
+     "t": 40.14,
+     "w": "keep"
+    },
+    {
+     "t": 40.32,
+     "w": "moving"
+    },
+    {
+     "t": 40.58,
+     "w": "in"
+    },
+    {
+     "t": 40.74,
+     "w": "a"
+    },
+    {
+     "t": 40.8,
+     "w": "positive"
+    },
+    {
+     "t": 41.08,
+     "w": "direction."
+    }
+   ],
+   "wpm": 147.3,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-ewdCt7Ym4g4": {
+  "take": "yt-ewdCt7Ym4g4",
+  "analyzedAt": "2026-10-18T01:44:56Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 59.69,
+   "loudnessDb": [
+    -15.8,
+    -19.5,
+    -22.7,
+    -31.9,
+    -21.5,
+    -24.3,
+    -29.9,
+    -20.9,
+    -33.7,
+    -31.6,
+    -27.3,
+    -19.1,
+    -28.4,
+    -19.4,
+    -26.9,
+    -28.0,
+    -23.7,
+    -27.9,
+    -26.5,
+    -27.0,
+    -35.2,
+    -24.4,
+    -25.4,
+    -25.2,
+    -20.8,
+    -14.6,
+    -15.2,
+    -23.9,
+    -17.3,
+    -23.0,
+    -20.0,
+    -32.1,
+    -25.4,
+    -31.6,
+    -32.9,
+    -32.5,
+    -21.0,
+    -19.7,
+    -21.2,
+    -20.0,
+    -19.8,
+    -22.8,
+    -33.0,
+    -32.8,
+    -26.9,
+    -23.9,
+    -32.9,
+    -40.6,
+    -23.2,
+    -18.3,
+    -25.2,
+    -28.5,
+    -16.3,
+    -22.5,
+    -22.7,
+    -41.8,
+    -16.9,
+    -21.5,
+    -31.8
+   ],
+   "pitchHz": [
+    205.1,
+    169.3,
+    139.2,
+    173.9,
+    180.9,
+    143.6,
+    181.8,
+    173.9,
+    141.6,
+    128.0,
+    175.8,
+    192.8,
+    188.4,
+    175.9,
+    155.3,
+    172.0,
+    160.1,
+    134.5,
+    150.2,
+    137.9,
+    177.8,
+    171.4,
+    156.8,
+    148.1,
+    258.1,
+    152.4,
+    195.1,
+    null,
+    216.2,
+    205.1,
+    163.3,
+    150.9,
+    128.0,
+    145.4,
+    147.1,
+    163.3,
+    245.2,
+    185.7,
+    222.2,
+    222.4,
+    145.5,
+    138.6,
+    107.4,
+    123.1,
+    186.0,
+    131.2,
+    130.1,
+    141.6,
+    133.4,
+    149.7,
+    166.7,
+    170.2,
+    189.3,
+    166.2,
+    165.8,
+    149.5,
+    180.8,
+    160.0,
+    181.8,
+    null
+   ],
+   "pitchMedianHz": 163.3,
+   "pitchRangeHz": [
+    126.0,
+    210.5
+   ],
+   "pauses": [
+    {
+     "t": 3.1,
+     "sec": 0.4
+    },
+    {
+     "t": 6.0,
+     "sec": 0.3
+    },
+    {
+     "t": 8.0,
+     "sec": 0.3
+    },
+    {
+     "t": 14.9,
+     "sec": 0.3
+    },
+    {
+     "t": 20.3,
+     "sec": 0.3
+    },
+    {
+     "t": 31.3,
+     "sec": 0.3
+    },
+    {
+     "t": 33.0,
+     "sec": 0.3
+    },
+    {
+     "t": 34.4,
+     "sec": 0.3
+    },
+    {
+     "t": 42.4,
+     "sec": 0.3
+    },
+    {
+     "t": 43.7,
+     "sec": 0.3
+    },
+    {
+     "t": 47.3,
+     "sec": 0.4
+    },
+    {
+     "t": 55.1,
+     "sec": 0.8
+    }
+   ],
+   "loudestSec": [
+    0,
+    25,
+    26
+   ],
+   "quietestSec": [
+    20,
+    47,
+    55
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "I genuinely think this would solve all the problems with America. Because you've gone to the left and you've gone to the right. And what, where I think most people live is in the center. It's a bit of compromise. I think there's two things need to happen. I think what you need in America is open primaries, so that people try and appeal to the masses, not to their own constituents. And then you need to limit terms on Congress and the Senate. You limit terms. And what? I don't blame, I don't blame Donald Trump for taking the power that he's taken. I blame a weak Congress and a weak judiciary. You need this country, the greatest piece of technology in this country is not AI or some new phone. It isn't. The greatest piece of technology you possess is the Constitution. 250 years old. It's fantastic. But the checks and balances only work if people check and balance. You need more of that. I think open primaries would fucking solve it. Yeah.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "I"
+    },
+    {
+     "t": 0.14,
+     "w": "genuinely"
+    },
+    {
+     "t": 0.54,
+     "w": "think"
+    },
+    {
+     "t": 0.92,
+     "w": "this"
+    },
+    {
+     "t": 1.12,
+     "w": "would"
+    },
+    {
+     "t": 1.26,
+     "w": "solve"
+    },
+    {
+     "t": 1.56,
+     "w": "all"
+    },
+    {
+     "t": 1.8,
+     "w": "the"
+    },
+    {
+     "t": 1.92,
+     "w": "problems"
+    },
+    {
+     "t": 2.32,
+     "w": "with"
+    },
+    {
+     "t": 2.72,
+     "w": "America."
+    },
+    {
+     "t": 3.44,
+     "w": "Because"
+    },
+    {
+     "t": 3.68,
+     "w": "you've"
+    },
+    {
+     "t": 3.94,
+     "w": "gone"
+    },
+    {
+     "t": 4.06,
+     "w": "to"
+    },
+    {
+     "t": 4.26,
+     "w": "the"
+    },
+    {
+     "t": 4.36,
+     "w": "left"
+    },
+    {
+     "t": 4.6,
+     "w": "and"
+    },
+    {
+     "t": 4.94,
+     "w": "you've"
+    },
+    {
+     "t": 5.16,
+     "w": "gone"
+    },
+    {
+     "t": 5.28,
+     "w": "to"
+    },
+    {
+     "t": 5.5,
+     "w": "the"
+    },
+    {
+     "t": 5.6,
+     "w": "right."
+    },
+    {
+     "t": 6.24,
+     "w": "And"
+    },
+    {
+     "t": 6.42,
+     "w": "what,"
+    },
+    {
+     "t": 6.68,
+     "w": "where"
+    },
+    {
+     "t": 6.84,
+     "w": "I"
+    },
+    {
+     "t": 6.98,
+     "w": "think"
+    },
+    {
+     "t": 7.08,
+     "w": "most"
+    },
+    {
+     "t": 7.28,
+     "w": "people"
+    },
+    {
+     "t": 7.58,
+     "w": "live"
+    },
+    {
+     "t": 7.86,
+     "w": "is"
+    },
+    {
+     "t": 8.4,
+     "w": "in"
+    },
+    {
+     "t": 8.54,
+     "w": "the"
+    },
+    {
+     "t": 8.62,
+     "w": "center."
+    },
+    {
+     "t": 9.26,
+     "w": "It's"
+    },
+    {
+     "t": 9.36,
+     "w": "a"
+    },
+    {
+     "t": 9.46,
+     "w": "bit"
+    },
+    {
+     "t": 9.46,
+     "w": "of"
+    },
+    {
+     "t": 9.54,
+     "w": "compromise."
+    },
+    {
+     "t": 10.04,
+     "w": "I"
+    },
+    {
+     "t": 10.18,
+     "w": "think"
+    },
+    {
+     "t": 10.3,
+     "w": "there's"
+    },
+    {
+     "t": 10.54,
+     "w": "two"
+    },
+    {
+     "t": 11.34,
+     "w": "things"
+    },
+    {
+     "t": 11.56,
+     "w": "need"
+    },
+    {
+     "t": 11.74,
+     "w": "to"
+    },
+    {
+     "t": 11.9,
+     "w": "happen."
+    },
+    {
+     "t": 12.6,
+     "w": "I"
+    },
+    {
+     "t": 12.7,
+     "w": "think"
+    },
+    {
+     "t": 12.8,
+     "w": "what"
+    },
+    {
+     "t": 12.96,
+     "w": "you"
+    },
+    {
+     "t": 13.12,
+     "w": "need"
+    },
+    {
+     "t": 13.26,
+     "w": "in"
+    },
+    {
+     "t": 13.36,
+     "w": "America"
+    },
+    {
+     "t": 13.56,
+     "w": "is"
+    },
+    {
+     "t": 13.78,
+     "w": "open"
+    },
+    {
+     "t": 14.12,
+     "w": "primaries,"
+    },
+    {
+     "t": 15.1,
+     "w": "so"
+    },
+    {
+     "t": 15.38,
+     "w": "that"
+    },
+    {
+     "t": 15.56,
+     "w": "people"
+    },
+    {
+     "t": 15.84,
+     "w": "try"
+    },
+    {
+     "t": 16.3,
+     "w": "and"
+    },
+    {
+     "t": 16.4,
+     "w": "appeal"
+    },
+    {
+     "t": 16.76,
+     "w": "to"
+    },
+    {
+     "t": 17.28,
+     "w": "the"
+    },
+    {
+     "t": 17.4,
+     "w": "masses,"
+    },
+    {
+     "t": 17.84,
+     "w": "not"
+    },
+    {
+     "t": 18.46,
+     "w": "to"
+    },
+    {
+     "t": 18.7,
+     "w": "their"
+    },
+    {
+     "t": 18.86,
+     "w": "own"
+    },
+    {
+     "t": 19.16,
+     "w": "constituents."
+    },
+    {
+     "t": 20.56,
+     "w": "And"
+    },
+    {
+     "t": 20.74,
+     "w": "then"
+    },
+    {
+     "t": 21.0,
+     "w": "you"
+    },
+    {
+     "t": 21.46,
+     "w": "need"
+    },
+    {
+     "t": 21.62,
+     "w": "to"
+    },
+    {
+     "t": 21.74,
+     "w": "limit"
+    },
+    {
+     "t": 21.98,
+     "w": "terms"
+    },
+    {
+     "t": 22.46,
+     "w": "on"
+    },
+    {
+     "t": 22.92,
+     "w": "Congress"
+    },
+    {
+     "t": 23.3,
+     "w": "and"
+    },
+    {
+     "t": 23.56,
+     "w": "the"
+    },
+    {
+     "t": 23.7,
+     "w": "Senate."
+    },
+    {
+     "t": 24.32,
+     "w": "You"
+    },
+    {
+     "t": 24.64,
+     "w": "limit"
+    },
+    {
+     "t": 24.88,
+     "w": "terms."
+    },
+    {
+     "t": 25.98,
+     "w": "And"
+    },
+    {
+     "t": 26.46,
+     "w": "what?"
+    },
+    {
+     "t": 27.94,
+     "w": "I"
+    },
+    {
+     "t": 28.5,
+     "w": "don't"
+    },
+    {
+     "t": 28.7,
+     "w": "blame,"
+    },
+    {
+     "t": 29.2,
+     "w": "I"
+    },
+    {
+     "t": 29.78,
+     "w": "don't"
+    },
+    {
+     "t": 30.14,
+     "w": "blame"
+    },
+    {
+     "t": 30.5,
+     "w": "Donald"
+    },
+    {
+     "t": 30.84,
+     "w": "Trump"
+    },
+    {
+     "t": 31.3,
+     "w": "for"
+    },
+    {
+     "t": 31.66,
+     "w": "taking"
+    },
+    {
+     "t": 31.94,
+     "w": "the"
+    },
+    {
+     "t": 32.12,
+     "w": "power"
+    },
+    {
+     "t": 32.4,
+     "w": "that"
+    },
+    {
+     "t": 32.56,
+     "w": "he's"
+    },
+    {
+     "t": 32.7,
+     "w": "taken."
+    },
+    {
+     "t": 33.3,
+     "w": "I"
+    },
+    {
+     "t": 33.48,
+     "w": "blame"
+    },
+    {
+     "t": 33.86,
+     "w": "a"
+    },
+    {
+     "t": 34.08,
+     "w": "weak"
+    },
+    {
+     "t": 34.32,
+     "w": "Congress"
+    },
+    {
+     "t": 35.04,
+     "w": "and"
+    },
+    {
+     "t": 35.66,
+     "w": "a"
+    },
+    {
+     "t": 35.76,
+     "w": "weak"
+    },
+    {
+     "t": 35.94,
+     "w": "judiciary."
+    },
+    {
+     "t": 37.4,
+     "w": "You"
+    },
+    {
+     "t": 37.58,
+     "w": "need"
+    },
+    {
+     "t": 37.84,
+     "w": "this"
+    },
+    {
+     "t": 38.6,
+     "w": "country,"
+    },
+    {
+     "t": 39.18,
+     "w": "the"
+    },
+    {
+     "t": 39.3,
+     "w": "greatest"
+    },
+    {
+     "t": 39.56,
+     "w": "piece"
+    },
+    {
+     "t": 39.82,
+     "w": "of"
+    },
+    {
+     "t": 39.98,
+     "w": "technology"
+    },
+    {
+     "t": 40.46,
+     "w": "in"
+    },
+    {
+     "t": 40.78,
+     "w": "this"
+    },
+    {
+     "t": 40.92,
+     "w": "country"
+    },
+    {
+     "t": 41.24,
+     "w": "is"
+    },
+    {
+     "t": 41.46,
+     "w": "not"
+    },
+    {
+     "t": 41.66,
+     "w": "AI"
+    },
+    {
+     "t": 42.1,
+     "w": "or"
+    },
+    {
+     "t": 42.84,
+     "w": "some"
+    },
+    {
+     "t": 43.08,
+     "w": "new"
+    },
+    {
+     "t": 43.32,
+     "w": "phone."
+    },
+    {
+     "t": 44.04,
+     "w": "It"
+    },
+    {
+     "t": 44.08,
+     "w": "isn't."
+    },
+    {
+     "t": 44.58,
+     "w": "The"
+    },
+    {
+     "t": 44.62,
+     "w": "greatest"
+    },
+    {
+     "t": 44.82,
+     "w": "piece"
+    },
+    {
+     "t": 44.98,
+     "w": "of"
+    },
+    {
+     "t": 45.12,
+     "w": "technology"
+    },
+    {
+     "t": 45.5,
+     "w": "you"
+    },
+    {
+     "t": 45.7,
+     "w": "possess"
+    },
+    {
+     "t": 45.94,
+     "w": "is"
+    },
+    {
+     "t": 46.48,
+     "w": "the"
+    },
+    {
+     "t": 46.64,
+     "w": "Constitution."
+    },
+    {
+     "t": 47.66,
+     "w": "250"
+    },
+    {
+     "t": 48.12,
+     "w": "years"
+    },
+    {
+     "t": 48.4,
+     "w": "old."
+    },
+    {
+     "t": 48.88,
+     "w": "It's"
+    },
+    {
+     "t": 49.28,
+     "w": "fantastic."
+    },
+    {
+     "t": 50.44,
+     "w": "But"
+    },
+    {
+     "t": 50.72,
+     "w": "the"
+    },
+    {
+     "t": 51.88,
+     "w": "checks"
+    },
+    {
+     "t": 52.16,
+     "w": "and"
+    },
+    {
+     "t": 52.36,
+     "w": "balances"
+    },
+    {
+     "t": 52.74,
+     "w": "only"
+    },
+    {
+     "t": 53.22,
+     "w": "work"
+    },
+    {
+     "t": 53.6,
+     "w": "if"
+    },
+    {
+     "t": 53.9,
+     "w": "people"
+    },
+    {
+     "t": 54.18,
+     "w": "check"
+    },
+    {
+     "t": 54.44,
+     "w": "and"
+    },
+    {
+     "t": 54.6,
+     "w": "balance."
+    },
+    {
+     "t": 54.88,
+     "w": "You"
+    },
+    {
+     "t": 55.48,
+     "w": "need"
+    },
+    {
+     "t": 56.18,
+     "w": "more"
+    },
+    {
+     "t": 56.38,
+     "w": "of"
+    },
+    {
+     "t": 56.5,
+     "w": "that."
+    },
+    {
+     "t": 56.74,
+     "w": "I"
+    },
+    {
+     "t": 56.74,
+     "w": "think"
+    },
+    {
+     "t": 56.88,
+     "w": "open"
+    },
+    {
+     "t": 57.12,
+     "w": "primaries"
+    },
+    {
+     "t": 57.62,
+     "w": "would"
+    },
+    {
+     "t": 57.8,
+     "w": "fucking"
+    },
+    {
+     "t": 57.98,
+     "w": "solve"
+    },
+    {
+     "t": 58.3,
+     "w": "it."
+    },
+    {
+     "t": 58.74,
+     "w": "Yeah."
+    }
+   ],
+   "wpm": 178.3,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-0S9zZ8e6ffU": {
+  "take": "yt-0S9zZ8e6ffU",
+  "analyzedAt": "2026-10-18T01:45:53Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "What you're about to hear is the single biggest hidden problem in our politics. Somebody calls up and says, are you going to vote? And I say, well, I can't, I'm an independent. They say, well, you could register as a Democrat. You could. Yeah, but I'm not. I'm an independent. He's not alone. 47 percent of voters now identify as independent, more than both parties combined. Yet in 16 states, millions of these voters are locked out of elections that their tax dollars pay for. And because districts are gerrymandered to be so red or so blue, the primary is the election. The general is just a formality. So what do we do? We need to open up primaries so that all voters can participate, including independence and unaffiliated.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "What"
+    },
+    {
+     "t": 0.26,
+     "w": "you're"
+    },
+    {
+     "t": 0.42,
+     "w": "about"
+    },
+    {
+     "t": 0.58,
+     "w": "to"
+    },
+    {
+     "t": 0.76,
+     "w": "hear"
+    },
+    {
+     "t": 1.0,
+     "w": "is"
+    },
+    {
+     "t": 1.18,
+     "w": "the"
+    },
+    {
+     "t": 1.34,
+     "w": "single"
+    },
+    {
+     "t": 1.78,
+     "w": "biggest"
+    },
+    {
+     "t": 2.22,
+     "w": "hidden"
+    },
+    {
+     "t": 2.54,
+     "w": "problem"
+    },
+    {
+     "t": 2.94,
+     "w": "in"
+    },
+    {
+     "t": 3.12,
+     "w": "our"
+    },
+    {
+     "t": 3.24,
+     "w": "politics."
+    },
+    {
+     "t": 4.1,
+     "w": "Somebody"
+    },
+    {
+     "t": 4.52,
+     "w": "calls"
+    },
+    {
+     "t": 4.86,
+     "w": "up"
+    },
+    {
+     "t": 5.14,
+     "w": "and"
+    },
+    {
+     "t": 5.3,
+     "w": "says,"
+    },
+    {
+     "t": 5.8,
+     "w": "are"
+    },
+    {
+     "t": 6.28,
+     "w": "you"
+    },
+    {
+     "t": 6.38,
+     "w": "going"
+    },
+    {
+     "t": 6.5,
+     "w": "to"
+    },
+    {
+     "t": 6.58,
+     "w": "vote?"
+    },
+    {
+     "t": 7.32,
+     "w": "And"
+    },
+    {
+     "t": 7.52,
+     "w": "I"
+    },
+    {
+     "t": 7.62,
+     "w": "say,"
+    },
+    {
+     "t": 7.8,
+     "w": "well,"
+    },
+    {
+     "t": 7.92,
+     "w": "I"
+    },
+    {
+     "t": 8.02,
+     "w": "can't,"
+    },
+    {
+     "t": 8.4,
+     "w": "I'm"
+    },
+    {
+     "t": 8.46,
+     "w": "an"
+    },
+    {
+     "t": 8.58,
+     "w": "independent."
+    },
+    {
+     "t": 9.2,
+     "w": "They"
+    },
+    {
+     "t": 9.26,
+     "w": "say,"
+    },
+    {
+     "t": 9.44,
+     "w": "well,"
+    },
+    {
+     "t": 9.56,
+     "w": "you"
+    },
+    {
+     "t": 9.7,
+     "w": "could"
+    },
+    {
+     "t": 9.94,
+     "w": "register"
+    },
+    {
+     "t": 10.28,
+     "w": "as"
+    },
+    {
+     "t": 10.54,
+     "w": "a"
+    },
+    {
+     "t": 10.66,
+     "w": "Democrat."
+    },
+    {
+     "t": 11.32,
+     "w": "You"
+    },
+    {
+     "t": 11.4,
+     "w": "could."
+    },
+    {
+     "t": 11.96,
+     "w": "Yeah,"
+    },
+    {
+     "t": 12.18,
+     "w": "but"
+    },
+    {
+     "t": 12.58,
+     "w": "I'm"
+    },
+    {
+     "t": 12.86,
+     "w": "not."
+    },
+    {
+     "t": 13.52,
+     "w": "I'm"
+    },
+    {
+     "t": 13.86,
+     "w": "an"
+    },
+    {
+     "t": 13.96,
+     "w": "independent."
+    },
+    {
+     "t": 15.24,
+     "w": "He's"
+    },
+    {
+     "t": 15.38,
+     "w": "not"
+    },
+    {
+     "t": 15.5,
+     "w": "alone."
+    },
+    {
+     "t": 16.08,
+     "w": "47"
+    },
+    {
+     "t": 16.4,
+     "w": "percent"
+    },
+    {
+     "t": 16.8,
+     "w": "of"
+    },
+    {
+     "t": 16.94,
+     "w": "voters"
+    },
+    {
+     "t": 17.16,
+     "w": "now"
+    },
+    {
+     "t": 17.5,
+     "w": "identify"
+    },
+    {
+     "t": 18.02,
+     "w": "as"
+    },
+    {
+     "t": 18.24,
+     "w": "independent,"
+    },
+    {
+     "t": 19.08,
+     "w": "more"
+    },
+    {
+     "t": 19.3,
+     "w": "than"
+    },
+    {
+     "t": 19.48,
+     "w": "both"
+    },
+    {
+     "t": 19.7,
+     "w": "parties"
+    },
+    {
+     "t": 20.08,
+     "w": "combined."
+    },
+    {
+     "t": 20.86,
+     "w": "Yet"
+    },
+    {
+     "t": 21.04,
+     "w": "in"
+    },
+    {
+     "t": 21.16,
+     "w": "16"
+    },
+    {
+     "t": 21.48,
+     "w": "states,"
+    },
+    {
+     "t": 22.12,
+     "w": "millions"
+    },
+    {
+     "t": 22.6,
+     "w": "of"
+    },
+    {
+     "t": 22.84,
+     "w": "these"
+    },
+    {
+     "t": 22.98,
+     "w": "voters"
+    },
+    {
+     "t": 23.26,
+     "w": "are"
+    },
+    {
+     "t": 23.56,
+     "w": "locked"
+    },
+    {
+     "t": 23.86,
+     "w": "out"
+    },
+    {
+     "t": 24.14,
+     "w": "of"
+    },
+    {
+     "t": 24.46,
+     "w": "elections"
+    },
+    {
+     "t": 25.24,
+     "w": "that"
+    },
+    {
+     "t": 25.54,
+     "w": "their"
+    },
+    {
+     "t": 25.7,
+     "w": "tax"
+    },
+    {
+     "t": 26.04,
+     "w": "dollars"
+    },
+    {
+     "t": 26.32,
+     "w": "pay"
+    },
+    {
+     "t": 26.6,
+     "w": "for."
+    },
+    {
+     "t": 27.42,
+     "w": "And"
+    },
+    {
+     "t": 27.66,
+     "w": "because"
+    },
+    {
+     "t": 27.9,
+     "w": "districts"
+    },
+    {
+     "t": 28.3,
+     "w": "are"
+    },
+    {
+     "t": 28.56,
+     "w": "gerrymandered"
+    },
+    {
+     "t": 29.18,
+     "w": "to"
+    },
+    {
+     "t": 29.3,
+     "w": "be"
+    },
+    {
+     "t": 29.42,
+     "w": "so"
+    },
+    {
+     "t": 29.66,
+     "w": "red"
+    },
+    {
+     "t": 30.02,
+     "w": "or"
+    },
+    {
+     "t": 30.2,
+     "w": "so"
+    },
+    {
+     "t": 30.42,
+     "w": "blue,"
+    },
+    {
+     "t": 31.18,
+     "w": "the"
+    },
+    {
+     "t": 31.24,
+     "w": "primary"
+    },
+    {
+     "t": 31.5,
+     "w": "is"
+    },
+    {
+     "t": 31.94,
+     "w": "the"
+    },
+    {
+     "t": 32.1,
+     "w": "election."
+    },
+    {
+     "t": 32.82,
+     "w": "The"
+    },
+    {
+     "t": 32.92,
+     "w": "general"
+    },
+    {
+     "t": 33.22,
+     "w": "is"
+    },
+    {
+     "t": 33.46,
+     "w": "just"
+    },
+    {
+     "t": 33.66,
+     "w": "a"
+    },
+    {
+     "t": 33.76,
+     "w": "formality."
+    },
+    {
+     "t": 34.74,
+     "w": "So"
+    },
+    {
+     "t": 34.86,
+     "w": "what"
+    },
+    {
+     "t": 34.98,
+     "w": "do"
+    },
+    {
+     "t": 35.04,
+     "w": "we"
+    },
+    {
+     "t": 35.14,
+     "w": "do?"
+    },
+    {
+     "t": 35.74,
+     "w": "We"
+    },
+    {
+     "t": 35.86,
+     "w": "need"
+    },
+    {
+     "t": 35.98,
+     "w": "to"
+    },
+    {
+     "t": 36.08,
+     "w": "open"
+    },
+    {
+     "t": 36.36,
+     "w": "up"
+    },
+    {
+     "t": 36.52,
+     "w": "primaries"
+    },
+    {
+     "t": 37.04,
+     "w": "so"
+    },
+    {
+     "t": 37.26,
+     "w": "that"
+    },
+    {
+     "t": 37.44,
+     "w": "all"
+    },
+    {
+     "t": 37.74,
+     "w": "voters"
+    },
+    {
+     "t": 38.06,
+     "w": "can"
+    },
+    {
+     "t": 38.26,
+     "w": "participate,"
+    },
+    {
+     "t": 38.96,
+     "w": "including"
+    },
+    {
+     "t": 39.32,
+     "w": "independence"
+    },
+    {
+     "t": 39.88,
+     "w": "and"
+    },
+    {
+     "t": 40.1,
+     "w": "unaffiliated."
+    }
+   ],
+   "wpm": 191.7,
+   "firstWordSec": 0.0
+  },
+  "note": "four cuts share this id; transcript from the 41 s upload cut, audio withheld until each cut is measured on its own"
+ },
+ "yt-PITjzV8ks3s": {
+  "take": "yt-PITjzV8ks3s",
+  "analyzedAt": "2026-10-18T01:45:20Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 70.49,
+   "loudnessDb": [
+    -19.8,
+    -24.9,
+    -30.5,
+    -27.2,
+    -25.5,
+    -23.3,
+    -24.0,
+    -27.9,
+    -21.2,
+    -31.1,
+    -24.0,
+    -28.0,
+    -34.3,
+    -23.4,
+    -26.1,
+    -30.7,
+    -19.1,
+    -19.2,
+    -23.8,
+    -23.8,
+    -33.9,
+    -20.6,
+    -22.6,
+    -24.9,
+    -23.8,
+    -24.8,
+    -25.0,
+    -23.3,
+    -23.5,
+    -22.4,
+    -28.8,
+    -25.8,
+    -20.3,
+    -19.4,
+    -22.4,
+    -23.0,
+    -22.7,
+    -33.6,
+    -20.0,
+    -22.5,
+    -23.0,
+    -26.0,
+    -23.4,
+    -23.4,
+    -31.8,
+    -21.0,
+    -23.7,
+    -24.3,
+    -20.0,
+    -24.2,
+    -21.4,
+    -18.6,
+    -30.5,
+    -20.7,
+    -22.4,
+    -23.4,
+    -31.0,
+    -23.4,
+    -22.2,
+    -22.2,
+    -21.3,
+    -21.9,
+    -21.2,
+    -24.9,
+    -22.3,
+    -22.9,
+    -21.0,
+    -20.3,
+    -20.0,
+    -22.6
+   ],
+   "pitchHz": [
+    142.9,
+    126.0,
+    150.9,
+    133.3,
+    136.8,
+    127.0,
+    128.5,
+    126.0,
+    149.5,
+    134.5,
+    135.8,
+    125.0,
+    139.1,
+    139.1,
+    144.8,
+    149.5,
+    166.7,
+    144.1,
+    137.9,
+    127.0,
+    124.5,
+    124.0,
+    108.1,
+    105.3,
+    115.9,
+    103.2,
+    124.8,
+    118.5,
+    97.0,
+    101.9,
+    109.6,
+    105.3,
+    101.9,
+    104.6,
+    100.0,
+    101.3,
+    94.5,
+    103.2,
+    101.0,
+    90.7,
+    92.0,
+    95.8,
+    87.4,
+    86.0,
+    115.1,
+    106.0,
+    97.6,
+    112.4,
+    109.6,
+    122.8,
+    136.8,
+    113.9,
+    133.1,
+    111.9,
+    93.6,
+    94.4,
+    87.9,
+    111.5,
+    120.3,
+    109.2,
+    121.7,
+    90.4,
+    92.5,
+    89.2,
+    123.2,
+    97.0,
+    122.1,
+    96.4,
+    101.2,
+    93.0,
+    96.4
+   ],
+   "pitchMedianHz": 113.9,
+   "pitchRangeHz": [
+    89.9,
+    152.4
+   ],
+   "pauses": [
+    {
+     "t": 9.8,
+     "sec": 0.3
+    },
+    {
+     "t": 15.5,
+     "sec": 0.5
+    },
+    {
+     "t": 37.7,
+     "sec": 0.3
+    }
+   ],
+   "loudestSec": [
+    16,
+    17,
+    51
+   ],
+   "quietestSec": [
+    12,
+    20,
+    37
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "Dario Modi, the CEO of Anthropoc, just came out with a statement, said that 50 % of all knowledge work could be outsourced to AI within one to five years. Why have we seen no push from Congress to A, have a plan, and B, regulate it in any way that actually shifts the momentum toward human thriving? Well, I think this all gets back to the notion that Congress is not mostly incentivized to win low turnout party primaries that really are about how well does each side stick in line with its party base and orthodoxy, not do I have to go back to my district and tell voters affirmatively, here's the legislation that I delivered for you on issues that matter. And I think that problem is getting worse because come the general election this November, 90 % of seats will already have been decided. These elections are foregone conclusions by the time that most people vote. And so to earn your seat in Congress and to keep your seat, you don't really have to engage in any of these major issues to the country. You don't really have to produce results. In many districts, all you need to do is basically get your name on the ballot, and that's good enough.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "Dario"
+    },
+    {
+     "t": 0.44,
+     "w": "Modi,"
+    },
+    {
+     "t": 1.04,
+     "w": "the"
+    },
+    {
+     "t": 1.16,
+     "w": "CEO"
+    },
+    {
+     "t": 1.42,
+     "w": "of"
+    },
+    {
+     "t": 1.62,
+     "w": "Anthropoc,"
+    },
+    {
+     "t": 2.36,
+     "w": "just"
+    },
+    {
+     "t": 2.6,
+     "w": "came"
+    },
+    {
+     "t": 2.92,
+     "w": "out"
+    },
+    {
+     "t": 3.08,
+     "w": "with"
+    },
+    {
+     "t": 3.2,
+     "w": "a"
+    },
+    {
+     "t": 3.38,
+     "w": "statement,"
+    },
+    {
+     "t": 3.76,
+     "w": "said"
+    },
+    {
+     "t": 3.92,
+     "w": "that"
+    },
+    {
+     "t": 4.12,
+     "w": "50"
+    },
+    {
+     "t": 4.58,
+     "w": "%"
+    },
+    {
+     "t": 4.9,
+     "w": "of"
+    },
+    {
+     "t": 5.04,
+     "w": "all"
+    },
+    {
+     "t": 5.28,
+     "w": "knowledge"
+    },
+    {
+     "t": 5.62,
+     "w": "work"
+    },
+    {
+     "t": 5.78,
+     "w": "could"
+    },
+    {
+     "t": 5.94,
+     "w": "be"
+    },
+    {
+     "t": 6.02,
+     "w": "outsourced"
+    },
+    {
+     "t": 6.54,
+     "w": "to"
+    },
+    {
+     "t": 6.7,
+     "w": "AI"
+    },
+    {
+     "t": 6.86,
+     "w": "within"
+    },
+    {
+     "t": 7.24,
+     "w": "one"
+    },
+    {
+     "t": 7.92,
+     "w": "to"
+    },
+    {
+     "t": 8.12,
+     "w": "five"
+    },
+    {
+     "t": 8.34,
+     "w": "years."
+    },
+    {
+     "t": 8.68,
+     "w": "Why"
+    },
+    {
+     "t": 8.84,
+     "w": "have"
+    },
+    {
+     "t": 9.0,
+     "w": "we"
+    },
+    {
+     "t": 9.12,
+     "w": "seen"
+    },
+    {
+     "t": 9.48,
+     "w": "no"
+    },
+    {
+     "t": 10.56,
+     "w": "push"
+    },
+    {
+     "t": 11.0,
+     "w": "from"
+    },
+    {
+     "t": 11.34,
+     "w": "Congress"
+    },
+    {
+     "t": 11.88,
+     "w": "to"
+    },
+    {
+     "t": 12.88,
+     "w": "A,"
+    },
+    {
+     "t": 13.66,
+     "w": "have"
+    },
+    {
+     "t": 13.8,
+     "w": "a"
+    },
+    {
+     "t": 13.92,
+     "w": "plan,"
+    },
+    {
+     "t": 14.7,
+     "w": "and"
+    },
+    {
+     "t": 14.88,
+     "w": "B,"
+    },
+    {
+     "t": 16.32,
+     "w": "regulate"
+    },
+    {
+     "t": 16.32,
+     "w": "it"
+    },
+    {
+     "t": 16.56,
+     "w": "in"
+    },
+    {
+     "t": 16.72,
+     "w": "any"
+    },
+    {
+     "t": 17.0,
+     "w": "way"
+    },
+    {
+     "t": 17.26,
+     "w": "that"
+    },
+    {
+     "t": 17.44,
+     "w": "actually"
+    },
+    {
+     "t": 17.78,
+     "w": "shifts"
+    },
+    {
+     "t": 18.14,
+     "w": "the"
+    },
+    {
+     "t": 18.5,
+     "w": "momentum"
+    },
+    {
+     "t": 18.84,
+     "w": "toward"
+    },
+    {
+     "t": 19.2,
+     "w": "human"
+    },
+    {
+     "t": 19.48,
+     "w": "thriving?"
+    },
+    {
+     "t": 20.38,
+     "w": "Well,"
+    },
+    {
+     "t": 20.8,
+     "w": "I"
+    },
+    {
+     "t": 21.04,
+     "w": "think"
+    },
+    {
+     "t": 21.18,
+     "w": "this"
+    },
+    {
+     "t": 21.38,
+     "w": "all"
+    },
+    {
+     "t": 21.54,
+     "w": "gets"
+    },
+    {
+     "t": 21.74,
+     "w": "back"
+    },
+    {
+     "t": 22.04,
+     "w": "to"
+    },
+    {
+     "t": 22.26,
+     "w": "the"
+    },
+    {
+     "t": 22.6,
+     "w": "notion"
+    },
+    {
+     "t": 22.82,
+     "w": "that"
+    },
+    {
+     "t": 23.1,
+     "w": "Congress"
+    },
+    {
+     "t": 23.6,
+     "w": "is"
+    },
+    {
+     "t": 27.68,
+     "w": "not"
+    },
+    {
+     "t": 27.86,
+     "w": "mostly"
+    },
+    {
+     "t": 28.06,
+     "w": "incentivized"
+    },
+    {
+     "t": 28.76,
+     "w": "to"
+    },
+    {
+     "t": 28.96,
+     "w": "win"
+    },
+    {
+     "t": 29.2,
+     "w": "low"
+    },
+    {
+     "t": 29.48,
+     "w": "turnout"
+    },
+    {
+     "t": 29.88,
+     "w": "party"
+    },
+    {
+     "t": 30.46,
+     "w": "primaries"
+    },
+    {
+     "t": 31.3,
+     "w": "that"
+    },
+    {
+     "t": 31.92,
+     "w": "really"
+    },
+    {
+     "t": 32.14,
+     "w": "are"
+    },
+    {
+     "t": 32.32,
+     "w": "about"
+    },
+    {
+     "t": 32.58,
+     "w": "how"
+    },
+    {
+     "t": 33.04,
+     "w": "well"
+    },
+    {
+     "t": 33.32,
+     "w": "does"
+    },
+    {
+     "t": 33.56,
+     "w": "each"
+    },
+    {
+     "t": 33.76,
+     "w": "side"
+    },
+    {
+     "t": 34.04,
+     "w": "stick"
+    },
+    {
+     "t": 34.44,
+     "w": "in"
+    },
+    {
+     "t": 34.58,
+     "w": "line"
+    },
+    {
+     "t": 34.78,
+     "w": "with"
+    },
+    {
+     "t": 35.02,
+     "w": "its"
+    },
+    {
+     "t": 35.18,
+     "w": "party"
+    },
+    {
+     "t": 35.56,
+     "w": "base"
+    },
+    {
+     "t": 36.0,
+     "w": "and"
+    },
+    {
+     "t": 36.14,
+     "w": "orthodoxy,"
+    },
+    {
+     "t": 37.3,
+     "w": "not"
+    },
+    {
+     "t": 37.54,
+     "w": "do"
+    },
+    {
+     "t": 38.1,
+     "w": "I"
+    },
+    {
+     "t": 38.2,
+     "w": "have"
+    },
+    {
+     "t": 38.34,
+     "w": "to"
+    },
+    {
+     "t": 38.44,
+     "w": "go"
+    },
+    {
+     "t": 38.56,
+     "w": "back"
+    },
+    {
+     "t": 38.78,
+     "w": "to"
+    },
+    {
+     "t": 38.92,
+     "w": "my"
+    },
+    {
+     "t": 39.04,
+     "w": "district"
+    },
+    {
+     "t": 39.34,
+     "w": "and"
+    },
+    {
+     "t": 39.58,
+     "w": "tell"
+    },
+    {
+     "t": 39.74,
+     "w": "voters"
+    },
+    {
+     "t": 40.02,
+     "w": "affirmatively,"
+    },
+    {
+     "t": 41.2,
+     "w": "here's"
+    },
+    {
+     "t": 41.54,
+     "w": "the"
+    },
+    {
+     "t": 41.66,
+     "w": "legislation"
+    },
+    {
+     "t": 42.14,
+     "w": "that"
+    },
+    {
+     "t": 42.38,
+     "w": "I"
+    },
+    {
+     "t": 42.48,
+     "w": "delivered"
+    },
+    {
+     "t": 42.74,
+     "w": "for"
+    },
+    {
+     "t": 43.08,
+     "w": "you"
+    },
+    {
+     "t": 43.24,
+     "w": "on"
+    },
+    {
+     "t": 43.4,
+     "w": "issues"
+    },
+    {
+     "t": 43.7,
+     "w": "that"
+    },
+    {
+     "t": 43.94,
+     "w": "matter."
+    },
+    {
+     "t": 45.0,
+     "w": "And"
+    },
+    {
+     "t": 45.34,
+     "w": "I"
+    },
+    {
+     "t": 45.46,
+     "w": "think"
+    },
+    {
+     "t": 45.58,
+     "w": "that"
+    },
+    {
+     "t": 45.72,
+     "w": "problem"
+    },
+    {
+     "t": 46.0,
+     "w": "is"
+    },
+    {
+     "t": 46.16,
+     "w": "getting"
+    },
+    {
+     "t": 46.52,
+     "w": "worse"
+    },
+    {
+     "t": 46.86,
+     "w": "because"
+    },
+    {
+     "t": 47.24,
+     "w": "come"
+    },
+    {
+     "t": 47.78,
+     "w": "the"
+    },
+    {
+     "t": 47.94,
+     "w": "general"
+    },
+    {
+     "t": 48.22,
+     "w": "election"
+    },
+    {
+     "t": 48.66,
+     "w": "this"
+    },
+    {
+     "t": 48.9,
+     "w": "November,"
+    },
+    {
+     "t": 49.7,
+     "w": "90"
+    },
+    {
+     "t": 50.0,
+     "w": "%"
+    },
+    {
+     "t": 50.36,
+     "w": "of"
+    },
+    {
+     "t": 50.5,
+     "w": "seats"
+    },
+    {
+     "t": 50.72,
+     "w": "will"
+    },
+    {
+     "t": 50.92,
+     "w": "already"
+    },
+    {
+     "t": 51.28,
+     "w": "have"
+    },
+    {
+     "t": 51.48,
+     "w": "been"
+    },
+    {
+     "t": 51.64,
+     "w": "decided."
+    },
+    {
+     "t": 52.66,
+     "w": "These"
+    },
+    {
+     "t": 52.86,
+     "w": "elections"
+    },
+    {
+     "t": 53.22,
+     "w": "are"
+    },
+    {
+     "t": 53.4,
+     "w": "foregone"
+    },
+    {
+     "t": 53.84,
+     "w": "conclusions"
+    },
+    {
+     "t": 54.32,
+     "w": "by"
+    },
+    {
+     "t": 54.72,
+     "w": "the"
+    },
+    {
+     "t": 54.84,
+     "w": "time"
+    },
+    {
+     "t": 55.06,
+     "w": "that"
+    },
+    {
+     "t": 55.22,
+     "w": "most"
+    },
+    {
+     "t": 55.44,
+     "w": "people"
+    },
+    {
+     "t": 55.86,
+     "w": "vote."
+    },
+    {
+     "t": 57.26,
+     "w": "And"
+    },
+    {
+     "t": 57.34,
+     "w": "so"
+    },
+    {
+     "t": 57.6,
+     "w": "to"
+    },
+    {
+     "t": 57.94,
+     "w": "earn"
+    },
+    {
+     "t": 58.5,
+     "w": "your"
+    },
+    {
+     "t": 58.68,
+     "w": "seat"
+    },
+    {
+     "t": 58.9,
+     "w": "in"
+    },
+    {
+     "t": 59.02,
+     "w": "Congress"
+    },
+    {
+     "t": 59.34,
+     "w": "and"
+    },
+    {
+     "t": 59.58,
+     "w": "to"
+    },
+    {
+     "t": 59.74,
+     "w": "keep"
+    },
+    {
+     "t": 59.92,
+     "w": "your"
+    },
+    {
+     "t": 60.12,
+     "w": "seat,"
+    },
+    {
+     "t": 60.58,
+     "w": "you"
+    },
+    {
+     "t": 60.66,
+     "w": "don't"
+    },
+    {
+     "t": 60.8,
+     "w": "really"
+    },
+    {
+     "t": 60.92,
+     "w": "have"
+    },
+    {
+     "t": 61.2,
+     "w": "to"
+    },
+    {
+     "t": 61.38,
+     "w": "engage"
+    },
+    {
+     "t": 61.64,
+     "w": "in"
+    },
+    {
+     "t": 61.82,
+     "w": "any"
+    },
+    {
+     "t": 61.98,
+     "w": "of"
+    },
+    {
+     "t": 62.1,
+     "w": "these"
+    },
+    {
+     "t": 62.36,
+     "w": "major"
+    },
+    {
+     "t": 62.74,
+     "w": "issues"
+    },
+    {
+     "t": 63.2,
+     "w": "to"
+    },
+    {
+     "t": 63.4,
+     "w": "the"
+    },
+    {
+     "t": 63.52,
+     "w": "country."
+    },
+    {
+     "t": 64.0,
+     "w": "You"
+    },
+    {
+     "t": 64.04,
+     "w": "don't"
+    },
+    {
+     "t": 64.2,
+     "w": "really"
+    },
+    {
+     "t": 64.34,
+     "w": "have"
+    },
+    {
+     "t": 64.58,
+     "w": "to"
+    },
+    {
+     "t": 64.72,
+     "w": "produce"
+    },
+    {
+     "t": 65.0,
+     "w": "results."
+    },
+    {
+     "t": 65.78,
+     "w": "In"
+    },
+    {
+     "t": 65.86,
+     "w": "many"
+    },
+    {
+     "t": 66.08,
+     "w": "districts,"
+    },
+    {
+     "t": 66.82,
+     "w": "all"
+    },
+    {
+     "t": 66.94,
+     "w": "you"
+    },
+    {
+     "t": 67.06,
+     "w": "need"
+    },
+    {
+     "t": 67.18,
+     "w": "to"
+    },
+    {
+     "t": 67.32,
+     "w": "do"
+    },
+    {
+     "t": 67.48,
+     "w": "is"
+    },
+    {
+     "t": 67.66,
+     "w": "basically"
+    },
+    {
+     "t": 68.1,
+     "w": "get"
+    },
+    {
+     "t": 68.34,
+     "w": "your"
+    },
+    {
+     "t": 68.5,
+     "w": "name"
+    },
+    {
+     "t": 68.68,
+     "w": "on"
+    },
+    {
+     "t": 68.82,
+     "w": "the"
+    },
+    {
+     "t": 68.92,
+     "w": "ballot,"
+    },
+    {
+     "t": 69.4,
+     "w": "and"
+    },
+    {
+     "t": 69.48,
+     "w": "that's"
+    },
+    {
+     "t": 69.68,
+     "w": "good"
+    },
+    {
+     "t": 69.8,
+     "w": "enough."
+    }
+   ],
+   "wpm": 184.2,
+   "firstWordSec": 0.0
+  }
+ },
+ "yt-wgNvP48RtuE": {
+  "take": "yt-wgNvP48RtuE",
+  "analyzedAt": "2026-10-18T01:46:01Z",
+  "provenance": "frame.io original, Whisper on the rig",
+  "audio": {
+   "source": "derived",
+   "durationSec": 51.63,
+   "loudnessDb": [
+    -26.0,
+    -20.1,
+    -19.2,
+    -18.5,
+    -20.6,
+    -22.5,
+    -29.3,
+    -28.2,
+    -25.8,
+    -28.1,
+    -20.0,
+    -20.3,
+    -28.7,
+    -27.9,
+    -25.5,
+    -38.9,
+    -29.6,
+    -25.5,
+    -26.2,
+    -27.7,
+    -38.9,
+    -28.5,
+    -25.9,
+    -27.4,
+    -25.6,
+    -29.8,
+    -35.5,
+    -25.7,
+    -29.3,
+    -28.1,
+    -27.1,
+    -27.6,
+    -30.0,
+    -32.0,
+    -27.0,
+    -30.7,
+    -31.5,
+    -24.4,
+    -31.2,
+    -20.2,
+    -26.2,
+    -23.0,
+    -32.5,
+    -29.9,
+    -30.2,
+    -30.0,
+    -30.0,
+    -25.3,
+    -31.9,
+    -25.0,
+    -34.1
+   ],
+   "pitchHz": [
+    190.5,
+    168.4,
+    205.2,
+    171.2,
+    183.9,
+    198.9,
+    186.0,
+    168.4,
+    176.7,
+    145.5,
+    139.9,
+    132.9,
+    131.1,
+    154.8,
+    124.0,
+    110.3,
+    123.0,
+    177.8,
+    216.2,
+    109.2,
+    228.6,
+    200.0,
+    108.8,
+    109.6,
+    132.3,
+    116.8,
+    135.6,
+    148.8,
+    106.0,
+    200.3,
+    103.9,
+    158.6,
+    149.5,
+    135.6,
+    141.6,
+    108.8,
+    177.8,
+    144.6,
+    118.2,
+    213.3,
+    164.9,
+    184.9,
+    131.4,
+    140.1,
+    130.1,
+    106.0,
+    103.0,
+    231.9,
+    175.3,
+    143.6,
+    108.8,
+    170.6
+   ],
+   "pitchMedianHz": 139.8,
+   "pitchRangeHz": [
+    98.2,
+    231.9
+   ],
+   "pauses": [
+    {
+     "t": 15.3,
+     "sec": 0.4
+    }
+   ],
+   "loudestSec": [
+    2,
+    3,
+    10
+   ],
+   "quietestSec": [
+    15,
+    20,
+    26
+   ]
+  },
+  "transcript": {
+   "source": "derived",
+   "model": "whisper-small",
+   "text": "Congress just packed their bags and went on recess until after the election, leaving a mountain of real -world problems on their desk untouched. Ever wonder how politicians can just walk away and not do anything? It's not because they're lazy. It's because they're terrified. Not terrified of you, but terrified of party bosses. The second a politician steps out of line to actually work across the aisle, you know, for people, then elite party insiders run an extreme challenger in a low turnout primary to purge them. Close primaries intentionally punish results and reward gridlock. They literally build a system where doing your job gets you fired. Open primaries, strip party bosses of their threat, and force politicians to answer to the public, not the party.",
+   "words": [
+    {
+     "t": 0.0,
+     "w": "Congress"
+    },
+    {
+     "t": 0.62,
+     "w": "just"
+    },
+    {
+     "t": 0.96,
+     "w": "packed"
+    },
+    {
+     "t": 1.32,
+     "w": "their"
+    },
+    {
+     "t": 1.56,
+     "w": "bags"
+    },
+    {
+     "t": 1.9,
+     "w": "and"
+    },
+    {
+     "t": 2.22,
+     "w": "went"
+    },
+    {
+     "t": 2.52,
+     "w": "on"
+    },
+    {
+     "t": 2.82,
+     "w": "recess"
+    },
+    {
+     "t": 3.28,
+     "w": "until"
+    },
+    {
+     "t": 3.66,
+     "w": "after"
+    },
+    {
+     "t": 4.08,
+     "w": "the"
+    },
+    {
+     "t": 4.26,
+     "w": "election,"
+    },
+    {
+     "t": 4.84,
+     "w": "leaving"
+    },
+    {
+     "t": 5.06,
+     "w": "a"
+    },
+    {
+     "t": 5.32,
+     "w": "mountain"
+    },
+    {
+     "t": 5.86,
+     "w": "of"
+    },
+    {
+     "t": 6.44,
+     "w": "real"
+    },
+    {
+     "t": 6.8,
+     "w": "-world"
+    },
+    {
+     "t": 7.08,
+     "w": "problems"
+    },
+    {
+     "t": 7.6,
+     "w": "on"
+    },
+    {
+     "t": 8.12,
+     "w": "their"
+    },
+    {
+     "t": 8.28,
+     "w": "desk"
+    },
+    {
+     "t": 8.6,
+     "w": "untouched."
+    },
+    {
+     "t": 9.62,
+     "w": "Ever"
+    },
+    {
+     "t": 9.76,
+     "w": "wonder"
+    },
+    {
+     "t": 9.94,
+     "w": "how"
+    },
+    {
+     "t": 10.1,
+     "w": "politicians"
+    },
+    {
+     "t": 10.54,
+     "w": "can"
+    },
+    {
+     "t": 10.9,
+     "w": "just"
+    },
+    {
+     "t": 11.08,
+     "w": "walk"
+    },
+    {
+     "t": 11.44,
+     "w": "away"
+    },
+    {
+     "t": 11.92,
+     "w": "and"
+    },
+    {
+     "t": 12.5,
+     "w": "not"
+    },
+    {
+     "t": 12.66,
+     "w": "do"
+    },
+    {
+     "t": 12.94,
+     "w": "anything?"
+    },
+    {
+     "t": 13.88,
+     "w": "It's"
+    },
+    {
+     "t": 14.12,
+     "w": "not"
+    },
+    {
+     "t": 14.34,
+     "w": "because"
+    },
+    {
+     "t": 14.56,
+     "w": "they're"
+    },
+    {
+     "t": 14.74,
+     "w": "lazy."
+    },
+    {
+     "t": 15.68,
+     "w": "It's"
+    },
+    {
+     "t": 15.88,
+     "w": "because"
+    },
+    {
+     "t": 16.06,
+     "w": "they're"
+    },
+    {
+     "t": 16.28,
+     "w": "terrified."
+    },
+    {
+     "t": 17.32,
+     "w": "Not"
+    },
+    {
+     "t": 17.6,
+     "w": "terrified"
+    },
+    {
+     "t": 17.9,
+     "w": "of"
+    },
+    {
+     "t": 18.16,
+     "w": "you,"
+    },
+    {
+     "t": 18.52,
+     "w": "but"
+    },
+    {
+     "t": 18.62,
+     "w": "terrified"
+    },
+    {
+     "t": 19.04,
+     "w": "of"
+    },
+    {
+     "t": 19.48,
+     "w": "party"
+    },
+    {
+     "t": 19.9,
+     "w": "bosses."
+    },
+    {
+     "t": 21.08,
+     "w": "The"
+    },
+    {
+     "t": 21.3,
+     "w": "second"
+    },
+    {
+     "t": 21.58,
+     "w": "a"
+    },
+    {
+     "t": 21.82,
+     "w": "politician"
+    },
+    {
+     "t": 22.04,
+     "w": "steps"
+    },
+    {
+     "t": 22.42,
+     "w": "out"
+    },
+    {
+     "t": 22.64,
+     "w": "of"
+    },
+    {
+     "t": 22.76,
+     "w": "line"
+    },
+    {
+     "t": 23.08,
+     "w": "to"
+    },
+    {
+     "t": 23.4,
+     "w": "actually"
+    },
+    {
+     "t": 23.84,
+     "w": "work"
+    },
+    {
+     "t": 24.06,
+     "w": "across"
+    },
+    {
+     "t": 24.4,
+     "w": "the"
+    },
+    {
+     "t": 24.62,
+     "w": "aisle,"
+    },
+    {
+     "t": 25.0,
+     "w": "you"
+    },
+    {
+     "t": 25.06,
+     "w": "know,"
+    },
+    {
+     "t": 25.32,
+     "w": "for"
+    },
+    {
+     "t": 25.46,
+     "w": "people,"
+    },
+    {
+     "t": 26.38,
+     "w": "then"
+    },
+    {
+     "t": 26.76,
+     "w": "elite"
+    },
+    {
+     "t": 27.14,
+     "w": "party"
+    },
+    {
+     "t": 27.64,
+     "w": "insiders"
+    },
+    {
+     "t": 28.36,
+     "w": "run"
+    },
+    {
+     "t": 28.74,
+     "w": "an"
+    },
+    {
+     "t": 28.98,
+     "w": "extreme"
+    },
+    {
+     "t": 29.5,
+     "w": "challenger"
+    },
+    {
+     "t": 30.24,
+     "w": "in"
+    },
+    {
+     "t": 30.42,
+     "w": "a"
+    },
+    {
+     "t": 30.54,
+     "w": "low"
+    },
+    {
+     "t": 31.06,
+     "w": "turnout"
+    },
+    {
+     "t": 31.52,
+     "w": "primary"
+    },
+    {
+     "t": 32.14,
+     "w": "to"
+    },
+    {
+     "t": 32.58,
+     "w": "purge"
+    },
+    {
+     "t": 33.04,
+     "w": "them."
+    },
+    {
+     "t": 33.76,
+     "w": "Close"
+    },
+    {
+     "t": 33.94,
+     "w": "primaries"
+    },
+    {
+     "t": 34.6,
+     "w": "intentionally"
+    },
+    {
+     "t": 35.62,
+     "w": "punish"
+    },
+    {
+     "t": 36.66,
+     "w": "results"
+    },
+    {
+     "t": 37.24,
+     "w": "and"
+    },
+    {
+     "t": 37.52,
+     "w": "reward"
+    },
+    {
+     "t": 37.92,
+     "w": "gridlock."
+    },
+    {
+     "t": 39.04,
+     "w": "They"
+    },
+    {
+     "t": 39.12,
+     "w": "literally"
+    },
+    {
+     "t": 39.36,
+     "w": "build"
+    },
+    {
+     "t": 39.6,
+     "w": "a"
+    },
+    {
+     "t": 39.74,
+     "w": "system"
+    },
+    {
+     "t": 40.1,
+     "w": "where"
+    },
+    {
+     "t": 40.68,
+     "w": "doing"
+    },
+    {
+     "t": 41.04,
+     "w": "your"
+    },
+    {
+     "t": 41.3,
+     "w": "job"
+    },
+    {
+     "t": 41.72,
+     "w": "gets"
+    },
+    {
+     "t": 41.96,
+     "w": "you"
+    },
+    {
+     "t": 42.18,
+     "w": "fired."
+    },
+    {
+     "t": 43.26,
+     "w": "Open"
+    },
+    {
+     "t": 43.56,
+     "w": "primaries,"
+    },
+    {
+     "t": 44.56,
+     "w": "strip"
+    },
+    {
+     "t": 44.62,
+     "w": "party"
+    },
+    {
+     "t": 44.94,
+     "w": "bosses"
+    },
+    {
+     "t": 45.38,
+     "w": "of"
+    },
+    {
+     "t": 45.68,
+     "w": "their"
+    },
+    {
+     "t": 45.88,
+     "w": "threat,"
+    },
+    {
+     "t": 46.62,
+     "w": "and"
+    },
+    {
+     "t": 46.88,
+     "w": "force"
+    },
+    {
+     "t": 47.28,
+     "w": "politicians"
+    },
+    {
+     "t": 48.18,
+     "w": "to"
+    },
+    {
+     "t": 48.9,
+     "w": "answer"
+    },
+    {
+     "t": 49.2,
+     "w": "to"
+    },
+    {
+     "t": 49.4,
+     "w": "the"
+    },
+    {
+     "t": 49.56,
+     "w": "public,"
+    },
+    {
+     "t": 50.26,
+     "w": "not"
+    },
+    {
+     "t": 50.74,
+     "w": "the"
+    },
+    {
+     "t": 50.96,
+     "w": "party."
+    }
+   ],
+   "wpm": 148.6,
+   "firstWordSec": 0.0
+  }
  }
 }

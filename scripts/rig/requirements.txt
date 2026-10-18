@@ -11,3 +11,4 @@ pyarrow
 pillow
 boto3
 scikit-learn
+faster-whisper

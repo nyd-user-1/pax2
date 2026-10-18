@@ -7,12 +7,14 @@
 #
 #   MODE=rehearse ./scripts/rig/launch-cpu.sh   # every 100th training row, outputs under model/rehearsal/
 #   MODE=full     ./scripts/rig/launch-cpu.sh   # everything, outputs under model/
+#   MODE=full JOBS=transcribe WATCHDOG=60 ./scripts/rig/launch-cpu.sh   # one job only
 # Then: ./scripts/rig/watch.sh <instance-id> <log key>
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 REGION=us-east-1
 BUCKET=pax-2-638175140432
 MODE=${MODE:-full}
+JOBS=${JOBS:-}   # e.g. JOBS=transcribe runs one job; empty runs every model job
 TS=$(date -u +%Y%m%dT%H%M%SZ)
 case $MODE in
   rehearse) PREFIX=model/rehearsal/; LIMIT=100; WATCHDOG=${WATCHDOG:-40}; LOG_KEY=logs/rig-rehearsal-$TS.log ;;
@@ -70,7 +72,7 @@ exec >> /var/log/rig.log 2>&1
 set -uo pipefail
 export AWS_DEFAULT_REGION=$REGION DEBIAN_FRONTEND=noninteractive
 echo "boot \$(date -u +%FT%TZ) \$(curl -s http://169.254.169.254/latest/meta-data/instance-type)"
-apt-get update -q && apt-get install -y -q python3-venv awscli aria2 >/dev/null
+apt-get update -q && apt-get install -y -q python3-venv awscli aria2 ffmpeg >/dev/null
 mkdir -p /work/code && aws s3 cp --only-show-errors --recursive s3://$BUCKET/code/rig/ /work/code/
 python3 -m venv /opt/rig
 /opt/rig/bin/pip install -q --upgrade pip
@@ -82,7 +84,7 @@ grep -v -E '^(#|resmem|$)' /work/code/requirements.txt > /work/req-core.txt
 echo "installed \$(date -u +%FT%TZ)"
 aws s3 cp --only-show-errors /var/log/rig.log s3://$BUCKET/$LOG_KEY
 chmod +x /work/code/run-all.sh
-BUCKET=$BUCKET RIG_PREFIX=$PREFIX RIG_MODE=$MODE RIG_LIMIT=$LIMIT LOG_KEY=$LOG_KEY PY=/opt/rig/bin/python /work/code/run-all.sh
+BUCKET=$BUCKET RIG_PREFIX=$PREFIX RIG_MODE=$MODE RIG_LIMIT=$LIMIT LOG_KEY=$LOG_KEY RIG_JOBS="$JOBS" PY=/opt/rig/bin/python /work/code/run-all.sh
 echo "rig done \$(date -u +%FT%TZ)"
 aws s3 cp --only-show-errors /var/log/rig.log s3://$BUCKET/$LOG_KEY
 shutdown -h now
