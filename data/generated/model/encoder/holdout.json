@@ -1,10 +1,10 @@
 {
- "builtAt": "2026-10-18T00:52:38.946Z",
+ "builtAt": "2026-10-18T01:03:11.045Z",
  "rule": "Within each family, the family's channel ids sorted by their last hexadecimal-looking character (0-9, a-f, case-folded; ties by the full id); every channel ranked above seven eighths of the family is held out, ceil(n / 8) channels and at least one. Paid-ad rows are never held out.",
  "corpus": {
   "file": "corpus.jsonl",
   "rows": 18455,
-  "sha256": "71a024e511c09c3b6425ca853b881d2df88f654102f93bf911c4e2b02f06eb17",
+  "sha256": "18eda112fc8240bfc68ff5077bf375c2ce993b70b65c85388a979b1b01d331c9",
   "textRecipe": "title, description, transcript text when content is present; non-empty parts joined by newlines; first 1,200 characters (scripts/encoder/corpus.mjs)"
  },
  "paidRows": 0,

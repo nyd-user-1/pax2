@@ -14,7 +14,7 @@
 //
 // Usage: node scripts/encoder/corpus.mjs [--upload]
 // Reads  data/generated/model/training-set.jsonl, data/generated/features.json
-// Writes data/generated/model/encoder/corpus.jsonl (gitignored, 20 MB) and holdout.json;
+// Writes data/generated/model/encoder/corpus.jsonl (gitignored, 7.7 MB) and holdout.json;
 //        --upload copies both to s3://nsr-embed-v2/pax2/corpus/
 import fs from "node:fs"
 import path from "node:path"
@@ -34,13 +34,15 @@ const rows = fs
   .map((l) => JSON.parse(l))
 const features = JSON.parse(fs.readFileSync(path.join(root, "data/generated/features.json"), "utf8"))
 
+// Well-formed and cut by character, not by UTF-16 unit: the training set's 600-character description cut
+// splits emoji in 21 rows, and a lone surrogate is invalid JSON to TEI (HTTP 400, rehearsal of 2026-10-18).
 export function docText(row) {
   const transcript = row.content ? (features[`yt-${row.id}`]?.transcript?.text ?? "") : ""
-  return [row.title, row.description, transcript]
-    .map((s) => (s ?? "").trim())
+  const joined = [row.title, row.description, transcript]
+    .map((s) => (s ?? "").toWellFormed().replace(/�/g, "").trim())
     .filter(Boolean)
     .join("\n")
-    .slice(0, CAP)
+  return Array.from(joined).slice(0, CAP).join("")
 }
 
 const docs = rows.map((r) => ({

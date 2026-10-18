@@ -5,7 +5,7 @@
 #   usage: ./scripts/rig/watch.sh <instance-id> <log key> [local log path]
 set -uo pipefail
 REGION=us-east-1
-BUCKET=pax-2-638175140432
+BUCKET=${BUCKET:-pax-2-638175140432}
 ID=${1:?instance id}
 KEY=${2:?log key}
 LOCAL=${3:-/tmp/$(basename "$KEY")}

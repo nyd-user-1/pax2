@@ -1,0 +1,13 @@
+2026-10-18T00:57:35Z launched i-0e4ae81f3cdd29c32 g6.xlarge subnet-0200d8f947fcf9090 run=20261018-005727-rehearse mode=rehearse
+2026-10-18T01:02Z i-0e4ae81f3cdd29c32 g6.xlarge rehearse FAILED ~4.5 min: datasets 5.1 vs huggingface-hub 0.36 (FlagEmbedding would not import); TEI HTTP 400 on the first embed chunk, 21 corpus texts with lone surrogates from the 600-char description cut
+2026-10-18T01:22:02Z launched i-06ca56481c7bb83cf g6.xlarge subnet-0200d8f947fcf9090 run=20261018-012155-rehearse mode=rehearse
+2026-10-18T01:29Z i-06ca56481c7bb83cf g6.xlarge rehearse OK ~7.5 min: phases 1 and 3 clean; encoder OOM at batch 16 on the L4 (22 GB), not halved; training goes to g6e.xlarge
+2026-10-18T01:29:34Z no g6e.xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
+2026-10-18T01:29:35Z no g6e.xlarge in subnet-0aeeab33ec7ee352e: Unsupported
+2026-10-18T01:29:40Z no g6e.xlarge in subnet-06b1914b54fc3e0c5: InsufficientInstanceCapacity
+2026-10-18T01:29:43Z launched i-0733eb7afb606a536 g6e.xlarge subnet-0407bd1ff7e9d8c44 run=20261018-012920-train mode=train
+2026-10-18T01:35Z i-0733eb7afb606a536 g6e.xlarge train FAILED ~5.5 min: phase 1 clean (14,573 pairs, stock pooled 0.5601 within 0.5576); encoder OOM at batch 16 on the L40S (44.3 GB, 3.66 GB reserved unallocated), not halved
+2026-10-18T02:05:08Z no g6e.xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
+2026-10-18T02:05:10Z no g6e.xlarge in subnet-0aeeab33ec7ee352e: Unsupported
+2026-10-18T02:05:12Z launched i-06553194149b4f17c g6e.xlarge subnet-06b1914b54fc3e0c5 run=20261018-020459-train mode=train
+2026-10-18T02:39Z i-06553194149b4f17c g6e.xlarge train OK 34.4 min: batch 16 fit with expandable_segments alone (no gradient checkpointing), 910 steps in 823 s at 17.7 pairs/s; reranker 2 epochs 703 s; Gate E FAIL, Gate R FAIL
