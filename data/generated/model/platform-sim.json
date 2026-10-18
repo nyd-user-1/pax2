@@ -1,0 +1,204 @@
+{
+ "builtAt": "2026-10-18T00:01:17Z",
+ "name": "PAX2 Platform Simulator",
+ "version": "sim-0",
+ "kind": "descriptive",
+ "method": "hourly series 0-72h, linear between readings and anchored at 0 views at hour 0; 72-hour value is the last reading at or after 71.5h; Hit at 3x the channel median (baselines.json), Miss at 0.5x or less; peak-growth hour is the end of the steepest hourly step from the first reading on",
+ "notes": [
+  "missesBelowHalf is 1 or near it by construction: views never fall, so a short that ends at 0.5x or less was below 0.5x at every earlier hour; it is reported because the brief asks for it, not as a finding"
+ ],
+ "all": {
+  "videos": 426,
+  "hits": 42,
+  "misses": 104,
+  "peakHour": {
+   "hits": 13.0,
+   "rest": 5.5
+  },
+  "viewsAtPeakHour": {
+   "hits": 24714.5,
+   "rest": 4339.3
+  },
+  "hitsAbove1x": {
+   "6": 0.262,
+   "12": 0.762,
+   "24": 1.0
+  },
+  "missesBelowHalf": {
+   "6": 1.0,
+   "12": 1.0,
+   "24": 1.0
+  },
+  "firstReadingByHour1": 0.742
+ },
+ "byFamily": {
+  "Candidates & officials": {
+   "videos": 164,
+   "hits": 20,
+   "misses": 46,
+   "peakHour": {
+    "hits": 24.0,
+    "rest": 5.5
+   },
+   "viewsAtPeakHour": {
+    "hits": 58577.8,
+    "rest": 4177.0
+   },
+   "hitsAbove1x": {
+    "6": 0.15,
+    "12": 0.6,
+    "24": 1.0
+   },
+   "missesBelowHalf": {
+    "6": 1.0,
+    "12": 1.0,
+    "24": 1.0
+   },
+   "firstReadingByHour1": 0.744
+  },
+  "Nonpartisan media": {
+   "videos": 43,
+   "hits": 5,
+   "misses": 10,
+   "peakHour": {
+    "hits": 7.0,
+    "rest": 16.5
+   },
+   "viewsAtPeakHour": {
+    "hits": 8771.3,
+    "rest": 9076.8
+   },
+   "hitsAbove1x": {
+    "6": 0.4,
+    "12": 0.8,
+    "24": 1.0
+   },
+   "missesBelowHalf": {
+    "6": 1.0,
+    "12": 1.0,
+    "24": 1.0
+   },
+   "firstReadingByHour1": 0.721
+  },
+  "Partisan media": {
+   "videos": 164,
+   "hits": 13,
+   "misses": 22,
+   "peakHour": {
+    "hits": 10.0,
+    "rest": 5.0
+   },
+   "viewsAtPeakHour": {
+    "hits": 28748.0,
+    "rest": 10356.0
+   },
+   "hitsAbove1x": {
+    "6": 0.231,
+    "12": 0.923,
+    "24": 1.0
+   },
+   "missesBelowHalf": {
+    "6": 1.0,
+    "12": 1.0,
+    "24": 1.0
+   },
+   "firstReadingByHour1": 0.75
+  },
+  "Reform": {
+   "videos": 21,
+   "hits": 1,
+   "misses": 11,
+   "peakHour": {
+    "hits": 1.0,
+    "rest": 5.5
+   },
+   "viewsAtPeakHour": {
+    "hits": 133.3,
+    "rest": 88.5
+   },
+   "hitsAbove1x": {
+    "6": 1.0,
+    "12": 1.0,
+    "24": 1.0
+   },
+   "missesBelowHalf": {
+    "6": 1.0,
+    "12": 1.0,
+    "24": 1.0
+   },
+   "firstReadingByHour1": 0.762
+  },
+  "UK": {
+   "videos": 5,
+   "hits": 0,
+   "misses": 2,
+   "peakHour": {
+    "hits": null,
+    "rest": 9.0
+   },
+   "viewsAtPeakHour": {
+    "hits": null,
+    "rest": 198.0
+   },
+   "hitsAbove1x": {
+    "6": null,
+    "12": null,
+    "24": null
+   },
+   "missesBelowHalf": {
+    "6": 1.0,
+    "12": 1.0,
+    "24": 1.0
+   },
+   "firstReadingByHour1": 0.8
+  },
+  "Unmapped": {
+   "videos": 2,
+   "hits": 0,
+   "misses": 1,
+   "peakHour": {
+    "hits": null,
+    "rest": 42.5
+   },
+   "viewsAtPeakHour": {
+    "hits": null,
+    "rest": 314.0
+   },
+   "hitsAbove1x": {
+    "6": null,
+    "12": null,
+    "24": null
+   },
+   "missesBelowHalf": {
+    "6": 1.0,
+    "12": 1.0,
+    "24": 1.0
+   },
+   "firstReadingByHour1": 0.0
+  },
+  "Voting rights": {
+   "videos": 27,
+   "hits": 3,
+   "misses": 12,
+   "peakHour": {
+    "hits": 5.0,
+    "rest": 4.0
+   },
+   "viewsAtPeakHour": {
+    "hits": 642.3,
+    "rest": 219.5
+   },
+   "hitsAbove1x": {
+    "6": 0.667,
+    "12": 1.0,
+    "24": 1.0
+   },
+   "missesBelowHalf": {
+    "6": 1.0,
+    "12": 1.0,
+    "24": 1.0
+   },
+   "firstReadingByHour1": 0.741
+  }
+ }
+}

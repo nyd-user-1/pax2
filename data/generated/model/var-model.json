@@ -1,0 +1,1886 @@
+{
+ "builtAt": "2026-10-18T00:01:09Z",
+ "name": "PAX2 Classifier",
+ "version": "var-1",
+ "method": "L2 logistic regression (lambda 2.0 on standardized features, intercept free) on 18455 settled shorts from 64 channels; validated leave-one-channel-out and on a time split at 2026-07-01.",
+ "rows": {
+  "trainingSet": 18455,
+  "withThumbnailFeatures": 18455
+ },
+ "metadata": {
+  "version": "var-1-metadata",
+  "method": "L2 logistic regression (lambda 2.0 on standardized features, intercept free) on 18455 settled shorts from 64 channels; validated leave-one-channel-out and on a time split at 2026-07-01.",
+  "target": "breakout: lifetime views at least 3x the channel's median of settled shorts",
+  "n": 18455,
+  "positives": 2739,
+  "baseRate": 0.1484,
+  "intercept": -2.2009,
+  "features": [
+   {
+    "key": "question",
+    "label": "Title asks a question",
+    "kind": "binary",
+    "coef": -0.0604,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.128
+   },
+   {
+    "key": "exclaim",
+    "label": "Exclamation mark in the title",
+    "kind": "binary",
+    "coef": -0.146,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.058
+   },
+   {
+    "key": "number",
+    "label": "A number in the title",
+    "kind": "binary",
+    "coef": -0.1114,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.082
+   },
+   {
+    "key": "firstPerson",
+    "label": "First person in the title",
+    "kind": "binary",
+    "coef": 0.1864,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.049
+   },
+   {
+    "key": "you",
+    "label": "Addresses the viewer",
+    "kind": "binary",
+    "coef": -0.0232,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.079
+   },
+   {
+    "key": "caps",
+    "label": "A word in all caps",
+    "kind": "binary",
+    "coef": 0.2519,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.237
+   },
+   {
+    "key": "anger",
+    "label": "Combative words in the title",
+    "kind": "binary",
+    "coef": 0.2619,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.048
+   },
+   {
+    "key": "quote",
+    "label": "Quotation in the title",
+    "kind": "binary",
+    "coef": -0.1167,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.074
+   },
+   {
+    "key": "shortTitle",
+    "label": "Title of six words or fewer",
+    "kind": "binary",
+    "coef": -0.0666,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.316
+   },
+   {
+    "key": "longTitle",
+    "label": "Title of fifteen words or more",
+    "kind": "binary",
+    "coef": -0.1429,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.089
+   },
+   {
+    "key": "emoji",
+    "label": "Emoji in the title",
+    "kind": "binary",
+    "coef": 0.658,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.141
+   },
+   {
+    "key": "hashtagTitle",
+    "label": "Hashtag in the title",
+    "kind": "binary",
+    "coef": 0.0078,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.074
+   },
+   {
+    "key": "trump",
+    "label": "Names Trump",
+    "kind": "binary",
+    "coef": 0.1622,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.175
+   },
+   {
+    "key": "titleWords",
+    "label": "Title length (log words)",
+    "kind": "continuous",
+    "coef": 0.0543,
+    "mean": 2.182492,
+    "sd": 0.423004,
+    "prevalence": null
+   },
+   {
+    "key": "cta",
+    "label": "Call to action in the description",
+    "kind": "binary",
+    "coef": 0.2013,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.191
+   },
+   {
+    "key": "link",
+    "label": "Link in the description",
+    "kind": "binary",
+    "coef": 0.2062,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.321
+   },
+   {
+    "key": "noDescription",
+    "label": "No description",
+    "kind": "binary",
+    "coef": -0.7962,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.282
+   },
+   {
+    "key": "descWords",
+    "label": "Description length (log words)",
+    "kind": "continuous",
+    "coef": -0.3693,
+    "mean": 1.834621,
+    "sd": 1.917642,
+    "prevalence": null
+   },
+   {
+    "key": "tags",
+    "label": "Has tags",
+    "kind": "binary",
+    "coef": 0.6682,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.534
+   },
+   {
+    "key": "tagCount",
+    "label": "Tag count (log)",
+    "kind": "continuous",
+    "coef": -0.3107,
+    "mean": 1.36166,
+    "sd": 1.349929,
+    "prevalence": null
+   },
+   {
+    "key": "under20",
+    "label": "20 seconds or shorter",
+    "kind": "binary",
+    "coef": 0.5856,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.089
+   },
+   {
+    "key": "under35",
+    "label": "35 seconds or shorter",
+    "kind": "binary",
+    "coef": 0.2147,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.237
+   },
+   {
+    "key": "over60",
+    "label": "Longer than a minute",
+    "kind": "binary",
+    "coef": -0.0758,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.475
+   },
+   {
+    "key": "logDuration",
+    "label": "Length (log seconds)",
+    "kind": "continuous",
+    "coef": 0.1951,
+    "mean": 4.029476,
+    "sd": 0.659795,
+    "prevalence": null
+   },
+   {
+    "key": "weekend",
+    "label": "Posted on a weekend",
+    "kind": "binary",
+    "coef": 0.2297,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.19
+   },
+   {
+    "key": "morning",
+    "label": "Posted 6 to 11am Eastern",
+    "kind": "binary",
+    "coef": 0.0048,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.153
+   },
+   {
+    "key": "evening",
+    "label": "Posted 6 to 11pm Eastern",
+    "kind": "binary",
+    "coef": 0.0462,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.306
+   },
+   {
+    "key": "night",
+    "label": "Posted midnight to 5am Eastern",
+    "kind": "binary",
+    "coef": -0.0952,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.011
+   },
+   {
+    "key": "logMedian",
+    "label": "Channel size (log median views)",
+    "kind": "continuous",
+    "coef": 0.2589,
+    "mean": 4.357161,
+    "sd": 0.874697,
+    "prevalence": null
+   },
+   {
+    "key": "family:Reform",
+    "label": "Reform",
+    "kind": "family",
+    "coef": 0.7002,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.065
+   },
+   {
+    "key": "family:Voting rights",
+    "label": "Voting rights",
+    "kind": "family",
+    "coef": -0.0488,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.044
+   },
+   {
+    "key": "family:Nonpartisan media",
+    "label": "Nonpartisan media",
+    "kind": "family",
+    "coef": 0.5894,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.079
+   },
+   {
+    "key": "family:Candidates & officials",
+    "label": "Candidates & officials",
+    "kind": "family",
+    "coef": 0.496,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.268
+   },
+   {
+    "key": "family:Partisan media",
+    "label": "Partisan media",
+    "kind": "family",
+    "coef": -0.6749,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.539
+   },
+   {
+    "key": "family:UK",
+    "label": "UK",
+    "kind": "family",
+    "coef": -1.0619,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.005
+   }
+  ],
+  "metrics": {
+   "leaveOneChannelOut": {
+    "auc": 0.604,
+    "aucChannelOnly": 0.556,
+    "withinChannelAuc": 0.55,
+    "withinChannelAucChannelOnly": 0.5,
+    "topDecileRate": 0.212,
+    "topDecileLift": 1.43,
+    "bottomDecileRate": 0.076,
+    "deciles": [
+     {
+      "decile": 1,
+      "n": 1845,
+      "predicted": 0.298,
+      "observed": 0.212
+     },
+     {
+      "decile": 2,
+      "n": 1846,
+      "predicted": 0.232,
+      "observed": 0.202
+     },
+     {
+      "decile": 3,
+      "n": 1845,
+      "predicted": 0.195,
+      "observed": 0.198
+     },
+     {
+      "decile": 4,
+      "n": 1846,
+      "predicted": 0.165,
+      "observed": 0.177
+     },
+     {
+      "decile": 5,
+      "n": 1845,
+      "predicted": 0.143,
+      "observed": 0.164
+     },
+     {
+      "decile": 6,
+      "n": 1846,
+      "predicted": 0.126,
+      "observed": 0.127
+     },
+     {
+      "decile": 7,
+      "n": 1845,
+      "predicted": 0.112,
+      "observed": 0.12
+     },
+     {
+      "decile": 8,
+      "n": 1846,
+      "predicted": 0.098,
+      "observed": 0.115
+     },
+     {
+      "decile": 9,
+      "n": 1845,
+      "predicted": 0.081,
+      "observed": 0.093
+     },
+     {
+      "decile": 10,
+      "n": 1846,
+      "predicted": 0.061,
+      "observed": 0.076
+     }
+    ],
+    "withinChannel": [
+     {
+      "channel": "Brian Tyler Cohen",
+      "n": 1793,
+      "auc": 0.551
+     },
+     {
+      "channel": "Turning Point USA",
+      "n": 1684,
+      "auc": 0.586
+     },
+     {
+      "channel": "Ben Shapiro",
+      "n": 1584,
+      "auc": 0.59
+     },
+     {
+      "channel": "Benny Johnson",
+      "n": 1342,
+      "auc": 0.561
+     },
+     {
+      "channel": "PragerU",
+      "n": 1224,
+      "auc": 0.538
+     },
+     {
+      "channel": "MeidasTouch",
+      "n": 976,
+      "auc": 0.601
+     },
+     {
+      "channel": "The Democrats",
+      "n": 891,
+      "auc": 0.623
+     },
+     {
+      "channel": "Jubilee",
+      "n": 841,
+      "auc": 0.561
+     },
+     {
+      "channel": "Pod Save America",
+      "n": 798,
+      "auc": 0.49
+     },
+     {
+      "channel": "Abdul El-Sayed",
+      "n": 633,
+      "auc": 0.487
+     },
+     {
+      "channel": "The Daily Wire",
+      "n": 541,
+      "auc": 0.577
+     },
+     {
+      "channel": "Vivek Ramaswamy",
+      "n": 511,
+      "auc": 0.622
+     },
+     {
+      "channel": "Cory Booker",
+      "n": 461,
+      "auc": 0.511
+     },
+     {
+      "channel": "The Free Press",
+      "n": 417,
+      "auc": 0.593
+     },
+     {
+      "channel": "James Talarico",
+      "n": 415,
+      "auc": 0.467
+     },
+     {
+      "channel": "Brennan Center for Justice",
+      "n": 404,
+      "auc": 0.461
+     },
+     {
+      "channel": "The Hometown Holler",
+      "n": 275,
+      "auc": 0.542
+     },
+     {
+      "channel": "Sherrod Brown",
+      "n": 260,
+      "auc": 0.449
+     },
+     {
+      "channel": "JB Pritzker",
+      "n": 223,
+      "auc": 0.421
+     },
+     {
+      "channel": "No Labels",
+      "n": 223,
+      "auc": 0.499
+     },
+     {
+      "channel": "Democracy Forward",
+      "n": 211,
+      "auc": 0.546
+     },
+     {
+      "channel": "Congresswoman Nancy Mace",
+      "n": 204,
+      "auc": 0.486
+     },
+     {
+      "channel": "Bernie Sanders",
+      "n": 200,
+      "auc": 0.519
+     },
+     {
+      "channel": "Ro Khanna",
+      "n": 190,
+      "auc": 0.639
+     },
+     {
+      "channel": "Voters Not Politicians",
+      "n": 185,
+      "auc": 0.405
+     },
+     {
+      "channel": "Gavin Newsom",
+      "n": 166,
+      "auc": 0.544
+     },
+     {
+      "channel": "Mallory McMorrow",
+      "n": 163,
+      "auc": 0.502
+     },
+     {
+      "channel": "Mary Peltola",
+      "n": 159,
+      "auc": 0.499
+     },
+     {
+      "channel": "Pete Buttigieg",
+      "n": 155,
+      "auc": 0.531
+     },
+     {
+      "channel": "Rep Maxwell Alejandro Frost",
+      "n": 112,
+      "auc": 0.627
+     }
+    ],
+    "perFamily": [
+     {
+      "family": "Candidates & officials",
+      "n": 4950,
+      "baseRate": 0.166,
+      "auc": 0.543
+     },
+     {
+      "family": "Nonpartisan media",
+      "n": 1453,
+      "baseRate": 0.196,
+      "auc": 0.561
+     },
+     {
+      "family": "Partisan media",
+      "n": 9942,
+      "baseRate": 0.141,
+      "auc": 0.63
+     },
+     {
+      "family": "Reform",
+      "n": 1196,
+      "baseRate": 0.132,
+      "auc": 0.465
+     },
+     {
+      "family": "UK",
+      "n": 98,
+      "baseRate": 0.01,
+      "auc": 0.381
+     },
+     {
+      "family": "Voting rights",
+      "n": 816,
+      "baseRate": 0.08,
+      "auc": 0.438
+     }
+    ]
+   },
+   "timeSplit": {
+    "cut": "2026-07-01",
+    "train": 13617,
+    "test": 4838,
+    "testBaseRate": 0.126,
+    "auc": 0.569
+   }
+  },
+  "checks": [
+   {
+    "input": {
+     "title": "@CrainAndCone takes on Washington \ud83c\uddfa\ud83c\uddf8\ud83c\udfc8",
+     "description": "",
+     "tags": [],
+     "durationSec": 44,
+     "published": "2025-04-15T15:34:49Z",
+     "group": "media-R",
+     "channelMedian": 28551
+    },
+    "p": 0.076144
+   },
+   {
+    "input": {
+     "title": "Brad Lander on #RankedChoiceVoting & the Power of Cross-Endorsements",
+     "description": "In NYC\u2019s primaries, candidates took a more collaborative approach to campaigning than we typically see in elections.\n\nFormer NYC mayoral candidate @landerfornyc told Anand Giridharadas that was thanks to #RankedChoiceVoting, and the response from voters \u201cwas really quite extraordinary.\u201d",
+     "tags": [],
+     "durationSec": 124,
+     "published": "2025-07-12T13:19:00Z",
+     "group": "reform-core",
+     "channelMedian": 2000.5
+    },
+    "p": 0.189625
+   },
+   {
+    "input": {
+     "title": "The Voting Rights Act and SCOTUS",
+     "description": "In 2013, the Supreme Court gutted a key part of the Voting Rights Act that blocked discriminatory voting policies. Chief Justice John Roberts said that racial discrimination in voting was a thing of the past, but Justice Ruth Bader Ginsburg warned that removing these protections was like \u201cthrowing away your umbrella in a rainstorm because you are not getting wet.\u201d Listen to the latest episode of our podcast, The Briefing with Michael Waldman, to learn what\u2019s at stake for voting rights in the Supreme Court\u2019s 2025\u201326 term.\n\nhttps://www.youtube.com/watch?v=9Cwe-DVrQrg&t=1518s",
+     "tags": [],
+     "durationSec": 56,
+     "published": "2025-10-09T15:51:47Z",
+     "group": "voting-rights",
+     "channelMedian": 1160
+    },
+    "p": 0.078704
+   },
+   {
+    "input": {
+     "title": "Trump CAPTURES Maduro, STRIKES Venezuela",
+     "description": "If you want to help support independent journalism, become a Member:\nhttps://www.youtube.com/channel/UCLdP3jmBYe9lAZQbY6OSYjw/join\n\nFOLLOW BENNY ON SOCIALS:\nhttps://www.bennyjohnson.com/follow\n\nCHECK OUT OUR MERCH: \nhttps://shop.bennyjohnson.com/\n\n\nSign up for The Benny Newsletter:\nhttps://www.bennyjohnson.com/newsletter\n\nSUBSCRIBE TO THE PODCAST\nhttps://www.bennyjohnson.com/thebennyshow",
+     "tags": [
+      "Benny Johnson",
+      "Benny",
+      "TPUSA",
+      "Charlie Kirk",
+      "Steven Crowder",
+      "TimCast",
+      "Brandon Tatum",
+      "Breaking",
+      "Just in",
+      "News",
+      "Politics",
+      "Cancelled",
+      "Woke",
+      "Go woke Go broke",
+      "Trump",
+      "Elon Musk",
+      "Joe Biden",
+      "Republican",
+      "Donald Trump",
+      "Election"
+     ],
+     "durationSec": 178,
+     "published": "2026-01-03T15:39:02Z",
+     "group": "media-R",
+     "channelMedian": 221450.5
+    },
+    "p": 0.193391
+   },
+   {
+    "input": {
+     "title": "This One Question Changed the Debate",
+     "description": "#charliekirk #politics #america #2026 #debate #trending #college",
+     "tags": [
+      "turning point usa",
+      "turning point",
+      "tpusa",
+      "Charlie kirk",
+      "viral",
+      "trending"
+     ],
+     "durationSec": 17,
+     "published": "2026-03-16T18:00:24Z",
+     "group": "media-R",
+     "channelMedian": 131371.5
+    },
+    "p": 0.198317
+   },
+   {
+    "input": {
+     "title": "Jon and Tommy Discuss the Few Options Trump has Left in Iran",
+     "description": "Trump is like a drunk guy at the bar who decided to pick a fight with the crazy guy with cauliflower ear.\n\nJoin this channel to get access to perks like ad-free episodes and exclusive videos:\nhttps://www.youtube.com/channel/UCKRoXz3hHAu2XL_k3Ef4vJQ/join\n\nSubscribe to our channel! https://www.youtube.com/crookedmedia?sub_confirmation=1\n\nPhotos courtesy of AP Photo Archive\n\nCrooked believes that we need a better conversation about politics, culture, and the world around us\u2014one that doesn\u2019t just focus on what\u2019s broken, but what we can do to fix it. At a time when it\u2019s increasingly easy to feel cy",
+     "tags": [
+      "Jon Favreau",
+      "John Favreau",
+      "Tommy Vietor",
+      "Tommy Vitor",
+      "Tommy Veetor",
+      "Jon Lovett",
+      "John Lovette",
+      "Jon Lovitz",
+      "Dan Pheiffer",
+      "Dan Phieffer",
+      "Dan Fipher",
+      "Pod Save America",
+      "Crooked Media",
+      "CNN",
+      "Late Show with Stephen Colbert",
+      "MS NOW",
+      "MSNOW"
+     ],
+     "durationSec": 93,
+     "published": "2026-05-13T14:15:28Z",
+     "group": "media-D",
+     "channelMedian": 32046.5
+    },
+    "p": 0.088733
+   },
+   {
+    "input": {
+     "title": "The government is making you bid against yourself?",
+     "description": "Are government \"affordable housing\" policies actually making it harder to buy a home? Pierre Poilievre exposes the irony of using taxpayer dollars to bid up the cost of empty condos. Instead of forcing regular Canadians to bid against themselves, Pierre offers a truly innovative and simple solution: let the housing prices drop.\n\n#HousingCrisis #CanadianRealEstate #AffordableHousing #PierrePoilievre #CondoMarket #Economy #LetPricesDrop",
+     "tags": [
+      "youre doing this completely wrong in the housing market",
+      "the government is making you bid against yourself",
+      "this common housing tip actually hurts you",
+      "affordable housing policy explained",
+      "pierre poilievre housing plan",
+      "canadian real estate bubble",
+      "bidding wars real estate",
+      "carney condo bailout",
+      "peirre poilievre clips",
+      "cost of living crisis canada",
+      "let housing prices drop"
+     ],
+     "durationSec": 19,
+     "published": "2026-07-05T04:00:15Z",
+     "group": "independent-media",
+     "channelMedian": 1307
+    },
+    "p": 0.19264
+   },
+   {
+    "input": {
+     "title": "Do you agree with David's take? #republicans #epsteinfiles #thesplit #jubilee",
+     "description": "Hey you \ud83d\udc48 Wanna be in a Jubilee video? https://bit.ly/be-in-a-video\n\nLET\u2019S BE FRIENDS\nInstagram: https://www.instagram.com/jubileemedia/\nTikTok: https://www.tiktok.com/@jubilee?lang=en\nWebsite: https://www.jubileemedia.com\n\nOUR LOVE + DATING CHANNEL \ud83c\udf51\nYouTube: https://www.youtube.com/@lovecommanectar\nInstagram: https://www.instagram.com/lovecommanectar  \nNectar app: https://lovecommanectar.co/m/download-nectar\n\nARE YOU A BRAND? WANNA WORK WITH US?\nEmail partnerships@jubileemedia.com\n\nFEATURING \n\n\nTIMECODES\n00:00 Intro",
+     "tags": [
+      "jubilee",
+      "jubilee media",
+      "jubilee project",
+      "middle ground",
+      "spectrum",
+      "odd man out",
+      "versus 1",
+      "embrace empathy",
+      "live deeper",
+      "love language",
+      "blind devotion",
+      "Odd One Out",
+      "Game Show",
+      "Dating Show",
+      "Nectar",
+      "Ask Me Anything",
+      "Gen Z",
+      "Millennial",
+      "loveprint",
+      "jason y lee"
+     ],
+     "durationSec": 119,
+     "published": "2026-08-23T17:00:28Z",
+     "group": "media-nonpartisan",
+     "channelMedian": 44999
+    },
+    "p": 0.227962
+   }
+  ]
+ },
+ "image": {
+  "version": "var-1-image",
+  "method": "L2 logistic regression (lambda 2.0 on standardized features, intercept free) on 18455 settled shorts from 64 channels; validated leave-one-channel-out and on a time split at 2026-07-01.",
+  "target": "breakout: lifetime views at least 3x the channel's median of settled shorts",
+  "n": 18455,
+  "positives": 2739,
+  "baseRate": 0.1484,
+  "intercept": -2.2693,
+  "features": [
+   {
+    "key": "question",
+    "label": "Title asks a question",
+    "kind": "binary",
+    "coef": -0.0768,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.128
+   },
+   {
+    "key": "exclaim",
+    "label": "Exclamation mark in the title",
+    "kind": "binary",
+    "coef": -0.1278,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.058
+   },
+   {
+    "key": "number",
+    "label": "A number in the title",
+    "kind": "binary",
+    "coef": -0.0739,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.082
+   },
+   {
+    "key": "firstPerson",
+    "label": "First person in the title",
+    "kind": "binary",
+    "coef": 0.1938,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.049
+   },
+   {
+    "key": "you",
+    "label": "Addresses the viewer",
+    "kind": "binary",
+    "coef": -0.0343,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.079
+   },
+   {
+    "key": "caps",
+    "label": "A word in all caps",
+    "kind": "binary",
+    "coef": 0.3019,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.237
+   },
+   {
+    "key": "anger",
+    "label": "Combative words in the title",
+    "kind": "binary",
+    "coef": 0.268,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.048
+   },
+   {
+    "key": "quote",
+    "label": "Quotation in the title",
+    "kind": "binary",
+    "coef": -0.1113,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.074
+   },
+   {
+    "key": "shortTitle",
+    "label": "Title of six words or fewer",
+    "kind": "binary",
+    "coef": -0.0728,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.316
+   },
+   {
+    "key": "longTitle",
+    "label": "Title of fifteen words or more",
+    "kind": "binary",
+    "coef": -0.1439,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.089
+   },
+   {
+    "key": "emoji",
+    "label": "Emoji in the title",
+    "kind": "binary",
+    "coef": 0.6233,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.141
+   },
+   {
+    "key": "hashtagTitle",
+    "label": "Hashtag in the title",
+    "kind": "binary",
+    "coef": -0.0892,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.074
+   },
+   {
+    "key": "trump",
+    "label": "Names Trump",
+    "kind": "binary",
+    "coef": 0.2236,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.175
+   },
+   {
+    "key": "titleWords",
+    "label": "Title length (log words)",
+    "kind": "continuous",
+    "coef": 0.0705,
+    "mean": 2.182492,
+    "sd": 0.423004,
+    "prevalence": null
+   },
+   {
+    "key": "cta",
+    "label": "Call to action in the description",
+    "kind": "binary",
+    "coef": 0.196,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.191
+   },
+   {
+    "key": "link",
+    "label": "Link in the description",
+    "kind": "binary",
+    "coef": 0.1948,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.321
+   },
+   {
+    "key": "noDescription",
+    "label": "No description",
+    "kind": "binary",
+    "coef": -0.7022,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.282
+   },
+   {
+    "key": "descWords",
+    "label": "Description length (log words)",
+    "kind": "continuous",
+    "coef": -0.3278,
+    "mean": 1.834621,
+    "sd": 1.917642,
+    "prevalence": null
+   },
+   {
+    "key": "tags",
+    "label": "Has tags",
+    "kind": "binary",
+    "coef": 0.7517,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.534
+   },
+   {
+    "key": "tagCount",
+    "label": "Tag count (log)",
+    "kind": "continuous",
+    "coef": -0.3904,
+    "mean": 1.36166,
+    "sd": 1.349929,
+    "prevalence": null
+   },
+   {
+    "key": "under20",
+    "label": "20 seconds or shorter",
+    "kind": "binary",
+    "coef": 0.6267,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.089
+   },
+   {
+    "key": "under35",
+    "label": "35 seconds or shorter",
+    "kind": "binary",
+    "coef": 0.2451,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.237
+   },
+   {
+    "key": "over60",
+    "label": "Longer than a minute",
+    "kind": "binary",
+    "coef": -0.0792,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.475
+   },
+   {
+    "key": "logDuration",
+    "label": "Length (log seconds)",
+    "kind": "continuous",
+    "coef": 0.2023,
+    "mean": 4.029476,
+    "sd": 0.659795,
+    "prevalence": null
+   },
+   {
+    "key": "weekend",
+    "label": "Posted on a weekend",
+    "kind": "binary",
+    "coef": 0.2106,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.19
+   },
+   {
+    "key": "morning",
+    "label": "Posted 6 to 11am Eastern",
+    "kind": "binary",
+    "coef": 0.0225,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.153
+   },
+   {
+    "key": "evening",
+    "label": "Posted 6 to 11pm Eastern",
+    "kind": "binary",
+    "coef": 0.0489,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.306
+   },
+   {
+    "key": "night",
+    "label": "Posted midnight to 5am Eastern",
+    "kind": "binary",
+    "coef": -0.0789,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.011
+   },
+   {
+    "key": "logMedian",
+    "label": "Channel size (log median views)",
+    "kind": "continuous",
+    "coef": 0.2586,
+    "mean": 4.357161,
+    "sd": 0.874697,
+    "prevalence": null
+   },
+   {
+    "key": "family:Reform",
+    "label": "Reform",
+    "kind": "family",
+    "coef": 0.7046,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.065
+   },
+   {
+    "key": "family:Voting rights",
+    "label": "Voting rights",
+    "kind": "family",
+    "coef": 0.0197,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.044
+   },
+   {
+    "key": "family:Nonpartisan media",
+    "label": "Nonpartisan media",
+    "kind": "family",
+    "coef": 0.5593,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.079
+   },
+   {
+    "key": "family:Candidates & officials",
+    "label": "Candidates & officials",
+    "kind": "family",
+    "coef": 0.4034,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.268
+   },
+   {
+    "key": "family:Partisan media",
+    "label": "Partisan media",
+    "kind": "family",
+    "coef": -0.6978,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.539
+   },
+   {
+    "key": "family:UK",
+    "label": "UK",
+    "kind": "family",
+    "coef": -0.9892,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.005
+   },
+   {
+    "key": "mem",
+    "label": "Thumbnail memorability (ResMem)",
+    "kind": "continuous",
+    "coef": -0.0226,
+    "mean": 0.803645,
+    "sd": 0.077889,
+    "prevalence": null
+   },
+   {
+    "key": "bright",
+    "label": "Thumbnail brightness (mean luma)",
+    "kind": "continuous",
+    "coef": 0.0419,
+    "mean": 54.204871,
+    "sd": 20.625909,
+    "prevalence": null
+   },
+   {
+    "key": "contrast",
+    "label": "Thumbnail contrast (luma standard deviation)",
+    "kind": "continuous",
+    "coef": -0.0651,
+    "mean": 53.725415,
+    "sd": 12.198228,
+    "prevalence": null
+   },
+   {
+    "key": "color",
+    "label": "Thumbnail colorfulness (Hasler and Susstrunk)",
+    "kind": "continuous",
+    "coef": -0.0399,
+    "mean": 29.949551,
+    "sd": 13.196306,
+    "prevalence": null
+   },
+   {
+    "key": "pca0",
+    "label": "Thumbnail CLIP component 1",
+    "kind": "continuous",
+    "coef": -0.021,
+    "mean": -0.0,
+    "sd": 0.173156,
+    "prevalence": null
+   },
+   {
+    "key": "pca1",
+    "label": "Thumbnail CLIP component 2",
+    "kind": "continuous",
+    "coef": -0.1283,
+    "mean": -0.0,
+    "sd": 0.13596,
+    "prevalence": null
+   },
+   {
+    "key": "pca2",
+    "label": "Thumbnail CLIP component 3",
+    "kind": "continuous",
+    "coef": -0.0614,
+    "mean": -0.0,
+    "sd": 0.11615,
+    "prevalence": null
+   },
+   {
+    "key": "pca3",
+    "label": "Thumbnail CLIP component 4",
+    "kind": "continuous",
+    "coef": -0.0684,
+    "mean": -0.0,
+    "sd": 0.105998,
+    "prevalence": null
+   },
+   {
+    "key": "pca4",
+    "label": "Thumbnail CLIP component 5",
+    "kind": "continuous",
+    "coef": -0.0299,
+    "mean": 0.0,
+    "sd": 0.099318,
+    "prevalence": null
+   },
+   {
+    "key": "pca5",
+    "label": "Thumbnail CLIP component 6",
+    "kind": "continuous",
+    "coef": 0.1278,
+    "mean": -0.0,
+    "sd": 0.094922,
+    "prevalence": null
+   },
+   {
+    "key": "pca6",
+    "label": "Thumbnail CLIP component 7",
+    "kind": "continuous",
+    "coef": 0.0753,
+    "mean": -0.0,
+    "sd": 0.090451,
+    "prevalence": null
+   },
+   {
+    "key": "pca7",
+    "label": "Thumbnail CLIP component 8",
+    "kind": "continuous",
+    "coef": -0.0736,
+    "mean": -0.0,
+    "sd": 0.089561,
+    "prevalence": null
+   }
+  ],
+  "metrics": {
+   "leaveOneChannelOut": {
+    "auc": 0.607,
+    "aucChannelOnly": 0.556,
+    "withinChannelAuc": 0.564,
+    "withinChannelAucChannelOnly": 0.5,
+    "topDecileRate": 0.248,
+    "topDecileLift": 1.67,
+    "bottomDecileRate": 0.083,
+    "deciles": [
+     {
+      "decile": 1,
+      "n": 1845,
+      "predicted": 0.314,
+      "observed": 0.248
+     },
+     {
+      "decile": 2,
+      "n": 1846,
+      "predicted": 0.237,
+      "observed": 0.183
+     },
+     {
+      "decile": 3,
+      "n": 1845,
+      "predicted": 0.197,
+      "observed": 0.195
+     },
+     {
+      "decile": 4,
+      "n": 1846,
+      "predicted": 0.168,
+      "observed": 0.167
+     },
+     {
+      "decile": 5,
+      "n": 1845,
+      "predicted": 0.145,
+      "observed": 0.149
+     },
+     {
+      "decile": 6,
+      "n": 1846,
+      "predicted": 0.126,
+      "observed": 0.131
+     },
+     {
+      "decile": 7,
+      "n": 1845,
+      "predicted": 0.109,
+      "observed": 0.113
+     },
+     {
+      "decile": 8,
+      "n": 1846,
+      "predicted": 0.093,
+      "observed": 0.121
+     },
+     {
+      "decile": 9,
+      "n": 1845,
+      "predicted": 0.077,
+      "observed": 0.093
+     },
+     {
+      "decile": 10,
+      "n": 1846,
+      "predicted": 0.055,
+      "observed": 0.083
+     }
+    ],
+    "withinChannel": [
+     {
+      "channel": "Brian Tyler Cohen",
+      "n": 1793,
+      "auc": 0.566
+     },
+     {
+      "channel": "Turning Point USA",
+      "n": 1684,
+      "auc": 0.592
+     },
+     {
+      "channel": "Ben Shapiro",
+      "n": 1584,
+      "auc": 0.613
+     },
+     {
+      "channel": "Benny Johnson",
+      "n": 1342,
+      "auc": 0.558
+     },
+     {
+      "channel": "PragerU",
+      "n": 1224,
+      "auc": 0.514
+     },
+     {
+      "channel": "MeidasTouch",
+      "n": 976,
+      "auc": 0.66
+     },
+     {
+      "channel": "The Democrats",
+      "n": 891,
+      "auc": 0.605
+     },
+     {
+      "channel": "Jubilee",
+      "n": 841,
+      "auc": 0.644
+     },
+     {
+      "channel": "Pod Save America",
+      "n": 798,
+      "auc": 0.485
+     },
+     {
+      "channel": "Abdul El-Sayed",
+      "n": 633,
+      "auc": 0.482
+     },
+     {
+      "channel": "The Daily Wire",
+      "n": 541,
+      "auc": 0.57
+     },
+     {
+      "channel": "Vivek Ramaswamy",
+      "n": 511,
+      "auc": 0.586
+     },
+     {
+      "channel": "Cory Booker",
+      "n": 461,
+      "auc": 0.527
+     },
+     {
+      "channel": "The Free Press",
+      "n": 417,
+      "auc": 0.534
+     },
+     {
+      "channel": "James Talarico",
+      "n": 415,
+      "auc": 0.517
+     },
+     {
+      "channel": "Brennan Center for Justice",
+      "n": 404,
+      "auc": 0.556
+     },
+     {
+      "channel": "The Hometown Holler",
+      "n": 275,
+      "auc": 0.588
+     },
+     {
+      "channel": "Sherrod Brown",
+      "n": 260,
+      "auc": 0.445
+     },
+     {
+      "channel": "JB Pritzker",
+      "n": 223,
+      "auc": 0.413
+     },
+     {
+      "channel": "No Labels",
+      "n": 223,
+      "auc": 0.601
+     },
+     {
+      "channel": "Democracy Forward",
+      "n": 211,
+      "auc": 0.617
+     },
+     {
+      "channel": "Congresswoman Nancy Mace",
+      "n": 204,
+      "auc": 0.515
+     },
+     {
+      "channel": "Bernie Sanders",
+      "n": 200,
+      "auc": 0.557
+     },
+     {
+      "channel": "Ro Khanna",
+      "n": 190,
+      "auc": 0.579
+     },
+     {
+      "channel": "Voters Not Politicians",
+      "n": 185,
+      "auc": 0.39
+     },
+     {
+      "channel": "Gavin Newsom",
+      "n": 166,
+      "auc": 0.608
+     },
+     {
+      "channel": "Mallory McMorrow",
+      "n": 163,
+      "auc": 0.608
+     },
+     {
+      "channel": "Mary Peltola",
+      "n": 159,
+      "auc": 0.417
+     },
+     {
+      "channel": "Pete Buttigieg",
+      "n": 155,
+      "auc": 0.507
+     },
+     {
+      "channel": "Rep Maxwell Alejandro Frost",
+      "n": 112,
+      "auc": 0.722
+     }
+    ],
+    "perFamily": [
+     {
+      "family": "Candidates & officials",
+      "n": 4950,
+      "baseRate": 0.166,
+      "auc": 0.544
+     },
+     {
+      "family": "Nonpartisan media",
+      "n": 1453,
+      "baseRate": 0.196,
+      "auc": 0.595
+     },
+     {
+      "family": "Partisan media",
+      "n": 9942,
+      "baseRate": 0.141,
+      "auc": 0.636
+     },
+     {
+      "family": "Reform",
+      "n": 1196,
+      "baseRate": 0.132,
+      "auc": 0.493
+     },
+     {
+      "family": "UK",
+      "n": 98,
+      "baseRate": 0.01,
+      "auc": 0.608
+     },
+     {
+      "family": "Voting rights",
+      "n": 816,
+      "baseRate": 0.08,
+      "auc": 0.477
+     }
+    ]
+   },
+   "timeSplit": {
+    "cut": "2026-07-01",
+    "train": 13617,
+    "test": 4838,
+    "testBaseRate": 0.126,
+    "auc": 0.567
+   }
+  },
+  "checks": [
+   {
+    "input": {
+     "title": "@CrainAndCone takes on Washington \ud83c\uddfa\ud83c\uddf8\ud83c\udfc8",
+     "description": "",
+     "tags": [],
+     "durationSec": 44,
+     "published": "2025-04-15T15:34:49Z",
+     "group": "media-R",
+     "channelMedian": 28551
+    },
+    "p": 0.093191,
+    "image": {
+     "mem": 0.7828,
+     "bright": 45.96,
+     "contrast": 54.16,
+     "color": 19.71,
+     "pca": [
+      -0.02261,
+      0.00843,
+      0.03027,
+      0.02256,
+      0.12836,
+      0.10705,
+      0.0623,
+      -0.09558
+     ]
+    }
+   },
+   {
+    "input": {
+     "title": "Brad Lander on #RankedChoiceVoting & the Power of Cross-Endorsements",
+     "description": "In NYC\u2019s primaries, candidates took a more collaborative approach to campaigning than we typically see in elections.\n\nFormer NYC mayoral candidate @landerfornyc told Anand Giridharadas that was thanks to #RankedChoiceVoting, and the response from voters \u201cwas really quite extraordinary.\u201d",
+     "tags": [],
+     "durationSec": 124,
+     "published": "2025-07-12T13:19:00Z",
+     "group": "reform-core",
+     "channelMedian": 2000.5
+    },
+    "p": 0.185747,
+    "image": {
+     "mem": 0.8277,
+     "bright": 67.14,
+     "contrast": 55.49,
+     "color": 29.12,
+     "pca": [
+      0.30475,
+      -0.10384,
+      -0.24023,
+      0.26338,
+      0.07017,
+      0.14124,
+      -0.05492,
+      0.17472
+     ]
+    }
+   },
+   {
+    "input": {
+     "title": "The Voting Rights Act and SCOTUS",
+     "description": "In 2013, the Supreme Court gutted a key part of the Voting Rights Act that blocked discriminatory voting policies. Chief Justice John Roberts said that racial discrimination in voting was a thing of the past, but Justice Ruth Bader Ginsburg warned that removing these protections was like \u201cthrowing away your umbrella in a rainstorm because you are not getting wet.\u201d Listen to the latest episode of our podcast, The Briefing with Michael Waldman, to learn what\u2019s at stake for voting rights in the Supreme Court\u2019s 2025\u201326 term.\n\nhttps://www.youtube.com/watch?v=9Cwe-DVrQrg&t=1518s",
+     "tags": [],
+     "durationSec": 56,
+     "published": "2025-10-09T15:51:47Z",
+     "group": "voting-rights",
+     "channelMedian": 1160
+    },
+    "p": 0.115387,
+    "image": {
+     "mem": 0.8577,
+     "bright": 50.28,
+     "contrast": 47.09,
+     "color": 28.62,
+     "pca": [
+      0.233,
+      -0.1658,
+      0.06553,
+      0.16513,
+      0.04574,
+      0.08653,
+      0.11665,
+      -0.04986
+     ]
+    }
+   },
+   {
+    "input": {
+     "title": "Trump CAPTURES Maduro, STRIKES Venezuela",
+     "description": "If you want to help support independent journalism, become a Member:\nhttps://www.youtube.com/channel/UCLdP3jmBYe9lAZQbY6OSYjw/join\n\nFOLLOW BENNY ON SOCIALS:\nhttps://www.bennyjohnson.com/follow\n\nCHECK OUT OUR MERCH: \nhttps://shop.bennyjohnson.com/\n\n\nSign up for The Benny Newsletter:\nhttps://www.bennyjohnson.com/newsletter\n\nSUBSCRIBE TO THE PODCAST\nhttps://www.bennyjohnson.com/thebennyshow",
+     "tags": [
+      "Benny Johnson",
+      "Benny",
+      "TPUSA",
+      "Charlie Kirk",
+      "Steven Crowder",
+      "TimCast",
+      "Brandon Tatum",
+      "Breaking",
+      "Just in",
+      "News",
+      "Politics",
+      "Cancelled",
+      "Woke",
+      "Go woke Go broke",
+      "Trump",
+      "Elon Musk",
+      "Joe Biden",
+      "Republican",
+      "Donald Trump",
+      "Election"
+     ],
+     "durationSec": 178,
+     "published": "2026-01-03T15:39:02Z",
+     "group": "media-R",
+     "channelMedian": 221450.5
+    },
+    "p": 0.171871,
+    "image": {
+     "mem": 0.7717,
+     "bright": 47.66,
+     "contrast": 46.16,
+     "color": 55.41,
+     "pca": [
+      0.36156,
+      0.00138,
+      -0.14949,
+      -0.20884,
+      0.00188,
+      -0.06615,
+      -0.13704,
+      0.0972
+     ]
+    }
+   },
+   {
+    "input": {
+     "title": "This One Question Changed the Debate",
+     "description": "#charliekirk #politics #america #2026 #debate #trending #college",
+     "tags": [
+      "turning point usa",
+      "turning point",
+      "tpusa",
+      "Charlie kirk",
+      "viral",
+      "trending"
+     ],
+     "durationSec": 17,
+     "published": "2026-03-16T18:00:24Z",
+     "group": "media-R",
+     "channelMedian": 131371.5
+    },
+    "p": 0.197194,
+    "image": {
+     "mem": 0.6944,
+     "bright": 58.74,
+     "contrast": 60.8,
+     "color": 21.05,
+     "pca": [
+      -0.06634,
+      0.13938,
+      -0.06356,
+      -0.06646,
+      0.19008,
+      -0.05745,
+      0.14982,
+      -0.07082
+     ]
+    }
+   },
+   {
+    "input": {
+     "title": "Jon and Tommy Discuss the Few Options Trump has Left in Iran",
+     "description": "Trump is like a drunk guy at the bar who decided to pick a fight with the crazy guy with cauliflower ear.\n\nJoin this channel to get access to perks like ad-free episodes and exclusive videos:\nhttps://www.youtube.com/channel/UCKRoXz3hHAu2XL_k3Ef4vJQ/join\n\nSubscribe to our channel! https://www.youtube.com/crookedmedia?sub_confirmation=1\n\nPhotos courtesy of AP Photo Archive\n\nCrooked believes that we need a better conversation about politics, culture, and the world around us\u2014one that doesn\u2019t just focus on what\u2019s broken, but what we can do to fix it. At a time when it\u2019s increasingly easy to feel cy",
+     "tags": [
+      "Jon Favreau",
+      "John Favreau",
+      "Tommy Vietor",
+      "Tommy Vitor",
+      "Tommy Veetor",
+      "Jon Lovett",
+      "John Lovette",
+      "Jon Lovitz",
+      "Dan Pheiffer",
+      "Dan Phieffer",
+      "Dan Fipher",
+      "Pod Save America",
+      "Crooked Media",
+      "CNN",
+      "Late Show with Stephen Colbert",
+      "MS NOW",
+      "MSNOW"
+     ],
+     "durationSec": 93,
+     "published": "2026-05-13T14:15:28Z",
+     "group": "media-D",
+     "channelMedian": 32046.5
+    },
+    "p": 0.104948,
+    "image": {
+     "mem": 0.7846,
+     "bright": 51.91,
+     "contrast": 42.31,
+     "color": 28.79,
+     "pca": [
+      -0.15336,
+      -0.14799,
+      0.1855,
+      -0.00844,
+      0.00589,
+      0.04851,
+      0.10621,
+      0.16581
+     ]
+    }
+   },
+   {
+    "input": {
+     "title": "The government is making you bid against yourself?",
+     "description": "Are government \"affordable housing\" policies actually making it harder to buy a home? Pierre Poilievre exposes the irony of using taxpayer dollars to bid up the cost of empty condos. Instead of forcing regular Canadians to bid against themselves, Pierre offers a truly innovative and simple solution: let the housing prices drop.\n\n#HousingCrisis #CanadianRealEstate #AffordableHousing #PierrePoilievre #CondoMarket #Economy #LetPricesDrop",
+     "tags": [
+      "youre doing this completely wrong in the housing market",
+      "the government is making you bid against yourself",
+      "this common housing tip actually hurts you",
+      "affordable housing policy explained",
+      "pierre poilievre housing plan",
+      "canadian real estate bubble",
+      "bidding wars real estate",
+      "carney condo bailout",
+      "peirre poilievre clips",
+      "cost of living crisis canada",
+      "let housing prices drop"
+     ],
+     "durationSec": 19,
+     "published": "2026-07-05T04:00:15Z",
+     "group": "independent-media",
+     "channelMedian": 1307
+    },
+    "p": 0.187096,
+    "image": {
+     "mem": 0.8805,
+     "bright": 47.28,
+     "contrast": 48.81,
+     "color": 47.88,
+     "pca": [
+      0.14837,
+      -0.10826,
+      -0.02706,
+      0.15403,
+      0.12899,
+      0.05343,
+      -0.08037,
+      -0.08158
+     ]
+    }
+   },
+   {
+    "input": {
+     "title": "Do you agree with David's take? #republicans #epsteinfiles #thesplit #jubilee",
+     "description": "Hey you \ud83d\udc48 Wanna be in a Jubilee video? https://bit.ly/be-in-a-video\n\nLET\u2019S BE FRIENDS\nInstagram: https://www.instagram.com/jubileemedia/\nTikTok: https://www.tiktok.com/@jubilee?lang=en\nWebsite: https://www.jubileemedia.com\n\nOUR LOVE + DATING CHANNEL \ud83c\udf51\nYouTube: https://www.youtube.com/@lovecommanectar\nInstagram: https://www.instagram.com/lovecommanectar  \nNectar app: https://lovecommanectar.co/m/download-nectar\n\nARE YOU A BRAND? WANNA WORK WITH US?\nEmail partnerships@jubileemedia.com\n\nFEATURING \n\n\nTIMECODES\n00:00 Intro",
+     "tags": [
+      "jubilee",
+      "jubilee media",
+      "jubilee project",
+      "middle ground",
+      "spectrum",
+      "odd man out",
+      "versus 1",
+      "embrace empathy",
+      "live deeper",
+      "love language",
+      "blind devotion",
+      "Odd One Out",
+      "Game Show",
+      "Dating Show",
+      "Nectar",
+      "Ask Me Anything",
+      "Gen Z",
+      "Millennial",
+      "loveprint",
+      "jason y lee"
+     ],
+     "durationSec": 119,
+     "published": "2026-08-23T17:00:28Z",
+     "group": "media-nonpartisan",
+     "channelMedian": 44999
+    },
+    "p": 0.28516,
+    "image": {
+     "mem": 0.8709,
+     "bright": 53.64,
+     "contrast": 52.24,
+     "color": 34.54,
+     "pca": [
+      -0.18269,
+      -0.22971,
+      -0.07614,
+      -0.1791,
+      -0.04135,
+      0.11871,
+      0.04954,
+      0.05451
+     ]
+    }
+   }
+  ],
+  "imageFeatures": {
+   "defs": [
+    {
+     "key": "mem",
+     "label": "Thumbnail memorability (ResMem)",
+     "kind": "continuous"
+    },
+    {
+     "key": "bright",
+     "label": "Thumbnail brightness (mean luma)",
+     "kind": "continuous"
+    },
+    {
+     "key": "contrast",
+     "label": "Thumbnail contrast (luma standard deviation)",
+     "kind": "continuous"
+    },
+    {
+     "key": "color",
+     "label": "Thumbnail colorfulness (Hasler and Susstrunk)",
+     "kind": "continuous"
+    },
+    {
+     "key": "pca0",
+     "label": "Thumbnail CLIP component 1",
+     "kind": "continuous"
+    },
+    {
+     "key": "pca1",
+     "label": "Thumbnail CLIP component 2",
+     "kind": "continuous"
+    },
+    {
+     "key": "pca2",
+     "label": "Thumbnail CLIP component 3",
+     "kind": "continuous"
+    },
+    {
+     "key": "pca3",
+     "label": "Thumbnail CLIP component 4",
+     "kind": "continuous"
+    },
+    {
+     "key": "pca4",
+     "label": "Thumbnail CLIP component 5",
+     "kind": "continuous"
+    },
+    {
+     "key": "pca5",
+     "label": "Thumbnail CLIP component 6",
+     "kind": "continuous"
+    },
+    {
+     "key": "pca6",
+     "label": "Thumbnail CLIP component 7",
+     "kind": "continuous"
+    },
+    {
+     "key": "pca7",
+     "label": "Thumbnail CLIP component 8",
+     "kind": "continuous"
+    }
+   ],
+   "source": {
+    "mem": "ResMem (pip resmem, pretrained) on the 227x227 center crop, 0 to 1",
+    "bright": "mean of 0.299R + 0.587G + 0.114B over hqdefault.jpg, 0 to 255",
+    "contrast": "standard deviation of the same luma",
+    "color": "sqrt(sd(R-G)^2 + sd((R+G)/2-B)^2) + 0.3 * sqrt(mean(R-G)^2 + mean((R+G)/2-B)^2)",
+    "pca0..pca7": "(L2-normalized CLIP ViT-B-32 openai image embedding - thumb-pca.json mean) projected on thumb-pca.json components"
+   },
+   "pca": "thumb-pca.json",
+   "thumbnail": "https://i.ytimg.com/vi/<id>/hqdefault.jpg"
+  }
+ },
+ "gates": {
+  "image": {
+   "passed": true,
+   "rule": "image leave-one-channel-out AUC and within-channel AUC both at least the metadata model's, on the same rows",
+   "metadata": {
+    "auc": 0.604,
+    "withinChannelAuc": 0.55
+   },
+   "image": {
+    "auc": 0.607,
+    "withinChannelAuc": 0.564
+   },
+   "memorability": true
+  }
+ },
+ "caveats": [
+  "Observational: a trait's coefficient is association within and across channels, not the effect of adding it.",
+  "The label is relative to the channel's own median, so a fast-growing channel's new shorts read low.",
+  "The metadata model has not seen the video; the image model has seen only its thumbnail.",
+  "Probabilities are calibrated on the catalog's mix of channels; a new channel inherits its family's rate until it has a median."
+ ]
+}
