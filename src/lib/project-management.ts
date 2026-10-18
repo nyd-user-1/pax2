@@ -29,11 +29,11 @@ export type Item = {
 }
 
 export const REQUIREMENTS: Item[] = [
-  { id: "1", name: "1. Record a video, or have one made", start: "2026-10-03", end: "2026-10-31", progress: 60, next: "webm to mp4 in the upload path, a Lambda with an ffmpeg layer, half a day; the Studio render after.",
+  { id: "1", name: "1. Record a video, or have one made", start: "2026-10-03", end: "2026-10-31", progress: 90, next: "The Studio's render checked in Chrome and Safari, then live with the next push, an hour.",
+    note: "Since 2026-10-18 a webm upload becomes an mp4 beside it (the pax2-transcode Lambda on the S3 upload event), the Studio renders its composition to an mp4 in the browser and submits it like a recording, and submitTake records the video's key with the style beside it.",
     steps: [
-      { what: "webm to mp4 on the S3 upload event: a Lambda with an ffmpeg layer, the mp4 written beside the upload.", share: 50, effort: "half a day; needs approval to deploy" },
-      { what: "The Studio renders a file from its Remotion preview and uploads it like a recording.", share: 40, effort: "a day" },
-      { what: "submitTake records the video's key, not the style name.", share: 10, effort: "an hour" },
+      { what: "The Studio's in-browser render checked in Chrome and Safari, then live on Amplify with the next push.", share: 70, effort: "an hour" },
+      { what: "A ruling on Remotion's licence: the free licence, or a company key in NEXT_PUBLIC_REMOTION_LICENSE_KEY.", share: 30, effort: "a decision" },
     ] },
   { id: "2", name: "2. Scripts", start: "2026-10-03", end: "2026-10-24", progress: 90, next: "The editor's sixth check reads the coded shorts' delivery patterns too, the draft coded on Bedrock the way the library scripts were, half a day.",
     note: "Since 2026-10-18 the writer's prompt, a sixth editor check and each library script's prior read the reform channels' lifts and the coded shorts' patterns from one file, src/lib/organic-evidence.ts.",

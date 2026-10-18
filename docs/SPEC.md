@@ -10,11 +10,13 @@ Analyze published videos. Help a person make one. Score it before release and sa
 
 Status words: **Built** works end to end today. **Partial** exists but misses part of the requirement. **Stub** the surface exists, the function does not. **Missing** nothing yet.
 
-### 1. Record a video, or have one made — Partial
+### 1. Record a video, or have one made — Built, with a gap
 
 Built: the recording flow. Pick or write a script (`/recording`, `/record/library`, `/record/personal`, `/record/script`), record with the teleprompter or upload (`/record/camera`), the file goes straight to S3 by presigned URL, and the ledger opens an original (`src/lib/originals.ts`). Sign-in by Cognito; owners see their own, admins see all.
 
-Missing: the camera-free Studio (`/record/studio`) previews a Remotion animation but never renders a file; `submitTake` records a ledger row whose key is a style name, not a video. Uploads arrive as webm; nothing converts them.
+Built 2026-10-18: a webm upload becomes an mp4 beside it. The `pax2-transcode` Lambda (Node 22, the `pax2-ffmpeg` layer, ffmpeg 7.0.2) runs on the S3 upload event under `uploads/`, writes `<id>.mp4` and records a `transcoded` event on the original in DynamoDB; a 5-second test clip took 1.8 to 2.1 seconds of ffmpeg, billed under 3 seconds at 2048 MB. The video page plays the mp4 once it exists and lists the conversion in the Recorded tab's History. The Studio's "Use this take" renders the Remotion composition to an H.264 mp4 in the browser (`@remotion/web-renderer`), uploads it to `uploads/<workspace>/<id>.mp4` and submits it through `submitOriginal` like a recording; `submitTake` records that key, the look and motion in `style`.
+
+Gap: the Studio's render has not run in a browser yet (no dev server on the Mac) and goes live with the next push; Remotion's licence wants a ruling, the free licence or a company key in `NEXT_PUBLIC_REMOTION_LICENSE_KEY`.
 
 ### 2. Scripts — Built, with a gap
 
