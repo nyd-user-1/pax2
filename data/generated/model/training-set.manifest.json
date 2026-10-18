@@ -1,5 +1,5 @@
 {
- "builtAt": "2026-10-17T22:55:51.705Z",
+ "builtAt": "2026-10-18T00:06:33.222Z",
  "source": {
   "catalog": "2026-10-15T15:22:02.105Z",
   "catalogSource": "YouTube Data API v3, shorts playlists, 18-month lookback"
@@ -216,6 +216,23 @@
    "kind": "family"
   }
  ],
+ "artifacts": {
+  "thumbEmbeddings": {
+   "key": "s3://pax-2-638175140432/model/thumb-embeddings.npy",
+   "what": "PAX2 Vision Encoder (CLIP ViT-B-32, pretrained openai) image embedding of each row's hqdefault.jpg thumbnail, L2-normalized, float16",
+   "shape": [
+    18455,
+    512
+   ],
+   "builtAt": "2026-10-18T00:00:59Z",
+   "script": "scripts/rig/encode_images.py"
+  },
+  "thumbIds": {
+   "key": "s3://pax-2-638175140432/model/ids.json",
+   "what": "the YouTube id of each embedding row, in order",
+   "rows": 18455
+  }
+ },
  "fields": {
   "id, channelId, channel, group, family, published": "YouTube ids and the channel's group (lambda/velocity/channels.json) and family (video-features.ts)",
   "title, description, tags, durationSec, channelMedian": "the raw pre-publish inputs; description is the first 600 characters",

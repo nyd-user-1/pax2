@@ -116,6 +116,8 @@ const out = path.join(root, "data/generated/model")
 fs.mkdirSync(out, { recursive: true })
 fs.writeFileSync(path.join(out, "training-set.jsonl"), rows.map((r) => JSON.stringify(r)).join("\n") + "\n")
 
+// Artifacts derived from these rows elsewhere (the rig's thumbnail embeddings in S3) are carried over from the last manifest.
+const previous = fs.existsSync(path.join(out, "training-set.manifest.json")) ? JSON.parse(fs.readFileSync(path.join(out, "training-set.manifest.json"), "utf8")) : {}
 const by = (k) => rows.reduce((m, r) => ((m[r[k]] = (m[r[k]] ?? 0) + 1), m), {})
 const manifest = {
   builtAt: new Date().toISOString(),
@@ -133,6 +135,7 @@ const manifest = {
   published: { first: rows[0]?.published, last: rows.at(-1)?.published },
   label: "breakout = 1 when lifetime views are at least 3x the channel's median of settled shorts (7+ days old); killed at 0.5x or less; baseline between.",
   features: FEATURE_DEFS,
+  ...(previous.artifacts && { artifacts: previous.artifacts }),
   fields: {
     "id, channelId, channel, group, family, published": "YouTube ids and the channel's group (lambda/velocity/channels.json) and family (video-features.ts)",
     "title, description, tags, durationSec, channelMedian": "the raw pre-publish inputs; description is the first 600 characters",
