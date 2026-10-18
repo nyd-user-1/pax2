@@ -5,8 +5,9 @@ import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { ArrowRight, Check, Circle, Mic } from "lucide-react"
 
+import { codeDraft, type DraftCodes } from "@/app/draft-actions"
 import { secondsAt, useDraft, words } from "@/components/record/draft"
-import { CAMPAIGN_FAMILY, organicCheck } from "@/lib/organic-evidence"
+import { CAMPAIGN_FAMILY, organicCheck, organicEvidence, patternCheck } from "@/lib/organic-evidence"
 import { cn } from "@/ui/lib/utils"
 
 export type Research = { key: string; label: string; diff: number; low: number; high: number }
@@ -27,6 +28,25 @@ function channelCheck(text: string): CheckResult {
     lines: rows.map((r) => ({
       ok: words(text) > 0 && r.good,
       text: `${r.label}: ${signed(r.points)} points (${signed(r.low)} to ${signed(r.high)}), ${r.channels} channels. ${r.line ? `Line ${r.line}: “${r.where}”` : r.where[0].toUpperCase() + r.where.slice(1)}`,
+    })),
+  }
+}
+
+/** The seventh check: the draft, coded on the words by PAX2 Trait Labeler when the reader presses the
+ *  button, against the delivery patterns that separate the coded reform shorts that broke out from the
+ *  rest (src/lib/organic-evidence.ts, patternCheck). */
+function patternResult(coded: DraftCodes | null, stale: boolean): CheckResult {
+  const { counts } = organicEvidence(CAMPAIGN_FAMILY)
+  const n = counts.above + counts.below
+  if (!coded) return { ok: false, title: "Delivery of the coded shorts", detail: `Code the draft to set it against the ${n} coded reform shorts: the patterns more common in the ones that broke out, and the ones more common in the rest.` }
+  const rows = patternCheck(coded.codes, coded.quotes, CAMPAIGN_FAMILY)
+  return {
+    ok: !stale && rows.every((r) => r.good),
+    title: stale ? "Delivery of the coded shorts (the draft changed since)" : "Delivery of the coded shorts",
+    detail: `How many of the ${counts.above} coded reform shorts above the set's median carried each pattern, and of the ${counts.below} below; the draft coded from its words alone.`,
+    lines: rows.map((r) => ({
+      ok: !stale && r.good,
+      text: `${r.label}: ${r.aboveN} of ${counts.above} above (${r.above}%), ${r.belowN} of ${counts.below} below (${r.below}%). ${r.present ? `Present${r.quote ? `: “${r.quote}”` : ""}` : "Not present"}.`,
     })),
   }
 }
@@ -79,7 +99,23 @@ export function Editor({ research }: { research: Record<string, Research> }) {
     } else setText(draft.text ?? "")
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready])
-  const cs = checks(text, research)
+  const [coded, setCoded] = React.useState<DraftCodes | null>(null)
+  const [codedText, setCodedText] = React.useState("")
+  const [coding, setCoding] = React.useState(false)
+  const [codeError, setCodeError] = React.useState<string | null>(null)
+  const code = async () => {
+    setCoding(true)
+    setCodeError(null)
+    try {
+      setCoded(await codeDraft(text, CAMPAIGN_FAMILY))
+      setCodedText(text)
+    } catch (e) {
+      setCodeError((e as Error).message)
+    } finally {
+      setCoding(false)
+    }
+  }
+  const cs = [...checks(text, research), patternResult(coded, !!coded && codedText !== text)]
   return (
     <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
       <ScriptBox
@@ -110,6 +146,12 @@ export function Editor({ research }: { research: Record<string, Research> }) {
             </span>
           </div>
         ))}
+        <div className="flex flex-wrap items-center gap-3">
+          <button type="button" disabled={coding || words(text) < 20} onClick={code} className="rounded-full bg-pax2-blue px-4 py-2 text-xs font-semibold text-white disabled:opacity-40">
+            {coding ? "Coding the draft…" : coded ? "Code the draft again" : "Code the draft"}
+          </button>
+          {codeError && <span className="text-xs text-destructive">{codeError}</span>}
+        </div>
         <p className="border-t pt-3 text-[11px] leading-relaxed text-slate-800">Vote-choice figures come from 617 campaign ads tested against control groups; channel figures from the campaigns&apos; own channels. They are priors, not promises: style alone predicts little, which is why every take is measured.</p>
       </aside>
     </div>

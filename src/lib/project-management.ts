@@ -35,12 +35,9 @@ export const REQUIREMENTS: Item[] = [
       { what: "The Studio's in-browser render checked in Chrome and Safari, then live on Amplify with the next push.", share: 70, effort: "an hour" },
       { what: "A ruling on Remotion's licence: the free licence, or a company key in NEXT_PUBLIC_REMOTION_LICENSE_KEY.", share: 30, effort: "a decision" },
     ] },
-  { id: "2", name: "2. Scripts", start: "2026-10-03", end: "2026-10-24", progress: 90, next: "The editor's sixth check reads the coded shorts' delivery patterns too, the draft coded on Bedrock the way the library scripts were, half a day.",
-    note: "Since 2026-10-18 the writer's prompt, a sixth editor check and each library script's prior read the reform channels' lifts and the coded shorts' patterns from one file, src/lib/organic-evidence.ts.",
-    steps: [
-      { what: "The editor's sixth check reads the delivery patterns of the coded reform shorts, which need the draft coded on Swayable's features; today it reads only what a script's words and length carry.", share: 70, effort: "half a day, a Bedrock call per check" },
-      { what: "A ruling on the writer's 80-to-110-word rule, about 37 to 51 seconds, against the 20-seconds-or-shorter lift on reform channels.", share: 30, effort: "a decision" },
-    ] },
+  { id: "2", name: "2. Scripts", start: "2026-10-03", end: "2026-10-24", progress: 100, next: "",
+    note: "The writer, the editor's six checks and each library script's prior read the reform channels' lifts and the coded shorts' patterns; the editor codes a draft on Bedrock on request and sets it against the coded shorts' delivery; the writer's length is 45 to 60 words, ruled 2026-10-18 from the under-20-second lift.",
+    steps: [    ] },
   { id: "3", name: "3. A pre-release prediction", start: "2026-10-17", end: "2026-11-07", progress: 72, next: "The chain in scripts/classifier/when-captions-land.sh fires when the caption run reaches the 3,465 priority shorts, about 17:00 UTC on 2026-10-18, and launches PAX2 Classifier v2's box; Gate C decides whether originals read it.",
     steps: [
       { what: "The chain merges the captions and reruns scripts/training-set.mjs so transcripts join the Model Training Library; running detached on the Mac since 05:50 UTC on 2026-10-18.", share: 43, effort: "automatic, about 17:00 UTC on 2026-10-18" },

@@ -49,7 +49,11 @@ function channelLines(family: OrganicFamily) {
 }
 
 export function writerPrompt(base: WriterBase, input: WriterAnswers, family: OrganicFamily = CAMPAIGN_FAMILY) {
-  return `Write a script a volunteer will read to a phone camera, 80 to 110 words, in the first person, in plain spoken English that sounds like this person, not like a campaign.
+  // Ruled 2026-10-18: 45 to 60 words, about 20 to 27 seconds spoken. On the reform channels, shorts of 20
+  // seconds or less reach 3x their channel's median 6.5 points more often (90% range 1 to 13, 6 channels,
+  // 56 shorts, data/velocity/metadata-lift.json); 35 and 60 seconds showed nothing that clears zero. The
+  // old 80 to 110 words ran 37 to 51 seconds. The library scripts keep their lengths.
+  return `Write a script a volunteer will read to a phone camera, 45 to 60 words, about 20 seconds spoken, in the first person, in plain spoken English that sounds like this person, not like a campaign.
 Build it on this argument (keep its core claim and framing): "${base.title}" — ${base.framing}
 Reference text of that argument:
 ${base.text}

@@ -165,3 +165,17 @@ export function organicCheck(text: string, seconds: number, family: OrganicFamil
   }
   return out
 }
+
+export type PatternCheckLine = { key: string; label: string; direction: "lifts" | "sinks"; above: number; below: number; aboveN: number; belowN: number; present: boolean; good: boolean; quote: string | null }
+
+/** The editor's seventh check: a draft's codes (src/app/draft-actions.ts, PAX2 Trait Labeler reading the
+ *  words) against the delivery patterns of the coded reform shorts. A pattern "lifts" when more of the
+ *  shorts above the set's median carried it than below, "sinks" the other way; only patterns at least
+ *  PATTERN_GAP points apart are read, as organicEvidence() filters them. */
+export function patternCheck(codes: Record<string, boolean>, quotes: Record<string, string> = {}, family: OrganicFamily = CAMPAIGN_FAMILY): PatternCheckLine[] {
+  return organicEvidence(family).patterns.map((p) => {
+    const direction: "lifts" | "sinks" = p.above > p.below ? "lifts" : "sinks"
+    const present = !!codes[p.key]
+    return { key: p.key, label: p.label, direction, above: p.above, below: p.below, aboveN: p.aboveN, belowN: p.belowN, present, good: present === (direction === "lifts"), quote: quotes[p.key] ?? null }
+  })
+}
