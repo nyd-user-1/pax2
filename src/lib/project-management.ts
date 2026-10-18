@@ -35,11 +35,11 @@ export const REQUIREMENTS: Item[] = [
       { what: "The Studio renders a file from its Remotion preview and uploads it like a recording.", share: 40, effort: "a day" },
       { what: "submitTake records the video's key, not the style name.", share: 10, effort: "an hour" },
     ] },
-  { id: "2", name: "2. Scripts", start: "2026-10-03", end: "2026-10-24", progress: 80, next: "Feed the organic lifts and the 40 coded shorts into the writer's and editor's prompts, 2 hours.",
+  { id: "2", name: "2. Scripts", start: "2026-10-03", end: "2026-10-24", progress: 90, next: "The editor's sixth check reads the coded shorts' delivery patterns too, the draft coded on Bedrock the way the library scripts were, half a day.",
+    note: "Since 2026-10-18 the writer's prompt, a sixth editor check and each library script's prior read the reform channels' lifts and the coded shorts' patterns from one file, src/lib/organic-evidence.ts.",
     steps: [
-      { what: "The writer's prompt carries the within-channel lifts from metadata-lift.json for the script's family.", share: 50, effort: "an hour" },
-      { what: "The editor's checks read the 40 coded shorts in organic-patterns.json beside the Swayable priors.", share: 40, effort: "an hour" },
-      { what: "Each library script's research prior is refreshed from both.", share: 10, effort: "30 minutes" },
+      { what: "The editor's sixth check reads the delivery patterns of the coded reform shorts, which need the draft coded on Swayable's features; today it reads only what a script's words and length carry.", share: 70, effort: "half a day, a Bedrock call per check" },
+      { what: "A ruling on the writer's 80-to-110-word rule, about 37 to 51 seconds, against the 20-seconds-or-shorter lift on reform channels.", share: 30, effort: "a decision" },
     ] },
   { id: "3", name: "3. A pre-release prediction", start: "2026-10-17", end: "2026-11-07", progress: 60, next: "PAX2 Classifier v2 with transcripts once the caption run merges, 1 hour and a 17-cent box.",
     steps: [
