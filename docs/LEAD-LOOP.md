@@ -41,14 +41,13 @@ Update the row: `src/lib/recipes/memorable.ts` (progress, next, status, note) an
 
 ## Current state (the lead keeps this current; a fork reads it first)
 
-Updated 2026-10-18 06:30 UTC.
+Updated 2026-10-18 08:25 UTC. Brendan's standing order since 03:45 Eastern: finish everything on both boards that needs nobody, publish what is publishable, run the tests, no check-ins; the weekend's budget is $10 in all.
 
-- Briefs 5 and 6 are complete and their rows are current. Brief 7 stands at 72: its chain (`scripts/classifier/when-captions-land.sh`, pid in `data/raw/captions/chain.log`) waits for 3,465 extracted captions, at 1,011 and about 3.7 a minute at 06:25 UTC, so about 17:30 UTC; then it merges, rebuilds the training set, launches one c7i.xlarge and re-scores. Do not launch a second.
-- PAX2 Headline Ranker v1 is done: Gate H passed at 0.672, card under `docs/cards`, rows current. Serving it is Brendan's call.
-- The lead's interactive session has a tracked waiter on `chain.log` that touches the heartbeat every five minutes until the merge line appears, then wakes it. A fork that finds "EXIT=0 node scripts/captions-merge.mjs" in `chain.log` and no `data/generated/model/encoder/retrain.launched` marker does step 6 itself: `node --experimental-strip-types scripts/encoder/corpus.mjs --upload`, write the marker with the run id, `MODE=train ./scripts/encoder/launch.sh`, watch it with `scripts/rig/watch.sh` to termination, re-score with `node scripts/encoder/rescore.mjs <run>`, update the encoder and reranker rows, and the Brief 3 cards' numbers if a gate passes. About $1.40.
-- PAX2 Velocity Classifier v1 waits for data: 332 qualifying curves at 06:10 UTC against 316 for v0; about 1,000 wanted. PAX2 Platform Simulator's fit waits with it.
-- Everything else on both lists waits on Brendan: the worker's replacement Lambda (requirement 4), the YouTube channel (7, 9, PAX2 Retention Regressor), the Hugging Face token (10), the proxy (PAX2 Audio Encoder, frames), usage rows (12, 13, PAX2 Feed Ranker), labels (PAX2 Trait Labeler), a serving Lambda for PAX2 Headline Ranker v1.
-- Spend by the lead so far: about $0.31 (two g6.xlarge runs). The weekend's ceiling is $10 across everything; Brief 7's box is still to come, about 10 cents.
+- Done since 06:30 UTC: requirements 2, 5, 6, 8 and 11 at 100; requirement 4 at 85 (the pax2-analyze chain: Lambda, box, Whisper, audio, CLIP frames, memorability, Pegasus on Bedrock, an analyzed event, the Content block); 12 has its join; PAX2 Headline Ranker v1 trained, gated, published (NYSgpt/pax2-headline-ranker), served from the pax2-headline Lambda and wired into the editor and the retitle; the two datasets published; PAX2 Velocity Classifier and PAX2 Platform Simulator refreshed on 332 and 442 curves; memorability measured; the usage join.
+- In flight: PAX2 Feed Ranker v0 pretrain on KuaiRand-1K, box i-0a0293638e5b1fae5 (log logs/rig-20261018T081723Z.log, watchdog 75 min; pull model/feed-v0.json into data/generated/model/, add the row and a card); the third analysis test with Pegasus, original orig-vf-3lfeAG7U1mw-v1 (check its analyzed event has a delivery block; if Pegasus failed on permissions, fix the bedrock policy in scripts/analyze/deploy.sh and re-run --apply and the test); Brief 7's chain waiting on the captions (1,473 of 3,465 at 08:20 UTC).
+- After the caption merge: step 6, the PAX2 Encoder retrain (marker data/generated/model/encoder/retrain.launched), about $1.40.
+- Waits on Brendan: the push to GitHub (requirement 1's last step), the YouTube channel (7, 9, PAX2 Retention Regressor), the proxy (4's last step, 10's content features, PAX2 Vision Encoder frames, PAX2 Audio Encoder), labels (PAX2 Trait Labeler), reader rows (12, 13).
+- Spend by the lead: about $0.65 (two L4 runs $0.31, five CPU boxes about $0.08, three publish boxes under 3 cents, three analysis boxes about 3 cents plus Pegasus, the feed box pending about $0.15). The weekend so far about $2.4 including Brief 3.
 
 ## Stopping
 
