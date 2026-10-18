@@ -1,0 +1,54 @@
+term	icc	lower95	upper95	year	group
+Policy facts	0.68	0.59	0.75	2018	primary
+Candidate facts	0.60	0.50	0.69	2018	primary
+Primary focus: Candidate	0.74	0.67	0.79	2018	primary
+Primary focus: Issues	0.76	0.70	0.81	2018	primary
+Technique: Negative name-calling	0.61	0.51	0.70	2018	primary
+Technique: Positive name-calling	0.08	-0.17	0.28	2018	primary
+Technique: Positive transfer of association	0.62	0.52	0.70	2018	primary
+Technique: Negative transfer of association	0.69	0.61	0.76	2018	primary
+Technique: Positive testimonial	0.83	0.78	0.86	2018	primary
+Technique: Negative testimonial	0.69	0.61	0.76	2018	primary
+Technique: Plain folks	0.58	0.47	0.67	2018	primary
+Specificity: Policy facts	0.54	0.36	0.67	2018	secondary
+Specificity: Candidate facts	0.34	-0.06	0.58	2018	secondary
+New fact (where fact present)	0.59	0.47	0.69	2018	primary
+Cited fact (where fact present)	0.74	0.66	0.80	2018	secondary
+Emotion: Anger	0.26	0.06	0.42	2018	secondary
+Emotion: Enthusiasm	0.76	0.70	0.81	2018	secondary
+Messenger: Female	0.96	0.94	0.97	2018	secondary
+Messenger: Politician	0.93	0.91	0.95	2018	secondary
+Explicit vote for	0.73	0.66	0.79	2018	secondary
+Primary tone: Positive	0.90	0.87	0.92	2018	secondary
+Primary tone: Contrast	0.83	0.79	0.87	2018	secondary
+Production value: High	0.78	0.72	0.83	2018	secondary
+Candidate facts	0.57	0.48	0.64	2020	primary
+How pushy	0.53	0.44	0.61	2020	new
+Specificity: Candidate facts	0.51	0.32	0.64	2020	secondary
+Specificity: Policy facts	0.36	0.16	0.50	2020	secondary
+Policy facts	0.66	0.60	0.72	2020	primary
+Primary focus: Candidate	0.62	0.55	0.68	2020	primary
+Primary focus: Issues	0.71	0.65	0.75	2020	primary
+Technique: Negative name-calling	0.55	0.47	0.63	2020	primary
+Technique: Positive name-calling	0.34	0.22	0.45	2020	primary
+Technique: Positive transfer of association	0.44	0.33	0.53	2020	primary
+Technique: Negative transfer of association	0.48	0.38	0.56	2020	primary
+Technique: Positive testimonial	0.74	0.69	0.78	2020	primary
+Technique: Negative testimonial	0.80	0.76	0.83	2020	primary
+Technique: Plain folks	0.23	0.08	0.35	2020	primary
+New fact (where fact present)	0.48	0.36	0.58	2020	primary
+Cited fact (where fact present)	0.67	0.60	0.73	2020	secondary
+Emotion: Anger	0.46	0.36	0.55	2020	secondary
+Emotion: Enthusiasm	0.80	0.77	0.84	2020	secondary
+Messenger: Female	0.94	0.93	0.95	2020	secondary
+Messenger: Politician	0.85	0.82	0.87	2020	secondary
+Messenger: Everyday people	0.75	0.70	0.79	2020	new
+Messenger: Republican	0.81	0.77	0.84	2020	new
+Messenger: Healthcare worker	0.88	0.86	0.90	2020	new
+Explicit vote for	0.62	0.55	0.68	2020	secondary
+Primary tone: Positive	0.93	0.92	0.94	2020	secondary
+Primary tone: Contrast	0.75	0.70	0.79	2020	secondary
+Issue: BLM/Race	0.83	0.80	0.86	2020	new
+Issue: COVID-19	0.89	0.87	0.91	2020	new
+Issue: Decency	0.73	0.67	0.77	2020	new
+Production value: High	0.56	0.47	0.63	2020	secondary

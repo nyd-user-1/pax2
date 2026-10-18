@@ -9,6 +9,7 @@ The course is generic. Its copy speaks only of model types: "the multi-label cla
 ## Read first
 
 - `AGENTS.md`, `/Users/brendanstanton/.claude/CLAUDE.md`, `docs/SPEC.md`, `docs/briefs/RIG-RULES.md` rules 15, 21, 24, 27, 28 and 29, and the house rules section of `docs/briefs/2026-10-17-graph-and-recipes.md`.
+- `data/raw/swayable/definitions.R` and `data/raw/swayable/reliability-DA35.tsv`, the archive's own words and its raters' agreement, see Part A0.
 - `src/app/labeling/page.tsx`, `src/app/labeling/actions.ts`, `src/lib/labeling.ts`, `src/lib/trait-definitions.ts`, `src/components/consensus-vote.tsx`, `src/lib/consensus.ts`, `src/lib/review.ts` (`recordVote`, `votes`), `scripts/consensus-agreement.mjs`, `src/app/usage-actions.ts`, `data/generated/model/organic-codes.json`, `data/generated/swayable-patterns.json`, `data/generated/model/reference-model.json`, `src/components/shell.tsx`.
 
 ## What it is
@@ -18,6 +19,20 @@ The forty coded campaign shorts and their twenty-eight traits, already on `/labe
 Course name: **Teach a Model**. Courses are listed by model type. The first and only course built here: **The Classifier**.
 
 Description, used on the index page verbatim: "A course on how a particular model learns, the multi-label classifier. The course defines a model by type and function and explains what is needed to train that kind of model and why. A classifier has its own requirements: labeled examples, features, agreement between labelers, and a held-out test, that other models do not. As part of the course you assist in the training of a classifier; in doing so you learn to recognize the conditions of its training, the rationale behind each one, and how to conduct your own training of a classifier."
+
+## Part A0: the archive's words
+
+Found 2026-10-18 by the lead window, so this part searches nothing. The Hewitt et al. replication archive (`s3://pax-2-638175140432/raw/swayable/`: both appendix PDFs converted to text and searched, `definitions.R` and `README.R` pulled from the zip) holds no rater instructions and no item wording. "Coded" and "rater" occur only in figure captions and the reliability table. What the archive does publish for each trait is its name, `defined_term_names` in `definitions.R`, and how well its raters agreed, Table DA35 of the Dataverse appendix, ICC(C,k) with three ratings per video in 2018 and two in 2020. Both are in the repository: `data/raw/swayable/definitions.R` verbatim, and `data/raw/swayable/reliability-DA35.tsv`, 53 rows, 23 for 2018 and 30 for 2020, parsed from the PDF.
+
+A0.1 `src/lib/trait-definitions.ts` gains `TRAIT_NAMES: Record<string, string>`, the archive's name for each of the 28 trait keys, verbatim from `defined_term_names` for the 25 it names. Three it does not: `emotion_hope_pride` (the archive has `emotion_pride`, "Emotion: Pride"; use that name and say so in a comment), `tone_negative` (the archive's third primary tone, unnamed because it is the omitted category; name it "Primary tone: Negative" in the archive's form, marked ours), `how_scripted` (not in the archive; keep this project's name "Delivery: Scripted", marked ours).
+
+A0.2 `scripts/swayable-reliability.mjs` reads the TSV and writes `data/generated/swayable-reliability.json`: for each trait key whose archive name has a row, `[{ year, icc, lower, upper }]` for every year present. Match on the exact term name. `fact_cite_yes` and `fact_new_yes` have no row: the table's "where fact present" rows are different variables, `fact_cite_only` and `fact_new_only`. `trait-definitions.ts` imports the JSON as `TRAIT_RELIABILITY`. Print the count of keys matched and unmatched; expect about eleven matched.
+
+A0.3 The header comment of `trait-definitions.ts` is rewritten to record what was searched, when, what was found and what was not, with the S3 prefix and the two repository files. `SOURCE_NOTE` gains one sentence: "The archive publishes each trait's name and how well its raters agreed, not the question they were asked; the sentence under each statement is this project's reading of the trait."
+
+A0.4 Primary tone. In the archive, positive, negative and contrast are one choice, the ad's primary tone, not three yes-or-no items. The three stay separate statements so `recordVote` and `scripts/consensus-agreement.mjs` are unchanged, but each of the three definitions ends with the clause "One of positive, negative and contrast is the ad's primary tone; agree with at most one."
+
+A0.5 Nothing on screen changes in this part except through B3 and B4 below. Commit A0 on its own before Part A.
 
 ## Part A: routes and data
 
@@ -42,14 +57,14 @@ B1. Each chapter has three states in one page, in order: the lesson, the seven q
 
 B2. The lesson, under the chapter's heading with no lead-in paragraph: four to six short paragraphs, plain words, third person, written to the points below. No numbers that were not measured.
 
-- Chapter 1, Labels. What a label is: one yes-or-no answer about one example. Why ground truth comes from people and not from the model. How the archive this classifier leans on got its labels: research assistants watched each ad, two or three per video, and their answers were averaged. That the learner is now one of those people. What "pass" means and why it is a valid answer.
+- Chapter 1, Labels. What a label is: one yes-or-no answer about one example. Why ground truth comes from people and not from the model. How the archive this classifier leans on got its labels: research assistants watched each ad, two or three per video, and their answers were averaged. That the archive publishes each trait's name and how well those assistants agreed, not the question they were asked, so the sentence under each statement here is this project's own reading. That the learner is now one of those people. What "pass" means and why it is a valid answer.
 - Chapter 2, Features. What the classifier reads: the transcript. What a feature is and the difference between a feature and a label. Why twenty-eight questions from one input make it a multi-label classifier. How this classifier answers today, a language model given the transcript and the trait list, and how a trained classifier would answer instead, from thousands of labeled examples; that the learner's labels are what makes the second possible.
-- Chapter 3, Agreement. Why two careful people disagree on a trait like anger. Agreement rate and Cohen's kappa, in one sentence each. What the archive found: near-total agreement on who the messenger is, weak agreement on subjective traits. Why the course asks several people per video and takes the majority.
+- Chapter 3, Agreement. Why two careful people disagree on a trait like anger. Agreement rate and Cohen's kappa, in one sentence each. What the archive measured, read from `TRAIT_RELIABILITY` without naming the file: 0.93 on whether the messenger is a politician in 2018, 0.26 on anger that year, 0.23 on plain folks in 2020. Why the course asks several people per video and takes the majority.
 - Chapter 4, Tests. Why a classifier is scored on examples it never saw. What held-out examples are and why whole channels are held out, not random videos. What a within-channel AUC of 0.55 says and does not say, read from `var-model.json` without naming the file or the product on screen. What happens to the learner's labels next: they measure the classifier now, and train a better one when there are enough.
 
-B3. The questions. `ConsensusVote` as today, one statement at a time, each with its definition from `trait-definitions.ts` beneath, the three buttons agree, disagree, pass, writing through `labelTrait`. The model's answers stay hidden until all seven are answered.
+B3. The questions. `ConsensusVote` as today, one statement at a time, each titled with the archive's name from `TRAIT_NAMES` and with its definition from `TRAIT_DEFINITIONS` beneath, the three buttons agree, disagree, pass, writing through `labelTrait`. The model's answers stay hidden until all seven are answered.
 
-B4. The reveal. A table of the seven traits: the learner's answer, the classifier's answer (`organic-codes.json` value at or above 0.5 reads present), agree or differ, and the trait's measured lean from `swayable-patterns.json` as points with its range, or a dash when the trait is not in that file. One line above the table: how many of the seven agreed. Then Next chapter, or on chapter four, Finish.
+B4. The reveal. A table of the seven traits: the learner's answer, the classifier's answer (`organic-codes.json` value at or above 0.5 reads present), agree or differ, the trait's measured lean from `swayable-patterns.json` as points with its range, or a dash when the trait is not in that file, and the archive's own raters' agreement on the trait, the ICC for the latest year in `TRAIT_RELIABILITY`, or a dash. One line above the table: how many of the seven agreed. Then Next chapter, or on chapter four, Finish.
 
 B5. Finish. One page: the learner's agreement with the model across all twenty-eight; how many labelers the video has now; a link back to the index and one to `/v/yt-<id>` for the video. A `finished` event is written.
 
@@ -69,4 +84,4 @@ The video column stacks above the lesson under `md`. The reveal table scrolls ho
 
 ## Commits
 
-Three, one per part, subjects in this repository's prose style. File-scoped type checks before each. When done, tell Brendan in a few lines what was built and what was left out.
+Four, one per part, A0 first, subjects in this repository's prose style. File-scoped type checks before each. When done, tell Brendan in a few lines what was built and what was left out.
