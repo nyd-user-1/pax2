@@ -121,6 +121,9 @@ export default async function DashboardPage() {
   const titleOf = (subject: string) => (homeFeed as { id: string; title: string }[]).find((v) => `yt-${v.id}` === subject || v.id === subject)?.title ?? subject
   const readersDemo = usage.length === 0
   const byKind = readersDemo ? SAMPLE_READERS.kinds : READER_KINDS.map((kind) => ({ kind, n: usage.filter((e) => e.kind === kind).length }))
+  const learners = new Set(usage.filter((e) => e.kind === "course-start").map((e) => e.who)).size
+  const chaptersFinished = usage.filter((e) => e.kind === "chapter-finish").length
+  const coursesFinished = usage.filter((e) => e.kind === "course-finish").length
   const opens = new Map<string, number>()
   for (const e of usage) if (e.kind === "open") opens.set(e.subject, (opens.get(e.subject) ?? 0) + 1)
   const mostOpened = readersDemo
@@ -243,6 +246,9 @@ export default async function DashboardPage() {
                   </div>
                 ))}
               </div>
+              <p className="tabular mt-4 border-t border-slate-100 pt-3 text-sm text-slate-600">
+                Teach a Model: {learners} {learners === 1 ? "learner" : "learners"} started, {chaptersFinished} {chaptersFinished === 1 ? "chapter" : "chapters"} finished, {coursesFinished} {coursesFinished === 1 ? "course" : "courses"} finished
+              </p>
             </MainBlock>
             <ListBlock title="Most opened" rows={mostOpened.map(({ title, n }) => ({ video: title, opens: n }))} footer="Last 7 days">
               {mostOpened.length ? (

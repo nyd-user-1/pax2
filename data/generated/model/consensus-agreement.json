@@ -1,4 +1,298 @@
 {
-  "pending": true,
-  "checkedAt": "2026-10-17T22:47:23.641Z"
+  "builtAt": "2026-10-18T04:49:16.863Z",
+  "method": "Human majority at half of non-pass votes against PAX2 Trait Labeler's code at 0.5; Cohen's kappa per trait over videos; inter-coder kappa pooled over voter pairs.",
+  "voters": 1,
+  "videos": 2,
+  "votes": 56,
+  "meanKappa": 0,
+  "traitsWithKappa": 4,
+  "labelersByVideo": {
+    "yt-5LHXjjQW0ug": 1,
+    "yt-mV0zO4WIWWc": 1
+  },
+  "videosWithThreeOrMore": 0,
+  "chapters": [
+    {
+      "n": 1,
+      "title": "Labels",
+      "comparisons": 6,
+      "agreement": 0.833,
+      "meanKappa": 0
+    },
+    {
+      "n": 2,
+      "title": "Features",
+      "comparisons": 6,
+      "agreement": 0.833,
+      "meanKappa": 0
+    },
+    {
+      "n": 3,
+      "title": "Agreement",
+      "comparisons": 7,
+      "agreement": 1,
+      "meanKappa": null
+    },
+    {
+      "n": 4,
+      "title": "Tests",
+      "comparisons": 7,
+      "agreement": 0.714,
+      "meanKappa": 0
+    }
+  ],
+  "rows": [
+    {
+      "tid": 0,
+      "key": "technique_plain_folks",
+      "label": "Plain-folks appeal",
+      "videos": 1,
+      "agreement": 0,
+      "kappa": 0,
+      "interCoder": null
+    },
+    {
+      "tid": 1,
+      "key": "technique_pos_testimonial",
+      "label": "Positive testimonial",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 2,
+      "key": "technique_neg_testimonial",
+      "label": "Negative testimonial",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 3,
+      "key": "messenger_every_people",
+      "label": "Everyday people as messengers",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 4,
+      "key": "messenger_politician",
+      "label": "Politician as messenger",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 5,
+      "key": "messenger_celebrity",
+      "label": "Celebrity as messenger",
+      "videos": 0,
+      "agreement": null,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 6,
+      "key": "messenger_veteran",
+      "label": "Veteran as messenger",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 7,
+      "key": "narration_personal_story",
+      "label": "Personal story",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 8,
+      "key": "narration_explain_facts",
+      "label": "Explains facts",
+      "videos": 0,
+      "agreement": null,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 9,
+      "key": "narration_advocate_opinions",
+      "label": "Advocates an opinion",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 10,
+      "key": "policy_facts",
+      "label": "Policy facts",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 11,
+      "key": "fact_cite_yes",
+      "label": "Cites a source for its facts",
+      "videos": 1,
+      "agreement": 0,
+      "kappa": 0,
+      "interCoder": null
+    },
+    {
+      "tid": 12,
+      "key": "fact_new_yes",
+      "label": "Offers a fact the viewer likely hasn't heard",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 13,
+      "key": "emotion_anger",
+      "label": "Anger",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 14,
+      "key": "emotion_enthusiasm",
+      "label": "Enthusiasm",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 15,
+      "key": "emotion_fear",
+      "label": "Fear",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 16,
+      "key": "emotion_hope_pride",
+      "label": "Pride",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 17,
+      "key": "emotion_humor",
+      "label": "Humor",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 18,
+      "key": "emotion_somber",
+      "label": "Somber",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 19,
+      "key": "tone_positive",
+      "label": "Positive tone",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 20,
+      "key": "tone_negative",
+      "label": "Negative tone",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 21,
+      "key": "tone_contrast",
+      "label": "Contrast",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 22,
+      "key": "explicit_vote_for",
+      "label": "Explicit ask to vote for",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 23,
+      "key": "production_value_high",
+      "label": "High production value",
+      "videos": 1,
+      "agreement": 0,
+      "kappa": 0,
+      "interCoder": null
+    },
+    {
+      "tid": 24,
+      "key": "style_amateur",
+      "label": "Amateur, phone-shot style",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 25,
+      "key": "style_text_on_screen",
+      "label": "Text on screen",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    },
+    {
+      "tid": 26,
+      "key": "style_animation",
+      "label": "Animation",
+      "videos": 1,
+      "agreement": 0,
+      "kappa": 0,
+      "interCoder": null
+    },
+    {
+      "tid": 27,
+      "key": "how_scripted",
+      "label": "Sounds scripted",
+      "videos": 1,
+      "agreement": 1,
+      "kappa": null,
+      "interCoder": null
+    }
+  ]
 }
