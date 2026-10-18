@@ -55,6 +55,8 @@ export type OrganicEvidence = {
   /** Only for reform and all: the coded shorts all come from reform channels. */
   patterns: OrganicPattern[]
   delivery: string[]
+  /** How many coded reform shorts sit above and below the set's median. */
+  counts: { above: number; below: number }
   method: { lift: string; patterns: string; liftBuilt: string; patternsBuilt: string }
 }
 
@@ -111,7 +113,7 @@ export function organicEvidence(family: OrganicFamily): OrganicEvidence {
       ]
     : []
 
-  return { family, scope, traits, patterns, delivery, method: { lift: LIFT.method, patterns: ORGANIC.method, liftBuilt: LIFT.builtAt.slice(0, 10), patternsBuilt: ORGANIC.built } }
+  return { family, scope, traits, patterns, delivery, counts: ORGANIC.counts, method: { lift: LIFT.method, patterns: ORGANIC.method, liftBuilt: LIFT.builtAt.slice(0, 10), patternsBuilt: ORGANIC.built } }
 }
 
 export type OrganicCheckLine = {

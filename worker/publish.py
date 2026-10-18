@@ -50,9 +50,26 @@ def features():
     write("features.json", allf)
 
 
+def keep_organic(data):
+    """script-codes.json's channel half is written in the repo by scripts/script-organic.mjs, not on the
+    box; carry it over so a publish of the Swayable half doesn't drop it. Rerun that script after a recode."""
+    try:
+        old = json.load(open(f"{G}/model/script-codes.json"))
+    except (OSError, ValueError):
+        return data
+    if "organic" in old:
+        data["organic"] = old["organic"]
+    for sid, s in data.get("scripts", {}).items():
+        if "organic" in old.get("scripts", {}).get(sid, {}):
+            s["organic"] = old["scripts"][sid]["organic"]
+    return data
+
+
 def model():
     for k in objs("model/"):
-        write(f"model/{k.split('/')[-1]}", load(k))
+        name = k.split("/")[-1]
+        data = load(k)
+        write(f"model/{name}", keep_organic(data) if name == "script-codes.json" else data)
 
 
 def library():

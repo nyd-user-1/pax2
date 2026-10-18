@@ -11,7 +11,14 @@ import { toneClasses, toneOf } from "@/lib/tone"
 import { cn } from "@/ui/lib/utils"
 
 export type CatalogResearch = { label: string; diff: number; low: number; high: number; ads: number; outcome: "votechoice" | "favorability" }
-export type CatalogWhy = { line: number; note: string; research: CatalogResearch | null; source: { label: string; href: string } | null }
+export type CatalogChannel = { label: string; points: number; low: number; high: number; channels: number; scope: string }
+export type CatalogWhy = { line: number; note: string; research: CatalogResearch | null; source: { label: string; href: string } | null; channel: CatalogChannel | null }
+export type CatalogChannels = {
+  scope: string
+  counts: { above: number; below: number }
+  lines: { label: string; direction: "lifts" | "sinks"; points: number; low: number; high: number; channels: number; present: boolean; good: boolean; where: string }[]
+  patterns: { label: string; above: number; below: number; aboveN: number; belowN: number; present: boolean | null }[]
+}
 export type CatalogScript = {
   id: string
   title: string
@@ -29,6 +36,7 @@ export type CatalogScript = {
   prior: { expected: number; low: number; high: number; average: number } | null
   features: { label: string; diff: number; sign: "up" | "down" | "flat"; note?: string }[]
   why: CatalogWhy[]
+  channels: CatalogChannels | null
 }
 
 const ts = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`
@@ -46,6 +54,14 @@ function Marker({ n, hot, onHot }: { n: number; hot: boolean; onHot: (n: number 
         {n}
       </span>
     </sup>
+  )
+}
+
+function Sign({ sign }: { sign: "up" | "down" | "flat" }) {
+  return (
+    <span className={cn("flex size-5 shrink-0 items-center justify-center rounded-full", sign === "up" ? "bg-above-soft text-above" : sign === "down" ? "bg-pax2-red-soft text-below" : "bg-slate-100 text-slate-400")}>
+      {sign === "up" ? <Check className="size-3" /> : sign === "down" ? <X className="size-3" /> : <Minus className="size-3" />}
+    </span>
   )
 }
 
@@ -158,10 +174,15 @@ export function ScriptCatalog({ scripts, opposition }: { scripts: CatalogScript[
                 >
                   <span className={cn("mt-0.5 flex size-[18px] shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition-colors", hot === k + 1 ? "bg-pax2-light-blue text-white" : "bg-pax2-lavender text-pax2-blue")}>{k + 1}</span>
                   <div className="flex min-w-0 flex-col gap-1.5">
-                    <p className="text-sm leading-relaxed text-slate-700">{w.note}</p>
+                    {w.note && <p className="text-sm leading-relaxed text-slate-700">{w.note}</p>}
                     {w.research && (
                       <p className="tabular text-xs leading-relaxed text-slate-500">
-                        In {w.research.ads} tested ads, “{w.research.label}” moved {OUTCOME[w.research.outcome]} {pts(w.research.diff)} points ({w.research.low.toFixed(1)} to {w.research.high.toFixed(1)}).
+                        In {w.research.ads} Swayable-tested ads, “{w.research.label}” moved {OUTCOME[w.research.outcome]} {pts(w.research.diff)} points ({w.research.low.toFixed(1)} to {w.research.high.toFixed(1)}).
+                      </p>
+                    )}
+                    {w.channel && (
+                      <p className="tabular text-sm leading-relaxed text-slate-700">
+                        On {w.channel.channels} {w.channel.scope}, the share of shorts reaching 3x their channel&apos;s median ran {pts(w.channel.points)} points with “{w.channel.label}” ({pts(w.channel.low)} to {pts(w.channel.high)}).
                       </p>
                     )}
                     {w.source && <SourceLink source={w.source} />}
@@ -195,6 +216,40 @@ export function ScriptCatalog({ scripts, opposition }: { scripts: CatalogScript[
                 What controlled tests found
               </Link>
             </div>
+
+            {s.channels && (
+              <div className="mt-5 flex flex-col gap-3 border-t pt-4">
+                <span className="text-sm font-semibold text-slate-900">On {s.channels.scope}</span>
+                <ul className="flex flex-col gap-2">
+                  {s.channels.lines.map((l) => (
+                    <li key={l.label} className="flex items-start gap-2 text-sm">
+                      <Sign sign={l.good ? "up" : "down"} />
+                      <span className="flex flex-1 flex-col">
+                        <span className="text-slate-700">{l.label}</span>
+                        <span className="text-xs text-slate-400">{l.where === "not present" || l.where.startsWith("about ") ? l.where : `“${l.where}”`}</span>
+                      </span>
+                      <span className="tabular text-xs text-slate-400" title={`${pts(l.low)} to ${pts(l.high)}, ${l.channels} channels`}>
+                        {pts(l.points)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <span className="text-xs font-medium text-slate-500">
+                  Coded reform shorts, {s.channels.counts.above} above the median vs {s.channels.counts.below} below
+                </span>
+                <ul className="flex flex-col gap-2">
+                  {s.channels.patterns.map((p) => (
+                    <li key={p.label} className="flex items-center gap-2 text-sm">
+                      <Sign sign={!p.present || p.above === p.below ? "flat" : p.above > p.below ? "up" : "down"} />
+                      <span className="flex-1 text-slate-700">{p.label}</span>
+                      <span className="tabular text-xs text-slate-400">
+                        {p.aboveN} vs {p.belowN}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {scored.length > 0 && (
               <div className="mt-5 flex flex-col gap-3 border-t pt-4">

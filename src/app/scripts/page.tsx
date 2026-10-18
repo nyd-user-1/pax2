@@ -11,7 +11,12 @@ import { whiteButton } from "@/components/white-button"
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Scripts" }
 
-type Codes = { scripts: Record<string, { codes: Record<string, number>; notes: Record<string, string>; prior: Record<string, { expected: number; low: number; high: number; average: number }> }> }
+type ChannelLine = { label: string; direction: "lifts" | "sinks"; points: number; low: number; high: number; channels: number; present: boolean; good: boolean; line: number | null; where: string }
+type ChannelPattern = { label: string; above: number; below: number; aboveN: number; belowN: number; present: boolean | null }
+type Codes = {
+  scripts: Record<string, { codes: Record<string, number>; notes: Record<string, string>; prior: Record<string, { expected: number; low: number; high: number; average: number }>; organic?: { lines: ChannelLine[]; patterns: ChannelPattern[] } }>
+  organic?: { scope: string; counts: { above: number; below: number } }
+}
 type Model = { featureLabels: Record<string, string>; outcomes: Record<string, { ads: number; features: { key: string; label?: string; diff: number; low: number; high: number }[] }> }
 
 const mean = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null)
@@ -58,7 +63,13 @@ export default async function ScriptsPage() {
         .sort((a, b) => Math.abs(b.f!.diff) - Math.abs(a.f!.diff))
         .slice(0, 5)
         .map(({ k, f }) => ({ label: RM.featureLabels[k], diff: f!.diff, sign: (f!.low > 0 ? "up" : f!.high < 0 ? "down" : "flat") as "up" | "down" | "flat", note: c.notes[k] })),
-      why: s.why.map((w) => ({ line: w.line, note: w.note, research: w.research ? research(w.research, w.outcome ?? "votechoice") : null, source: w.source ?? null })),
+      why: [
+        ...s.why.map((w) => ({ line: w.line, note: w.note, research: w.research ? research(w.research, w.outcome ?? "votechoice") : null, source: w.source ?? null, channel: null })),
+        ...(c?.organic?.lines ?? [])
+          .filter((l) => l.line != null)
+          .map((l) => ({ line: l.line!, note: "", research: null, source: null, channel: { label: l.label, points: l.points, low: l.low, high: l.high, channels: l.channels, scope: C.organic?.scope ?? "these channels" } })),
+      ].sort((a, b) => a.line - b.line),
+      channels: c?.organic && C.organic ? { scope: C.organic.scope, counts: C.organic.counts, lines: c.organic.lines, patterns: c.organic.patterns } : null,
     }
   })
 

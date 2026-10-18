@@ -2,6 +2,9 @@
 research prior before anyone records it. Claude on Bedrock does the coding (AI-assessed, labeled so).
 
 Output: s3://pax-2-638175140432/model/script-codes.json
+The channel half of each prior (what travels on the campaign's own channels) is added in the repo by
+scripts/script-organic.mjs from src/lib/organic-evidence.ts; publish.py keeps it, and that script
+should be rerun after a recode so a new or changed script gets its channel half.
 """
 import json, os, re
 import boto3
