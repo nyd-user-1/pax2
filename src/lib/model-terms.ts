@@ -1,4 +1,4 @@
-// The Terms view of the Models block on /project-management: for each of the eleven models PAX2 trains
+// The Architecture view of the Models block on /project-management: for each of the eleven models PAX2 trains
 // or plans to train, the three mechanical answers Brendan asked for on 2026-10-18, read from the
 // training code and the model files, never from the label: what the model predicts and its bounds, the
 // loss it minimizes, and the algorithm or class that runs. PAX2GPT is not here: it is Claude on Bedrock,

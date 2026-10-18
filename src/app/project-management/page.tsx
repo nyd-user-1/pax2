@@ -98,7 +98,7 @@ function Rows({ list, rated, today }: { list: Item[]; rated: boolean; today: str
   )
 }
 
-/** The Terms view: for each model PAX2 trains or plans to train, what it predicts, the loss it minimizes and the algorithm that runs. */
+/** The Architecture view: for each model PAX2 trains or plans to train, what it predicts, the loss it minimizes and the algorithm that runs. */
 function Terms() {
   return (
     <div className="overflow-x-auto">
