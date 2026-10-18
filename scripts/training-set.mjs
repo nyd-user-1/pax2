@@ -6,7 +6,7 @@
 //
 // Usage: node --experimental-strip-types scripts/training-set.mjs
 // Reads  data/velocity/catalog.json, data/generated/features.json, data/generated/delivery.json,
-//        data/generated/model/organic-codes.json
+//        data/generated/model/organic-codes.json, data/generated/transcripts.json when present
 // Writes data/generated/model/training-set.jsonl and training-set.manifest.json
 import fs from "node:fs"
 import path from "node:path"
@@ -21,6 +21,8 @@ const catalog = read("data/velocity/catalog.json")
 const features = read("data/generated/features.json")
 const delivery = read("data/generated/delivery.json").videos
 const codes = read("data/generated/model/organic-codes.json").scripts ?? {}
+// YouTube's auto-captions (scripts/yt-captions.sh, merged by scripts/captions-merge.mjs), when that file exists.
+const transcripts = fs.existsSync(path.join(root, "data/generated/transcripts.json")) ? read("data/generated/transcripts.json") : {}
 // Velocity features (scripts/velocity-features.mjs) when that file exists: views at 1, 6, 24 and 72 hours
 // for every short the poller has read; null for the rest of the catalog, which predates the poller.
 const velocityPath = path.join(root, "data/generated/model/velocity-features.json")
@@ -54,6 +56,8 @@ for (const v of catalog.videos) {
     tags: v.tags ?? [],
     durationSec: v.durationSec,
     channelMedian: v.channelMedian,
+    // What was said, from the auto-captions; null until the caption run reaches it.
+    transcript: transcripts[v.id]?.text ?? null,
     // Outcome.
     views: v.views,
     likes: v.likes ?? null,
@@ -138,6 +142,7 @@ const manifest = {
   byTier: by("tier"),
   byFamily: by("family"),
   withContent: rows.filter((r) => r.content).length,
+  withTranscript: rows.filter((r) => r.transcript).length,
   withVelocity: rows.filter((r) => r.velocity).length,
   velocitySource: velocity ? { builtAt: velocity.builtAt, days: velocity.days, videos: velocity.videos } : null,
   paidAds,
@@ -152,6 +157,7 @@ const manifest = {
     x: "pre-publish features from src/lib/video-features.ts",
     velocity: "for shorts the poller read in their first 72 hours (scripts/velocity-features.mjs): views at 1, 6, 24 and 72 hours off the running maximum of the readings, the first and last hour read, and the count; null otherwise",
     paid: "for rows a Google political video ad resolved to (scripts/google-video-ads.mjs): impression and spend bands, days, advertiser; rows with group paid-ad have no breakout label",
+    transcript: "YouTube's auto-captions as text (data/generated/transcripts.json); null when there are none yet",
     content: "measured content features for analyzed shorts (Transcribe, ffmpeg, Pegasus, delivery coding, Swayable codes); null otherwise",
   },
 }

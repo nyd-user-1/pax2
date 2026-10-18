@@ -22,3 +22,7 @@ data/generated/model/training-set.jsonl
 
 # YouTube auto-captions pulled by scripts/yt-captions.sh (json3 per video); merged into data/generated/transcripts.json
 data/raw/captions
+
+# PAX2 Classifier v2's inputs and held-out predictions (scripts/classifier/), rebuilt by its chain; the model file is committed
+data/generated/model/transcript-features.json
+data/generated/model/predictions-v2.jsonl
