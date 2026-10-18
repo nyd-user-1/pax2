@@ -43,7 +43,7 @@ function Row({ b, n, list, rated, today }: { b: Item; n: number; list: Item[]; r
   const remaining = 100 - b.progress
   return (
     <details data-find className="group border-t border-slate-100">
-      <summary className={cn("grid cursor-pointer list-none items-center gap-x-3 py-2 text-xs hover:bg-slate-50 [&::-webkit-details-marker]:hidden", rated ? COLS.rated : COLS.plain)}>
+      <summary className={cn("grid min-h-24 cursor-pointer list-none items-center gap-x-3 py-2 text-xs hover:bg-slate-50 [&::-webkit-details-marker]:hidden", rated ? COLS.rated : COLS.plain)}>
         <span className="tabular text-slate-500">{n}</span>
         <p className="truncate font-medium text-slate-900">{plainName(b.name)}</p>
         <div className={cn("h-3 overflow-hidden rounded-full", done ? "bg-green-100" : late ? "bg-red-100" : "bg-slate-100")} title={`${b.progress}%`}>
@@ -120,7 +120,7 @@ function Specs() {
         </thead>
         <tbody>
           {specsInModelOrder().map((m, i) => (
-            <tr key={m.id} data-find className="border-t border-slate-100 align-top [&_td]:py-2 [&_td]:pr-4 [&_td]:leading-snug">
+            <tr key={m.id} data-find className="border-t border-slate-100 align-top [&_td]:h-24 [&_td]:py-2 [&_td]:pr-4 [&_td]:leading-snug">
               <td className="tabular text-slate-500">{i + 1}</td>
               <td className="font-medium text-slate-900">{m.name}</td>
               <td className="text-slate-700">{m.target}</td>
@@ -153,17 +153,17 @@ export default async function ProjectManagementPage({ searchParams }: { searchPa
     <div className="flex flex-col gap-6">
       <TabRail tabs={tabs} active={active} />
       {active === "requirements" && (
-        <ProgressBlock title="Requirements" search="Search requirements…" rows={rows(REQUIREMENTS)} name="requirements" height="auto" footer={summary(REQUIREMENTS)}>
+        <ProgressBlock title="Requirements" search="Search requirements…" rows={rows(REQUIREMENTS)} name="requirements" height="h-[1460px]" footer={summary(REQUIREMENTS)}>
           <Rows list={REQUIREMENTS} rated={false} today={today} />
         </ProgressBlock>
       )}
       {active === "models" && (
-        <ProgressBlock title="Models" search="Search models…" rows={rows(MODELS)} name="models" height="auto" footer={summary(MODELS)}>
+        <ProgressBlock title="Models" search="Search models…" rows={rows(MODELS)} name="models" height="h-[1460px]" footer={summary(MODELS)}>
           <Rows list={MODELS} rated today={today} />
         </ProgressBlock>
       )}
       {active === "specs" && (
-        <TableBlock title="Specs" search="Search specs…" rows={specsInModelOrder().map(({ name, target, loss, algorithm }, i) => ({ no: i + 1, item: name, target, loss, algorithm }))} name="model-specs" height="auto">
+        <TableBlock title="Specs" search="Search specs…" rows={specsInModelOrder().map(({ name, target, loss, algorithm }, i) => ({ no: i + 1, item: name, target, loss, algorithm }))} name="model-specs" height="h-[1460px]">
           <Specs />
         </TableBlock>
       )}
