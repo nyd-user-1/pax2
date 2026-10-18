@@ -30,9 +30,10 @@ Brendan's rule for the remainder: the three windows' items first (requirements 1
 3. Requirement 6: confirm the findings email's best-change line carries a range and no promised uplift (the email template, not `evaluate.ts`).
 4. Requirement 8: both versions of a chain publishable; the queues show the chain.
 5. PAX2 Headline Ranker v1: a BERT-class fine-tune on the 41,175 Upworthy pairs on one g6.xlarge, about an hour and about $1, on the `scripts/encoder` launcher pattern with a one-percent rehearsal first; the Mac re-scores held-out pairs. The library `src/lib/headline.ts` reads v1 if it beats v0's 0.61 held out.
-6. PAX2 Velocity Classifier v1 when the readings allow; PAX2 Platform Simulator's fit when they allow.
-7. Requirement 10: the Hugging Face publish waits on a new token in SSM; velocity and transcripts joined count toward it. Requirement 7 and PAX2 Retention Regressor wait on the channel. Requirements 12 and 13, PAX2 Feed Ranker and PAX2 Audio Encoder wait on data that does not exist yet. Note each as waiting; do not invent work for them.
-8. Then the next unfinished item on either list, highest Importance first.
+6. PAX2 Encoder retrain once Brief 7's chain has merged the captions (`data/raw/captions/chain.log` says "EXIT=0 node scripts/captions-merge.mjs"): `node scripts/encoder/corpus.mjs --upload`, then `MODE=train ./scripts/encoder/launch.sh`, about 35 minutes and about $1.40 on a g6e.xlarge, watched to termination, re-scored on the Mac with `scripts/encoder/rescore.mjs`; Gate E as before. If Gate E passes, PAX2 Reranker on the same run.
+7. PAX2 Velocity Classifier v1 when the readings allow; PAX2 Platform Simulator's fit when they allow.
+8. Requirement 10: the Hugging Face publish waits on a new token in SSM; velocity and transcripts joined count toward it. Requirement 7 and PAX2 Retention Regressor wait on the channel. Requirements 12 and 13, PAX2 Feed Ranker and PAX2 Audio Encoder wait on data that does not exist yet. Note each as waiting; do not invent work for them.
+9. Then the next unfinished item on either list, highest Importance first.
 
 ## After each step
 
