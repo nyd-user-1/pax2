@@ -1,0 +1,2 @@
+# The corpus (20 MB) is rebuilt by scripts/encoder/corpus.mjs and lives in s3://nsr-embed-v2/pax2/corpus/
+corpus.jsonl
