@@ -74,8 +74,13 @@ export type Evaluation = {
 }
 
 export type EventInput = {
-  kind: "recorded" | "scored" | "note" | "rerecord" | "approved" | "enhance" | "replaced" | "owner-publish" | "published" | "watching"
+  kind: "recorded" | "transcoded" | "scored" | "note" | "rerecord" | "approved" | "enhance" | "replaced" | "owner-publish" | "published" | "watching"
   by: string
+  /** On a transcoded event, written by the pax2-transcode Lambda: the mp4's S3 key, ffmpeg's run
+   *  time in seconds, and the mp4's size in bytes. */
+  key?: string
+  seconds?: number
+  bytes?: number
   note?: string
   evaluation?: Evaluation
   child?: string
@@ -130,6 +135,9 @@ export function stageOf(evs: OriginalEvent[]): Stage {
   }
   return s
 }
+
+/** The mp4 the pax2-transcode Lambda made from a webm upload, once it exists. */
+export const playableKey = (o: { key: string }, evs: OriginalEvent[]) => evs.filter((e) => e.kind === "transcoded" && e.key).at(-1)?.key ?? o.key
 
 export const latestEvaluation = (evs: OriginalEvent[]) => evs.filter((e) => e.kind === "scored").at(-1)?.evaluation ?? null
 

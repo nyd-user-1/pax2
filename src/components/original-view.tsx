@@ -7,7 +7,7 @@ import { UsageOpen } from "@/components/usage-beacon"
 import { Player } from "@/components/workbench"
 import { currentUser } from "@/lib/auth"
 import { outbox } from "@/lib/mail"
-import { gainOf, STAGE_LABEL, type Evaluation, type OriginalRow } from "@/lib/originals"
+import { gainOf, STAGE_LABEL, type Evaluation, type OriginalEvent, type OriginalRow } from "@/lib/originals"
 import { pollsFrom, recentPolls } from "@/lib/velocity-store"
 import { versions } from "@/lib/versions"
 import { cn } from "@/ui/lib/utils"
@@ -104,6 +104,16 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
                 <p className="whitespace-pre-line text-sm leading-relaxed text-slate-700">{row.text}</p>
               </ListBlock>
             )}
+            <ListBlock title="History" height="auto">
+              <div className="flex flex-col divide-y divide-slate-100">
+                {row.events.map((e) => (
+                  <div key={e.sk} className="flex flex-wrap items-baseline justify-between gap-2 py-2.5 text-sm">
+                    <span className="text-slate-800">{historyLine(e)}</span>
+                    <span className="text-xs text-slate-500">{when(e.at)}</span>
+                  </div>
+                ))}
+              </div>
+            </ListBlock>
             {admin && !row.evaluation && (
               <CardBlock title="Score" height="auto">
                 <ScoreButton id={row.id} />
@@ -235,6 +245,25 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
       {active === "polled" && <Polled row={row} />}
     </div>
   )
+}
+
+const HISTORY: Record<OriginalEvent["kind"], string> = {
+  recorded: "Recorded",
+  transcoded: "Converted to MP4",
+  scored: "Scored by PAX2",
+  note: "Note added",
+  rerecord: "Sent back to re-record",
+  approved: "Approved",
+  enhance: "Sent to the Enrichment Engine",
+  replaced: "Replaced by a new version",
+  "owner-publish": "Published as is by the owner",
+  published: "Published",
+  watching: "Watched on YouTube",
+}
+
+function historyLine(e: OriginalEvent) {
+  if (e.kind === "transcoded" && e.bytes != null && e.seconds != null) return `${HISTORY.transcoded}, ${(e.bytes / 1e6).toFixed(1)} MB in ${e.seconds}s`
+  return e.kind === "recorded" || e.kind === "transcoded" ? HISTORY[e.kind] : `${HISTORY[e.kind]} · ${e.by}`
 }
 
 /** Every version of the video side by side, and the version delta once two of them have been read
