@@ -49,7 +49,7 @@ c. The library. Built: Swayable reference model, Upworthy headline patterns, Wes
 
 ### 5. Automatic on save — Partial
 
-Built: `PAX2_AUTOSCORE=1` scores an original the moment it is submitted, and emails the admins. Missing: the scoring is script-only; no video analysis runs; no S3 event starts anything; the box it would start is gone.
+Built: every submit scores the original the moment the button is pressed (since 2026-10-18; `PAX2_AUTOSCORE=0` turns it off for a dev session), and emails the admins. Missing: the scoring is script-only; no video analysis runs; no S3 event starts anything; the box it would start is gone.
 
 ### 6. Specific recommendations — Partial
 

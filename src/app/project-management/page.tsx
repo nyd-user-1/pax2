@@ -6,15 +6,14 @@ import { cn } from "@/ui/lib/utils"
 
 export const metadata = { title: "Project Management" }
 
-const short = (iso: string) => new Date(iso + "T00:00:00Z").toLocaleDateString([], { month: "short", day: "numeric", timeZone: "UTC" })
 const RATINGS: { key: "importance" | "utility" | "ease"; label: string }[] = [
   { key: "importance", label: "Importance" },
   { key: "utility", label: "Utility" },
   { key: "ease", label: "Ease" },
 ]
 const COLS = {
-  plain: "grid-cols-[minmax(200px,260px)_minmax(160px,1fr)_48px_minmax(220px,1.4fr)]",
-  rated: "grid-cols-[minmax(200px,260px)_minmax(160px,1fr)_48px_72px_72px_72px_minmax(220px,1.4fr)]",
+  plain: "grid-cols-[minmax(200px,260px)_minmax(160px,1fr)_48px_minmax(220px,1.4fr)_minmax(96px,0.5fr)]",
+  rated: "grid-cols-[minmax(200px,260px)_minmax(160px,1fr)_48px_72px_72px_72px_minmax(220px,1.4fr)_minmax(96px,0.5fr)]",
 }
 
 function Rating({ n }: { n?: number }) {
@@ -28,8 +27,8 @@ function Rating({ n }: { n?: number }) {
   )
 }
 
-const Tag = ({ children, tone }: { children: React.ReactNode; tone: "block" | "wait" }) => (
-  <span className={cn("rounded-full px-1.5 py-px text-[10px] font-medium", tone === "block" ? "bg-red-50 text-red-700 ring-1 ring-red-200" : "bg-slate-100 text-slate-600")}>{children}</span>
+const Tag = ({ children, tone, title }: { children: React.ReactNode; tone: "block" | "wait"; title?: string }) => (
+  <span title={title} className={cn("whitespace-nowrap rounded-full px-1.5 py-px text-[10px] font-medium", tone === "block" ? "bg-red-50 text-red-700 ring-1 ring-red-200" : "bg-slate-100 text-slate-600 ring-1 ring-slate-200")}>{children}</span>
 )
 
 function Row({ b, list, rated, today }: { b: Item; list: Item[]; rated: boolean; today: string }) {
@@ -37,20 +36,12 @@ function Row({ b, list, rated, today }: { b: Item; list: Item[]; rated: boolean;
   const late = !done && today > b.end
   const blocks = blockedBy(list, b.id)
   const waits = [...(b.waits ?? []).map((id) => list.find((x) => x.id === id)?.name.replace(/^\d+\. /, "").replace(/^PAX2 /, "") ?? id), ...(b.waitsOn ? [b.waitsOn] : [])]
+  const blocked = !done && (b.waits ?? []).some((id) => (list.find((x) => x.id === id)?.progress ?? 0) < 100) || (!done && !!b.waitsOn)
   const remaining = 100 - b.progress
   return (
     <details data-find className="group border-t border-slate-100">
       <summary className={cn("grid cursor-pointer list-none items-center gap-x-3 py-2 text-xs hover:bg-slate-50 [&::-webkit-details-marker]:hidden", rated ? COLS.rated : COLS.plain)}>
-        <div className="min-w-0">
-          <p className="flex items-center gap-1.5 truncate font-medium text-slate-900">
-            <span className="truncate">{b.name}</span>
-            {blocks.length > 0 && <Tag tone="block">Blocks {blocks.join(", ")}</Tag>}
-          </p>
-          <p className="truncate text-[11px] text-slate-500">
-            {short(b.start)} to {short(b.end)}
-            {waits.length > 0 && <> · waits on {waits.join(", ")}</>}
-          </p>
-        </div>
+        <p className="truncate font-medium text-slate-900">{b.name}</p>
         <div className={cn("h-3 overflow-hidden rounded-full", done ? "bg-green-100" : late ? "bg-red-100" : "bg-slate-100")} title={`${b.progress}%`}>
           <div className={cn("h-full rounded-full", done ? "bg-green-500" : late ? "bg-red-400" : "bg-pax2-light-blue")} style={{ width: `${b.progress}%` }} />
         </div>
@@ -59,6 +50,10 @@ function Row({ b, list, rated, today }: { b: Item; list: Item[]; rated: boolean;
         </div>
         {rated && RATINGS.map((r) => <Rating key={r.key} n={b[r.key]} />)}
         <p className={cn("line-clamp-2 leading-snug", done ? "text-slate-400" : "text-slate-600")}>{done ? (b.note ?? "") : b.next}</p>
+        <div className="flex flex-wrap gap-1">
+          {blocked && <Tag tone="block" title={`Waits on ${waits.join(", ")}`}>Blocked</Tag>}
+          {blocks.length > 0 && <Tag tone="wait" title={`Blocks ${blocks.join(", ")}`}>Blocks {blocks.map((n) => n.replace(/ .*/, "")).join(", ")}</Tag>}
+        </div>
       </summary>
       {b.steps.length > 0 && (
         <div className="mb-2 ml-2 rounded-md bg-slate-50 px-3 py-2 text-xs">
@@ -89,8 +84,9 @@ function Rows({ list, rated, today }: { list: Item[]; rated: boolean; today: str
           <span>Item</span>
           <span>Progress</span>
           <span className="text-right">Done</span>
-          {rated && RATINGS.map((r) => <span key={r.key} className="text-center">{r.label}</span>)}
+            {rated && RATINGS.map((r) => <span key={r.key} className="text-center">{r.label}</span>)}
           <span>Next</span>
+          <span>Blocked</span>
         </div>
         {list.map((b) => (
           <Row key={b.id} b={b} list={list} rated={rated} today={today} />

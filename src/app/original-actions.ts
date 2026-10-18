@@ -50,8 +50,9 @@ export async function againDraft(id: string) {
   return { title: row.title, text: row.text, name: row.name, role: row.role, town: row.town }
 }
 
-/** A recording lands. It is scored straight away when automatic scoring is on (PAX2_AUTOSCORE=1);
- *  otherwise it waits on /drafts for an admin to press Score. */
+/** A recording lands. It is scored straight away, the prediction made the moment the button is
+ *  pressed (requirement 5); PAX2_AUTOSCORE=0 turns that off for a dev session that must not call
+ *  Bedrock, and then it waits on /drafts for an admin to press Score. */
 export async function submitOriginal(input: { id: string; key: string; email?: string; scriptId?: string; title?: string; text?: string; name?: string; role?: string; town?: string; seconds: number; consent: boolean; parent?: string; publishAt?: string }) {
   const user = await currentUser()
   const owner = (user?.email ?? input.email ?? "").trim().toLowerCase()
@@ -59,7 +60,7 @@ export async function submitOriginal(input: { id: string; key: string; email?: s
   const parent = input.parent ? await originalRow(input.parent) : null
   await createOriginal({ id: input.id, owner, key: input.key, version: parent ? parent.version + 1 : 1, parent: parent?.id, title: input.title, text: input.text, name: input.name, role: input.role, town: input.town, seconds: input.seconds, consent: input.consent, publishAt: input.publishAt && !Number.isNaN(Date.parse(input.publishAt)) ? new Date(input.publishAt).toISOString() : undefined })
   if (parent) await addEvent(parent.id, { kind: "replaced", by: owner, child: input.id })
-  if (process.env.PAX2_AUTOSCORE === "1") await score(input.id)
+  if (process.env.PAX2_AUTOSCORE !== "0") await score(input.id)
   refresh(input.id)
   return { ok: true }
 }
@@ -149,7 +150,7 @@ export async function submitEnhanced(input: { parent: string; id: string; key: s
   const parent = await must(input.parent)
   await createOriginal({ id: input.id, owner: parent.owner, key: input.key, version: parent.version + 1, parent: parent.id, title: parent.title, text: parent.text, name: parent.name, role: parent.role, town: parent.town, seconds: input.seconds, consent: parent.consent })
   await addEvent(parent.id, { kind: "replaced", by: admin.email, child: input.id })
-  if (process.env.PAX2_AUTOSCORE === "1") await score(input.id)
+  if (process.env.PAX2_AUTOSCORE !== "0") await score(input.id)
   refresh(parent.id)
   refresh(input.id)
   return { id: input.id }
