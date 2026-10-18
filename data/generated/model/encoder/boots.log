@@ -13,3 +13,6 @@
 2026-10-18T02:39Z i-06553194149b4f17c g6e.xlarge train OK 34.4 min: batch 16 fit with expandable_segments alone (no gradient checkpointing), 910 steps in 823 s at 17.7 pairs/s; reranker 2 epochs 703 s; Gate E FAIL, Gate R FAIL
 2026-10-18T02:47:29Z launched i-0bff341cfd37d0cf3 t3.small publish NYSgpt/pax2-breakout-benchmark
 2026-10-18T02:47:33Z launched i-0be1d247936aea940 t3.small publish NYSgpt/pax2-shorts-training-set
+2026-10-18T07:40:50Z launched i-027b399b22cb81d53 t3.small publish NYSgpt/pax2-breakout-benchmark
+2026-10-18T07:40:54Z launched i-0347885d496c156cd t3.small publish NYSgpt/pax2-shorts-training-set
+2026-10-18T07:50:13Z launched i-0522aade88e4223da t3.small publish NYSgpt/pax2-headline-ranker
