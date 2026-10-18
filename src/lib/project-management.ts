@@ -97,8 +97,7 @@ type Plan = { start: string; end: string; importance: number; utility: number; e
 const MODEL_PLAN: Record<string, Plan> = {
   "m-writer": { start: "2026-10-03", end: "2026-10-17", importance: 5, utility: 5, ease: 5, steps: [] },
   "m-velocity": { start: "2026-10-17", end: "2026-11-30", importance: 4, utility: 5, ease: 5, steps: [
-    { what: "v1 at about 1,000 settled curves; 442 today, the poller adds about 180 shorts a week.", share: 83, effort: "weeks of polling, then an hour" },
-    { what: "A retrain script that reads the S3 readings directly.", share: 17, effort: "an hour" },
+    { what: "v1 at about 1,000 settled curves; 332 qualify today, the poller adds about 180 shorts a week; the refresh runs with MODE=full PREFIX=model/<name>/ JOBS=velocity ./scripts/rig/launch-cpu.sh.", share: 100, effort: "weeks of polling, then 3 cents and ten minutes" },
   ] },
   "m-classifier": { start: "2026-10-17", end: "2026-11-07", importance: 5, utility: 3, ease: 4, steps: [
     { what: "v2 with transcript features from the caption run; its chain is running and launches the box itself when the priority families land.", share: 62, effort: "automatic, about 17:00 UTC on 2026-10-18; about 5 cents" },
@@ -134,7 +133,7 @@ const MODEL_PLAN: Record<string, Plan> = {
     { what: "Gate R again.", share: 10, effort: "30 minutes" },
   ] },
   "m-simulator": { start: "2026-10-17", end: "2026-12-15", importance: 2, utility: 1, ease: 2, steps: [
-    { what: "Fit a seed-test model to the velocity curves.", share: 60, effort: "a day, after about 1,000 curves" },
+    { what: "Fit a seed-test model to the velocity curves; sim-0 describes 442 today.", share: 60, effort: "a day, after about 1,000 curves" },
     { what: "Simulate a short's path from its first hour.", share: 30, effort: "half a day" },
     { what: "On /live-tracking beside the measured curve.", share: 10, effort: "2 hours" },
   ] },
