@@ -14,7 +14,7 @@ import { forecastMetrics } from "@/lib/measures"
 import { board, findings, forecasts, loads, picks, steps, submissions, votes, workspace } from "@/lib/review"
 import { SAMPLE_ACTIVITY, SAMPLE_COUNTS, SAMPLE_FEED, SAMPLE_SENT } from "@/lib/sample"
 import { toneOf } from "@/lib/tone"
-import { USAGE_KINDS, usageSince } from "@/lib/usage"
+import { READER_KINDS, usageSince } from "@/lib/usage"
 import homeFeed from "../../../data/generated/home-feed.json"
 
 export const dynamic = "force-dynamic"
@@ -120,7 +120,7 @@ export default async function DashboardPage() {
   // Readers: what people did on PAX2 in the last 7 days, from the usage log.
   const titleOf = (subject: string) => (homeFeed as { id: string; title: string }[]).find((v) => `yt-${v.id}` === subject || v.id === subject)?.title ?? subject
   const readersDemo = usage.length === 0
-  const byKind = readersDemo ? SAMPLE_READERS.kinds : USAGE_KINDS.map((kind) => ({ kind, n: usage.filter((e) => e.kind === kind).length }))
+  const byKind = readersDemo ? SAMPLE_READERS.kinds : READER_KINDS.map((kind) => ({ kind, n: usage.filter((e) => e.kind === kind).length }))
   const opens = new Map<string, number>()
   for (const e of usage) if (e.kind === "open") opens.set(e.subject, (opens.get(e.subject) ?? 0) + 1)
   const mostOpened = readersDemo
