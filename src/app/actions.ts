@@ -3,13 +3,10 @@
 import { cookies } from "next/headers"
 import { revalidatePath } from "next/cache"
 
-import feed from "../../data/generated/home-feed.json"
-import channels from "../../data/velocity/channels.json"
 import { takeById } from "@/lib/catalog"
-import { recommendations } from "@/lib/forecast"
-import { nextWeekdayNine } from "@/lib/post-time"
 import { read, type Reading } from "@/lib/pax2"
 import { FORMULA_V1 } from "@/lib/resonance"
+import { writerPrompt } from "@/lib/writer-prompt"
 import { board, DATASETS, findings, loadExport, recordForecast, recordPick, recordStep, recordVote, saveFinding, steps, workspace, type LoadResult } from "@/lib/review"
 
 export async function loadDataset(id: string): Promise<LoadResult> {
@@ -89,24 +86,9 @@ export async function freshReview() {
   return id
 }
 
-// What travels on the reform channels, for PAX2GPT's prompt: the ten reform-core shorts with the
-// highest iWAR (views over the channel's median) in the home feed.
-const REFORM_CORE = new Set((channels as { id: string; group: string }[]).filter((c) => c.group === "reform-core").map((c) => c.id))
-const TRAVELLED = (feed as { title: string; channel: string; channelId: string; ratio: number }[])
-  .filter((v) => REFORM_CORE.has(v.channelId))
-  .sort((a, b) => b.ratio - a.ratio)
-  .slice(0, 10)
-
-/** The top three distribution changes for a video of this script's length posted at the default
- *  time, as constraints for the writer. */
-function travelConstraints(title: string, text: string) {
-  const seconds = Math.round((text.split(/\s+/).filter(Boolean).length / 130) * 60)
-  const { changes } = recommendations({ title, description: text, tags: [], durationSec: seconds, published: nextWeekdayNine(), group: "reform-core", channelMedian: null })
-  return changes.slice(0, 3).map((c) => `${c.action![0].toLowerCase()}${c.action!.slice(1)} (${c.points > 0 ? "+" : ""}${c.points} points of breakout rate on ${c.scope})`)
-}
-
 /** PAX2GPT writes a volunteer's script from their own answers, on the framing that is scoring best
- *  so far, told what travels on the reform channels. */
+ *  so far, told what Swayable's tested ads found and what travels on the campaign's own channels
+ *  (src/lib/writer-prompt.ts). PAX2GPT is Claude on Bedrock. */
 export async function writeScript(input: { name: string; role: string; town: string; why: string; moment: string }) {
   const { BedrockRuntimeClient, ConverseCommand } = await import("@aws-sdk/client-bedrock-runtime")
   const { SCRIPTS } = await import("@/lib/catalog")
@@ -119,24 +101,7 @@ export async function writeScript(input: { name: string; role: string; town: str
   const ranked = SCRIPTS.map((s) => ({ s, m: mean(s.id) })).sort((a, b) => (b.m ?? -1) - (a.m ?? -1))
   const base = ranked[0].m != null ? ranked[0] : { s: SCRIPTS.find((s) => s.id === "calm")!, m: null }
   const client = new BedrockRuntimeClient({ region: process.env.PAX2_REGION ?? "us-east-1" })
-  const prompt = `Write a script a volunteer will read to a phone camera, 80 to 110 words, in the first person, in plain spoken English that sounds like this person, not like a campaign.
-Build it on this argument (keep its core claim and framing): "${base.s.title}" — ${base.s.framing}
-Reference text of that argument:
-${base.s.text}
-
-Observed patterns on the reform channels, not rules: weigh them, don't obey them blindly.
-The titles of the ten reform-channel shorts with the highest iWAR (views against their channel's median):
-${TRAVELLED.map((v) => `- "${v.title}" (${v.channel}, ${v.ratio.toFixed(1)}x)`).join("\n")}
-What measurably travels further for a video like this one:
-${travelConstraints(base.s.title, base.s.text).map((c) => `- ${c}`).join("\n") || "- (nothing measured clears zero)"}
-
-About the volunteer, in their words:
-- Name: ${input.name || "(not given)"}
-- Who they are: ${input.role || "(not given)"}${input.town ? `, ${input.town}` : ""}
-- Why this matters to them: ${input.why}
-- A moment they felt they had no real choice: ${input.moment || "(not given)"}
-
-Rules: open with one short line that would make someone stop scrolling; use one of their own details; keep any number only if it appears in the reference text; end with "Vote yes on Question 3." Return only the script, line breaks between sentences groups, no title.`
+  const prompt = writerPrompt(base.s, input)
   const r = await client.send(new ConverseCommand({ modelId: process.env.PAX2_MODEL ?? "us.anthropic.claude-sonnet-4-6", messages: [{ role: "user", content: [{ text: prompt }] }], inferenceConfig: { maxTokens: 500, temperature: 0.6 } }))
   const text = r.output?.message?.content?.map((c) => ("text" in c ? c.text : "")).join("").trim() ?? ""
   return { text, basedOn: base.s.id, basedOnTitle: base.s.title, why: base.m != null ? `the framing scoring best so far (average Resonance ${base.m.toFixed(0)})` : "the framing with the strongest research prior, until paid results arrive" }
