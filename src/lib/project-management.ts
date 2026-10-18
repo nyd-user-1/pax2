@@ -136,9 +136,9 @@ const MODEL_PLAN: Record<string, Plan> = {
     { what: "Self-supervised training on a GPU box.", share: 40, effort: "a few GPU hours, estimate $5 to $10" },
     { what: "Its features into PAX2 Classifier.", share: 20, effort: "an hour and a c7i box" },
   ] },
-  "m-ranker": { start: "2026-11-15", end: "2026-12-31", importance: 3, utility: 1, ease: 2, waitsOn: "requirement 11", steps: [
-    { what: "Usage events accumulate.", share: 40, effort: "after requirement 11" },
-    { what: "v0, learning to rank over them.", share: 40, effort: "a day" },
+  "m-ranker": { start: "2026-10-18", end: "2026-12-31", importance: 3, utility: 1, ease: 2, waitsOn: "reader rows", steps: [
+    { what: "A few thousand reader rows in the DynamoDB table.", share: 40, effort: "readers; nothing to build", blocker: true },
+    { what: "PAX2 Feed Ranker trained on PAX2's rows with v0's reader-feature recipe; beat 0.595 within reader.", share: 40, effort: "a day and a c7i box" },
     { what: "Serve the home feed from it.", share: 20, effort: "half a day" },
   ] },
 }
