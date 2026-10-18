@@ -6,11 +6,30 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { ArrowRight, Check, Circle, Mic } from "lucide-react"
 
 import { secondsAt, useDraft, words } from "@/components/record/draft"
+import { CAMPAIGN_FAMILY, organicCheck } from "@/lib/organic-evidence"
 import { cn } from "@/ui/lib/utils"
 
 export type Research = { key: string; label: string; diff: number; low: number; high: number }
 
-type CheckResult = { ok: boolean; title: string; detail: string }
+type CheckResult = { ok: boolean; title: string; detail: string; lines?: { ok: boolean; text: string }[] }
+
+const signed = (n: number) => `${n > 0 ? "+" : n < 0 ? "−" : ""}${Math.abs(n)}`
+
+/** The sixth check: the traits that measurably lift or sink on the campaign's own channels, each with
+ *  its lift as metadata-lift.json states it and the line that carries it (src/lib/organic-evidence.ts). */
+function channelCheck(text: string): CheckResult {
+  const rows = organicCheck(text, secondsAt(text), CAMPAIGN_FAMILY)
+  const scope = rows[0]?.scope ?? "these channels"
+  return {
+    ok: words(text) > 0 && rows.every((r) => r.good),
+    title: `Travels on ${scope}`,
+    detail: `Points in the share of shorts reaching 3x their channel's median, within channel, with the 90% range; measured on the titles and lengths of the ${scope}' own shorts.`,
+    lines: rows.map((r) => ({
+      ok: words(text) > 0 && r.good,
+      text: `${r.label}: ${signed(r.points)} points (${signed(r.low)} to ${signed(r.high)}), ${r.channels} channels. ${r.line ? `Line ${r.line}: “${r.where}”` : r.where[0].toUpperCase() + r.where.slice(1)}`,
+    })),
+  }
+}
 
 function checks(text: string, research: Record<string, Research>): CheckResult[] {
   const first = (text.trim().split(/(?<=[.!?])\s+/)[0] ?? "").trim()
@@ -44,6 +63,7 @@ function checks(text: string, research: Record<string, Research>): CheckResult[]
       title: "Offers a fact",
       detail: "A concrete number gives the claim weight; check it against the campaign's sources before recording.",
     },
+    channelCheck(text),
   ]
 }
 
@@ -77,10 +97,20 @@ export function Editor({ research }: { research: Record<string, Research> }) {
             <span className="flex flex-col">
               <span className={cn("text-sm font-medium", c.ok ? "text-pax2-blue" : "text-slate-800")}>{c.title}</span>
               <span className="text-xs leading-relaxed text-slate-800">{c.detail}</span>
+              {c.lines && (
+                <ul className="mt-1.5 flex flex-col gap-1.5">
+                  {c.lines.map((l) => (
+                    <li key={l.text} className="flex gap-2 text-xs leading-relaxed text-slate-800">
+                      <span className={cn("mt-0.5 flex size-3.5 shrink-0 items-center justify-center rounded-full", l.ok ? "bg-primary text-white" : "border text-slate-800")}>{l.ok ? <Check className="size-2.5" /> : <Circle className="size-1.5" />}</span>
+                      <span className="min-w-0">{l.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </span>
           </div>
         ))}
-        <p className="border-t pt-3 text-[11px] leading-relaxed text-slate-800">Research figures come from 617 campaign ads tested against control groups. They are priors, not promises: style alone predicts little, which is why every take is measured.</p>
+        <p className="border-t pt-3 text-[11px] leading-relaxed text-slate-800">Vote-choice figures come from 617 campaign ads tested against control groups; channel figures from the campaigns&apos; own channels. They are priors, not promises: style alone predicts little, which is why every take is measured.</p>
       </aside>
     </div>
   )
