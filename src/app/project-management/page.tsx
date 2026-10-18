@@ -43,7 +43,7 @@ function Row({ b, n, list, rated, today }: { b: Item; n: number; list: Item[]; r
   const remaining = 100 - b.progress
   return (
     <details data-find className="group border-t border-slate-100">
-      <summary className={cn("grid cursor-pointer list-none items-center gap-x-3 py-2 text-xs hover:bg-slate-50 [&::-webkit-details-marker]:hidden", rated ? COLS.rated : COLS.plain)}>
+      <summary className={cn("grid h-11 cursor-pointer list-none items-center gap-x-3 text-xs hover:bg-slate-50 [&::-webkit-details-marker]:hidden", rated ? COLS.rated : COLS.plain)}>
         <span className="tabular text-slate-500">{n}</span>
         <p className="truncate font-medium text-slate-900">{plainName(b.name)}</p>
         <div className={cn("h-3 overflow-hidden rounded-full", done ? "bg-green-100" : late ? "bg-red-100" : "bg-slate-100")} title={`${b.progress}%`}>
@@ -53,12 +53,13 @@ function Row({ b, n, list, rated, today }: { b: Item; n: number; list: Item[]; r
           {done ? <Check className="h-4 w-4 text-green-600" strokeWidth={3} aria-label="Complete" /> : `${b.progress}%`}
         </div>
         {rated && RATINGS.map((r) => <Rating key={r.key} n={b[r.key]} />)}
-        <p className={cn("line-clamp-2 leading-snug", done ? "text-slate-400" : "text-slate-600")}>{done ? (b.note ?? "") : b.next}</p>
+        <p className={cn("truncate", done ? "text-slate-400" : "text-slate-600")} title={done ? (b.note ?? "") : b.next}>{done ? (b.note ?? "") : b.next}</p>
         <div className="flex flex-wrap gap-1">
           {blocked && <Tag tone="block" title={`Waits on ${waits.join(", ")}`}>Blocked</Tag>}
           {blocks.length > 0 && <Tag tone="wait" title={`Blocks ${blocks.join(", ")}`}>Blocks {blocks.map((n) => n.replace(/ .*/, "")).join(", ")}</Tag>}
         </div>
       </summary>
+      {(b.next || b.note) && <p className="mb-2 ml-2 text-xs leading-relaxed text-slate-700">{done ? b.note : b.next}</p>}
       {b.steps.length > 0 && (
         <div className="mb-2 ml-2 rounded-md bg-slate-50 px-3 py-2 text-xs">
           <p className="mb-1 text-[10px] uppercase tracking-wide text-slate-400">Of the {remaining}% that remains</p>
@@ -106,30 +107,37 @@ const specsInModelOrder = () => MODELS.map((m) => MODEL_TERMS.find((t) => t.id =
 
 /** Specs: for each model PAX2 trains or plans to train, what it predicts, the loss it minimizes and the algorithm that runs. */
 function Specs() {
+  const cols = "grid-cols-[36px_minmax(160px,220px)_minmax(180px,1fr)_minmax(180px,1fr)_minmax(180px,1fr)]"
+  const rows = specsInModelOrder()
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[900px] text-xs">
-        <thead className="text-left text-[10px] uppercase tracking-wide text-slate-400">
-          <tr className="[&_th]:py-1 [&_th]:pr-4 [&_th]:font-medium [&_th]:align-bottom">
-            <th className="w-[36px]">No.</th>
-            <th className="w-[160px]">Item</th>
-            <th>Target variable and bounds</th>
-            <th>Loss function</th>
-            <th>Algorithm or class</th>
-          </tr>
-        </thead>
-        <tbody>
-          {specsInModelOrder().map((m, i) => (
-            <tr key={m.id} data-find className="border-t border-slate-100 align-top [&_td]:py-2 [&_td]:pr-4 [&_td]:leading-snug">
-              <td className="tabular text-slate-500">{i + 1}</td>
-              <td className="font-medium text-slate-900">{m.name}</td>
-              <td className="text-slate-700">{m.target}</td>
-              <td className="text-slate-700">{m.loss}</td>
-              <td className="text-slate-700">{m.algorithm}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="min-w-[900px]">
+        <div className={cn("grid items-end gap-x-3 pb-1 text-[10px] uppercase tracking-wide text-slate-400", cols)}>
+          <span>No.</span>
+          <span>Item</span>
+          <span>Target variable and bounds</span>
+          <span>Loss function</span>
+          <span>Algorithm or class</span>
+        </div>
+        {rows.map((m, i) => (
+          <details key={m.id} data-find className="group border-t border-slate-100">
+            <summary className={cn("grid h-11 cursor-pointer list-none items-center gap-x-3 text-xs hover:bg-slate-50 [&::-webkit-details-marker]:hidden", cols)}>
+              <span className="tabular text-slate-500">{i + 1}</span>
+              <p className="truncate font-medium text-slate-900">{m.name}</p>
+              <p className="truncate text-slate-700" title={m.target}>{m.target}</p>
+              <p className="truncate text-slate-700" title={m.loss}>{m.loss}</p>
+              <p className="truncate text-slate-700" title={m.algorithm}>{m.algorithm}</p>
+            </summary>
+            <div className={cn("mb-3 grid gap-x-3 text-xs leading-relaxed text-slate-700", cols)}>
+              <span />
+              <span />
+              <p>{m.target}</p>
+              <p>{m.loss}</p>
+              <p>{m.algorithm}</p>
+            </div>
+          </details>
+        ))}
+      </div>
     </div>
   )
 }
