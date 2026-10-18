@@ -81,9 +81,9 @@ Built: `scripts/training-set.mjs` assembles one row per settled short: raw input
 
 Missing: content features for hundreds of shorts; the dataset and model published to Hugging Face under NYSgpt with a card and a frozen benchmark, the way `/Code/nsr` published NSR-CPT (`docs/NSR-CPT-REPORT.md` there is the template: pre-registered gates, held-out benchmark, private repos until redistribution terms are clear). Script writing stays Claude on Bedrock with this dataset as its evidence; a fine-tune is a later question once there are enough scored originals to learn from.
 
-### 11. Platform usage — Missing
+### 11. Platform usage — Built, accumulating
 
-No event is recorded when someone opens a video, plays it, searches, filters, boosts or bookmarks. The feed's Boost, queue, playlist and share controls are built and unwired. The ledger pattern for it exists (`putOnce`); 44b's `answer_usage` and `chat_usage` tables are the metering shape to copy.
+Since 2026-10-17 every reader act writes one row to the DynamoDB table `pax2-ledger` under `USAGE#<day>` (`src/lib/usage.ts`): open, play, watched75, search, filter, sort, boost, bookmark, share, queue, and Teach a Model's course events. The first row landed 2026-10-18 04:46 UTC. The Readers block on `/dashboard` reads them. Nothing left to build; the rows accumulate.
 
 ### 12. Platform data trains the model — Missing
 

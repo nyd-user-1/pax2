@@ -88,11 +88,9 @@ export const REQUIREMENTS: Item[] = [
       { what: "The dataset and benchmark published to Hugging Face under NYSgpt, private, with their cards.", share: 40, effort: "a new token in SSM from Brendan, then publish.sh twice" },
       { what: "Content features for hundreds of shorts.", share: 27, effort: "after the proxy" },
     ] },
-  { id: "11", name: "11. Platform usage", start: "2026-10-17", end: "2026-10-31", progress: 70, next: "Confirm one event lands end to end, 15 minutes; then readers.",
+  { id: "11", name: "11. Platform usage", start: "2026-10-17", end: "2026-10-31", progress: 85, next: "Nothing to build; rows accumulate as people use the feed and the courses.",
     steps: [
-      { what: "Confirm one event lands in the DynamoDB table end to end.", share: 30, effort: "15 minutes", blocker: true },
-      { what: "Beacons for open, play, search and filter; Boost, bookmark, share and queue already write.", share: 50, effort: "2 hours" },
-      { what: "The Readers block on /dashboard reads real rows.", share: 20, effort: "nothing to build once events exist" },
+      { what: "The Readers block on /dashboard shows real rows as they arrive; the first landed 2026-10-18 04:46 UTC.", share: 100, effort: "nothing to build" },
     ] },
   { id: "12", name: "12. Platform data trains the model", start: "2026-11-01", end: "2026-12-15", progress: 0, next: "Usage events accumulate first.", waits: ["11"],
     steps: [
