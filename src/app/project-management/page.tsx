@@ -153,17 +153,17 @@ export default async function ProjectManagementPage({ searchParams }: { searchPa
     <div className="flex flex-col gap-6">
       <TabRail tabs={tabs} active={active} />
       {active === "requirements" && (
-        <ProgressBlock title="Requirements" search="Search requirements…" rows={rows(REQUIREMENTS)} name="requirements" height="h-[1460px]" footer={summary(REQUIREMENTS)}>
+        <ProgressBlock title="Requirements" search="Search requirements…" rows={rows(REQUIREMENTS)} name="requirements" height="h-[calc(100dvh-220px)]" footer={summary(REQUIREMENTS)}>
           <Rows list={REQUIREMENTS} rated={false} today={today} />
         </ProgressBlock>
       )}
       {active === "models" && (
-        <ProgressBlock title="Models" search="Search models…" rows={rows(MODELS)} name="models" height="h-[1460px]" footer={summary(MODELS)}>
+        <ProgressBlock title="Models" search="Search models…" rows={rows(MODELS)} name="models" height="h-[calc(100dvh-220px)]" footer={summary(MODELS)}>
           <Rows list={MODELS} rated today={today} />
         </ProgressBlock>
       )}
       {active === "specs" && (
-        <TableBlock title="Specs" search="Search specs…" rows={specsInModelOrder().map(({ name, target, loss, algorithm }, i) => ({ no: i + 1, item: name, target, loss, algorithm }))} name="model-specs" height="h-[1460px]">
+        <TableBlock title="Specs" search="Search specs…" rows={specsInModelOrder().map(({ name, target, loss, algorithm }, i) => ({ no: i + 1, item: name, target, loss, algorithm }))} name="model-specs" height="h-[calc(100dvh-220px)]">
           <Specs />
         </TableBlock>
       )}
