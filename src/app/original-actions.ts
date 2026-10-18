@@ -19,6 +19,13 @@ const refresh = (id: string) => {
 
 const signed = (x: number, digits: number) => `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(digits)}`
 
+/** PAX2 Classifier's two numbers, as the Scored tab shows them: the chance of a Hit and the views to expect. */
+function forecastLine(e: Evaluation): string | null {
+  const f = e.forecast
+  if (!f) return null
+  return `PAX2 Classifier gives it a ${Math.round(f.p * 100)}% chance of a Hit${f.expected ? `, about ${f.expected.views.toLocaleString("en-US")} expected views` : ""}.`
+}
+
 /** The findings as the owner reads them: each change with its measured range in plain words. */
 function findings(e: Evaluation): string[] {
   const persuasion = e.recommendations
@@ -115,6 +122,7 @@ export async function review(id: string, decision: "rerecord" | "approved" | "en
       heading: "Findings",
       paragraphs: [
         "Great video! Wanna do it again? Here is what PAX2 measured would help it travel and persuade, each with the range the evidence allows.",
+        ...(forecastLine(evaluation) ? [forecastLine(evaluation)!] : []),
         ...(note.trim() ? [note.trim()] : []),
       ],
       list: findings(evaluation),

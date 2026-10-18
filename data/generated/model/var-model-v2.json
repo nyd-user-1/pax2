@@ -1,0 +1,6 @@
+{
+ "name": "PAX2 Classifier",
+ "version": "var-2",
+ "status": "pending: scripts/classifier/when-captions-land.sh replaces this file with the trained model when the caption run's priority families land",
+ "gates": { "transcript": { "passed": false } }
+}

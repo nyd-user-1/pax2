@@ -287,14 +287,18 @@ async function Versions({ id }: { id: string }) {
   )
 }
 
-/** PAX2 Classifier's chance of a Hit, with its measured strength and the six strongest pulls. */
+const MODEL_NAME = { metadata: "The metadata model", image: "The image model", transcript: "The transcript model" } as const
+
+/** PAX2 Classifier's chance of a Hit and the views to expect, with the measured strength of the model that answered and the six strongest pulls. */
 function ForecastCard({ f }: { f: NonNullable<Evaluation["forecast"]> }) {
   const s = f.strength
+  const e = f.expected
   return (
     <CardBlock title="Forecast" height="auto">
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
           <span className="font-display text-5xl text-pax2-blue">{pct(f.p)}</span>
+          {e && <span className="tabular text-sm text-slate-800">{e.views.toLocaleString("en-US")} expected views</span>}
           {f.base.family != null && (
             <span className="tabular text-sm text-slate-600">
               {f.base.familyName} channels: {pct(f.base.family)}
@@ -302,7 +306,8 @@ function ForecastCard({ f }: { f: NonNullable<Evaluation["forecast"]> }) {
           )}
         </div>
         <p className="text-sm text-slate-600">
-          Trained on {s.n.toLocaleString("en-US")} shorts{s.channels ? ` from ${s.channels} channels` : ""}; ranks new videos at AUC {s.auc.toFixed(2)} across channels{s.withinChannelAuc != null && ` and ${s.withinChannelAuc.toFixed(2)} within a channel`}.
+          {f.model ? `${MODEL_NAME[f.model]}, trained` : "Trained"} on {s.n.toLocaleString("en-US")} shorts{s.channels ? ` from ${s.channels} channels` : ""}; ranks new videos at AUC {s.auc.toFixed(2)} across channels{s.withinChannelAuc != null && ` and ${s.withinChannelAuc.toFixed(2)} within a channel`}.
+          {e && f.anchor.median != null && ` Expected views: ${compact.format(f.anchor.median)}${e.medianSource ? `, ${e.medianSource},` : ""} times ${e.hitRatio} for a Hit or ${e.restRatio} otherwise, weighted by the chance.`}
         </p>
         <ul className="flex flex-col gap-1.5">
           {f.contributions.map((c) => (

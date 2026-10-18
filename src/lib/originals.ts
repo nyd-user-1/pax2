@@ -1,6 +1,6 @@
 import "server-only"
 
-import type { Contribution, Recommendation as Distribution } from "@/lib/forecast"
+import type { Contribution, ModelKind, Recommendation as Distribution } from "@/lib/forecast"
 import { get, now, putOnce, query, type Item } from "@/lib/ledger"
 
 // Original content: a video a user records for PAX2, from the recording to the wild.
@@ -60,8 +60,12 @@ export type Evaluation = {
   /** PAX2 Classifier: the chance of a Hit from what the video will carry at publish, with its measured strength. */
   forecast?: {
     p: number
+    /** Which of PAX2 Classifier's models answered; absent on evaluations scored before v2. */
+    model?: ModelKind
     base: { all: number; family: number | null; familyName: string | null }
     anchor: { median: number | null; breakoutViews: number | null }
+    /** Views to expect and where the median came from; absent on evaluations scored before v2. */
+    expected?: { views: number; hitRatio: number; restRatio: number; medianSource: string | null } | null
     strength: { auc: number; withinChannelAuc: number | null; topDecileLift: number; familyAuc: number | null; n: number; channels: number | null; version: string; builtAt: string }
     contributions: Contribution[]
   }

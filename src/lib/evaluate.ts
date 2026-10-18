@@ -14,10 +14,10 @@ import type { Evaluation, Original, Recommendation, Trait } from "@/lib/original
 //   persuasion  each trait's lean from Swayable's tests: its ads against the other ads in the same
 //               study (data/generated/swayable-patterns.json)
 //   virality    the title against Upworthy's headline tests (won vs. lost)
-//   forecast    PAX2 Classifier's chance of a Hit from what the video will carry at publish, and
-//               the distribution recommendations from the measured within-channel lifts
-//               (src/lib/forecast.ts)
-// The script stands in for what was said until the recording itself is transcribed.
+//   forecast    PAX2 Classifier's chance of a Hit from what the video will carry at publish and, when
+//               its Gate C passed, from the script as the transcript; the views to expect; and the
+//               distribution recommendations from the measured within-channel lifts (src/lib/forecast.ts)
+// The script stands in for what was said: the recording's words are the script.
 
 const MODEL = process.env.PAX2_MODEL ?? "us.anthropic.claude-sonnet-4-6"
 const TRAITS = patterns.traits as { key: string; label: string; ads: number; diff: number; low: number; high: number }[]
@@ -26,11 +26,13 @@ const TRAITS = patterns.traits as { key: string; label: string; ads: number; dif
 // Its median is the catalog's (data/velocity/catalog.json), carried on every row of the home feed,
 // which the app already bundles; the 12 MB catalog stays out of the server bundle.
 const STAND_IN = "UC-rKSUWdEqPmP-UM7yV6Ssw"
-const CHANNEL_MEDIAN: number | null = (feed as { channelId: string; channelMedian?: number }[]).find((v) => v.channelId === STAND_IN)?.channelMedian ?? null
+const STAND_IN_ROW = (feed as { channelId: string; channel: string; channelMedian?: number }[]).find((v) => v.channelId === STAND_IN)
+const CHANNEL_MEDIAN: number | null = STAND_IN_ROW?.channelMedian ?? null
+const MEDIAN_SOURCE = STAND_IN_ROW ? `${STAND_IN_ROW.channel}'s median of settled shorts, the stand-in channel` : null
 const CHANNELS = Number((model as { method: string }).method.match(/from (\d+) channels/)?.[1]) || null
 
-/** What PAX2 Classifier reads from an original. The script stands in for the description. */
-export function videoInputOf(o: Original): VideoInput {
+/** What PAX2 Classifier reads from an original. The script stands in for the description and is the transcript. */
+export function videoInputOf(o: Original): VideoInput & { transcript: string | null } {
   const firstLine = (o.text ?? "").split("\n").map((l) => l.trim()).find(Boolean) ?? ""
   return {
     title: o.title?.trim() || firstLine,
@@ -40,6 +42,7 @@ export function videoInputOf(o: Original): VideoInput {
     published: o.publishAt ?? new Date().toISOString(),
     group: "reform-core",
     channelMedian: CHANNEL_MEDIAN,
+    transcript: o.text?.trim() || null,
   }
 }
 
@@ -102,7 +105,7 @@ export async function evaluate(o: Original): Promise<Evaluation> {
       : []
 
   const input = videoInputOf(o)
-  const f = forecast(input)
+  const f = forecast(input, null, input.transcript)
   const d = recommendations(input)
   return {
     model: MODEL,
@@ -111,7 +114,7 @@ export async function evaluate(o: Original): Promise<Evaluation> {
     lean,
     title,
     recommendations: [...persuasion, ...virality],
-    forecast: { p: f.p, base: f.base, anchor: f.anchor, strength: { ...f.strength, channels: CHANNELS }, contributions: f.contributions.slice(0, 6) },
+    forecast: { p: f.p, model: f.model, base: f.base, anchor: f.anchor, expected: f.expected ? { ...f.expected, medianSource: MEDIAN_SOURCE } : null, strength: { ...f.strength, channels: CHANNELS }, contributions: f.contributions.slice(0, 6) },
     distribution: { changes: d.changes, keeps: d.keeps },
   }
 }

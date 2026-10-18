@@ -1,17 +1,22 @@
+import ratios from "../../data/generated/model/outcome-ratios.json"
 import model from "../../data/generated/model/var-model.json"
+import modelV2 from "../../data/generated/model/var-model-v2.json"
 import lift from "../../data/velocity/metadata-lift.json"
+import { transcriptFeatures, type Vocabulary } from "@/lib/transcript-features"
 import { extract, familyOf, type VideoInput } from "@/lib/video-features"
 
 // The pre-publish forecast: before a video is posted, how likely it is to be pushed past its
 // channel's median (the breakout label on /break-out), from PAX2 Classifier
 // (data/generated/model/var-model.json, scripts/rig/train_var.py), with every input's pull on
-// the number shown. The metadata model by default; the image model, which adds the thumbnail's
+// the number shown. The metadata model by default; the transcript model (PAX2 Classifier with
+// transcript features, data/generated/model/var-model-v2.json, scripts/classifier/train_v2.py) when a
+// transcript is supplied and Gate C passed; the image model, which adds the thumbnail's
 // PAX2 Vision Encoder features, when those features are supplied and its gate passed. Beside it, the distribution recommendations: each pre-publish trait whose within-channel
 // lift (data/velocity/metadata-lift.json) is measurably above or below zero for the video's family,
 // read against what this video has, as a concrete change or a trait to keep.
 //
-// What it is not: a reading of the video itself. Neither model has heard a word; the image model has
-// seen only the thumbnail. Its strength is reported with the number so no screen can overstate it.
+// What it is not: a reading of the video itself. The transcript model reads the words only; the image
+// model has seen only the thumbnail. Its strength is reported with the number so no screen can overstate it.
 
 export type { VideoInput } from "@/lib/video-features"
 
@@ -29,13 +34,21 @@ type Model = {
 type Models = { builtAt: string; metadata: Model; image: Model; gates: { image: { passed: boolean } }; caveats: string[] }
 const MODELS = model as unknown as Models
 const M = MODELS.metadata
+// A placeholder until the v2 run lands: { status, gates: { transcript: { passed: false } } }.
+type ModelsV2 = { builtAt?: string; transcript?: Model & { transcriptFeatures: { vocab: Vocabulary } }; gates: { transcript: { passed: boolean } } }
+const V2 = modelV2 as unknown as ModelsV2
+const RATIOS = ratios as { hit: { n: number; medianRatio: number }; rest: { n: number; medianRatio: number } }
+
+export type ModelKind = "metadata" | "image" | "transcript"
 
 /** A thumbnail's PAX2 Vision Encoder features, as scripts/rig/encode_images.py computes them. */
 export type ImageFeatures = { mem: number | null; bright: number; contrast: number; color: number; pca: number[] }
 
-/** The model a forecast reads: the image model only when image features are supplied and its gate passed. */
-export function modelFor(image?: ImageFeatures | null): { model: Model; kind: "metadata" | "image" } {
-  return image && MODELS.gates.image.passed ? { model: MODELS.image, kind: "image" } : { model: M, kind: "metadata" }
+/** The model a forecast reads: the transcript model when a transcript is supplied and Gate C passed,
+ *  else the image model when image features are supplied and its gate passed, else the metadata model. */
+export function modelFor(image?: ImageFeatures | null, transcript?: string | null): { model: Model; kind: ModelKind; builtAt: string } {
+  if (transcript?.trim() && V2.gates.transcript.passed && V2.transcript) return { model: V2.transcript, kind: "transcript", builtAt: V2.builtAt ?? MODELS.builtAt }
+  return image && MODELS.gates.image.passed ? { model: MODELS.image, kind: "image", builtAt: MODELS.builtAt } : { model: M, kind: "metadata", builtAt: MODELS.builtAt }
 }
 
 function imageX(image: ImageFeatures): Record<string, number> {
@@ -55,19 +68,27 @@ export type Forecast = {
   base: { all: number; family: number | null; familyName: string | null }
   /** The channel's median and what 3x of it is, so the probability has a number in views beside it. */
   anchor: { median: number | null; breakoutViews: number | null }
+  /** Views to expect: the median times p of a Hit's median ratio plus (1 - p) of the rest's
+   *  (data/generated/model/outcome-ratios.json); null without a median. */
+  expected: { views: number; hitRatio: number; restRatio: number } | null
   /** Every input's pull on the log-odds, strongest first; families and channel size included. */
   contributions: Contribution[]
   /** How much to trust it: the model's own out-of-sample numbers. */
   strength: { auc: number; withinChannelAuc: number | null; topDecileLift: number; familyAuc: number | null; n: number; version: string; builtAt: string }
-  /** Which of PAX2 Classifier's two models produced it. */
-  model: "metadata" | "image"
+  /** Which of PAX2 Classifier's models produced it. */
+  model: ModelKind
 }
 
 const sigmoid = (z: number) => 1 / (1 + Math.exp(-z))
 
-export function forecast(input: VideoInput, image?: ImageFeatures | null): Forecast {
-  const { model: Mx, kind } = modelFor(image)
-  const x = kind === "image" && image ? { ...extract(input), ...imageX(image) } : extract(input)
+export function forecast(input: VideoInput, image?: ImageFeatures | null, transcript?: string | null): Forecast {
+  const { model: Mx, kind, builtAt } = modelFor(image, transcript)
+  const x =
+    kind === "transcript" && V2.transcript
+      ? { ...extract(input), ...transcriptFeatures({ text: transcript ?? null, title: input.title, durationSec: input.durationSec }, V2.transcript.transcriptFeatures.vocab) }
+      : kind === "image" && image
+        ? { ...extract(input), ...imageX(image) }
+        : extract(input)
   const fam = familyOf(input.group)
   const contributions: Contribution[] = Mx.features.map((f) => {
     const value = x[f.key] ?? 0
@@ -75,13 +96,16 @@ export function forecast(input: VideoInput, image?: ImageFeatures | null): Forec
   })
   const logit = Mx.intercept + contributions.reduce((t, c) => t + c.pull, 0)
   const perFamily = Mx.metrics.leaveOneChannelOut.perFamily.find((p) => p.family === fam)
+  const p = sigmoid(logit)
+  const { hit, rest } = RATIOS
   return {
-    p: sigmoid(logit),
+    p,
     logit,
     base: { all: Mx.baseRate, family: perFamily?.baseRate ?? null, familyName: fam },
     anchor: { median: input.channelMedian, breakoutViews: input.channelMedian ? Math.round(input.channelMedian * 3) : null },
+    expected: input.channelMedian ? { views: Math.round(input.channelMedian * (p * hit.medianRatio + (1 - p) * rest.medianRatio)), hitRatio: hit.medianRatio, restRatio: rest.medianRatio } : null,
     contributions: contributions.filter((c) => Math.abs(c.pull) > 1e-9).sort((a, b) => Math.abs(b.pull) - Math.abs(a.pull)),
-    strength: { auc: Mx.metrics.leaveOneChannelOut.auc, withinChannelAuc: Mx.metrics.leaveOneChannelOut.withinChannelAuc, topDecileLift: Mx.metrics.leaveOneChannelOut.topDecileLift, familyAuc: perFamily?.auc ?? null, n: Mx.n, version: Mx.version, builtAt: MODELS.builtAt },
+    strength: { auc: Mx.metrics.leaveOneChannelOut.auc, withinChannelAuc: Mx.metrics.leaveOneChannelOut.withinChannelAuc, topDecileLift: Mx.metrics.leaveOneChannelOut.topDecileLift, familyAuc: perFamily?.auc ?? null, n: Mx.n, version: Mx.version, builtAt },
     model: kind,
   }
 }

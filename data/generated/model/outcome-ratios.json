@@ -1,0 +1,12 @@
+{
+ "builtAt": "2026-10-18T05:51:34.571Z",
+ "source": "data/generated/model/training-set.jsonl, settled catalog shorts; ratio = lifetime views over the channel's median of settled shorts",
+ "hit": {
+  "n": 2739,
+  "medianRatio": 5.8
+ },
+ "rest": {
+  "n": 15716,
+  "medianRatio": 0.86
+ }
+}
