@@ -20,6 +20,7 @@ import { RECIPE_DEFAULTS, RECIPE_H, RECIPE_LABEL, RECIPE_W, RecipeForm, RecipeNo
 import { whiteButton } from "@/components/white-button"
 import { describeEntity, readDragEntity, setDragEntity, type DragEntity } from "@/lib/drag-entity"
 import { isRecipeType, similarTo, type CanvasRow, type CanvasState, type GraphChannel, type GraphData, type GraphVideo, type RecipeType, type SavedEdge } from "@/lib/graph-data"
+import { ClusterMap } from "@/components/graph/cluster-map"
 import { LOOPS } from "@/lib/recipes/loops"
 import { TEMPLATES, type RecipeTemplate } from "@/lib/recipes/memorable"
 import { fmtCompact } from "@/lib/velocity-meta"
@@ -476,9 +477,10 @@ type RailProps = {
   onAsk?: (g: GNode) => void
   onAddFile: (f: CanvasFile) => void
   onLoad: (id: string) => void
+  onMap: () => void
 }
 
-function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad }: RailProps) {
+function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad, onMap }: RailProps) {
   const [browse, setBrowse] = useState<string | null>(null)
   const [filter, setFilter] = useState("")
   const [files, setFiles] = useState<CanvasFile[] | null>(null)
@@ -562,6 +564,10 @@ function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad
         </button>
       ))}
       <p className="px-3 pb-1 pt-4 text-[10px] uppercase tracking-wide text-slate-400">Workspace</p>
+      <button onClick={onMap} className={RAIL_ROW}>
+        <Boxes className="h-3.5 w-3.5 text-slate-400" />
+        <span>Clusters</span>
+      </button>
       {([["library", "Library", FileText], ["views", "Views", Layers], ...(admin ? [["recipes", "Recipes", BookOpen] as const] : [])] as const).map(([key, label, Icon]) => (
         <button key={key} onClick={() => setBrowse(key)} className={RAIL_ROW}>
           <Icon className="h-3.5 w-3.5 text-slate-400" />
@@ -1380,6 +1386,9 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     fit()
   }, [enterMode, snapshot, setEdges, setNodes, R, fit])
 
+  /* ── the cluster layer over the canvas ── */
+  const [mapOpen, setMapOpen] = useState(false)
+
   /* ── the Loops recipe's walk: Play triggers each stage in order, one pass, then rests ── */
   const [playingLoop, setPlayingLoop] = useState(false)
   const playLoop = useCallback(() => {
@@ -1546,6 +1555,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
 
   return (
     <div className="flex min-h-0 flex-1">
+      {mapOpen && <ClusterMap onClose={() => setMapOpen(false)} />}
       {!railOpen ? null : mode === "recipes" ? <RecipeRail refresh={railRefresh} onTemplate={loadTemplate} onLoad={loadView} /> : <RecordRail
         R={R}
         admin={admin}
@@ -1555,6 +1565,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
         onAsk={(g) => { setAttached(g); setDockOpen(true) }}
         onAddFile={(f) => addToCanvas({ type: "file", id: f.key, label: f.name, sub: kb(f.size), fileKey: f.key })}
         onLoad={loadView}
+        onMap={() => setMapOpen(true)}
       />}
 
       <div ref={paneRef} className="relative min-h-0 min-w-0 flex-1" onDragOver={(e) => e.preventDefault()} onDrop={onDrop}>
