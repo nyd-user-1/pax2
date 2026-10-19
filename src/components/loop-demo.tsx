@@ -1,263 +1,164 @@
 "use client"
 
 import * as React from "react"
-import { Activity, Brain, ChevronRight, Gauge, ListChecks } from "lucide-react"
+import "./loop-demo.css"
 
-import { MainBlock } from "@/components/blocks"
-import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
+import { Activity, Brain, Gauge, ListChecks, Send, Video } from "lucide-react"
+import { Background, BackgroundVariant, BaseEdge, EdgeLabelRenderer, getBezierPath, Handle, Panel, Position, ReactFlow, ReactFlowProvider, type EdgeProps, type NodeProps } from "@xyflow/react"
+
 import { cn } from "@/ui/lib/utils"
 
-// The closed loop, run on screen with one real short: scored from what it carried at publish,
-// the measured changes it could have made, its real curve under the poller with the model's live
-// calls, and the files the tracked outcomes refit — the same files the first stage reads. Every
-// number on this page comes from the serving model files and the poller's rows, nothing typed in.
+// The closed loop as a living diagram, for anyone who needs to see the system in one look: the five
+// stages on a circle, every video entering at Record, zaps running the edges without stop, the
+// model-update edge in red closing the cycle, and the hub ticking through what the poller is
+// carrying right now. Nothing here is a control; the loop runs whether or not anyone is watching,
+// and every number is read from the serving model files and the poller's rows.
 
-export type LoopData = {
-  short: { id: string; title: string; channel: string; publishedAt: string; durationSec: number; median: number }
-  predict: {
-    p: number
-    expectedViews: number | null
-    contributions: { label: string; pull: number }[]
-    model: { version: string; auc: number; n: number; builtAt: string }
-  }
-  recommend: {
-    changes: { action: string; points: number; low: number; high: number; scope: string }[]
-    keeps: { label: string; points: number }[]
-    measured: { videos: number; channels: number; builtAt: string }
-  }
-  track: { series: [number, number][]; calls: { hour: number; p: number }[]; views72: number; ratio: number; hit: boolean; readings: number }
-  learn: {
-    trainingRows: number
-    outliers: number
-    setBuiltAt: string
-    velocityCurves: number
-    velocityAuc6: number | null
-    velocityBuiltAt: string
-    liftVideos: number
-    liftBuiltAt: string
-  }
+export type LoopStats = {
+  catalog: number
+  channels: number
+  scored: number
+  outliers: number
+  classifierAuc: number
+  classifierFit: string
+  liftVideos: number
+  watched: number
+  readings: number
+  curves: number
+  velocityFit: string
 }
+export type TickerItem = { title: string; channel: string; p: number | null; views: number; hour: number }
+export type LoopData = { stats: LoopStats; ticker: TickerItem[] }
 
-const STAGES = [
-  { key: "score", label: "Score", icon: Gauge },
-  { key: "recommend", label: "Recommend", icon: ListChecks },
-  { key: "track", label: "Track", icon: Activity },
-  { key: "learn", label: "Learn", icon: Brain },
-] as const
-
-const STAGE_MS = 9000
 const fmt = (n: number) => new Intl.NumberFormat("en-US").format(Math.round(n))
-const pct = (p: number) => `${(p * 100).toFixed(0)}%`
+const pct = (p: number) => `${Math.round(p * 100)}%`
 
-/** Views at an hour, linear on the series anchored at (0, 0), flat past the last reading. */
-function viewsAt(series: [number, number][], t: number): number {
-  let ph = 0
-  let pv = 0
-  for (const [h, v] of series) {
-    if (t <= h) return h === ph ? v : pv + ((v - pv) * (t - ph)) / (h - ph)
-    ph = h
-    pv = v
-  }
-  return pv
-}
+type StageData = { key: string; name: string; icon: "video" | "gauge" | "list" | "send" | "activity" | "brain"; l1: string; l2: string; active?: boolean }
+const ICON = { video: Video, gauge: Gauge, list: ListChecks, send: Send, activity: Activity, brain: Brain }
 
-function Rail({ at, progress, onPick }: { at: number; progress: number; onPick: (i: number) => void }) {
+function StageNode({ data }: NodeProps) {
+  const d = data as StageData
+  const Icon = ICON[d.icon]
   return (
-    <div className="flex items-center gap-1">
-      {STAGES.map((s, i) => (
-        <React.Fragment key={s.key}>
-          {i > 0 && <ChevronRight className="size-4 shrink-0 text-slate-300" aria-hidden />}
-          <button type="button" onClick={() => onPick(i)} className={cn("relative flex items-center gap-2 overflow-hidden rounded-md px-3 py-1.5 text-sm transition-colors", i === at ? "bg-pax2-lavender text-pax2-blue" : "text-slate-800 hover:bg-muted")}>
-            <s.icon className="size-4" aria-hidden />
-            {s.label}
-            {i === at && <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-pax2-light-blue" style={{ transform: `scaleX(${progress})` }} />}
-          </button>
+    <div className={cn("w-[232px] rounded-xl border bg-card p-3.5 shadow-xs transition-all duration-500", d.active && "stage-active")}>
+      {(["t", "r", "b", "l"] as const).map((h) => (
+        <React.Fragment key={h}>
+          <Handle id={h} type="source" position={h === "t" ? Position.Top : h === "r" ? Position.Right : h === "b" ? Position.Bottom : Position.Left} className="!size-1 !border-0 !bg-transparent" />
+          <Handle id={`${h}i`} type="target" position={h === "t" ? Position.Top : h === "r" ? Position.Right : h === "b" ? Position.Bottom : Position.Left} className="!size-1 !border-0 !bg-transparent" />
         </React.Fragment>
       ))}
-    </div>
-  )
-}
-
-function Pull({ label, pull, max }: { label: string; pull: number; max: number }) {
-  const up = pull > 0
-  return (
-    <div className="flex items-center gap-2 text-sm" data-find={label}>
-      <span className="w-1/2 truncate text-slate-800">{label}</span>
-      <span className="flex h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
-        <span className={cn("h-full rounded-full", up ? "bg-pax2-above" : "bg-pax2-below")} style={{ width: `${Math.max(6, (Math.abs(pull) / max) * 100)}%` }} />
-      </span>
-      <span className={cn("w-12 text-right tabular-nums", up ? "text-pax2-above" : "text-pax2-below")}>
-        {up ? "+" : ""}
-        {pull.toFixed(2)}
-      </span>
-    </div>
-  )
-}
-
-function Curve({ track, median, clock }: { track: LoopData["track"]; median: number; clock: number }) {
-  const W = 640
-  const H = 230
-  const PAD = 10
-  const top = Math.max(track.views72, median * 3.4, 1)
-  const x = (h: number) => PAD + (h / 72) * (W - 2 * PAD)
-  const y = (v: number) => H - 18 - (v / top) * (H - 42)
-  const shown = track.series.filter(([h]) => h <= clock)
-  if (shown.length && clock < 72) shown.push([clock, viewsAt(track.series, clock)])
-  const pts = shown.map(([h, v]) => `${x(h).toFixed(1)},${y(v).toFixed(1)}`).join(" ")
-  const done = clock >= 72
-  return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full">
-      <line x1={PAD} x2={W - PAD} y1={y(median)} y2={y(median)} stroke="var(--pax2-blue)" strokeDasharray="3 4" strokeOpacity="0.45" />
-      <text x={W - PAD} y={y(median) - 4} textAnchor="end" className="fill-slate-500 text-[10px]">
-        channel median {fmt(median)}
-      </text>
-      <line x1={PAD} x2={W - PAD} y1={y(median * 3)} y2={y(median * 3)} stroke="var(--pax2-above)" strokeDasharray="3 4" strokeOpacity="0.6" />
-      <text x={W - PAD} y={y(median * 3) - 4} textAnchor="end" className="fill-pax2-above text-[10px]">
-        Hit at 3x, {fmt(median * 3)}
-      </text>
-      <line x1={PAD} x2={W - PAD} y1={H - 18} y2={H - 18} stroke="#e2e8f0" />
-      {[0, 24, 48, 72].map((h) => (
-        <text key={h} x={x(h)} y={H - 5} textAnchor="middle" className="fill-slate-400 text-[10px]">
-          {h}h
-        </text>
-      ))}
-      {pts && <polyline points={pts} fill="none" stroke="var(--pax2-light-blue)" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />}
-      {track.calls
-        .filter((c) => c.hour <= clock)
-        .map((c) => (
-          <g key={c.hour}>
-            <circle cx={x(c.hour)} cy={y(viewsAt(track.series, c.hour))} r="3.5" fill="var(--pax2-blue)" />
-            <text x={x(c.hour)} y={y(viewsAt(track.series, c.hour)) - 8} textAnchor="middle" className="fill-pax2-blue text-[11px] font-medium">
-              p {pct(c.p)} at {c.hour}h
-            </text>
-          </g>
-        ))}
-      {done && (
-        <text x={x(72) - 4} y={y(track.views72) - 8} textAnchor="end" className={cn("text-[12px] font-semibold", track.hit ? "fill-pax2-above" : "fill-slate-700")}>
-          {fmt(track.views72)} views, {track.ratio.toFixed(1)}x {track.hit ? "· Hit" : "· no Hit"}
-        </text>
-      )}
-    </svg>
-  )
-}
-
-function LearnRow({ name, count, unit, date }: { name: string; count: number; unit: string; date: string }) {
-  return (
-    <div className="flex items-baseline justify-between border-b py-3 text-sm last:border-b-0" data-find={name}>
-      <span className="text-slate-800">{name}</span>
-      <span className="flex items-baseline gap-3">
-        <span className="font-semibold tabular-nums">
-          {fmt(count)} {unit}
+      <div className="flex items-center gap-2">
+        <span className={cn("flex size-7 items-center justify-center rounded-full transition-colors duration-500", d.active ? "bg-pax2-blue text-white" : "bg-pax2-lavender text-pax2-blue")}>
+          <Icon className="size-4" />
         </span>
-        <span className="text-xs text-slate-500">{date}</span>
-      </span>
+        <p className="text-sm font-semibold">{d.name}</p>
+      </div>
+      <p className="mt-2 text-xs leading-snug text-slate-800">{d.l1}</p>
+      <p className="mt-1 text-xs leading-snug text-slate-500">{d.l2}</p>
     </div>
   )
 }
 
-export function LoopDemo({ data }: { data: LoopData | null }) {
+function HubNode({ data }: NodeProps) {
+  const d = data as { ticker: TickerItem[]; watched: number }
   const [at, setAt] = React.useState(0)
-  const [progress, setProgress] = React.useState(0)
-  const [held, setHeld] = React.useState(false)
-  const start = React.useRef(Date.now())
   React.useEffect(() => {
-    if (!data || held) return
-    start.current = Date.now()
-    const t = window.setInterval(() => {
-      const gone = (Date.now() - start.current) / STAGE_MS
-      if (gone >= 1) {
-        setAt((i) => (i + 1) % STAGES.length)
-        start.current = Date.now()
-        setProgress(0)
-      } else setProgress(gone)
-    }, 80)
+    if (!d.ticker.length) return
+    const t = window.setInterval(() => setAt((i) => (i + 1) % d.ticker.length), 3200)
     return () => window.clearInterval(t)
-  }, [data, held, at])
-  const clock = at === 2 ? Math.min(72, progress * 1.25 * 72) : 72
-
+  }, [d.ticker.length])
+  const v = d.ticker[at]
   return (
-    <BlockOrder page="loop" initial={["loop"]}>
-      <OrderedBlock id="loop" label="The loop">
-        <MainBlock
-          title="The loop"
-          height="auto"
-          tools={data ? <Rail at={at} progress={progress} onPick={(i) => (setAt(i), (start.current = Date.now()), setProgress(0))} /> : undefined}
-          footer={
-            data
-              ? `One real short, ${data.short.title.slice(0, 60)} (${data.short.channel}); every number read from the serving model files and the poller's rows. The short sits in the models' training catalog; the mechanism, not a held-out test.`
-              : undefined
-          }
-        >
-          {!data ? (
-            <p className="py-10 text-center text-sm text-slate-500">No finished short under watch yet. The poller writes the first curve within days of a channel joining the watch list.</p>
-          ) : (
-            <div onPointerEnter={() => setHeld(true)} onPointerLeave={() => setHeld(false)} className="min-h-[300px]">
-              {at === 0 && (
-                <div className="grid gap-6 md:grid-cols-[1fr_1.2fr]">
-                  <div>
-                    <p className="text-sm font-medium">{data.short.title}</p>
-                    <p className="mt-1 text-xs text-slate-500">
-                      {data.short.channel} · {data.short.durationSec}s · scored from what it carried at publish, {data.short.publishedAt}
-                    </p>
-                    <p className="mt-6 text-5xl font-semibold tabular-nums text-pax2-blue">{pct(data.predict.p)}</p>
-                    <p className="mt-1 text-sm text-slate-800">chance of a Hit: 3x the channel&apos;s median of {fmt(data.short.median)} views</p>
-                    {data.predict.expectedViews != null && <p className="mt-3 text-sm text-slate-800">{fmt(data.predict.expectedViews)} views expected</p>}
-                    <p className="mt-6 text-xs text-slate-500">
-                      PAX2 Classifier {data.predict.model.version}, AUC {data.predict.model.auc.toFixed(3)} across {fmt(data.predict.model.n)} shorts, fit {data.predict.model.builtAt}
-                    </p>
-                  </div>
-                  <div className="space-y-2.5 self-center">
-                    {data.predict.contributions.map((c) => (
-                      <Pull key={c.label} label={c.label} pull={c.pull} max={Math.max(...data.predict.contributions.map((v) => Math.abs(v.pull)), 0.01)} />
-                    ))}
-                  </div>
-                </div>
-              )}
-              {at === 1 && (
-                <div className="max-w-2xl">
-                  {data.recommend.changes.map((r) => (
-                    <div key={r.action} className="flex items-baseline justify-between gap-4 border-b py-3 text-sm last:border-b-0" data-find={r.action}>
-                      <span>{r.action}</span>
-                      <span className="shrink-0 text-right">
-                        <span className={cn("font-semibold tabular-nums", r.points > 0 ? "text-pax2-above" : "text-pax2-below")}>
-                          {r.points > 0 ? "+" : ""}
-                          {r.points.toFixed(1)} points
-                        </span>
-                        <span className="ml-2 text-xs text-slate-500">
-                          {r.low.toFixed(1)} to {r.high.toFixed(1)}, {r.scope}
-                        </span>
-                      </span>
-                    </div>
-                  ))}
-                  <p className="mt-4 text-xs text-slate-500">
-                    Hit-rate lifts measured within channel across {fmt(data.recommend.measured.videos)} shorts on {fmt(data.recommend.measured.channels)} channels, refreshed {data.recommend.measured.builtAt}
-                    {data.recommend.keeps.length ? `; ${data.recommend.keeps.length} favorable traits already in place` : ""}
-                  </p>
-                </div>
-              )}
-              {at === 2 && (
-                <div>
-                  <Curve track={data.track} median={data.short.median} clock={clock} />
-                  <p className="mt-2 text-xs text-slate-500">
-                    {fmt(data.track.readings)} poller readings over 72 hours; at 1, 3 and 6 hours, the velocity model&apos;s live call from the curve so far
-                  </p>
-                </div>
-              )}
-              {at === 3 && (
-                <div className="max-w-2xl">
-                  <LearnRow name="Training set: settled shorts with outcomes, the classifier's food" count={data.learn.trainingRows} unit="rows" date={data.learn.setBuiltAt} />
-                  <LearnRow name="Velocity curves with a 72-hour verdict, the velocity model's food" count={data.learn.velocityCurves} unit="curves" date={data.learn.velocityBuiltAt} />
-                  <LearnRow name="Recommendation evidence: within-channel lifts" count={data.learn.liftVideos} unit="shorts" date={data.learn.liftBuiltAt} />
-                  <p className="mt-4 text-sm text-slate-800">
-                    Each refit writes the files the Score stage reads. {fmt(data.learn.outliers)} of {fmt(data.learn.trainingRows)} settled shorts are Hits
-                    {data.learn.velocityAuc6 != null ? `; the 6-hour call holds AUC ${data.learn.velocityAuc6.toFixed(2)} out of channel` : ""}.
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
-        </MainBlock>
-      </OrderedBlock>
-    </BlockOrder>
+    <div className="w-[270px] rounded-xl border border-pax2-blue/30 bg-white p-4 text-center shadow-md">
+      <p className="flex items-center justify-center gap-1.5 text-[11px] font-medium tracking-wide text-pax2-red uppercase">
+        <span className="live-dot" /> running now
+      </p>
+      {v ? (
+        <div key={at} className="hub-fade mt-2.5">
+          <p className="line-clamp-2 text-sm leading-snug font-medium">{v.title}</p>
+          <p className="mt-1.5 text-xs text-slate-500">
+            {v.channel} · {fmt(v.views)} views at {Math.round(v.hour)}h{v.p != null ? ` · p(Hit) ${pct(v.p)}` : ""}
+          </p>
+        </div>
+      ) : (
+        <p className="mt-2.5 text-xs text-slate-500">the poller's next pass fills this</p>
+      )}
+      <p className="mt-3 border-t pt-2.5 text-xs text-slate-500">{fmt(d.watched)} shorts in the loop right now</p>
+    </div>
+  )
+}
+
+function ZapEdge(props: EdgeProps) {
+  const { id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data } = props
+  const [path, labelX, labelY] = getBezierPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition, curvature: 0.45 })
+  const d = (data ?? {}) as { color?: string; dur?: number; dots?: number; label?: string }
+  const color = d.color ?? "var(--pax2-light-blue)"
+  const dur = d.dur ?? 2.8
+  const dots = d.dots ?? 3
+  return (
+    <>
+      <BaseEdge id={id} path={path} style={{ stroke: "#cbd5e1", strokeWidth: 1.25 }} />
+      {Array.from({ length: dots }).map((_, i) => (
+        <circle key={i} r={3.5} fill={color}>
+          <animateMotion dur={`${dur}s`} repeatCount="indefinite" begin={`${((i * dur) / dots).toFixed(2)}s`} path={path} />
+        </circle>
+      ))}
+      {d.label && (
+        <EdgeLabelRenderer>
+          <p style={{ transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)` }} className="absolute rounded bg-white/90 px-1.5 py-0.5 text-[10px] font-medium text-pax2-red">
+            {d.label}
+          </p>
+        </EdgeLabelRenderer>
+      )}
+    </>
+  )
+}
+
+const nodeTypes = { stage: StageNode, hub: HubNode }
+const edgeTypes = { zap: ZapEdge }
+const CYCLE = ["score", "recommend", "publish", "track", "learn"]
+// Five stages on a circle of radius 310, Score at the top; Record feeds in from the left.
+const AT = (deg: number, w = 232, h = 100) => {
+  const r = (deg * Math.PI) / 180
+  return { x: 310 * Math.cos(r) - w / 2, y: 310 * Math.sin(r) - h / 2 }
+}
+
+export function LoopDemo({ data }: { data: LoopData }) {
+  const s = data.stats
+  const [active, setActive] = React.useState(0)
+  React.useEffect(() => {
+    const t = window.setInterval(() => setActive((i) => (i + 1) % CYCLE.length), 2200)
+    return () => window.clearInterval(t)
+  }, [])
+  const stage = (key: string, name: string, icon: StageData["icon"], l1: string, l2: string): StageData => ({ key, name, icon, l1, l2, active: CYCLE[active] === key })
+  const nodes = [
+    { id: "record", type: "stage", position: { x: -860, y: -360 }, data: stage("record", "Record", "video", "Camera takes, Studio takes, connected channels.", `${fmt(s.catalog)} shorts across ${s.channels} channels`) },
+    { id: "score", type: "stage", position: AT(-90), data: stage("score", "Score", "gauge", "The chance of a Hit before anything is posted.", `${fmt(s.scored)} scored · AUC ${s.classifierAuc.toFixed(3)} · fit ${s.classifierFit}`) },
+    { id: "recommend", type: "stage", position: AT(-18), data: stage("recommend", "Recommend", "list", "The measured changes, within channel, with ranges.", `${fmt(s.liftVideos)} shorts of evidence`) },
+    { id: "publish", type: "stage", position: AT(54), data: stage("publish", "Publish", "send", "Approval, the upload, the watch-list write.", "unlisted until the client kickoff") },
+    { id: "track", type: "stage", position: AT(126), data: stage("track", "Track", "activity", "The poller reads every watched short, around the clock.", `${fmt(s.watched)} under watch · ${fmt(s.readings)} readings`) },
+    { id: "learn", type: "stage", position: AT(198), data: stage("learn", "Learn", "brain", "Every settled curve refits the serving models.", `${fmt(s.curves)} curves · fit ${s.velocityFit}`) },
+    { id: "hub", type: "hub", position: { x: -135, y: -92 }, data: { ticker: data.ticker, watched: s.watched }, draggable: false },
+  ]
+  const zap = (id: string, source: string, target: string, sh: string, th: string, data?: Record<string, unknown>) => ({ id, source, target, sourceHandle: sh, targetHandle: `${th}i`, type: "zap", data })
+  const edges = [
+    zap("e-in", "record", "score", "r", "l", { dur: 3.4, dots: 2 }),
+    zap("e1", "score", "recommend", "r", "t"),
+    zap("e2", "recommend", "publish", "b", "r"),
+    zap("e3", "publish", "track", "l", "r"),
+    zap("e4", "track", "learn", "l", "b"),
+    zap("e5", "learn", "score", "t", "l", { color: "var(--pax2-red)", dur: 2.2, dots: 2, label: "the model updates" }),
+  ]
+  return (
+    <div style={{ height: "calc(100dvh - 130px)", minHeight: 560 }}>
+      <ReactFlowProvider>
+        <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} edgeTypes={edgeTypes} fitView fitViewOptions={{ padding: 0.12 }} proOptions={{ hideAttribution: true }} nodesConnectable={false} zoomOnScroll={false} preventScrolling={false}>
+          <Background variant={BackgroundVariant.Dots} gap={20} size={1} />
+          <Panel position="bottom-left" className="max-w-md text-xs text-slate-500">
+            Every number read live from the serving model files and the poller's rows.
+          </Panel>
+        </ReactFlow>
+      </ReactFlowProvider>
+    </div>
   )
 }
