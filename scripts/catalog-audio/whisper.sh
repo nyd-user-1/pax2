@@ -36,7 +36,10 @@ exec > /var/log/pax2-whisper.log 2>&1
 set -ux
 export AWS_DEFAULT_REGION=$REGION
 PY=/opt/pytorch/bin/python3
-\$PY -m pip install -q faster-whisper 2>&1 | tail -2
+# -U on av too: the DLAMI preinstalls an older PyAV whose open() lacks metadata_errors, and
+# faster-whisper atop it fails on every file (measured 2026-10-19, run whisper-20261019-070759, 0 of 684).
+\$PY -m pip install -q -U faster-whisper av 2>&1 | tail -2
+\$PY -c 'import av, faster_whisper; print("av", av.__version__, "faster-whisper ok")'
 mkdir -p /opt/work && cd /opt/work
 aws s3 ls s3://$BUCKET/catalog-media/ | awk '{print \$4}' | grep '\.m4a\$' > audio.txt
 aws s3 ls s3://$BUCKET/catalog-media-transcripts/ 2>/dev/null | awk '{print \$4}' | sed 's/\.json\$//' > done.txt || true
@@ -49,6 +52,7 @@ todo = [l.strip() for l in open("audio.txt") if l.strip() and l.strip()[:-4] not
 print(f"{len(todo)} to transcribe", flush=True)
 model = WhisperModel("large-v3", device="cuda", compute_type="float16")
 t0 = time.time(); n = 0
+first_error = None
 for f in todo:
     vid = f[:-4]
     try:
@@ -68,7 +72,13 @@ for f in todo:
         if n % 50 == 0: print(f"{n}/{len(todo)} at {n/((time.time()-t0)/60):.1f}/min", flush=True)
     except Exception as e:
         print(f"{vid}: {e}", flush=True)
+        # Fail fast: if the very first file errors, the rig is broken, not the file (rule 14).
+        if n == 0:
+            first_error = e
+            break
 print(f"DONE {n} of {len(todo)} in {time.time()-t0:.0f}s", flush=True)
+if first_error is not None:
+    raise SystemExit(1)
 PYEOF
 echo "EXIT=\$?"
 aws s3 cp --only-show-errors /var/log/pax2-whisper.log s3://$BUCKET/logs/pax2-$RUN.log

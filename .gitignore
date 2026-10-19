@@ -31,3 +31,5 @@ data/studio/music
 data/raw/captions-api
 # Catalog media staging (scripts/catalog-media/fetch-videos.sh); each file goes to S3 and is deleted
 data/raw/videos
+# Whisper catalog transcripts (scripts/catalog-audio/merge.mjs syncs them); merged into data/generated/transcripts.json
+data/raw/whisper-transcripts
