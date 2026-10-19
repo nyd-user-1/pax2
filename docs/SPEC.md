@@ -16,7 +16,7 @@ Built: the recording flow. Pick or write a script (`/recording`, `/record/librar
 
 Built 2026-10-18: a webm upload becomes an mp4 beside it. The `pax2-transcode` Lambda (Node 22, the `pax2-ffmpeg` layer, ffmpeg 7.0.2) runs on the S3 upload event under `uploads/`, writes `<id>.mp4` and records a `transcoded` event on the original in DynamoDB; a 5-second test clip took 1.8 to 2.1 seconds of ffmpeg, billed under 3 seconds at 2048 MB. The video page plays the mp4 once it exists and lists the conversion in the Recorded tab's History. The Studio's "Use this take" renders the Remotion composition to an H.264 mp4 in the browser (`@remotion/web-renderer`), uploads it to `uploads/<workspace>/<id>.mp4` and submits it through `submitOriginal` like a recording; `submitTake` records that key, the look and motion in `style`.
 
-Gap: the Studio's render has not run in a browser yet (no dev server on the Mac) and goes live with the next push; Remotion's licence wants a ruling, the free licence or a company key in `NEXT_PUBLIC_REMOTION_LICENSE_KEY`.
+Gap: the Studio's render has not run in a browser yet (no dev server on the Mac) and goes live with the next push. Remotion stays on the free licence, ruled 2026-10-19; revisit at scale.
 
 ### 2. Scripts — Built
 

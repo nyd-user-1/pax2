@@ -29,26 +29,25 @@ export type Item = {
 }
 
 export const REQUIREMENTS: Item[] = [
-  { id: "1", name: "1. Record a video, or have one made", start: "2026-10-03", end: "2026-10-31", progress: 90, next: "The Studio's render checked in Chrome and Safari, then live with the next push, an hour.",
-    note: "Since 2026-10-18 a webm upload becomes an mp4 beside it (the pax2-transcode Lambda on the S3 upload event), the Studio renders its composition to an mp4 in the browser and submits it like a recording, and submitTake records the video's key with the style beside it.",
+  { id: "1", name: "1. Record a video, or have one made", start: "2026-10-03", end: "2026-10-31", progress: 95, next: "The Studio's render checked in Chrome and Safari, then live with the next push, an hour.",
+    note: "Since 2026-10-18 a webm upload becomes an mp4 beside it (the pax2-transcode Lambda on the S3 upload event), the Studio renders its composition to an mp4 in the browser and submits it like a recording, and submitTake records the video's key with the style beside it. Remotion stays on the free licence, ruled 2026-10-19; revisit at scale.",
     steps: [
-      { what: "The Studio's in-browser render checked in Chrome and Safari, then live on Amplify with the next push.", share: 70, effort: "an hour" },
-      { what: "A ruling on Remotion's licence: the free licence, or a company key in NEXT_PUBLIC_REMOTION_LICENSE_KEY.", share: 30, effort: "a decision" },
+      { what: "The Studio's in-browser render checked in Chrome and Safari, then live on Amplify with the next push.", share: 100, effort: "an hour" },
     ] },
   { id: "2", name: "2. Scripts", start: "2026-10-03", end: "2026-10-24", progress: 100, next: "",
     note: "The writer, the editor's six checks and each library script's prior read the reform channels' lifts and the coded shorts' patterns; the editor codes a draft on Bedrock on request and sets it against the coded shorts' delivery; the writer's length is 45 to 60 words, ruled 2026-10-18 from the under-20-second lift.",
     steps: [    ] },
-  { id: "3", name: "3. A pre-release prediction", start: "2026-10-17", end: "2026-11-07", progress: 80, next: "The first hours are the strong predictor; the encoder's retrain on 3,424 transcripts missed its gate by 0.0002 and waits on the rest of the captions; audio and frames follow the proxy.",
+  { id: "3", name: "3. A pre-release prediction", start: "2026-10-17", end: "2026-11-07", progress: 80, next: "The encoder is retraining now on 5,232 transcripts (the 3,424 run missed its gate by 0.0002); the fleet is landing the catalog's audio and frames this morning.",
     note: "The chance of a Hit and the views to expect are on the Scored tab and in the findings email with the model's strength stated. PAX2 Classifier v2 trained 2026-10-19 on 3,424 transcripts and failed Gate C: the words, read as a linear model reads them, added nothing to the title, length and posting time (pooled AUC 0.597 against 0.604), so the app keeps v1 by rule.",
     steps: [
-      { what: "PAX2 Encoder retrained 2026-10-19 on 3,424 transcripts and missed Gate E by 0.0002; retrain when the captions cover the catalog, and on a pass its neighbors become a forecast feature.", share: 40, effort: "$1.33 measured; the next run about the same" },
-      { what: "Audio and frame features once the catalog's files exist.", share: 40, effort: "after the proxy" },
+      { what: "PAX2 Encoder retrained 2026-10-19 on 3,424 transcripts and missed Gate E by 0.0002; the rerun on 5,232 Whisper-backed transcripts is on a box now, and on a pass its neighbors become a forecast feature.", share: 40, effort: "$1.43 this run" },
+      { what: "Audio and frame features; the fleet is landing the catalog's files this morning.", share: 40, effort: "a measurement run after the fleet" },
       { what: "The forecast at hour 1, 3 and 6 after publish, the velocity model's call, shown on the video page beside the pre-release number.", share: 20, effort: "half a day, no spend" },
     ] },
-  { id: "4", name: "4. Every available factor", start: "2026-10-06", end: "2026-11-30", progress: 92, next: "Audio and frames for the catalog through the proxy, Brendan's account.",
-    note: "Tracking and polling run, the readings are in the Model Training Library, every upload is measured by the pax2-analyze chain since 2026-10-18 (Whisper, audio, CLIP frames, memorability, Pegasus reading the video), and the library's archives feed the forecast and the writer.",
+  { id: "4", name: "4. Every available factor", start: "2026-10-06", end: "2026-11-30", progress: 94, next: "The fleet is downloading the catalog now; the content measurements run once the files land.",
+    note: "Tracking and polling run, the readings are in the Model Training Library, every upload is measured by the pax2-analyze chain since 2026-10-18 (Whisper, audio, CLIP frames, memorability, Pegasus reading the video), and the library's archives feed the forecast and the writer. The residential proxy account opened 2026-10-19: 20 static residential IPs at $6 a month, 14 of them past YouTube's wall, credentials in SSM.",
     steps: [
-      { what: "The residential proxy on an EC2 box, then yt-dlp for the catalog's audio and 360p video, then the same measurements for thousands of shorts.", share: 100, effort: "Brendan opens the account; then a day and about $30 to $70 of bandwidth", blocker: true },
+      { what: "The 20-box residential-IP fleet is fetching the catalog's audio and 360p video now (2,936 of 5,498 pairs at 09:52 UTC); then the same measurements for thousands of shorts.", share: 100, effort: "about $0.25 of EC2 for the pair set; the measurement boxes after" },
     ] },
   { id: "5", name: "5. Automatic on save", start: "2026-10-10", end: "2026-11-14", progress: 100, next: "", note: "Submit scores the script on Bedrock at once; the upload's webm becomes an mp4, the mp4 starts a box, and four minutes later the original carries its transcript, audio measures, frames and memorability; the next score reads the measured transcript. Proven on two real originals 2026-10-18.",
     steps: [] },
