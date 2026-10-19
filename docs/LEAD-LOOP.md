@@ -41,10 +41,13 @@ Update the row: `src/lib/recipes/memorable.ts` (progress, next, status, note) an
 
 ## Current state (the lead keeps this current; a fork reads it first)
 
-Updated 2026-10-18 08:35 UTC. **Everything is stopped at Brendan's word**: the caption run (2,211 of 3,465 priority shorts extracted, 2,149 caption files on disk), Brief 7's chain, the lead's waiter, the hourly watchdog and caffeinate (both unloaded from launchd). No AWS box is running. Nothing resumes until Brendan says so.
+Updated 2026-10-19 00:35 UTC.
 
-- To resume: `./scripts/yt-captions.sh` on the ids not yet fetched (filter `data/raw/captions/ids-priority.txt` against the `.en.json3` files on disk), then `nohup ./scripts/classifier/when-captions-land.sh >/dev/null 2>&1 &`, then `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.pax2.lead-watchdog.plist` and the caffeinate plist if the lead is to run unattended again. After the merge: step 6, the PAX2 Encoder retrain.
-- The boards are current as of this time; `docs/HANDOFF-2026-10-18-morning.md` has the night.
+- Production runs 4237af2 since 23:51 UTC on 2026-10-18 (Amplify job 6, built clean). Brendan recorded through the camera flow on the live site and it worked; he will not send a video of himself, so the end-to-end test of publish and analysis on production uses a Studio render or an uploaded file.
+- Committed since the push, not pushed (Brendan's word pushes): the teleprompter that paces the reader word by word with space or tap to pause; requirement 7's code (the YouTube grant route, the upload on approval, the watch-list write, the connect link on /publishing) waiting on his Google OAuth client, `scripts/youtube/grant.sh --apply` and the channel's grant; requirement 13's affinity term in the For you sort.
+- The caption run is back on the ids not yet attempted (2,925 of 3,465 at 00:30 UTC, about 4 a minute); Brief 7's chain waits for 3,465, then trains PAX2 Classifier v2 on one c7i.xlarge; the lead's waiter then starts the PAX2 Encoder retrain, about $1.40. Caffeinate is loaded; the hourly watchdog is not.
+- Waits on Brendan: the push; the Google OAuth client and the channel's grant (7, 9, the retention model's real data); the proxy (4's last step, 10's content features, frames, audio); labels; reader rows.
+- Spend by the lead: about $0.50; the weekend about $2.3 before tonight's two boxes.
 
 ## Stopping
 

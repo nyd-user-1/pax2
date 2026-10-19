@@ -48,10 +48,14 @@ The caption run (2,211 of 3,465 extracted, 2,149 files on disk), Brief 7's chain
 
 Lead: two L4 runs $0.31; five c7i.xlarge CPU boxes about $0.08; three t3.small publishes under 3 cents; three analysis boxes about 3 cents plus one Pegasus call about 4 cents; the feed box about 2 cents. About $0.50. Brief 5's two t3.small about 2 cents; Brief 7's box tonight about 10 cents; the encoder retrain about $1.40. The weekend including Brief 3's $1.39 and Brief 1's $0.25: about $2.3 so far, about $3.8 after tonight, of the $10.
 
+## Evening, 2026-10-18
+
+Pushed at 23:46 UTC; Amplify job 6 built clean in 3 minutes 37 seconds; production runs 4237af2. Brendan recorded on the live site through the teleprompter and the flow worked end to end up to Send. Since then, committed and not pushed: the teleprompter paces the reader word by word (space or tap pauses); requirement 7's publish step is written (grant route, upload on approval, watch-list write) and waits on the Google OAuth client and a channel's grant; the For you sort carries the reader's own channel affinity. The caption run resumed at 21:19 UTC and the chain with it.
+
 ## Yours
 
-1. Push to GitHub so Amplify deploys all of this; the Studio render wants a look in Chrome and Safari first.
-2. The YouTube channel and OAuth client: requirements 7 and 9, PAX2 Retention Regressor.
+1. Push again when you want the teleprompter, the publish step and the affinity term live.
+2. The Google OAuth client, its id and secret in the Amplify environment, `scripts/youtube/grant.sh --apply`, and the channel's grant at /api/youtube/oauth: requirements 7 and 9, and the retention model's real data.
 3. The residential proxy account, credentials into SSM: requirement 4's last step, requirement 10's content features, PAX2 Vision Encoder frames, PAX2 Audio Encoder.
 4. Labelers for Teach a Model: PAX2 Trait Labeler. One labeler on two videos so far.
 5. SES production access, unchanged.
