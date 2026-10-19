@@ -264,7 +264,7 @@ export function ShortCard({ v }: { v: FeedVideo }) {
         <p className="line-clamp-2 min-h-[2lh] min-w-0 text-sm font-semibold leading-snug text-slate-900">{v.title}</p>
         <RowMenu v={v} className="-mr-1.5 size-8" />
       </div>
-      <CardFoot v={v} />
+      <CardFoot v={v} boost />
     </Link>
   )
 }

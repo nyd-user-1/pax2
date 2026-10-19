@@ -97,7 +97,7 @@ export function FlapHero() {
             />
           ))}
           {/* Under the board, flush with its right edge; out of the flow so the board keeps its centre. */}
-          <div className={`absolute right-0 top-full mt-4 flex gap-2 text-base transition-opacity duration-700 ${cue ? "opacity-100" : "pointer-events-none opacity-0"}`}>
+          <div className="absolute right-0 top-full mt-4 flex gap-2 text-base">
             {stepped && (
               <button type="button" aria-label="Previous" onClick={() => turn(-1)} className={whiteButton("circle", "flex size-8")}>
                 <ChevronLeft className="size-4" />
@@ -121,11 +121,11 @@ export function FlapHero() {
       )}
       {/* Below the board without displacing it: the board alone decides the hero's centring. */}
       <div className="absolute inset-x-0 top-full z-10 flex flex-col items-center">
-        <div className={`mt-20 flex flex-col items-center gap-2 px-6 text-center transition-opacity duration-700 ${cue ? "opacity-100" : "opacity-0"}`}>
+        <div className="mt-20 flex flex-col items-center gap-2 px-6 text-center">
           <p className="text-xl font-semibold text-pax2-blue md:text-2xl">Your voice matters.</p>
           <p className="text-lg leading-relaxed text-pax2-blue">Fine tune it with PAX.</p>
         </div>
-        <div className={`relative mt-8 h-11 transition-opacity duration-700 ${cue ? "opacity-100" : "pointer-events-none opacity-0"}`}>
+        <div className="relative mt-8 h-11">
           <ScrollCue className="static translate-x-0" />
         </div>
       </div>
