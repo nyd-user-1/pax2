@@ -96,7 +96,7 @@ export function RecipeNode({ data: d, selected }: NodeProps<Node<RecipeCardData>
   const [main, small] = LINE[d.type]
   return (
     <div
-      className={cn("group/card relative rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs shadow-e1 transition-opacity", selected && "border-pax2-light-blue ring-1 ring-pax2-light-blue", d.dimmed && "opacity-30")}
+      className={cn("group/card relative rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs shadow-e1 transition-all", selected && "border-pax2-light-blue ring-1 ring-pax2-light-blue", d.dimmed && "opacity-30", (d as { pulse?: boolean }).pulse && "border-pax2-light-blue shadow-e3 ring-2 ring-pax2-lavender")}
       style={{ width: RECIPE_W, minHeight: RECIPE_H - 8, borderLeftWidth: 3, borderLeftColor: color }}
     >
       <Handle type="target" position={Position.Left} className={HANDLE} />

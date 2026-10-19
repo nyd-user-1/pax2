@@ -6,7 +6,7 @@ import type { RecipeType } from "@/lib/graph-data"
 // MEMORABLE is also PAX2's model inventory: every model card on it is listed on /ml, and nowhere
 // else keeps a second list. Names follow one convention: PAX2 and the kind of model.
 
-export type RecipeTemplateNode = { type: RecipeType; id: string; fields: Record<string, string> }
+export type RecipeTemplateNode = { type: RecipeType; id: string; fields: Record<string, string>; pos?: { x: number; y: number } }
 export type RecipeTemplate = { id: string; name: string; nodes: RecipeTemplateNode[]; edges: [string, string][] }
 
 const ing = (id: string, fields: Record<string, string>): RecipeTemplateNode => ({ type: "ingredient", id, fields })
@@ -97,4 +97,6 @@ export const MEMORABLE: RecipeTemplate = {
   ],
 }
 
-export const TEMPLATES: RecipeTemplate[] = [MEMORABLE]
+import { LOOPS } from "@/lib/recipes/loops"
+
+export const TEMPLATES: RecipeTemplate[] = [MEMORABLE, LOOPS]

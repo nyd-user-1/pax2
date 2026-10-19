@@ -20,6 +20,7 @@ import { RECIPE_DEFAULTS, RECIPE_H, RECIPE_LABEL, RECIPE_W, RecipeForm, RecipeNo
 import { whiteButton } from "@/components/white-button"
 import { describeEntity, readDragEntity, setDragEntity, type DragEntity } from "@/lib/drag-entity"
 import { isRecipeType, similarTo, type CanvasRow, type CanvasState, type GraphChannel, type GraphData, type GraphVideo, type RecipeType, type SavedEdge } from "@/lib/graph-data"
+import { LOOPS } from "@/lib/recipes/loops"
 import { TEMPLATES, type RecipeTemplate } from "@/lib/recipes/memorable"
 import { fmtCompact } from "@/lib/velocity-meta"
 import { Dialog, DialogContent, DialogTitle } from "@/ui/components/nova/dialog"
@@ -602,6 +603,7 @@ function RecipeRail({ refresh, onTemplate, onLoad }: { refresh: number; onTempla
     <div className={RAIL}>
       <p className="px-3 pb-1 pt-3 text-[10px] uppercase tracking-wide text-slate-400">Recipes</p>
       <button onClick={() => setBrowse("templates")} className={RAIL_ROW}><Layers className="h-3.5 w-3.5 text-slate-400" /><span>Templates</span><span className="tabular ml-auto text-xs text-slate-400">{TEMPLATES.length}</span></button>
+      <button onClick={() => onTemplate(LOOPS)} className={RAIL_ROW}><Play className="h-3.5 w-3.5 text-slate-400" /><span>Loops</span></button>
       <button onClick={() => setBrowse("saved")} className={RAIL_ROW}><BookOpen className="h-3.5 w-3.5 text-slate-400" /><span>Saved recipes</span></button>
     </div>
   )
@@ -1365,12 +1367,35 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     const es: Edge[] = t.edges.filter(([a, b]) => k.has(a) && k.has(b)).map(([a, b]) => ({ id: `${k.get(a)}->${k.get(b)}`, source: k.get(a)!, target: k.get(b)!, data: { kind: "drawn", tpl: t.name } as EdgeMeta }))
     edgesRef.current = es
     setEdges(es)
-    setNodes(layout(gs.map((g) => ({ id: keyOf(g), type: "recipe", position: { x: 0, y: 0 }, data: { ...g } })), es, R, layoutModeRef.current === "dagre-tb" ? "TB" : "LR"))
+    // A template whose every node carries a position (the Loops cycle) keeps its drawn shape; the rest lay out by dagre.
+    const fixed = t.nodes.every((n) => n.pos)
+    setNodes(fixed ? t.nodes.map((n, i) => ({ id: keyOf(gs[i]), type: "recipe" as const, position: n.pos!, data: { ...gs[i] } })) : layout(gs.map((g) => ({ id: keyOf(g), type: "recipe", position: { x: 0, y: 0 }, data: { ...g } })), es, R, layoutModeRef.current === "dagre-tb" ? "TB" : "LR"))
     setSelectedKey(null)
     setEdgeInfo(null)
     setCanvas({ name: t.name })
     fit()
   }, [enterMode, snapshot, setEdges, setNodes, R, fit])
+
+  /* ── the Loops recipe's walk: Play triggers each stage in order, one pass, then rests ── */
+  const [playingLoop, setPlayingLoop] = useState(false)
+  const playLoop = useCallback(() => {
+    if (playingLoop) return
+    setPlayingLoop(true)
+    const seq = LOOPS.edges.map(([a, b]) => [`step:${a}`, `step:${b}`] as const)
+    const STEP_MS = 1150
+    seq.forEach(([src, tgt], i) => {
+      const closing = i === seq.length - 1
+      window.setTimeout(() => {
+        setNodes((ns) => ns.map((n) => ({ ...n, data: { ...n.data, pulse: n.id === src || n.id === tgt } })))
+        setEdges((es) => es.map((e) => (e.id === `${src}->${tgt}` ? { ...e, animated: true, style: { stroke: closing ? "var(--pax2-red)" : "var(--pax2-light-blue)", strokeWidth: 2 } } : { ...e, animated: false, style: undefined })))
+      }, i * STEP_MS)
+    })
+    window.setTimeout(() => {
+      setNodes((ns) => ns.map((n) => ({ ...n, data: { ...n.data, pulse: false } })))
+      setEdges((es) => es.map((e) => ({ ...e, animated: false, style: undefined })))
+      setPlayingLoop(false)
+    }, seq.length * STEP_MS + 700)
+  }, [playingLoop, setNodes, setEdges])
 
   /** Data edges are records; the only lines a reader draws go into prompt steps, or between the
    *  cards of a recipe, where every line is a plan. */
@@ -1645,9 +1670,16 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
             </div>
             <div className="pointer-events-auto ml-auto flex flex-col items-end gap-2">
               <div className={cn(GROUP_BAR, "flex-wrap justify-end")}>
-                {mode === "recipes" ? RECIPE_TOOLS.map(([type, label]) => (
+                {mode === "recipes" ? <>
+                {canvas?.name === "Loops" && (
+                  <button className={PILL} onClick={playLoop} disabled={playingLoop}>
+                    {playingLoop ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5" />} Play
+                  </button>
+                )}
+                {RECIPE_TOOLS.map(([type, label]) => (
                   <button key={type} className={PILL} onClick={() => addRecipeNode(type)}><Plus className="h-3.5 w-3.5" /> {label}</button>
-                )) : <>
+                ))}
+                </> : <>
                 <button className={PILL} onClick={() => addPromptNode(paneCenter())}><Plus className="h-3.5 w-3.5" /> Prompt</button>
                 <button className={PILL} onClick={runAll} disabled={!hasPrompts || !!running}>
                   {running ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5" />} Run
