@@ -2,16 +2,17 @@ import "server-only"
 
 import { now, putOnce, query, type Item } from "@/lib/ledger"
 
-// Email through Amazon SES, every message also written to the ledger's outbox (MAIL / <iso>), sent
-// or not, so a failed send is visible in the app. SES is in its sandbox until production access is
-// granted: until then it only delivers to verified addresses, and the sender (PAX2_MAIL_FROM)
-// must itself be verified.
+// Email through Resend (nysgpt.com is a verified domain there, so any recipient), falling back to
+// Amazon SES when Resend is unset or fails; every message is also written to the ledger's outbox
+// (MAIL / <iso>) with the provider that carried it, sent or not, so a failed send is visible in the
+// app. SES is in its sandbox until production access is granted: it only delivers to verified
+// addresses, and the sender (PAX2_MAIL_FROM) must itself be verified.
 
 const FROM = process.env.PAX2_MAIL_FROM ?? "brendan@nysgpt.com"
 export const SITE = (process.env.PAX2_URL ?? "http://localhost:3000").replace(/\/$/, "")
 export const ADMINS = (process.env.ADMIN_EMAILS ?? "brendan@nysgpt.com").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean)
 
-export type Mail = Item & { at: string; to: string[]; subject: string; text: string; html: string; about?: string; status: "sent" | "failed"; error?: string }
+export type Mail = Item & { at: string; to: string[]; subject: string; text: string; html: string; about?: string; status: "sent" | "failed"; error?: string; via?: "resend" | "ses" }
 
 export type Button = { label: string; href: string }
 
@@ -28,26 +29,52 @@ ${(buttons ?? []).map((b, i) => `<a href="${b.href}" style="display:inline-block
   return { html, text }
 }
 
+async function viaResend(key: string, to: string[], subject: string, body: { html: string; text: string }) {
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ from: `PAX <${FROM}>`, to, subject, html: body.html, text: body.text }),
+  })
+  if (!res.ok) throw new Error(`Resend ${res.status}: ${(await res.text()).slice(0, 200)}`)
+}
+
+async function viaSes(to: string[], subject: string, body: { html: string; text: string }) {
+  const { SESv2Client, SendEmailCommand } = await import("@aws-sdk/client-sesv2")
+  const ses = new SESv2Client({ region: process.env.PAX2_REGION ?? "us-east-1" })
+  await ses.send(
+    new SendEmailCommand({
+      FromEmailAddress: `PAX <${FROM}>`,
+      Destination: { ToAddresses: to },
+      Content: { Simple: { Subject: { Data: subject }, Body: { Html: { Data: body.html }, Text: { Data: body.text } } } },
+    }),
+  )
+}
+
 export async function send(to: string[], subject: string, body: { html: string; text: string }, about?: string) {
   let status: Mail["status"] = "sent"
   let error: string | undefined
-  try {
-    const { SESv2Client, SendEmailCommand } = await import("@aws-sdk/client-sesv2")
-    const ses = new SESv2Client({ region: process.env.PAX2_REGION ?? "us-east-1" })
-    await ses.send(
-      new SendEmailCommand({
-        FromEmailAddress: `PAX2 <${FROM}>`,
-        Destination: { ToAddresses: to },
-        Content: { Simple: { Subject: { Data: subject }, Body: { Html: { Data: body.html }, Text: { Data: body.text } } } },
-      }),
-    )
-  } catch (e) {
-    status = "failed"
-    error = (e as Error).message
+  let via: Mail["via"]
+  const key = process.env.RESEND_API_KEY
+  if (key) {
+    try {
+      await viaResend(key, to, subject, body)
+      via = "resend"
+    } catch (e) {
+      error = (e as Error).message
+    }
+  }
+  if (!via) {
+    try {
+      await viaSes(to, subject, body)
+      via = "ses"
+    } catch (e) {
+      status = "failed"
+      error = [error, (e as Error).message].filter(Boolean).join("; ")
+    }
   }
   const at = now()
-  await putOnce({ pk: "MAIL", sk: `${at}#${Math.random().toString(36).slice(2, 6)}`, at, to, subject, ...body, about, status, error })
-  return { status, error }
+  await putOnce({ pk: "MAIL", sk: `${at}#${Math.random().toString(36).slice(2, 6)}`, at, to, subject, ...body, about, status, error, via })
+  return { status, error, via }
 }
 
 export const outbox = async (about?: string) => (await query<Mail>("MAIL")).filter((m) => !about || m.about === about).sort((a, b) => b.at.localeCompare(a.at))
