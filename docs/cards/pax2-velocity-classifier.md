@@ -9,7 +9,7 @@ tags:
 
 # PAX2 Velocity Classifier
 
-Whether a short will be a Hit at 72 hours, views at least 3x its channel's median, from its first hours of views. One model per horizon, each reading only the views up to that hour plus the pre-publish features. Built 2026-10-18; it serves the chance per watched short on PAX2's live tracking.
+Whether a short will be a Hit at 72 hours, views at least 3x its channel's median, from its first hours of views. One model per horizon, each reading only the views up to that hour plus the pre-publish features. Built 2026-10-18, refreshed 2026-10-19 on the poller's grown set; it serves the chance per watched short on PAX2's live tracking.
 
 ## Scoring
 
@@ -23,7 +23,7 @@ The view series is the running maximum of the poller's readings, anchored at 0 v
 
 ## Training
 
-- 332 shorts from 39 channels with readings through 72 hours, 32 Hits (base rate 0.096)
+- 341 shorts with readings through 72 hours, 33 Hits (base rate 0.097); the 2026-10-18 fit had 332 and 32
 - L2 logistic regression, lambda 2.0 on standardized features (`scripts/rig/velocity.py`)
 - features: log views and views over the channel median at each reading hour, and PAX2 Classifier's pre-publish features
 
@@ -31,11 +31,11 @@ The view series is the running maximum of the poller's readings, anchored at 0 v
 
 | Horizon | Pooled AUC, leave one channel out | Within channel | Top-decile lift | Time split AUC |
 |---|---:|---:|---:|---:|
-| 1 hour | 0.595 | 0.517 | 2.2x | 0.667 |
-| 3 hours | 0.689 | 0.732 | 3.1x | 0.801 |
-| 6 hours | **0.877** | **0.903** | **5.0x** | 0.863 |
+| 1 hour | 0.515 | 0.525 | 1.8x | 0.717 |
+| 3 hours | 0.540 | 0.572 | 1.8x | 0.740 |
+| 6 hours | **0.729** | **0.862** | **3.7x** | 0.697 |
 
-The pre-publish features alone score 0.487 on the same rows; the views carry the signal. The time split trains before 2026-10-09 22:56 UTC and scores the 100 shorts after.
+The pre-publish features alone score 0.435 on the same rows; the views carry the signal. The 2026-10-18 fit on 332 curves read 0.877 pooled at 6 hours; nine added curves moved it to 0.729 — with 33 Hits these numbers swing, and the refreshed fit serves because it stands on every curve the poller holds.
 
 ## Caveats
 

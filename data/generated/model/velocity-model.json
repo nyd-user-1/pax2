@@ -1,65 +1,65 @@
 {
- "builtAt": "2026-10-18T08:01:48Z",
+ "builtAt": "2026-10-19T17:15:50Z",
  "name": "PAX2 Velocity Classifier",
- "qualifying": 332,
+ "qualifying": 341,
  "counts": {
-  "videos": 815,
-  "firstReadingBy6h": 568,
-  "readingAfter6h": 559,
-  "literal72h": 45,
-  "has72h": 332,
-  "settledInTrainingSet": 126,
-  "noMedian": 0,
+  "videos": 859,
+  "firstReadingBy6h": 612,
+  "readingAfter6h": 596,
+  "literal72h": 46,
+  "has72h": 336,
+  "settledInTrainingSet": 329,
+  "noMedian": 9,
   "noX": 0,
-  "qualifying": 332,
-  "labelFrom72h": 332,
-  "labelFromTier": 0
+  "qualifying": 341,
+  "labelFrom72h": 327,
+  "labelFromTier": 14
  },
- "n": 332,
- "positives": 32,
- "baseRate": 0.0964,
- "method": "L2 logistic regression (lambda 2.0 on standardized features) per horizon on 332 shorts from 39 channels; leave-one-channel-out and a time split at 2026-10-09T22:56:24Z.",
+ "n": 341,
+ "positives": 33,
+ "baseRate": 0.0968,
+ "method": "L2 logistic regression (lambda 2.0 on standardized features) per horizon on 341 shorts from 39 channels; leave-one-channel-out and a time split at 2026-10-10T01:00:19Z.",
  "target": "Hit at 72 hours: views at 72 hours at least 3x the channel median (baselines.json); the training set's settled tier where no 72-hour reading exists",
  "series": "running maximum of views, anchored at (0h, 0 views), linear in hours; the 72-hour value is the last reading at or after hour 71.5 (the poller stops at 72.0)",
  "aucByHorizon": {
-  "1": 0.595,
-  "3": 0.689,
-  "6": 0.877
+  "1": 0.515,
+  "3": 0.54,
+  "6": 0.729
  },
  "horizons": {
   "1": {
    "horizon": 1,
-   "intercept": -2.5829,
+   "intercept": -1.9891,
    "features": [
     {
      "key": "logViews1h",
      "label": "Views at 1h (log10)",
      "kind": "continuous",
-     "coef": 0.4958,
-     "mean": 2.891648,
-     "sd": 0.872608
+     "coef": 0.5833,
+     "mean": 2.861665,
+     "sd": 0.888838
     },
     {
      "key": "ratio1h",
      "label": "Views at 1h over the channel median (log10)",
      "kind": "continuous",
-     "coef": 0.6296,
-     "mean": -1.345801,
-     "sd": 0.503123
+     "coef": 0.1831,
+     "mean": -1.350228,
+     "sd": 0.473391
     },
     {
      "key": "firstHour",
      "label": "Hour of the first reading",
      "kind": "continuous",
-     "coef": 0.3309,
-     "mean": 0.25,
-     "sd": 0.136545
+     "coef": 0.1977,
+     "mean": 0.246628,
+     "sd": 0.128705
     },
     {
      "key": "question",
      "label": "Title asks a question",
      "kind": "binary",
-     "coef": 0.3424,
+     "coef": 0.2199,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -67,7 +67,7 @@
      "key": "exclaim",
      "label": "Exclamation mark in the title",
      "kind": "binary",
-     "coef": -0.3805,
+     "coef": 0.1063,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -75,7 +75,7 @@
      "key": "number",
      "label": "A number in the title",
      "kind": "binary",
-     "coef": -0.2443,
+     "coef": 0.0616,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -83,7 +83,7 @@
      "key": "firstPerson",
      "label": "First person in the title",
      "kind": "binary",
-     "coef": -0.0213,
+     "coef": -0.0424,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -91,7 +91,7 @@
      "key": "you",
      "label": "Addresses the viewer",
      "kind": "binary",
-     "coef": -0.2792,
+     "coef": -0.4509,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -99,7 +99,7 @@
      "key": "caps",
      "label": "A word in all caps",
      "kind": "binary",
-     "coef": 0.3262,
+     "coef": 0.0244,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -107,7 +107,7 @@
      "key": "anger",
      "label": "Combative words in the title",
      "kind": "binary",
-     "coef": 0.3308,
+     "coef": 0.3232,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -115,7 +115,7 @@
      "key": "quote",
      "label": "Quotation in the title",
      "kind": "binary",
-     "coef": 0.1647,
+     "coef": 0.1529,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -123,7 +123,7 @@
      "key": "shortTitle",
      "label": "Title of six words or fewer",
      "kind": "binary",
-     "coef": -0.3352,
+     "coef": -0.1749,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -131,7 +131,7 @@
      "key": "longTitle",
      "label": "Title of fifteen words or more",
      "kind": "binary",
-     "coef": 0.1389,
+     "coef": -0.0662,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -139,7 +139,7 @@
      "key": "emoji",
      "label": "Emoji in the title",
      "kind": "binary",
-     "coef": -0.2237,
+     "coef": 0.1172,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -147,7 +147,7 @@
      "key": "hashtagTitle",
      "label": "Hashtag in the title",
      "kind": "binary",
-     "coef": -0.4398,
+     "coef": -0.7925,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -155,7 +155,7 @@
      "key": "trump",
      "label": "Names Trump",
      "kind": "binary",
-     "coef": -0.6678,
+     "coef": -0.7675,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -163,15 +163,15 @@
      "key": "titleWords",
      "label": "Title length (log words)",
      "kind": "continuous",
-     "coef": -0.1696,
-     "mean": 2.244286,
-     "sd": 0.415546
+     "coef": 0.043,
+     "mean": 2.247182,
+     "sd": 0.422852
     },
     {
      "key": "cta",
      "label": "Call to action in the description",
      "kind": "binary",
-     "coef": -0.3697,
+     "coef": -0.4617,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -179,7 +179,7 @@
      "key": "link",
      "label": "Link in the description",
      "kind": "binary",
-     "coef": -0.2014,
+     "coef": -0.1839,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -187,7 +187,7 @@
      "key": "noDescription",
      "label": "No description",
      "kind": "binary",
-     "coef": 0.3544,
+     "coef": 0.4589,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -195,15 +195,15 @@
      "key": "descWords",
      "label": "Description length (log words)",
      "kind": "continuous",
-     "coef": 0.1803,
-     "mean": 1.83587,
-     "sd": 1.922862
+     "coef": 0.0037,
+     "mean": 1.880855,
+     "sd": 1.928792
     },
     {
      "key": "tags",
      "label": "Has tags",
      "kind": "binary",
-     "coef": 0.1843,
+     "coef": 0.2397,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -211,15 +211,15 @@
      "key": "tagCount",
      "label": "Tag count (log)",
      "kind": "continuous",
-     "coef": 0.0256,
-     "mean": 1.193016,
-     "sd": 1.254529
+     "coef": 0.1697,
+     "mean": 1.220459,
+     "sd": 1.258606
     },
     {
      "key": "under20",
      "label": "20 seconds or shorter",
      "kind": "binary",
-     "coef": 0.5309,
+     "coef": 0.4147,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -227,7 +227,7 @@
      "key": "under35",
      "label": "35 seconds or shorter",
      "kind": "binary",
-     "coef": -0.1447,
+     "coef": -0.439,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -235,7 +235,7 @@
      "key": "over60",
      "label": "Longer than a minute",
      "kind": "binary",
-     "coef": -0.2251,
+     "coef": -0.4202,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -243,15 +243,15 @@
      "key": "logDuration",
      "label": "Length (log seconds)",
      "kind": "continuous",
-     "coef": 0.6678,
-     "mean": 3.903091,
-     "sd": 0.708661
+     "coef": 0.4673,
+     "mean": 3.882965,
+     "sd": 0.70564
     },
     {
      "key": "weekend",
      "label": "Posted on a weekend",
      "kind": "binary",
-     "coef": -0.4105,
+     "coef": -0.4173,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -259,7 +259,7 @@
      "key": "morning",
      "label": "Posted 6 to 11am Eastern",
      "kind": "binary",
-     "coef": 0.8848,
+     "coef": 0.603,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -267,7 +267,7 @@
      "key": "evening",
      "label": "Posted 6 to 11pm Eastern",
      "kind": "binary",
-     "coef": 0.0901,
+     "coef": -0.1463,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -275,7 +275,7 @@
      "key": "night",
      "label": "Posted midnight to 5am Eastern",
      "kind": "binary",
-     "coef": 0.114,
+     "coef": -0.0453,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -283,15 +283,15 @@
      "key": "logMedian",
      "label": "Channel size (log median views)",
      "kind": "continuous",
-     "coef": -0.0246,
-     "mean": 4.210936,
-     "sd": 0.875236
+     "coef": -0.5085,
+     "mean": 4.145248,
+     "sd": 0.915927
     },
     {
      "key": "family:Reform",
      "label": "Reform",
      "kind": "family",
-     "coef": -0.0263,
+     "coef": 0.3668,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -299,7 +299,7 @@
      "key": "family:Voting rights",
      "label": "Voting rights",
      "kind": "family",
-     "coef": 0.013,
+     "coef": -0.1244,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -307,7 +307,7 @@
      "key": "family:Nonpartisan media",
      "label": "Nonpartisan media",
      "kind": "family",
-     "coef": 0.4387,
+     "coef": 0.5802,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -315,7 +315,7 @@
      "key": "family:Candidates & officials",
      "label": "Candidates & officials",
      "kind": "family",
-     "coef": 0.2922,
+     "coef": -0.1612,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -323,7 +323,7 @@
      "key": "family:Partisan media",
      "label": "Partisan media",
      "kind": "family",
-     "coef": -0.6791,
+     "coef": -0.6006,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -331,128 +331,128 @@
      "key": "family:UK",
      "label": "UK",
      "kind": "family",
-     "coef": -0.0385,
+     "coef": -0.0608,
      "mean": 0.0,
      "sd": 1.0
     }
    ],
    "metrics": {
     "leaveOneChannelOut": {
-     "auc": 0.595,
-     "aucPrePublishOnly": 0.487,
-     "withinChannelAuc": 0.517,
+     "auc": 0.515,
+     "aucPrePublishOnly": 0.435,
+     "withinChannelAuc": 0.525,
      "withinChannelMin": "channels with 10+ videos and 2+ of each outcome",
-     "topDecileRate": 0.212,
-     "topDecileLift": 2.2,
-     "bottomDecileRate": 0.059,
+     "topDecileRate": 0.176,
+     "topDecileLift": 1.82,
+     "bottomDecileRate": 0.114,
      "deciles": [
       {
        "decile": 1,
-       "n": 33,
-       "predicted": 0.309,
-       "observed": 0.212
+       "n": 34,
+       "predicted": 0.236,
+       "observed": 0.176
       },
       {
        "decile": 2,
-       "n": 33,
-       "predicted": 0.185,
-       "observed": 0.121
+       "n": 34,
+       "predicted": 0.166,
+       "observed": 0.088
       },
       {
        "decile": 3,
-       "n": 33,
-       "predicted": 0.131,
-       "observed": 0.091
+       "n": 34,
+       "predicted": 0.133,
+       "observed": 0.088
       },
       {
        "decile": 4,
-       "n": 33,
+       "n": 34,
        "predicted": 0.103,
-       "observed": 0.061
+       "observed": 0.088
       },
       {
        "decile": 5,
        "n": 34,
-       "predicted": 0.079,
+       "predicted": 0.083,
        "observed": 0.059
       },
       {
        "decile": 6,
-       "n": 33,
-       "predicted": 0.06,
-       "observed": 0.121
+       "n": 34,
+       "predicted": 0.066,
+       "observed": 0.059
       },
       {
        "decile": 7,
-       "n": 33,
-       "predicted": 0.044,
-       "observed": 0.061
+       "n": 34,
+       "predicted": 0.052,
+       "observed": 0.088
       },
       {
        "decile": 8,
-       "n": 33,
-       "predicted": 0.031,
-       "observed": 0.121
+       "n": 34,
+       "predicted": 0.04,
+       "observed": 0.029
       },
       {
        "decile": 9,
-       "n": 33,
-       "predicted": 0.021,
-       "observed": 0.061
+       "n": 34,
+       "predicted": 0.03,
+       "observed": 0.176
       },
       {
        "decile": 10,
-       "n": 34,
-       "predicted": 0.008,
-       "observed": 0.059
+       "n": 35,
+       "predicted": 0.014,
+       "observed": 0.114
       }
      ],
      "withinChannel": [
       {
        "channel": "The Democrats",
-       "n": 39,
-       "auc": 0.386
+       "n": 42,
+       "auc": 0.523
       },
       {
-       "channel": "James Talarico",
-       "n": 32,
-       "auc": 0.667
+       "channel": "Abdul El-Sayed",
+       "n": 24,
+       "auc": 0.491
       },
       {
        "channel": "PragerU",
        "n": 24,
-       "auc": 0.508
+       "auc": 0.46
       },
       {
-       "channel": "Abdul El-Sayed",
-       "n": 23,
-       "auc": 0.539
+       "channel": "Jubilee",
+       "n": 17,
+       "auc": 0.667
       }
      ],
      "perFamily": [
       {
        "family": "Candidates & officials",
-       "n": 137,
-       "baseRate": 0.124,
-       "auc": 0.534
+       "n": 133,
+       "baseRate": 0.105,
+       "auc": 0.469
       },
       {
        "family": "Nonpartisan media",
-       "n": 31,
-       "baseRate": 0.161,
-       "auc": 0.862
+       "n": 32,
+       "baseRate": 0.188,
+       "auc": 0.66
       },
       {
        "family": "Partisan media",
-       "n": 124,
-       "baseRate": 0.056,
-       "auc": 0.529
+       "n": 127,
+       "baseRate": 0.055,
+       "auc": 0.512
       },
       {
        "family": "Reform",
-       "n": 16,
-       "baseRate": 0.062,
-       "auc": 0.867
+       "n": 24,
+       "baseRate": 0.167,
+       "auc": 0.412
       },
       {
        "family": "UK",
@@ -462,18 +462,18 @@
       },
       {
        "family": "Voting rights",
-       "n": 20,
-       "baseRate": 0.1,
-       "auc": 0.444
+       "n": 21,
+       "baseRate": 0.095,
+       "auc": 0.447
       }
      ]
     },
     "timeSplit": {
-     "cut": "2026-10-09T22:56:24Z",
-     "train": 232,
-     "test": 100,
-     "testBaseRate": 0.09,
-     "auc": 0.667
+     "cut": "2026-10-10T01:00:19Z",
+     "train": 238,
+     "test": 103,
+     "testBaseRate": 0.126,
+     "auc": 0.717
     }
    },
    "checks": [
@@ -624,7 +624,7 @@
        "comments": 1.0
       }
      ],
-     "channelMedian": 1378,
+     "channelMedian": 1383,
      "x": {
       "question": 0,
       "exclaim": 0,
@@ -654,7 +654,7 @@
       "morning": 1,
       "evening": 0,
       "night": 0,
-      "logMedian": 3.0737183503461227,
+      "logMedian": 3.073351702386901,
       "family:Reform": 1,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 0,
@@ -662,168 +662,174 @@
       "family:Partisan media": 0,
       "family:UK": 0
      },
-     "p": 0.01617
+     "p": 0.078042
     },
     {
      "readings": [
       {
+       "hour": 0.0,
+       "views": 2.0,
+       "likes": 2.0,
+       "comments": 0.0
+      },
+      {
        "hour": 0.3,
-       "views": 465.0,
-       "likes": 52.0,
-       "comments": 7.0
+       "views": 1014.0,
+       "likes": 243.0,
+       "comments": 13.0
       },
       {
        "hour": 0.5,
-       "views": 988.0,
-       "likes": 103.0,
-       "comments": 14.0
-      },
-      {
-       "hour": 0.8,
-       "views": 1540.0,
-       "likes": 153.0,
-       "comments": 17.0
-      },
-      {
-       "hour": 1.0,
-       "views": 2164.0,
-       "likes": 228.0,
-       "comments": 19.0
-      },
-      {
-       "hour": 1.3,
-       "views": 2425.0,
-       "likes": 262.0,
+       "views": 2130.0,
+       "likes": 460.0,
        "comments": 25.0
       },
       {
-       "hour": 1.5,
-       "views": 2605.0,
-       "likes": 276.0,
-       "comments": 26.0
-      },
-      {
-       "hour": 1.8,
-       "views": 2724.0,
-       "likes": 306.0,
-       "comments": 26.0
-      },
-      {
-       "hour": 2.0,
-       "views": 2915.0,
-       "likes": 324.0,
-       "comments": 28.0
-      },
-      {
-       "hour": 2.3,
-       "views": 3154.0,
-       "likes": 347.0,
-       "comments": 29.0
-      },
-      {
-       "hour": 2.5,
-       "views": 3442.0,
-       "likes": 358.0,
-       "comments": 29.0
-      },
-      {
-       "hour": 2.8,
-       "views": 3789.0,
-       "likes": 374.0,
-       "comments": 29.0
-      },
-      {
-       "hour": 3.1,
-       "views": 4165.0,
-       "likes": 399.0,
-       "comments": 32.0
-      },
-      {
-       "hour": 3.3,
-       "views": 4480.0,
-       "likes": 418.0,
-       "comments": 33.0
-      },
-      {
-       "hour": 3.6,
-       "views": 4643.0,
-       "likes": 433.0,
-       "comments": 33.0
-      },
-      {
-       "hour": 3.8,
-       "views": 5006.0,
-       "likes": 448.0,
-       "comments": 33.0
-      },
-      {
-       "hour": 4.1,
-       "views": 5258.0,
-       "likes": 458.0,
-       "comments": 33.0
-      },
-      {
-       "hour": 4.3,
-       "views": 5365.0,
-       "likes": 474.0,
+       "hour": 0.8,
+       "views": 2934.0,
+       "likes": 622.0,
        "comments": 34.0
       },
       {
+       "hour": 1.0,
+       "views": 3505.0,
+       "likes": 737.0,
+       "comments": 41.0
+      },
+      {
+       "hour": 1.3,
+       "views": 3917.0,
+       "likes": 830.0,
+       "comments": 48.0
+      },
+      {
+       "hour": 1.5,
+       "views": 4259.0,
+       "likes": 927.0,
+       "comments": 57.0
+      },
+      {
+       "hour": 1.8,
+       "views": 4570.0,
+       "likes": 1010.0,
+       "comments": 63.0
+      },
+      {
+       "hour": 2.1,
+       "views": 4987.0,
+       "likes": 1090.0,
+       "comments": 68.0
+      },
+      {
+       "hour": 2.3,
+       "views": 5327.0,
+       "likes": 1185.0,
+       "comments": 73.0
+      },
+      {
+       "hour": 2.6,
+       "views": 6052.0,
+       "likes": 1258.0,
+       "comments": 78.0
+      },
+      {
+       "hour": 2.8,
+       "views": 6399.0,
+       "likes": 1323.0,
+       "comments": 84.0
+      },
+      {
+       "hour": 3.1,
+       "views": 6752.0,
+       "likes": 1377.0,
+       "comments": 85.0
+      },
+      {
+       "hour": 3.3,
+       "views": 7000.0,
+       "likes": 1424.0,
+       "comments": 87.0
+      },
+      {
+       "hour": 3.6,
+       "views": 7651.0,
+       "likes": 1471.0,
+       "comments": 89.0
+      },
+      {
+       "hour": 3.8,
+       "views": 7916.0,
+       "likes": 1504.0,
+       "comments": 90.0
+      },
+      {
+       "hour": 4.1,
+       "views": 8209.0,
+       "likes": 1540.0,
+       "comments": 92.0
+      },
+      {
+       "hour": 4.3,
+       "views": 8719.0,
+       "likes": 1567.0,
+       "comments": 92.0
+      },
+      {
        "hour": 4.6,
-       "views": 5585.0,
-       "likes": 488.0,
-       "comments": 35.0
+       "views": 9334.0,
+       "likes": 1603.0,
+       "comments": 93.0
       },
       {
        "hour": 4.8,
-       "views": 5908.0,
-       "likes": 502.0,
-       "comments": 35.0
+       "views": 9821.0,
+       "likes": 1626.0,
+       "comments": 94.0
       },
       {
        "hour": 5.1,
-       "views": 6083.0,
-       "likes": 509.0,
-       "comments": 35.0
+       "views": 10248.0,
+       "likes": 1652.0,
+       "comments": 98.0
       },
       {
        "hour": 5.3,
-       "views": 6221.0,
-       "likes": 516.0,
-       "comments": 35.0
+       "views": 10484.0,
+       "likes": 1679.0,
+       "comments": 100.0
       },
       {
        "hour": 5.6,
-       "views": 6594.0,
-       "likes": 522.0,
-       "comments": 35.0
+       "views": 10707.0,
+       "likes": 1697.0,
+       "comments": 103.0
       },
       {
        "hour": 5.8,
-       "views": 6944.0,
-       "likes": 528.0,
-       "comments": 35.0
+       "views": 11051.0,
+       "likes": 1723.0,
+       "comments": 104.0
       },
       {
        "hour": 6.1,
-       "views": 7205.0,
-       "likes": 531.0,
-       "comments": 35.0
+       "views": 11307.0,
+       "likes": 1737.0,
+       "comments": 104.0
       },
       {
-       "hour": 6.3,
-       "views": 7387.0,
-       "likes": 533.0,
-       "comments": 35.0
+       "hour": 6.4,
+       "views": 11554.0,
+       "likes": 1752.0,
+       "comments": 105.0
       }
      ],
-     "channelMedian": 50485,
+     "channelMedian": 84635,
      "x": {
-      "question": 1,
+      "question": 0,
       "exclaim": 0,
       "number": 0,
       "firstPerson": 0,
-      "you": 0,
+      "you": 1,
       "caps": 0,
       "anger": 0,
       "quote": 0,
@@ -831,207 +837,8 @@
       "longTitle": 0,
       "emoji": 0,
       "hashtagTitle": 0,
-      "trump": 1,
-      "titleWords": 2.1972245773362196,
-      "cta": 1,
-      "link": 1,
-      "noDescription": 0,
-      "descWords": 4.304065093204169,
-      "tags": 1,
-      "tagCount": 2.8903717578961645,
-      "under20": 0,
-      "under35": 0,
-      "over60": 0,
-      "logDuration": 3.912023005428146,
-      "weekend": 0,
-      "morning": 0,
-      "evening": 1,
-      "night": 0,
-      "logMedian": 4.505794156208896,
-      "family:Reform": 0,
-      "family:Voting rights": 0,
-      "family:Nonpartisan media": 0,
-      "family:Candidates & officials": 0,
-      "family:Partisan media": 1,
-      "family:UK": 0
-     },
-     "p": 0.03723
-    },
-    {
-     "readings": [
-      {
-       "hour": 0.2,
-       "views": 279.0,
-       "likes": 69.0,
-       "comments": 8.0
-      },
-      {
-       "hour": 0.4,
-       "views": 742.0,
-       "likes": 150.0,
-       "comments": 18.0
-      },
-      {
-       "hour": 0.7,
-       "views": 1194.0,
-       "likes": 250.0,
-       "comments": 29.0
-      },
-      {
-       "hour": 0.9,
-       "views": 1699.0,
-       "likes": 344.0,
-       "comments": 34.0
-      },
-      {
-       "hour": 1.2,
-       "views": 2182.0,
-       "likes": 431.0,
-       "comments": 46.0
-      },
-      {
-       "hour": 1.4,
-       "views": 2667.0,
-       "likes": 536.0,
-       "comments": 54.0
-      },
-      {
-       "hour": 1.7,
-       "views": 3177.0,
-       "likes": 635.0,
-       "comments": 62.0
-      },
-      {
-       "hour": 1.9,
-       "views": 3639.0,
-       "likes": 722.0,
-       "comments": 72.0
-      },
-      {
-       "hour": 2.2,
-       "views": 4145.0,
-       "likes": 817.0,
-       "comments": 80.0
-      },
-      {
-       "hour": 2.4,
-       "views": 4596.0,
-       "likes": 888.0,
-       "comments": 86.0
-      },
-      {
-       "hour": 2.7,
-       "views": 5040.0,
-       "likes": 970.0,
-       "comments": 92.0
-      },
-      {
-       "hour": 2.9,
-       "views": 5516.0,
-       "likes": 1045.0,
-       "comments": 98.0
-      },
-      {
-       "hour": 3.2,
-       "views": 6175.0,
-       "likes": 1137.0,
-       "comments": 104.0
-      },
-      {
-       "hour": 3.4,
-       "views": 6750.0,
-       "likes": 1215.0,
-       "comments": 109.0
-      },
-      {
-       "hour": 3.7,
-       "views": 7419.0,
-       "likes": 1295.0,
-       "comments": 116.0
-      },
-      {
-       "hour": 3.9,
-       "views": 8128.0,
-       "likes": 1383.0,
-       "comments": 124.0
-      },
-      {
-       "hour": 4.2,
-       "views": 8669.0,
-       "likes": 1470.0,
-       "comments": 124.0
-      },
-      {
-       "hour": 4.4,
-       "views": 9286.0,
-       "likes": 1561.0,
-       "comments": 125.0
-      },
-      {
-       "hour": 4.7,
-       "views": 10006.0,
-       "likes": 1623.0,
-       "comments": 129.0
-      },
-      {
-       "hour": 4.9,
-       "views": 10891.0,
-       "likes": 1680.0,
-       "comments": 131.0
-      },
-      {
-       "hour": 5.2,
-       "views": 11920.0,
-       "likes": 1757.0,
-       "comments": 134.0
-      },
-      {
-       "hour": 5.4,
-       "views": 12732.0,
-       "likes": 1788.0,
-       "comments": 136.0
-      },
-      {
-       "hour": 5.7,
-       "views": 13175.0,
-       "likes": 1841.0,
-       "comments": 141.0
-      },
-      {
-       "hour": 5.9,
-       "views": 13966.0,
-       "likes": 1895.0,
-       "comments": 147.0
-      },
-      {
-       "hour": 6.2,
-       "views": 15081.0,
-       "likes": 1954.0,
-       "comments": 149.0
-      },
-      {
-       "hour": 6.4,
-       "views": 16885.0,
-       "likes": 2018.0,
-       "comments": 153.0
-      }
-     ],
-     "channelMedian": 47250,
-     "x": {
-      "question": 0,
-      "exclaim": 0,
-      "number": 0,
-      "firstPerson": 0,
-      "you": 0,
-      "caps": 1,
-      "anger": 1,
-      "quote": 1,
-      "shortTitle": 0,
-      "longTitle": 0,
-      "emoji": 0,
-      "hashtagTitle": 0,
       "trump": 0,
-      "titleWords": 2.4849066497880004,
+      "titleWords": 2.1972245773362196,
       "cta": 0,
       "link": 0,
       "noDescription": 1,
@@ -1040,13 +847,13 @@
       "tagCount": 0,
       "under20": 0,
       "under35": 0,
-      "over60": 1,
-      "logDuration": 4.653960350157523,
+      "over60": 0,
+      "logDuration": 3.8918202981106265,
       "weekend": 0,
       "morning": 0,
       "evening": 1,
       "night": 0,
-      "logMedian": 4.9469923407483725,
+      "logMedian": 4.927555129892227,
       "family:Reform": 0,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 0,
@@ -1054,170 +861,363 @@
       "family:Partisan media": 0,
       "family:UK": 0
      },
-     "p": 0.287251
+     "p": 0.055548
     },
     {
      "readings": [
       {
-       "hour": 0.2,
-       "views": 93.0,
+       "hour": 0.1,
+       "views": 19.0,
+       "likes": 3.0,
+       "comments": 0.0
+      },
+      {
+       "hour": 0.3,
+       "views": 201.0,
        "likes": 15.0,
-       "comments": 1.0
+       "comments": 3.0
       },
       {
-       "hour": 0.4,
-       "views": 301.0,
-       "likes": 44.0,
-       "comments": 2.0
-      },
-      {
-       "hour": 0.7,
-       "views": 500.0,
-       "likes": 73.0,
+       "hour": 0.6,
+       "views": 413.0,
+       "likes": 29.0,
        "comments": 6.0
       },
       {
-       "hour": 0.9,
-       "views": 684.0,
-       "likes": 95.0,
-       "comments": 6.0
-      },
-      {
-       "hour": 1.2,
-       "views": 864.0,
-       "likes": 112.0,
+       "hour": 0.8,
+       "views": 582.0,
+       "likes": 37.0,
        "comments": 7.0
       },
       {
-       "hour": 1.4,
-       "views": 1078.0,
-       "likes": 141.0,
-       "comments": 7.0
+       "hour": 1.1,
+       "views": 766.0,
+       "likes": 50.0,
+       "comments": 13.0
       },
       {
-       "hour": 1.7,
-       "views": 1261.0,
-       "likes": 174.0,
-       "comments": 9.0
-      },
-      {
-       "hour": 1.9,
-       "views": 1401.0,
-       "likes": 191.0,
-       "comments": 11.0
-      },
-      {
-       "hour": 2.2,
-       "views": 1530.0,
-       "likes": 207.0,
-       "comments": 12.0
-      },
-      {
-       "hour": 2.4,
-       "views": 1670.0,
-       "likes": 226.0,
+       "hour": 1.3,
+       "views": 947.0,
+       "likes": 61.0,
        "comments": 14.0
       },
       {
-       "hour": 2.7,
-       "views": 1816.0,
-       "likes": 241.0,
-       "comments": 14.0
-      },
-      {
-       "hour": 2.9,
-       "views": 1953.0,
-       "likes": 250.0,
+       "hour": 1.6,
+       "views": 1122.0,
+       "likes": 75.0,
        "comments": 16.0
       },
       {
-       "hour": 3.2,
-       "views": 2183.0,
-       "likes": 262.0,
-       "comments": 16.0
-      },
-      {
-       "hour": 3.4,
-       "views": 2376.0,
-       "likes": 285.0,
-       "comments": 17.0
-      },
-      {
-       "hour": 3.7,
-       "views": 2637.0,
-       "likes": 300.0,
-       "comments": 19.0
-      },
-      {
-       "hour": 3.9,
-       "views": 2832.0,
-       "likes": 314.0,
+       "hour": 1.8,
+       "views": 1373.0,
+       "likes": 85.0,
        "comments": 20.0
       },
       {
-       "hour": 4.2,
-       "views": 3008.0,
-       "likes": 326.0,
-       "comments": 21.0
+       "hour": 2.1,
+       "views": 1609.0,
+       "likes": 96.0,
+       "comments": 24.0
       },
       {
-       "hour": 4.4,
-       "views": 3143.0,
-       "likes": 343.0,
+       "hour": 2.3,
+       "views": 1833.0,
+       "likes": 99.0,
+       "comments": 24.0
+      },
+      {
+       "hour": 2.6,
+       "views": 2032.0,
+       "likes": 107.0,
+       "comments": 29.0
+      },
+      {
+       "hour": 2.8,
+       "views": 2208.0,
+       "likes": 118.0,
+       "comments": 30.0
+      },
+      {
+       "hour": 3.1,
+       "views": 2446.0,
+       "likes": 128.0,
+       "comments": 34.0
+      },
+      {
+       "hour": 3.3,
+       "views": 2609.0,
+       "likes": 132.0,
+       "comments": 35.0
+      },
+      {
+       "hour": 3.6,
+       "views": 2777.0,
+       "likes": 137.0,
+       "comments": 37.0
+      },
+      {
+       "hour": 3.8,
+       "views": 2957.0,
+       "likes": 143.0,
+       "comments": 41.0
+      },
+      {
+       "hour": 4.1,
+       "views": 3237.0,
+       "likes": 146.0,
+       "comments": 42.0
+      },
+      {
+       "hour": 4.3,
+       "views": 3626.0,
+       "likes": 146.0,
+       "comments": 42.0
+      },
+      {
+       "hour": 4.6,
+       "views": 3882.0,
+       "likes": 157.0,
+       "comments": 47.0
+      },
+      {
+       "hour": 4.8,
+       "views": 4122.0,
+       "likes": 162.0,
+       "comments": 54.0
+      },
+      {
+       "hour": 5.1,
+       "views": 4295.0,
+       "likes": 165.0,
+       "comments": 54.0
+      },
+      {
+       "hour": 5.3,
+       "views": 4544.0,
+       "likes": 174.0,
+       "comments": 54.0
+      },
+      {
+       "hour": 5.6,
+       "views": 4937.0,
+       "likes": 177.0,
+       "comments": 55.0
+      },
+      {
+       "hour": 5.8,
+       "views": 5352.0,
+       "likes": 182.0,
+       "comments": 55.0
+      },
+      {
+       "hour": 6.1,
+       "views": 5602.0,
+       "likes": 185.0,
+       "comments": 56.0
+      },
+      {
+       "hour": 6.3,
+       "views": 5883.0,
+       "likes": 185.0,
+       "comments": 57.0
+      }
+     ],
+     "channelMedian": 62215.5,
+     "x": {
+      "question": 0,
+      "exclaim": 0,
+      "number": 0,
+      "firstPerson": 0,
+      "you": 0,
+      "caps": 0,
+      "anger": 0,
+      "quote": 1,
+      "shortTitle": 0,
+      "longTitle": 1,
+      "emoji": 0,
+      "hashtagTitle": 0,
+      "trump": 1,
+      "titleWords": 2.772588722239781,
+      "cta": 0,
+      "link": 0,
+      "noDescription": 0,
+      "descWords": 0,
+      "tags": 1,
+      "tagCount": 1.9459101490553132,
+      "under20": 1,
+      "under35": 1,
+      "over60": 0,
+      "logDuration": 2.9444389791664403,
+      "weekend": 0,
+      "morning": 0,
+      "evening": 1,
+      "night": 0,
+      "logMedian": 4.051036695141213,
+      "family:Reform": 0,
+      "family:Voting rights": 0,
+      "family:Nonpartisan media": 0,
+      "family:Candidates & officials": 1,
+      "family:Partisan media": 0,
+      "family:UK": 0
+     },
+     "p": 0.023339
+    },
+    {
+     "readings": [
+      {
+       "hour": 0.4,
+       "views": 934.0,
+       "likes": 109.0,
+       "comments": 8.0
+      },
+      {
+       "hour": 0.7,
+       "views": 1459.0,
+       "likes": 167.0,
+       "comments": 9.0
+      },
+      {
+       "hour": 0.9,
+       "views": 1984.0,
+       "likes": 226.0,
+       "comments": 9.0
+      },
+      {
+       "hour": 1.2,
+       "views": 2334.0,
+       "likes": 263.0,
+       "comments": 9.0
+      },
+      {
+       "hour": 1.4,
+       "views": 2610.0,
+       "likes": 312.0,
+       "comments": 12.0
+      },
+      {
+       "hour": 1.7,
+       "views": 2780.0,
+       "likes": 345.0,
+       "comments": 16.0
+      },
+      {
+       "hour": 1.9,
+       "views": 3004.0,
+       "likes": 393.0,
+       "comments": 16.0
+      },
+      {
+       "hour": 2.2,
+       "views": 3178.0,
+       "likes": 412.0,
+       "comments": 18.0
+      },
+      {
+       "hour": 2.4,
+       "views": 3551.0,
+       "likes": 433.0,
+       "comments": 18.0
+      },
+      {
+       "hour": 2.7,
+       "views": 3820.0,
+       "likes": 455.0,
+       "comments": 20.0
+      },
+      {
+       "hour": 2.9,
+       "views": 4230.0,
+       "likes": 494.0,
        "comments": 23.0
       },
       {
+       "hour": 3.2,
+       "views": 4564.0,
+       "likes": 534.0,
+       "comments": 23.0
+      },
+      {
+       "hour": 3.4,
+       "views": 4876.0,
+       "likes": 565.0,
+       "comments": 23.0
+      },
+      {
+       "hour": 3.7,
+       "views": 5180.0,
+       "likes": 591.0,
+       "comments": 23.0
+      },
+      {
+       "hour": 3.9,
+       "views": 5417.0,
+       "likes": 617.0,
+       "comments": 23.0
+      },
+      {
+       "hour": 4.2,
+       "views": 5710.0,
+       "likes": 631.0,
+       "comments": 25.0
+      },
+      {
+       "hour": 4.4,
+       "views": 5964.0,
+       "likes": 649.0,
+       "comments": 25.0
+      },
+      {
        "hour": 4.7,
-       "views": 3279.0,
-       "likes": 353.0,
-       "comments": 24.0
+       "views": 6262.0,
+       "likes": 670.0,
+       "comments": 25.0
       },
       {
        "hour": 4.9,
-       "views": 3473.0,
-       "likes": 360.0,
-       "comments": 24.0
+       "views": 6534.0,
+       "likes": 687.0,
+       "comments": 25.0
       },
       {
        "hour": 5.2,
-       "views": 3614.0,
-       "likes": 376.0,
-       "comments": 24.0
+       "views": 6837.0,
+       "likes": 711.0,
+       "comments": 25.0
       },
       {
        "hour": 5.4,
-       "views": 3816.0,
-       "likes": 386.0,
-       "comments": 24.0
+       "views": 7159.0,
+       "likes": 727.0,
+       "comments": 25.0
       },
       {
        "hour": 5.7,
-       "views": 3959.0,
-       "likes": 399.0,
-       "comments": 24.0
+       "views": 7395.0,
+       "likes": 740.0,
+       "comments": 25.0
       },
       {
        "hour": 5.9,
-       "views": 4132.0,
-       "likes": 410.0,
-       "comments": 24.0
+       "views": 7725.0,
+       "likes": 757.0,
+       "comments": 27.0
       },
       {
        "hour": 6.2,
-       "views": 4278.0,
-       "likes": 424.0,
+       "views": 7973.0,
+       "likes": 757.0,
        "comments": 27.0
       },
       {
        "hour": 6.4,
-       "views": 4445.0,
-       "likes": 434.0,
-       "comments": 29.0
+       "views": 8256.0,
+       "likes": 767.0,
+       "comments": 27.0
       }
      ],
-     "channelMedian": 10814,
+     "channelMedian": 42258.5,
      "x": {
-      "question": 1,
+      "question": 0,
       "exclaim": 0,
       "number": 0,
       "firstPerson": 0,
@@ -1233,19 +1233,19 @@
       "titleWords": 1.9459101490553132,
       "cta": 0,
       "link": 0,
-      "noDescription": 1,
+      "noDescription": 0,
       "descWords": 0,
-      "tags": 0,
-      "tagCount": 0,
+      "tags": 1,
+      "tagCount": 1.6094379124341003,
       "under20": 0,
-      "under35": 1,
-      "over60": 0,
-      "logDuration": 3.4657359027997265,
+      "under35": 0,
+      "over60": 1,
+      "logDuration": 4.394449154672439,
       "weekend": 0,
       "morning": 0,
       "evening": 1,
       "night": 0,
-      "logMedian": 4.03402652377511,
+      "logMedian": 5.111977904962384,
       "family:Reform": 0,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 0,
@@ -1253,204 +1253,198 @@
       "family:Partisan media": 1,
       "family:UK": 0
      },
-     "p": 0.032131
+     "p": 0.060609
     },
     {
      "readings": [
       {
-       "hour": 0.0,
-       "views": 1.0,
-       "likes": 0.0,
+       "hour": 0.2,
+       "views": 146.0,
+       "likes": 12.0,
        "comments": 0.0
       },
       {
-       "hour": 0.3,
-       "views": 16.0,
-       "likes": 0.0,
-       "comments": 0.0
-      },
-      {
-       "hour": 0.5,
-       "views": 26.0,
-       "likes": 0.0,
-       "comments": 0.0
-      },
-      {
-       "hour": 0.8,
-       "views": 32.0,
-       "likes": 0.0,
-       "comments": 0.0
-      },
-      {
-       "hour": 1.0,
-       "views": 40.0,
-       "likes": 0.0,
+       "hour": 0.4,
+       "views": 519.0,
+       "likes": 35.0,
        "comments": 1.0
       },
       {
-       "hour": 1.3,
-       "views": 45.0,
-       "likes": 0.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 1.5,
-       "views": 54.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 1.8,
-       "views": 64.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 2.0,
-       "views": 70.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 2.3,
-       "views": 80.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 2.5,
-       "views": 88.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 2.8,
-       "views": 100.0,
-       "likes": 2.0,
+       "hour": 0.7,
+       "views": 1093.0,
+       "likes": 71.0,
        "comments": 2.0
       },
       {
-       "hour": 3.0,
-       "views": 108.0,
-       "likes": 2.0,
-       "comments": 2.0
+       "hour": 0.9,
+       "views": 1938.0,
+       "likes": 144.0,
+       "comments": 6.0
       },
       {
-       "hour": 3.3,
-       "views": 115.0,
-       "likes": 2.0,
-       "comments": 2.0
+       "hour": 1.2,
+       "views": 2799.0,
+       "likes": 214.0,
+       "comments": 10.0
       },
       {
-       "hour": 3.5,
-       "views": 122.0,
-       "likes": 2.0,
-       "comments": 2.0
+       "hour": 1.4,
+       "views": 3406.0,
+       "likes": 280.0,
+       "comments": 15.0
       },
       {
-       "hour": 3.8,
-       "views": 133.0,
-       "likes": 2.0,
-       "comments": 2.0
+       "hour": 1.7,
+       "views": 3829.0,
+       "likes": 314.0,
+       "comments": 15.0
       },
       {
-       "hour": 4.0,
-       "views": 142.0,
-       "likes": 4.0,
-       "comments": 2.0
+       "hour": 1.9,
+       "views": 4152.0,
+       "likes": 345.0,
+       "comments": 16.0
       },
       {
-       "hour": 4.3,
-       "views": 147.0,
-       "likes": 4.0,
-       "comments": 2.0
+       "hour": 2.2,
+       "views": 4562.0,
+       "likes": 379.0,
+       "comments": 18.0
       },
       {
-       "hour": 4.5,
-       "views": 156.0,
-       "likes": 4.0,
-       "comments": 2.0
+       "hour": 2.4,
+       "views": 5010.0,
+       "likes": 408.0,
+       "comments": 21.0
       },
       {
-       "hour": 4.8,
-       "views": 169.0,
-       "likes": 5.0,
-       "comments": 2.0
+       "hour": 2.7,
+       "views": 5645.0,
+       "likes": 435.0,
+       "comments": 22.0
       },
       {
-       "hour": 5.0,
-       "views": 177.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 2.9,
+       "views": 6144.0,
+       "likes": 450.0,
+       "comments": 24.0
       },
       {
-       "hour": 5.3,
-       "views": 180.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 3.2,
+       "views": 6750.0,
+       "likes": 465.0,
+       "comments": 24.0
       },
       {
-       "hour": 5.5,
-       "views": 184.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 3.4,
+       "views": 7611.0,
+       "likes": 475.0,
+       "comments": 25.0
       },
       {
-       "hour": 5.8,
-       "views": 191.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 3.7,
+       "views": 8049.0,
+       "likes": 483.0,
+       "comments": 25.0
       },
       {
-       "hour": 6.0,
-       "views": 196.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 3.9,
+       "views": 8670.0,
+       "likes": 493.0,
+       "comments": 25.0
       },
       {
-       "hour": 6.3,
-       "views": 205.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 4.2,
+       "views": 9242.0,
+       "likes": 502.0,
+       "comments": 25.0
       },
       {
-       "hour": 6.5,
-       "views": 212.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 4.4,
+       "views": 9834.0,
+       "likes": 513.0,
+       "comments": 25.0
+      },
+      {
+       "hour": 4.7,
+       "views": 10445.0,
+       "likes": 519.0,
+       "comments": 25.0
+      },
+      {
+       "hour": 4.9,
+       "views": 10877.0,
+       "likes": 528.0,
+       "comments": 27.0
+      },
+      {
+       "hour": 5.2,
+       "views": 11457.0,
+       "likes": 534.0,
+       "comments": 29.0
+      },
+      {
+       "hour": 5.4,
+       "views": 11836.0,
+       "likes": 540.0,
+       "comments": 31.0
+      },
+      {
+       "hour": 5.7,
+       "views": 12552.0,
+       "likes": 553.0,
+       "comments": 31.0
+      },
+      {
+       "hour": 5.9,
+       "views": 13166.0,
+       "likes": 561.0,
+       "comments": 31.0
+      },
+      {
+       "hour": 6.2,
+       "views": 13482.0,
+       "likes": 569.0,
+       "comments": 31.0
+      },
+      {
+       "hour": 6.4,
+       "views": 13902.0,
+       "likes": 578.0,
+       "comments": 33.0
       }
      ],
-     "channelMedian": 7262,
+     "channelMedian": 58061.5,
      "x": {
       "question": 0,
-      "exclaim": 0,
-      "number": 0,
+      "exclaim": 1,
+      "number": 1,
       "firstPerson": 0,
-      "you": 1,
+      "you": 0,
       "caps": 0,
       "anger": 0,
       "quote": 0,
-      "shortTitle": 1,
+      "shortTitle": 0,
       "longTitle": 0,
       "emoji": 0,
-      "hashtagTitle": 0,
+      "hashtagTitle": 1,
       "trump": 0,
-      "titleWords": 1.791759469228055,
+      "titleWords": 2.5649493574615367,
       "cta": 0,
-      "link": 0,
+      "link": 1,
       "noDescription": 0,
-      "descWords": 2.8903717578961645,
-      "tags": 0,
-      "tagCount": 0,
+      "descWords": 4.465908118654584,
+      "tags": 1,
+      "tagCount": 3.044522437723423,
       "under20": 0,
-      "under35": 1,
-      "over60": 0,
-      "logDuration": 3.1354942159291497,
+      "under35": 0,
+      "over60": 1,
+      "logDuration": 4.382026634673881,
       "weekend": 0,
       "morning": 0,
       "evening": 0,
       "night": 0,
-      "logMedian": 3.8611160441613954,
+      "logMedian": 4.661064563023236,
       "family:Reform": 0,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 1,
@@ -1458,170 +1452,170 @@
       "family:Partisan media": 0,
       "family:UK": 0
      },
-     "p": 0.002961
+     "p": 0.128797
     },
     {
      "readings": [
       {
        "hour": 0.2,
-       "views": 57.0,
-       "likes": 6.0,
-       "comments": 0.0
+       "views": 77.0,
+       "likes": 13.0,
+       "comments": 2.0
       },
       {
        "hour": 0.4,
-       "views": 200.0,
-       "likes": 13.0,
-       "comments": 1.0
+       "views": 254.0,
+       "likes": 38.0,
+       "comments": 5.0
       },
       {
        "hour": 0.7,
-       "views": 426.0,
-       "likes": 33.0,
-       "comments": 1.0
+       "views": 431.0,
+       "likes": 57.0,
+       "comments": 9.0
       },
       {
        "hour": 0.9,
-       "views": 681.0,
-       "likes": 44.0,
-       "comments": 1.0
+       "views": 600.0,
+       "likes": 87.0,
+       "comments": 13.0
       },
       {
        "hour": 1.2,
-       "views": 904.0,
-       "likes": 55.0,
-       "comments": 2.0
+       "views": 778.0,
+       "likes": 104.0,
+       "comments": 14.0
       },
       {
        "hour": 1.4,
-       "views": 1015.0,
-       "likes": 63.0,
-       "comments": 2.0
+       "views": 927.0,
+       "likes": 126.0,
+       "comments": 21.0
       },
       {
        "hour": 1.7,
-       "views": 1126.0,
-       "likes": 72.0,
-       "comments": 2.0
+       "views": 1051.0,
+       "likes": 141.0,
+       "comments": 26.0
       },
       {
        "hour": 1.9,
-       "views": 1192.0,
-       "likes": 82.0,
-       "comments": 2.0
+       "views": 1104.0,
+       "likes": 158.0,
+       "comments": 27.0
       },
       {
        "hour": 2.2,
-       "views": 1285.0,
-       "likes": 88.0,
-       "comments": 2.0
+       "views": 1196.0,
+       "likes": 176.0,
+       "comments": 29.0
       },
       {
        "hour": 2.4,
-       "views": 1386.0,
-       "likes": 97.0,
-       "comments": 2.0
+       "views": 1303.0,
+       "likes": 188.0,
+       "comments": 32.0
       },
       {
        "hour": 2.7,
-       "views": 1480.0,
-       "likes": 107.0,
-       "comments": 2.0
+       "views": 1417.0,
+       "likes": 196.0,
+       "comments": 35.0
       },
       {
        "hour": 2.9,
-       "views": 1629.0,
-       "likes": 115.0,
-       "comments": 4.0
+       "views": 1538.0,
+       "likes": 207.0,
+       "comments": 42.0
       },
       {
        "hour": 3.2,
-       "views": 1762.0,
-       "likes": 129.0,
-       "comments": 4.0
+       "views": 1632.0,
+       "likes": 215.0,
+       "comments": 47.0
       },
       {
        "hour": 3.4,
-       "views": 1829.0,
-       "likes": 137.0,
-       "comments": 4.0
+       "views": 1744.0,
+       "likes": 221.0,
+       "comments": 47.0
       },
       {
        "hour": 3.7,
-       "views": 2024.0,
-       "likes": 149.0,
-       "comments": 4.0
+       "views": 1889.0,
+       "likes": 236.0,
+       "comments": 51.0
       },
       {
        "hour": 3.9,
-       "views": 2091.0,
-       "likes": 152.0,
-       "comments": 4.0
+       "views": 2029.0,
+       "likes": 254.0,
+       "comments": 52.0
       },
       {
        "hour": 4.2,
-       "views": 2212.0,
-       "likes": 157.0,
-       "comments": 4.0
+       "views": 2187.0,
+       "likes": 269.0,
+       "comments": 55.0
       },
       {
        "hour": 4.4,
-       "views": 2286.0,
-       "likes": 160.0,
-       "comments": 4.0
+       "views": 2313.0,
+       "likes": 282.0,
+       "comments": 58.0
       },
       {
        "hour": 4.7,
-       "views": 2436.0,
-       "likes": 161.0,
-       "comments": 4.0
+       "views": 2407.0,
+       "likes": 291.0,
+       "comments": 58.0
       },
       {
        "hour": 4.9,
-       "views": 2488.0,
-       "likes": 165.0,
-       "comments": 4.0
+       "views": 2510.0,
+       "likes": 306.0,
+       "comments": 58.0
       },
       {
        "hour": 5.2,
-       "views": 2583.0,
-       "likes": 169.0,
-       "comments": 4.0
+       "views": 2631.0,
+       "likes": 319.0,
+       "comments": 59.0
       },
       {
        "hour": 5.4,
-       "views": 2664.0,
-       "likes": 172.0,
-       "comments": 4.0
+       "views": 2756.0,
+       "likes": 331.0,
+       "comments": 59.0
       },
       {
        "hour": 5.7,
-       "views": 2802.0,
-       "likes": 176.0,
-       "comments": 4.0
+       "views": 2899.0,
+       "likes": 347.0,
+       "comments": 60.0
       },
       {
        "hour": 5.9,
-       "views": 2870.0,
-       "likes": 178.0,
-       "comments": 4.0
+       "views": 3029.0,
+       "likes": 352.0,
+       "comments": 61.0
       },
       {
        "hour": 6.2,
-       "views": 2975.0,
-       "likes": 180.0,
-       "comments": 4.0
+       "views": 3136.0,
+       "likes": 364.0,
+       "comments": 61.0
       },
       {
        "hour": 6.4,
-       "views": 3051.0,
-       "likes": 183.0,
-       "comments": 4.0
+       "views": 3250.0,
+       "likes": 368.0,
+       "comments": 62.0
       }
      ],
-     "channelMedian": 10814,
+     "channelMedian": 11046,
      "x": {
-      "question": 0,
+      "question": 1,
       "exclaim": 0,
       "number": 0,
       "firstPerson": 0,
@@ -1634,7 +1628,7 @@
       "emoji": 0,
       "hashtagTitle": 0,
       "trump": 0,
-      "titleWords": 2.0794415416798357,
+      "titleWords": 2.1972245773362196,
       "cta": 0,
       "link": 0,
       "noDescription": 1,
@@ -1642,14 +1636,14 @@
       "tags": 0,
       "tagCount": 0,
       "under20": 0,
-      "under35": 1,
-      "over60": 0,
-      "logDuration": 3.1780538303479458,
+      "under35": 0,
+      "over60": 1,
+      "logDuration": 4.304065093204169,
       "weekend": 1,
-      "morning": 0,
-      "evening": 1,
+      "morning": 1,
+      "evening": 0,
       "night": 0,
-      "logMedian": 4.03402652377511,
+      "logMedian": 4.0851478121269045,
       "family:Reform": 0,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 0,
@@ -1657,59 +1651,59 @@
       "family:Partisan media": 1,
       "family:UK": 0
      },
-     "p": 0.015489
+     "p": 0.109189
     }
    ]
   },
   "3": {
    "horizon": 3,
-   "intercept": -2.9448,
+   "intercept": -1.9812,
    "features": [
     {
      "key": "logViews1h",
      "label": "Views at 1h (log10)",
      "kind": "continuous",
-     "coef": 0.099,
-     "mean": 2.933526,
-     "sd": 0.860362
+     "coef": 0.2874,
+     "mean": 2.890645,
+     "sd": 0.892307
     },
     {
      "key": "ratio1h",
      "label": "Views at 1h over the channel median (log10)",
      "kind": "continuous",
-     "coef": -0.0313,
-     "mean": -1.303923,
-     "sd": 0.465461
+     "coef": -0.0503,
+     "mean": -1.321248,
+     "sd": 0.473878
     },
     {
      "key": "logViews3h",
      "label": "Views at 3h (log10)",
      "kind": "continuous",
-     "coef": 0.6522,
-     "mean": 3.271479,
-     "sd": 0.892908
+     "coef": 0.4399,
+     "mean": 3.224382,
+     "sd": 0.940522
     },
     {
      "key": "ratio3h",
      "label": "Views at 3h over the channel median (log10)",
      "kind": "continuous",
-     "coef": 1.0677,
-     "mean": -0.96597,
-     "sd": 0.451943
+     "coef": 0.2847,
+     "mean": -0.987512,
+     "sd": 0.468545
     },
     {
      "key": "firstHour",
      "label": "Hour of the first reading",
      "kind": "continuous",
-     "coef": 0.3311,
-     "mean": 0.250602,
-     "sd": 0.140244
+     "coef": 0.2056,
+     "mean": 0.246628,
+     "sd": 0.128705
     },
     {
      "key": "question",
      "label": "Title asks a question",
      "kind": "binary",
-     "coef": 0.3382,
+     "coef": 0.202,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1717,7 +1711,7 @@
      "key": "exclaim",
      "label": "Exclamation mark in the title",
      "kind": "binary",
-     "coef": -0.3668,
+     "coef": 0.0987,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1725,7 +1719,7 @@
      "key": "number",
      "label": "A number in the title",
      "kind": "binary",
-     "coef": -0.1632,
+     "coef": 0.1063,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1733,7 +1727,7 @@
      "key": "firstPerson",
      "label": "First person in the title",
      "kind": "binary",
-     "coef": -0.0384,
+     "coef": -0.0696,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1741,7 +1735,7 @@
      "key": "you",
      "label": "Addresses the viewer",
      "kind": "binary",
-     "coef": -0.1199,
+     "coef": -0.4145,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1749,7 +1743,7 @@
      "key": "caps",
      "label": "A word in all caps",
      "kind": "binary",
-     "coef": 0.248,
+     "coef": -0.0135,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1757,7 +1751,7 @@
      "key": "anger",
      "label": "Combative words in the title",
      "kind": "binary",
-     "coef": 0.3647,
+     "coef": 0.3217,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1765,7 +1759,7 @@
      "key": "quote",
      "label": "Quotation in the title",
      "kind": "binary",
-     "coef": 0.1972,
+     "coef": 0.1464,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1773,7 +1767,7 @@
      "key": "shortTitle",
      "label": "Title of six words or fewer",
      "kind": "binary",
-     "coef": -0.3576,
+     "coef": -0.2023,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1781,7 +1775,7 @@
      "key": "longTitle",
      "label": "Title of fifteen words or more",
      "kind": "binary",
-     "coef": 0.1416,
+     "coef": -0.0735,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1789,7 +1783,7 @@
      "key": "emoji",
      "label": "Emoji in the title",
      "kind": "binary",
-     "coef": -0.185,
+     "coef": 0.1277,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1797,7 +1791,7 @@
      "key": "hashtagTitle",
      "label": "Hashtag in the title",
      "kind": "binary",
-     "coef": -0.467,
+     "coef": -0.8104,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1805,7 +1799,7 @@
      "key": "trump",
      "label": "Names Trump",
      "kind": "binary",
-     "coef": -0.628,
+     "coef": -0.7462,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1813,15 +1807,15 @@
      "key": "titleWords",
      "label": "Title length (log words)",
      "kind": "continuous",
-     "coef": -0.1986,
-     "mean": 2.244286,
-     "sd": 0.415546
+     "coef": 0.0325,
+     "mean": 2.247182,
+     "sd": 0.422852
     },
     {
      "key": "cta",
      "label": "Call to action in the description",
      "kind": "binary",
-     "coef": -0.3209,
+     "coef": -0.448,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1829,7 +1823,7 @@
      "key": "link",
      "label": "Link in the description",
      "kind": "binary",
-     "coef": -0.1462,
+     "coef": -0.1917,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1837,7 +1831,7 @@
      "key": "noDescription",
      "label": "No description",
      "kind": "binary",
-     "coef": 0.4149,
+     "coef": 0.4695,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1845,15 +1839,15 @@
      "key": "descWords",
      "label": "Description length (log words)",
      "kind": "continuous",
-     "coef": 0.1695,
-     "mean": 1.83587,
-     "sd": 1.922862
+     "coef": -0.0147,
+     "mean": 1.880855,
+     "sd": 1.928792
     },
     {
      "key": "tags",
      "label": "Has tags",
      "kind": "binary",
-     "coef": 0.2482,
+     "coef": 0.2383,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1861,15 +1855,15 @@
      "key": "tagCount",
      "label": "Tag count (log)",
      "kind": "continuous",
-     "coef": 0.0958,
-     "mean": 1.193016,
-     "sd": 1.254529
+     "coef": 0.1754,
+     "mean": 1.220459,
+     "sd": 1.258606
     },
     {
      "key": "under20",
      "label": "20 seconds or shorter",
      "kind": "binary",
-     "coef": 0.5433,
+     "coef": 0.4046,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1877,7 +1871,7 @@
      "key": "under35",
      "label": "35 seconds or shorter",
      "kind": "binary",
-     "coef": -0.1927,
+     "coef": -0.4557,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1885,7 +1879,7 @@
      "key": "over60",
      "label": "Longer than a minute",
      "kind": "binary",
-     "coef": -0.1786,
+     "coef": -0.4224,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1893,15 +1887,15 @@
      "key": "logDuration",
      "label": "Length (log seconds)",
      "kind": "continuous",
-     "coef": 0.6867,
-     "mean": 3.903091,
-     "sd": 0.708661
+     "coef": 0.4669,
+     "mean": 3.882965,
+     "sd": 0.70564
     },
     {
      "key": "weekend",
      "label": "Posted on a weekend",
      "kind": "binary",
-     "coef": -0.4147,
+     "coef": -0.4265,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1909,7 +1903,7 @@
      "key": "morning",
      "label": "Posted 6 to 11am Eastern",
      "kind": "binary",
-     "coef": 0.9498,
+     "coef": 0.5958,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1917,7 +1911,7 @@
      "key": "evening",
      "label": "Posted 6 to 11pm Eastern",
      "kind": "binary",
-     "coef": 0.0884,
+     "coef": -0.141,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1925,7 +1919,7 @@
      "key": "night",
      "label": "Posted midnight to 5am Eastern",
      "kind": "binary",
-     "coef": 0.025,
+     "coef": -0.0363,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1933,15 +1927,15 @@
      "key": "logMedian",
      "label": "Channel size (log median views)",
      "kind": "continuous",
-     "coef": -0.11,
-     "mean": 4.210936,
-     "sd": 0.875236
+     "coef": -0.6146,
+     "mean": 4.145248,
+     "sd": 0.915927
     },
     {
      "key": "family:Reform",
      "label": "Reform",
      "kind": "family",
-     "coef": -0.0049,
+     "coef": 0.4268,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1949,7 +1943,7 @@
      "key": "family:Voting rights",
      "label": "Voting rights",
      "kind": "family",
-     "coef": -0.0098,
+     "coef": -0.1065,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1957,7 +1951,7 @@
      "key": "family:Nonpartisan media",
      "label": "Nonpartisan media",
      "kind": "family",
-     "coef": 0.4213,
+     "coef": 0.5754,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1965,7 +1959,7 @@
      "key": "family:Candidates & officials",
      "label": "Candidates & officials",
      "kind": "family",
-     "coef": 0.4245,
+     "coef": -0.1926,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1973,7 +1967,7 @@
      "key": "family:Partisan media",
      "label": "Partisan media",
      "kind": "family",
-     "coef": -0.7988,
+     "coef": -0.6429,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -1981,128 +1975,128 @@
      "key": "family:UK",
      "label": "UK",
      "kind": "family",
-     "coef": -0.0323,
+     "coef": -0.0603,
      "mean": 0.0,
      "sd": 1.0
     }
    ],
    "metrics": {
     "leaveOneChannelOut": {
-     "auc": 0.689,
-     "aucPrePublishOnly": 0.487,
-     "withinChannelAuc": 0.732,
+     "auc": 0.54,
+     "aucPrePublishOnly": 0.435,
+     "withinChannelAuc": 0.572,
      "withinChannelMin": "channels with 10+ videos and 2+ of each outcome",
-     "topDecileRate": 0.303,
-     "topDecileLift": 3.14,
-     "bottomDecileRate": 0.029,
+     "topDecileRate": 0.176,
+     "topDecileLift": 1.82,
+     "bottomDecileRate": 0.143,
      "deciles": [
       {
        "decile": 1,
-       "n": 33,
-       "predicted": 0.359,
-       "observed": 0.303
+       "n": 34,
+       "predicted": 0.244,
+       "observed": 0.176
       },
       {
        "decile": 2,
-       "n": 33,
-       "predicted": 0.199,
-       "observed": 0.152
+       "n": 34,
+       "predicted": 0.166,
+       "observed": 0.176
       },
       {
        "decile": 3,
-       "n": 33,
-       "predicted": 0.144,
-       "observed": 0.03
+       "n": 34,
+       "predicted": 0.131,
+       "observed": 0.029
       },
       {
        "decile": 4,
-       "n": 33,
-       "predicted": 0.106,
-       "observed": 0.091
+       "n": 34,
+       "predicted": 0.104,
+       "observed": 0.088
       },
       {
        "decile": 5,
        "n": 34,
-       "predicted": 0.073,
-       "observed": 0.118
+       "predicted": 0.081,
+       "observed": 0.059
       },
       {
        "decile": 6,
-       "n": 33,
-       "predicted": 0.048,
-       "observed": 0.091
+       "n": 34,
+       "predicted": 0.065,
+       "observed": 0.029
       },
       {
        "decile": 7,
-       "n": 33,
-       "predicted": 0.031,
-       "observed": 0.061
+       "n": 34,
+       "predicted": 0.05,
+       "observed": 0.088
       },
       {
        "decile": 8,
-       "n": 33,
-       "predicted": 0.021,
-       "observed": 0.061
+       "n": 34,
+       "predicted": 0.038,
+       "observed": 0.147
       },
       {
        "decile": 9,
-       "n": 33,
-       "predicted": 0.012,
-       "observed": 0.03
+       "n": 34,
+       "predicted": 0.028,
+       "observed": 0.029
       },
       {
        "decile": 10,
-       "n": 34,
-       "predicted": 0.003,
-       "observed": 0.029
+       "n": 35,
+       "predicted": 0.013,
+       "observed": 0.143
       }
      ],
      "withinChannel": [
       {
        "channel": "The Democrats",
-       "n": 39,
-       "auc": 0.6
+       "n": 42,
+       "auc": 0.56
       },
       {
-       "channel": "James Talarico",
-       "n": 32,
-       "auc": 0.837
+       "channel": "Abdul El-Sayed",
+       "n": 24,
+       "auc": 0.519
       },
       {
        "channel": "PragerU",
        "n": 24,
-       "auc": 0.841
+       "auc": 0.556
       },
       {
-       "channel": "Abdul El-Sayed",
-       "n": 23,
-       "auc": 0.696
+       "channel": "Jubilee",
+       "n": 17,
+       "auc": 0.7
       }
      ],
      "perFamily": [
       {
        "family": "Candidates & officials",
-       "n": 137,
-       "baseRate": 0.124,
-       "auc": 0.625
+       "n": 133,
+       "baseRate": 0.105,
+       "auc": 0.482
       },
       {
        "family": "Nonpartisan media",
-       "n": 31,
-       "baseRate": 0.161,
-       "auc": 0.923
+       "n": 32,
+       "baseRate": 0.188,
+       "auc": 0.718
       },
       {
        "family": "Partisan media",
-       "n": 124,
-       "baseRate": 0.056,
-       "auc": 0.665
+       "n": 127,
+       "baseRate": 0.055,
+       "auc": 0.56
       },
       {
        "family": "Reform",
-       "n": 16,
-       "baseRate": 0.062,
-       "auc": 1.0
+       "n": 24,
+       "baseRate": 0.167,
+       "auc": 0.325
       },
       {
        "family": "UK",
@@ -2112,18 +2106,18 @@
       },
       {
        "family": "Voting rights",
-       "n": 20,
-       "baseRate": 0.1,
-       "auc": 0.472
+       "n": 21,
+       "baseRate": 0.095,
+       "auc": 0.474
       }
      ]
     },
     "timeSplit": {
-     "cut": "2026-10-09T22:56:24Z",
-     "train": 232,
-     "test": 100,
-     "testBaseRate": 0.09,
-     "auc": 0.801
+     "cut": "2026-10-10T01:00:19Z",
+     "train": 238,
+     "test": 103,
+     "testBaseRate": 0.126,
+     "auc": 0.74
     }
    },
    "checks": [
@@ -2274,7 +2268,7 @@
        "comments": 1.0
       }
      ],
-     "channelMedian": 1378,
+     "channelMedian": 1383,
      "x": {
       "question": 0,
       "exclaim": 0,
@@ -2304,7 +2298,7 @@
       "morning": 1,
       "evening": 0,
       "night": 0,
-      "logMedian": 3.0737183503461227,
+      "logMedian": 3.073351702386901,
       "family:Reform": 1,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 0,
@@ -2312,168 +2306,174 @@
       "family:Partisan media": 0,
       "family:UK": 0
      },
-     "p": 0.014759
+     "p": 0.113425
     },
     {
      "readings": [
       {
+       "hour": 0.0,
+       "views": 2.0,
+       "likes": 2.0,
+       "comments": 0.0
+      },
+      {
        "hour": 0.3,
-       "views": 465.0,
-       "likes": 52.0,
-       "comments": 7.0
+       "views": 1014.0,
+       "likes": 243.0,
+       "comments": 13.0
       },
       {
        "hour": 0.5,
-       "views": 988.0,
-       "likes": 103.0,
-       "comments": 14.0
-      },
-      {
-       "hour": 0.8,
-       "views": 1540.0,
-       "likes": 153.0,
-       "comments": 17.0
-      },
-      {
-       "hour": 1.0,
-       "views": 2164.0,
-       "likes": 228.0,
-       "comments": 19.0
-      },
-      {
-       "hour": 1.3,
-       "views": 2425.0,
-       "likes": 262.0,
+       "views": 2130.0,
+       "likes": 460.0,
        "comments": 25.0
       },
       {
-       "hour": 1.5,
-       "views": 2605.0,
-       "likes": 276.0,
-       "comments": 26.0
-      },
-      {
-       "hour": 1.8,
-       "views": 2724.0,
-       "likes": 306.0,
-       "comments": 26.0
-      },
-      {
-       "hour": 2.0,
-       "views": 2915.0,
-       "likes": 324.0,
-       "comments": 28.0
-      },
-      {
-       "hour": 2.3,
-       "views": 3154.0,
-       "likes": 347.0,
-       "comments": 29.0
-      },
-      {
-       "hour": 2.5,
-       "views": 3442.0,
-       "likes": 358.0,
-       "comments": 29.0
-      },
-      {
-       "hour": 2.8,
-       "views": 3789.0,
-       "likes": 374.0,
-       "comments": 29.0
-      },
-      {
-       "hour": 3.1,
-       "views": 4165.0,
-       "likes": 399.0,
-       "comments": 32.0
-      },
-      {
-       "hour": 3.3,
-       "views": 4480.0,
-       "likes": 418.0,
-       "comments": 33.0
-      },
-      {
-       "hour": 3.6,
-       "views": 4643.0,
-       "likes": 433.0,
-       "comments": 33.0
-      },
-      {
-       "hour": 3.8,
-       "views": 5006.0,
-       "likes": 448.0,
-       "comments": 33.0
-      },
-      {
-       "hour": 4.1,
-       "views": 5258.0,
-       "likes": 458.0,
-       "comments": 33.0
-      },
-      {
-       "hour": 4.3,
-       "views": 5365.0,
-       "likes": 474.0,
+       "hour": 0.8,
+       "views": 2934.0,
+       "likes": 622.0,
        "comments": 34.0
       },
       {
+       "hour": 1.0,
+       "views": 3505.0,
+       "likes": 737.0,
+       "comments": 41.0
+      },
+      {
+       "hour": 1.3,
+       "views": 3917.0,
+       "likes": 830.0,
+       "comments": 48.0
+      },
+      {
+       "hour": 1.5,
+       "views": 4259.0,
+       "likes": 927.0,
+       "comments": 57.0
+      },
+      {
+       "hour": 1.8,
+       "views": 4570.0,
+       "likes": 1010.0,
+       "comments": 63.0
+      },
+      {
+       "hour": 2.1,
+       "views": 4987.0,
+       "likes": 1090.0,
+       "comments": 68.0
+      },
+      {
+       "hour": 2.3,
+       "views": 5327.0,
+       "likes": 1185.0,
+       "comments": 73.0
+      },
+      {
+       "hour": 2.6,
+       "views": 6052.0,
+       "likes": 1258.0,
+       "comments": 78.0
+      },
+      {
+       "hour": 2.8,
+       "views": 6399.0,
+       "likes": 1323.0,
+       "comments": 84.0
+      },
+      {
+       "hour": 3.1,
+       "views": 6752.0,
+       "likes": 1377.0,
+       "comments": 85.0
+      },
+      {
+       "hour": 3.3,
+       "views": 7000.0,
+       "likes": 1424.0,
+       "comments": 87.0
+      },
+      {
+       "hour": 3.6,
+       "views": 7651.0,
+       "likes": 1471.0,
+       "comments": 89.0
+      },
+      {
+       "hour": 3.8,
+       "views": 7916.0,
+       "likes": 1504.0,
+       "comments": 90.0
+      },
+      {
+       "hour": 4.1,
+       "views": 8209.0,
+       "likes": 1540.0,
+       "comments": 92.0
+      },
+      {
+       "hour": 4.3,
+       "views": 8719.0,
+       "likes": 1567.0,
+       "comments": 92.0
+      },
+      {
        "hour": 4.6,
-       "views": 5585.0,
-       "likes": 488.0,
-       "comments": 35.0
+       "views": 9334.0,
+       "likes": 1603.0,
+       "comments": 93.0
       },
       {
        "hour": 4.8,
-       "views": 5908.0,
-       "likes": 502.0,
-       "comments": 35.0
+       "views": 9821.0,
+       "likes": 1626.0,
+       "comments": 94.0
       },
       {
        "hour": 5.1,
-       "views": 6083.0,
-       "likes": 509.0,
-       "comments": 35.0
+       "views": 10248.0,
+       "likes": 1652.0,
+       "comments": 98.0
       },
       {
        "hour": 5.3,
-       "views": 6221.0,
-       "likes": 516.0,
-       "comments": 35.0
+       "views": 10484.0,
+       "likes": 1679.0,
+       "comments": 100.0
       },
       {
        "hour": 5.6,
-       "views": 6594.0,
-       "likes": 522.0,
-       "comments": 35.0
+       "views": 10707.0,
+       "likes": 1697.0,
+       "comments": 103.0
       },
       {
        "hour": 5.8,
-       "views": 6944.0,
-       "likes": 528.0,
-       "comments": 35.0
+       "views": 11051.0,
+       "likes": 1723.0,
+       "comments": 104.0
       },
       {
        "hour": 6.1,
-       "views": 7205.0,
-       "likes": 531.0,
-       "comments": 35.0
+       "views": 11307.0,
+       "likes": 1737.0,
+       "comments": 104.0
       },
       {
-       "hour": 6.3,
-       "views": 7387.0,
-       "likes": 533.0,
-       "comments": 35.0
+       "hour": 6.4,
+       "views": 11554.0,
+       "likes": 1752.0,
+       "comments": 105.0
       }
      ],
-     "channelMedian": 50485,
+     "channelMedian": 84635,
      "x": {
-      "question": 1,
+      "question": 0,
       "exclaim": 0,
       "number": 0,
       "firstPerson": 0,
-      "you": 0,
+      "you": 1,
       "caps": 0,
       "anger": 0,
       "quote": 0,
@@ -2481,207 +2481,8 @@
       "longTitle": 0,
       "emoji": 0,
       "hashtagTitle": 0,
-      "trump": 1,
-      "titleWords": 2.1972245773362196,
-      "cta": 1,
-      "link": 1,
-      "noDescription": 0,
-      "descWords": 4.304065093204169,
-      "tags": 1,
-      "tagCount": 2.8903717578961645,
-      "under20": 0,
-      "under35": 0,
-      "over60": 0,
-      "logDuration": 3.912023005428146,
-      "weekend": 0,
-      "morning": 0,
-      "evening": 1,
-      "night": 0,
-      "logMedian": 4.505794156208896,
-      "family:Reform": 0,
-      "family:Voting rights": 0,
-      "family:Nonpartisan media": 0,
-      "family:Candidates & officials": 0,
-      "family:Partisan media": 1,
-      "family:UK": 0
-     },
-     "p": 0.021759
-    },
-    {
-     "readings": [
-      {
-       "hour": 0.2,
-       "views": 279.0,
-       "likes": 69.0,
-       "comments": 8.0
-      },
-      {
-       "hour": 0.4,
-       "views": 742.0,
-       "likes": 150.0,
-       "comments": 18.0
-      },
-      {
-       "hour": 0.7,
-       "views": 1194.0,
-       "likes": 250.0,
-       "comments": 29.0
-      },
-      {
-       "hour": 0.9,
-       "views": 1699.0,
-       "likes": 344.0,
-       "comments": 34.0
-      },
-      {
-       "hour": 1.2,
-       "views": 2182.0,
-       "likes": 431.0,
-       "comments": 46.0
-      },
-      {
-       "hour": 1.4,
-       "views": 2667.0,
-       "likes": 536.0,
-       "comments": 54.0
-      },
-      {
-       "hour": 1.7,
-       "views": 3177.0,
-       "likes": 635.0,
-       "comments": 62.0
-      },
-      {
-       "hour": 1.9,
-       "views": 3639.0,
-       "likes": 722.0,
-       "comments": 72.0
-      },
-      {
-       "hour": 2.2,
-       "views": 4145.0,
-       "likes": 817.0,
-       "comments": 80.0
-      },
-      {
-       "hour": 2.4,
-       "views": 4596.0,
-       "likes": 888.0,
-       "comments": 86.0
-      },
-      {
-       "hour": 2.7,
-       "views": 5040.0,
-       "likes": 970.0,
-       "comments": 92.0
-      },
-      {
-       "hour": 2.9,
-       "views": 5516.0,
-       "likes": 1045.0,
-       "comments": 98.0
-      },
-      {
-       "hour": 3.2,
-       "views": 6175.0,
-       "likes": 1137.0,
-       "comments": 104.0
-      },
-      {
-       "hour": 3.4,
-       "views": 6750.0,
-       "likes": 1215.0,
-       "comments": 109.0
-      },
-      {
-       "hour": 3.7,
-       "views": 7419.0,
-       "likes": 1295.0,
-       "comments": 116.0
-      },
-      {
-       "hour": 3.9,
-       "views": 8128.0,
-       "likes": 1383.0,
-       "comments": 124.0
-      },
-      {
-       "hour": 4.2,
-       "views": 8669.0,
-       "likes": 1470.0,
-       "comments": 124.0
-      },
-      {
-       "hour": 4.4,
-       "views": 9286.0,
-       "likes": 1561.0,
-       "comments": 125.0
-      },
-      {
-       "hour": 4.7,
-       "views": 10006.0,
-       "likes": 1623.0,
-       "comments": 129.0
-      },
-      {
-       "hour": 4.9,
-       "views": 10891.0,
-       "likes": 1680.0,
-       "comments": 131.0
-      },
-      {
-       "hour": 5.2,
-       "views": 11920.0,
-       "likes": 1757.0,
-       "comments": 134.0
-      },
-      {
-       "hour": 5.4,
-       "views": 12732.0,
-       "likes": 1788.0,
-       "comments": 136.0
-      },
-      {
-       "hour": 5.7,
-       "views": 13175.0,
-       "likes": 1841.0,
-       "comments": 141.0
-      },
-      {
-       "hour": 5.9,
-       "views": 13966.0,
-       "likes": 1895.0,
-       "comments": 147.0
-      },
-      {
-       "hour": 6.2,
-       "views": 15081.0,
-       "likes": 1954.0,
-       "comments": 149.0
-      },
-      {
-       "hour": 6.4,
-       "views": 16885.0,
-       "likes": 2018.0,
-       "comments": 153.0
-      }
-     ],
-     "channelMedian": 47250,
-     "x": {
-      "question": 0,
-      "exclaim": 0,
-      "number": 0,
-      "firstPerson": 0,
-      "you": 0,
-      "caps": 1,
-      "anger": 1,
-      "quote": 1,
-      "shortTitle": 0,
-      "longTitle": 0,
-      "emoji": 0,
-      "hashtagTitle": 0,
       "trump": 0,
-      "titleWords": 2.4849066497880004,
+      "titleWords": 2.1972245773362196,
       "cta": 0,
       "link": 0,
       "noDescription": 1,
@@ -2690,13 +2491,13 @@
       "tagCount": 0,
       "under20": 0,
       "under35": 0,
-      "over60": 1,
-      "logDuration": 4.653960350157523,
+      "over60": 0,
+      "logDuration": 3.8918202981106265,
       "weekend": 0,
       "morning": 0,
       "evening": 1,
       "night": 0,
-      "logMedian": 4.9469923407483725,
+      "logMedian": 4.927555129892227,
       "family:Reform": 0,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 0,
@@ -2704,170 +2505,363 @@
       "family:Partisan media": 0,
       "family:UK": 0
      },
-     "p": 0.316356
+     "p": 0.050961
     },
     {
      "readings": [
       {
-       "hour": 0.2,
-       "views": 93.0,
+       "hour": 0.1,
+       "views": 19.0,
+       "likes": 3.0,
+       "comments": 0.0
+      },
+      {
+       "hour": 0.3,
+       "views": 201.0,
        "likes": 15.0,
-       "comments": 1.0
+       "comments": 3.0
       },
       {
-       "hour": 0.4,
-       "views": 301.0,
-       "likes": 44.0,
-       "comments": 2.0
-      },
-      {
-       "hour": 0.7,
-       "views": 500.0,
-       "likes": 73.0,
+       "hour": 0.6,
+       "views": 413.0,
+       "likes": 29.0,
        "comments": 6.0
       },
       {
-       "hour": 0.9,
-       "views": 684.0,
-       "likes": 95.0,
-       "comments": 6.0
-      },
-      {
-       "hour": 1.2,
-       "views": 864.0,
-       "likes": 112.0,
+       "hour": 0.8,
+       "views": 582.0,
+       "likes": 37.0,
        "comments": 7.0
       },
       {
-       "hour": 1.4,
-       "views": 1078.0,
-       "likes": 141.0,
-       "comments": 7.0
+       "hour": 1.1,
+       "views": 766.0,
+       "likes": 50.0,
+       "comments": 13.0
       },
       {
-       "hour": 1.7,
-       "views": 1261.0,
-       "likes": 174.0,
-       "comments": 9.0
-      },
-      {
-       "hour": 1.9,
-       "views": 1401.0,
-       "likes": 191.0,
-       "comments": 11.0
-      },
-      {
-       "hour": 2.2,
-       "views": 1530.0,
-       "likes": 207.0,
-       "comments": 12.0
-      },
-      {
-       "hour": 2.4,
-       "views": 1670.0,
-       "likes": 226.0,
+       "hour": 1.3,
+       "views": 947.0,
+       "likes": 61.0,
        "comments": 14.0
       },
       {
-       "hour": 2.7,
-       "views": 1816.0,
-       "likes": 241.0,
-       "comments": 14.0
-      },
-      {
-       "hour": 2.9,
-       "views": 1953.0,
-       "likes": 250.0,
+       "hour": 1.6,
+       "views": 1122.0,
+       "likes": 75.0,
        "comments": 16.0
       },
       {
-       "hour": 3.2,
-       "views": 2183.0,
-       "likes": 262.0,
-       "comments": 16.0
-      },
-      {
-       "hour": 3.4,
-       "views": 2376.0,
-       "likes": 285.0,
-       "comments": 17.0
-      },
-      {
-       "hour": 3.7,
-       "views": 2637.0,
-       "likes": 300.0,
-       "comments": 19.0
-      },
-      {
-       "hour": 3.9,
-       "views": 2832.0,
-       "likes": 314.0,
+       "hour": 1.8,
+       "views": 1373.0,
+       "likes": 85.0,
        "comments": 20.0
       },
       {
-       "hour": 4.2,
-       "views": 3008.0,
-       "likes": 326.0,
-       "comments": 21.0
+       "hour": 2.1,
+       "views": 1609.0,
+       "likes": 96.0,
+       "comments": 24.0
       },
       {
-       "hour": 4.4,
-       "views": 3143.0,
-       "likes": 343.0,
+       "hour": 2.3,
+       "views": 1833.0,
+       "likes": 99.0,
+       "comments": 24.0
+      },
+      {
+       "hour": 2.6,
+       "views": 2032.0,
+       "likes": 107.0,
+       "comments": 29.0
+      },
+      {
+       "hour": 2.8,
+       "views": 2208.0,
+       "likes": 118.0,
+       "comments": 30.0
+      },
+      {
+       "hour": 3.1,
+       "views": 2446.0,
+       "likes": 128.0,
+       "comments": 34.0
+      },
+      {
+       "hour": 3.3,
+       "views": 2609.0,
+       "likes": 132.0,
+       "comments": 35.0
+      },
+      {
+       "hour": 3.6,
+       "views": 2777.0,
+       "likes": 137.0,
+       "comments": 37.0
+      },
+      {
+       "hour": 3.8,
+       "views": 2957.0,
+       "likes": 143.0,
+       "comments": 41.0
+      },
+      {
+       "hour": 4.1,
+       "views": 3237.0,
+       "likes": 146.0,
+       "comments": 42.0
+      },
+      {
+       "hour": 4.3,
+       "views": 3626.0,
+       "likes": 146.0,
+       "comments": 42.0
+      },
+      {
+       "hour": 4.6,
+       "views": 3882.0,
+       "likes": 157.0,
+       "comments": 47.0
+      },
+      {
+       "hour": 4.8,
+       "views": 4122.0,
+       "likes": 162.0,
+       "comments": 54.0
+      },
+      {
+       "hour": 5.1,
+       "views": 4295.0,
+       "likes": 165.0,
+       "comments": 54.0
+      },
+      {
+       "hour": 5.3,
+       "views": 4544.0,
+       "likes": 174.0,
+       "comments": 54.0
+      },
+      {
+       "hour": 5.6,
+       "views": 4937.0,
+       "likes": 177.0,
+       "comments": 55.0
+      },
+      {
+       "hour": 5.8,
+       "views": 5352.0,
+       "likes": 182.0,
+       "comments": 55.0
+      },
+      {
+       "hour": 6.1,
+       "views": 5602.0,
+       "likes": 185.0,
+       "comments": 56.0
+      },
+      {
+       "hour": 6.3,
+       "views": 5883.0,
+       "likes": 185.0,
+       "comments": 57.0
+      }
+     ],
+     "channelMedian": 62215.5,
+     "x": {
+      "question": 0,
+      "exclaim": 0,
+      "number": 0,
+      "firstPerson": 0,
+      "you": 0,
+      "caps": 0,
+      "anger": 0,
+      "quote": 1,
+      "shortTitle": 0,
+      "longTitle": 1,
+      "emoji": 0,
+      "hashtagTitle": 0,
+      "trump": 1,
+      "titleWords": 2.772588722239781,
+      "cta": 0,
+      "link": 0,
+      "noDescription": 0,
+      "descWords": 0,
+      "tags": 1,
+      "tagCount": 1.9459101490553132,
+      "under20": 1,
+      "under35": 1,
+      "over60": 0,
+      "logDuration": 2.9444389791664403,
+      "weekend": 0,
+      "morning": 0,
+      "evening": 1,
+      "night": 0,
+      "logMedian": 4.051036695141213,
+      "family:Reform": 0,
+      "family:Voting rights": 0,
+      "family:Nonpartisan media": 0,
+      "family:Candidates & officials": 1,
+      "family:Partisan media": 0,
+      "family:UK": 0
+     },
+     "p": 0.026363
+    },
+    {
+     "readings": [
+      {
+       "hour": 0.4,
+       "views": 934.0,
+       "likes": 109.0,
+       "comments": 8.0
+      },
+      {
+       "hour": 0.7,
+       "views": 1459.0,
+       "likes": 167.0,
+       "comments": 9.0
+      },
+      {
+       "hour": 0.9,
+       "views": 1984.0,
+       "likes": 226.0,
+       "comments": 9.0
+      },
+      {
+       "hour": 1.2,
+       "views": 2334.0,
+       "likes": 263.0,
+       "comments": 9.0
+      },
+      {
+       "hour": 1.4,
+       "views": 2610.0,
+       "likes": 312.0,
+       "comments": 12.0
+      },
+      {
+       "hour": 1.7,
+       "views": 2780.0,
+       "likes": 345.0,
+       "comments": 16.0
+      },
+      {
+       "hour": 1.9,
+       "views": 3004.0,
+       "likes": 393.0,
+       "comments": 16.0
+      },
+      {
+       "hour": 2.2,
+       "views": 3178.0,
+       "likes": 412.0,
+       "comments": 18.0
+      },
+      {
+       "hour": 2.4,
+       "views": 3551.0,
+       "likes": 433.0,
+       "comments": 18.0
+      },
+      {
+       "hour": 2.7,
+       "views": 3820.0,
+       "likes": 455.0,
+       "comments": 20.0
+      },
+      {
+       "hour": 2.9,
+       "views": 4230.0,
+       "likes": 494.0,
        "comments": 23.0
       },
       {
+       "hour": 3.2,
+       "views": 4564.0,
+       "likes": 534.0,
+       "comments": 23.0
+      },
+      {
+       "hour": 3.4,
+       "views": 4876.0,
+       "likes": 565.0,
+       "comments": 23.0
+      },
+      {
+       "hour": 3.7,
+       "views": 5180.0,
+       "likes": 591.0,
+       "comments": 23.0
+      },
+      {
+       "hour": 3.9,
+       "views": 5417.0,
+       "likes": 617.0,
+       "comments": 23.0
+      },
+      {
+       "hour": 4.2,
+       "views": 5710.0,
+       "likes": 631.0,
+       "comments": 25.0
+      },
+      {
+       "hour": 4.4,
+       "views": 5964.0,
+       "likes": 649.0,
+       "comments": 25.0
+      },
+      {
        "hour": 4.7,
-       "views": 3279.0,
-       "likes": 353.0,
-       "comments": 24.0
+       "views": 6262.0,
+       "likes": 670.0,
+       "comments": 25.0
       },
       {
        "hour": 4.9,
-       "views": 3473.0,
-       "likes": 360.0,
-       "comments": 24.0
+       "views": 6534.0,
+       "likes": 687.0,
+       "comments": 25.0
       },
       {
        "hour": 5.2,
-       "views": 3614.0,
-       "likes": 376.0,
-       "comments": 24.0
+       "views": 6837.0,
+       "likes": 711.0,
+       "comments": 25.0
       },
       {
        "hour": 5.4,
-       "views": 3816.0,
-       "likes": 386.0,
-       "comments": 24.0
+       "views": 7159.0,
+       "likes": 727.0,
+       "comments": 25.0
       },
       {
        "hour": 5.7,
-       "views": 3959.0,
-       "likes": 399.0,
-       "comments": 24.0
+       "views": 7395.0,
+       "likes": 740.0,
+       "comments": 25.0
       },
       {
        "hour": 5.9,
-       "views": 4132.0,
-       "likes": 410.0,
-       "comments": 24.0
+       "views": 7725.0,
+       "likes": 757.0,
+       "comments": 27.0
       },
       {
        "hour": 6.2,
-       "views": 4278.0,
-       "likes": 424.0,
+       "views": 7973.0,
+       "likes": 757.0,
        "comments": 27.0
       },
       {
        "hour": 6.4,
-       "views": 4445.0,
-       "likes": 434.0,
-       "comments": 29.0
+       "views": 8256.0,
+       "likes": 767.0,
+       "comments": 27.0
       }
      ],
-     "channelMedian": 10814,
+     "channelMedian": 42258.5,
      "x": {
-      "question": 1,
+      "question": 0,
       "exclaim": 0,
       "number": 0,
       "firstPerson": 0,
@@ -2883,19 +2877,19 @@
       "titleWords": 1.9459101490553132,
       "cta": 0,
       "link": 0,
-      "noDescription": 1,
+      "noDescription": 0,
       "descWords": 0,
-      "tags": 0,
-      "tagCount": 0,
+      "tags": 1,
+      "tagCount": 1.6094379124341003,
       "under20": 0,
-      "under35": 1,
-      "over60": 0,
-      "logDuration": 3.4657359027997265,
+      "under35": 0,
+      "over60": 1,
+      "logDuration": 4.394449154672439,
       "weekend": 0,
       "morning": 0,
       "evening": 1,
       "night": 0,
-      "logMedian": 4.03402652377511,
+      "logMedian": 5.111977904962384,
       "family:Reform": 0,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 0,
@@ -2903,204 +2897,198 @@
       "family:Partisan media": 1,
       "family:UK": 0
      },
-     "p": 0.027662
+     "p": 0.05451
     },
     {
      "readings": [
       {
-       "hour": 0.0,
-       "views": 1.0,
-       "likes": 0.0,
+       "hour": 0.2,
+       "views": 146.0,
+       "likes": 12.0,
        "comments": 0.0
       },
       {
-       "hour": 0.3,
-       "views": 16.0,
-       "likes": 0.0,
-       "comments": 0.0
-      },
-      {
-       "hour": 0.5,
-       "views": 26.0,
-       "likes": 0.0,
-       "comments": 0.0
-      },
-      {
-       "hour": 0.8,
-       "views": 32.0,
-       "likes": 0.0,
-       "comments": 0.0
-      },
-      {
-       "hour": 1.0,
-       "views": 40.0,
-       "likes": 0.0,
+       "hour": 0.4,
+       "views": 519.0,
+       "likes": 35.0,
        "comments": 1.0
       },
       {
-       "hour": 1.3,
-       "views": 45.0,
-       "likes": 0.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 1.5,
-       "views": 54.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 1.8,
-       "views": 64.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 2.0,
-       "views": 70.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 2.3,
-       "views": 80.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 2.5,
-       "views": 88.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 2.8,
-       "views": 100.0,
-       "likes": 2.0,
+       "hour": 0.7,
+       "views": 1093.0,
+       "likes": 71.0,
        "comments": 2.0
       },
       {
-       "hour": 3.0,
-       "views": 108.0,
-       "likes": 2.0,
-       "comments": 2.0
+       "hour": 0.9,
+       "views": 1938.0,
+       "likes": 144.0,
+       "comments": 6.0
       },
       {
-       "hour": 3.3,
-       "views": 115.0,
-       "likes": 2.0,
-       "comments": 2.0
+       "hour": 1.2,
+       "views": 2799.0,
+       "likes": 214.0,
+       "comments": 10.0
       },
       {
-       "hour": 3.5,
-       "views": 122.0,
-       "likes": 2.0,
-       "comments": 2.0
+       "hour": 1.4,
+       "views": 3406.0,
+       "likes": 280.0,
+       "comments": 15.0
       },
       {
-       "hour": 3.8,
-       "views": 133.0,
-       "likes": 2.0,
-       "comments": 2.0
+       "hour": 1.7,
+       "views": 3829.0,
+       "likes": 314.0,
+       "comments": 15.0
       },
       {
-       "hour": 4.0,
-       "views": 142.0,
-       "likes": 4.0,
-       "comments": 2.0
+       "hour": 1.9,
+       "views": 4152.0,
+       "likes": 345.0,
+       "comments": 16.0
       },
       {
-       "hour": 4.3,
-       "views": 147.0,
-       "likes": 4.0,
-       "comments": 2.0
+       "hour": 2.2,
+       "views": 4562.0,
+       "likes": 379.0,
+       "comments": 18.0
       },
       {
-       "hour": 4.5,
-       "views": 156.0,
-       "likes": 4.0,
-       "comments": 2.0
+       "hour": 2.4,
+       "views": 5010.0,
+       "likes": 408.0,
+       "comments": 21.0
       },
       {
-       "hour": 4.8,
-       "views": 169.0,
-       "likes": 5.0,
-       "comments": 2.0
+       "hour": 2.7,
+       "views": 5645.0,
+       "likes": 435.0,
+       "comments": 22.0
       },
       {
-       "hour": 5.0,
-       "views": 177.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 2.9,
+       "views": 6144.0,
+       "likes": 450.0,
+       "comments": 24.0
       },
       {
-       "hour": 5.3,
-       "views": 180.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 3.2,
+       "views": 6750.0,
+       "likes": 465.0,
+       "comments": 24.0
       },
       {
-       "hour": 5.5,
-       "views": 184.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 3.4,
+       "views": 7611.0,
+       "likes": 475.0,
+       "comments": 25.0
       },
       {
-       "hour": 5.8,
-       "views": 191.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 3.7,
+       "views": 8049.0,
+       "likes": 483.0,
+       "comments": 25.0
       },
       {
-       "hour": 6.0,
-       "views": 196.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 3.9,
+       "views": 8670.0,
+       "likes": 493.0,
+       "comments": 25.0
       },
       {
-       "hour": 6.3,
-       "views": 205.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 4.2,
+       "views": 9242.0,
+       "likes": 502.0,
+       "comments": 25.0
       },
       {
-       "hour": 6.5,
-       "views": 212.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 4.4,
+       "views": 9834.0,
+       "likes": 513.0,
+       "comments": 25.0
+      },
+      {
+       "hour": 4.7,
+       "views": 10445.0,
+       "likes": 519.0,
+       "comments": 25.0
+      },
+      {
+       "hour": 4.9,
+       "views": 10877.0,
+       "likes": 528.0,
+       "comments": 27.0
+      },
+      {
+       "hour": 5.2,
+       "views": 11457.0,
+       "likes": 534.0,
+       "comments": 29.0
+      },
+      {
+       "hour": 5.4,
+       "views": 11836.0,
+       "likes": 540.0,
+       "comments": 31.0
+      },
+      {
+       "hour": 5.7,
+       "views": 12552.0,
+       "likes": 553.0,
+       "comments": 31.0
+      },
+      {
+       "hour": 5.9,
+       "views": 13166.0,
+       "likes": 561.0,
+       "comments": 31.0
+      },
+      {
+       "hour": 6.2,
+       "views": 13482.0,
+       "likes": 569.0,
+       "comments": 31.0
+      },
+      {
+       "hour": 6.4,
+       "views": 13902.0,
+       "likes": 578.0,
+       "comments": 33.0
       }
      ],
-     "channelMedian": 7262,
+     "channelMedian": 58061.5,
      "x": {
       "question": 0,
-      "exclaim": 0,
-      "number": 0,
+      "exclaim": 1,
+      "number": 1,
       "firstPerson": 0,
-      "you": 1,
+      "you": 0,
       "caps": 0,
       "anger": 0,
       "quote": 0,
-      "shortTitle": 1,
+      "shortTitle": 0,
       "longTitle": 0,
       "emoji": 0,
-      "hashtagTitle": 0,
+      "hashtagTitle": 1,
       "trump": 0,
-      "titleWords": 1.791759469228055,
+      "titleWords": 2.5649493574615367,
       "cta": 0,
-      "link": 0,
+      "link": 1,
       "noDescription": 0,
-      "descWords": 2.8903717578961645,
-      "tags": 0,
-      "tagCount": 0,
+      "descWords": 4.465908118654584,
+      "tags": 1,
+      "tagCount": 3.044522437723423,
       "under20": 0,
-      "under35": 1,
-      "over60": 0,
-      "logDuration": 3.1354942159291497,
+      "under35": 0,
+      "over60": 1,
+      "logDuration": 4.382026634673881,
       "weekend": 0,
       "morning": 0,
       "evening": 0,
       "night": 0,
-      "logMedian": 3.8611160441613954,
+      "logMedian": 4.661064563023236,
       "family:Reform": 0,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 1,
@@ -3108,170 +3096,170 @@
       "family:Partisan media": 0,
       "family:UK": 0
      },
-     "p": 0.000687
+     "p": 0.1431
     },
     {
      "readings": [
       {
        "hour": 0.2,
-       "views": 57.0,
-       "likes": 6.0,
-       "comments": 0.0
+       "views": 77.0,
+       "likes": 13.0,
+       "comments": 2.0
       },
       {
        "hour": 0.4,
-       "views": 200.0,
-       "likes": 13.0,
-       "comments": 1.0
+       "views": 254.0,
+       "likes": 38.0,
+       "comments": 5.0
       },
       {
        "hour": 0.7,
-       "views": 426.0,
-       "likes": 33.0,
-       "comments": 1.0
+       "views": 431.0,
+       "likes": 57.0,
+       "comments": 9.0
       },
       {
        "hour": 0.9,
-       "views": 681.0,
-       "likes": 44.0,
-       "comments": 1.0
+       "views": 600.0,
+       "likes": 87.0,
+       "comments": 13.0
       },
       {
        "hour": 1.2,
-       "views": 904.0,
-       "likes": 55.0,
-       "comments": 2.0
+       "views": 778.0,
+       "likes": 104.0,
+       "comments": 14.0
       },
       {
        "hour": 1.4,
-       "views": 1015.0,
-       "likes": 63.0,
-       "comments": 2.0
+       "views": 927.0,
+       "likes": 126.0,
+       "comments": 21.0
       },
       {
        "hour": 1.7,
-       "views": 1126.0,
-       "likes": 72.0,
-       "comments": 2.0
+       "views": 1051.0,
+       "likes": 141.0,
+       "comments": 26.0
       },
       {
        "hour": 1.9,
-       "views": 1192.0,
-       "likes": 82.0,
-       "comments": 2.0
+       "views": 1104.0,
+       "likes": 158.0,
+       "comments": 27.0
       },
       {
        "hour": 2.2,
-       "views": 1285.0,
-       "likes": 88.0,
-       "comments": 2.0
+       "views": 1196.0,
+       "likes": 176.0,
+       "comments": 29.0
       },
       {
        "hour": 2.4,
-       "views": 1386.0,
-       "likes": 97.0,
-       "comments": 2.0
+       "views": 1303.0,
+       "likes": 188.0,
+       "comments": 32.0
       },
       {
        "hour": 2.7,
-       "views": 1480.0,
-       "likes": 107.0,
-       "comments": 2.0
+       "views": 1417.0,
+       "likes": 196.0,
+       "comments": 35.0
       },
       {
        "hour": 2.9,
-       "views": 1629.0,
-       "likes": 115.0,
-       "comments": 4.0
+       "views": 1538.0,
+       "likes": 207.0,
+       "comments": 42.0
       },
       {
        "hour": 3.2,
-       "views": 1762.0,
-       "likes": 129.0,
-       "comments": 4.0
+       "views": 1632.0,
+       "likes": 215.0,
+       "comments": 47.0
       },
       {
        "hour": 3.4,
-       "views": 1829.0,
-       "likes": 137.0,
-       "comments": 4.0
+       "views": 1744.0,
+       "likes": 221.0,
+       "comments": 47.0
       },
       {
        "hour": 3.7,
-       "views": 2024.0,
-       "likes": 149.0,
-       "comments": 4.0
+       "views": 1889.0,
+       "likes": 236.0,
+       "comments": 51.0
       },
       {
        "hour": 3.9,
-       "views": 2091.0,
-       "likes": 152.0,
-       "comments": 4.0
+       "views": 2029.0,
+       "likes": 254.0,
+       "comments": 52.0
       },
       {
        "hour": 4.2,
-       "views": 2212.0,
-       "likes": 157.0,
-       "comments": 4.0
+       "views": 2187.0,
+       "likes": 269.0,
+       "comments": 55.0
       },
       {
        "hour": 4.4,
-       "views": 2286.0,
-       "likes": 160.0,
-       "comments": 4.0
+       "views": 2313.0,
+       "likes": 282.0,
+       "comments": 58.0
       },
       {
        "hour": 4.7,
-       "views": 2436.0,
-       "likes": 161.0,
-       "comments": 4.0
+       "views": 2407.0,
+       "likes": 291.0,
+       "comments": 58.0
       },
       {
        "hour": 4.9,
-       "views": 2488.0,
-       "likes": 165.0,
-       "comments": 4.0
+       "views": 2510.0,
+       "likes": 306.0,
+       "comments": 58.0
       },
       {
        "hour": 5.2,
-       "views": 2583.0,
-       "likes": 169.0,
-       "comments": 4.0
+       "views": 2631.0,
+       "likes": 319.0,
+       "comments": 59.0
       },
       {
        "hour": 5.4,
-       "views": 2664.0,
-       "likes": 172.0,
-       "comments": 4.0
+       "views": 2756.0,
+       "likes": 331.0,
+       "comments": 59.0
       },
       {
        "hour": 5.7,
-       "views": 2802.0,
-       "likes": 176.0,
-       "comments": 4.0
+       "views": 2899.0,
+       "likes": 347.0,
+       "comments": 60.0
       },
       {
        "hour": 5.9,
-       "views": 2870.0,
-       "likes": 178.0,
-       "comments": 4.0
+       "views": 3029.0,
+       "likes": 352.0,
+       "comments": 61.0
       },
       {
        "hour": 6.2,
-       "views": 2975.0,
-       "likes": 180.0,
-       "comments": 4.0
+       "views": 3136.0,
+       "likes": 364.0,
+       "comments": 61.0
       },
       {
        "hour": 6.4,
-       "views": 3051.0,
-       "likes": 183.0,
-       "comments": 4.0
+       "views": 3250.0,
+       "likes": 368.0,
+       "comments": 62.0
       }
      ],
-     "channelMedian": 10814,
+     "channelMedian": 11046,
      "x": {
-      "question": 0,
+      "question": 1,
       "exclaim": 0,
       "number": 0,
       "firstPerson": 0,
@@ -3284,7 +3272,7 @@
       "emoji": 0,
       "hashtagTitle": 0,
       "trump": 0,
-      "titleWords": 2.0794415416798357,
+      "titleWords": 2.1972245773362196,
       "cta": 0,
       "link": 0,
       "noDescription": 1,
@@ -3292,14 +3280,14 @@
       "tags": 0,
       "tagCount": 0,
       "under20": 0,
-      "under35": 1,
-      "over60": 0,
-      "logDuration": 3.1780538303479458,
+      "under35": 0,
+      "over60": 1,
+      "logDuration": 4.304065093204169,
       "weekend": 1,
-      "morning": 0,
-      "evening": 1,
+      "morning": 1,
+      "evening": 0,
       "night": 0,
-      "logMedian": 4.03402652377511,
+      "logMedian": 4.0851478121269045,
       "family:Reform": 0,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 0,
@@ -3307,61 +3295,61 @@
       "family:Partisan media": 1,
       "family:UK": 0
      },
-     "p": 0.010554
+     "p": 0.109923
     }
    ]
   },
   "6": {
    "horizon": 6,
-   "intercept": -3.9533,
+   "intercept": -2.1632,
    "features": [
     {
      "key": "logViews1h",
      "label": "Views at 1h (log10)",
      "kind": "continuous",
-     "coef": -0.3564,
-     "mean": 2.933526,
-     "sd": 0.860362
+     "coef": -0.1351,
+     "mean": 2.890645,
+     "sd": 0.892307
     },
     {
      "key": "ratio1h",
      "label": "Views at 1h over the channel median (log10)",
      "kind": "continuous",
-     "coef": -0.1342,
-     "mean": -1.303923,
-     "sd": 0.465461
+     "coef": -0.0265,
+     "mean": -1.321248,
+     "sd": 0.473878
     },
     {
      "key": "logViews3h",
      "label": "Views at 3h (log10)",
      "kind": "continuous",
-     "coef": -0.2928,
-     "mean": 3.283469,
-     "sd": 0.893855
+     "coef": -0.3885,
+     "mean": 3.235818,
+     "sd": 0.941335
     },
     {
      "key": "ratio3h",
      "label": "Views at 3h over the channel median (log10)",
      "kind": "continuous",
-     "coef": -0.0389,
-     "mean": -0.95398,
-     "sd": 0.452112
+     "coef": -0.5493,
+     "mean": -0.976075,
+     "sd": 0.469038
     },
     {
      "key": "logViews6h",
      "label": "Views at 6h (log10)",
      "kind": "continuous",
-     "coef": 0.6515,
-     "mean": 3.574751,
-     "sd": 0.907524
+     "coef": 0.4319,
+     "mean": 3.52419,
+     "sd": 0.964382
     },
     {
      "key": "ratio6h",
      "label": "Views at 6h over the channel median (log10)",
      "kind": "continuous",
-     "coef": 1.9356,
-     "mean": -0.662698,
-     "sd": 0.431593
+     "coef": 1.1527,
+     "mean": -0.687704,
+     "sd": 0.45503
     },
     {
      "key": "hasCounts6h",
@@ -3375,31 +3363,31 @@
      "key": "logLikes6h",
      "label": "Likes at 6h (log10)",
      "kind": "continuous",
-     "coef": 0.8112,
-     "mean": 2.475328,
-     "sd": 0.910441
+     "coef": 0.3135,
+     "mean": 2.421421,
+     "sd": 0.973489
     },
     {
      "key": "logComments6h",
      "label": "Comments at 6h (log10)",
      "kind": "continuous",
-     "coef": 0.6348,
-     "mean": 1.397882,
-     "sd": 0.799506
+     "coef": 0.9285,
+     "mean": 1.369818,
+     "sd": 0.82914
     },
     {
      "key": "firstHour",
      "label": "Hour of the first reading",
      "kind": "continuous",
-     "coef": 0.4622,
-     "mean": 0.250602,
-     "sd": 0.140244
+     "coef": 0.2287,
+     "mean": 0.246628,
+     "sd": 0.128705
     },
     {
      "key": "question",
      "label": "Title asks a question",
      "kind": "binary",
-     "coef": 0.4121,
+     "coef": 0.2164,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3407,7 +3395,7 @@
      "key": "exclaim",
      "label": "Exclamation mark in the title",
      "kind": "binary",
-     "coef": -0.1854,
+     "coef": 0.1799,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3415,7 +3403,7 @@
      "key": "number",
      "label": "A number in the title",
      "kind": "binary",
-     "coef": -0.0818,
+     "coef": 0.3066,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3423,7 +3411,7 @@
      "key": "firstPerson",
      "label": "First person in the title",
      "kind": "binary",
-     "coef": -0.1116,
+     "coef": -0.2312,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3431,7 +3419,7 @@
      "key": "you",
      "label": "Addresses the viewer",
      "kind": "binary",
-     "coef": 0.1024,
+     "coef": -0.2868,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3439,7 +3427,7 @@
      "key": "caps",
      "label": "A word in all caps",
      "kind": "binary",
-     "coef": 0.076,
+     "coef": -0.3295,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3447,7 +3435,7 @@
      "key": "anger",
      "label": "Combative words in the title",
      "kind": "binary",
-     "coef": 0.2169,
+     "coef": 0.3074,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3455,7 +3443,7 @@
      "key": "quote",
      "label": "Quotation in the title",
      "kind": "binary",
-     "coef": 0.3045,
+     "coef": 0.1259,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3463,7 +3451,7 @@
      "key": "shortTitle",
      "label": "Title of six words or fewer",
      "kind": "binary",
-     "coef": -0.2677,
+     "coef": -0.1475,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3471,7 +3459,7 @@
      "key": "longTitle",
      "label": "Title of fifteen words or more",
      "kind": "binary",
-     "coef": 0.195,
+     "coef": -0.0015,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3479,7 +3467,7 @@
      "key": "emoji",
      "label": "Emoji in the title",
      "kind": "binary",
-     "coef": -0.1204,
+     "coef": 0.0769,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3487,7 +3475,7 @@
      "key": "hashtagTitle",
      "label": "Hashtag in the title",
      "kind": "binary",
-     "coef": -0.2943,
+     "coef": -0.8651,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3495,7 +3483,7 @@
      "key": "trump",
      "label": "Names Trump",
      "kind": "binary",
-     "coef": -0.6116,
+     "coef": -0.7592,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3503,15 +3491,15 @@
      "key": "titleWords",
      "label": "Title length (log words)",
      "kind": "continuous",
-     "coef": -0.1034,
-     "mean": 2.244286,
-     "sd": 0.415546
+     "coef": 0.1537,
+     "mean": 2.247182,
+     "sd": 0.422852
     },
     {
      "key": "cta",
      "label": "Call to action in the description",
      "kind": "binary",
-     "coef": -0.1338,
+     "coef": -0.4243,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3519,7 +3507,7 @@
      "key": "link",
      "label": "Link in the description",
      "kind": "binary",
-     "coef": -0.0137,
+     "coef": -0.054,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3527,7 +3515,7 @@
      "key": "noDescription",
      "label": "No description",
      "kind": "binary",
-     "coef": 0.4856,
+     "coef": 0.6469,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3535,15 +3523,15 @@
      "key": "descWords",
      "label": "Description length (log words)",
      "kind": "continuous",
-     "coef": 0.0866,
-     "mean": 1.83587,
-     "sd": 1.922862
+     "coef": -0.061,
+     "mean": 1.880855,
+     "sd": 1.928792
     },
     {
      "key": "tags",
      "label": "Has tags",
      "kind": "binary",
-     "coef": 0.1773,
+     "coef": 0.2009,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3551,15 +3539,15 @@
      "key": "tagCount",
      "label": "Tag count (log)",
      "kind": "continuous",
-     "coef": 0.0475,
-     "mean": 1.193016,
-     "sd": 1.254529
+     "coef": 0.128,
+     "mean": 1.220459,
+     "sd": 1.258606
     },
     {
      "key": "under20",
      "label": "20 seconds or shorter",
      "kind": "binary",
-     "coef": 0.3813,
+     "coef": 0.2797,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3567,7 +3555,7 @@
      "key": "under35",
      "label": "35 seconds or shorter",
      "kind": "binary",
-     "coef": -0.1083,
+     "coef": -0.4705,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3575,7 +3563,7 @@
      "key": "over60",
      "label": "Longer than a minute",
      "kind": "binary",
-     "coef": -0.0412,
+     "coef": -0.4519,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3583,15 +3571,15 @@
      "key": "logDuration",
      "label": "Length (log seconds)",
      "kind": "continuous",
-     "coef": 0.6637,
-     "mean": 3.903091,
-     "sd": 0.708661
+     "coef": 0.3612,
+     "mean": 3.882965,
+     "sd": 0.70564
     },
     {
      "key": "weekend",
      "label": "Posted on a weekend",
      "kind": "binary",
-     "coef": -0.5975,
+     "coef": -0.6262,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3599,7 +3587,7 @@
      "key": "morning",
      "label": "Posted 6 to 11am Eastern",
      "kind": "binary",
-     "coef": 0.7934,
+     "coef": 0.3753,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3607,7 +3595,7 @@
      "key": "evening",
      "label": "Posted 6 to 11pm Eastern",
      "kind": "binary",
-     "coef": 0.0305,
+     "coef": -0.2079,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3615,7 +3603,7 @@
      "key": "night",
      "label": "Posted midnight to 5am Eastern",
      "kind": "binary",
-     "coef": 0.197,
+     "coef": -0.0161,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3623,15 +3611,15 @@
      "key": "logMedian",
      "label": "Channel size (log median views)",
      "kind": "continuous",
-     "coef": -0.5369,
-     "mean": 4.210936,
-     "sd": 0.875236
+     "coef": -0.7998,
+     "mean": 4.145248,
+     "sd": 0.915927
     },
     {
      "key": "family:Reform",
      "label": "Reform",
      "kind": "family",
-     "coef": 0.1124,
+     "coef": 0.6966,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3639,7 +3627,7 @@
      "key": "family:Voting rights",
      "label": "Voting rights",
      "kind": "family",
-     "coef": -0.3163,
+     "coef": -0.2319,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3647,7 +3635,7 @@
      "key": "family:Nonpartisan media",
      "label": "Nonpartisan media",
      "kind": "family",
-     "coef": 0.345,
+     "coef": 0.5399,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3655,7 +3643,7 @@
      "key": "family:Candidates & officials",
      "label": "Candidates & officials",
      "kind": "family",
-     "coef": 0.626,
+     "coef": -0.2616,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3663,7 +3651,7 @@
      "key": "family:Partisan media",
      "label": "Partisan media",
      "kind": "family",
-     "coef": -0.7631,
+     "coef": -0.7252,
      "mean": 0.0,
      "sd": 1.0
     },
@@ -3671,128 +3659,128 @@
      "key": "family:UK",
      "label": "UK",
      "kind": "family",
-     "coef": -0.004,
+     "coef": -0.0178,
      "mean": 0.0,
      "sd": 1.0
     }
    ],
    "metrics": {
     "leaveOneChannelOut": {
-     "auc": 0.877,
-     "aucPrePublishOnly": 0.487,
-     "withinChannelAuc": 0.903,
+     "auc": 0.729,
+     "aucPrePublishOnly": 0.435,
+     "withinChannelAuc": 0.862,
      "withinChannelMin": "channels with 10+ videos and 2+ of each outcome",
-     "topDecileRate": 0.485,
-     "topDecileLift": 5.03,
-     "bottomDecileRate": 0.0,
+     "topDecileRate": 0.353,
+     "topDecileLift": 3.65,
+     "bottomDecileRate": 0.086,
      "deciles": [
       {
        "decile": 1,
-       "n": 33,
-       "predicted": 0.472,
-       "observed": 0.485
+       "n": 34,
+       "predicted": 0.401,
+       "observed": 0.353
       },
       {
        "decile": 2,
-       "n": 33,
-       "predicted": 0.21,
-       "observed": 0.182
+       "n": 34,
+       "predicted": 0.179,
+       "observed": 0.147
       },
       {
        "decile": 3,
-       "n": 33,
-       "predicted": 0.122,
-       "observed": 0.152
+       "n": 34,
+       "predicted": 0.128,
+       "observed": 0.059
       },
       {
        "decile": 4,
-       "n": 33,
-       "predicted": 0.065,
-       "observed": 0.091
+       "n": 34,
+       "predicted": 0.096,
+       "observed": 0.118
       },
       {
        "decile": 5,
        "n": 34,
-       "predicted": 0.038,
-       "observed": 0.0
+       "predicted": 0.069,
+       "observed": 0.147
       },
       {
        "decile": 6,
-       "n": 33,
-       "predicted": 0.024,
-       "observed": 0.03
+       "n": 34,
+       "predicted": 0.047,
+       "observed": 0.029
       },
       {
        "decile": 7,
-       "n": 33,
-       "predicted": 0.013,
-       "observed": 0.03
+       "n": 34,
+       "predicted": 0.033,
+       "observed": 0.029
       },
       {
        "decile": 8,
-       "n": 33,
-       "predicted": 0.005,
+       "n": 34,
+       "predicted": 0.024,
        "observed": 0.0
       },
       {
        "decile": 9,
-       "n": 33,
-       "predicted": 0.002,
+       "n": 34,
+       "predicted": 0.015,
        "observed": 0.0
       },
       {
        "decile": 10,
-       "n": 34,
-       "predicted": 0.0,
-       "observed": 0.0
+       "n": 35,
+       "predicted": 0.005,
+       "observed": 0.086
       }
      ],
      "withinChannel": [
       {
        "channel": "The Democrats",
-       "n": 39,
-       "auc": 0.921
+       "n": 42,
+       "auc": 0.852
       },
       {
-       "channel": "James Talarico",
-       "n": 32,
-       "auc": 0.852
+       "channel": "Abdul El-Sayed",
+       "n": 24,
+       "auc": 0.787
       },
       {
        "channel": "PragerU",
        "n": 24,
-       "auc": 1.0
+       "auc": 0.952
       },
       {
-       "channel": "Abdul El-Sayed",
-       "n": 23,
-       "auc": 0.843
+       "channel": "Jubilee",
+       "n": 17,
+       "auc": 0.867
       }
      ],
      "perFamily": [
       {
        "family": "Candidates & officials",
-       "n": 137,
-       "baseRate": 0.124,
-       "auc": 0.823
+       "n": 133,
+       "baseRate": 0.105,
+       "auc": 0.735
       },
       {
        "family": "Nonpartisan media",
-       "n": 31,
-       "baseRate": 0.161,
-       "auc": 0.992
+       "n": 32,
+       "baseRate": 0.188,
+       "auc": 0.962
       },
       {
        "family": "Partisan media",
-       "n": 124,
-       "baseRate": 0.056,
-       "auc": 0.821
+       "n": 127,
+       "baseRate": 0.055,
+       "auc": 0.754
       },
       {
        "family": "Reform",
-       "n": 16,
-       "baseRate": 0.062,
-       "auc": 1.0
+       "n": 24,
+       "baseRate": 0.167,
+       "auc": 0.2
       },
       {
        "family": "UK",
@@ -3802,18 +3790,18 @@
       },
       {
        "family": "Voting rights",
-       "n": 20,
-       "baseRate": 0.1,
-       "auc": 1.0
+       "n": 21,
+       "baseRate": 0.095,
+       "auc": 0.921
       }
      ]
     },
     "timeSplit": {
-     "cut": "2026-10-09T22:56:24Z",
-     "train": 232,
-     "test": 100,
-     "testBaseRate": 0.09,
-     "auc": 0.863
+     "cut": "2026-10-10T01:00:19Z",
+     "train": 238,
+     "test": 103,
+     "testBaseRate": 0.126,
+     "auc": 0.697
     }
    },
    "checks": [
@@ -3964,7 +3952,7 @@
        "comments": 1.0
       }
      ],
-     "channelMedian": 1378,
+     "channelMedian": 1383,
      "x": {
       "question": 0,
       "exclaim": 0,
@@ -3994,7 +3982,7 @@
       "morning": 1,
       "evening": 0,
       "night": 0,
-      "logMedian": 3.0737183503461227,
+      "logMedian": 3.073351702386901,
       "family:Reform": 1,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 0,
@@ -4002,168 +3990,174 @@
       "family:Partisan media": 0,
       "family:UK": 0
      },
-     "p": 0.002835
+     "p": 0.096055
     },
     {
      "readings": [
       {
+       "hour": 0.0,
+       "views": 2.0,
+       "likes": 2.0,
+       "comments": 0.0
+      },
+      {
        "hour": 0.3,
-       "views": 465.0,
-       "likes": 52.0,
-       "comments": 7.0
+       "views": 1014.0,
+       "likes": 243.0,
+       "comments": 13.0
       },
       {
        "hour": 0.5,
-       "views": 988.0,
-       "likes": 103.0,
-       "comments": 14.0
-      },
-      {
-       "hour": 0.8,
-       "views": 1540.0,
-       "likes": 153.0,
-       "comments": 17.0
-      },
-      {
-       "hour": 1.0,
-       "views": 2164.0,
-       "likes": 228.0,
-       "comments": 19.0
-      },
-      {
-       "hour": 1.3,
-       "views": 2425.0,
-       "likes": 262.0,
+       "views": 2130.0,
+       "likes": 460.0,
        "comments": 25.0
       },
       {
-       "hour": 1.5,
-       "views": 2605.0,
-       "likes": 276.0,
-       "comments": 26.0
-      },
-      {
-       "hour": 1.8,
-       "views": 2724.0,
-       "likes": 306.0,
-       "comments": 26.0
-      },
-      {
-       "hour": 2.0,
-       "views": 2915.0,
-       "likes": 324.0,
-       "comments": 28.0
-      },
-      {
-       "hour": 2.3,
-       "views": 3154.0,
-       "likes": 347.0,
-       "comments": 29.0
-      },
-      {
-       "hour": 2.5,
-       "views": 3442.0,
-       "likes": 358.0,
-       "comments": 29.0
-      },
-      {
-       "hour": 2.8,
-       "views": 3789.0,
-       "likes": 374.0,
-       "comments": 29.0
-      },
-      {
-       "hour": 3.1,
-       "views": 4165.0,
-       "likes": 399.0,
-       "comments": 32.0
-      },
-      {
-       "hour": 3.3,
-       "views": 4480.0,
-       "likes": 418.0,
-       "comments": 33.0
-      },
-      {
-       "hour": 3.6,
-       "views": 4643.0,
-       "likes": 433.0,
-       "comments": 33.0
-      },
-      {
-       "hour": 3.8,
-       "views": 5006.0,
-       "likes": 448.0,
-       "comments": 33.0
-      },
-      {
-       "hour": 4.1,
-       "views": 5258.0,
-       "likes": 458.0,
-       "comments": 33.0
-      },
-      {
-       "hour": 4.3,
-       "views": 5365.0,
-       "likes": 474.0,
+       "hour": 0.8,
+       "views": 2934.0,
+       "likes": 622.0,
        "comments": 34.0
       },
       {
+       "hour": 1.0,
+       "views": 3505.0,
+       "likes": 737.0,
+       "comments": 41.0
+      },
+      {
+       "hour": 1.3,
+       "views": 3917.0,
+       "likes": 830.0,
+       "comments": 48.0
+      },
+      {
+       "hour": 1.5,
+       "views": 4259.0,
+       "likes": 927.0,
+       "comments": 57.0
+      },
+      {
+       "hour": 1.8,
+       "views": 4570.0,
+       "likes": 1010.0,
+       "comments": 63.0
+      },
+      {
+       "hour": 2.1,
+       "views": 4987.0,
+       "likes": 1090.0,
+       "comments": 68.0
+      },
+      {
+       "hour": 2.3,
+       "views": 5327.0,
+       "likes": 1185.0,
+       "comments": 73.0
+      },
+      {
+       "hour": 2.6,
+       "views": 6052.0,
+       "likes": 1258.0,
+       "comments": 78.0
+      },
+      {
+       "hour": 2.8,
+       "views": 6399.0,
+       "likes": 1323.0,
+       "comments": 84.0
+      },
+      {
+       "hour": 3.1,
+       "views": 6752.0,
+       "likes": 1377.0,
+       "comments": 85.0
+      },
+      {
+       "hour": 3.3,
+       "views": 7000.0,
+       "likes": 1424.0,
+       "comments": 87.0
+      },
+      {
+       "hour": 3.6,
+       "views": 7651.0,
+       "likes": 1471.0,
+       "comments": 89.0
+      },
+      {
+       "hour": 3.8,
+       "views": 7916.0,
+       "likes": 1504.0,
+       "comments": 90.0
+      },
+      {
+       "hour": 4.1,
+       "views": 8209.0,
+       "likes": 1540.0,
+       "comments": 92.0
+      },
+      {
+       "hour": 4.3,
+       "views": 8719.0,
+       "likes": 1567.0,
+       "comments": 92.0
+      },
+      {
        "hour": 4.6,
-       "views": 5585.0,
-       "likes": 488.0,
-       "comments": 35.0
+       "views": 9334.0,
+       "likes": 1603.0,
+       "comments": 93.0
       },
       {
        "hour": 4.8,
-       "views": 5908.0,
-       "likes": 502.0,
-       "comments": 35.0
+       "views": 9821.0,
+       "likes": 1626.0,
+       "comments": 94.0
       },
       {
        "hour": 5.1,
-       "views": 6083.0,
-       "likes": 509.0,
-       "comments": 35.0
+       "views": 10248.0,
+       "likes": 1652.0,
+       "comments": 98.0
       },
       {
        "hour": 5.3,
-       "views": 6221.0,
-       "likes": 516.0,
-       "comments": 35.0
+       "views": 10484.0,
+       "likes": 1679.0,
+       "comments": 100.0
       },
       {
        "hour": 5.6,
-       "views": 6594.0,
-       "likes": 522.0,
-       "comments": 35.0
+       "views": 10707.0,
+       "likes": 1697.0,
+       "comments": 103.0
       },
       {
        "hour": 5.8,
-       "views": 6944.0,
-       "likes": 528.0,
-       "comments": 35.0
+       "views": 11051.0,
+       "likes": 1723.0,
+       "comments": 104.0
       },
       {
        "hour": 6.1,
-       "views": 7205.0,
-       "likes": 531.0,
-       "comments": 35.0
+       "views": 11307.0,
+       "likes": 1737.0,
+       "comments": 104.0
       },
       {
-       "hour": 6.3,
-       "views": 7387.0,
-       "likes": 533.0,
-       "comments": 35.0
+       "hour": 6.4,
+       "views": 11554.0,
+       "likes": 1752.0,
+       "comments": 105.0
       }
      ],
-     "channelMedian": 50485,
+     "channelMedian": 84635,
      "x": {
-      "question": 1,
+      "question": 0,
       "exclaim": 0,
       "number": 0,
       "firstPerson": 0,
-      "you": 0,
+      "you": 1,
       "caps": 0,
       "anger": 0,
       "quote": 0,
@@ -4171,207 +4165,8 @@
       "longTitle": 0,
       "emoji": 0,
       "hashtagTitle": 0,
-      "trump": 1,
-      "titleWords": 2.1972245773362196,
-      "cta": 1,
-      "link": 1,
-      "noDescription": 0,
-      "descWords": 4.304065093204169,
-      "tags": 1,
-      "tagCount": 2.8903717578961645,
-      "under20": 0,
-      "under35": 0,
-      "over60": 0,
-      "logDuration": 3.912023005428146,
-      "weekend": 0,
-      "morning": 0,
-      "evening": 1,
-      "night": 0,
-      "logMedian": 4.505794156208896,
-      "family:Reform": 0,
-      "family:Voting rights": 0,
-      "family:Nonpartisan media": 0,
-      "family:Candidates & officials": 0,
-      "family:Partisan media": 1,
-      "family:UK": 0
-     },
-     "p": 0.005102
-    },
-    {
-     "readings": [
-      {
-       "hour": 0.2,
-       "views": 279.0,
-       "likes": 69.0,
-       "comments": 8.0
-      },
-      {
-       "hour": 0.4,
-       "views": 742.0,
-       "likes": 150.0,
-       "comments": 18.0
-      },
-      {
-       "hour": 0.7,
-       "views": 1194.0,
-       "likes": 250.0,
-       "comments": 29.0
-      },
-      {
-       "hour": 0.9,
-       "views": 1699.0,
-       "likes": 344.0,
-       "comments": 34.0
-      },
-      {
-       "hour": 1.2,
-       "views": 2182.0,
-       "likes": 431.0,
-       "comments": 46.0
-      },
-      {
-       "hour": 1.4,
-       "views": 2667.0,
-       "likes": 536.0,
-       "comments": 54.0
-      },
-      {
-       "hour": 1.7,
-       "views": 3177.0,
-       "likes": 635.0,
-       "comments": 62.0
-      },
-      {
-       "hour": 1.9,
-       "views": 3639.0,
-       "likes": 722.0,
-       "comments": 72.0
-      },
-      {
-       "hour": 2.2,
-       "views": 4145.0,
-       "likes": 817.0,
-       "comments": 80.0
-      },
-      {
-       "hour": 2.4,
-       "views": 4596.0,
-       "likes": 888.0,
-       "comments": 86.0
-      },
-      {
-       "hour": 2.7,
-       "views": 5040.0,
-       "likes": 970.0,
-       "comments": 92.0
-      },
-      {
-       "hour": 2.9,
-       "views": 5516.0,
-       "likes": 1045.0,
-       "comments": 98.0
-      },
-      {
-       "hour": 3.2,
-       "views": 6175.0,
-       "likes": 1137.0,
-       "comments": 104.0
-      },
-      {
-       "hour": 3.4,
-       "views": 6750.0,
-       "likes": 1215.0,
-       "comments": 109.0
-      },
-      {
-       "hour": 3.7,
-       "views": 7419.0,
-       "likes": 1295.0,
-       "comments": 116.0
-      },
-      {
-       "hour": 3.9,
-       "views": 8128.0,
-       "likes": 1383.0,
-       "comments": 124.0
-      },
-      {
-       "hour": 4.2,
-       "views": 8669.0,
-       "likes": 1470.0,
-       "comments": 124.0
-      },
-      {
-       "hour": 4.4,
-       "views": 9286.0,
-       "likes": 1561.0,
-       "comments": 125.0
-      },
-      {
-       "hour": 4.7,
-       "views": 10006.0,
-       "likes": 1623.0,
-       "comments": 129.0
-      },
-      {
-       "hour": 4.9,
-       "views": 10891.0,
-       "likes": 1680.0,
-       "comments": 131.0
-      },
-      {
-       "hour": 5.2,
-       "views": 11920.0,
-       "likes": 1757.0,
-       "comments": 134.0
-      },
-      {
-       "hour": 5.4,
-       "views": 12732.0,
-       "likes": 1788.0,
-       "comments": 136.0
-      },
-      {
-       "hour": 5.7,
-       "views": 13175.0,
-       "likes": 1841.0,
-       "comments": 141.0
-      },
-      {
-       "hour": 5.9,
-       "views": 13966.0,
-       "likes": 1895.0,
-       "comments": 147.0
-      },
-      {
-       "hour": 6.2,
-       "views": 15081.0,
-       "likes": 1954.0,
-       "comments": 149.0
-      },
-      {
-       "hour": 6.4,
-       "views": 16885.0,
-       "likes": 2018.0,
-       "comments": 153.0
-      }
-     ],
-     "channelMedian": 47250,
-     "x": {
-      "question": 0,
-      "exclaim": 0,
-      "number": 0,
-      "firstPerson": 0,
-      "you": 0,
-      "caps": 1,
-      "anger": 1,
-      "quote": 1,
-      "shortTitle": 0,
-      "longTitle": 0,
-      "emoji": 0,
-      "hashtagTitle": 0,
       "trump": 0,
-      "titleWords": 2.4849066497880004,
+      "titleWords": 2.1972245773362196,
       "cta": 0,
       "link": 0,
       "noDescription": 1,
@@ -4380,13 +4175,13 @@
       "tagCount": 0,
       "under20": 0,
       "under35": 0,
-      "over60": 1,
-      "logDuration": 4.653960350157523,
+      "over60": 0,
+      "logDuration": 3.8918202981106265,
       "weekend": 0,
       "morning": 0,
       "evening": 1,
       "night": 0,
-      "logMedian": 4.9469923407483725,
+      "logMedian": 4.927555129892227,
       "family:Reform": 0,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 0,
@@ -4394,170 +4189,363 @@
       "family:Partisan media": 0,
       "family:UK": 0
      },
-     "p": 0.427755
+     "p": 0.050635
     },
     {
      "readings": [
       {
-       "hour": 0.2,
-       "views": 93.0,
+       "hour": 0.1,
+       "views": 19.0,
+       "likes": 3.0,
+       "comments": 0.0
+      },
+      {
+       "hour": 0.3,
+       "views": 201.0,
        "likes": 15.0,
-       "comments": 1.0
+       "comments": 3.0
       },
       {
-       "hour": 0.4,
-       "views": 301.0,
-       "likes": 44.0,
-       "comments": 2.0
-      },
-      {
-       "hour": 0.7,
-       "views": 500.0,
-       "likes": 73.0,
+       "hour": 0.6,
+       "views": 413.0,
+       "likes": 29.0,
        "comments": 6.0
       },
       {
-       "hour": 0.9,
-       "views": 684.0,
-       "likes": 95.0,
-       "comments": 6.0
-      },
-      {
-       "hour": 1.2,
-       "views": 864.0,
-       "likes": 112.0,
+       "hour": 0.8,
+       "views": 582.0,
+       "likes": 37.0,
        "comments": 7.0
       },
       {
-       "hour": 1.4,
-       "views": 1078.0,
-       "likes": 141.0,
-       "comments": 7.0
+       "hour": 1.1,
+       "views": 766.0,
+       "likes": 50.0,
+       "comments": 13.0
       },
       {
-       "hour": 1.7,
-       "views": 1261.0,
-       "likes": 174.0,
-       "comments": 9.0
-      },
-      {
-       "hour": 1.9,
-       "views": 1401.0,
-       "likes": 191.0,
-       "comments": 11.0
-      },
-      {
-       "hour": 2.2,
-       "views": 1530.0,
-       "likes": 207.0,
-       "comments": 12.0
-      },
-      {
-       "hour": 2.4,
-       "views": 1670.0,
-       "likes": 226.0,
+       "hour": 1.3,
+       "views": 947.0,
+       "likes": 61.0,
        "comments": 14.0
       },
       {
-       "hour": 2.7,
-       "views": 1816.0,
-       "likes": 241.0,
-       "comments": 14.0
-      },
-      {
-       "hour": 2.9,
-       "views": 1953.0,
-       "likes": 250.0,
+       "hour": 1.6,
+       "views": 1122.0,
+       "likes": 75.0,
        "comments": 16.0
       },
       {
-       "hour": 3.2,
-       "views": 2183.0,
-       "likes": 262.0,
-       "comments": 16.0
-      },
-      {
-       "hour": 3.4,
-       "views": 2376.0,
-       "likes": 285.0,
-       "comments": 17.0
-      },
-      {
-       "hour": 3.7,
-       "views": 2637.0,
-       "likes": 300.0,
-       "comments": 19.0
-      },
-      {
-       "hour": 3.9,
-       "views": 2832.0,
-       "likes": 314.0,
+       "hour": 1.8,
+       "views": 1373.0,
+       "likes": 85.0,
        "comments": 20.0
       },
       {
-       "hour": 4.2,
-       "views": 3008.0,
-       "likes": 326.0,
-       "comments": 21.0
+       "hour": 2.1,
+       "views": 1609.0,
+       "likes": 96.0,
+       "comments": 24.0
       },
       {
-       "hour": 4.4,
-       "views": 3143.0,
-       "likes": 343.0,
+       "hour": 2.3,
+       "views": 1833.0,
+       "likes": 99.0,
+       "comments": 24.0
+      },
+      {
+       "hour": 2.6,
+       "views": 2032.0,
+       "likes": 107.0,
+       "comments": 29.0
+      },
+      {
+       "hour": 2.8,
+       "views": 2208.0,
+       "likes": 118.0,
+       "comments": 30.0
+      },
+      {
+       "hour": 3.1,
+       "views": 2446.0,
+       "likes": 128.0,
+       "comments": 34.0
+      },
+      {
+       "hour": 3.3,
+       "views": 2609.0,
+       "likes": 132.0,
+       "comments": 35.0
+      },
+      {
+       "hour": 3.6,
+       "views": 2777.0,
+       "likes": 137.0,
+       "comments": 37.0
+      },
+      {
+       "hour": 3.8,
+       "views": 2957.0,
+       "likes": 143.0,
+       "comments": 41.0
+      },
+      {
+       "hour": 4.1,
+       "views": 3237.0,
+       "likes": 146.0,
+       "comments": 42.0
+      },
+      {
+       "hour": 4.3,
+       "views": 3626.0,
+       "likes": 146.0,
+       "comments": 42.0
+      },
+      {
+       "hour": 4.6,
+       "views": 3882.0,
+       "likes": 157.0,
+       "comments": 47.0
+      },
+      {
+       "hour": 4.8,
+       "views": 4122.0,
+       "likes": 162.0,
+       "comments": 54.0
+      },
+      {
+       "hour": 5.1,
+       "views": 4295.0,
+       "likes": 165.0,
+       "comments": 54.0
+      },
+      {
+       "hour": 5.3,
+       "views": 4544.0,
+       "likes": 174.0,
+       "comments": 54.0
+      },
+      {
+       "hour": 5.6,
+       "views": 4937.0,
+       "likes": 177.0,
+       "comments": 55.0
+      },
+      {
+       "hour": 5.8,
+       "views": 5352.0,
+       "likes": 182.0,
+       "comments": 55.0
+      },
+      {
+       "hour": 6.1,
+       "views": 5602.0,
+       "likes": 185.0,
+       "comments": 56.0
+      },
+      {
+       "hour": 6.3,
+       "views": 5883.0,
+       "likes": 185.0,
+       "comments": 57.0
+      }
+     ],
+     "channelMedian": 62215.5,
+     "x": {
+      "question": 0,
+      "exclaim": 0,
+      "number": 0,
+      "firstPerson": 0,
+      "you": 0,
+      "caps": 0,
+      "anger": 0,
+      "quote": 1,
+      "shortTitle": 0,
+      "longTitle": 1,
+      "emoji": 0,
+      "hashtagTitle": 0,
+      "trump": 1,
+      "titleWords": 2.772588722239781,
+      "cta": 0,
+      "link": 0,
+      "noDescription": 0,
+      "descWords": 0,
+      "tags": 1,
+      "tagCount": 1.9459101490553132,
+      "under20": 1,
+      "under35": 1,
+      "over60": 0,
+      "logDuration": 2.9444389791664403,
+      "weekend": 0,
+      "morning": 0,
+      "evening": 1,
+      "night": 0,
+      "logMedian": 4.051036695141213,
+      "family:Reform": 0,
+      "family:Voting rights": 0,
+      "family:Nonpartisan media": 0,
+      "family:Candidates & officials": 1,
+      "family:Partisan media": 0,
+      "family:UK": 0
+     },
+     "p": 0.0271
+    },
+    {
+     "readings": [
+      {
+       "hour": 0.4,
+       "views": 934.0,
+       "likes": 109.0,
+       "comments": 8.0
+      },
+      {
+       "hour": 0.7,
+       "views": 1459.0,
+       "likes": 167.0,
+       "comments": 9.0
+      },
+      {
+       "hour": 0.9,
+       "views": 1984.0,
+       "likes": 226.0,
+       "comments": 9.0
+      },
+      {
+       "hour": 1.2,
+       "views": 2334.0,
+       "likes": 263.0,
+       "comments": 9.0
+      },
+      {
+       "hour": 1.4,
+       "views": 2610.0,
+       "likes": 312.0,
+       "comments": 12.0
+      },
+      {
+       "hour": 1.7,
+       "views": 2780.0,
+       "likes": 345.0,
+       "comments": 16.0
+      },
+      {
+       "hour": 1.9,
+       "views": 3004.0,
+       "likes": 393.0,
+       "comments": 16.0
+      },
+      {
+       "hour": 2.2,
+       "views": 3178.0,
+       "likes": 412.0,
+       "comments": 18.0
+      },
+      {
+       "hour": 2.4,
+       "views": 3551.0,
+       "likes": 433.0,
+       "comments": 18.0
+      },
+      {
+       "hour": 2.7,
+       "views": 3820.0,
+       "likes": 455.0,
+       "comments": 20.0
+      },
+      {
+       "hour": 2.9,
+       "views": 4230.0,
+       "likes": 494.0,
        "comments": 23.0
       },
       {
+       "hour": 3.2,
+       "views": 4564.0,
+       "likes": 534.0,
+       "comments": 23.0
+      },
+      {
+       "hour": 3.4,
+       "views": 4876.0,
+       "likes": 565.0,
+       "comments": 23.0
+      },
+      {
+       "hour": 3.7,
+       "views": 5180.0,
+       "likes": 591.0,
+       "comments": 23.0
+      },
+      {
+       "hour": 3.9,
+       "views": 5417.0,
+       "likes": 617.0,
+       "comments": 23.0
+      },
+      {
+       "hour": 4.2,
+       "views": 5710.0,
+       "likes": 631.0,
+       "comments": 25.0
+      },
+      {
+       "hour": 4.4,
+       "views": 5964.0,
+       "likes": 649.0,
+       "comments": 25.0
+      },
+      {
        "hour": 4.7,
-       "views": 3279.0,
-       "likes": 353.0,
-       "comments": 24.0
+       "views": 6262.0,
+       "likes": 670.0,
+       "comments": 25.0
       },
       {
        "hour": 4.9,
-       "views": 3473.0,
-       "likes": 360.0,
-       "comments": 24.0
+       "views": 6534.0,
+       "likes": 687.0,
+       "comments": 25.0
       },
       {
        "hour": 5.2,
-       "views": 3614.0,
-       "likes": 376.0,
-       "comments": 24.0
+       "views": 6837.0,
+       "likes": 711.0,
+       "comments": 25.0
       },
       {
        "hour": 5.4,
-       "views": 3816.0,
-       "likes": 386.0,
-       "comments": 24.0
+       "views": 7159.0,
+       "likes": 727.0,
+       "comments": 25.0
       },
       {
        "hour": 5.7,
-       "views": 3959.0,
-       "likes": 399.0,
-       "comments": 24.0
+       "views": 7395.0,
+       "likes": 740.0,
+       "comments": 25.0
       },
       {
        "hour": 5.9,
-       "views": 4132.0,
-       "likes": 410.0,
-       "comments": 24.0
+       "views": 7725.0,
+       "likes": 757.0,
+       "comments": 27.0
       },
       {
        "hour": 6.2,
-       "views": 4278.0,
-       "likes": 424.0,
+       "views": 7973.0,
+       "likes": 757.0,
        "comments": 27.0
       },
       {
        "hour": 6.4,
-       "views": 4445.0,
-       "likes": 434.0,
-       "comments": 29.0
+       "views": 8256.0,
+       "likes": 767.0,
+       "comments": 27.0
       }
      ],
-     "channelMedian": 10814,
+     "channelMedian": 42258.5,
      "x": {
-      "question": 1,
+      "question": 0,
       "exclaim": 0,
       "number": 0,
       "firstPerson": 0,
@@ -4573,19 +4561,19 @@
       "titleWords": 1.9459101490553132,
       "cta": 0,
       "link": 0,
-      "noDescription": 1,
+      "noDescription": 0,
       "descWords": 0,
-      "tags": 0,
-      "tagCount": 0,
+      "tags": 1,
+      "tagCount": 1.6094379124341003,
       "under20": 0,
-      "under35": 1,
-      "over60": 0,
-      "logDuration": 3.4657359027997265,
+      "under35": 0,
+      "over60": 1,
+      "logDuration": 4.394449154672439,
       "weekend": 0,
       "morning": 0,
       "evening": 1,
       "night": 0,
-      "logMedian": 4.03402652377511,
+      "logMedian": 5.111977904962384,
       "family:Reform": 0,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 0,
@@ -4593,204 +4581,198 @@
       "family:Partisan media": 1,
       "family:UK": 0
      },
-     "p": 0.029976
+     "p": 0.022679
     },
     {
      "readings": [
       {
-       "hour": 0.0,
-       "views": 1.0,
-       "likes": 0.0,
+       "hour": 0.2,
+       "views": 146.0,
+       "likes": 12.0,
        "comments": 0.0
       },
       {
-       "hour": 0.3,
-       "views": 16.0,
-       "likes": 0.0,
-       "comments": 0.0
-      },
-      {
-       "hour": 0.5,
-       "views": 26.0,
-       "likes": 0.0,
-       "comments": 0.0
-      },
-      {
-       "hour": 0.8,
-       "views": 32.0,
-       "likes": 0.0,
-       "comments": 0.0
-      },
-      {
-       "hour": 1.0,
-       "views": 40.0,
-       "likes": 0.0,
+       "hour": 0.4,
+       "views": 519.0,
+       "likes": 35.0,
        "comments": 1.0
       },
       {
-       "hour": 1.3,
-       "views": 45.0,
-       "likes": 0.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 1.5,
-       "views": 54.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 1.8,
-       "views": 64.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 2.0,
-       "views": 70.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 2.3,
-       "views": 80.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 2.5,
-       "views": 88.0,
-       "likes": 1.0,
-       "comments": 1.0
-      },
-      {
-       "hour": 2.8,
-       "views": 100.0,
-       "likes": 2.0,
+       "hour": 0.7,
+       "views": 1093.0,
+       "likes": 71.0,
        "comments": 2.0
       },
       {
-       "hour": 3.0,
-       "views": 108.0,
-       "likes": 2.0,
-       "comments": 2.0
+       "hour": 0.9,
+       "views": 1938.0,
+       "likes": 144.0,
+       "comments": 6.0
       },
       {
-       "hour": 3.3,
-       "views": 115.0,
-       "likes": 2.0,
-       "comments": 2.0
+       "hour": 1.2,
+       "views": 2799.0,
+       "likes": 214.0,
+       "comments": 10.0
       },
       {
-       "hour": 3.5,
-       "views": 122.0,
-       "likes": 2.0,
-       "comments": 2.0
+       "hour": 1.4,
+       "views": 3406.0,
+       "likes": 280.0,
+       "comments": 15.0
       },
       {
-       "hour": 3.8,
-       "views": 133.0,
-       "likes": 2.0,
-       "comments": 2.0
+       "hour": 1.7,
+       "views": 3829.0,
+       "likes": 314.0,
+       "comments": 15.0
       },
       {
-       "hour": 4.0,
-       "views": 142.0,
-       "likes": 4.0,
-       "comments": 2.0
+       "hour": 1.9,
+       "views": 4152.0,
+       "likes": 345.0,
+       "comments": 16.0
       },
       {
-       "hour": 4.3,
-       "views": 147.0,
-       "likes": 4.0,
-       "comments": 2.0
+       "hour": 2.2,
+       "views": 4562.0,
+       "likes": 379.0,
+       "comments": 18.0
       },
       {
-       "hour": 4.5,
-       "views": 156.0,
-       "likes": 4.0,
-       "comments": 2.0
+       "hour": 2.4,
+       "views": 5010.0,
+       "likes": 408.0,
+       "comments": 21.0
       },
       {
-       "hour": 4.8,
-       "views": 169.0,
-       "likes": 5.0,
-       "comments": 2.0
+       "hour": 2.7,
+       "views": 5645.0,
+       "likes": 435.0,
+       "comments": 22.0
       },
       {
-       "hour": 5.0,
-       "views": 177.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 2.9,
+       "views": 6144.0,
+       "likes": 450.0,
+       "comments": 24.0
       },
       {
-       "hour": 5.3,
-       "views": 180.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 3.2,
+       "views": 6750.0,
+       "likes": 465.0,
+       "comments": 24.0
       },
       {
-       "hour": 5.5,
-       "views": 184.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 3.4,
+       "views": 7611.0,
+       "likes": 475.0,
+       "comments": 25.0
       },
       {
-       "hour": 5.8,
-       "views": 191.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 3.7,
+       "views": 8049.0,
+       "likes": 483.0,
+       "comments": 25.0
       },
       {
-       "hour": 6.0,
-       "views": 196.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 3.9,
+       "views": 8670.0,
+       "likes": 493.0,
+       "comments": 25.0
       },
       {
-       "hour": 6.3,
-       "views": 205.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 4.2,
+       "views": 9242.0,
+       "likes": 502.0,
+       "comments": 25.0
       },
       {
-       "hour": 6.5,
-       "views": 212.0,
-       "likes": 6.0,
-       "comments": 2.0
+       "hour": 4.4,
+       "views": 9834.0,
+       "likes": 513.0,
+       "comments": 25.0
+      },
+      {
+       "hour": 4.7,
+       "views": 10445.0,
+       "likes": 519.0,
+       "comments": 25.0
+      },
+      {
+       "hour": 4.9,
+       "views": 10877.0,
+       "likes": 528.0,
+       "comments": 27.0
+      },
+      {
+       "hour": 5.2,
+       "views": 11457.0,
+       "likes": 534.0,
+       "comments": 29.0
+      },
+      {
+       "hour": 5.4,
+       "views": 11836.0,
+       "likes": 540.0,
+       "comments": 31.0
+      },
+      {
+       "hour": 5.7,
+       "views": 12552.0,
+       "likes": 553.0,
+       "comments": 31.0
+      },
+      {
+       "hour": 5.9,
+       "views": 13166.0,
+       "likes": 561.0,
+       "comments": 31.0
+      },
+      {
+       "hour": 6.2,
+       "views": 13482.0,
+       "likes": 569.0,
+       "comments": 31.0
+      },
+      {
+       "hour": 6.4,
+       "views": 13902.0,
+       "likes": 578.0,
+       "comments": 33.0
       }
      ],
-     "channelMedian": 7262,
+     "channelMedian": 58061.5,
      "x": {
       "question": 0,
-      "exclaim": 0,
-      "number": 0,
+      "exclaim": 1,
+      "number": 1,
       "firstPerson": 0,
-      "you": 1,
+      "you": 0,
       "caps": 0,
       "anger": 0,
       "quote": 0,
-      "shortTitle": 1,
+      "shortTitle": 0,
       "longTitle": 0,
       "emoji": 0,
-      "hashtagTitle": 0,
+      "hashtagTitle": 1,
       "trump": 0,
-      "titleWords": 1.791759469228055,
+      "titleWords": 2.5649493574615367,
       "cta": 0,
-      "link": 0,
+      "link": 1,
       "noDescription": 0,
-      "descWords": 2.8903717578961645,
-      "tags": 0,
-      "tagCount": 0,
+      "descWords": 4.465908118654584,
+      "tags": 1,
+      "tagCount": 3.044522437723423,
       "under20": 0,
-      "under35": 1,
-      "over60": 0,
-      "logDuration": 3.1354942159291497,
+      "under35": 0,
+      "over60": 1,
+      "logDuration": 4.382026634673881,
       "weekend": 0,
       "morning": 0,
       "evening": 0,
       "night": 0,
-      "logMedian": 3.8611160441613954,
+      "logMedian": 4.661064563023236,
       "family:Reform": 0,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 1,
@@ -4798,170 +4780,170 @@
       "family:Partisan media": 0,
       "family:UK": 0
      },
-     "p": 1.8e-05
+     "p": 0.114372
     },
     {
      "readings": [
       {
        "hour": 0.2,
-       "views": 57.0,
-       "likes": 6.0,
-       "comments": 0.0
+       "views": 77.0,
+       "likes": 13.0,
+       "comments": 2.0
       },
       {
        "hour": 0.4,
-       "views": 200.0,
-       "likes": 13.0,
-       "comments": 1.0
+       "views": 254.0,
+       "likes": 38.0,
+       "comments": 5.0
       },
       {
        "hour": 0.7,
-       "views": 426.0,
-       "likes": 33.0,
-       "comments": 1.0
+       "views": 431.0,
+       "likes": 57.0,
+       "comments": 9.0
       },
       {
        "hour": 0.9,
-       "views": 681.0,
-       "likes": 44.0,
-       "comments": 1.0
+       "views": 600.0,
+       "likes": 87.0,
+       "comments": 13.0
       },
       {
        "hour": 1.2,
-       "views": 904.0,
-       "likes": 55.0,
-       "comments": 2.0
+       "views": 778.0,
+       "likes": 104.0,
+       "comments": 14.0
       },
       {
        "hour": 1.4,
-       "views": 1015.0,
-       "likes": 63.0,
-       "comments": 2.0
+       "views": 927.0,
+       "likes": 126.0,
+       "comments": 21.0
       },
       {
        "hour": 1.7,
-       "views": 1126.0,
-       "likes": 72.0,
-       "comments": 2.0
+       "views": 1051.0,
+       "likes": 141.0,
+       "comments": 26.0
       },
       {
        "hour": 1.9,
-       "views": 1192.0,
-       "likes": 82.0,
-       "comments": 2.0
+       "views": 1104.0,
+       "likes": 158.0,
+       "comments": 27.0
       },
       {
        "hour": 2.2,
-       "views": 1285.0,
-       "likes": 88.0,
-       "comments": 2.0
+       "views": 1196.0,
+       "likes": 176.0,
+       "comments": 29.0
       },
       {
        "hour": 2.4,
-       "views": 1386.0,
-       "likes": 97.0,
-       "comments": 2.0
+       "views": 1303.0,
+       "likes": 188.0,
+       "comments": 32.0
       },
       {
        "hour": 2.7,
-       "views": 1480.0,
-       "likes": 107.0,
-       "comments": 2.0
+       "views": 1417.0,
+       "likes": 196.0,
+       "comments": 35.0
       },
       {
        "hour": 2.9,
-       "views": 1629.0,
-       "likes": 115.0,
-       "comments": 4.0
+       "views": 1538.0,
+       "likes": 207.0,
+       "comments": 42.0
       },
       {
        "hour": 3.2,
-       "views": 1762.0,
-       "likes": 129.0,
-       "comments": 4.0
+       "views": 1632.0,
+       "likes": 215.0,
+       "comments": 47.0
       },
       {
        "hour": 3.4,
-       "views": 1829.0,
-       "likes": 137.0,
-       "comments": 4.0
+       "views": 1744.0,
+       "likes": 221.0,
+       "comments": 47.0
       },
       {
        "hour": 3.7,
-       "views": 2024.0,
-       "likes": 149.0,
-       "comments": 4.0
+       "views": 1889.0,
+       "likes": 236.0,
+       "comments": 51.0
       },
       {
        "hour": 3.9,
-       "views": 2091.0,
-       "likes": 152.0,
-       "comments": 4.0
+       "views": 2029.0,
+       "likes": 254.0,
+       "comments": 52.0
       },
       {
        "hour": 4.2,
-       "views": 2212.0,
-       "likes": 157.0,
-       "comments": 4.0
+       "views": 2187.0,
+       "likes": 269.0,
+       "comments": 55.0
       },
       {
        "hour": 4.4,
-       "views": 2286.0,
-       "likes": 160.0,
-       "comments": 4.0
+       "views": 2313.0,
+       "likes": 282.0,
+       "comments": 58.0
       },
       {
        "hour": 4.7,
-       "views": 2436.0,
-       "likes": 161.0,
-       "comments": 4.0
+       "views": 2407.0,
+       "likes": 291.0,
+       "comments": 58.0
       },
       {
        "hour": 4.9,
-       "views": 2488.0,
-       "likes": 165.0,
-       "comments": 4.0
+       "views": 2510.0,
+       "likes": 306.0,
+       "comments": 58.0
       },
       {
        "hour": 5.2,
-       "views": 2583.0,
-       "likes": 169.0,
-       "comments": 4.0
+       "views": 2631.0,
+       "likes": 319.0,
+       "comments": 59.0
       },
       {
        "hour": 5.4,
-       "views": 2664.0,
-       "likes": 172.0,
-       "comments": 4.0
+       "views": 2756.0,
+       "likes": 331.0,
+       "comments": 59.0
       },
       {
        "hour": 5.7,
-       "views": 2802.0,
-       "likes": 176.0,
-       "comments": 4.0
+       "views": 2899.0,
+       "likes": 347.0,
+       "comments": 60.0
       },
       {
        "hour": 5.9,
-       "views": 2870.0,
-       "likes": 178.0,
-       "comments": 4.0
+       "views": 3029.0,
+       "likes": 352.0,
+       "comments": 61.0
       },
       {
        "hour": 6.2,
-       "views": 2975.0,
-       "likes": 180.0,
-       "comments": 4.0
+       "views": 3136.0,
+       "likes": 364.0,
+       "comments": 61.0
       },
       {
        "hour": 6.4,
-       "views": 3051.0,
-       "likes": 183.0,
-       "comments": 4.0
+       "views": 3250.0,
+       "likes": 368.0,
+       "comments": 62.0
       }
      ],
-     "channelMedian": 10814,
+     "channelMedian": 11046,
      "x": {
-      "question": 0,
+      "question": 1,
       "exclaim": 0,
       "number": 0,
       "firstPerson": 0,
@@ -4974,7 +4956,7 @@
       "emoji": 0,
       "hashtagTitle": 0,
       "trump": 0,
-      "titleWords": 2.0794415416798357,
+      "titleWords": 2.1972245773362196,
       "cta": 0,
       "link": 0,
       "noDescription": 1,
@@ -4982,14 +4964,14 @@
       "tags": 0,
       "tagCount": 0,
       "under20": 0,
-      "under35": 1,
-      "over60": 0,
-      "logDuration": 3.1780538303479458,
+      "under35": 0,
+      "over60": 1,
+      "logDuration": 4.304065093204169,
       "weekend": 1,
-      "morning": 0,
-      "evening": 1,
+      "morning": 1,
+      "evening": 0,
       "night": 0,
-      "logMedian": 4.03402652377511,
+      "logMedian": 4.0851478121269045,
       "family:Reform": 0,
       "family:Voting rights": 0,
       "family:Nonpartisan media": 0,
@@ -4997,7 +4979,7 @@
       "family:Partisan media": 1,
       "family:UK": 0
      },
-     "p": 0.002043
+     "p": 0.125537
     }
    ]
   }
