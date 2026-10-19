@@ -12,7 +12,6 @@ import { Stat2 } from "@/components/dash/stats"
 import { SCRIPTS, scriptById, takeLabel } from "@/lib/catalog"
 import { forecastMetrics } from "@/lib/measures"
 import { board, findings, forecasts, loads, picks, steps, submissions, votes, workspace } from "@/lib/review"
-import { SAMPLE_ACTIVITY, SAMPLE_COUNTS, SAMPLE_FEED, SAMPLE_SENT } from "@/lib/sample"
 import { toneOf } from "@/lib/tone"
 import { READER_KINDS, usageSince } from "@/lib/usage"
 import homeFeed from "../../../data/generated/home-feed.json"
@@ -26,21 +25,6 @@ export const metadata = { title: "Dashboard" }
 const day = (iso: string) => iso.slice(0, 10)
 
 const KIND_LABEL: Record<string, string> = { open: "Opens", play: "Plays", watched75: "Watched 75%", search: "Searches", filter: "Filters", sort: "Sorts", boost: "Boosts", bookmark: "Bookmarks", share: "Shares", queue: "Queued" }
-const SAMPLE_READERS = {
-  kinds: [
-    { kind: "open", n: 412 },
-    { kind: "play", n: 268 },
-    { kind: "watched75", n: 97 },
-    { kind: "search", n: 54 },
-    { kind: "filter", n: 21 },
-    { kind: "sort", n: 33 },
-    { kind: "boost", n: 12 },
-    { kind: "bookmark", n: 18 },
-    { kind: "share", n: 9 },
-    { kind: "queue", n: 14 },
-  ],
-  opened: (homeFeed as { id: string; title: string }[]).slice(0, 10).map((v, i) => ({ subject: `yt-${v.id}`, title: v.title, n: 40 - i * 3 })),
-}
 
 export default async function DashboardPage() {
   const ws = await workspace()
@@ -102,43 +86,28 @@ export default async function DashboardPage() {
     .sort((a, b) => b.at.localeCompare(a.at))
     .slice(0, 8)
 
-  // Until the ledger has activity, show the page's full shape with sample data, labeled as such.
-  const demo = !readings.length && !sent.length && !decided.length
-  const show = demo
-    ? { sent: SAMPLE_SENT.length, sentNote: "Latest today", calls: `${SAMPLE_COUNTS.callsRight} of ${SAMPLE_COUNTS.callsTotal}`, activity: SAMPLE_ACTIVITY, readings: SAMPLE_COUNTS.readings, decisions: SAMPLE_COUNTS.decisions, votes: SAMPLE_COUNTS.votes, feed: SAMPLE_FEED }
-    : { sent: sent.length, sentNote: sent.length ? `Latest ${new Date(sent[0].at).toLocaleDateString()}` : "None yet", calls: resolved.length ? `${resolved.filter(Boolean).length} of ${resolved.length}` : "—", activity, readings: readings.length, decisions: decided.length, votes: voteRows.length, feed }
-  if (demo) {
-    funnel[0].n = SAMPLE_COUNTS.proposed
-    funnel[1].n = SAMPLE_COUNTS.approved
-    funnel[2].n = SAMPLE_COUNTS.made
-  }
-  const fmaxShown = Math.max(1, ...funnel.map((f) => f.n))
+  // The numbers are the ledger's or nothing: an empty campaign shows its empty shape honestly.
+  const show = { sent: sent.length, sentNote: sent.length ? `Latest ${new Date(sent[0].at).toLocaleDateString()}` : "None yet", calls: resolved.length ? `${resolved.filter(Boolean).length} of ${resolved.length}` : "—", activity, readings: readings.length, decisions: decided.length, votes: voteRows.length, feed }
   const activityRows = show.activity.length ? show.activity : [{ date: new Date().toISOString().slice(0, 10), item1: 0, item2: 0 }]
 
   const [user, poller, queue, usage] = await Promise.all([currentUser(), pollerStatus().catch(() => null), pipelineQueue().catch(() => null), usageSince(7).catch(() => [])])
 
   // Readers: what people did on PAX2 in the last 7 days, from the usage log.
   const titleOf = (subject: string) => (homeFeed as { id: string; title: string }[]).find((v) => `yt-${v.id}` === subject || v.id === subject)?.title ?? subject
-  const readersDemo = usage.length === 0
-  const byKind = readersDemo ? SAMPLE_READERS.kinds : READER_KINDS.map((kind) => ({ kind, n: usage.filter((e) => e.kind === kind).length }))
+  const byKind = READER_KINDS.map((kind) => ({ kind, n: usage.filter((e) => e.kind === kind).length }))
   const learners = new Set(usage.filter((e) => e.kind === "course-start").map((e) => e.who)).size
   const chaptersFinished = usage.filter((e) => e.kind === "chapter-finish").length
   const coursesFinished = usage.filter((e) => e.kind === "course-finish").length
   const opens = new Map<string, number>()
   for (const e of usage) if (e.kind === "open") opens.set(e.subject, (opens.get(e.subject) ?? 0) + 1)
-  const mostOpened = readersDemo
-    ? SAMPLE_READERS.opened
-    : [...opens]
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 10)
-        .map(([subject, n]) => ({ subject, title: titleOf(subject), n }))
+  const mostOpened = [...opens]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10)
+    .map(([subject, n]) => ({ subject, title: titleOf(subject), n }))
 
   return (
     <div className="flex flex-col gap-10">
       <AdminControls admin={!!user?.admin} poller={poller} queue={queue} />
-      <header className="rise flex flex-wrap items-center gap-3">
-        {demo && <span className="rounded-full bg-pax2-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax2-red-deep">Sample data</span>}
-      </header>
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Stat2 title="Videos in rotation" value={takes.length} footer={`${new Set(takes.map((t) => t.take.scriptId)).size} scripts · ${new Set(takes.map((t) => t.take.voice)).size} messengers`} />
@@ -178,7 +147,7 @@ export default async function DashboardPage() {
                       <span className="tabular font-semibold text-slate-900">{f.n}</span>
                     </div>
                     <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
-                      <div className="grow h-full rounded-full bg-pax2-blue" style={{ width: `${(f.n / fmaxShown) * 100}%`, ["--i" as string]: i }} />
+                      <div className="grow h-full rounded-full bg-pax2-blue" style={{ width: `${(f.n / fmax) * 100}%`, ["--i" as string]: i }} />
                     </div>
                   </div>
                 ))}
@@ -237,7 +206,7 @@ export default async function DashboardPage() {
 
         <OrderedBlock id="readers" label="Readers">
           <TwoHalfBlock>
-            <MainBlock title="Readers" tools={readersDemo ? <span className="rounded-full bg-pax2-red-soft px-2.5 py-0.5 text-xs font-semibold text-pax2-red-deep">Sample data</span> : undefined} rows={byKind.map(({ kind, n }) => ({ kind, count: n }))} footer="Last 7 days">
+            <MainBlock title="Readers" rows={byKind.map(({ kind, n }) => ({ kind, count: n }))} footer="Last 7 days">
               <div className="grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-5">
                 {byKind.map(({ kind, n }) => (
                   <div key={kind} className="flex flex-col">

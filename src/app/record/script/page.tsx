@@ -11,7 +11,7 @@ export default function ScriptPage() {
   const research = Object.fromEntries(vc.map((f) => [f.key, f]))
   return (
     <>
-      <StepBar step={1} back={{ href: "/record/library", label: "Scripts" }} />
+      <StepBar back={{ href: "/record/library", label: "Scripts" }} />
       <FlowPage title="Make it yours." lead="Change anything you'd like. It should sound like you." wide>
         <Suspense>
           <Editor research={research} />

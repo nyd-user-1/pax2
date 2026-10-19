@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 
-// Replaced by the original-content queues.
+// The queues merged into /videos; old links keep their filter.
 export default function Page() {
-  redirect("/publishing")
+  redirect("/videos?q=publishing")
 }

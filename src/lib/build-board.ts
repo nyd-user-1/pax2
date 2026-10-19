@@ -122,7 +122,7 @@ export const PAGES: PageTile[] = [
     better: ["An organic score from views, likes and comments.", "The Question 3 shorts analyzed by the pipeline."],
   },
   {
-    href: "/scoring",
+    href: "/videos?q=scoring",
     name: "Scoring",
     data: "The research archives and the reference model",
     state: "real",

@@ -16,12 +16,12 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children, drawer }: LayoutProps<"/">) {
-  const signedIn = !!(await currentUser())
+  const user = await currentUser()
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body className="min-h-dvh font-sans text-foreground antialiased">
         <LoadCurtain />
-        <Shell drawer={drawer} signedIn={signedIn}>
+        <Shell drawer={drawer} signedIn={!!user} admin={!!user?.admin}>
           {children}
         </Shell>
         {process.env.NODE_ENV === "development" && <DevInspector />}

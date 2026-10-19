@@ -10,7 +10,7 @@ export type Category = "Source" | "Produce" | "Measure" | "Publish"
 export const CATEGORIES: Category[] = ["Source", "Produce", "Measure", "Publish"]
 
 export const STEP: Record<StepKey, { name: string; makes: string; href: string; page: string; category: Category; icon: LucideIcon }> = {
-  outliers: { name: "Outliers", makes: "The catalog's Hits to model a short on", href: "/outliers", page: "iWAR", category: "Source", icon: Rocket },
+  outliers: { name: "Outliers", makes: "The catalog's Hits to model a short on", href: "/tracking?tab=settled", page: "Tracking", category: "Source", icon: Rocket },
   script: { name: "Script", makes: "A draft on one of the library's structures", href: "/scripts", page: "Scripts", category: "Source", icon: NotebookPen },
   record: { name: "Record", makes: "A camera take, paced by the teleprompter", href: "/recording", page: "Recording", category: "Source", icon: Video },
   voice: { name: "Voice", makes: "A read with word timings, ElevenLabs or Amazon Polly", href: "/recording", page: "Recording", category: "Produce", icon: AudioLines },
@@ -18,9 +18,9 @@ export const STEP: Record<StepKey, { name: string; makes: string; href: string; 
   captions: { name: "Captions", makes: "Word-timed captions from the transcript", href: "/recording", page: "Recording", category: "Produce", icon: Captions },
   endcard: { name: "End card", makes: "The hook and end cards over the take", href: "/recording", page: "Recording", category: "Produce", icon: LayoutTemplate },
   render: { name: "Render", makes: "The finished short, rendered in the browser", href: "/recording", page: "Recording", category: "Produce", icon: Clapperboard },
-  score: { name: "Score", makes: "The pre-publish forecast and its recommendations", href: "/scoring", page: "Scoring", category: "Measure", icon: Gauge },
-  publish: { name: "Publish", makes: "The upload to the connected channel on approval", href: "/publishing", page: "Publishing", category: "Publish", icon: Send },
-  track: { name: "Track", makes: "The poller's watch and the live Hit call", href: "/live-tracking", page: "Live tracking", category: "Measure", icon: Radio },
+  score: { name: "Score", makes: "The pre-publish forecast and its recommendations", href: "/videos?q=scoring", page: "My videos", category: "Measure", icon: Gauge },
+  publish: { name: "Publish", makes: "The upload to the connected channel on approval", href: "/videos?q=publishing", page: "My videos", category: "Publish", icon: Send },
+  track: { name: "Track", makes: "The poller's watch and the live Hit call", href: "/tracking", page: "Tracking", category: "Measure", icon: Radio },
 }
 
 export const STEP_KEYS = Object.keys(STEP) as StepKey[]

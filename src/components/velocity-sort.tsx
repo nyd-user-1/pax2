@@ -18,12 +18,11 @@ export function VelocitySortMenu({ sort, focus, filter }: { sort: VelocitySort; 
   const router = useRouter()
   const current = SORTS.find((s) => s.value === sort) ?? SORTS[0]
   const href = (value: VelocitySort) => {
-    const q = new URLSearchParams()
+    const q = new URLSearchParams({ tab: "curves" })
     if (focus) q.set("v", focus)
     if (value !== "oldest") q.set("s", value)
     if (filter && filter !== "all") q.set("f", filter)
-    const qs = q.toString()
-    return `/velocity-tracker${qs ? `?${qs}` : ""}`
+    return `/tracking?${q.toString()}`
   }
   return (
     <DropdownMenu>

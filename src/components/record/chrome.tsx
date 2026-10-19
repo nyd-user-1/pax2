@@ -1,34 +1,16 @@
 import Link from "next/link"
-import { ArrowLeft, Check } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 
 import { cn } from "@/ui/lib/utils"
 
-const STEPS = ["Script", "Video", "Send"]
-
-/** The flow's top bar: a back link and the three steps. */
-export function StepBar({ step, back }: { step: 1 | 2 | 3; back: { href: string; label: string } }) {
+/** The flow's top bar: the way back, nothing else — the numbered steps never advanced and are gone. */
+export function StepBar({ back }: { back: { href: string; label: string } }) {
   return (
     <div className="border-b bg-background/80 backdrop-blur">
-      <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-5 py-4">
+      <div className="mx-auto flex max-w-3xl items-center gap-4 px-5 py-4">
         <Link href={back.href} className="flex items-center gap-1.5 text-sm text-slate-800 hover:text-pax2-blue">
           <ArrowLeft className="size-4" /> {back.label}
         </Link>
-        <ol className="flex items-center gap-2 text-sm">
-          {STEPS.map((s, i) => {
-            const n = i + 1
-            const done = n < step
-            const on = n === step
-            return (
-              <li key={s} className="flex items-center gap-2">
-                {i > 0 && <span className="h-px w-6 bg-border sm:w-10" />}
-                <span className={cn("flex size-6 items-center justify-center rounded-full text-xs font-medium", done ? "bg-primary/80 text-white" : on ? "bg-pax2-blue text-white ring-4 ring-primary/15" : "border text-slate-800")}>
-                  {done ? <Check className="size-3.5" /> : n}
-                </span>
-                <span className={cn("hidden sm:inline", on ? "font-medium text-pax2-blue" : "text-slate-800")}>{s}</span>
-              </li>
-            )
-          })}
-        </ol>
       </div>
     </div>
   )

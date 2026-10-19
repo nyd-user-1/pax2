@@ -29,7 +29,7 @@ export async function GET(req: Request) {
   if (!code && !err) {
     const asked = url.searchParams.get("mode")
     const mode: GrantMode = asked === "connect" || !user.admin ? "connect" : "publish"
-    const back = safePath(url.searchParams.get("return")) ?? (mode === "publish" ? "/publishing" : "/channels")
+    const back = safePath(url.searchParams.get("return")) ?? (mode === "publish" ? "/videos?q=publishing" : "/channels")
     return NextResponse.redirect(authUrl(JSON.stringify({ m: mode, e: user.email, r: back }), mode))
   }
   let state: { m?: string; e?: string; r?: string }
@@ -37,7 +37,7 @@ export async function GET(req: Request) {
     state = JSON.parse(url.searchParams.get("state") ?? "")
   } catch {
     // A consent screen opened before the state carried a mode: the admin publish grant.
-    state = { m: "publish", e: url.searchParams.get("state") ?? "", r: "/publishing" }
+    state = { m: "publish", e: url.searchParams.get("state") ?? "", r: "/videos?q=publishing" }
   }
   if (state.e !== user.email) return NextResponse.json({ error: "That grant belongs to another session." }, { status: 400 })
   const mode: GrantMode = state.m === "publish" && user.admin ? "publish" : "connect"

@@ -36,7 +36,6 @@ export default async function ClassifierCoursePage({ searchParams }: { searchPar
   const next = n < CHAPTERS.length ? { href: `/labeling/classifier?c=${n + 1}`, label: "Next chapter" } : { href: "/labeling/classifier/finish", label: "Finish" }
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="font-display text-3xl text-slate-900">The Classifier</h1>
       <nav className="grid grid-cols-4 gap-1.5">
         {CHAPTERS.map((c) => {
           const open = c.n === n

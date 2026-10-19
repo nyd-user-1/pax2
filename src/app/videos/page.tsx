@@ -1,6 +1,9 @@
-import { redirect } from "next/navigation"
+import { MyVideos } from "@/components/my-videos"
 
-// Replaced by the original-content queues.
-export default function Page() {
-  redirect("/drafts")
+export const dynamic = "force-dynamic"
+export const metadata = { title: "My videos" }
+
+export default async function VideosPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const { q } = await searchParams
+  return <MyVideos filter={q} />
 }

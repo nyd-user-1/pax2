@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 
 import { myChannels } from "@/app/onboarding-actions"
 import { ListBlock } from "@/components/blocks"
+import { ChannelsPitch } from "@/components/channels/pitch"
 import { ChannelChip } from "@/components/onboarding/ingest"
 import { currentUser } from "@/lib/auth"
 
@@ -32,7 +33,7 @@ export default async function ChannelsPage({ searchParams }: { searchParams: Pro
           ))}
         </div>
       ) : (
-        <p className="text-sm text-slate-500">No channel connected yet.</p>
+        <ChannelsPitch />
       )}
     </ListBlock>
   )

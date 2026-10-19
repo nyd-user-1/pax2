@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, FilePen, Flag, FlaskConical, GanttChart, Gauge, GitBranch, Hammer, House, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, RefreshCw, Rocket, Search, Send, Settings, Target, TrendingUp, Tv, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Film, FlaskConical, GanttChart, Gauge, GitBranch, Hammer, House, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, Tag, Target, TrendingUp, Tv, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { RevealFx } from "@/components/reveal-fx"
@@ -12,81 +12,67 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { cn } from "@/ui/lib/utils"
 import { whiteButton } from "@/components/white-button"
 
-// What stands today; everything being reworked sits under Work in progress, in the product's order —
-// the user's video and its scoring, then the research behind it.
+// The sidebar by audience (the UX audit's split, ruled 2026-10-19): the creator's product plain
+// at the top, the research behind it under its own label, and the admin surfaces for admins only.
 const NAV = [
   { href: "/app/home", label: "Home", icon: House },
   { href: "/chat", label: "Chat", icon: MessagesSquare },
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/channels", label: "Channels", icon: Tv },
-]
-const WIP = [
-  { href: "/recording", label: "Recording", icon: Video },
-  { href: "/scoring", label: "Scoring", icon: Gauge },
-  { href: "/publishing", label: "Publishing", icon: Send },
+  { href: "/recording", label: "Create", icon: Video },
+  { href: "/videos", label: "My videos", icon: Film },
   { href: "/scripts", label: "Scripts", icon: NotebookPen },
-  { href: "/polling", label: "Polling", icon: ChartColumn },
-  { href: "/evals", label: "Evals", icon: Target },
+  { href: "/channels", label: "Channels", icon: Tv },
   { href: "/labeling", label: "Teach a Model", icon: ListChecks },
-  { href: "/outliers", label: "iWAR", icon: Rocket },
-  { href: "/feature-lift", label: "Feature lift", icon: TrendingUp },
-  { href: "/velocity-tracker", label: "Velocity", icon: Activity },
-  { href: "/live-tracking", label: "Live tracking", icon: Radio },
-  { href: "/loop", label: "Loop", icon: RefreshCw },
-  { href: "/patterns", label: "Patterns", icon: ChartColumn },
+]
+const RESEARCH = [
+  { href: "/tracking", label: "Tracking", icon: Activity },
+  { href: "/evidence", label: "Evidence", icon: TrendingUp },
+  { href: "/polling", label: "Polling", icon: ChartColumn },
   { href: "/graph", label: "Graph", icon: Workflow },
   { href: "/flow", label: "Flows", icon: GitBranch },
-  { href: "/project-management", label: "Project Management", icon: GanttChart },
-  { href: "/endgame", label: "Endgame", icon: Flag },
+  { href: "/tags", label: "Tags", icon: Tag },
   { href: "/ml", label: "ML", icon: Brain },
   { href: "/scoring/method", label: "Score method", icon: FlaskConical },
-]
-// Pages that branch off a sidebar item, drawn hanging from it on the branched menu's tree lines.
-const BRANCHES: Record<string, { href: string; label: string; icon: typeof Gauge }[]> = {
-  "/recording": [{ href: "/drafts", label: "Drafts", icon: FilePen }],
-}
-// Off the sidebar and the page switcher: early pages kept for reference, under the account menu's Lab.
-const LAB = [{ href: "/campaigns", label: "Campaigns", icon: Clapperboard }]
-const MORE = [
-  { href: "/glossary", label: "Glossary", icon: BookA },
   { href: "/library", label: "Library", icon: Library },
+  { href: "/glossary", label: "Glossary", icon: BookA },
+]
+const ADMIN = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/evals", label: "Evals", icon: Target },
   { href: "/pipeline", label: "Pipeline", icon: Workflow },
   { href: "/build", label: "Build", icon: Hammer },
+  { href: "/project-management", label: "Project Management", icon: GanttChart },
 ]
+// Off the sidebar and the search: early pages kept for reference, under the account menu's Lab.
+const LAB = [{ href: "/campaigns", label: "Campaigns", icon: Clapperboard }]
 
 // The header names the page; the first match wins, so a deeper route comes before its parent.
 const TITLES: [string, string][] = [
   ["/app/home", "Home"],
-  ["/recording", "Recording"],
-  ["/drafts", "Drafts"],
-  ["/scoring/method", "Score method"],
-  ["/scoring", "Scoring"],
-  ["/publishing", "Publishing"],
   ["/chat", "Chat"],
-  ["/dashboard", "Dashboard"],
-  ["/channels", "Channels"],
-  ["/v/", "Video"],
+  ["/recording", "Create"],
+  ["/record/", "Create"],
+  ["/videos", "My videos"],
   ["/scripts", "Scripts"],
-  ["/polling", "Polling"],
-  ["/evals", "Evals"],
+  ["/channels", "Channels"],
+  ["/labeling/classifier", "The Classifier"],
   ["/labeling", "Teach a Model"],
-  ["/project-management", "Project Management"],
-  ["/campaigns", "Campaigns"],
-  ["/glossary", "Glossary"],
-  ["/library", "Library"],
-  ["/pipeline", "Pipeline"],
-  ["/build", "Build"],
-  ["/outliers", "iWAR"],
-  ["/feature-lift", "Feature lift"],
-  ["/velocity-tracker", "Velocity"],
-  ["/live-tracking", "Live tracking"],
-  ["/loop", "Loop"],
-  ["/patterns", "Patterns"],
+  ["/v/", "Video"],
+  ["/tracking", "Tracking"],
+  ["/evidence", "Evidence"],
+  ["/polling", "Polling"],
   ["/graph", "Graph"],
   ["/flow", "Flows"],
-  ["/endgame", "Endgame"],
-  ["/ml", "ML"],
   ["/tags", "Tags"],
+  ["/ml", "ML"],
+  ["/scoring/method", "Score method"],
+  ["/library", "Library"],
+  ["/glossary", "Glossary"],
+  ["/dashboard", "Dashboard"],
+  ["/evals", "Evals"],
+  ["/pipeline", "Pipeline"],
+  ["/build", "Build"],
+  ["/project-management", "Project Management"],
+  ["/campaigns", "Campaigns"],
 ]
 
 const PANEL_THIRD = "md:w-[clamp(420px,34vw,620px)]"
@@ -116,7 +102,7 @@ export type PanelSize = "third" | "half" | "full" | "custom"
 const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {}, size: "third", nextSize: "half", cycleSize: () => {}, panelOpen: false, sidebarOpen: false, toggleSidebar: () => {}, discuss: false, toggleDiscuss: () => {} })
 export const useShellPanel = () => React.useContext(PanelCtx)
 
-export function Shell({ children, drawer, signedIn = false }: { children: React.ReactNode; drawer: React.ReactNode; signedIn?: boolean }) {
+export function Shell({ children, drawer, signedIn = false, admin = false }: { children: React.ReactNode; drawer: React.ReactNode; signedIn?: boolean; admin?: boolean }) {
   const path = usePathname()
   const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = React.useState(false)
@@ -188,7 +174,9 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
     setSplit(w / window.innerWidth)
     setSize("custom")
   }
-  const active = (href: string) => (href === "/scoring" ? path === "/scoring" : path.startsWith(href))
+  // Create stays lit through the whole recording flow, whichever prefix a step lives under.
+  const active = (href: string) => (href === "/recording" ? path.startsWith("/recording") || path.startsWith("/record/") : path.startsWith(href))
+  const findable = React.useMemo(() => [...NAV, ...RESEARCH, ...(admin ? ADMIN : [])], [admin])
   // The front door (landing, record entry, sign-in) is full bleed; the recording flow, from /recording on, sits in the shell.
   // /signup and /signin are the landing's first screen with a form in place of the hero, sidebar and all.
   const home = path === "/" || path === "/signup" || path === "/signin"
@@ -222,43 +210,6 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
       </Link>
     )
   }
-  const branch = (kids: { href: string; label: string; icon: typeof Gauge }[]) => {
-    const ROW = 32
-    const PAD = 2
-    /** Under the parent's 18px icon, which sits 12px in. */
-    const TRUNK = 21
-    const R = 8
-    const END = 34
-    const y = (k: number) => PAD + k * ROW + ROW / 2
-    const arc = (k: number) => `A ${R} ${R} 0 0 0 ${TRUNK + R} ${y(k)} H ${END}`
-    const length = (k: number) => y(k) - R + (Math.PI * R) / 2 + (END - TRUNK - R)
-    const h = PAD * 2 + kids.length * ROW
-    return (
-      <div className="relative" style={{ height: h }}>
-        <svg aria-hidden width={END} height={h} className="pointer-events-none absolute left-0 top-0 overflow-visible fill-none [stroke-linecap:round] [stroke-linejoin:round]" strokeWidth={1.5}>
-          <path className="stroke-slate-300" d={`M ${TRUNK} 0 V ${y(kids.length - 1) - R}`} />
-          {kids.map((k, i) => (
-            <path key={k.href} className="stroke-slate-300" d={`M ${TRUNK} ${y(i) - R} ${arc(i)}`} />
-          ))}
-          {kids.map((k, i) => (
-            <path
-              key={`${k.href}-reach`}
-              className="stroke-pax2-light-blue transition-[stroke-dashoffset] duration-400 ease-[cubic-bezier(0.23,1,0.32,1)]"
-              d={`M ${TRUNK} 0 V ${y(i) - R} ${arc(i)}`}
-              style={{ strokeDasharray: length(i), strokeDashoffset: active(k.href) ? 0 : length(i) }}
-            />
-          ))}
-        </svg>
-        <div className="flex flex-col pl-9" style={{ paddingTop: PAD }}>
-          {kids.map((k) => (
-            <div key={k.href} className="flex items-center" style={{ height: ROW }}>
-              <div className="w-full">{item(k.href, k.label, k.icon, true)}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    )
-  }
   const sidebar = (
     <div className="flex h-full w-60 flex-col rounded-2xl border border-slate-500 bg-pax2-mist px-3 py-4 shadow-e2">
       <Link href="/" aria-label="Home" className="mb-4 flex px-3 pt-1">
@@ -266,17 +217,14 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
       </Link>
       <nav className="flex flex-col gap-0.5">{NAV.map((n) => item(n.href, n.label, n.icon))}</nav>
       <div className="mt-3 min-h-0 flex-1 overflow-y-auto border-t border-slate-200/70 pt-3">
-        <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Work in progress</p>
-        <nav className="flex flex-col gap-0.5">
-          {WIP.map((n) => (
-            <React.Fragment key={n.href}>
-              {item(n.href, n.label, n.icon)}
-              {BRANCHES[n.href] && branch(BRANCHES[n.href])}
-            </React.Fragment>
-          ))}
-        </nav>
-        <p className="mt-3 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">More</p>
-        <nav className="flex flex-col gap-0.5">{MORE.map((n) => item(n.href, n.label, n.icon))}</nav>
+        <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Research</p>
+        <nav className="flex flex-col gap-0.5">{RESEARCH.map((n) => item(n.href, n.label, n.icon))}</nav>
+        {admin && (
+          <>
+            <p className="mt-3 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Admin</p>
+            <nav className="flex flex-col gap-0.5">{ADMIN.map((n) => item(n.href, n.label, n.icon))}</nav>
+          </>
+        )}
       </div>
       <div className="border-t border-slate-200/70 pt-3">
         <AccountMenu />
@@ -336,9 +284,9 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
               <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className={whiteButton("circle")}>
                 {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
               </button>
-              <PageSwitcher title={title} />
+              <h1 className="font-display max-w-[220px] truncate pl-1 text-[17px] text-slate-900">{title}</h1>
               <div className="flex min-w-0 flex-1 justify-center px-4">
-                <HeaderSearch />
+                <HeaderSearch items={findable} />
               </div>
               {/* A page's own header controls (the dashboard's poller switch and pipeline run) portal in here. */}
               <div id="page-actions" className="flex items-center gap-3" />
@@ -462,7 +410,7 @@ function Announcement() {
 }
 
 // The header's search: every page behind one field, ⌘K from anywhere, Enter takes the first match.
-function HeaderSearch() {
+function HeaderSearch({ items }: { items: { href: string; label: string; icon: typeof Gauge }[] }) {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const [q, setQ] = React.useState("")
@@ -498,8 +446,7 @@ function HeaderSearch() {
     router.push(href)
   }
   const needle = q.trim().toLowerCase()
-  const all = [...NAV, ...WIP, ...Object.values(BRANCHES).flat(), ...MORE]
-  const filtered = needle ? all.filter((d) => d.label.toLowerCase().includes(needle)) : all
+  const filtered = needle ? items.filter((d) => d.label.toLowerCase().includes(needle)) : items
   return (
     <div ref={ref} className="relative w-full max-w-[420px]">
       <div className="flex h-9 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 shadow-e1 transition-colors focus-within:border-slate-300">
@@ -550,88 +497,6 @@ function HeaderSearch() {
   )
 }
 
-// The page name is also the jump menu: a pill that opens a filterable list of
-// every page (the leuk context switcher, in pax2 clothes).
-function PageSwitcher({ title }: { title: string }) {
-  const router = useRouter()
-  const [open, setOpen] = React.useState(false)
-  const [q, setQ] = React.useState("")
-  const ref = React.useRef<HTMLDivElement>(null)
-
-  React.useEffect(() => {
-    if (!open) return
-    const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
-    }
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false)
-    }
-    document.addEventListener("mousedown", onDown)
-    document.addEventListener("keydown", onKey)
-    return () => {
-      document.removeEventListener("mousedown", onDown)
-      document.removeEventListener("keydown", onKey)
-    }
-  }, [open])
-
-  const go = (href: string) => {
-    setOpen(false)
-    setQ("")
-    router.push(href)
-  }
-  const needle = q.trim().toLowerCase()
-  const all = [...NAV, ...WIP, ...Object.values(BRANCHES).flat(), ...MORE]
-  const filtered = needle ? all.filter((d) => d.label.toLowerCase().includes(needle)) : all
-
-  return (
-    <div ref={ref} className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-label={`${title} — switch page`}
-        className={cn("flex h-9 items-center gap-1.5 rounded-full pl-3 pr-2 transition-colors", open ? "bg-slate-200/70" : "hover:bg-slate-200/70")}
-      >
-        <span className="font-display max-w-[220px] truncate text-[17px] text-slate-900">{title}</span>
-        <ChevronsUpDown className="size-3.5 shrink-0 text-slate-400" />
-      </button>
-      <h1 className="sr-only">{title}</h1>
-      {open && (
-        <div role="menu" className="absolute left-0 top-full z-50 mt-1.5 w-64 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-e3">
-          <div className="border-b border-slate-200/70 p-2">
-            <input
-              autoFocus
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Find…"
-              aria-label="Find a page"
-              className="w-full rounded-lg bg-pax2-mist px-2.5 py-1.5 text-sm text-slate-900 outline-none placeholder:text-slate-400"
-            />
-          </div>
-          <div className="no-scrollbar max-h-72 overflow-y-auto p-1.5">
-            {filtered.length === 0 ? (
-              <p className="px-2.5 py-3 text-sm text-slate-500">No matches.</p>
-            ) : (
-              filtered.map((d) => (
-                <button
-                  key={d.href}
-                  type="button"
-                  role="menuitem"
-                  onClick={() => go(d.href)}
-                  className="group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm font-medium text-slate-600 transition-colors hover:bg-pax2-mist hover:text-pax2-blue"
-                >
-                  <d.icon className="size-4 shrink-0 text-slate-400 transition-colors group-hover:fill-pax2-lavender group-hover:text-pax2-blue" strokeWidth={1.75} />
-                  <span className="flex-1 truncate">{d.label}</span>
-                </button>
-              ))
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
 
 // leuk's AccountMenu (components/shell/account-menu.tsx): the UserChip at the foot of the
 // sidebar, opening upward to the identity header and Log out.

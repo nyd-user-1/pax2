@@ -1,8 +1,6 @@
-import { OriginalsQueue } from "@/components/originals-queue"
+import { redirect } from "next/navigation"
 
-export const dynamic = "force-dynamic"
-export const metadata = { title: "Scoring" }
-
-export default function ScoringPage() {
-  return <OriginalsQueue queue="scoring" />
+// The queues merged into /videos; old links keep their filter.
+export default function Page() {
+  redirect("/videos?q=scoring")
 }

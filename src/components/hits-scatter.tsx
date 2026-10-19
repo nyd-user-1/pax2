@@ -40,7 +40,7 @@ export function HitsScatter() {
         </text>
       ))}
       {vids.map((v) => (
-        <a key={v.id} href={`/velocity-tracker?v=${v.id}`}>
+        <a key={v.id} href={`/tracking?tab=curves&v=${v.id}`}>
           <circle cx={x(v.published)} cy={y(v.ratio)} r={4.5} fill={TIER[v.tier].dot} fillOpacity={0.75} className="cursor-pointer transition-[fill-opacity] hover:fill-opacity-100">
             <title>{`${v.title}\n${v.channel} · ${new Date(v.published).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}\n${v.views.toLocaleString()} views, ${v.ratio >= 10 ? v.ratio.toFixed(0) : v.ratio.toFixed(1)}x the channel median · ${TIER[v.tier].label}`}</title>
           </circle>
