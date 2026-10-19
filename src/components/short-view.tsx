@@ -106,6 +106,17 @@ const LOREM = [
 let loremAt = 0
 const toComment = (id: string, c: YtSnippet): ThreadComment => ({ id, author: c.authorDisplayName, avatar: c.authorProfileImageUrl, text: LOREM[loremAt++ % LOREM.length], likes: c.likeCount, published: c.publishedAt })
 
+/** The stand-in threads every video shows until its real comments arrive: lorem through and through. */
+const PLACEHOLDER_THREADS: Thread[] = [
+  { id: "ph-1", author: "Lorem Ipsum", avatar: "", text: LOREM[0], likes: 24, published: "2026-10-12T14:00:00Z", replyCount: 2, replies: [
+    { id: "ph-1a", author: "Dolor Sit", avatar: "", text: LOREM[3], likes: 6, published: "2026-10-12T18:00:00Z" },
+    { id: "ph-1b", author: "Amet Consectetur", avatar: "", text: LOREM[5], likes: 2, published: "2026-10-13T09:00:00Z" },
+  ] },
+  { id: "ph-2", author: "Adipiscing Elit", avatar: "", text: LOREM[1], likes: 11, published: "2026-10-14T11:00:00Z", replyCount: 0, replies: [] },
+  { id: "ph-3", author: "Tempor Incididunt", avatar: "", text: LOREM[2], likes: 7, published: "2026-10-15T16:00:00Z", replyCount: 0, replies: [] },
+  { id: "ph-4", author: "Magna Aliqua", avatar: "", text: LOREM[4], likes: 3, published: "2026-10-17T08:00:00Z", replyCount: 0, replies: [] },
+]
+
 /** The video's top comment threads from YouTube (by relevance) with the replies YouTube sends along,
  *  cached an hour. Null when there's no key, comments are off, or YouTube won't answer. */
 async function topComments(ytId: string): Promise<Thread[] | null> {
@@ -239,11 +250,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "comments",
       "Comments",
       <ListBlock key="comments" title="Comments" height="auto">
-        {comments?.length ? (
-          <CommentThread videoId={ytId} threads={comments} />
-        ) : (
-          <p className="text-sm text-slate-800">{comments ? "No comments yet." : "Comments couldn't be loaded."}</p>
-        )}
+        <CommentThread videoId={ytId} threads={comments?.length ? comments : PLACEHOLDER_THREADS} />
       </ListBlock>,
     ],
   ]
