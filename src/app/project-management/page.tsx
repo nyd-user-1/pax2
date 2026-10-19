@@ -18,10 +18,11 @@ const RATINGS: { key: "importance" | "utility" | "ease"; label: string }[] = [
   { key: "ease", label: "Ease" },
 ]
 const COLS = {
-  plain: "grid-cols-[36px_minmax(200px,260px)_minmax(160px,1fr)_48px_minmax(220px,1.4fr)_minmax(96px,0.5fr)]",
-  rated: "grid-cols-[36px_minmax(200px,260px)_minmax(160px,1fr)_48px_72px_72px_72px_minmax(220px,1.4fr)_minmax(96px,0.5fr)]",
-  // Models carry two more columns (what it does, why it matters) and the baseline under the name.
-  model: "grid-cols-[36px_minmax(200px,260px)_minmax(120px,0.8fr)_48px_72px_72px_72px_minmax(200px,1.1fr)_minmax(200px,1.1fr)_minmax(200px,1.1fr)_minmax(96px,0.4fr)]",
+  plain: "grid-cols-[36px_minmax(180px,240px)_minmax(140px,0.9fr)_48px_minmax(220px,1.4fr)_minmax(90px,0.5fr)]",
+  rated: "grid-cols-[36px_minmax(180px,240px)_minmax(140px,0.9fr)_48px_72px_72px_72px_minmax(220px,1.4fr)_minmax(90px,0.5fr)]",
+  // Models read like a model hub listing: the base checkpoint in its own column, task tags as pills;
+  // the prose (function, value-add, next) lives on the Specs tab.
+  model: "grid-cols-[36px_minmax(150px,200px)_minmax(150px,210px)_minmax(100px,0.7fr)_48px_64px_64px_64px_minmax(170px,1fr)_minmax(90px,0.4fr)]",
 }
 const plainName = (name: string) => name.replace(/^\d+\. /, "")
 
@@ -49,12 +50,10 @@ function Row({ b, n, list, rated, model, today }: { b: Item; n: number; list: It
   const remaining = 100 - b.progress
   return (
     <details data-find className="group border-t border-slate-100">
-      <summary className={cn("grid min-h-24 cursor-pointer list-none items-center gap-x-3 py-2 text-xs hover:bg-slate-50 [&::-webkit-details-marker]:hidden", model ? COLS.model : rated ? COLS.rated : COLS.plain)}>
+      <summary className={cn("grid cursor-pointer list-none items-center gap-x-3 py-2.5 text-xs hover:bg-slate-50 [&::-webkit-details-marker]:hidden", model ? COLS.model : rated ? COLS.rated : COLS.plain)}>
         <span className="tabular text-slate-500">{n}</span>
-        <div className="min-w-0">
-          <p className="truncate font-medium text-slate-900">{plainName(b.name)}</p>
-          {model && b.base && <p className="mt-0.5 line-clamp-2 text-[10px] leading-snug text-slate-500">{b.base}</p>}
-        </div>
+        <p className="truncate font-medium text-slate-900">{plainName(b.name)}</p>
+        {model && <p className="truncate font-mono text-[11px] text-slate-700" title={b.base}>{b.base}</p>}
         <div className={cn("h-3 overflow-hidden rounded-full", done ? "bg-green-100" : late ? "bg-red-100" : "bg-slate-100")} title={`${b.progress}%`}>
           {/* The fill grows from the left on arrival, staggered down the list (pax2.css .grow). */}
           <div className={cn("grow h-full rounded-full", done ? "bg-green-500" : late ? "bg-red-400" : "bg-pax2-light-blue")} style={{ width: `${b.progress}%`, "--i": n } as React.CSSProperties} />
@@ -63,17 +62,24 @@ function Row({ b, n, list, rated, model, today }: { b: Item; n: number; list: It
           {done ? <Check className="h-4 w-4 text-green-600" strokeWidth={3} aria-label="Complete" /> : `${b.progress}%`}
         </div>
         {rated && RATINGS.map((r) => <Rating key={r.key} n={b[r.key]} />)}
-        {model && <p className="line-clamp-3 leading-snug text-slate-700">{b.func}</p>}
-        {model && <p className="line-clamp-3 leading-snug text-slate-600">{b.value}</p>}
-        <p className={cn("line-clamp-2 leading-snug", done ? "text-slate-400" : "text-slate-600")}>{done ? (b.note ?? "") : b.next}</p>
+        {model ? (
+          <div className="flex flex-wrap gap-1">
+            {(b.tags ?? []).map((t) => (
+              <span key={t} className="whitespace-nowrap rounded-full bg-white px-2 py-px text-[10px] text-slate-700 ring-1 ring-slate-200">{t}</span>
+            ))}
+          </div>
+        ) : (
+          <p className={cn("line-clamp-1 leading-snug group-open:line-clamp-none", done ? "text-slate-400" : "text-slate-600")}>{done ? (b.note ?? "") : b.next}</p>
+        )}
         <div className="flex flex-wrap gap-1">
           {blocked && <Tag tone="block" title={`Waits on ${waits.join(", ")}`}>Blocked</Tag>}
           {blocks.length > 0 && <Tag tone="wait" title={`Blocks ${blocks.join(", ")}`}>Blocks {blocks.map((n) => n.replace(/ .*/, "")).join(", ")}</Tag>}
         </div>
       </summary>
-      {b.steps.length > 0 && (
+      {(b.steps.length > 0 || model) && (
         <div className="mb-2 ml-2 rounded-md bg-slate-50 px-3 py-2 text-xs">
-          <p className="mb-1 text-[10px] uppercase tracking-wide text-slate-400">Of the {remaining}% that remains</p>
+          {model && (done ? b.note : b.next) && <p className="mb-2 leading-snug text-slate-700">{done ? b.note : b.next}</p>}
+          {b.steps.length > 0 && <p className="mb-1 text-[10px] uppercase tracking-wide text-slate-400">Of the {remaining}% that remains</p>}
           <ol className="space-y-1">
             {b.steps.map((s, i) => (
               <li key={i} className="grid grid-cols-[40px_1fr] gap-x-2 sm:grid-cols-[40px_1fr_minmax(160px,0.5fr)]">
@@ -94,23 +100,21 @@ function Row({ b, n, list, rated, model, today }: { b: Item; n: number; list: It
 
 function Rows({ list, rated, model, today }: { list: Item[]; rated: boolean; model?: boolean; today: string }) {
   return (
-    <div className="overflow-x-auto">
-      <div className={model ? "min-w-[1280px]" : rated ? "min-w-[900px]" : "min-w-[720px]"}>
-        <div className={cn("grid items-end gap-x-3 pb-1 text-[10px] uppercase tracking-wide text-slate-400", model ? COLS.model : rated ? COLS.rated : COLS.plain)}>
-          <span>No.</span>
-          <span>Item</span>
-          <span>Progress</span>
-          <span className="text-right">Done</span>
-            {rated && RATINGS.map((r) => <span key={r.key} className="text-center">{r.label}</span>)}
-          {model && <span>Function</span>}
-          {model && <span>Value-add</span>}
-          <span>Next</span>
-          <span>Blocked</span>
-        </div>
-        {list.map((b, i) => (
-          <Row key={b.id} b={b} n={i + 1} list={list} rated={rated} model={model} today={today} />
-        ))}
+    <div>
+      {/* The header pins while the rows scroll (the block body is the scroll container), muted ground, bold. */}
+      <div className={cn("sticky top-0 z-10 grid items-center gap-x-3 border-b border-slate-200 bg-slate-50 py-2 text-[11px] font-semibold text-slate-600", model ? COLS.model : rated ? COLS.rated : COLS.plain)}>
+        <span>No.</span>
+        <span>Item</span>
+        {model && <span>Base model</span>}
+        <span>Progress</span>
+        <span className="text-right">Done</span>
+        {rated && RATINGS.map((r) => <span key={r.key} className="text-center">{r.label}</span>)}
+        {model ? <span>Task</span> : <span>Next</span>}
+        <span>Blocked</span>
       </div>
+      {list.map((b, i) => (
+        <Row key={b.id} b={b} n={i + 1} list={list} rated={rated} model={model} today={today} />
+      ))}
     </div>
   )
 }
@@ -121,30 +125,37 @@ const specsInModelOrder = () => MODELS.map((m) => MODEL_TERMS.find((t) => t.id =
 /** Specs: for each model PAX2 trains or plans to train, what it predicts, the loss it minimizes and the algorithm that runs. */
 function Specs() {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full min-w-[900px] text-xs">
-        <thead className="text-left text-[10px] uppercase tracking-wide text-slate-400">
-          <tr className="[&_th]:py-1 [&_th]:pr-4 [&_th]:font-medium [&_th]:align-bottom">
-            <th className="w-[36px]">No.</th>
-            <th className="w-[160px]">Item</th>
-            <th>Target variable and bounds</th>
-            <th>Loss function</th>
-            <th>Algorithm or class</th>
-          </tr>
-        </thead>
-        <tbody>
-          {specsInModelOrder().map((m, i) => (
-            <tr key={m.id} data-find className="border-t border-slate-100 align-top [&_td]:h-24 [&_td]:py-2 [&_td]:pr-4 [&_td]:leading-snug">
+    <table className="w-full text-xs">
+      <thead className="sticky top-0 z-10 text-left text-[11px] font-semibold text-slate-600">
+        <tr className="[&_th]:border-b [&_th]:border-slate-200 [&_th]:bg-slate-50 [&_th]:py-2 [&_th]:pr-4 [&_th]:align-bottom">
+          <th className="w-[32px]">No.</th>
+          <th className="w-[130px]">Item</th>
+          <th>Function</th>
+          <th>Value-add</th>
+          <th>Target variable and bounds</th>
+          <th>Loss function</th>
+          <th>Algorithm or class</th>
+          <th>Next</th>
+        </tr>
+      </thead>
+      <tbody>
+        {specsInModelOrder().map((m, i) => {
+          const model = MODELS.find((x) => x.id === m.id)
+          return (
+            <tr key={m.id} data-find className="border-t border-slate-100 align-top [&_td]:py-2.5 [&_td]:pr-4 [&_td]:leading-snug">
               <td className="tabular text-slate-500">{i + 1}</td>
               <td className="font-medium text-slate-900">{m.name}</td>
+              <td className="text-slate-700">{model?.func}</td>
+              <td className="text-slate-700">{model?.value}</td>
               <td className="text-slate-700">{m.target}</td>
               <td className="text-slate-700">{m.loss}</td>
               <td className="text-slate-700">{m.algorithm}</td>
+              <td className="text-slate-600">{model?.progress !== undefined && model.progress >= 100 ? (model.note ?? "") : model?.next}</td>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          )
+        })}
+      </tbody>
+    </table>
   )
 }
 

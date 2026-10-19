@@ -22,8 +22,10 @@ export type Item = {
   func?: string
   /** Models only: why it matters to the loop. */
   value?: string
-  /** Models only: the baseline we began training from — a named checkpoint, or from scratch. */
+  /** Models only: the checkpoint training began from, bare (as it reads on Hugging Face), or "from scratch". */
   base?: string
+  /** Models only: task tags the way a model hub tags them (what kind of model this is). */
+  tags?: string[]
   /** Ids in the same list this item waits on. */
   waits?: string[]
   /** Things outside this list it waits on, in words. */
@@ -96,19 +98,19 @@ export const REQUIREMENTS: Item[] = [
 
 // importance: how much the loop depends on it. utility: what it delivers today, at its measured
 // strength. ease: how little stands between today and a finished version (data, compute, approvals).
-type Plan = { start: string; end: string; importance: number; utility: number; ease: number; steps: Step[]; waits?: string[]; waitsOn?: string; func: string; value: string; base: string }
+type Plan = { start: string; end: string; importance: number; utility: number; ease: number; steps: Step[]; waits?: string[]; waitsOn?: string; func: string; value: string; base: string; tags: string[] }
 const MODEL_PLAN: Record<string, Plan> = {
   "m-velocity": { start: "2026-10-17", end: "2026-11-30", importance: 4, utility: 5, ease: 5,
     func: "Reads a short's first hours of views and calls whether it will break out.",
     value: "The earliest warning after publish; drives /live-tracking and the hour-1/3/6 forecast.",
-    base: "From scratch on PAX2's own velocity readings.",
+    base: "from scratch", tags: ["Tabular classification"],
     steps: [
     { what: "v1 at about 1,000 settled curves; 332 qualify today, the poller adds about 180 shorts a week; the refresh runs with MODE=full PREFIX=model/<name>/ JOBS=velocity ./scripts/rig/launch-cpu.sh.", share: 100, effort: "weeks of polling, then 3 cents and ten minutes" },
   ] },
   "m-classifier": { start: "2026-10-17", end: "2026-11-07", importance: 5, utility: 3, ease: 4,
     func: "Scores a video before release: the chance of a Hit from title, length and posting time.",
     value: "The pre-release number on the Scored tab and in the findings email.",
-    base: "From scratch on the catalog's settled outcomes.",
+    base: "from scratch", tags: ["Tabular classification"],
     steps: [
     { what: "v2 with transcript features from the caption run; its chain is running and launches the box itself when the priority families land.", share: 62, effort: "automatic, about 17:00 UTC on 2026-10-18; about 5 cents" },
     { what: "Audio and frame features once files exist.", share: 38, effort: "after the proxy" },
@@ -116,12 +118,12 @@ const MODEL_PLAN: Record<string, Plan> = {
   "m-headline": { start: "2026-10-17", end: "2026-11-07", importance: 3, utility: 3, ease: 4,
     func: "Scores a headline on its own; two scores pick the stronger title.",
     value: "Title choice before publish, measured 0.61 held out.",
-    base: "Fine-tuned from bert-base-uncased on 41,175 Upworthy headline pairs.",
+    base: "bert-base-uncased", tags: ["Text ranking"],
     steps: [] },
   "m-labeler": { start: "2026-10-10", end: "2026-12-15", importance: 4, utility: 3, ease: 3,
     func: "Codes a video's traits (hook, tone, delivery) the way trained labelers do.",
     value: "Scales human trait-reading to the whole catalog once a few hundred labels exist.",
-    base: "Base model unchosen; waits on labels from Teach a Model.",
+    base: "unchosen", tags: ["Multi-label classification"],
     steps: [
     { what: "Three labelers per video from Teach a Model, 40 videos.", share: 40, effort: "weeks of learners" },
     { what: "Agreement between the labelers and the Bedrock codes, per trait.", share: 20, effort: "the script exists; run it" },
@@ -130,7 +132,7 @@ const MODEL_PLAN: Record<string, Plan> = {
   "m-encoder": { start: "2026-10-17", end: "2026-11-21", importance: 4, utility: 2, ease: 2,
     func: "Embeds title, description and transcript so that similar means performs similarly, not talks alike.",
     value: "A draft script borrows the measured track record of the videos it most resembles.",
-    base: "Fine-tuned from BAAI/bge-m3 (text embeddings).",
+    base: "BAAI/bge-m3", tags: ["Text embeddings"],
     steps: [
     { what: "The retrain on 5,232 transcripts (Whisper over our own audio replaced the caption run) is on a box now; the 3,424 run missed Gate E by 0.0002 (pooled +0.0198 of the +0.02 required).", share: 50, effort: "running, about 46 minutes and $1.43" },
     { what: "Gate E on the rerun; publish the weights if it passes, and the fleet's audio can push the corpus toward 9,500 if the curve says more helps.", share: 30, effort: "an hour, then Brendan's call on more GPU" },
@@ -139,7 +141,7 @@ const MODEL_PLAN: Record<string, Plan> = {
   "m-vision": { start: "2026-10-17", end: "2026-12-15", importance: 2, utility: 2, ease: 3,
     func: "Embeds thumbnails, and frames once the videos exist, as visual features.",
     value: "Visual signal into the hit predictor beyond words and metadata.",
-    base: "CLIP ViT-B-32 (OpenAI weights) borrowed as-is, ResMem for memorability; nothing fine-tuned yet.",
+    base: "CLIP ViT-B-32 (openai)", tags: ["Image embeddings", "borrowed as-is"],
     steps: [
     { what: "Frames from downloaded video, not only the thumbnail.", share: 62, effort: "after the proxy" },
     { what: "Frame embeddings as features of PAX2 Classifier.", share: 38, effort: "an hour and a c7i box" },
@@ -147,7 +149,7 @@ const MODEL_PLAN: Record<string, Plan> = {
   "m-retention": { start: "2026-10-17", end: "2026-12-31", importance: 3, utility: 2, ease: 2, waitsOn: "requirement 7",
     func: "Predicts where viewers drop off through a video's run.",
     value: "Edit guidance: cut where the predicted curve falls.",
-    base: "From scratch (v0 in the rig); fine-tunes on PAX's own retention after requirement 7.",
+    base: "from scratch", tags: ["Curve regression"],
     steps: [
     { what: "Retention curves from YouTube Analytics on a connected PAX2 channel.", share: 50, effort: "after requirement 7" },
     { what: "Fine-tune v0 on PAX2's own retention.", share: 40, effort: "an hour and a c7i box" },
@@ -156,14 +158,14 @@ const MODEL_PLAN: Record<string, Plan> = {
   "m-reranker": { start: "2026-10-17", end: "2026-11-21", importance: 2, utility: 1, ease: 2, waits: ["m-encoder"],
     func: "Rereads the embedding model's top 50 matches as full text pairs and reorders them.",
     value: "Sharper neighbors for the same forecast; its gate is already passed.",
-    base: "Fine-tuned from gte-reranker-modernbert-base (a cross-encoder).",
+    base: "gte-reranker-modernbert-base", tags: ["Text ranking", "cross-encoder"],
     steps: [
     { what: "Gate R passed 2026-10-19 (pooled 0.572 over the encoder's 0.571, within 0.563 over 0.559), but it rescores the encoder's neighbors, so it publishes only with an encoder that passes Gate E.", share: 100, effort: "waits on the encoder" },
   ] },
   "m-simulator": { start: "2026-10-17", end: "2026-12-15", importance: 2, utility: 1, ease: 2,
     func: "Fits a seed-and-test model to view curves and plays a short's path forward from hour one.",
     value: "What-if before and just after publish, beside the measured curve on /live-tracking.",
-    base: "From scratch on the settled curves.",
+    base: "from scratch", tags: ["Curve simulation"],
     steps: [
     { what: "Fit a seed-test model to the velocity curves; sim-0 describes 442 today.", share: 60, effort: "a day, after about 1,000 curves" },
     { what: "Simulate a short's path from its first hour.", share: 30, effort: "half a day" },
@@ -172,7 +174,7 @@ const MODEL_PLAN: Record<string, Plan> = {
   "m-cpc": { start: "2026-11-01", end: "2026-12-15", importance: 3, utility: 1, ease: 1,
     func: "Learns audio features from the catalog's sound alone, no labels needed.",
     value: "Delivery and sound signal into the hit predictor.",
-    base: "Self-supervised from scratch; waits on the catalog's audio (landing now).",
+    base: "from scratch", tags: ["Audio embeddings", "self-supervised"],
     steps: [
     { what: "The catalog's audio through the proxy, about 9 GB.", share: 40, effort: "Brendan opens the account; then a day" },
     { what: "Self-supervised training on a GPU box.", share: 40, effort: "a few GPU hours, estimate $5 to $10" },
@@ -181,7 +183,7 @@ const MODEL_PLAN: Record<string, Plan> = {
   "m-ranker": { start: "2026-10-18", end: "2026-12-31", importance: 3, utility: 1, ease: 2, waitsOn: "reader rows",
     func: "Ranks the home feed for each reader from their opens and plays.",
     value: "Per-reader recommendations once reader rows exist.",
-    base: "From scratch; v0's recipe measured 0.595 within reader on public logs.",
+    base: "from scratch", tags: ["Recommendation"],
     steps: [
     { what: "A few thousand reader rows in the DynamoDB table.", share: 40, effort: "readers; nothing to build", blocker: true },
     { what: "PAX2 Feed Ranker trained on PAX2's rows with v0's reader-feature recipe; beat 0.595 within reader.", share: 40, effort: "a day and a c7i box" },
@@ -193,7 +195,7 @@ export const MODELS: Item[] = Object.entries(MODEL_PLAN).map(([id, d]) => {
   const node = MEMORABLE.nodes.find((n) => n.id === id)
   if (!node) throw new Error(`project-management: no model ${id} in the Memorable recipe`)
   const f = node.fields
-  return { id, name: f.name, start: d.start, end: d.end, progress: Number(f.progress ?? 0), next: f.next ?? "", note: f.metrics, steps: d.steps, waits: d.waits, waitsOn: d.waitsOn, importance: d.importance, utility: d.utility, ease: d.ease, func: d.func, value: d.value, base: d.base }
+  return { id, name: f.name, start: d.start, end: d.end, progress: Number(f.progress ?? 0), next: f.next ?? "", note: f.metrics, steps: d.steps, waits: d.waits, waitsOn: d.waitsOn, importance: d.importance, utility: d.utility, ease: d.ease, func: d.func, value: d.value, base: d.base, tags: d.tags }
 })
 
 /** The names of the items in the same list that wait on this one. */
