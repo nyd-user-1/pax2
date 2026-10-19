@@ -6,8 +6,12 @@ import { ChevronLeft, ChevronRight, Minus, Plus, X } from "lucide-react"
 
 import { cn } from "@/ui/lib/utils"
 
-// Full-screen recorder: the camera behind, the script over it a sentence or two at a time,
-// advancing at the chosen pace once recording starts.
+// Full-screen recorder: the camera behind, the script over it a sentence or two at a time. Once
+// recording starts the prompter paces the reader word by word at the chosen speed: words already read
+// are bright, the word to say now is underlined, the words ahead are dim, and the block advances on its
+// own when its last word is reached. Space, or a tap on the words, pauses and resumes; the arrows and
+// the arrow keys jump a block; the speed can change mid-read. Before recording it waits on the first
+// block.
 
 function blocks(text: string) {
   const sentences = text.replace(/\s+/g, " ").trim().split(/(?<=[.!?…])\s+/)
@@ -28,10 +32,16 @@ export function Teleprompter({ text, onClose, onDone }: { text: string; onClose:
   const startedAt = React.useRef(0)
   const [err, setErr] = React.useState<string | null>(null)
   const [recording, setRecording] = React.useState(false)
+  const [paused, setPaused] = React.useState(false)
   const [elapsed, setElapsed] = React.useState(0)
   const [wpm, setWpm] = React.useState(130)
-  const [i, setI] = React.useState(0)
+  const [w, setW] = React.useState(0)
   const parts = React.useMemo(() => blocks(text), [text])
+  // Every word with its block, and where each block starts, so the pointer and the blocks agree.
+  const words = React.useMemo(() => parts.flatMap((p, b) => p.split(" ").map((t) => ({ t, b }))), [parts])
+  const starts = React.useMemo(() => parts.map((_, b) => words.findIndex((x) => x.b === b)), [parts, words])
+  const cur = words[Math.min(w, words.length - 1)]?.b ?? 0
+  const running = recording && !paused
 
   React.useEffect(() => {
     let alive = true
@@ -49,19 +59,39 @@ export function Teleprompter({ text, onClose, onDone }: { text: string; onClose:
     }
   }, [])
 
-  // Advance the script at the chosen pace while recording.
+  // The pace: one word every 60000 / wpm milliseconds while recording and not paused; the speed
+  // control takes effect at once because the interval is rebuilt when wpm changes.
   React.useEffect(() => {
-    if (!recording) return
-    const n = parts[i]?.split(" ").length ?? 0
-    const t = setTimeout(() => setI((x) => Math.min(parts.length - 1, x + 1)), (n / wpm) * 60000)
-    return () => clearTimeout(t)
-  }, [recording, i, wpm, parts])
+    if (!running) return
+    const t = setInterval(() => setW((x) => Math.min(words.length - 1, x + 1)), 60000 / wpm)
+    return () => clearInterval(t)
+  }, [running, wpm, words.length])
 
   React.useEffect(() => {
     if (!recording) return
     const t = setInterval(() => setElapsed((Date.now() - startedAt.current) / 1000), 250)
     return () => clearInterval(t)
   }, [recording])
+
+  const jump = React.useCallback((d: number) => setW((x) => starts[Math.max(0, Math.min(parts.length - 1, (words[Math.min(x, words.length - 1)]?.b ?? 0) + d))] ?? 0), [starts, parts.length, words])
+  const togglePause = React.useCallback(() => {
+    if (recording) setPaused((p) => !p)
+  }, [recording])
+
+  // Space pauses and resumes, the arrow keys jump a block, unless the focus is on a control.
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement | null)?.tagName
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "BUTTON") return
+      if (e.code === "Space") {
+        e.preventDefault()
+        togglePause()
+      } else if (e.key === "ArrowLeft") jump(-1)
+      else if (e.key === "ArrowRight") jump(1)
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [togglePause, jump])
 
   const start = () => {
     if (!stream.current) return
@@ -71,7 +101,8 @@ export function Teleprompter({ text, onClose, onDone }: { text: string; onClose:
     r.ondataavailable = (e) => e.data.size && chunks.current.push(e.data)
     r.onstop = () => onDone(new Blob(chunks.current, { type: r.mimeType }), (Date.now() - startedAt.current) / 1000, r.mimeType)
     rec.current = r
-    setI(0)
+    setW(0)
+    setPaused(false)
     startedAt.current = Date.now()
     r.start(1000)
     setRecording(true)
@@ -79,7 +110,13 @@ export function Teleprompter({ text, onClose, onDone }: { text: string; onClose:
   const stop = () => {
     rec.current?.stop()
     setRecording(false)
+    setPaused(false)
   }
+
+  const clock = `${Math.floor(elapsed / 60)}:${String(Math.floor(elapsed % 60)).padStart(2, "0")}`
+  const status = !recording ? "Tap to start; the words pace themselves" : paused ? `Paused ${clock} · space or tap the words to resume` : `● ${clock}`
+  const curWords = parts[cur]?.split(" ") ?? []
+  const curStart = starts[cur] ?? 0
 
   // Portaled to <body> so the app shell's page animation (a mask on the content card) can't clip it.
   return createPortal(
@@ -90,30 +127,37 @@ export function Teleprompter({ text, onClose, onDone }: { text: string; onClose:
         <button type="button" onClick={() => (recording ? stop() : onClose())} aria-label="Close">
           <X className="size-6" />
         </button>
-        <span className="text-sm text-white/80">{recording ? `● ${Math.floor(elapsed / 60)}:${String(Math.floor(elapsed % 60)).padStart(2, "0")}` : "Read at your own pace"}</span>
+        <span className="text-sm text-white/80">{status}</span>
         <span className="flex items-center gap-2 rounded-full bg-black/40 px-2 py-1 text-xs">
-          <button type="button" onClick={() => setWpm((w) => Math.max(90, w - 10))} aria-label="Slower">
+          <button type="button" onClick={() => setWpm((v) => Math.max(90, v - 10))} aria-label="Slower">
             <Minus className="size-3.5" />
           </button>
           {wpm} wpm
-          <button type="button" onClick={() => setWpm((w) => Math.min(190, w + 10))} aria-label="Faster">
+          <button type="button" onClick={() => setWpm((v) => Math.min(190, v + 10))} aria-label="Faster">
             <Plus className="size-3.5" />
           </button>
         </span>
       </div>
       <div className="relative flex flex-1 items-end justify-center px-16 pb-10">
-        <button type="button" onClick={() => setI((x) => Math.max(0, x - 1))} className="absolute left-4 top-1/2 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/40" aria-label="Previous">
+        <button type="button" onClick={() => jump(-1)} className="absolute left-4 top-1/2 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/40" aria-label="Previous">
           <ChevronLeft />
         </button>
-        <div className="flex max-w-2xl flex-col gap-6 text-center">
-          {parts.slice(i, i + 2).map((p, k) => (
-            <p key={i + k} className={cn("font-display font-semibold leading-snug drop-shadow-lg transition-opacity", k === 0 ? "text-3xl md:text-5xl" : "text-xl text-white/50 md:text-3xl")}>
-              {p}
-            </p>
-          ))}
+        <div role="button" tabIndex={-1} onClick={togglePause} aria-label={paused ? "Resume" : "Pause"} className={cn("flex max-w-2xl cursor-pointer select-none flex-col gap-6 text-center", paused && "opacity-80")}>
+          <p className="font-display text-3xl font-semibold leading-snug drop-shadow-lg md:text-5xl">
+            {curWords.map((t, k) => {
+              const idx = curStart + k
+              const state = !recording ? "ahead" : idx < w ? "read" : idx === w ? "now" : "ahead"
+              return (
+                <React.Fragment key={idx}>
+                  <span className={cn("transition-colors duration-150", state === "read" && "text-white", state === "now" && "text-white underline decoration-[var(--pax2-red)] decoration-4 underline-offset-8", state === "ahead" && (recording ? "text-white/45" : "text-white"))}>{t}</span>{" "}
+                </React.Fragment>
+              )
+            })}
+          </p>
+          {parts[cur + 1] && <p className="font-display text-xl font-semibold leading-snug text-white/50 drop-shadow-lg md:text-3xl">{parts[cur + 1]}</p>}
           {err && <p className="rounded-xl bg-black/60 px-4 py-3 text-base">{err}</p>}
         </div>
-        <button type="button" onClick={() => setI((x) => Math.min(parts.length - 1, x + 1))} className="absolute right-4 top-1/2 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/40" aria-label="Next">
+        <button type="button" onClick={() => jump(1)} className="absolute right-4 top-1/2 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/40" aria-label="Next">
           <ChevronRight />
         </button>
       </div>
@@ -123,8 +167,7 @@ export function Teleprompter({ text, onClose, onDone }: { text: string; onClose:
         </button>
         <span className="text-sm text-white/80">{recording ? "Tap to finish" : "Tap to start"}</span>
       </div>
-    </div>
-    ,
+    </div>,
     document.body,
   )
 }
