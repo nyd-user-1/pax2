@@ -67,7 +67,9 @@ Done 2026-10-17, confirmed 2026-10-18: the findings email carries each change wi
 
 Built 2026-10-18 (`src/lib/youtube.ts`, `src/app/api/youtube/oauth/route.ts`): an admin opens the grant route, the channel's owner or an Editor signs in once, the refresh token goes to SSM and the channel to the DynamoDB table; approving a video then uploads its mp4 to that channel and writes the YouTube id to the watch list the same minute.
 
-Connected 2026-10-19: Brendan created the channel PAX (@PAX-DEV-TEST, UCXQimTA5x32Ne9fvyJEYK1g), the OAuth client and production-mode consent screen went up (project pax2-512104), the push deployed green (Amplify job 7), and his consent click wrote the refresh token to SSM at 05:39 UTC. What remains is the first approved video; requirement 9 closes with it. His 16 seed videos go up unlisted at minimum — private is invisible to the poller.
+Connected 2026-10-19: Brendan created the channel PAX (@PAX-DEV-TEST, UCXQimTA5x32Ne9fvyJEYK1g), the OAuth client and production-mode consent screen went up (project pax2-512104), the push deployed green (Amplify job 7), and his consent click wrote the refresh token to SSM at 05:39 UTC. What remains is the first approved video; requirement 9 closes with it.
+
+Ruled by Brendan 2026-10-19: the Voter Freedom back catalog (however many videos it is) predates PAX2 — it is scored as originals from its files and transcripts, and never enters the poller's watch list: its early windows are long past, so polling it would measure staleness, not content, and a re-upload would mint a fresh id with a reset publish date and masquerade as a new publish. It does not need re-uploading to PAX at all; if any of it lands there for display, it stays off the watch list. The unlisted-never-private rule applies only to genuinely new publishes, where publish time is now and the early window is real.
 
 ### 8. Versions and A/B — Built
 
