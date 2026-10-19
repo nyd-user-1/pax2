@@ -39,10 +39,11 @@ export const POSITIONS: { id: Position; label: string }[] = [
   { id: "lower", label: "Lower third" },
 ]
 
-/** Voices: four from ElevenLabs (premade, American; ids as its /v1/voices lists them), which read more
- *  naturally and return character timings, and four Amazon Polly neural voices, the three the project
- *  used for its stand-in takes and one more, which need no outside account. ElevenLabs voices need
- *  ELEVENLABS_API_KEY on the server; the free tier is 10,000 characters a month, about 30 scripts. */
+/** Voices: twelve from ElevenLabs (premade; ids as its /v1/voices lists them, 2026-10-19), which read
+ *  more naturally and return character timings, and four Amazon Polly neural voices, the three the
+ *  project used for its stand-in takes and one more, which need no outside account. ElevenLabs voices
+ *  need ELEVENLABS_API_KEY on the server; the free tier is 10,000 characters a month, about 30 scripts,
+ *  and a script already narrated in a voice is served from S3 without spending any. */
 export type VoiceId = "none" | "Ruth" | "Stephen" | "Danielle" | "Matthew" | `el:${string}`
 export type Voice = { id: VoiceId; label: string; provider: "ElevenLabs" | "Polly" | "none" }
 export const VOICES: Voice[] = [
@@ -51,6 +52,14 @@ export const VOICES: Voice[] = [
   { id: "el:XrExE9yKIg1WjnnlVkGX", label: "Matilda", provider: "ElevenLabs" },
   { id: "el:cjVigY5qzO86Huf0OWal", label: "Eric", provider: "ElevenLabs" },
   { id: "el:nPczCjzI2devNBz1zQrb", label: "Brian", provider: "ElevenLabs" },
+  { id: "el:TX3LPaxmHKxFdv7VOQHJ", label: "Liam", provider: "ElevenLabs" },
+  { id: "el:FGY2WhTYpPnrIDTdsKH5", label: "Laura", provider: "ElevenLabs" },
+  { id: "el:cgSgspJ2msm6clMCkdW9", label: "Jessica", provider: "ElevenLabs" },
+  { id: "el:pqHfZKP75CvOlQylNhV4", label: "Bill", provider: "ElevenLabs" },
+  { id: "el:onwK4e9ZLuTAKqWW03F9", label: "Daniel", provider: "ElevenLabs" },
+  { id: "el:Xb7hH8MSUJpSbSDYk0k2", label: "Alice", provider: "ElevenLabs" },
+  { id: "el:JBFqnCBsd6RMkjVDRZzb", label: "George", provider: "ElevenLabs" },
+  { id: "el:pNInz6obpgDQGcFmaJgB", label: "Adam", provider: "ElevenLabs" },
   { id: "Ruth", label: "Ruth", provider: "Polly" },
   { id: "Danielle", label: "Danielle", provider: "Polly" },
   { id: "Stephen", label: "Stephen", provider: "Polly" },

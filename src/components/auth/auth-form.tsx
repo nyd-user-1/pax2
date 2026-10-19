@@ -15,10 +15,11 @@ const post = async (action: string, body: object) => {
   return { status: r.status, ...j }
 }
 
-/** Where to land after signing in: the page the reader came from (?next=), else the record flow. */
-const nextPath = () => {
+/** Where to land after signing in: the page the reader came from (?next=), else onboarding for a new
+ *  account and the record flow for a returning one. */
+const nextPath = (mode: Mode) => {
   const n = new URLSearchParams(window.location.search).get("next")
-  return n && n.startsWith("/") && !n.startsWith("//") ? n : "/recording"
+  return n && n.startsWith("/") && !n.startsWith("//") ? n : mode === "signup" ? "/signup/welcome" : "/recording"
 }
 
 const FIELD = "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-shadow placeholder:text-slate-400 focus:ring-2 focus:ring-pax2-light-blue/40"
@@ -49,7 +50,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
       setError(r.error ?? "Something went wrong.")
       return false
     }
-    router.push(nextPath())
+    router.push(nextPath(mode))
     router.refresh()
     return true
   }

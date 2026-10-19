@@ -94,7 +94,8 @@ export function Shelf({ takes, scripts }: { takes: RecentTake[]; scripts: QuickS
             </button>
           ))}
         </div>
-        <div className="mt-4 flex items-center gap-2">
+        {/* Sticks 20px under the shell's header row as the cards scroll up behind it, as the root page's feed search does. */}
+        <div className="sticky top-5 z-10 mt-[30px] flex items-center gap-2">
           <div className="flex h-11 flex-1 items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-3.5 transition-colors focus-within:border-slate-300">
             <Search className="size-4 shrink-0 text-slate-400" />
             <input

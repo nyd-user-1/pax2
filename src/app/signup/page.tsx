@@ -11,7 +11,7 @@ export default function SignUpPage() {
       <header className="fixed inset-x-0 top-0 z-10 flex items-center px-6 py-5">
         <Link href="/" aria-label="Home"><Wordmark size={28} /></Link>
       </header>
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-[451px]">
         <h1 className="font-display m-0 mb-8 text-center text-4xl font-normal text-pax2-blue">Create an account</h1>
         <AuthForm mode="signup" />
       </div>

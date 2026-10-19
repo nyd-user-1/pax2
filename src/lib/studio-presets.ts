@@ -22,4 +22,13 @@ export const EFFECTS: StudioEffect[] = [
   { id: "hook-first", title: "Hook first", scriptId: "noparty", style: { hookCard: true, voice: voice("Sarah"), music: "bright" } },
   { id: "slow-burn", title: "Slow burn", scriptId: "calm", style: { color: "night", size: "l", position: "lower", wpm: 110, music: "calm" } },
   { id: "anchor-read", title: "Anchor read", scriptId: "coin", style: { position: "lower", voice: voice("Matthew") } },
+  // ElevenLabs' social-media and narration voices, each set in a look that suits how it reads.
+  { id: "creator-cut", title: "Creator cut", scriptId: "noparty", style: { motion: "type", size: "l", hookCard: true, voice: voice("Liam"), music: "bright" } },
+  { id: "street-talk", title: "Street talk", scriptId: "majority", style: { color: "flag", motion: "zoom", voice: voice("Laura"), music: "pulse" } },
+  { id: "kitchen-table", title: "Kitchen table", scriptId: "listen", style: { color: "paper", font: "serif", position: "lower", voice: voice("Jessica"), music: "calm" } },
+  { id: "elder-statesman", title: "Elder statesman", scriptId: "already", style: { color: "night", font: "serif", voice: voice("Bill"), music: "calm" } },
+  { id: "evening-news", title: "Evening news", scriptId: "district", style: { position: "lower", voice: voice("Daniel") } },
+  { id: "explainer", title: "Explainer", scriptId: "coin", style: { color: "paper", motion: "type", voice: voice("Alice") } },
+  { id: "storyteller", title: "Storyteller", scriptId: "calm", style: { color: "night", size: "l", voice: voice("George"), music: "calm" } },
+  { id: "hard-line", title: "Hard line", scriptId: "majority", style: { color: "flag", motion: "type", size: "l", voice: voice("Adam"), music: "pulse" } },
 ]

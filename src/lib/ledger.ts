@@ -1,7 +1,7 @@
 import "server-only"
 
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
-import { DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb"
+import { DeleteCommand, DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb"
 
 // The ledger: one DynamoDB table, append-only. Nothing is updated in place;
 // a decision that changes status is a new item, so the history is the table.
@@ -53,6 +53,12 @@ export async function query<T extends Item>(pk: string, prefix?: string): Promis
     start = r.LastEvaluatedKey
   } while (start)
   return out
+}
+
+/** The one exception to append-only: a user withdrawing their own data (a private or unlisted video they
+ *  un-pick, a video that left the channel's public set). Only the channel-ingest Lambda holds DeleteItem. */
+export async function remove(pk: string, sk: string) {
+  await client.send(new DeleteCommand({ TableName: TABLE, Key: { pk, sk } }))
 }
 
 export const now = () => new Date().toISOString()

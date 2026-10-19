@@ -1,16 +1,7 @@
-import { cn } from "@/ui/lib/utils"
+import { PaxMark } from "@/components/pax-mark"
 
-/** The parallax wordmark, restored from the original pax repo: the double l drawn as two bars, blue and red. */
+/** The PAX wordmark everywhere outside the root page: the static PAX mark (src/components/pax-mark.tsx).
+ *  The animated curtain is the root page's alone. Kept as its own name so every caller stays as it is. */
 export function Wordmark({ className, size = 22 }: { className?: string; size?: number }) {
-  const bar = { width: Math.max(2, Math.round(size * 0.11)), height: Math.round(size * 1.05) }
-  return (
-    <span className={cn("inline-flex items-baseline font-semibold tracking-[-0.03em] text-slate-900", className)} style={{ fontSize: size, lineHeight: 1 }} aria-label="parallax">
-      <span aria-hidden>para</span>
-      <span aria-hidden className="mx-[0.06em] inline-flex gap-[0.07em] self-end" style={{ transform: `translateY(${Math.round(size * 0.04)}px)` }}>
-        <span className="rounded-[1px] bg-pax2-blue" style={bar} />
-        <span className="rounded-[1px] bg-pax2-red" style={bar} />
-      </span>
-      <span aria-hidden>ax</span>
-    </span>
-  )
+  return <PaxMark className={className} size={size} />
 }
