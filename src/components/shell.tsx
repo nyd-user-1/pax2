@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, FilePen, Flag, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Search, Send, Settings, Target, TrendingUp, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, FilePen, Flag, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Search, Send, Settings, Target, TrendingUp, Tv, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { RevealFx } from "@/components/reveal-fx"
@@ -18,6 +18,7 @@ const NAV = [
   { href: "/app/home", label: "Home", icon: House },
   { href: "/chat", label: "Chat", icon: MessagesSquare },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/channels", label: "Channels", icon: Tv },
 ]
 const WIP = [
   { href: "/recording", label: "Recording", icon: Video },
@@ -27,7 +28,7 @@ const WIP = [
   { href: "/polling", label: "Polling", icon: ChartColumn },
   { href: "/evals", label: "Evals", icon: Target },
   { href: "/labeling", label: "Teach a Model", icon: ListChecks },
-  { href: "/break-out", label: "iWAR", icon: Rocket },
+  { href: "/outliers", label: "iWAR", icon: Rocket },
   { href: "/feature-lift", label: "Feature lift", icon: TrendingUp },
   { href: "/velocity-tracker", label: "Velocity", icon: Activity },
   { href: "/live-tracking", label: "Live tracking", icon: Radio },
@@ -61,6 +62,7 @@ const TITLES: [string, string][] = [
   ["/publishing", "Publishing"],
   ["/chat", "Chat"],
   ["/dashboard", "Dashboard"],
+  ["/channels", "Channels"],
   ["/v/", "Video"],
   ["/scripts", "Scripts"],
   ["/polling", "Polling"],
@@ -72,7 +74,7 @@ const TITLES: [string, string][] = [
   ["/library", "Library"],
   ["/pipeline", "Pipeline"],
   ["/build", "Build"],
-  ["/break-out", "iWAR"],
+  ["/outliers", "iWAR"],
   ["/feature-lift", "Feature lift"],
   ["/velocity-tracker", "Velocity"],
   ["/live-tracking", "Live tracking"],
