@@ -17,6 +17,7 @@ import { ArrowUp, Check, ChevronLeft, ChevronRight, MapPin, Mic, PlaySquare, Squ
 import { MarkdownContent } from '@/components/chat/markdown'
 import { PlusMenu, type ScriptChip, type VideoChip } from '@/components/chat/plus-menu'
 import { Wordmark } from '@/components/wordmark'
+import { cn } from '@/ui/lib/utils'
 
 type Message = { id: string; role: 'user' | 'assistant'; content: string }
 type Suggestion = { place_id: string; description: string }
@@ -40,8 +41,11 @@ const SKIN = {
 const ask = (v: VideoChip) => `What explains the score on ${v.label}?`
 
 /** `context` supplies extra system context per message (the graph canvas's dock passes what is on
- *  the canvas); `attachment` renders above the input box (the dock's attached-entity banner). */
-export function Chat({ scripts = [], videos = [], compact = false, context, attachment }: { scripts?: ScriptChip[]; videos?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode }) {
+ *  the canvas); `attachment` renders above the input box (the dock's attached-entity banner).
+ *  /app/home dresses the same chat as its front page: `heading` stands in for the wordmark,
+ *  `below` hangs under the input in the empty state, `explore: false` yields that spot, and
+ *  `shelf` renders past the fold — the empty state fills the viewport and the shelf scrolls up. */
+export function Chat({ scripts = [], videos = [], compact = false, context, attachment, heading, below, explore = true, shelf }: { scripts?: ScriptChip[]; videos?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode; heading?: React.ReactNode; below?: React.ReactNode; explore?: boolean; shelf?: React.ReactNode }) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -545,15 +549,22 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
     <div className="flex h-full flex-1 flex-col overflow-hidden" style={SKIN}>
       <div className="flex-1 overflow-y-auto">
         {isEmpty && !compact ? (
-          <div className="flex flex-col items-center justify-center min-h-full px-4 py-8">
-            <div className="w-full max-w-[773px] flex flex-col gap-6">
-              {!compact && (
-                <div className="flex flex-col items-center">
-                  <Wordmark size={34} />
-                </div>
-              )}
+          // With `below` (the home), the layout is the reference's: the chat column rides at a fixed
+          // offset from the top — set so the input's bottom edge lands where the reference's does,
+          // our box being ~56px taller — the tiles and promos press to the bottom of the first
+          // viewport, and the gap between them takes whatever height is left; the shelf waits past
+          // the fold. Without `below`, the column centers as always.
+          <>
+          <div className={cn("flex flex-col items-center px-4", below ? "min-h-full pb-10 pt-16" : "min-h-full justify-center py-8")}>
+            <div className="flex w-full max-w-[773px] flex-col gap-6">
+              {!compact &&
+                (heading ?? (
+                  <div className="flex flex-col items-center">
+                    <Wordmark size={34} />
+                  </div>
+                ))}
               {inputBox}
-              {videos.length > 0 && (
+              {explore && videos.length > 0 && (
                 <div className="max-w-[636px] mx-auto w-full">
                   <div className="flex items-center justify-between mb-4">
                     <p className="text-base font-semibold text-[var(--txt)]">Explore</p>
@@ -591,7 +602,15 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
                 </div>
               )}
             </div>
+            {below && (
+              <>
+                <div className="min-h-12 flex-1" />
+                {below}
+              </>
+            )}
           </div>
+            {shelf}
+          </>
         ) : (
           <div className="flex flex-col gap-4 px-4 py-6 max-w-[773px] mx-auto w-full">
             {messages.map(msg => (

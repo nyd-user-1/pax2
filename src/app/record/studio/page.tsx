@@ -10,6 +10,7 @@ import { submitOriginal, viewer } from "@/app/original-actions"
 import { musicUrl, narrate, type Narration } from "@/app/studio-actions"
 import { FlowPage } from "@/components/record/chrome"
 import { useDraft } from "@/components/record/draft"
+import { PRESET_KEY } from "@/lib/studio-presets"
 import { ScriptVideo } from "@/components/studio/script-video"
 import { DEFAULT_STYLE, FONTS, FPS, LOOKS, MOTIONS, MUSIC, POSITIONS, SIZES, VOICES, WPM_MAX, WPM_MIN, styleLabel, timeline, type StyleRecord } from "@/lib/studio-style"
 import { cn } from "@/ui/lib/utils"
@@ -23,6 +24,15 @@ import { whiteButton } from "@/components/white-button"
 export default function StudioPage() {
   const { draft, ready } = useDraft()
   const [style, setStyle] = React.useState<StyleRecord>(DEFAULT_STYLE)
+  // A quickstart's preset (the home's studio effects) arrives in sessionStorage, once.
+  React.useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem(PRESET_KEY)
+      if (!raw) return
+      sessionStorage.removeItem(PRESET_KEY)
+      setStyle((s) => ({ ...s, ...(JSON.parse(raw) as Partial<StyleRecord>) }))
+    } catch {}
+  }, [])
   const [ask, setAsk] = React.useState("Vote YES on 3")
   const [voice, setVoice] = React.useState<Narration | null>(null)
   const [voicing, setVoicing] = React.useState(false)

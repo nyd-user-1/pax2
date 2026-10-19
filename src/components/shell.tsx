@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, FilePen, Flag, FlaskConical, GanttChart, Gauge, Hammer, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Send, Settings, Target, TrendingUp, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, FilePen, Flag, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Search, Send, Settings, Target, TrendingUp, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { RevealFx } from "@/components/reveal-fx"
@@ -15,6 +15,7 @@ import { whiteButton } from "@/components/white-button"
 // What stands today; everything being reworked sits under Work in progress, in the product's order —
 // the user's video and its scoring, then the research behind it.
 const NAV = [
+  { href: "/app/home", label: "Home", icon: House },
   { href: "/chat", label: "Chat", icon: MessagesSquare },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
 ]
@@ -52,6 +53,7 @@ const MORE = [
 
 // The header names the page; the first match wins, so a deeper route comes before its parent.
 const TITLES: [string, string][] = [
+  ["/app/home", "Home"],
   ["/recording", "Recording"],
   ["/drafts", "Drafts"],
   ["/scoring/method", "Score method"],
@@ -299,8 +301,8 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
   // Both panes side by side: the divider and the corner closes show.
   const paired = open && !takeover
   const closePanel = () => (panelOpen ? router.back() : setDiscuss(false))
-  // /chat fills the content card edge to edge, as solar's chat fills its main area.
-  const full = path.startsWith("/chat") || path.startsWith("/graph")
+  // /chat fills the content card edge to edge, as solar's chat fills its main area; /app/home is the same chat dressed as the home.
+  const full = path.startsWith("/chat") || path.startsWith("/graph") || path.startsWith("/app/home")
   return (
     <PanelCtx.Provider value={panel}>
       <div className="flex min-h-dvh md:h-dvh md:overflow-hidden md:bg-slate-200/60 md:p-[18px]">
@@ -309,6 +311,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
         </div>
         <div ref={mainRef} className={cn("relative flex min-w-0 flex-1 flex-col", takeover && "md:hidden")}>
           <div className="flex min-w-0 flex-1 flex-col md:min-h-0 md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:bg-pax2-mist md:shadow-e2">
+            <Announcement />
             <header className="sticky top-0 z-20 flex items-center gap-3 border-b bg-white/90 px-4 py-2.5 backdrop-blur md:hidden">
               <Link href="/" aria-label="Home"><Wordmark size={18} /></Link>
               <nav className="no-scrollbar flex flex-1 gap-1 overflow-x-auto">
@@ -327,7 +330,9 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
                 {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
               </button>
               <PageSwitcher title={title} />
-              <div className="flex-1" />
+              <div className="flex min-w-0 flex-1 justify-center px-4">
+                <HeaderSearch />
+              </div>
               {/* A page's own header controls (the dashboard's poller switch and pipeline run) portal in here. */}
               <div id="page-actions" className="flex items-center gap-3" />
               <Link href="/record" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-pax2-blue text-white shadow-md transition-shadow hover:shadow-e3">
@@ -411,6 +416,129 @@ function CornerClose({ label, onClose }: { label: string; onClose: () => void })
       <button type="button" onClick={onClose} aria-label={label} className="pointer-events-auto absolute bottom-1.5 right-1.5 flex size-6 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-300/70 hover:text-pax2-blue">
         <X className="size-3.5" strokeWidth={2.25} />
       </button>
+    </div>
+  )
+}
+
+// The announcement over the header: what just shipped, in one line, dismissed once per browser.
+// The gradient runs the wordmark's navy into its red.
+const BANNER_KEY = "pax2:banner:elevenlabs-voices"
+function Announcement() {
+  const [open, setOpen] = React.useState(false)
+  React.useEffect(() => {
+    try {
+      if (!localStorage.getItem(BANNER_KEY)) setOpen(true)
+    } catch {}
+  }, [])
+  if (!open) return null
+  return (
+    <div className="relative z-30 flex shrink-0 items-center justify-center gap-2 bg-[linear-gradient(100deg,#060b22,#1e3a8a_55%,#5b1120_130%)] px-12 py-2 text-[13px] text-white">
+      <p className="truncate">Four ElevenLabs voices are in the Studio — Sarah, Matilda, Eric and Brian.</p>
+      <Link href="/record/studio" className="shrink-0 font-semibold underline underline-offset-2">
+        Try them
+      </Link>
+      <button
+        type="button"
+        aria-label="Dismiss"
+        onClick={() => {
+          setOpen(false)
+          try {
+            localStorage.setItem(BANNER_KEY, "1")
+          } catch {}
+        }}
+        className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-1 text-white/70 transition-colors hover:text-white"
+      >
+        <X className="size-4" />
+      </button>
+    </div>
+  )
+}
+
+// The header's search: every page behind one field, ⌘K from anywhere, Enter takes the first match.
+function HeaderSearch() {
+  const router = useRouter()
+  const [open, setOpen] = React.useState(false)
+  const [q, setQ] = React.useState("")
+  const ref = React.useRef<HTMLDivElement>(null)
+  const inputRef = React.useRef<HTMLInputElement>(null)
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault()
+        inputRef.current?.focus()
+        setOpen(true)
+      }
+      if (e.key === "Escape") {
+        setOpen(false)
+        inputRef.current?.blur()
+      }
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [])
+  React.useEffect(() => {
+    if (!open) return
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener("mousedown", onDown)
+    return () => document.removeEventListener("mousedown", onDown)
+  }, [open])
+  const go = (href: string) => {
+    setOpen(false)
+    setQ("")
+    inputRef.current?.blur()
+    router.push(href)
+  }
+  const needle = q.trim().toLowerCase()
+  const all = [...NAV, ...WIP, ...Object.values(BRANCHES).flat(), ...MORE]
+  const filtered = needle ? all.filter((d) => d.label.toLowerCase().includes(needle)) : all
+  return (
+    <div ref={ref} className="relative w-full max-w-[420px]">
+      <div className="flex h-9 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 shadow-e1 transition-colors focus-within:border-slate-300">
+        <Search className="size-4 shrink-0 text-slate-400" />
+        <input
+          ref={inputRef}
+          value={q}
+          onChange={(e) => {
+            setQ(e.target.value)
+            setOpen(true)
+          }}
+          onFocus={() => setOpen(true)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && filtered[0]) go(filtered[0].href)
+          }}
+          placeholder="Search everything…"
+          aria-label="Search everything"
+          className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
+        />
+        <span aria-hidden className="flex shrink-0 gap-1">
+          <kbd className="rounded-md border border-slate-200 bg-pax2-mist px-1.5 py-0.5 text-[11px] text-slate-500">⌘</kbd>
+          <kbd className="rounded-md border border-slate-200 bg-pax2-mist px-1.5 py-0.5 text-[11px] text-slate-500">K</kbd>
+        </span>
+      </div>
+      {open && (
+        <div role="menu" className="absolute left-0 right-0 top-full z-50 mt-1.5 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-e3">
+          <div className="no-scrollbar max-h-72 overflow-y-auto p-1.5">
+            {filtered.length === 0 ? (
+              <p className="px-2.5 py-3 text-sm text-slate-500">No matches.</p>
+            ) : (
+              filtered.map((d) => (
+                <button
+                  key={d.href}
+                  type="button"
+                  role="menuitem"
+                  onClick={() => go(d.href)}
+                  className="group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm font-medium text-slate-600 transition-colors hover:bg-pax2-mist hover:text-pax2-blue"
+                >
+                  <d.icon className="size-4 shrink-0 text-slate-400 transition-colors group-hover:fill-pax2-lavender group-hover:text-pax2-blue" strokeWidth={1.75} />
+                  <span className="flex-1 truncate">{d.label}</span>
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
