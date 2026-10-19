@@ -47,7 +47,17 @@ export async function POST(req: Request, { params }: { params: Promise<{ action:
   const email = (body.email ?? "").trim().toLowerCase()
   try {
     if (action === "signup") {
-      await cip.send(new SignUpCommand({ ClientId: CLIENT, Username: email, Password: body.password, UserAttributes: [{ Name: "email", Value: email }] }))
+      try {
+        await cip.send(new SignUpCommand({ ClientId: CLIENT, Username: email, Password: body.password, UserAttributes: [{ Name: "email", Value: email }] }))
+      } catch (e) {
+        if ((e as { name?: string }).name !== "UsernameExistsException") throw e
+        // Registered but never confirmed (the tab closed before the code went in): a fresh code, and the
+        // form goes on to its code step. A confirmed account fails the resend and still hears "sign in instead".
+        await cip.send(new ResendConfirmationCodeCommand({ ClientId: CLIENT, Username: email })).catch(() => {
+          throw e
+        })
+        return NextResponse.json({ ok: true, resent: true })
+      }
       return NextResponse.json({ ok: true })
     }
     if (action === "confirm") {

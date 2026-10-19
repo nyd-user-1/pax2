@@ -15,7 +15,9 @@ import { whiteButton } from "@/components/white-button"
  *  the shell's hairline-and-shadow once the feed scrolls beneath it. The feed's
  *  search bar sticks just beneath it. Signed in, there's no hero: the sidebar toggle stands where
  *  PAX was and the discussion where Sign up was, and the bar turns white as soon as the feed moves. */
-export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
+/** `arriveAt`: when the buttons dissolve in, in ms; the landing waits for its curtain, /signup has none.
+ *  `signIn`: the right-hand button reads Sign in, for the sign-up page itself. */
+export function LandingHeader({ signedIn = false, arriveAt = CURTAIN, signIn = false }: { signedIn?: boolean; arriveAt?: number; signIn?: boolean }) {
   const [scrolled, setScrolled] = React.useState(false)
   const { sidebarOpen, toggleSidebar, discuss, toggleDiscuss } = useShellPanel()
   // As the curtain clears and the board begins: the header's two white buttons dissolve into place,
@@ -23,9 +25,9 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
   const [arrived, setArrived] = React.useState(false)
   const [drawPax, setDrawPax] = React.useState(false)
   React.useEffect(() => {
-    const timers = [window.setTimeout(() => setArrived(true), CURTAIN), window.setTimeout(() => setDrawPax(true), CURTAIN + 450)]
+    const timers = [window.setTimeout(() => setArrived(true), arriveAt), window.setTimeout(() => setDrawPax(true), arriveAt + 450)]
     return () => timers.forEach((t) => window.clearTimeout(t))
-  }, [])
+  }, [arriveAt])
   /** The dissolve both buttons arrive with: up from a faint blur and a touch small. */
   const arrive = cn("transition-[opacity,filter,scale,color,background-color,border-color] duration-500 ease-out", arrived ? "scale-100 opacity-100 blur-0" : "scale-95 opacity-0 blur-sm")
   React.useEffect(() => {
@@ -77,8 +79,8 @@ export function LandingHeader({ signedIn = false }: { signedIn?: boolean }) {
               )}
             </span>
           </button>
-          <Link href="/signup" className={whiteButton("md", arrive)}>
-            Sign up
+          <Link href={signIn ? "/signin" : "/signup"} className={whiteButton("md", arrive)}>
+            {signIn ? "Sign in" : "Sign up"}
           </Link>
         </>
       )}

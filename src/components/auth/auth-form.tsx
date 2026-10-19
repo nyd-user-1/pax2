@@ -11,7 +11,7 @@ type Mode = "signup" | "signin"
 
 const post = async (action: string, body: object) => {
   const r = await fetch(`/api/auth/${action}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
-  const j = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string; confirm?: boolean }
+  const j = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string; confirm?: boolean; resent?: boolean }
   return { status: r.status, ...j }
 }
 
@@ -22,18 +22,23 @@ const nextPath = (mode: Mode) => {
   return n && n.startsWith("/") && !n.startsWith("//") ? n : mode === "signup" ? "/signup/welcome" : "/recording"
 }
 
-const FIELD = "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-shadow placeholder:text-slate-400 focus:ring-2 focus:ring-pax2-light-blue/40"
+const FIELD = "w-full rounded-xl border border-slate-400 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-[border-color,box-shadow] hover:border-pax2-blue focus:border-pax2-blue placeholder:text-slate-400 focus:ring-2 focus:ring-pax2-light-blue/40"
 const BUTTON = "flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-pax2-blue text-[15px] font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60"
 
-export function AuthForm({ mode }: { mode: Mode }) {
+export type AuthStep = "form" | "code" | "reset"
+
+/** `onStep`: told each time the form moves between its steps, so the page can retitle itself. */
+export function AuthForm({ mode, onStep }: { mode: Mode; onStep?: (step: AuthStep) => void }) {
   const router = useRouter()
-  const [step, setStep] = React.useState<"form" | "code" | "reset">("form")
+  const [step, setStep] = React.useState<AuthStep>("form")
+  React.useEffect(() => onStep?.(step), [step, onStep])
   const [email, setEmail] = React.useState("")
   const [password, setPassword] = React.useState("")
   const [code, setCode] = React.useState("")
   const [busy, setBusy] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
   const [notice, setNotice] = React.useState<string | null>(null)
+  const [resumed, setResumed] = React.useState(false)
   // The ?next= return address rides along when switching between sign in and sign up.
   const [qs, setQs] = React.useState("")
   React.useEffect(() => setQs(window.location.search), [])
@@ -68,8 +73,14 @@ export function AuthForm({ mode }: { mode: Mode }) {
       } else if (step === "code") {
         const r = await post("confirm", { email, code })
         if (!r.ok) setError(r.error ?? "Something went wrong.")
-        else if (password) await signin()
-        else {
+        else if (password) {
+          // A sign-up that resumed an earlier, unconfirmed one keeps the earlier password.
+          if (!(await signin()) && resumed) {
+            setError(null)
+            setNotice("Email confirmed. Sign in with the password you chose the first time.")
+            setStep("form")
+          }
+        } else {
           setNotice("Confirmed — sign in to continue.")
           setStep("form")
         }
@@ -77,6 +88,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
         const r = await post("signup", { email, password })
         if (!r.ok) setError(r.error ?? "Something went wrong.")
         else {
+          setResumed(!!r.resent)
           setNotice(`We emailed a six-digit code to ${email}.`)
           setStep("code")
         }
