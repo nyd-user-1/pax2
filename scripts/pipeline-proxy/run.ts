@@ -97,6 +97,7 @@ async function main() {
     await addEvent(arg, { kind: "approved", by })
 
     const ch = await channel()
+    if (!ch) throw new Error("no channel is connected; the grant has not run")
     const key = playableKey(row, row.events)
     if (!/\.(mp4|mov|m4v)$/i.test(key)) throw new Error("no playable mp4 on the record")
     const { youtubeId, url } = await uploadShort({ key, title: row.title ?? TITLE, description: row.text ?? "", publishAt: null })
