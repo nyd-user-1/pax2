@@ -63,11 +63,11 @@ Built today, not on screen: `recommendations()` in `src/lib/forecast.ts` turns e
 
 Done 2026-10-17, confirmed 2026-10-18: the findings email carries each change with its measured range, points of vote choice or of the chance of a Hit, and no promised uplift; the old `upliftPct` line is gone.
 
-### 7. Publish — Stub
+### 7. Publish — Built, connected, awaiting its first video
 
-The admin's Approved, and the owner's "publish it", record a published event with three destinations and null links, and email the owner. No PAX2 channel exists; nothing uploads. `watchOnYouTube` takes a pasted link.
+Built 2026-10-18 (`src/lib/youtube.ts`, `src/app/api/youtube/oauth/route.ts`): an admin opens the grant route, the channel's owner or an Editor signs in once, the refresh token goes to SSM and the channel to the DynamoDB table; approving a video then uploads its mp4 to that channel and writes the YouTube id to the watch list the same minute.
 
-Built 2026-10-18 (`src/lib/youtube.ts`, `src/app/api/youtube/oauth/route.ts`): an admin opens the grant route, the channel's owner or an Editor signs in once, the refresh token goes to SSM and the channel to the DynamoDB table; approving a video then uploads its mp4 to that channel and writes the YouTube id to the watch list the same minute. Needs from Brendan: the Google Cloud OAuth client and its id and secret in the Amplify environment, `scripts/youtube/grant.sh --apply` for the server's SSM rights, and the channel's grant, Voter Freedom's or a PAX2 channel's.
+Connected 2026-10-19: Brendan created the channel PAX (@PAX-DEV-TEST, UCXQimTA5x32Ne9fvyJEYK1g), the OAuth client and production-mode consent screen went up (project pax2-512104), the push deployed green (Amplify job 7), and his consent click wrote the refresh token to SSM at 05:39 UTC. What remains is the first approved video; requirement 9 closes with it. His 16 seed videos go up unlisted at minimum — private is invisible to the poller.
 
 ### 8. Versions and A/B — Built
 
@@ -118,7 +118,7 @@ One convention, no exceptions: the project name and the kind of model. PAX2 Clas
 
 1. Done 2026-10-17: the poller is back on, and Brendan's word is it never goes off again.
 2. The worker's replacement: a Lambda (ffmpeg layer plus Transcribe and Pegasus calls) fired by the S3 upload event, or a new self-stopping box. The Lambda is the fit for one-video-at-a-time uploads. Needs approval to deploy.
-3. The YouTube channel and OAuth client for publishing. Only Brendan can create these.
+3. Done 2026-10-19: the channel PAX, the OAuth client, and the grant — publishing is connected.
 4. SES production access, so the findings and publish emails reach real owners.
 5. Whether the findings email keeps its best-change gain line or carries the range instead.
 6. The forecast on the Scored tab: show P(breakout) with its stated strength beside the persuasion lean, or hold it until the content model exists.
