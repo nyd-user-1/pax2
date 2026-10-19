@@ -1,0 +1,89 @@
+{
+ "builtAt": "2026-10-19T17:16:42.746Z",
+ "script": {
+  "id": "coin",
+  "title": "Uncontested"
+ },
+ "model": {
+  "shots": "us.anthropic.claude-sonnet-4-6",
+  "image": "stability.stable-image-ultra-v1:1",
+  "video": "luma.ray-v2:0"
+ },
+ "beats": [
+  {
+   "line": "Flip a coin. That's your odds of your state legislative race actually being contested in Massachusetts.",
+   "query": "coin flip",
+   "prompt": "A single silver coin spinning mid-air above a worn wooden table in a dimly lit room, dramatic side lighting casting a long shadow, mood tense and uncertain.",
+   "stock": {
+    "file": "/visuals/stock-0.jpg",
+    "source": "Openverse (CC)",
+    "credit": "frankieleon"
+   },
+   "canvas": {
+    "error": "ThrottlingException"
+   }
+  },
+  {
+   "line": "Since 2014, 51% of races in this state — more than half — have had just ONE name on the ballot. No opponent. No debate. No choice.",
+   "query": "empty ballot",
+   "prompt": "A stark white paper ballot on a plain gray surface with a single printed line and one checkbox, harsh overhead fluorescent light, mood clinical and hollow.",
+   "stock": {
+    "file": "/visuals/stock-1.jpg",
+    "source": "Openverse (CC)",
+    "credit": "Sandstein"
+   },
+   "canvas": {
+    "error": "ThrottlingException"
+   }
+  },
+  {
+   "line": "Massachusetts ranks dead last in the country for electoral competitiveness.",
+   "query": "last place ranking",
+   "prompt": "A printed list or ranked chart pinned to a corkboard with the bottom entry circled in red ink, natural window light from the side, mood bleak and bureaucratic.",
+   "stock": null,
+   "canvas": {
+    "error": "ThrottlingException"
+   }
+  },
+  {
+   "line": "And it's not because good candidates don't exist — it's because the system makes it nearly impossible for a challenger to even get on the ballot in the first place.",
+   "query": "locked door barrier",
+   "prompt": "A heavy closed wooden door with a large iron padlock in a stark institutional hallway, cool blue ambient light, mood forbidding and exclusionary.",
+   "stock": {
+    "file": "/visuals/stock-3.jpg",
+    "source": "Openverse (CC)",
+    "credit": "ABUS Security Tech Germany"
+   },
+   "canvas": {
+    "error": "ThrottlingException"
+   }
+  },
+  {
+   "line": "Voters show up… to rubber-stamp a decision that was already made for them.",
+   "query": "rubber stamp paper",
+   "prompt": "A red rubber stamp pressing down onto a white document on a government office desk, motion blur on the stamp, warm incandescent light, mood resigned and mechanical.",
+   "stock": {
+    "file": "/visuals/stock-4.jpg",
+    "source": "Openverse (CC)",
+    "credit": "Double--M"
+   },
+   "canvas": {
+    "error": "ThrottlingException"
+   }
+  }
+ ],
+ "reel": [
+  {
+   "arn": null,
+   "prompt": "A single silver coin spinning mid-air above a worn wooden table in a dimly lit room, dramatic side lighting casting a long shadow, mood tense and uncertain.",
+   "status": "failed: ThrottlingException",
+   "file": null
+  },
+  {
+   "arn": null,
+   "prompt": "A stark white paper ballot on a plain gray surface with a single printed line and one checkbox, harsh overhead fluorescent light, mood clinical and hollow.",
+   "status": "failed: ThrottlingException",
+   "file": null
+  }
+ ]
+}
