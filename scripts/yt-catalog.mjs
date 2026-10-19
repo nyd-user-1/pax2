@@ -1,5 +1,5 @@
 // The lookback: every short the tracked channels posted in the last 18 months, with lifetime counts,
-// labeled the way /break-out labels — views over the channel's own median of settled shorts
+// labeled the way /outliers labels — views over the channel's own median of settled shorts
 // (3x and up pushed, half or less killed). Writes data/velocity/catalog.json. Free quota only.
 import fs from "node:fs"
 import path from "node:path"

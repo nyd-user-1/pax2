@@ -1,5 +1,5 @@
 // Every catalog short as a dot: publish date across, views over its channel's median up (log scale),
-// green for a Hit, red for a Miss. Each dot links to its curve. Shown on /break-out and on every video.
+// green for a Hit, red for a Miss. Each dot links to its curve. Shown on /outliers and on every video.
 
 import { labVideos, type Tier } from "@/lib/lab"
 

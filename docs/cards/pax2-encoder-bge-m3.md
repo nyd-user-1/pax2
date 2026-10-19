@@ -21,7 +21,7 @@ BAAI/bge-m3 fine-tuned so that a short's title, description and transcript sit n
 - 910 steps in 823 seconds on one L40S (17.7 pairs a second); mean training loss over the epoch 2.07
 - batch 16 ran out of memory on an L4 and, without `expandable_segments`, on the L40S; it was never reduced
 
-## Benchmark (`NYSgpt/pax2-breakout-benchmark`)
+## Benchmark (`NYSgpt/pax2-outlier-benchmark`)
 
 | | Stock bge-m3 | PAX2 Encoder |
 |---|---:|---:|

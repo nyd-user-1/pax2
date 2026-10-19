@@ -82,7 +82,7 @@ export default function MlPage() {
       n: 6,
       title: "Ship as a prior",
       detail: "The model's probability becomes the pre-publish iWAR estimate shown with its inputs, the way every PAX2 number shows its math. It advises which take to post first; the live curve then renders the real verdict.",
-      status: "UI exists on /break-out",
+      status: "UI exists on /outliers",
       ok: true,
     },
   ]

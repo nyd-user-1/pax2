@@ -6,7 +6,7 @@ import { transcriptFeatures, type Vocabulary } from "@/lib/transcript-features"
 import { extract, familyOf, type VideoInput } from "@/lib/video-features"
 
 // The pre-publish forecast: before a video is posted, how likely it is to be pushed past its
-// channel's median (the breakout label on /break-out), from PAX2 Classifier
+// channel's median (the breakout label on /outliers), from PAX2 Classifier
 // (data/generated/model/var-model.json, scripts/rig/train_var.py), with every input's pull on
 // the number shown. The metadata model by default; the transcript model (PAX2 Classifier with
 // transcript features, data/generated/model/var-model-v2.json, scripts/classifier/train_v2.py) when a

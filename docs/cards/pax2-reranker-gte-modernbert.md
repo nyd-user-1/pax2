@@ -20,7 +20,7 @@ A cross-encoder that re-scores PAX2 Encoder's candidates: given a short and a ca
 - 44b's `scripts/reranker/train.py` unchanged: grouped cross-entropy, 8 groups a batch (64 pairs), max length 256, query to 600 characters and passage to 900, learning rate 2e-5, bf16, 2 epochs
 - 703 seconds on one L40S
 
-## Benchmark (`NYSgpt/pax2-breakout-benchmark`)
+## Benchmark (`NYSgpt/pax2-outlier-benchmark`)
 
 For each held-out short, PAX2 Encoder's 50 nearest training shorts are re-scored and the top 20 kept.
 

@@ -19,6 +19,7 @@ const config: NextConfig = {
       { source: "/method", destination: "/scoring", permanent: false },
       { source: "/reference", destination: "/scoring?tab=research", permanent: false },
       { source: "/sources", destination: "/library", permanent: false },
+      { source: "/break-out", destination: "/outliers", permanent: true },
     ]
   },
   // The ledger and the model run on the server; the compute role supplies credentials.

@@ -14,10 +14,10 @@ const RULE = "pax2-velocity-poll"
 const lambda = new LambdaClient({ region: REGION })
 const events = new EventBridgeClient({ region: REGION })
 
-/** Recompute the /break-out stat card snapshot now, then re-render the page. */
+/** Recompute the /outliers stat card snapshot now, then re-render the page. */
 export async function refreshSnapshot() {
   await lambda.send(new InvokeCommand({ FunctionName: FUNCTION, InvocationType: "RequestResponse", Payload: new TextEncoder().encode(JSON.stringify({ mode: "snapshot" })) }))
-  revalidatePath("/break-out")
+  revalidatePath("/outliers")
 }
 
 export type PollerStatus = { enabled: boolean; lastRunAt: string | null; lastWatched: number | null }

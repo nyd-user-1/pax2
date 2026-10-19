@@ -19,7 +19,7 @@ done
 node -e 'console.log(require("./'$D'/holdout.json").ids.join("\n"))' > /tmp/pax2-heldout-ids.txt
 aws s3 cp $R /tmp/pax2-heldout-ids.txt $PUB/benchmark/heldout-ids.txt
 aws s3 cp $R $D/holdout.json $PUB/benchmark/holdout.json
-aws s3 cp $R docs/cards/pax2-breakout-benchmark.md $PUB/benchmark/README.md
+aws s3 cp $R docs/cards/pax2-outlier-benchmark.md $PUB/benchmark/README.md
 aws s3 cp $R $D/corpus.jsonl $PUB/training-set/corpus.jsonl
 aws s3 cp $R $D/holdout.json $PUB/training-set/holdout.json
 aws s3 cp $R data/generated/model/training-set.manifest.json $PUB/training-set/training-set.manifest.json

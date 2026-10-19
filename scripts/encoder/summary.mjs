@@ -23,7 +23,7 @@ const gateR = arms.reranker.gate
 const hf = {
   encoder: "NYSgpt/pax2-encoder-bge-m3",
   reranker: "NYSgpt/pax2-reranker-gte-modernbert",
-  benchmark: "datasets/NYSgpt/pax2-breakout-benchmark",
+  benchmark: "datasets/NYSgpt/pax2-outlier-benchmark",
   trainingSet: "datasets/NYSgpt/pax2-shorts-training-set",
 }
 const out = {
