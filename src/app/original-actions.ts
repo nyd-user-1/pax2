@@ -5,8 +5,9 @@ import { revalidatePath } from "next/cache"
 import { currentUser, requireAdmin } from "@/lib/auth"
 import { evaluate } from "@/lib/evaluate"
 import { ADMINS, layout, send, SITE } from "@/lib/mail"
-import { addEvent, createOriginal, gainOf, latestEvaluation, originalRow, type Evaluation, type OriginalRow } from "@/lib/originals"
+import { addEvent, createOriginal, gainOf, latestEvaluation, originalRow, type Evaluation, type OriginalRow, playableKey } from "@/lib/originals"
 import { addToWatch } from "@/lib/velocity-store"
+import { channel, uploadShort } from "@/lib/youtube"
 
 // Every step of an original video's way from the recording to the wild. Admin-only steps check the
 // session themselves; the owner's one choice (publish as is) checks that the caller owns the video.
@@ -97,7 +98,24 @@ export async function saveNote(id: string, note: string) {
 }
 
 async function publish(row: OriginalRow, by: string) {
-  // The PAX2 channels don't exist yet: each destination is recorded and waits for its link.
+  // With a granted channel (src/lib/youtube.ts) the video goes to YouTube now and the poller watches it
+  // from this minute; without one, each destination is recorded and waits for its link, as before.
+  const ch = await channel().catch(() => null)
+  if (ch) {
+    const key = playableKey(row, row.events)
+    if (!/\.(mp4|mov|m4v)$/i.test(key)) throw new Error("The mp4 is not ready yet; the transcode runs a minute or two after the upload. Try again shortly.")
+    const { youtubeId, url } = await uploadShort({ key, title: row.title ?? "A PAX2 video", description: row.text ?? "", publishAt: row.publishAt ?? null })
+    await addEvent(row.id, { kind: "published", by, destinations: [{ platform: "YouTube", url }, { platform: "TikTok", url: null }, { platform: "Instagram", url: null }] })
+    await addToWatch({ youtubeId, original: row.id, at: new Date().toISOString() })
+    await addEvent(row.id, { kind: "watching", by: "pax2", youtubeId, published: new Date().toISOString(), destinations: [{ platform: "YouTube", url }] })
+    const body = layout({
+      heading: "Your video is published",
+      paragraphs: [`${row.title ?? "Your video"} is live on ${ch.title}. PAX2 is watching how it does in its first days and shows it on the video's page.`],
+      buttons: [{ label: "Watch it on YouTube", href: url }, { label: "See your video", href: link(row.id, "published") }],
+    })
+    await send([row.owner], "Your video is published", body, row.id)
+    return
+  }
   await addEvent(row.id, { kind: "published", by, destinations: ["YouTube", "TikTok", "Instagram"].map((platform) => ({ platform, url: null })) })
   const body = layout({
     heading: "Your video is published",

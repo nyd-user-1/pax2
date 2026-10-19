@@ -5,6 +5,7 @@ import { TabRail } from "@/components/tab-rail"
 import { WaveHero } from "@/components/wave-hero"
 import { currentUser } from "@/lib/auth"
 import { originals, STAGE_LABEL, type OriginalRow, type Stage } from "@/lib/originals"
+import { channel, configured } from "@/lib/youtube"
 
 // /drafts, /scoring and /publishing: the three queues of original videos, on one tab rail.
 // Each video lives at /v/[id]; these pages only list where each one stands.
@@ -24,13 +25,14 @@ export async function OriginalsQueue({ queue }: { queue: "recording" | "scoring"
   const rows = all.map((r) => ({ ...r, of: chainLength(r, all) }))
   const q = QUEUES.find((x) => x.key === queue)!
   const shown = rows.filter((r) => q.stages.includes(r.stage))
+  const yt = queue === "publishing" && user?.admin ? await channel().catch(() => null) : null
   return (
     <div className="flex flex-col gap-6">
       <TabRail tabs={QUEUES.map((x) => ({ key: x.key, label: x.label, href: x.href, count: rows.filter((r) => x.stages.includes(r.stage)).length }))} active={queue} />
       {!user ? (
         <WaveHero next={`/${queue}`} />
       ) : (
-        <TableBlock title={q.label} height="auto">
+        <TableBlock title={q.label} height="auto" footer={queue === "publishing" && user.admin ? (yt ? `Publishing to ${yt.title} on YouTube, granted by ${yt.by} ${new Date(yt.at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}.` : configured() ? <Link href="/api/youtube/oauth" className="text-pax2-light-blue hover:underline">Connect the YouTube channel</Link> : "No YouTube channel yet; the Google OAuth client is not configured on the server.") : undefined}>
           {shown.length ? <Table rows={shown} admin={user.admin} /> : <p className="text-sm text-slate-500">Nothing here yet.</p>}
         </TableBlock>
       )}

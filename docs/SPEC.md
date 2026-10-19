@@ -67,7 +67,7 @@ Done 2026-10-17, confirmed 2026-10-18: the findings email carries each change wi
 
 The admin's Approved, and the owner's "publish it", record a published event with three destinations and null links, and email the owner. No PAX2 channel exists; nothing uploads. `watchOnYouTube` takes a pasted link.
 
-Needs: a PAX2 YouTube channel, a Google Cloud OAuth client with the upload scope, and a stored refresh token; then `videos.insert` from the publish step, the returned id written to the watch list.
+Built 2026-10-18 (`src/lib/youtube.ts`, `src/app/api/youtube/oauth/route.ts`): an admin opens the grant route, the channel's owner or an Editor signs in once, the refresh token goes to SSM and the channel to the DynamoDB table; approving a video then uploads its mp4 to that channel and writes the YouTube id to the watch list the same minute. Needs from Brendan: the Google Cloud OAuth client and its id and secret in the Amplify environment, `scripts/youtube/grant.sh --apply` for the server's SSM rights, and the channel's grant, Voter Freedom's or a PAX2 channel's.
 
 ### 8. Versions and A/B — Built
 
