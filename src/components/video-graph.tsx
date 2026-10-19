@@ -9,7 +9,7 @@ import {
 import dagre from "@dagrejs/dagre"
 import { toast } from "sonner"
 import {
-  ArrowLeft, BookOpen, Boxes, Check, ChevronRight, Clapperboard, Crosshair, ExternalLink, FileText, GripVertical, Hash, History, Layers, Loader2,
+  ArrowLeft, BookOpen, Boxes, Check, ChevronLeft, ChevronRight, Clapperboard, Crosshair, ExternalLink, FileText, GripVertical, Hash, History, Layers, Loader2,
   MessageSquare, Minus, MoreHorizontal, PanelLeftClose, PanelLeftOpen, Play, Plus, Save, Search, Settings2, Tv, Users, X,
 } from "lucide-react"
 
@@ -1556,6 +1556,33 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   return (
     <div className="flex min-h-0 flex-1">
       {mapOpen && <ClusterMap onClose={() => setMapOpen(false)} />}
+      {/* The config panel holds the left; the tracked/workspace rail is stored behind it, opened
+          by the tab on the panel's right edge — govblock's rail tab, to the pixel. */}
+      {settingsOpen && (
+        <div className="relative z-10 hidden shrink-0 md:flex">
+          <FlowSettingsPanel
+            value={flowProps}
+            onChange={setFlowProps}
+            dataset={dataset}
+            onDataset={applyDataset}
+            datasets={datasets.map(({ id, label }) => ({ id, label }))}
+            layoutMode={layoutMode}
+            onLayoutMode={changeLayoutMode}
+            onClose={() => setSettingsOpen(false)}
+            onReset={() => setFlowProps(DEFAULT_FLOW_PROPS)}
+          />
+          <button
+            type="button"
+            onClick={toggleRail}
+            aria-expanded={railOpen}
+            aria-label={railOpen ? "Hide the tracked panel" : "Show the tracked panel"}
+            title={railOpen ? "Hide the tracked panel" : "Show the tracked panel"}
+            className="absolute -right-4 top-[200px] z-20 flex h-8 w-4 items-center justify-center rounded-r-[10px] bg-[rgb(24,24,27)] text-zinc-500 shadow-[0_4px_16px_rgba(0,0,0,0.35)] transition-colors hover:text-zinc-300"
+          >
+            {railOpen ? <ChevronLeft className="size-4" /> : <ChevronRight className="size-4" />}
+          </button>
+        </div>
+      )}
       {!railOpen ? null : mode === "recipes" ? <RecipeRail refresh={railRefresh} onTemplate={loadTemplate} onLoad={loadView} /> : <RecordRail
         R={R}
         admin={admin}
@@ -1706,7 +1733,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
                     <History className="h-4 w-4" />
                   </button>
                 )}
-                <button className={cn(PILL_ICON, settingsOpen && "border-pax2-blue bg-slate-50")} aria-pressed={settingsOpen} aria-label="Canvas settings" title="Canvas settings" onClick={() => setSettingsOpen((v) => !v)}>
+                <button className={cn(PILL_ICON, settingsOpen && "border-pax2-blue bg-slate-50")} aria-pressed={settingsOpen} aria-label="Canvas settings" title="Canvas settings" onClick={() => { if (!settingsOpen) setRailOpen(false); setSettingsOpen((v) => !v) }}>
                   <Settings2 className="h-4 w-4" />
                 </button>
               </div>
@@ -1728,19 +1755,6 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
         <ChatDock context={canvasContext} open={dockOpen} onOpenChange={setDockOpen} attached={attached} onAttach={setAttached} />
       </div>
 
-      {settingsOpen && (
-        <FlowSettingsPanel
-          value={flowProps}
-          onChange={setFlowProps}
-          dataset={dataset}
-          onDataset={applyDataset}
-          datasets={datasets.map(({ id, label }) => ({ id, label }))}
-          layoutMode={layoutMode}
-          onLayoutMode={changeLayoutMode}
-          onClose={() => setSettingsOpen(false)}
-          onReset={() => setFlowProps(DEFAULT_FLOW_PROPS)}
-        />
-      )}
       {!settingsOpen && sel && isRecipeType(sel.type) && (
         <div className={SIDE}>
           <SideHeader badge={RECIPE_LABEL[sel.type]} onClose={() => setSelectedKey(null)} />

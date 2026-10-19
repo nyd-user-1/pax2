@@ -225,7 +225,7 @@ export function FlowSettingsPanel({
   const SELECT = "h-7 rounded-md border border-slate-200 bg-white px-2 font-mono text-xs text-slate-900"
 
   return (
-    <div className="hidden w-80 shrink-0 overflow-y-auto border-l border-slate-200 bg-white p-4 md:block">
+    <div className="hidden w-80 shrink-0 overflow-y-auto border-r border-slate-200 bg-white p-4 shadow-[4px_0_12px_-6px_rgb(15_23_42/0.15)] md:block">
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-sm font-semibold text-slate-900">{"<ReactFlow /> Props"}</h2>
         <div className="flex items-center gap-3">
