@@ -1,10 +1,10 @@
 {
- "builtAt": "2026-10-19T02:25:37.203Z",
+ "builtAt": "2026-10-19T09:39:56.986Z",
  "rule": "Within each family, the family's channel ids sorted by their last hexadecimal-looking character (0-9, a-f, case-folded; ties by the full id); every channel ranked above seven eighths of the family is held out, ceil(n / 8) channels and at least one. Paid-ad rows are never held out.",
  "corpus": {
   "file": "corpus.jsonl",
   "rows": 18455,
-  "sha256": "a4cbece4a76660139e84e116e8c3f4625d276d0ec2613ec40b809d6b4618fbdb",
+  "sha256": "69ba3826af17530994c1602c5a316f55aff7c1f1721d6867a4955c8cbbaad0d1",
   "textRecipe": "title, description, transcript text (the analyzed transcript when content is present, else YouTube's auto-captions from transcripts.json); non-empty parts joined by newlines; first 1,200 characters (scripts/encoder/corpus.mjs)"
  },
  "paidRows": 0,

@@ -43,3 +43,12 @@
 2026-10-19T02:27:59Z no g6e.2xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
 2026-10-19T02:28:00Z no g6e.2xlarge in subnet-0aeeab33ec7ee352e: Unsupported
 2026-10-19T02:28:02Z launched i-044ab0db20eb874ee g6e.2xlarge subnet-06b1914b54fc3e0c5 run=20261019-022545-train mode=train
+2026-10-19T09:40:15Z no g6e.2xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
+2026-10-19T09:40:16Z no g6e.2xlarge in subnet-0aeeab33ec7ee352e: Unsupported
+2026-10-19T09:40:20Z no g6e.2xlarge in subnet-06b1914b54fc3e0c5: InsufficientInstanceCapacity
+2026-10-19T09:40:26Z no g6e.2xlarge in subnet-0407bd1ff7e9d8c44: InsufficientInstanceCapacity
+2026-10-19T09:40:27Z no g6e.2xlarge in subnet-00eb48e9ed20f5c9a: Unsupported
+2026-10-19T09:40:32Z no g6e.2xlarge in subnet-09e840612db030382: InsufficientInstanceCapacity
+2026-10-19T09:41:22Z no g6e.xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
+2026-10-19T09:41:23Z no g6e.xlarge in subnet-0aeeab33ec7ee352e: Unsupported
+2026-10-19T09:41:27Z launched i-0c19b2de203a1c139 g6e.xlarge subnet-06b1914b54fc3e0c5 run=20261019-094112-train mode=train
