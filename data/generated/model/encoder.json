@@ -4,7 +4,7 @@
  "models": {
   "PAX2 Encoder": {
    "base": "BAAI/bge-m3",
-   "hf": null,
+   "hf": "NYSgpt/pax2-encoder",
    "s3": "s3://nsr-embed-v2/pax2/models/20261019-094112-train/encoder/"
   },
   "PAX2 Reranker": {
@@ -15,7 +15,7 @@
  },
  "datasets": {
   "benchmark": {
-   "hf": "datasets/NYSgpt/pax2-breakout-benchmark",
+   "hf": "datasets/NYSgpt/pax2-outlier-benchmark",
    "published": false
   },
   "trainingSet": {

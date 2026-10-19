@@ -52,3 +52,7 @@
 2026-10-19T09:41:22Z no g6e.xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
 2026-10-19T09:41:23Z no g6e.xlarge in subnet-0aeeab33ec7ee352e: Unsupported
 2026-10-19T09:41:27Z launched i-0c19b2de203a1c139 g6e.xlarge subnet-06b1914b54fc3e0c5 run=20261019-094112-train mode=train
+2026-10-19T15:07:07Z launched i-011b6b79d8965dbd6 t3.small publish NYSgpt/pax2-encoder
+2026-10-19T15:07:11Z launched i-0e702e96a0fbd69dd t3.small publish NYSgpt/pax2-reranker
+2026-10-19T15:25:43Z launched i-0fd01519496b73416 t3.small publish NYSgpt/pax2-reranker
+2026-10-19T15:27:27Z launched i-0cc94c98bc72dd076 t3.small publish NYSgpt/pax2-encoder

@@ -147,6 +147,9 @@ const out = {
   gateP: gate,
   perFamily,
   topWeights: top,
+  // Every weight and the diff spread it divides by: score(short) = sum_f weights[f] * x[f] / sd[f]; the
+  // winner of a pair is the higher score. Without these the file could not be served or published.
+  features: KEYS.map((k, f) => ({ key: k, w: w[f], sd: sd[f] })),
 }
 fs.writeFileSync(path.join(ROOT, `data/generated/model/pairwise-v0${scopeSlug}.json`), JSON.stringify(out, null, 1) + "\n")
 console.log(`pairs: train ${trainScoped.length}, eval ${evalScoped.length} (held-out channels ${heldChannels.size}${FAMILIES ? `, scope ${[...FAMILIES].join(", ")}` : ""})`)

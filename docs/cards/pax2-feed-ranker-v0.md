@@ -10,7 +10,7 @@ tags:
 
 Which short a given reader will watch through. Pretrained on KuaiRand-1K's randomly exposed impressions until PAX2's own reader rows (requirement 11) number in the thousands. Built 2026-10-18 on one c7i.xlarge in about seven minutes, about 2 cents.
 
-**Not published.** The file is `data/generated/model/feed-v0.json`; nothing serves it. The feed's For you sort runs the cold-start ranker in `src/lib/feed-rank.ts`.
+`feed-v0.json` carries the video-plus-reader model: `features`, `weights`, `intercept`, the duration decile edges, upload types and tags. p(long view) = sigmoid(intercept + sum_f weight_f * x_f). Nothing in PAX2 serves it; the feed's For you sort runs a cold-start ranker until PAX2's own reader rows exist.
 
 ## Training
 

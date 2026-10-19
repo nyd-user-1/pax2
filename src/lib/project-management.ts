@@ -134,7 +134,7 @@ const MODEL_PLAN: Record<string, Plan> = {
     value: "A draft script borrows the measured track record of the videos it most resembles.",
     base: "BAAI/bge-m3", tags: ["Text embeddings"],
     steps: [
-    { what: "Gate E PASSED 2026-10-19 at 5,232 transcripts (pooled 0.608 against stock 0.578, +0.0305 of the +0.02 required; within +0.0216); publish the weights.", share: 50, effort: "waits on the Hugging Face token in SSM", blocker: true },
+    { what: "Gate E PASSED 2026-10-19 at 5,232 transcripts (pooled 0.608 against stock 0.578, +0.0305 of the +0.02 required; within +0.0216); published private on Hugging Face as NYSgpt/pax2-encoder.", share: 50, effort: "done 2026-10-19" },
     { what: "Its neighbors become the forecast feature on requirement 3.", share: 50, effort: "half a day" },
   ] },
   "m-vision": { start: "2026-10-17", end: "2026-12-15", importance: 2, utility: 2, ease: 3,

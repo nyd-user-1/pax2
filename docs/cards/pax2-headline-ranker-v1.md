@@ -12,7 +12,7 @@ tags:
 
 Which of two headlines for the same story wins the click. bert-base-uncased with one linear unit on its pooled output, scoring one headline; trained on the Upworthy Research Archive's randomized headline tests. Run `20261018-060508-train`.
 
-**Not published.** The weights and an ONNX export sit in `s3://nsr-embed-v2/pax2/headline/models/20261018-060508-train/`; nothing in the app reads them yet (see Serving).
+`v0/headline-model.json` holds v0, the linear model before it (below).
 
 ## Training
 
@@ -39,7 +39,15 @@ Gate H, pre-registered 2026-10-18: at least 0.6301, v0 plus 0.02. **Passed.** Th
 
 ## Serving
 
-The app's `src/lib/headline.ts` still reads v0, a linear model that runs in Node. v1 is a 438 MB BERT; running it at request time needs a small Lambda with ONNX Runtime reading `model-v1.onnx` from S3, or a SageMaker endpoint. Neither exists; the choice is Brendan's. Until then v1 is a measured number, not a product surface.
+Since 2026-10-18 the pax2-headline Lambda runs `model-v1.onnx` in ONNX Runtime; PAX2 reads each score against the scores of 10,452 held-out Upworthy headlines and shows a percentile. v0 stays the fallback when the function is absent or fails.
+
+## v0
+
+`v0/headline-model.json`: pairwise L2 logistic regression on the winner-minus-loser difference of ten pattern flags (a digit, "this" or "these" first, a question, "you", a quote and others), two counts and presence of 2,000 tokens; C 0.03 by grouped 5-fold cross-validation on the training tests (`scripts/rig/headline_v0.py`). The file carries its own regexes, tokenizer, vocabulary, weights, means and intercept:
+
+```
+p(beats a typical rival) = sigmoid(intercept + sum_j weight_j * (feature_j - mean_j))
+```
 
 ## Caveats
 
