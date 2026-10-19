@@ -150,7 +150,8 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
         signal: controller.signal,
       })
       if (!res.ok || !res.body) {
-        setMessages(prev => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: 'Something went wrong. Please try again.' }])
+        const gate = res.status === 402 ? ((await res.json().catch(() => null)) as { error?: string } | null) : null
+        setMessages(prev => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: gate?.error ?? 'Something went wrong. Please try again.' }])
         setLoading(false); return
       }
       const assistantId = crypto.randomUUID()

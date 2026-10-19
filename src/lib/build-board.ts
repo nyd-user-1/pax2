@@ -50,7 +50,7 @@ export const PAGES: PageTile[] = [
     better: ["Trend lines across rounds once there are several.", "A filter per campaign once there is more than one."],
   },
   {
-    href: "/videos",
+    href: "/my-videos",
     name: "Videos",
     data: "Synthetic videos, stand-in results",
     state: "stand-in",
@@ -122,7 +122,7 @@ export const PAGES: PageTile[] = [
     better: ["An organic score from views, likes and comments.", "The Question 3 shorts analyzed by the pipeline."],
   },
   {
-    href: "/videos?q=scoring",
+    href: "/my-videos?q=scoring",
     name: "Scoring",
     data: "The research archives and the reference model",
     state: "real",

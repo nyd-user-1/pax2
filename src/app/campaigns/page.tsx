@@ -5,6 +5,8 @@ import { CampaignMap } from "@/components/map/campaign-map"
 import { ShortsSort } from "@/components/shorts-sort"
 import { TabRail } from "@/components/tab-rail"
 import { CHANNELS, secs } from "@/lib/channels"
+import { currentUser } from "@/lib/auth"
+import { redirect } from "next/navigation"
 
 export const metadata = { title: "Campaign videos" }
 
@@ -14,6 +16,8 @@ type Yt = { fetchedAt: string; videos: { id: string; channelId: string; channel:
 // channel only; a second "Yes on 3" channel belongs to 2024's rideshare-union question.
 
 export default async function CampaignPage({ searchParams }: { searchParams: Promise<{ c?: string; s?: string }> }) {
+  const gatekeeper = await currentUser()
+  if (!gatekeeper) redirect("/signin?next=/campaigns")
   const { c = "yes-on-3", s = "perday" } = await searchParams
   const data = shorts as unknown as Yt
   const asOf = data.fetchedAt.slice(0, 10)

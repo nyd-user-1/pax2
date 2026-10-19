@@ -40,7 +40,10 @@ export default function TagsPage() {
     const v = card(t.id.replace(/^yt-/, ""))
     if (v) for (const tag of t.tags) byTag.set(tag, [...(byTag.get(tag) ?? []), v])
   }
+  // A tag earns its section with two videos; single-video categories surface later, once a second
+  // lands. Aggrieved is off the page by ruling.
   const sections = [...byTag]
+    .filter(([tag, vs]) => tag !== "aggrieved" && vs.length >= 2)
     .map(([tag, vs]) => ({ tag, videos: vs.sort((a, b) => Date.parse(b.published) - Date.parse(a.published)) }))
     .sort((a, b) => a.tag.localeCompare(b.tag))
   return <TagsExplorer sections={sections} />

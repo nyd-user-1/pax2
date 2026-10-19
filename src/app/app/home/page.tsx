@@ -10,11 +10,15 @@ import { Promos } from "@/components/home/promos"
 import { Shelf } from "@/components/home/shelf"
 import { SCRIPTS, scriptById, takeLabel } from "@/lib/catalog"
 import { board, workspace } from "@/lib/review"
+import { currentUser } from "@/lib/auth"
+import { redirect } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Home" }
 
 export default async function HomePage() {
+  const gatekeeper = await currentUser()
+  if (!gatekeeper) redirect("/signin?next=/app/home")
   const { takes } = await board(await workspace())
   const sorted = takes.slice().sort((a, b) => (b.latest?.score.value ?? -1) - (a.latest?.score.value ?? -1))
   const videos = sorted.map(({ take, latest }) => ({

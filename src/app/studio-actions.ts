@@ -3,6 +3,7 @@
 import { createHash } from "node:crypto"
 
 import { isWord, linesOf, VOICES, type MusicId, type VoiceId, type WordMark } from "@/lib/studio-style"
+import { anonSpend } from "@/lib/anon"
 
 // The Studio's audio, made on the server and served back through /api/studio/audio so the browser's
 // renderer reads it from the app's own origin (the bucket has no CORS). Narration is Amazon Polly:
@@ -69,6 +70,7 @@ async function elevenLabs(voiceId: string, text: string): Promise<{ mp3: Buffer;
 }
 
 export async function narrate(text: string, voice: VoiceId): Promise<Narration> {
+  await anonSpend("voice")
   if (voice === "none" || !VOICES.some((v) => v.id === voice)) throw new Error("Pick a voice first.")
   const lines = linesOf(text)
   const spoken = lines.join("\n")

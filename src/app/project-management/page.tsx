@@ -9,6 +9,8 @@ import { TabRail } from "@/components/tab-rail"
 import { MODEL_TERMS } from "@/lib/model-terms"
 import { MODELS, REQUIREMENTS, blockedBy, type Item } from "@/lib/project-management"
 import { cn } from "@/ui/lib/utils"
+import { currentUser } from "@/lib/auth"
+import { notFound, redirect } from "next/navigation"
 
 export const metadata = { title: "Project Management" }
 
@@ -189,6 +191,9 @@ const VIEWS = ["requirements", "models", "specs"] as const
 type View = (typeof VIEWS)[number]
 
 export default async function ProjectManagementPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
+  const gatekeeper = await currentUser()
+  if (!gatekeeper) redirect("/signin?next=/project-management")
+  if (!gatekeeper.admin) notFound()
   const { view } = await searchParams
   const active: View = VIEWS.includes(view as View) ? (view as View) : "requirements"
   const today = new Date().toISOString().slice(0, 10)

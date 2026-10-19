@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 
-import { answerRound, finishCourseChapter, startCourseChapter } from "@/app/labeling/course-actions"
+import { answerRound, finishCourseChapter, startCourseChapter } from "@/app/learn/course-actions"
 import type { Answer, Card, Result, Round } from "@/lib/courses"
 import { Button } from "@/ui/components/nova/button"
 import { cn } from "@/ui/lib/utils"

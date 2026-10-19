@@ -15,6 +15,7 @@ import { board, findings, forecasts, loads, picks, steps, submissions, votes, wo
 import { toneOf } from "@/lib/tone"
 import { READER_KINDS, usageSince } from "@/lib/usage"
 import homeFeed from "../../../data/generated/home-feed.json"
+import { notFound, redirect } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Dashboard" }
@@ -27,6 +28,9 @@ const day = (iso: string) => iso.slice(0, 10)
 const KIND_LABEL: Record<string, string> = { open: "Opens", play: "Plays", watched75: "Watched 75%", search: "Searches", filter: "Filters", sort: "Sorts", boost: "Boosts", bookmark: "Bookmarks", share: "Shares", queue: "Queued" }
 
 export default async function DashboardPage() {
+  const gatekeeper = await currentUser()
+  if (!gatekeeper) redirect("/signin?next=/dashboard")
+  if (!gatekeeper.admin) notFound()
   const ws = await workspace()
   const [{ takes }, history, sent, chosen, voteRows] = await Promise.all([board(ws), loads(ws), submissions(ws), picks(ws), votes(ws, "open-primaries")])
   const per = await Promise.all(takes.map(async (t) => ({ t, fs: await findings(ws, t.take.id), ev: await steps(ws, t.take.id), calls: await forecasts(ws, t.take.id) })))

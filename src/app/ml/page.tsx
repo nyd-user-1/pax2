@@ -11,6 +11,8 @@ import { featureLift, labVideos } from "@/lib/lab"
 import { linkParts } from "@/lib/recipes/links"
 import { MEMORABLE } from "@/lib/recipes/memorable"
 import { cn } from "@/ui/lib/utils"
+import { currentUser } from "@/lib/auth"
+import { redirect } from "next/navigation"
 
 export const metadata = { title: "ML" }
 
@@ -39,7 +41,9 @@ function Linked({ value }: { value?: string }) {
   )
 }
 
-export default function MlPage() {
+export default async function MlPage() {
+  const gatekeeper = await currentUser()
+  if (!gatekeeper) redirect("/signin?next=/ml")
   const vids = labVideos()
   const { analyzed } = featureLift()
   const steps = [

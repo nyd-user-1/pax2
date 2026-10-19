@@ -6,11 +6,14 @@ import { VideoGraph } from "@/components/video-graph"
 import { currentUser } from "@/lib/auth"
 import type { GraphData } from "@/lib/graph-data"
 import { patternsData } from "@/lib/velocity-analytics"
+import { redirect } from "next/navigation"
 
 export const metadata = { title: "Graph" }
 export const dynamic = "force-dynamic"
 
 export default async function GraphPage({ searchParams }: { searchParams: Promise<{ view?: string; center?: string }> }) {
+  const gatekeeper = await currentUser()
+  if (!gatekeeper) redirect("/signin?next=/graph")
   const [d, user, params] = await Promise.all([patternsData(), currentUser(), searchParams])
   const data: GraphData = {
     channels: d.channels.map(({ id, name, group, subs, median, n, pushed, killed }) => ({ id, name, group, subs, median, n, pushed, killed })),

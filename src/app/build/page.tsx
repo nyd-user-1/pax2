@@ -16,6 +16,8 @@ import { workspace } from "@/lib/review"
 import { Badge } from "@/ui/components/nova/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/components/nova/table"
 import { cn } from "@/ui/lib/utils"
+import { currentUser } from "@/lib/auth"
+import { notFound, redirect } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Build" }
@@ -43,6 +45,9 @@ function runs(cost: Record<string, number>) {
 }
 
 export default async function BuildPage() {
+  const gatekeeper = await currentUser()
+  if (!gatekeeper) redirect("/signin?next=/build")
+  if (!gatekeeper.admin) notFound()
   const b = build as Build
   const ws = await workspace()
   const spent = b.budget.spent.reduce((t, s) => t + s.usd, 0)

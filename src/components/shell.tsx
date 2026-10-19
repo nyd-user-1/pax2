@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Film, FlaskConical, GanttChart, Gauge, GitBranch, Hammer, House, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, Tag, Target, TrendingUp, Tv, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Film, FlaskConical, GanttChart, Gauge, GitBranch, Hammer, House, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, Tag, Target, TrendingUp, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { RevealFx } from "@/components/reveal-fx"
@@ -18,10 +18,13 @@ const NAV = [
   { href: "/app/home", label: "Home", icon: House },
   { href: "/chat", label: "Chat", icon: MessagesSquare },
   { href: "/recording", label: "Create", icon: Video },
-  { href: "/videos", label: "My videos", icon: Film },
   { href: "/scripts", label: "Scripts", icon: NotebookPen },
+  { href: "/my-videos", label: "My videos", icon: Film },
+  { href: "/my-channels", label: "My channels", icon: TvMinimal },
+  { href: "/tags", label: "Tags", icon: Tag },
+  { href: "/videos", label: "Videos", icon: Clapperboard },
   { href: "/channels", label: "Channels", icon: Tv },
-  { href: "/labeling", label: "Teach a Model", icon: ListChecks },
+  { href: "/learn", label: "Teach a Model", icon: ListChecks },
 ]
 const RESEARCH = [
   { href: "/tracking", label: "Tracking", icon: Activity },
@@ -29,7 +32,6 @@ const RESEARCH = [
   { href: "/polling", label: "Polling", icon: ChartColumn },
   { href: "/graph", label: "Graph", icon: Workflow },
   { href: "/flow", label: "Flows", icon: GitBranch },
-  { href: "/tags", label: "Tags", icon: Tag },
   { href: "/ml", label: "ML", icon: Brain },
   { href: "/scoring/method", label: "Score method", icon: FlaskConical },
   { href: "/library", label: "Library", icon: Library },
@@ -51,11 +53,13 @@ const TITLES: [string, string][] = [
   ["/chat", "Chat"],
   ["/recording", "Create"],
   ["/record/", "Create"],
-  ["/videos", "My videos"],
+  ["/my-videos", "My videos"],
+  ["/my-channels", "My channels"],
+  ["/videos", "Videos"],
   ["/scripts", "Scripts"],
   ["/channels", "Channels"],
-  ["/labeling/classifier", "The Classifier"],
-  ["/labeling", "Teach a Model"],
+  ["/learn/classifier", "The Classifier"],
+  ["/learn", "Teach a Model"],
   ["/v/", "Video"],
   ["/tracking", "Tracking"],
   ["/evidence", "Evidence"],

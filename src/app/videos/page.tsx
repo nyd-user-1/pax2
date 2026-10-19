@@ -1,9 +1,12 @@
-import { MyVideos } from "@/components/my-videos"
+import homeFeed from "../../../data/generated/home-feed.json"
+import { Feed, type FeedVideo } from "@/components/record/feed"
+import { tagsFor } from "@/lib/tags"
 
-export const dynamic = "force-dynamic"
-export const metadata = { title: "My videos" }
+// The catalog feed — the landing's video section as its own page, open to everyone.
 
-export default async function VideosPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
-  const { q } = await searchParams
-  return <MyVideos filter={q} />
+export const metadata = { title: "Videos" }
+
+export default function VideosPage() {
+  const feed = (homeFeed as FeedVideo[]).map((v) => ({ ...v, tags: tagsFor(`yt-${v.id}`) }))
+  return <Feed videos={feed} />
 }

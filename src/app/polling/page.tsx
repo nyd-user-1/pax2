@@ -8,6 +8,8 @@ import { ChartBlock, ListBlock, MapBlock, TwoThirdBlock } from "@/components/blo
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { UncontestedMap } from "@/components/map/maps"
 import { cn } from "@/ui/lib/utils"
+import { currentUser } from "@/lib/auth"
+import { redirect } from "next/navigation"
 
 export const metadata = { title: "Polling" }
 
@@ -20,7 +22,9 @@ function Source({ href, children }: { href: string; children: React.ReactNode })
 }
 
 /** Where Question 3 stands, how the idea has fared on other ballots, and where races go uncontested. */
-export default function PollingPage() {
+export default async function PollingPage() {
+  const gatekeeper = await currentUser()
+  if (!gatekeeper) redirect("/signin?next=/polling")
   const q = polling.q3
   const unc = (maps.uncontested as Record<string, { races: number; uncontested: number; pct: number }>).MA
   const districts = Object.entries((ma as unknown as { districts: Record<string, number> }).districts)

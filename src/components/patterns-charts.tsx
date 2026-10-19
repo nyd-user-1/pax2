@@ -684,7 +684,6 @@ function stories(data: PatternsData): Record<string, Story> {
 }
 
 const DESC: Record<string, string> = {
-  velocity: "Each line is one video's cumulative views divided by its channel's median, read every 15 minutes across its first 72 hours. The dotted guides mark the .5x, 1x and 3x bands; the chips pick which band is drawn.",
   publish: "Each cell counts the videos published in that hour and weekday, Eastern time. Deeper purple is more videos; a green ring means at least one of them finished above 3x.",
   channels: "Each dot is one video's 72-hour ratio, on its channel's row; channels sort by outlier share. The right edge carries the channel's subscribers and videos tracked.",
   subs: "One dot per channel, placed by its subscriber count and the median ratio of its tracked videos — both axes log, dot size is how many videos it has in the watch.",
@@ -693,16 +692,67 @@ const DESC: Record<string, string> = {
   spread: "Each box is every tracked video's ratio to its channel median at that hour: the box is the middle half, the dark line the median, the whiskers the 5th and 95th percentiles.",
 }
 
+// V@H, in the manner of the reranker's P@k: a video's ratio to its channel median at hour H,
+// read from the poller's own series.
+const HORIZONS = [1, 6, 12, 24, 48, 72] as const
+
+function VelocityTable({ data }: { data: PatternsData }) {
+  const at = (id: string, h: number, median: number | null | undefined) => {
+    const ser = data.series[id]
+    if (!ser?.length || !median) return null
+    let views: number | null = null
+    for (const [t, v] of ser) {
+      if (t <= h) views = v
+      else break
+    }
+    return views == null ? null : views / median
+  }
+  const rows = data.videos
+    .map((v) => ({ v, cells: HORIZONS.map((h) => at(v.id, h, v.median)) }))
+    .filter((r) => r.cells.some((c) => c != null))
+    .sort((a, b) => (b.cells.at(-1) ?? -1) - (a.cells.at(-1) ?? -1))
+  const x = (r: number | null) => (r == null ? "–" : rx(r))
+  return (
+    <div className="h-full overflow-auto">
+      <table className="tabular w-full text-sm">
+        <thead className="sticky top-0 bg-card text-left">
+          <tr className="bg-muted/60 [&_th]:whitespace-nowrap [&_th]:px-4 [&_th]:py-2.5 [&_th]:font-medium [&_th]:text-foreground">
+            <th>Video</th>
+            <th>Channel</th>
+            {HORIZONS.map((h) => (
+              <th key={h} className="!text-right">V@{h}H</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(({ v, cells }) => (
+            <tr key={v.id} className="border-t border-slate-100">
+              <td className="max-w-80 px-4 py-2">
+                <a href={`/v/yt-${v.id}`} className="line-clamp-1 font-sans text-slate-900 hover:text-pax2-light-blue">{v.title}</a>
+              </td>
+              <td className="whitespace-nowrap px-4 py-2 text-slate-500">{v.channel}</td>
+              {cells.map((c, i) => (
+                <td key={i} className={cn("px-4 py-2 text-right", c != null && c >= 3 ? "font-semibold text-above" : "text-slate-700")}>{x(c)}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
 export function PatternSections({ data }: { data: PatternsData }) {
   const [story, setStory] = useState<string | null>(null)
   const [heatView, setHeatView] = useState("published")
+  const [vTab, setVTab] = useState<"data" | "table">("data")
   const tales = useMemo(() => stories(data), [data])
   const subs = new Map(data.channels.map((c) => [c.id, c.subs]))
   const videoRows = data.videos.map((v) => ({ title: v.title, channel: v.channel, published: v.published, views: v.views, median: v.median ?? "", ratio: v.ratio != null ? Math.round(v.ratio * 100) / 100 : "", likes: v.likes ?? "", subscribers: subs.get(v.channelId) ?? "" }))
   const heatRows = data.heat.flatMap((row, d) => row.map((c, h) => ({ dow: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][d], hour: h, published: c.n, above3x: c.pushed })))
   const channelRows = data.channels.map((c) => ({ channel: c.name, group: c.group, subscribers: c.subs ?? "", tracked: c.n, above3x: c.pushed, below05x: c.killed }))
   const sections: { key: string; title: string; rows: Record<string, unknown>[]; chart: React.ReactNode }[] = [
-    { key: "velocity", title: "Velocity, every 15 minutes", rows: videoRows, chart: <VelocityLines data={data} /> },
+    { key: "velocity", title: "Velocity, every 15 minutes", rows: videoRows, chart: vTab === "table" ? <VelocityTable data={data} /> : <VelocityLines data={data} /> },
     { key: "publish", title: "Publish times", rows: heatRows, chart: <PublishHeatmap data={data} view={heatView} /> },
     { key: "channels", title: "Channels", rows: channelRows, chart: <ChannelStrips data={data} /> },
     { key: "subs", title: "Subscribers", rows: videoRows, chart: <SubsScatter data={data} /> },
@@ -733,7 +783,19 @@ export function PatternSections({ data }: { data: PatternsData }) {
           }
         >
           <div className="flex h-full min-h-0 flex-col gap-3">
-            <p className="text-sm text-slate-500">{s.key === "publish" && heatView === "velocity" ? "Each cell holds one tile per video published in that hour and weekday, Eastern time, colored by where it finished against its channel's median - the band legend sits below the grid." : DESC[s.key]}</p>
+            {s.key === "velocity" && (
+              <div className="flex w-fit gap-1 rounded-full bg-pax2-mist p-1">
+                {(["data", "table"] as const).map((t) => (
+                  <button key={t} type="button" onClick={() => setVTab(t)} className={cn("rounded-full px-4 py-1 text-xs font-semibold transition-colors", vTab === t ? "bg-white text-pax2-blue shadow-e1" : "text-slate-500 hover:text-pax2-blue")}>
+                    {t === "data" ? "Data" : "Table"}
+                  </button>
+                ))}
+              </div>
+            )}
+            {(() => {
+              const desc = s.key === "publish" && heatView === "velocity" ? "Each cell holds one tile per video published in that hour and weekday, Eastern time, colored by where it finished against its channel's median - the band legend sits below the grid." : DESC[s.key]
+              return desc ? <p className="text-sm text-slate-500">{desc}</p> : null
+            })()}
             <div className="min-h-0 flex-1">{s.chart}</div>
           </div>
         </ChartBlock>

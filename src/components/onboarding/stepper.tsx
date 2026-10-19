@@ -174,7 +174,7 @@ export function Stepper({ initial, channels }: { initial: Profile | null; channe
             <div className="flex items-center gap-3">
               {back && <BackChevron onClick={back} />}
               <button type="button" disabled={busy} onClick={finish} className={BLACK}>Go to PAX</button>
-              {channels.length > 0 && <Link href="/channels" className="text-[15px] font-medium text-slate-500 hover:text-slate-950">See the analysis</Link>}
+              {channels.length > 0 && <Link href="/my-channels" className="text-[15px] font-medium text-slate-500 hover:text-slate-950">See the analysis</Link>}
             </div>
           </div>
         )}

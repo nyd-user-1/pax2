@@ -535,10 +535,14 @@ function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad
                 onClick={() => onPick(g)}
                 draggable
                 onDragStart={(e) => setDragEntity(e.dataTransfer, g)}
-                className="flex w-full flex-col gap-0.5 px-3 py-2 pr-7 text-left transition-colors hover:bg-slate-50"
+                className={browse === "channels" ? "flex w-full items-center gap-2.5 px-3 py-2 pr-7 text-left transition-colors hover:bg-slate-50" : "flex w-full flex-col gap-0.5 px-3 py-2 pr-7 text-left transition-colors hover:bg-slate-50"}
               >
+                {browse === "channels" && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={`/logos/channels/${g.id}.jpg`} alt="" className="size-7 shrink-0 rounded-full object-cover" onError={(e) => (e.currentTarget.style.visibility = "hidden")} />
+                )}
                 <span className="line-clamp-2 text-xs font-semibold text-slate-900">{g.label}</span>
-                {g.sub && <span className="tabular text-[10px] text-slate-500">{g.sub}</span>}
+                {browse !== "channels" && g.sub && <span className="tabular text-[10px] text-slate-500">{g.sub}</span>}
               </button>
               <RowMenu g={g} onPick={onPick} onAdd={onAdd} onAsk={onAsk} />
             </div>

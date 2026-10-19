@@ -2,6 +2,8 @@ import { TabRail } from "@/components/tab-rail"
 import { LiftTab } from "@/components/evidence/lift"
 import { PatternSections } from "@/components/patterns-charts"
 import { patternsData } from "@/lib/velocity-analytics"
+import { currentUser } from "@/lib/auth"
+import { redirect } from "next/navigation"
 
 // What travels, on one page, replacing /feature-lift and /patterns: the within-channel trait
 // lifts with the Upworthy priors beside the catalog's pattern charts. The old routes redirect in.
@@ -15,6 +17,8 @@ const TABS = [
 ]
 
 export default async function EvidencePage({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
+  const gatekeeper = await currentUser()
+  if (!gatekeeper) redirect("/signin?next=/evidence")
   const sp = await searchParams
   const tab = sp.tab === "patterns" ? "patterns" : "lift"
   return (

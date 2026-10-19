@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-import { finishChapter, labelTrait, startChapter } from "@/app/labeling/actions"
+import { finishChapter, labelTrait, startChapter } from "@/app/learn/actions"
 import { ConsensusVote } from "@/components/consensus-vote"
 import { CourseReveal } from "@/components/course-reveal"
 import type { RevealRow } from "@/lib/course"

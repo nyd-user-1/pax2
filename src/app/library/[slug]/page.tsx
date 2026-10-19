@@ -3,7 +3,8 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, Check, Download, ExternalLink, Minus } from "lucide-react"
 
 import upworthyTop from "../../../../data/generated/upworthy-top.json"
-import { TableBlock } from "@/components/blocks"
+import { CardBlock, TableBlock } from "@/components/blocks"
+import { TabRail } from "@/components/tab-rail"
 import { UpworthyLessons, UpworthyTable, type UpworthyData } from "@/components/library/upworthy-top"
 import { bytes, count, datasetBySlug, type Dataset, type Table } from "@/lib/library"
 import { kindStyle, tagStyle } from "@/lib/swatches"
@@ -40,13 +41,9 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
         </section>
 
         {table && (
-          <section className="flex flex-col gap-3">
-            <h2 className="font-display text-xl text-slate-900">Schema</h2>
-            <div className="surface flex flex-col gap-2 p-5">
-              <p className="text-sm font-semibold text-slate-900">{table.columnCount} columns</p>
-              <SchemaGrid table={table} />
-            </div>
-          </section>
+          <CardBlock title={`Schema · ${table.columnCount} columns`} height="auto">
+            <SchemaGrid table={table} />
+          </CardBlock>
         )}
 
         {table && <PreviewTable table={table} />}
@@ -111,23 +108,12 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
       </section>
 
       {table && (
-        <section className="flex flex-col gap-3">
-          <div className="flex flex-wrap items-center gap-2">
-            {tables.map((x) => (
-              <Link key={x.name} href={`/library/${d.slug}?t=${x.name}`} scroll={false} className={x.name === table.name ? "rounded-full bg-pax2-blue px-3 py-1 text-xs font-medium text-white" : "rounded-full bg-white px-3 py-1 text-xs text-slate-600 shadow-e1 hover:text-pax2-blue"}>
-                {x.name} · {count(x.rows)}
-              </Link>
-            ))}
-          </div>
+        <section className="flex flex-col gap-4">
+          {tables.length > 1 && <TabRail tabs={tables.map((x) => ({ key: x.name, label: x.name, href: `/library/${d.slug}?t=${x.name}`, count: x.rows }))} active={table.name} />}
           <PreviewTable table={table} />
-          <details className="surface">
-            <summary className="cursor-pointer list-none px-5 py-3 text-sm font-semibold text-slate-900">
-              Schema · {table.columnCount} columns
-            </summary>
-            <div className="px-5 pb-4">
-              <SchemaGrid table={table} />
-            </div>
-          </details>
+          <CardBlock title={`Schema · ${table.columnCount} columns`} height="auto">
+            <SchemaGrid table={table} />
+          </CardBlock>
         </section>
       )}
 

@@ -8,6 +8,7 @@ import { read, type Reading } from "@/lib/pax2"
 import { FORMULA_V1 } from "@/lib/resonance"
 import { writerPrompt } from "@/lib/writer-prompt"
 import { board, DATASETS, findings, loadExport, recordForecast, recordPick, recordStep, recordVote, saveFinding, steps, workspace, type LoadResult } from "@/lib/review"
+import { anonSpend } from "@/lib/anon"
 
 export async function loadDataset(id: string): Promise<LoadResult> {
   const ws = await workspace()
@@ -90,6 +91,7 @@ export async function freshReview() {
  *  so far, told what Swayable's tested ads found and what travels on the campaign's own channels
  *  (src/lib/writer-prompt.ts). PAX2GPT is Claude on Bedrock. */
 export async function writeScript(input: { name: string; role: string; town: string; why: string; moment: string }) {
+  await anonSpend("write")
   const { BedrockRuntimeClient, ConverseCommand } = await import("@aws-sdk/client-bedrock-runtime")
   const { SCRIPTS } = await import("@/lib/catalog")
   const ws = await workspace()

@@ -1,40 +1,42 @@
-import Link from "next/link"
-import { redirect } from "next/navigation"
+/* eslint-disable @next/next/no-img-element */
+import { existsSync } from "node:fs"
+import { join } from "node:path"
 
-import { myChannels } from "@/app/onboarding-actions"
-import { ListBlock } from "@/components/blocks"
-import { ChannelsPitch } from "@/components/channels/pitch"
-import { ChannelChip } from "@/components/onboarding/ingest"
-import { currentUser } from "@/lib/auth"
+import { CardBlock } from "@/components/blocks"
+import { patternsData } from "@/lib/velocity-analytics"
 
-// The user's connected YouTube channels; each opens its analysis at /channels/[id].
+// The tracked catalog's channels, open to everyone. A user's own connected channels live at /my-channels.
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Channels" }
 
-const connect = `/api/youtube/oauth?mode=connect&return=${encodeURIComponent("/channels")}`
+const compact = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${Math.round(n / 1e3)}K` : String(n))
 
-export default async function ChannelsPage({ searchParams }: { searchParams: Promise<{ channel?: string; youtube_error?: string }> }) {
-  if (!(await currentUser())) redirect(`/signin?next=${encodeURIComponent("/channels")}`)
-  const [channels, q] = await Promise.all([myChannels(), searchParams])
+export default async function ChannelsPage() {
+  const data = await patternsData()
+  const channels = data.channels
+    .slice()
+    .sort((a, b) => (b.subs ?? 0) - (a.subs ?? 0))
+    .map((c) => ({ ...c, logo: existsSync(join(process.cwd(), "public", "logos", "channels", `${c.id}.jpg`)) }))
   return (
-    <ListBlock
-      title="Channels"
-      height="auto"
-      tools={<a href={connect} className="ml-2 rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-pax2-blue transition-colors hover:bg-slate-50">{channels.length ? "Connect another channel" : "Connect a YouTube channel"}</a>}
-      footer={q.youtube_error ? <span className="text-pax2-red-deep">{q.youtube_error === "access_denied" ? "Google's consent was cancelled; nothing was connected." : q.youtube_error}</span> : undefined}
-    >
-      {channels.length ? (
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3">
-          {channels.map((c) => (
-            <Link key={c.channelId} href={`/channels/${c.channelId}`} className="rounded-2xl transition-shadow hover:shadow-sm">
-              <ChannelChip channelId={c.channelId} title={c.title} thumbnail={c.thumbnail} initial={c.progress} />
-            </Link>
-          ))}
-        </div>
-      ) : (
-        <ChannelsPitch />
-      )}
-    </ListBlock>
+    <CardBlock title={`Channels (${channels.length})`} height="auto">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        {channels.map((c) => (
+          <a key={c.id} data-find={c.name} href={`https://youtube.com/channel/${c.id}`} target="_blank" rel="noreferrer" className="lift flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition-shadow hover:shadow-e2">
+            {c.logo ? (
+              <img src={`/logos/channels/${c.id}.jpg`} alt="" className="size-10 shrink-0 rounded-full object-cover" />
+            ) : (
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-pax2-lavender text-sm font-semibold text-pax2-blue">{c.name.charAt(0)}</span>
+            )}
+            <span className="min-w-0">
+              <span className="block truncate font-medium text-slate-900">{c.name}</span>
+              <span className="tabular block text-xs text-slate-500">
+                {c.subs != null ? `${compact(c.subs)} subs · ` : ""}{c.n} tracked · {c.pushed} above 3x
+              </span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </CardBlock>
   )
 }

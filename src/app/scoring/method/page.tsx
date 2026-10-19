@@ -3,6 +3,8 @@ import Link from "next/link"
 import Formula from "@/components/scoring/formula"
 import Research from "@/components/scoring/research"
 import { cn } from "@/ui/lib/utils"
+import { currentUser } from "@/lib/auth"
+import { redirect } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Score method" }
@@ -13,6 +15,8 @@ const TABS = [
 ]
 
 export default async function ScoringPage({ searchParams }: { searchParams: Promise<{ tab?: string; o?: string }> }) {
+  const gatekeeper = await currentUser()
+  if (!gatekeeper) redirect("/signin?next=/scoring/method")
   const sp = await searchParams
   const tab = sp.tab === "research" ? "research" : "formula"
   return (

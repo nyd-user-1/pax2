@@ -3,6 +3,7 @@ import { BedrockRuntimeClient, ConverseStreamCommand, type Message } from "@aws-
 import { COMPONENTS } from "@/lib/resonance"
 import { SCRIPTS, scriptById, takeLabel } from "@/lib/catalog"
 import { board, workspace } from "@/lib/review"
+import { anonSpend } from "@/lib/anon"
 
 // The /chat answer, after solar's /api/chat: a system prompt carrying the record (here, every take's
 // current score and its parts, and the scripts), then the reply streamed back as plain text.
@@ -62,6 +63,12 @@ function addressContext(address?: string, place?: Place | null): string {
 }
 
 export async function POST(req: Request) {
+  // Signed out, the chat answers a handful of questions, then asks for an account.
+  try {
+    await anonSpend("chat")
+  } catch (e) {
+    return new Response(JSON.stringify({ error: (e as Error).message, gate: true }), { status: 402, headers: { "Content-Type": "application/json" } })
+  }
   const { messages, address, place, systemContext } = (await req.json()) as { messages: { role: "user" | "assistant"; content: string }[]; address?: string; place?: Place | null; systemContext?: string }
   // Extra context from the caller (the graph canvas: what is on it, an attached entity, a prompt step's wiring), after the record.
   const extra = typeof systemContext === "string" && systemContext.trim() ? `\n\n${systemContext.slice(0, 40_000)}` : ""

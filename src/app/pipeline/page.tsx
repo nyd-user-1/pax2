@@ -8,6 +8,8 @@ import { submissions, workspace } from "@/lib/review"
 import { DiagramBlock, TableBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { cn } from "@/ui/lib/utils"
+import { currentUser } from "@/lib/auth"
+import { notFound, redirect } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Pipeline" }
@@ -24,6 +26,9 @@ function State({ s }: { s: StepState }) {
 
 /** Every video goes through three checks on the worker box before its version page fills in. */
 export default async function PipelinePage() {
+  const gatekeeper = await currentUser()
+  if (!gatekeeper) redirect("/signin?next=/pipeline")
+  if (!gatekeeper.admin) notFound()
   const [batch, sent] = await Promise.all([currentBatch(), workspace().then(submissions)])
   const list = rows(batch)
   const total = list.reduce((s, r) => s + r.cost, 0)

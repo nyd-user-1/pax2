@@ -13,10 +13,10 @@ export const metadata = { title: "The Classifier" }
 /** The end of the Classifier course: the learner against the classifier on all twenty-eight. */
 export default async function ClassifierFinishPage() {
   const user = await currentUser()
-  if (!user) return <WaveHero next="/labeling/classifier/finish" />
+  if (!user) return <WaveHero next="/learn/classifier/finish" />
   const { videoId } = await assignment(user.email)
   const a = await answers(user.email, videoId)
-  if (!CHAPTERS.every((c) => chapterDone(a, c.n))) redirect("/labeling/classifier")
+  if (!CHAPTERS.every((c) => chapterDone(a, c.n))) redirect("/learn/classifier")
   if (await markOnce(user.email, "finished", CHAPTERS.length)) await logUsage("course-finish", COURSE, { course: COURSE, chapter: CHAPTERS.length })
   const rows = revealRows(videoId, CHAPTERS.flatMap((c) => c.keys), a)
   const agreed = rows.filter(agrees).length
@@ -41,7 +41,7 @@ export default async function ClassifierFinishPage() {
         <Link href={`/v/${videoId}`} className="press rounded-full bg-pax2-blue px-6 py-3 font-medium text-white">
           The video
         </Link>
-        <Link href="/labeling" className="rounded-full border px-6 py-3 font-medium text-pax2-blue">
+        <Link href="/learn" className="rounded-full border px-6 py-3 font-medium text-pax2-blue">
           Teach a Model
         </Link>
       </div>

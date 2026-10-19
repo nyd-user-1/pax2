@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Check, Copy } from "lucide-react"
 
-import { LandscapeCard, ListRow, SearchBar, ShortCard, type FeedVideo } from "@/components/record/feed"
+import { LandscapeCard, SearchBar, type FeedVideo } from "@/components/record/feed"
 import { tagId } from "@/lib/tags"
 import { cn } from "@/ui/lib/utils"
 
@@ -52,52 +52,16 @@ function RunLabel({ shorts }: { shorts: boolean }) {
   )
 }
 
-/** A tag's videos: one is a full-width row, two sit side by side, three or more take turns —
- *  six landscape cards three across, then six Shorts — each run under its mark. */
+/** A tag's videos, side by side in pairs — every section on the page carries at least two. */
 function TagVideos({ videos }: { videos: FeedVideo[] }) {
-  if (videos.length === 1)
-    return (
-      <div className="flex flex-col gap-3">
-        <RunLabel shorts={false} />
-        <ListRow v={videos[0]} />
-      </div>
-    )
-  if (videos.length === 2)
-    return (
-      <div className="flex flex-col gap-3">
-        <RunLabel shorts={false} />
-        <div className="grid gap-8 sm:grid-cols-2">
-          {videos.map((v) => (
-            <LandscapeCard key={v.id} v={v} />
-          ))}
-        </div>
-      </div>
-    )
-  const runs: FeedVideo[][] = []
-  for (let i = 0; i < videos.length; i += 6) runs.push(videos.slice(i, i + 6))
   return (
-    <div className="flex flex-col gap-8">
-      {runs.map((run, i) =>
-        i % 2 === 0 ? (
-          <div key={i} className="flex flex-col gap-3">
-            <RunLabel shorts={false} />
-            <div className="grid gap-8 sm:grid-cols-3">
-              {run.map((v) => (
-                <LandscapeCard key={v.id} v={v} />
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div key={i} className="flex flex-col gap-3">
-            <RunLabel shorts />
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-              {run.map((v) => (
-                <ShortCard key={v.id} v={v} />
-              ))}
-            </div>
-          </div>
-        ),
-      )}
+    <div className="flex flex-col gap-3">
+      <RunLabel shorts={false} />
+      <div className="grid gap-8 sm:grid-cols-2">
+        {videos.map((v) => (
+          <LandscapeCard key={v.id} v={v} />
+        ))}
+      </div>
     </div>
   )
 }

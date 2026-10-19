@@ -85,7 +85,7 @@ export async function MyVideos({ filter }: { filter?: string }) {
   if (!user)
     return (
       <div className="flex flex-col gap-6">
-        <WaveHero next="/videos" />
+        <WaveHero next="/my-videos" />
       </div>
     )
   // Every version keeps its place, so two versions can both be published and tracked.
@@ -96,7 +96,7 @@ export async function MyVideos({ filter }: { filter?: string }) {
   return (
     <div className="flex flex-col gap-6">
       <TabRail
-        tabs={FILTERS.map((x) => ({ key: x.key, label: x.label, href: x.key === "all" ? "/videos" : `/videos?q=${x.key}`, count: x.stages ? rows.filter((r) => x.stages!.includes(r.stage)).length : rows.length }))}
+        tabs={FILTERS.map((x) => ({ key: x.key, label: x.label, href: x.key === "all" ? "/my-videos" : `/my-videos?q=${x.key}`, count: x.stages ? rows.filter((r) => x.stages!.includes(r.stage)).length : rows.length }))}
         active={f.key}
       />
       <TableBlock

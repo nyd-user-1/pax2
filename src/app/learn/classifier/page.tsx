@@ -17,7 +17,7 @@ export const metadata = { title: "The Classifier" }
 /** Teach a Model, the Classifier: one video for the whole course, four chapters of seven traits. */
 export default async function ClassifierCoursePage({ searchParams }: { searchParams: Promise<{ c?: string }> }) {
   const user = await currentUser()
-  if (!user) return <WaveHero next="/labeling/classifier" />
+  if (!user) return <WaveHero next="/learn/classifier" />
   const { videoId, fresh } = await assignment(user.email)
   if (fresh) await logUsage("course-start", COURSE, { course: COURSE, chapter: 1 })
   const v = courseVideo(videoId)!
@@ -33,7 +33,7 @@ export default async function ClassifierCoursePage({ searchParams }: { searchPar
     return { tid: tidOf(key), key, text: `This video has: ${label.charAt(0).toLowerCase()}${label.slice(1)}.`, detail: TRAIT_DEFINITIONS[key], label: TRAIT_NAMES[key] }
   })
   const given = Object.fromEntries(chapter.keys.filter((k) => k in a).map((k) => [k, a[k]]))
-  const next = n < CHAPTERS.length ? { href: `/labeling/classifier?c=${n + 1}`, label: "Next chapter" } : { href: "/labeling/classifier/finish", label: "Finish" }
+  const next = n < CHAPTERS.length ? { href: `/learn/classifier?c=${n + 1}`, label: "Next chapter" } : { href: "/learn/classifier/finish", label: "Finish" }
   return (
     <div className="flex flex-col gap-6">
       <nav className="grid grid-cols-4 gap-1.5">
@@ -43,7 +43,7 @@ export default async function ClassifierCoursePage({ searchParams }: { searchPar
           const cls = cn("flex flex-col gap-1.5 text-xs", c.n > reached && "pointer-events-none opacity-40")
           const bar = <span className={cn("h-1 rounded-full", open ? "bg-pax2-blue" : finished ? "bg-pax2-light-blue" : "bg-slate-200")} />
           return (
-            <Link key={c.n} href={`/labeling/classifier?c=${c.n}`} aria-current={open ? "step" : undefined} aria-disabled={c.n > reached} className={cls}>
+            <Link key={c.n} href={`/learn/classifier?c=${c.n}`} aria-current={open ? "step" : undefined} aria-disabled={c.n > reached} className={cls}>
               {bar}
               <span className={cn("truncate", open ? "font-semibold text-pax2-blue" : "text-slate-500")}>
                 {c.n}. {c.title}

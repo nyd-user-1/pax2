@@ -23,7 +23,7 @@ export async function GET(req: Request) {
   const user = await currentUser()
   if (!user) return NextResponse.redirect(`${SITE}/signin?next=${encodeURIComponent("/signup/welcome")}`)
   // A demo account never holds a grant: no stored token, no channel row, no ingest run.
-  if (user.demo) return NextResponse.redirect(`${SITE}/channels?youtube_error=${encodeURIComponent("A demo account can't connect a channel.")}`)
+  if (user.demo) return NextResponse.redirect(`${SITE}/my-channels?youtube_error=${encodeURIComponent("A demo account can't connect a channel.")}`)
   if (!configured()) return NextResponse.json({ error: "PAX2_GOOGLE_CLIENT_ID and PAX2_GOOGLE_CLIENT_SECRET are not set on the server." }, { status: 503 })
   const url = new URL(req.url)
   const code = url.searchParams.get("code")
@@ -31,7 +31,7 @@ export async function GET(req: Request) {
   if (!code && !err) {
     const asked = url.searchParams.get("mode")
     const mode: GrantMode = asked === "connect" || !user.admin ? "connect" : "publish"
-    const back = safePath(url.searchParams.get("return")) ?? (mode === "publish" ? "/videos?q=publishing" : "/channels")
+    const back = safePath(url.searchParams.get("return")) ?? (mode === "publish" ? "/my-videos?q=publishing" : "/my-channels")
     return NextResponse.redirect(authUrl(JSON.stringify({ m: mode, e: user.email, r: back }), mode))
   }
   let state: { m?: string; e?: string; r?: string }
@@ -39,11 +39,11 @@ export async function GET(req: Request) {
     state = JSON.parse(url.searchParams.get("state") ?? "")
   } catch {
     // A consent screen opened before the state carried a mode: the admin publish grant.
-    state = { m: "publish", e: url.searchParams.get("state") ?? "", r: "/videos?q=publishing" }
+    state = { m: "publish", e: url.searchParams.get("state") ?? "", r: "/my-videos?q=publishing" }
   }
   if (state.e !== user.email) return NextResponse.json({ error: "That grant belongs to another session." }, { status: 400 })
   const mode: GrantMode = state.m === "publish" && user.admin ? "publish" : "connect"
-  const back = safePath(state.r ?? null) ?? "/channels"
+  const back = safePath(state.r ?? null) ?? "/my-channels"
   if (err || !code) return NextResponse.redirect(`${SITE}${back}${back.includes("?") ? "&" : "?"}youtube_error=${encodeURIComponent(err ?? "no code")}`)
   try {
     const ch = await completeGrant(code, user.email, mode)

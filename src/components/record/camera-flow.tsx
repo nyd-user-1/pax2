@@ -73,7 +73,7 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
             <CheckCircle2 className="size-10 text-primary" />
             <div className="flex flex-wrap gap-4">
               <Link href="/recording" className="rounded-full bg-pax2-blue px-6 py-3 font-medium text-white">Record another</Link>
-              {me && <Link href="/videos" className="rounded-full border px-6 py-3 font-medium text-pax2-blue">Your videos</Link>}
+              {me && <Link href="/my-videos" className="rounded-full border px-6 py-3 font-medium text-pax2-blue">Your videos</Link>}
             </div>
           </div>
       </Frame>

@@ -12,6 +12,8 @@ import type { Reading } from "@/lib/pax2"
 import { COMPONENTS } from "@/lib/resonance"
 import { board, findings, forecasts, loads, steps, submissions, workspace } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
+import { currentUser } from "@/lib/auth"
+import { notFound, redirect } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Evals" }
@@ -21,6 +23,9 @@ const side = (low: number, high: number): Side => (low > 50 ? "above" : high < 5
 const SIDE: Record<Side, string> = { above: "above the reference average", below: "below the reference average", unclear: "not distinguishable from average" }
 
 export default async function ReviewsPage() {
+  const gatekeeper = await currentUser()
+  if (!gatekeeper) redirect("/signin?next=/evals")
+  if (!gatekeeper.admin) notFound()
   const ws = await workspace()
   const [{ ref, takes }, history, sent] = await Promise.all([board(ws), loads(ws), submissions(ws)])
   const perTake = await Promise.all(takes.map(async (t) => ({ t, fs: await findings(ws, t.take.id), ev: await steps(ws, t.take.id), calls: await forecasts(ws, t.take.id) })))
