@@ -20,6 +20,8 @@ const RATINGS: { key: "importance" | "utility" | "ease"; label: string }[] = [
 const COLS = {
   plain: "grid-cols-[36px_minmax(200px,260px)_minmax(160px,1fr)_48px_minmax(220px,1.4fr)_minmax(96px,0.5fr)]",
   rated: "grid-cols-[36px_minmax(200px,260px)_minmax(160px,1fr)_48px_72px_72px_72px_minmax(220px,1.4fr)_minmax(96px,0.5fr)]",
+  // Models carry two more columns (what it does, why it matters) and the baseline under the name.
+  model: "grid-cols-[36px_minmax(200px,260px)_minmax(120px,0.8fr)_48px_72px_72px_72px_minmax(200px,1.1fr)_minmax(200px,1.1fr)_minmax(200px,1.1fr)_minmax(96px,0.4fr)]",
 }
 const plainName = (name: string) => name.replace(/^\d+\. /, "")
 
@@ -38,7 +40,7 @@ const Tag = ({ children, tone, title }: { children: React.ReactNode; tone: "bloc
   <span title={title} className={cn("whitespace-nowrap rounded-full px-1.5 py-px text-[10px] font-medium", tone === "block" ? "bg-red-50 text-red-700 ring-1 ring-red-200" : "bg-slate-100 text-slate-600 ring-1 ring-slate-200")}>{children}</span>
 )
 
-function Row({ b, n, list, rated, today }: { b: Item; n: number; list: Item[]; rated: boolean; today: string }) {
+function Row({ b, n, list, rated, model, today }: { b: Item; n: number; list: Item[]; rated: boolean; model?: boolean; today: string }) {
   const done = b.progress >= 100
   const late = !done && today > b.end
   const blocks = blockedBy(list, b.id)
@@ -47,9 +49,12 @@ function Row({ b, n, list, rated, today }: { b: Item; n: number; list: Item[]; r
   const remaining = 100 - b.progress
   return (
     <details data-find className="group border-t border-slate-100">
-      <summary className={cn("grid min-h-24 cursor-pointer list-none items-center gap-x-3 py-2 text-xs hover:bg-slate-50 [&::-webkit-details-marker]:hidden", rated ? COLS.rated : COLS.plain)}>
+      <summary className={cn("grid min-h-24 cursor-pointer list-none items-center gap-x-3 py-2 text-xs hover:bg-slate-50 [&::-webkit-details-marker]:hidden", model ? COLS.model : rated ? COLS.rated : COLS.plain)}>
         <span className="tabular text-slate-500">{n}</span>
-        <p className="truncate font-medium text-slate-900">{plainName(b.name)}</p>
+        <div className="min-w-0">
+          <p className="truncate font-medium text-slate-900">{plainName(b.name)}</p>
+          {model && b.base && <p className="mt-0.5 line-clamp-2 text-[10px] leading-snug text-slate-500">{b.base}</p>}
+        </div>
         <div className={cn("h-3 overflow-hidden rounded-full", done ? "bg-green-100" : late ? "bg-red-100" : "bg-slate-100")} title={`${b.progress}%`}>
           {/* The fill grows from the left on arrival, staggered down the list (pax2.css .grow). */}
           <div className={cn("grow h-full rounded-full", done ? "bg-green-500" : late ? "bg-red-400" : "bg-pax2-light-blue")} style={{ width: `${b.progress}%`, "--i": n } as React.CSSProperties} />
@@ -58,6 +63,8 @@ function Row({ b, n, list, rated, today }: { b: Item; n: number; list: Item[]; r
           {done ? <Check className="h-4 w-4 text-green-600" strokeWidth={3} aria-label="Complete" /> : `${b.progress}%`}
         </div>
         {rated && RATINGS.map((r) => <Rating key={r.key} n={b[r.key]} />)}
+        {model && <p className="line-clamp-3 leading-snug text-slate-700">{b.func}</p>}
+        {model && <p className="line-clamp-3 leading-snug text-slate-600">{b.value}</p>}
         <p className={cn("line-clamp-2 leading-snug", done ? "text-slate-400" : "text-slate-600")}>{done ? (b.note ?? "") : b.next}</p>
         <div className="flex flex-wrap gap-1">
           {blocked && <Tag tone="block" title={`Waits on ${waits.join(", ")}`}>Blocked</Tag>}
@@ -85,21 +92,23 @@ function Row({ b, n, list, rated, today }: { b: Item; n: number; list: Item[]; r
   )
 }
 
-function Rows({ list, rated, today }: { list: Item[]; rated: boolean; today: string }) {
+function Rows({ list, rated, model, today }: { list: Item[]; rated: boolean; model?: boolean; today: string }) {
   return (
     <div className="overflow-x-auto">
-      <div className={rated ? "min-w-[900px]" : "min-w-[720px]"}>
-        <div className={cn("grid items-end gap-x-3 pb-1 text-[10px] uppercase tracking-wide text-slate-400", rated ? COLS.rated : COLS.plain)}>
+      <div className={model ? "min-w-[1280px]" : rated ? "min-w-[900px]" : "min-w-[720px]"}>
+        <div className={cn("grid items-end gap-x-3 pb-1 text-[10px] uppercase tracking-wide text-slate-400", model ? COLS.model : rated ? COLS.rated : COLS.plain)}>
           <span>No.</span>
           <span>Item</span>
           <span>Progress</span>
           <span className="text-right">Done</span>
             {rated && RATINGS.map((r) => <span key={r.key} className="text-center">{r.label}</span>)}
+          {model && <span>Function</span>}
+          {model && <span>Value-add</span>}
           <span>Next</span>
           <span>Blocked</span>
         </div>
         {list.map((b, i) => (
-          <Row key={b.id} b={b} n={i + 1} list={list} rated={rated} today={today} />
+          <Row key={b.id} b={b} n={i + 1} list={list} rated={rated} model={model} today={today} />
         ))}
       </div>
     </div>
@@ -193,7 +202,7 @@ export default async function ProjectManagementPage({ searchParams }: { searchPa
         {active === "models" && (
           <OrderedBlock id="board" label="Models">
           <ProgressBlock title="Models" search="Search models…" rows={rows(MODELS)} name="models" height="h-[calc(100dvh-226px)]" footer={summary(MODELS)}>
-            <Rows list={MODELS} rated today={today} />
+            <Rows list={MODELS} rated model today={today} />
           </ProgressBlock>
           </OrderedBlock>
         )}
