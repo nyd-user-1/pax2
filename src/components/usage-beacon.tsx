@@ -9,7 +9,7 @@ import type { UsageKind } from "@/lib/usage"
 // never blocks or throws. Call `log` from an event, never on render.
 
 const KEY = "pax2-reader"
-const readerId = () => {
+export const readerId = () => {
   try {
     let id = localStorage.getItem(KEY)
     if (!id) {

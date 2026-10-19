@@ -8,9 +8,9 @@ import { usePathname } from "next/navigation"
 import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, EllipsisVertical, Forward, ListPlus, MessageCircle, Play, Rocket, Search, SlidersHorizontal, TrendingUp, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
 
 import { viewer } from "@/app/original-actions"
-import { usageSince } from "@/app/usage-actions"
+import { myUsageSince, usageSince } from "@/app/usage-actions"
 import { useShellPanel } from "@/components/shell"
-import { useUsage } from "@/components/usage-beacon"
+import { readerId, useUsage } from "@/components/usage-beacon"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
 import { rankFeed, type RankEvent } from "@/lib/feed-rank"
 import { cn } from "@/ui/lib/utils"
@@ -808,6 +808,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   const [signedIn, setSignedIn] = React.useState(false)
   const [forYou, setForYou] = React.useState(false)
   const [events, setEvents] = React.useState<RankEvent[]>([])
+  const [mine, setMine] = React.useState<RankEvent[]>([])
   React.useEffect(() => {
     viewer().then((u) => setSignedIn(!!u)).catch(() => {})
   }, [])
@@ -815,7 +816,10 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
     const on = !forYou
     setForYou(on)
     log("sort", on ? "foryou" : "none")
-    if (on) usageSince(7).then(setEvents).catch(() => {})
+    if (on) {
+      usageSince(7).then(setEvents).catch(() => {})
+      myUsageSince(90, readerId()).then(setMine).catch(() => {})
+    }
   }
   const channels = React.useMemo(() => [...new Set(videos.map((v) => v.channel))].sort((a, b) => a.localeCompare(b)), [videos])
   const tags = React.useMemo(() => [...new Set(videos.flatMap((v) => v.tags ?? []))].sort((a, b) => a.localeCompare(b)), [videos])
@@ -866,7 +870,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
         .toSorted(orderOf(sorts)),
     [videos, needle, channel, tag, sorts],
   )
-  const ordered = React.useMemo(() => (forYou ? rankFeed(shown, events) : shown), [forYou, shown, events])
+  const ordered = React.useMemo(() => (forYou ? rankFeed(shown, events, Date.now(), mine) : shown), [forYou, shown, events, mine])
   // With a video's drawer open beside the feed, search results lay out as a grid sized to the feed's
   // own width — three, two or one across — so a dragged split works the same as a preset one.
   const { panelOpen } = useShellPanel()

@@ -14,6 +14,15 @@ export async function logUsage(kind: UsageKind, subject: string, meta?: Record<s
   await writeUsage(kind, String(subject).slice(0, 200), who, m)
 }
 
+/** The signed-in reader's own opens and plays, or the anonymous browser's by its reader id, over the
+ *  last `days` days, for the For you sort's affinity term. */
+export async function myUsageSince(days: number, reader?: string) {
+  const user = await currentUser()
+  const who = user?.email ?? (reader && /^r-[a-z0-9]{6,16}$/.test(reader) ? reader : null)
+  if (!who) return []
+  return (await since(Math.min(90, Math.max(1, days)))).filter((e) => e.who === who && (e.kind === "open" || e.kind === "play")).map((e) => ({ kind: e.kind, subject: e.subject, at: e.at }))
+}
+
 /** The opens and plays of the last `days` days, without who did them, for a signed-in reader's
  *  For you sort (src/lib/feed-rank.ts). */
 export async function usageSince(days: number) {

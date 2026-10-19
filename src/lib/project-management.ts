@@ -81,12 +81,12 @@ export const REQUIREMENTS: Item[] = [
       { what: "PAX2 Classifier retrained with the usage feature.", share: 30, effort: "an hour and a c7i box" },
       { what: "Measure whether it adds to the held-out AUC.", share: 20, effort: "30 minutes" },
     ] },
-  { id: "13", name: "13. Per-user recommendations", start: "2026-11-15", end: "2026-12-31", progress: 30, next: "PAX2 Feed Ranker v0 pretrains on KuaiRand today; the reader's own plays join the For you sort when rows exist.", waits: ["11", "12"],
-    note: "The feed's For you sort already ranks by recency, ratio to the channel's median and PAX2 readers' opens and plays (src/lib/feed-rank.ts); it is one ranking for every reader until the rows exist to tell readers apart.",
+  { id: "13", name: "13. Per-user recommendations", start: "2026-11-15", end: "2026-12-31", progress: 50, next: "PAX2 Feed Ranker trained on PAX2's own reader rows at a few thousand; the affinity term is live and waiting for them.", waits: ["11", "12"],
+    note: "The feed's For you sort ranks by recency, ratio to the channel's median, PAX2 readers' opens and plays, and since 2026-10-18 the reader's own opens and plays by channel (src/lib/feed-rank.ts), the reader-by-channel affinity PAX2 Feed Ranker v0 measured on public logs; one ranking for every reader until the rows exist to tell readers apart.",
     steps: [
-      { what: "The reader's own opens and plays weigh their feed: a per-reader affinity by channel and family, the shape PAX2 Feed Ranker v0 learned on KuaiRand.", share: 50, effort: "half a day once rows exist" },
-      { what: "PAX2 Feed Ranker trained on PAX2's rows.", share: 40, effort: "a day at a few thousand rows" },
-      { what: "A holdout of readers to measure it.", share: 10, effort: "an hour" },
+      { what: "A few thousand reader rows, so the affinity term has history to read.", share: 40, effort: "readers; nothing to build", blocker: true },
+      { what: "PAX2 Feed Ranker trained on PAX2's rows; beat 0.595 within reader.", share: 45, effort: "a day at a few thousand rows" },
+      { what: "A holdout of readers to measure it.", share: 15, effort: "an hour" },
     ] },
 ]
 
