@@ -606,7 +606,7 @@ function stories(data: PatternsData): Record<string, Story> {
     velocity: {
       title: "The verdict is decided early",
       paras: [
-        `The eventual breakouts separate almost immediately: the median breakout crosses its channel's 1x line ${cross1 != null ? `by hour ${Math.round(cross1)}` : "within its first readings"} and the 3x line ${cross3 != null ? `by hour ${Math.round(cross3)}` : "well inside the window"} — long before the 72-hour verdict is recorded. The push, when it comes, comes early.`,
+        `The eventual outliers separate almost immediately: the median outlier crosses its channel's 1x line ${cross1 != null ? `by hour ${Math.round(cross1)}` : "within its first readings"} and the 3x line ${cross3 != null ? `by hour ${Math.round(cross3)}` : "well inside the window"} — long before the 72-hour verdict is recorded. The push, when it comes, comes early.`,
         `The inverse is just as sharp: of the ${dead.length} videos that finished below half their channel's median, ${deadEverAt1 === 0 ? "not one" : `only ${deadEverAt1}`} ever touched the 1x line at any point in 72 hours. There are no late rescues in this data — a video the algorithm declines in its first test audience stays declined.`,
         `The practical inference: the 72-hour window is a formality. Watching a short's first 12 to 18 hours against its channel median predicts its band almost perfectly, which means the poller could call verdicts in a quarter of the time, and a creator deciding whether to boost or re-cut a video has their answer the same day they publish.`,
       ],
@@ -615,14 +615,14 @@ function stories(data: PatternsData): Record<string, Story> {
       title: "Publishing runs on office hours; the algorithm doesn't",
       paras: [
         `${pct(nineToFive / (hours.length || 1))} of tracked videos went out between 9am and 5pm Eastern — these channels publish on staff schedules. Weekends carry ${weekend.length} of ${vs.length} videos.`,
-        `The breakout rate tells a different story than the volume: weekday publishes broke out at ${pct(rate(weekday))} against ${pct(rate(weekend))} on weekends${rate(weekend) > rate(weekday) ? " — the thinner weekend field converts better, consistent with less competition in the feed at the moment of the seed test" : " — the weekday advantage suggests the seed audience these channels reach is itself a weekday audience"}.`,
-        `Because the seed test happens in the hours right after publish, the hour of publish is really a choice of first audience. The cells with green rings mark hours that have produced a breakout; the empty late-night columns are untested, not disproven.`,
+        `The outlier rate tells a different story than the volume: weekday publishes were outliers at ${pct(rate(weekday))} against ${pct(rate(weekend))} on weekends${rate(weekend) > rate(weekday) ? " — the thinner weekend field converts better, consistent with less competition in the feed at the moment of the seed test" : " — the weekday advantage suggests the seed audience these channels reach is itself a weekday audience"}.`,
+        `Because the seed test happens in the hours right after publish, the hour of publish is really a choice of first audience. The cells with green rings mark hours that have produced an outlier; the empty late-night columns are untested, not disproven.`,
       ],
     },
     channels: {
-      title: "Breakout is a channel property before it is a video property",
+      title: "Outlier status is a channel property before it is a video property",
       paras: [
-        `${top3.map((c) => c.name).join(", ")} account for ${pct(top3Share)} of every breakout recorded, while ${silent.length} channels with five or more tracked videos have yet to produce one. The ratio scale already cancels channel size — so this concentration is not big channels looking big, it is certain channels repeatedly clearing a bar that others never clear.`,
+        `${top3.map((c) => c.name).join(", ")} account for ${pct(top3Share)} of every outlier recorded, while ${silent.length} channels with five or more tracked videos have yet to produce one. The ratio scale already cancels channel size — so this concentration is not big channels looking big, it is certain channels repeatedly clearing a bar that others never clear.`,
         `The inference: the algorithm's seed test is not run against a neutral audience, it is run against each channel's own reachable audience. A channel whose uploads repeatedly break 3x has an audience that converts tests into pushes — which makes the channel, not the individual video, the strongest single predictor in this dataset.`,
         `For a portfolio, that reads as: study the silent channels' content against the repeat breakers' before spending on production. The same script performs differently depending on whose test audience first receives it.`,
       ],
@@ -631,7 +631,7 @@ function stories(data: PatternsData): Record<string, Story> {
       title: "Size doesn't buy escape velocity",
       paras: [
         `Across ${pairs.length} videos the correlation between channel subscribers and ratio-to-median is r = ${r.toFixed(2)} — ${Math.abs(r) < 0.15 ? "effectively none" : r > 0 ? "weakly positive" : "weakly negative"} on log scales. Dividing by the channel median was meant to cancel size, and the scatter confirms it did.`,
-        `That flatness is the finding: a 1,600-subscriber channel and a 1.4-million-subscriber one face the same odds of a 3x breakout once you measure against their own normal. The algorithm's test is relative, which is why the small reform channels in this corpus can and do out-multiply national channels.`,
+        `That flatness is the finding: a 1,600-subscriber channel and a 1.4-million-subscriber one face the same odds of a 3x outlier once you measure against their own normal. The algorithm's test is relative, which is why the small reform channels in this corpus can and do out-multiply national channels.`,
         `What size does buy is the denominator: the same 3x means thousands of views on a small channel and hundreds of thousands on a large one. Multiplier and magnitude are different prizes, and only the first is level.`,
       ],
     },
@@ -639,7 +639,7 @@ function stories(data: PatternsData): Record<string, Story> {
       title: "Engagement rides along; it doesn't steer",
       paras: [
         erWin != null && erDead != null
-          ? `The median breakout earns ${erWin.toFixed(0)} likes per thousand views against ${erDead.toFixed(0)} on the killed videos${erMid != null ? ` and ${erMid.toFixed(0)} in the middle band` : ""} — ${Math.abs(erWin - (erDead ?? 0)) < 5 ? "nearly identical rates" : "a real but modest gap"} for videos whose reach differs by an order of magnitude.`
+          ? `The median outlier earns ${erWin.toFixed(0)} likes per thousand views against ${erDead.toFixed(0)} on the killed videos${erMid != null ? ` and ${erMid.toFixed(0)} in the middle band` : ""} — ${Math.abs(erWin - (erDead ?? 0)) < 5 ? "nearly identical rates" : "a real but modest gap"} for videos whose reach differs by an order of magnitude.`
           : "Like counts are too sparse in this window to split by band yet.",
         `Per-view engagement barely moving across bands implies the push is not a reward for engagement rate — the pushed and killed videos please their viewers at similar rates, but one got served and one did not. That is consistent with the seed test measuring watch behavior (holds, swipes, completion) that never appears in public counts.`,
         `The caution for scoring: likes-per-view is a weak public proxy for whatever the algorithm actually optimizes. Treat it as a floor check, not a predictor — the real signal lives in data only the channel owner's analytics can hand over, which is what the Endgame integration is for.`,
@@ -665,8 +665,8 @@ function stories(data: PatternsData): Record<string, Story> {
             .sort((a, b) => a - b)
           const medPeak = peaks.length ? peaks[Math.floor(peaks.length / 2)] : null
           return medPeak != null
-            ? `Across the ${wins.length} breakouts, the six-hour window with the biggest view gain starts at hour ${medPeak} for the median video. The candle chart shows the same thing for one video at a time: a short run of green candles, then red as the rate falls back.`
-            : "Too few breakouts with full series to place the peak yet."
+            ? `Across the ${wins.length} outliers, the six-hour window with the biggest view gain starts at hour ${medPeak} for the median video. The candle chart shows the same thing for one video at a time: a short run of green candles, then red as the rate falls back.`
+            : "Too few outliers with full series to place the peak yet."
         })(),
         "The rate peaks and then falls while the cumulative count keeps rising. That is why the line charts all flatten: the push is a burst measured in hours, and everything after it is residual traffic.",
         "Read the wicks: a tall upper wick with a small body is a burst the algorithm did not sustain. A sequence of full green bodies is a sustained push. Those are different events with the same 72-hour total.",
@@ -686,7 +686,7 @@ function stories(data: PatternsData): Record<string, Story> {
 const DESC: Record<string, string> = {
   velocity: "Each line is one video's cumulative views divided by its channel's median, read every 15 minutes across its first 72 hours. The dotted guides mark the .5x, 1x and 3x bands; the chips pick which band is drawn.",
   publish: "Each cell counts the videos published in that hour and weekday, Eastern time. Deeper purple is more videos; a green ring means at least one of them finished above 3x.",
-  channels: "Each dot is one video's 72-hour ratio, on its channel's row; channels sort by breakout share. The right edge carries the channel's subscribers and videos tracked.",
+  channels: "Each dot is one video's 72-hour ratio, on its channel's row; channels sort by outlier share. The right edge carries the channel's subscribers and videos tracked.",
   subs: "One dot per channel, placed by its subscriber count and the median ratio of its tracked videos — both axes log, dot size is how many videos it has in the watch.",
   engagement: "Each dot is a video, placed by its 72-hour ratio and the likes it earned per thousand views. Color is the verdict band.",
   candles: "One video's views-per-hour, one candle per six hours. Open and close are the rate entering and leaving the window; the wicks are the fastest and slowest 15-minute stretches inside it. Green means the rate rose over the window, red means it fell. Rates carry a 3-reading rolling average because 15-minute deltas are noisy. Pick the video above the chart.",

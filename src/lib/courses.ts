@@ -109,7 +109,7 @@ const pickVideos = (pool: string, rounds: number, prompt: string, opts: { anchor
   },
 })
 const recorded = (rs: { round: Round; answer: Answer }[], what: string) => `${rs.length} ${what} recorded.`
-const tierWord = { breakout: "Broke out", baseline: "Usual", killed: "Missed" } as const
+const tierWord = { breakout: "Outlier", baseline: "Usual", killed: "Missed" } as const
 const outcome = (id: string) => `${tierWord[F[id].tier]}, ${x2(F[id].ratio)} the channel median`
 
 const RANKER: CourseDef = {
@@ -182,9 +182,9 @@ const RANKER: CourseDef = {
       title: "Tests",
       lesson: [
         "A ranker is tested on pairs it never trained on, by how often it puts the better item first. Half is chance; every point above it has to be earned on held-out items.",
-        "The better item has to be defined by an outcome, not an opinion. Here it is a breakout: a short that drew three times its channel's median views or more.",
-        `A classifier on this site that predicts breakouts from what a short carries at publish was tested on channels it never saw. Given two shorts from one channel, one of them a breakout, it put the breakout first ${in100(WITHIN)} times in 100.`,
-        "The exercise asks the learner the same question: two shorts from one channel, one of them a breakout. The score at the end is the learner's own held-out accuracy, beside the classifier's and beside chance.",
+        "The better item has to be defined by an outcome, not an opinion. Here it is an outlier: a short that drew three times its channel's median views or more.",
+        `A classifier on this site that predicts outliers from what a short carries at publish was tested on channels it never saw. Given two shorts from one channel, one of them an outlier, it put the outlier first ${in100(WITHIN)} times in 100.`,
+        "The exercise asks the learner the same question: two shorts from one channel, one of them an outlier. The score at the end is the learner's own held-out accuracy, beside the classifier's and beside chance.",
       ],
       exercise: {
         ...pickVideos("pairsSame", 8, "One of these two broke out on its channel. Pick it."),
@@ -440,7 +440,7 @@ const SIMULATOR: CourseDef = {
       lesson: [
         "A simulator has to reproduce how often things happen before it can say when. One that makes every third short a Hit is wrong before it is run.",
         `Base rates differ by kind of channel. The catalog's ${fmt(SETTLED)} settled shorts broke out at different rates in each family of channels.`,
-        "People misjudge base rates. A vivid breakout is remembered; the many shorts that drew their usual audience are not.",
+        "People misjudge base rates. A vivid outlier is remembered; the many shorts that drew their usual audience are not.",
         "The exercise asks, for each family of channels, what share of its shorts broke out. The measured share is shown beside each estimate.",
       ],
       exercise: {

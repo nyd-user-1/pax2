@@ -70,7 +70,7 @@ export function describeEntity(g: DragEntity | null, data: GraphData): string {
     const top = [...vs].sort((a, b) => (b.ratio ?? 0) - (a.ratio ?? 0)).slice(0, 5)
     const breakouts = vs.filter((v) => v.tier === "breakout").length
     return [
-      `${g.type.toUpperCase()} "${g.label}": on ${vs.length} tracked videos, ${breakouts} of them breakouts.`,
+      `${g.type.toUpperCase()} "${g.label}": on ${vs.length} tracked videos, ${breakouts} of them outliers.`,
       top.length ? `Top videos by ratio:\n${top.map((v) => `- "${v.title}" (/v/yt-${v.id}), ${v.channel}: ${ratio(v.ratio)}`).join("\n")}` : "",
     ].filter(Boolean).join("\n")
   }

@@ -11,7 +11,7 @@ export const MODEL_TERMS: ModelTerms[] = [
   {
     id: "m-classifier",
     name: "PAX2 Classifier",
-    target: "Breakout, 0 or 1: whether a settled short's lifetime views reach 3x its channel's median of settled shorts. v1 adds thumbnail features; v2 adds transcript features, same target.",
+    target: "Outlier, 0 or 1: whether a settled short's lifetime views reach 3x its channel's median of settled shorts. v1 adds thumbnail features; v2 adds transcript features, same target.",
     loss: "Binary cross-entropy (the logistic log-loss) with an L2 penalty on the weights, lambda 2.0.",
     algorithm: "L2-regularized logistic regression fit by Newton's method in numpy (scripts/rig/common.py fit), features standardized; leave-one-channel-out for the measured strength.",
   },
@@ -32,7 +32,7 @@ export const MODEL_TERMS: ModelTerms[] = [
   {
     id: "m-encoder",
     name: "PAX2 Encoder",
-    target: "No scalar target. Contrastive: a short's text should sit nearer its 3 nearest same-channel, same-tier training shorts than 5 hard negatives of another tier; evaluated as kNN-AUC against the breakout label.",
+    target: "No scalar target. Contrastive: a short's text should sit nearer its 3 nearest same-channel, same-tier training shorts than 5 hard negatives of another tier; evaluated as kNN-AUC against the outlier label.",
     loss: "InfoNCE, the contrastive cross-entropy over each group of one anchor, positives and negatives, temperature 0.02.",
     algorithm: "BAAI/bge-m3 (XLM-RoBERTa-large, 568M parameters) fine-tuned dense-only with FlagEmbedding's encoder_only.m3, CLS pooling, 1 epoch, batch 16, learning rate 1e-5, bf16.",
   },
