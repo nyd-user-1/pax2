@@ -56,8 +56,10 @@ first_error = None
 for f in todo:
     vid = f[:-4]
     try:
-        subprocess.run(["aws", "s3", "cp", "--only-show-errors", f"s3://{bucket}/catalog-media/{f}", f], check=True)
-        segments, info = model.transcribe(f, language="en", word_timestamps=True, vad_filter=True)
+        # ./ on every local path: catalog ids can begin with a dash and the CLI reads a bare one as a flag
+        # (measured: run 072514 died on -6iChOmLosA.m4a, "the following arguments are required: paths").
+        subprocess.run(["aws", "s3", "cp", "--only-show-errors", f"s3://{bucket}/catalog-media/{f}", f"./{f}"], check=True)
+        segments, info = model.transcribe(f"./{f}", language="en", word_timestamps=True, vad_filter=True)
         words = []
         for seg in segments:
             for w in seg.words or []:
@@ -65,9 +67,9 @@ for f in todo:
         text = " ".join(w["w"] for w in words).strip()
         out = {"id": vid, "text": text or None, "words": words, "source": "whisper-catalog", "model": "large-v3",
                "durationSec": round(info.duration, 1), "at": datetime.datetime.utcnow().isoformat() + "Z"}
-        with open(f"{vid}.json", "w") as fh: json.dump(out, fh)
-        subprocess.run(["aws", "s3", "cp", "--only-show-errors", f"{vid}.json", f"s3://{bucket}/catalog-media-transcripts/{vid}.json"], check=True)
-        os.remove(f); os.remove(f"{vid}.json")
+        with open(f"./{vid}.json", "w") as fh: json.dump(out, fh)
+        subprocess.run(["aws", "s3", "cp", "--only-show-errors", f"./{vid}.json", f"s3://{bucket}/catalog-media-transcripts/{vid}.json"], check=True)
+        os.remove(f"./{f}"); os.remove(f"./{vid}.json")
         n += 1
         if n % 50 == 0: print(f"{n}/{len(todo)} at {n/((time.time()-t0)/60):.1f}/min", flush=True)
     except Exception as e:
