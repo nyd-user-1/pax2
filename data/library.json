@@ -7,24 +7,30 @@
   "scripts": [
     {
       "id": "coin",
-      "title": "51% of Mass. races have been uncontested since 2014.",
+      "title": "Uncontested",
       "framing": "Leads with the number. Good if you want a hard fact up front.",
       "approach": "The hard number",
       "source": "Parallax Partner Portal Lite script library (full text from the library's editor screen)",
       "text": "Flip a coin. That’s your odds of your state legislative race actually being contested in Massachusetts.\nSince 2014, 51% of races in this state — more than half — have had just ONE name on the ballot. No opponent. No debate. No choice.\nMassachusetts ranks dead last in the country for electoral competitiveness.\nThat’s not democracy, that’s your leaders being chosen for you.\nAnd it’s not because good candidates don’t exist — it’s because the system makes it nearly impossible for a challenger to even get on the ballot in the first place.\nSo every two years, the same seats go back to the same people, and nobody has to explain a single vote. Voters show up… to rubber-stamp a decision that was already made for them.",
-      "short": "The 51% fact",
+      "short": "Uncontested",
       "why": [
         {
           "line": 0,
           "note": "“Flip a coin” turns the statistic into odds a viewer can feel before a single number is said — the concrete, curiosity-first opening that won the randomized headline tests.",
-          "source": { "label": "Upworthy archive, 32,487 headline tests", "href": "/library/upworthy-archive" }
+          "source": {
+            "label": "Upworthy archive, 32,487 headline tests",
+            "href": "/library/upworthy-archive"
+          }
         },
         {
           "line": 1,
           "note": "The number lands in the second line and is repeated three ways — no opponent, no debate, no choice. A fact most viewers haven't heard is one of the few script choices that paid off on favorability. Parallax's 51% is kept verbatim; the returns PAX2 holds put it at 62.8% — 628 of the last 1,000 races.",
           "research": "fact_new_yes",
           "outcome": "favorability",
-          "source": { "label": "Uncontested races 2014–2022", "href": "/polling" }
+          "source": {
+            "label": "Uncontested races 2014–2022",
+            "href": "/polling"
+          }
         },
         {
           "line": 3,
@@ -38,16 +44,19 @@
           "research": "explicit_vote_for",
           "outcome": "votechoice"
         }
-      ]
+      ],
+      "hook": "51% of Mass. races have been uncontested since 2014.",
+      "structure": "Odds as a hook, the number said three ways, the consequence, who decided for you. No ask.",
+      "method": "Stat-led and angry on purpose: a fact most viewers have not heard, anger at being chosen for, and the only script that never asks for the vote."
     },
     {
       "id": "calm",
-      "title": "No competition, no accountability.",
+      "title": "No Competition",
       "framing": "The calmest of the three, and the only one that names Question 3 directly.",
       "approach": "The plain case",
       "source": "Opening line from the Parallax library card; the rest drafted by PAX2 as a stand-in until the full script arrives",
       "text": "More than half of Massachusetts races since 2014 have been completely uncontested. Think about that.\nWhen there’s only one name on the ballot, there’s no debate, no comparison, and no reason for anyone to earn your vote.\nQuestion 3 would put every candidate on one primary ballot, and the top finishers would move on to November. Every voter, in every party or none, gets a say.\nThat means real campaigns in the fall, with candidates who have to knock on doors, show up to debates, and explain where they stand.\nIt’s a simple change. More choices on the ballot, and representatives who have to answer to all of us.\nVote yes on Question 3.",
-      "short": "No competition",
+      "short": "No Competition",
       "why": [
         {
           "line": 0,
@@ -58,7 +67,10 @@
         {
           "line": 2,
           "note": "The mechanics in one sentence, which is where ballot measures live or die: on nine statewide votes, the simple versions passed (Washington 59.9%, California 53.7%) and the ones that took a paragraph to explain lost (Idaho 30.4%, South Dakota 34.4%).",
-          "source": { "label": "Ballot history", "href": "/polling" }
+          "source": {
+            "label": "Ballot history",
+            "href": "/polling"
+          }
         },
         {
           "line": 3,
@@ -70,16 +82,19 @@
           "research": "explicit_vote_for",
           "outcome": "votechoice"
         }
-      ]
+      ],
+      "hook": "No competition, no accountability.",
+      "structure": "The shared fact, why it matters, how Question 3 works in one line, what changes, the ask.",
+      "method": "The plain explainer: facts explained, the mechanics in a sentence, pictures a viewer can see, and an explicit ask last."
     },
     {
       "id": "listen",
-      "title": "When politicians don't have to compete, they don't have to listen.",
+      "title": "No Need to Listen",
       "framing": "The accountability argument, with a plain-English analogy in the middle.",
       "approach": "The analogy",
       "source": "Opening line from the Parallax library card; the rest drafted by PAX2 as a stand-in until the full script arrives",
       "text": "In most Massachusetts races, there’s no competition — one candidate, one party, no choice.\nWhy does that matter? Think about the only coffee shop in town. If nobody else can open across the street, prices go up and service goes down. Nobody has to try.\nPolitics works the same way. When politicians don’t have to compete, they don’t have to listen.\nSince 2014, more than half of the races for the State House and Senate have had just one name on the ballot.\nQuestion 3 changes the rules. Every candidate runs in one primary, and the top two finishers face off in November.\nTwo real choices in the fall means every vote has to be earned. That’s how you get representatives who actually listen.",
-      "short": "They don’t have to listen",
+      "short": "No Need to Listen",
       "why": [
         {
           "line": 1,
@@ -105,38 +120,53 @@
           "research": "explicit_vote_for",
           "outcome": "votechoice"
         }
-      ]
+      ],
+      "hook": "When politicians don't have to compete, they don't have to listen.",
+      "structure": "The problem, a coffee-shop analogy, the thesis as a contrast, one statistic, the fix, the payoff.",
+      "method": "Analogy and contrast in an ordinary voice; the single number held back until it makes sense; stops one word short of the ask."
     },
     {
       "id": "majority",
-      "title": "Candidates should have to win a majority.",
+      "title": "Win a Majority",
       "framing": "The argument that polls best — for a viewer who wants to hear what voters actually support.",
       "approach": "The polled argument",
       "source": "Written by PAX2 on the RealClear Opinion Research national poll (Jan 2026) and the uncontested-race returns",
       "text": "Here’s a line from a national poll this January: open primaries would produce better candidates — candidates who appeal to a majority of voters, not just their base.\nSeventy-three percent of voters agreed. Democrats, Republicans and independents — majorities of all three.\nNow look at Massachusetts. In the last decade, nearly two-thirds of our state legislative races had exactly one name on the November ballot. Nobody had to appeal to a majority. Nobody had to appeal to anyone.\nQuestion 3 is the fix: one primary, every candidate on it, every voter gets a ballot, and the top finishers go to November.\nIf you think candidates should have to win over a majority, this is how you make them.\nVote yes on Question 3.",
-      "short": "Appeal to a majority",
+      "short": "Win a Majority",
       "why": [
         {
           "line": 0,
           "note": "Opens by reading the one argument for open primaries that has actually been message-tested, in the poll's own words — 73% of voters nationally agreed with it.",
-          "source": { "label": "RealClear Opinion Research, Jan 2026", "href": "/polling" }
+          "source": {
+            "label": "RealClear Opinion Research, Jan 2026",
+            "href": "/polling"
+          }
         },
         {
           "line": 1,
           "note": "Names all three groups because the support really is cross-party — 79% of Democrats, 70% of independents, 65% of Republicans — so the claim is safe wherever the video lands.",
-          "source": { "label": "National poll, by party", "href": "/polling" }
+          "source": {
+            "label": "National poll, by party",
+            "href": "/polling"
+          }
         },
         {
           "line": 2,
           "note": "Then the Massachusetts fact that makes the national argument local: 628 of the last 1,000 legislative races had one name on the ballot.",
           "research": "fact_new_yes",
           "outcome": "favorability",
-          "source": { "label": "Uncontested races 2014–2022", "href": "/polling" }
+          "source": {
+            "label": "Uncontested races 2014–2022",
+            "href": "/polling"
+          }
         },
         {
           "line": 3,
           "note": "Mechanics in one sentence, like every script here — on statewide ballots the simple versions passed and the complicated ones lost.",
-          "source": { "label": "Ballot history", "href": "/polling" }
+          "source": {
+            "label": "Ballot history",
+            "href": "/polling"
+          }
         },
         {
           "line": 5,
@@ -144,33 +174,45 @@
           "research": "explicit_vote_for",
           "outcome": "votechoice"
         }
-      ]
+      ],
+      "hook": "Candidates should have to win a majority.",
+      "structure": "A poll result, who agreed, the local fact, the mechanics, the principle, the ask.",
+      "method": "The polled argument: cross-party support first, a new local fact second, the explicit ask last."
     },
     {
       "id": "noparty",
-      "title": "Massachusetts’ biggest party is nobody’s.",
+      "title": "Nobody's Party",
       "framing": "For the unenrolled viewer — two in three voters — who’s never felt a primary was theirs.",
       "approach": "The unenrolled",
       "source": "Written by PAX2 on the Aug 2026 enrollment figures and the uncontested-race returns",
       "text": "Quick quiz. What’s the biggest political party in Massachusetts?\nIt’s not the Democrats — they’re twenty-four percent of registered voters. It’s not the Republicans — eight percent. It’s unenrolled: two out of every three of us belong to no party at all.\nBut primaries are still run party by party. You pick one ballot, you get a say in that one race — and by November, most races here have just one name left anyway.\nQuestion 3 ends the sorting. One primary, every candidate on it, every voter gets the same ballot, and the top finishers move on.\nTwo-thirds of this state never joined a party. The election should work for them too.\nVote yes on 3.",
-      "short": "Two-thirds, no party",
+      "short": "Nobody's Party",
       "why": [
         {
           "line": 0,
           "note": "A question the viewer will probably get wrong — the gap the next line fills. Curiosity openings won the randomized headline tests.",
-          "source": { "label": "Upworthy archive", "href": "/library/upworthy-archive" }
+          "source": {
+            "label": "Upworthy archive",
+            "href": "/library/upworthy-archive"
+          }
         },
         {
           "line": 1,
           "note": "The registration facts, August 2026: 66.6% unenrolled, 24.5% Democrats, 8.0% Republicans. For most viewers this is news.",
           "research": "fact_new_yes",
           "outcome": "favorability",
-          "source": { "label": "Secretary of the Commonwealth, via the Globe", "href": "/polling" }
+          "source": {
+            "label": "Secretary of the Commonwealth, via the Globe",
+            "href": "/polling"
+          }
         },
         {
           "line": 2,
           "note": "Accurate on purpose: unenrolled voters can take a party ballot in Massachusetts, so the script claims only what's true — each voter gets a say in one party's race, while most Novembers end up with one name.",
-          "source": { "label": "Uncontested races", "href": "/polling" }
+          "source": {
+            "label": "Uncontested races",
+            "href": "/polling"
+          }
         },
         {
           "line": 5,
@@ -178,35 +220,47 @@
           "research": "explicit_vote_for",
           "outcome": "votechoice"
         }
-      ]
+      ],
+      "hook": "Massachusetts’ biggest party is nobody’s.",
+      "structure": "A quiz, the surprising answer, the sorting problem, the fix, the principle, the ask.",
+      "method": "A curiosity hook and a new fact aimed at the two in three voters who belong to no party; an explicit ask."
     },
     {
       "id": "district",
-      "title": "Who ran against your rep? Probably nobody.",
+      "title": "Your District",
       "framing": "Make it local: in 2022, 106 of the 160 House districts had one name on the ballot — check yours and say so.",
       "approach": "Your district",
       "source": "Written by PAX2 on the 2022 Massachusetts House returns, district by district",
       "text": "Quick question: who ran against your state rep in the last election?\nIf you can’t remember, here’s why. In 2022, one hundred six of the one hundred sixty Massachusetts House districts had exactly one name on the ballot. Two out of three.\nMine was one of them. No debate. No one knocking on my door. The election was over before it started.\nQuestion 3 would change that: every candidate in one primary, every voter voting, and the top finishers facing off in November. Even a safe seat would have to be defended out loud.\nLook up your district. If nobody ran against your rep either, now you know what to do about it.\nVote yes on Question 3.",
-      "short": "Your own district",
+      "short": "Your District",
       "why": [
         {
           "line": 0,
           "note": "Opens with a question most viewers can't answer about their own rep — and then answers it.",
-          "source": { "label": "Upworthy archive", "href": "/library/upworthy-archive" }
+          "source": {
+            "label": "Upworthy archive",
+            "href": "/library/upworthy-archive"
+          }
         },
         {
           "line": 1,
           "note": "106 of 160, straight from the 2022 returns, said twice so it lands.",
           "research": "fact_new_yes",
           "outcome": "favorability",
-          "source": { "label": "2022 House returns, district by district", "href": "/polling" }
+          "source": {
+            "label": "2022 House returns, district by district",
+            "href": "/polling"
+          }
         },
         {
           "line": 2,
           "note": "First person, as a neighbor — plain-folks delivery is the strongest vote-choice feature in the tested ads. Before recording, check the district list and make this line true for you; if your district had a race, cut it.",
           "research": "technique_plain_folks",
           "outcome": "votechoice",
-          "source": { "label": "The 106 districts", "href": "/polling" }
+          "source": {
+            "label": "The 106 districts",
+            "href": "/polling"
+          }
         },
         {
           "line": 4,
@@ -214,33 +268,45 @@
           "research": "explicit_vote_for",
           "outcome": "votechoice"
         }
-      ]
+      ],
+      "hook": "Who ran against your rep? Probably nobody.",
+      "structure": "A question about your own rep, the 106-of-160 fact, a first-person neighbor, the fix, something to do, the ask.",
+      "method": "Local and first person, plain-folks delivery; a new fact said twice; an action before the ask."
     },
     {
       "id": "already",
-      "title": "Washington has voted this way for nearly twenty years.",
+      "title": "Twenty Years",
       "framing": "For the skeptic who’s heard the case against: concede the strongest objection, then answer it.",
       "approach": "The track record",
       "source": "Written by PAX2 on the statewide ballot history and the No side's own arguments",
       "text": "The strongest argument against Question 3 is that it could put two candidates from the same party on the November ballot.\nThat’s true. It can.\nHere’s what’s also true: in Massachusetts right now, nearly two-thirds of legislative races put ONE candidate on the November ballot. We skipped the two-of-the-same-party problem and went straight to none.\nWashington has used a top-two primary since 2008, California since 2012. Hundreds of elections. It’s not an experiment anymore — it’s just how they vote.\nAnd when two candidates from one party do face off, everyone else finally gets a say in which one wins.\nTwo names on every ballot, picked by everybody, beats one name picked for you.\nVote yes on Question 3.",
-      "short": "Twenty years of it",
+      "short": "Twenty Years",
       "why": [
         {
           "line": 0,
           "note": "Leads with the No side's best argument, stated fairly — the viewer who's already heard it knows this script isn't hiding from it.",
-          "source": { "label": "The opposition's case (WBUR)", "href": "https://www.wbur.org/news/2026/09/28/massachusetts-ballot-question-3-backers-supporters" }
+          "source": {
+            "label": "The opposition's case (WBUR)",
+            "href": "https://www.wbur.org/news/2026/09/28/massachusetts-ballot-question-3-backers-supporters"
+          }
         },
         {
           "line": 2,
           "note": "The concession flips on a fact: today's system already produces one-name Novembers — 628 of the last 1,000 races. Built as a contrast, which ran ahead on vote choice.",
           "research": "tone_contrast",
           "outcome": "votechoice",
-          "source": { "label": "Uncontested races 2014–2022", "href": "/polling" }
+          "source": {
+            "label": "Uncontested races 2014–2022",
+            "href": "/polling"
+          }
         },
         {
           "line": 3,
           "note": "The track record, from the ballot history: Washington passed it in 2004 with 59.9% and has voted that way since 2008; California passed it in 2010 with 53.7%.",
-          "source": { "label": "Ballot history", "href": "/polling" }
+          "source": {
+            "label": "Ballot history",
+            "href": "/polling"
+          }
         },
         {
           "line": 6,
@@ -248,7 +314,10 @@
           "research": "explicit_vote_for",
           "outcome": "votechoice"
         }
-      ]
+      ],
+      "hook": "Washington has voted this way for nearly twenty years.",
+      "structure": "The other side's best argument, the concession, the flip on a fact, the track record, the payoff, the ask.",
+      "method": "Concede then answer, for the viewer who has heard the case against; contrast; the record in two states; an explicit ask."
     }
   ]
 }

@@ -5,7 +5,7 @@ import { ArrowRight, MapPin, Mic } from "lucide-react"
 
 import { useDraft } from "@/components/record/draft"
 
-export type CardData = { id: string; title: string; framing: string; text: string; seconds: number; place: string; notes: { label: string; tone: "good" | "neutral" | "caution" }[] }
+export type CardData = { id: string; title: string; framing: string; structure: string; method: string; text: string; seconds: number; place: string; notes: { label: string; tone: "good" | "neutral" | "caution" }[] }
 
 /** A script's card. `compact` keeps the title, the opening lines and the length and place, for the
  *  landing's slider; the library shows the framing and the notes as well. With `onPick`, choosing
@@ -32,6 +32,12 @@ export function LibraryCard({ s, compact = false, onPick }: { s: CardData; compa
         </span>
       </span>
       {!compact && <span className="text-slate-800">{s.framing}</span>}
+      {!compact && (s.structure || s.method) && (
+        <span className="flex flex-col gap-1 text-sm text-slate-800">
+          {s.structure && <span><span className="font-medium text-pax2-blue">Structure</span> {s.structure}</span>}
+          {s.method && <span><span className="font-medium text-pax2-blue">Method</span> {s.method}</span>}
+        </span>
+      )}
       <span className="border-l-2 border-primary/30 pl-4 italic text-slate-800">“{excerpt}”</span>
       <span className={compact ? "mt-auto flex flex-wrap gap-2 border-t pt-5" : "flex flex-wrap gap-2"}>
         <span className="flex items-center gap-1.5 rounded-full bg-pax2-mist px-3 py-1 text-sm text-pax2-blue">

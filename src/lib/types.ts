@@ -33,6 +33,11 @@ export type Script = {
   framing: string
   /** The angle in two or three words, for the catalog chip. */
   approach: string
+  /** The script's beats in order, and the persuasion method behind them, as the library card says them. */
+  structure: string
+  method: string
+  /** The opening line the script was once titled by, kept for the video's title. */
+  hook: string
   text: string
   words: number
   seconds: number

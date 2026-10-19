@@ -19,6 +19,6 @@ export async function libraryCards(): Promise<CardData[]> {
     if (best != null) notes.push({ label: `Recorded ${scored.length} times so far · best Resonance ${best.toFixed(0)}`, tone: best >= 60 ? "good" : best < 40 ? "caution" : "neutral" })
     else notes.push({ label: "Not yet recorded with paid results", tone: "neutral" })
     if (prior) notes.push({ label: `Ads in this style moved vote choice about ${prior.expected.toFixed(1)} pts in tested campaigns (average ${prior.average.toFixed(1)})`, tone: "neutral" })
-    return { id: s.id, title: s.title, framing: s.framing, text: s.text, seconds: Math.round((s.words / 130) * 60), place: "Massachusetts", notes }
+    return { id: s.id, title: s.title, framing: s.framing, structure: s.structure, method: s.method, text: s.text, seconds: Math.round((s.words / 130) * 60), place: "Massachusetts", notes }
   })
 }

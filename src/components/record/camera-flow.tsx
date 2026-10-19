@@ -6,10 +6,9 @@ import { ArrowRight, CheckCircle2, Loader2, RotateCcw, Upload, Video } from "luc
 
 import { uploadUrl } from "@/app/actions"
 import { againDraft, submitOriginal, viewer } from "@/app/original-actions"
-import { FlowPage, StepBar } from "@/components/record/chrome"
+import { FlowPage } from "@/components/record/chrome"
 import { useDraft } from "@/components/record/draft"
 import { Teleprompter } from "@/components/record/teleprompter"
-import { fromEasternLocal, nextWeekdayNine, toEasternLocal } from "@/lib/post-time"
 import { RevealFx } from "@/components/reveal-fx"
 import { cn } from "@/ui/lib/utils"
 
@@ -49,7 +48,7 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
     v.src = url
   }
 
-  const send = async () => {
+  const send = async (asDraft = false) => {
     if (!clip) return
     setState("sending")
     setErr(null)
@@ -57,7 +56,8 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
       const u = await uploadUrl(clip.mime.split(";")[0])
       const r = await fetch(u.url, { method: "PUT", body: clip.blob, headers: { "Content-Type": clip.mime.split(";")[0] } })
       if (!r.ok) throw new Error(`Upload failed (${r.status})`)
-      await submitOriginal({ id: u.id, key: u.key, email: me ? undefined : email, scriptId: draft.scriptId, title: draft.title, text: draft.text, name: draft.name, role: draft.role, town: draft.town, seconds: Math.round(clip.seconds), consent: true, parent: draft.again, publishAt: draft.publishAt ?? nextWeekdayNine() })
+      const name = [draft.name, draft.lastName].map((x) => (x ?? "").trim()).filter(Boolean).join(" ") || undefined
+      await submitOriginal({ id: u.id, key: u.key, email: me ? undefined : email, scriptId: draft.scriptId, title: draft.title, text: draft.text, name, seconds: Math.round(clip.seconds), consent: true, parent: draft.again, draft: asDraft })
       update({ again: undefined })
       setState("sent")
     } catch (e) {
@@ -81,41 +81,39 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
 
   if (clip)
     return (
-      <Frame embedded={!!embedded} step={3} back={{ href: "/record/script", label: "Script" }} title="Looks good?" lead="Watch it back. Send it, or try again. There's no limit.">
+      <Frame embedded={!!embedded} step={3} back={{ href: "/record/script", label: "Script" }} title="Looks good?" lead="Watch it back. Send it, or try again.">
           <div className="grid gap-6 md:grid-cols-[280px_1fr]">
             <video src={clip.url} controls playsInline className="aspect-[9/16] w-full rounded-3xl bg-black object-cover shadow-xl" />
             <div className="flex flex-col gap-4">
               <div className="surface p-6 text-sm">
                 <p className="font-medium text-pax2-blue">{draft.title ?? "Your video"}</p>
-                <p className="text-slate-800">
-                  {Math.round(clip.seconds)} seconds · {clip.source === "recorded" ? "recorded here" : "uploaded"}
-                </p>
-                <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                  {(["name", "role", "town"] as const).map((k) => (
+                <p className="text-slate-800">{Math.round(clip.seconds)} seconds</p>
+                <ol className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-slate-800">
+                  {["Select script", "Record video", "Submit video"].map((step, i) => (
+                    <li key={step} className="flex items-center gap-1.5">
+                      <span className="tabular text-pax2-blue">{i + 1}.</span> {step}
+                    </li>
+                  ))}
+                </ol>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {(["name", "lastName"] as const).map((k) => (
                     <label key={k} className="flex flex-col gap-1">
-                      <span className="text-xs text-slate-800">{k === "name" ? "First name" : k === "role" ? "Who you are" : "Town"}</span>
+                      <span className="text-xs text-slate-800">{k === "name" ? "First name" : "Last name"}</span>
                       <input value={draft[k] ?? ""} onChange={(e) => update({ [k]: e.target.value })} className="rounded-lg border bg-pax2-mist px-3 py-2 outline-none focus:border-primary" />
                     </label>
                   ))}
                 </div>
-                <input
-                  type="datetime-local"
-                  aria-label="Post when"
-                  placeholder="Post when"
-                  value={toEasternLocal(draft.publishAt ?? nextWeekdayNine())}
-                  onChange={(e) => e.target.value && update({ publishAt: fromEasternLocal(e.target.value) })}
-                  className="mt-4 w-full rounded-lg border bg-pax2-mist px-3 py-2 outline-none focus:border-primary sm:w-auto"
-                />
-                {me === null && (
-                  <label className="mt-4 flex flex-col gap-1">
-                    <span className="text-xs text-slate-800">Email, for the link to your video</span>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-lg border bg-pax2-mist px-3 py-2 outline-none focus:border-primary" />
-                  </label>
-                )}
+                <label className="mt-4 flex flex-col gap-1">
+                  <span className="text-xs text-slate-800">Email</span>
+                  <input type="email" value={me ?? email} disabled={!!me} onChange={(e) => setEmail(e.target.value)} className="rounded-lg border bg-pax2-mist px-3 py-2 outline-none focus:border-primary disabled:text-slate-500" />
+                </label>
               </div>
               <div className="flex flex-wrap items-center gap-4">
-                <button type="button" disabled={state === "sending" || (me === null && !/^\S+@\S+\.\S+$/.test(email))} onClick={send} className="flex items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
-                  {state === "sending" ? <Loader2 className="size-4 animate-spin" /> : null} Send it <ArrowRight className="size-4" />
+                <button type="button" disabled={state === "sending" || (me === null && !/^\S+@\S+\.\S+$/.test(email))} onClick={() => send(false)} className="flex items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
+                  {state === "sending" ? <Loader2 className="size-4 animate-spin" /> : null} Save
+                </button>
+                <button type="button" disabled={state === "sending" || (me === null && !/^\S+@\S+\.\S+$/.test(email))} onClick={() => send(true)} className="rounded-full bg-pax2-blue/70 px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
+                  Draft
                 </button>
                 <button type="button" onClick={() => setClip(null)} className="flex items-center gap-2 font-medium text-primary">
                   <RotateCcw className="size-4" /> Try again
@@ -217,11 +215,8 @@ function Frame({ embedded, step, back, title, lead, children }: { embedded: bool
       </RevealFx>
     )
   return (
-    <>
-      <StepBar step={step} back={back} />
-      <FlowPage title={title} lead={lead}>
-        {children}
-      </FlowPage>
-    </>
+    <FlowPage title={title} lead={lead}>
+      {children}
+    </FlowPage>
   )
 }

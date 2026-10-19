@@ -9,6 +9,7 @@ export type Draft = {
   title?: string
   text?: string
   name?: string
+  lastName?: string
   role?: string
   town?: string
   wpm?: number
