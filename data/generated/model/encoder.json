@@ -1,16 +1,16 @@
 {
- "builtAt": "2026-10-19T03:14:29.888Z",
- "run": "20261019-022545-train",
+ "builtAt": "2026-10-19T10:25:04.588Z",
+ "run": "20261019-094112-train",
  "models": {
   "PAX2 Encoder": {
    "base": "BAAI/bge-m3",
    "hf": null,
-   "s3": "s3://nsr-embed-v2/pax2/models/20261019-022545-train/encoder/"
+   "s3": "s3://nsr-embed-v2/pax2/models/20261019-094112-train/encoder/"
   },
   "PAX2 Reranker": {
    "base": "Alibaba-NLP/gte-reranker-modernbert-base",
    "hf": null,
-   "s3": "s3://nsr-embed-v2/pax2/models/20261019-022545-train/reranker/"
+   "s3": "s3://nsr-embed-v2/pax2/models/20261019-094112-train/reranker/"
   }
  },
  "datasets": {
@@ -22,7 +22,7 @@
    "hf": "datasets/NYSgpt/pax2-shorts-training-set",
    "published": false
   },
-  "staged": "s3://nsr-embed-v2/pax2/publish/20261019-022545-train/"
+  "staged": "s3://nsr-embed-v2/pax2/publish/20261019-094112-train/"
  },
  "benchmark": {
   "task": "For each held-out short, the 20 nearest training shorts by cosine; score = the share that broke out; AUC against the short's own breakout label, pooled and within each held-out channel (weighted by the channel's shorts, channels with both classes).",
@@ -35,20 +35,20 @@
  "gates": {
   "E": {
    "rule": "pooled kNN-AUC on held-out channels at least 0.02 above stock bge-m3, and within-channel kNN-AUC not below stock",
-   "pass": false,
-   "pooledDelta": 0.01976091619463427,
-   "withinDelta": 0.015575186442579603
+   "pass": true,
+   "pooledDelta": 0.030518736237343136,
+   "withinDelta": 0.0216026904590223
   },
   "R": {
    "rule": "pooled kNN-AUC at least PAX2 Encoder's, within-channel kNN-AUC not below",
-   "pass": true
+   "pass": false
   }
  },
  "arms": {
   "stock": {
-   "pooled": 0.5508779564446094,
-   "within": 0.5437289499626359,
-   "withinUnweighted": 0.5148904131743888,
+   "pooled": 0.5775310209691764,
+   "within": 0.581904002705627,
+   "withinUnweighted": 0.6321900947347622,
    "withinChannels": 8,
    "n": 3869,
    "breakouts": 654,
@@ -57,25 +57,25 @@
      "family": "Candidates & officials",
      "n": 1220,
      "breakouts": 221,
-     "auc": 0.5368785074667428
+     "auc": 0.6436776142658496
     },
     {
      "family": "Nonpartisan media",
      "n": 463,
      "breakouts": 71,
-     "auc": 0.4624173613107215
+     "auc": 0.48620293187697616
     },
     {
      "family": "Partisan media",
      "n": 1793,
      "breakouts": 334,
-     "auc": 0.5771732751084534
+     "auc": 0.5605666665298601
     },
     {
      "family": "Reform",
      "n": 313,
      "breakouts": 20,
-     "auc": 0.4104095563139932
+     "auc": 0.4848122866894198
     },
     {
      "family": "UK",
@@ -87,7 +87,7 @@
      "family": "Voting rights",
      "n": 54,
      "breakouts": 8,
-     "auc": 0.44565217391304346
+     "auc": 0.5978260869565217
     }
    ],
    "perChannel": [
@@ -103,35 +103,35 @@
      "family": "Partisan media",
      "n": 1793,
      "breakouts": 334,
-     "auc": 0.5771732751084534
+     "auc": 0.5605666665298601
     },
     {
      "channelId": "UCSRRURbKlPf1HwPUhjmufTg",
      "family": "Nonpartisan media",
      "n": 417,
      "breakouts": 70,
-     "auc": 0.4698023878139152
+     "auc": 0.4807533964594483
     },
     {
      "channelId": "UCY-3GVY7vhOuuixr1QBMWEg",
      "family": "Candidates & officials",
      "n": 166,
      "breakouts": 33,
-     "auc": 0.47311460469355204
+     "auc": 0.5731373889268626
     },
     {
      "channelId": "UCbPojIVZdVhfBTRwj64j0Cw",
      "family": "Nonpartisan media",
      "n": 46,
      "breakouts": 1,
-     "auc": 0.4888888888888889
+     "auc": 0.9666666666666667
     },
     {
      "channelId": "UCdFZ5b8bpOLRgbOATyPRtdw",
      "family": "Reform",
      "n": 223,
      "breakouts": 20,
-     "auc": 0.45233990147783254
+     "auc": 0.46711822660098523
     },
     {
      "channelId": "UCgIuEJP3M3zg-vt5Z1UVfdg",
@@ -145,29 +145,29 @@
      "family": "Candidates & officials",
      "n": 163,
      "breakouts": 15,
-     "auc": 0.6815315315315316
+     "auc": 0.7628378378378379
     },
     {
      "channelId": "UClkO4MArT2WKWj32YDD_-Ew",
      "family": "Candidates & officials",
      "n": 891,
      "breakouts": 173,
-     "auc": 0.5306205419678941
+     "auc": 0.6486144878999147
     },
     {
      "channelId": "UCnpLmnN_7TxPdpGODs-JXxg",
      "family": "Voting rights",
      "n": 54,
      "breakouts": 8,
-     "auc": 0.44565217391304346
+     "auc": 0.5978260869565217
     }
    ],
    "gate": null
   },
   "encoder": {
-   "pooled": 0.5706388726392436,
-   "within": 0.5593041364052155,
-   "withinUnweighted": 0.5330604534859665,
+   "pooled": 0.6080497572065195,
+   "within": 0.6035066931646493,
+   "withinUnweighted": 0.634551345322169,
    "withinChannels": 8,
    "n": 3869,
    "breakouts": 654,
@@ -176,25 +176,25 @@
      "family": "Candidates & officials",
      "n": 1220,
      "breakouts": 221,
-     "auc": 0.6068489303783421
+     "auc": 0.691218367688956
     },
     {
      "family": "Nonpartisan media",
      "n": 463,
      "breakouts": 71,
-     "auc": 0.471579476861167
+     "auc": 0.5104376257545271
     },
     {
      "family": "Partisan media",
      "n": 1793,
      "breakouts": 334,
-     "auc": 0.5463343361255556
+     "auc": 0.5709133480810825
     },
     {
      "family": "Reform",
      "n": 313,
      "breakouts": 20,
-     "auc": 0.5621160409556314
+     "auc": 0.5313993174061433
     },
     {
      "family": "UK",
@@ -206,7 +206,7 @@
      "family": "Voting rights",
      "n": 54,
      "breakouts": 8,
-     "auc": 0.717391304347826
+     "auc": 0.7907608695652174
     }
    ],
    "perChannel": [
@@ -222,35 +222,35 @@
      "family": "Partisan media",
      "n": 1793,
      "breakouts": 334,
-     "auc": 0.5463343361255556
+     "auc": 0.5709133480810825
     },
     {
      "channelId": "UCSRRURbKlPf1HwPUhjmufTg",
      "family": "Nonpartisan media",
      "n": 417,
      "breakouts": 70,
-     "auc": 0.48423219431864967
+     "auc": 0.4972622478386167
     },
     {
      "channelId": "UCY-3GVY7vhOuuixr1QBMWEg",
      "family": "Candidates & officials",
      "n": 166,
      "breakouts": 33,
-     "auc": 0.5218728639781272
+     "auc": 0.6297562087035771
     },
     {
      "channelId": "UCbPojIVZdVhfBTRwj64j0Cw",
      "family": "Nonpartisan media",
      "n": 46,
      "breakouts": 1,
-     "auc": 0.12222222222222222
+     "auc": 0.6777777777777778
     },
     {
      "channelId": "UCdFZ5b8bpOLRgbOATyPRtdw",
      "family": "Reform",
      "n": 223,
      "breakouts": 20,
-     "auc": 0.5885467980295567
+     "auc": 0.4987684729064039
     },
     {
      "channelId": "UCgIuEJP3M3zg-vt5Z1UVfdg",
@@ -264,43 +264,43 @@
      "family": "Candidates & officials",
      "n": 163,
      "breakouts": 15,
-     "auc": 0.6711711711711712
+     "auc": 0.7047297297297297
     },
     {
      "channelId": "UClkO4MArT2WKWj32YDD_-Ew",
      "family": "Candidates & officials",
      "n": 891,
      "breakouts": 173,
-     "auc": 0.6127127376946238
+     "auc": 0.7064421079749464
     },
     {
      "channelId": "UCnpLmnN_7TxPdpGODs-JXxg",
      "family": "Voting rights",
      "n": 54,
      "breakouts": 8,
-     "auc": 0.717391304347826
+     "auc": 0.7907608695652174
     }
    ],
    "gate": {
     "name": "E",
     "rule": "pooled kNN-AUC on held-out channels at least 0.02 above stock bge-m3, and within-channel kNN-AUC not below stock",
     "stock": {
-     "pooled": 0.5508779564446094,
-     "within": 0.5437289499626359
+     "pooled": 0.5775310209691764,
+     "within": 0.581904002705627
     },
     "encoder": {
-     "pooled": 0.5706388726392436,
-     "within": 0.5593041364052155
+     "pooled": 0.6080497572065195,
+     "within": 0.6035066931646493
     },
-    "pooledDelta": 0.01976091619463427,
-    "withinDelta": 0.015575186442579603,
-    "pass": false
+    "pooledDelta": 0.030518736237343136,
+    "withinDelta": 0.0216026904590223,
+    "pass": true
    }
   },
   "reranker": {
-   "pooled": 0.5716511859070393,
-   "within": 0.5629214058576416,
-   "withinUnweighted": 0.5437251314667139,
+   "pooled": 0.596031598822416,
+   "within": 0.5942907127995184,
+   "withinUnweighted": 0.6039840414342879,
    "withinChannels": 8,
    "n": 3869,
    "breakouts": 654,
@@ -309,25 +309,25 @@
      "family": "Candidates & officials",
      "n": 1220,
      "breakouts": 221,
-     "auc": 0.6174319115495586
+     "auc": 0.6813397107514755
     },
     {
      "family": "Nonpartisan media",
      "n": 463,
      "breakouts": 71,
-     "auc": 0.4774360448404714
+     "auc": 0.5355166714573153
     },
     {
      "family": "Partisan media",
      "n": 1793,
      "breakouts": 334,
-     "auc": 0.5358152782851022
+     "auc": 0.5552825124254576
     },
     {
      "family": "Reform",
      "n": 313,
      "breakouts": 20,
-     "auc": 0.6436006825938566
+     "auc": 0.5745733788395905
     },
     {
      "family": "UK",
@@ -339,7 +339,7 @@
      "family": "Voting rights",
      "n": 54,
      "breakouts": 8,
-     "auc": 0.6480978260869565
+     "auc": 0.6440217391304348
     }
    ],
    "perChannel": [
@@ -355,35 +355,35 @@
      "family": "Partisan media",
      "n": 1793,
      "breakouts": 334,
-     "auc": 0.5358152782851022
+     "auc": 0.5552825124254576
     },
     {
      "channelId": "UCSRRURbKlPf1HwPUhjmufTg",
      "family": "Nonpartisan media",
      "n": 417,
      "breakouts": 70,
-     "auc": 0.48738163853437627
+     "auc": 0.5332853025936599
     },
     {
      "channelId": "UCY-3GVY7vhOuuixr1QBMWEg",
      "family": "Candidates & officials",
      "n": 166,
      "breakouts": 33,
-     "auc": 0.44782410571884257
+     "auc": 0.6364775575301891
     },
     {
      "channelId": "UCbPojIVZdVhfBTRwj64j0Cw",
      "family": "Nonpartisan media",
      "n": 46,
      "breakouts": 1,
-     "auc": 0.24444444444444444
+     "auc": 0.5666666666666667
     },
     {
      "channelId": "UCdFZ5b8bpOLRgbOATyPRtdw",
      "family": "Reform",
      "n": 223,
      "breakouts": 20,
-     "auc": 0.6330049261083743
+     "auc": 0.5299261083743843
     },
     {
      "channelId": "UCgIuEJP3M3zg-vt5Z1UVfdg",
@@ -397,21 +397,21 @@
      "family": "Candidates & officials",
      "n": 163,
      "breakouts": 15,
-     "auc": 0.7126126126126127
+     "auc": 0.6725225225225225
     },
     {
      "channelId": "UClkO4MArT2WKWj32YDD_-Ew",
      "family": "Candidates & officials",
      "n": 891,
      "breakouts": 173,
-     "auc": 0.6406202199430016
+     "auc": 0.6936899222309885
     },
     {
      "channelId": "UCnpLmnN_7TxPdpGODs-JXxg",
      "family": "Voting rights",
      "n": 54,
      "breakouts": 8,
-     "auc": 0.6480978260869565
+     "auc": 0.6440217391304348
     }
    ],
    "gate": {
@@ -419,16 +419,16 @@
     "rule": "pooled kNN-AUC at least PAX2 Encoder's, within-channel kNN-AUC not below",
     "base": {
      "arm": "encoder",
-     "pooled": 0.5706388726392436,
-     "within": 0.5593041364052155
+     "pooled": 0.6080497572065195,
+     "within": 0.6035066931646493
     },
     "reranker": {
-     "pooled": 0.5716511859070393,
-     "within": 0.5629214058576416
+     "pooled": 0.596031598822416,
+     "within": 0.5942907127995184
     },
-    "pass": true
+    "pass": false
    }
   }
  },
- "costUsd": 1.33
+ "costUsd": 1.4
 }
