@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, FilePen, Flag, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, Rocket, Search, Send, Settings, Target, TrendingUp, Tv, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, FilePen, Flag, FlaskConical, GanttChart, Gauge, GitBranch, Hammer, House, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Radio, RefreshCw, Rocket, Search, Send, Settings, Target, TrendingUp, Tv, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { RevealFx } from "@/components/reveal-fx"
@@ -32,8 +32,10 @@ const WIP = [
   { href: "/feature-lift", label: "Feature lift", icon: TrendingUp },
   { href: "/velocity-tracker", label: "Velocity", icon: Activity },
   { href: "/live-tracking", label: "Live tracking", icon: Radio },
+  { href: "/loop", label: "Loop", icon: RefreshCw },
   { href: "/patterns", label: "Patterns", icon: ChartColumn },
   { href: "/graph", label: "Graph", icon: Workflow },
+  { href: "/flow", label: "Flow", icon: GitBranch },
   { href: "/project-management", label: "Project Management", icon: GanttChart },
   { href: "/endgame", label: "Endgame", icon: Flag },
   { href: "/ml", label: "ML", icon: Brain },
@@ -78,8 +80,10 @@ const TITLES: [string, string][] = [
   ["/feature-lift", "Feature lift"],
   ["/velocity-tracker", "Velocity"],
   ["/live-tracking", "Live tracking"],
+  ["/loop", "Loop"],
   ["/patterns", "Patterns"],
   ["/graph", "Graph"],
+  ["/flow", "Flow"],
   ["/endgame", "Endgame"],
   ["/ml", "ML"],
   ["/tags", "Tags"],
@@ -186,8 +190,9 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
   }
   const active = (href: string) => (href === "/scoring" ? path === "/scoring" : path.startsWith(href))
   // The front door (landing, record entry, sign-in) is full bleed; the recording flow, from /recording on, sits in the shell.
-  const home = path === "/"
-  if (path === "/record" || path.startsWith("/sign"))
+  // /signup and /signin are the landing's first screen with a form in place of the hero, sidebar and all.
+  const home = path === "/" || path === "/signup" || path === "/signin"
+  if (path === "/record" || (path.startsWith("/sign") && !home))
     return (
       <div className="min-h-dvh bg-pax2-mist">
         <RevealFx key={path} translateY={4}>
