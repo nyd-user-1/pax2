@@ -1,6 +1,6230 @@
 {
+ "builtAt": "2026-10-19T02:25:17Z",
  "name": "PAX2 Classifier",
  "version": "var-2",
- "status": "pending: scripts/classifier/when-captions-land.sh replaces this file with the trained model when the caption run's priority families land",
- "gates": { "transcript": { "passed": false } }
+ "method": "L2 logistic regression (lambda 2.0 on standardized features, intercept free) on 18455 settled shorts from 64 channels, 3412 with a transcript; validated leave-one-channel-out and on a time split at 2026-07-01.",
+ "run": "model/v2/20261019T022133Z/",
+ "rows": {
+  "trainingSet": 18455,
+  "withTranscript": 3412
+ },
+ "metadata": {
+  "version": "var-2-metadata",
+  "method": "L2 logistic regression (lambda 2.0 on standardized features, intercept free) on 18455 settled shorts from 64 channels, 3412 with a transcript; validated leave-one-channel-out and on a time split at 2026-07-01.",
+  "target": "breakout: lifetime views at least 3x the channel's median of settled shorts",
+  "n": 18455,
+  "positives": 2739,
+  "baseRate": 0.1484,
+  "intercept": -2.2009,
+  "features": [
+   {
+    "key": "question",
+    "label": "Title asks a question",
+    "kind": "binary",
+    "coef": -0.0604,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.128
+   },
+   {
+    "key": "exclaim",
+    "label": "Exclamation mark in the title",
+    "kind": "binary",
+    "coef": -0.146,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.058
+   },
+   {
+    "key": "number",
+    "label": "A number in the title",
+    "kind": "binary",
+    "coef": -0.1114,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.082
+   },
+   {
+    "key": "firstPerson",
+    "label": "First person in the title",
+    "kind": "binary",
+    "coef": 0.1864,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.049
+   },
+   {
+    "key": "you",
+    "label": "Addresses the viewer",
+    "kind": "binary",
+    "coef": -0.0232,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.079
+   },
+   {
+    "key": "caps",
+    "label": "A word in all caps",
+    "kind": "binary",
+    "coef": 0.2519,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.237
+   },
+   {
+    "key": "anger",
+    "label": "Combative words in the title",
+    "kind": "binary",
+    "coef": 0.2619,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.048
+   },
+   {
+    "key": "quote",
+    "label": "Quotation in the title",
+    "kind": "binary",
+    "coef": -0.1167,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.074
+   },
+   {
+    "key": "shortTitle",
+    "label": "Title of six words or fewer",
+    "kind": "binary",
+    "coef": -0.0666,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.316
+   },
+   {
+    "key": "longTitle",
+    "label": "Title of fifteen words or more",
+    "kind": "binary",
+    "coef": -0.1429,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.089
+   },
+   {
+    "key": "emoji",
+    "label": "Emoji in the title",
+    "kind": "binary",
+    "coef": 0.658,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.141
+   },
+   {
+    "key": "hashtagTitle",
+    "label": "Hashtag in the title",
+    "kind": "binary",
+    "coef": 0.0078,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.074
+   },
+   {
+    "key": "trump",
+    "label": "Names Trump",
+    "kind": "binary",
+    "coef": 0.1622,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.175
+   },
+   {
+    "key": "titleWords",
+    "label": "Title length (log words)",
+    "kind": "continuous",
+    "coef": 0.0543,
+    "mean": 2.182492,
+    "sd": 0.423004,
+    "prevalence": null
+   },
+   {
+    "key": "cta",
+    "label": "Call to action in the description",
+    "kind": "binary",
+    "coef": 0.2013,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.191
+   },
+   {
+    "key": "link",
+    "label": "Link in the description",
+    "kind": "binary",
+    "coef": 0.2062,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.321
+   },
+   {
+    "key": "noDescription",
+    "label": "No description",
+    "kind": "binary",
+    "coef": -0.7962,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.282
+   },
+   {
+    "key": "descWords",
+    "label": "Description length (log words)",
+    "kind": "continuous",
+    "coef": -0.3693,
+    "mean": 1.834621,
+    "sd": 1.917642,
+    "prevalence": null
+   },
+   {
+    "key": "tags",
+    "label": "Has tags",
+    "kind": "binary",
+    "coef": 0.6682,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.534
+   },
+   {
+    "key": "tagCount",
+    "label": "Tag count (log)",
+    "kind": "continuous",
+    "coef": -0.3107,
+    "mean": 1.36166,
+    "sd": 1.349929,
+    "prevalence": null
+   },
+   {
+    "key": "under20",
+    "label": "20 seconds or shorter",
+    "kind": "binary",
+    "coef": 0.5856,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.089
+   },
+   {
+    "key": "under35",
+    "label": "35 seconds or shorter",
+    "kind": "binary",
+    "coef": 0.2147,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.237
+   },
+   {
+    "key": "over60",
+    "label": "Longer than a minute",
+    "kind": "binary",
+    "coef": -0.0758,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.475
+   },
+   {
+    "key": "logDuration",
+    "label": "Length (log seconds)",
+    "kind": "continuous",
+    "coef": 0.1951,
+    "mean": 4.029476,
+    "sd": 0.659795,
+    "prevalence": null
+   },
+   {
+    "key": "weekend",
+    "label": "Posted on a weekend",
+    "kind": "binary",
+    "coef": 0.2297,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.19
+   },
+   {
+    "key": "morning",
+    "label": "Posted 6 to 11am Eastern",
+    "kind": "binary",
+    "coef": 0.0048,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.153
+   },
+   {
+    "key": "evening",
+    "label": "Posted 6 to 11pm Eastern",
+    "kind": "binary",
+    "coef": 0.0462,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.306
+   },
+   {
+    "key": "night",
+    "label": "Posted midnight to 5am Eastern",
+    "kind": "binary",
+    "coef": -0.0952,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.011
+   },
+   {
+    "key": "logMedian",
+    "label": "Channel size (log median views)",
+    "kind": "continuous",
+    "coef": 0.2589,
+    "mean": 4.357161,
+    "sd": 0.874697,
+    "prevalence": null
+   },
+   {
+    "key": "family:Reform",
+    "label": "Reform",
+    "kind": "family",
+    "coef": 0.7002,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.065
+   },
+   {
+    "key": "family:Voting rights",
+    "label": "Voting rights",
+    "kind": "family",
+    "coef": -0.0488,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.044
+   },
+   {
+    "key": "family:Nonpartisan media",
+    "label": "Nonpartisan media",
+    "kind": "family",
+    "coef": 0.5894,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.079
+   },
+   {
+    "key": "family:Candidates & officials",
+    "label": "Candidates & officials",
+    "kind": "family",
+    "coef": 0.496,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.268
+   },
+   {
+    "key": "family:Partisan media",
+    "label": "Partisan media",
+    "kind": "family",
+    "coef": -0.6749,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.539
+   },
+   {
+    "key": "family:UK",
+    "label": "UK",
+    "kind": "family",
+    "coef": -1.0619,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.005
+   }
+  ],
+  "metrics": {
+   "leaveOneChannelOut": {
+    "auc": 0.604,
+    "aucChannelOnly": 0.556,
+    "withinChannelAuc": 0.55,
+    "withinChannelAucChannelOnly": 0.5,
+    "topDecileRate": 0.212,
+    "topDecileLift": 1.43,
+    "bottomDecileRate": 0.076,
+    "deciles": [
+     {
+      "decile": 1,
+      "n": 1845,
+      "predicted": 0.298,
+      "observed": 0.212
+     },
+     {
+      "decile": 2,
+      "n": 1846,
+      "predicted": 0.232,
+      "observed": 0.202
+     },
+     {
+      "decile": 3,
+      "n": 1845,
+      "predicted": 0.195,
+      "observed": 0.198
+     },
+     {
+      "decile": 4,
+      "n": 1846,
+      "predicted": 0.165,
+      "observed": 0.177
+     },
+     {
+      "decile": 5,
+      "n": 1845,
+      "predicted": 0.143,
+      "observed": 0.164
+     },
+     {
+      "decile": 6,
+      "n": 1846,
+      "predicted": 0.126,
+      "observed": 0.127
+     },
+     {
+      "decile": 7,
+      "n": 1845,
+      "predicted": 0.112,
+      "observed": 0.12
+     },
+     {
+      "decile": 8,
+      "n": 1846,
+      "predicted": 0.098,
+      "observed": 0.115
+     },
+     {
+      "decile": 9,
+      "n": 1845,
+      "predicted": 0.081,
+      "observed": 0.093
+     },
+     {
+      "decile": 10,
+      "n": 1846,
+      "predicted": 0.061,
+      "observed": 0.076
+     }
+    ],
+    "withinChannel": [
+     {
+      "channel": "Brian Tyler Cohen",
+      "n": 1793,
+      "auc": 0.551
+     },
+     {
+      "channel": "Turning Point USA",
+      "n": 1684,
+      "auc": 0.586
+     },
+     {
+      "channel": "Ben Shapiro",
+      "n": 1584,
+      "auc": 0.59
+     },
+     {
+      "channel": "Benny Johnson",
+      "n": 1342,
+      "auc": 0.561
+     },
+     {
+      "channel": "PragerU",
+      "n": 1224,
+      "auc": 0.538
+     },
+     {
+      "channel": "MeidasTouch",
+      "n": 976,
+      "auc": 0.601
+     },
+     {
+      "channel": "The Democrats",
+      "n": 891,
+      "auc": 0.623
+     },
+     {
+      "channel": "Jubilee",
+      "n": 841,
+      "auc": 0.561
+     },
+     {
+      "channel": "Pod Save America",
+      "n": 798,
+      "auc": 0.49
+     },
+     {
+      "channel": "Abdul El-Sayed",
+      "n": 633,
+      "auc": 0.487
+     },
+     {
+      "channel": "The Daily Wire",
+      "n": 541,
+      "auc": 0.577
+     },
+     {
+      "channel": "Vivek Ramaswamy",
+      "n": 511,
+      "auc": 0.622
+     },
+     {
+      "channel": "Cory Booker",
+      "n": 461,
+      "auc": 0.511
+     },
+     {
+      "channel": "The Free Press",
+      "n": 417,
+      "auc": 0.593
+     },
+     {
+      "channel": "James Talarico",
+      "n": 415,
+      "auc": 0.467
+     },
+     {
+      "channel": "Brennan Center for Justice",
+      "n": 404,
+      "auc": 0.461
+     },
+     {
+      "channel": "The Hometown Holler",
+      "n": 275,
+      "auc": 0.542
+     },
+     {
+      "channel": "Sherrod Brown",
+      "n": 260,
+      "auc": 0.449
+     },
+     {
+      "channel": "JB Pritzker",
+      "n": 223,
+      "auc": 0.421
+     },
+     {
+      "channel": "No Labels",
+      "n": 223,
+      "auc": 0.499
+     },
+     {
+      "channel": "Democracy Forward",
+      "n": 211,
+      "auc": 0.546
+     },
+     {
+      "channel": "Congresswoman Nancy Mace",
+      "n": 204,
+      "auc": 0.486
+     },
+     {
+      "channel": "Bernie Sanders",
+      "n": 200,
+      "auc": 0.519
+     },
+     {
+      "channel": "Ro Khanna",
+      "n": 190,
+      "auc": 0.639
+     },
+     {
+      "channel": "Voters Not Politicians",
+      "n": 185,
+      "auc": 0.405
+     },
+     {
+      "channel": "Gavin Newsom",
+      "n": 166,
+      "auc": 0.544
+     },
+     {
+      "channel": "Mallory McMorrow",
+      "n": 163,
+      "auc": 0.502
+     },
+     {
+      "channel": "Mary Peltola",
+      "n": 159,
+      "auc": 0.499
+     },
+     {
+      "channel": "Pete Buttigieg",
+      "n": 155,
+      "auc": 0.531
+     },
+     {
+      "channel": "Rep Maxwell Alejandro Frost",
+      "n": 112,
+      "auc": 0.627
+     }
+    ],
+    "perFamily": [
+     {
+      "family": "Candidates & officials",
+      "n": 4950,
+      "baseRate": 0.166,
+      "auc": 0.543
+     },
+     {
+      "family": "Nonpartisan media",
+      "n": 1453,
+      "baseRate": 0.196,
+      "auc": 0.561
+     },
+     {
+      "family": "Partisan media",
+      "n": 9942,
+      "baseRate": 0.141,
+      "auc": 0.63
+     },
+     {
+      "family": "Reform",
+      "n": 1196,
+      "baseRate": 0.132,
+      "auc": 0.465
+     },
+     {
+      "family": "UK",
+      "n": 98,
+      "baseRate": 0.01,
+      "auc": 0.381
+     },
+     {
+      "family": "Voting rights",
+      "n": 816,
+      "baseRate": 0.08,
+      "auc": 0.438
+     }
+    ],
+    "bySegment": {
+     "withTranscript": {
+      "n": 3412,
+      "baseRate": 0.154,
+      "auc": 0.592,
+      "withinChannelAuc": 0.526
+     },
+     "withoutTranscript": {
+      "n": 15043,
+      "baseRate": 0.147,
+      "auc": 0.608,
+      "withinChannelAuc": 0.555
+     }
+    }
+   },
+   "timeSplit": {
+    "cut": "2026-07-01",
+    "train": 13617,
+    "test": 4838,
+    "testBaseRate": 0.126,
+    "auc": 0.569
+   }
+  },
+  "checks": [
+   {
+    "id": "vqojtbL7Gqs",
+    "input": {
+     "title": "The History of Dueling in the United States",
+     "description": "Dueling was once common in the United States. Here\u2019s how states helped change that. Visit the link below to sign up to receive the free State Court Report newsletter and learn more about what's happening in state courts.\n\nhttps://bit.ly/3RinoZG",
+     "tags": [],
+     "durationSec": 76,
+     "published": "2025-04-15T18:13:06Z",
+     "group": "voting-rights",
+     "channelMedian": 1160
+    },
+    "transcript": true,
+    "p": 0.095396
+   },
+   {
+    "id": "qym5hK52LQI",
+    "input": {
+     "title": "Why Aren't Young Men Reading in 2025?",
+     "description": "Why are young men and boys not reading in America in 2025?\n\nShilo Brooks: \u201cI suspect there\u2019s plenty of trash that they\u2019re willing to ingest. But what they\u2019re reading are ephemeral things rather than enduring things.\u201d\n\nShilo Brooks wants to save men from despair. His prescription? Books.\n\nThis is the driving vision of the new podcast he just launched with The Free Press called Old School, where he talks to guests about the books that shaped their lives.\n\nGet it now on Spotify, Apple podcasts, and YouTube.",
+     "tags": [],
+     "durationSec": 78,
+     "published": "2025-10-31T16:20:08Z",
+     "group": "media-nonpartisan",
+     "channelMedian": 9068
+    },
+    "transcript": true,
+    "p": 0.110486
+   },
+   {
+    "id": "K8XPVwhiqMg",
+    "input": {
+     "title": "A bipartisan fiscal commission could finally force action",
+     "description": "America\u2019s debt keeps climbing\u2014now over $31 trillion. Lawmakers in both parties think a bipartisan fiscal commission could finally force action\u2014read the story at NoLabels.org/The-Latest and let us know what you think.",
+     "tags": [],
+     "durationSec": 49,
+     "published": "2026-03-19T17:31:46Z",
+     "group": "reform",
+     "channelMedian": 1273
+    },
+    "transcript": true,
+    "p": 0.12956
+   },
+   {
+    "id": "pRzWL_pH_ZI",
+    "input": {
+     "title": "Do you believe in aliens? #aliens #stevenspielberg #filmtok #thesplit #jubilee",
+     "description": "Hey you \ud83d\udc48 Wanna be in a Jubilee video? https://bit.ly/be-in-a-video\n\nLET\u2019S BE FRIENDS\nInstagram: https://www.instagram.com/jubileemedia/\nTikTok: https://www.tiktok.com/@jubilee?lang=en\nWebsite: https://www.jubileemedia.com\n\nOUR LOVE + DATING CHANNEL \ud83c\udf51\nYouTube: https://www.youtube.com/@lovecommanectar\nInstagram: https://www.instagram.com/lovecommanectar  \nNectar app: https://lovecommanectar.co/m/download-nectar\n\nARE YOU A BRAND? WANNA WORK WITH US?\nEmail partnerships@jubileemedia.com\n\nFEATURING \n\n\nTIMECODES\n00:00 Intro",
+     "tags": [
+      "jubilee",
+      "jubilee media",
+      "jubilee project",
+      "middle ground",
+      "spectrum",
+      "odd man out",
+      "versus 1",
+      "embrace empathy",
+      "live deeper",
+      "love language",
+      "blind devotion",
+      "Odd One Out",
+      "Game Show",
+      "Dating Show",
+      "Nectar",
+      "Ask Me Anything",
+      "Gen Z",
+      "Millennial",
+      "loveprint",
+      "jason y lee"
+     ],
+     "durationSec": 76,
+     "published": "2026-07-09T18:00:13Z",
+     "group": "media-nonpartisan",
+     "channelMedian": 44999
+    },
+    "transcript": true,
+    "p": 0.167908
+   },
+   {
+    "id": "D6kGj4LdBh8",
+    "input": {
+     "title": "@CrainAndCone takes on Washington \ud83c\uddfa\ud83c\uddf8\ud83c\udfc8",
+     "description": "",
+     "tags": [],
+     "durationSec": 44,
+     "published": "2025-04-15T15:34:49Z",
+     "group": "media-R",
+     "channelMedian": 28551
+    },
+    "transcript": false,
+    "p": 0.076144
+   },
+   {
+    "id": "Q_okD3_gA0U",
+    "input": {
+     "title": "Well said Franklin! \ud83e\udd0c \ud83d\ude2e\u200d\ud83d\udca8",
+     "description": "",
+     "tags": [],
+     "durationSec": 45,
+     "published": "2025-10-04T19:00:22Z",
+     "group": "media-R",
+     "channelMedian": 12145.5
+    },
+    "transcript": false,
+    "p": 0.074444
+   },
+   {
+    "id": "AYtA2AllGLE",
+    "input": {
+     "title": "Does Location Determine a Baby\u2019s Worth?",
+     "description": "#charliekirk #2026 #america #politics #debate #abortiondebate #trending",
+     "tags": [
+      "turning point usa",
+      "turning point",
+      "tpusa",
+      "Charlie kirk",
+      "viral",
+      "trending"
+     ],
+     "durationSec": 62,
+     "published": "2026-03-15T22:00:08Z",
+     "group": "media-R",
+     "channelMedian": 131371.5
+    },
+    "transcript": false,
+    "p": 0.156166
+   },
+   {
+    "id": "g2qKqqijkmU",
+    "input": {
+     "title": "Happy 250th Birthday, America!",
+     "description": "250 years ago, our Founders built something new: a nation governed by the people, endowed with the unalienable rights to Life, Liberty, and the Pursuit of Happiness. \n\nThe work toward a \"more perfect union\" is far from finished. At 250, it's just beginning. It's on all of us to keep it alive. \ud83c\uddfa\ud83c\uddf8",
+     "tags": [],
+     "durationSec": 37,
+     "published": "2026-07-04T13:30:42Z",
+     "group": "candidate-D",
+     "channelMedian": 1898
+    },
+    "transcript": false,
+    "p": 0.082822
+   }
+  ]
+ },
+ "transcript": {
+  "version": "var-2-tfidf",
+  "method": "L2 logistic regression (lambda 2.0 on standardized features, intercept free) on 18455 settled shorts from 64 channels, 3412 with a transcript; validated leave-one-channel-out and on a time split at 2026-07-01.",
+  "target": "breakout: lifetime views at least 3x the channel's median of settled shorts",
+  "n": 18455,
+  "positives": 2739,
+  "baseRate": 0.1484,
+  "intercept": -2.7251,
+  "features": [
+   {
+    "key": "question",
+    "label": "Title asks a question",
+    "kind": "binary",
+    "coef": -0.0262,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.128
+   },
+   {
+    "key": "exclaim",
+    "label": "Exclamation mark in the title",
+    "kind": "binary",
+    "coef": -0.1099,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.058
+   },
+   {
+    "key": "number",
+    "label": "A number in the title",
+    "kind": "binary",
+    "coef": -0.1827,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.082
+   },
+   {
+    "key": "firstPerson",
+    "label": "First person in the title",
+    "kind": "binary",
+    "coef": 0.2119,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.049
+   },
+   {
+    "key": "you",
+    "label": "Addresses the viewer",
+    "kind": "binary",
+    "coef": 0.0396,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.079
+   },
+   {
+    "key": "caps",
+    "label": "A word in all caps",
+    "kind": "binary",
+    "coef": 0.2275,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.237
+   },
+   {
+    "key": "anger",
+    "label": "Combative words in the title",
+    "kind": "binary",
+    "coef": 0.3013,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.048
+   },
+   {
+    "key": "quote",
+    "label": "Quotation in the title",
+    "kind": "binary",
+    "coef": -0.1575,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.074
+   },
+   {
+    "key": "shortTitle",
+    "label": "Title of six words or fewer",
+    "kind": "binary",
+    "coef": -0.0638,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.316
+   },
+   {
+    "key": "longTitle",
+    "label": "Title of fifteen words or more",
+    "kind": "binary",
+    "coef": -0.1313,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.089
+   },
+   {
+    "key": "emoji",
+    "label": "Emoji in the title",
+    "kind": "binary",
+    "coef": 0.6753,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.141
+   },
+   {
+    "key": "hashtagTitle",
+    "label": "Hashtag in the title",
+    "kind": "binary",
+    "coef": -0.2308,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.074
+   },
+   {
+    "key": "trump",
+    "label": "Names Trump",
+    "kind": "binary",
+    "coef": 0.1296,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.175
+   },
+   {
+    "key": "titleWords",
+    "label": "Title length (log words)",
+    "kind": "continuous",
+    "coef": 0.0496,
+    "mean": 2.182492,
+    "sd": 0.423004,
+    "prevalence": null
+   },
+   {
+    "key": "cta",
+    "label": "Call to action in the description",
+    "kind": "binary",
+    "coef": 0.2192,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.191
+   },
+   {
+    "key": "link",
+    "label": "Link in the description",
+    "kind": "binary",
+    "coef": 0.1676,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.321
+   },
+   {
+    "key": "noDescription",
+    "label": "No description",
+    "kind": "binary",
+    "coef": -0.7705,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.282
+   },
+   {
+    "key": "descWords",
+    "label": "Description length (log words)",
+    "kind": "continuous",
+    "coef": -0.3514,
+    "mean": 1.834621,
+    "sd": 1.917642,
+    "prevalence": null
+   },
+   {
+    "key": "tags",
+    "label": "Has tags",
+    "kind": "binary",
+    "coef": 0.6735,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.534
+   },
+   {
+    "key": "tagCount",
+    "label": "Tag count (log)",
+    "kind": "continuous",
+    "coef": -0.3068,
+    "mean": 1.36166,
+    "sd": 1.349929,
+    "prevalence": null
+   },
+   {
+    "key": "under20",
+    "label": "20 seconds or shorter",
+    "kind": "binary",
+    "coef": 0.5833,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.089
+   },
+   {
+    "key": "under35",
+    "label": "35 seconds or shorter",
+    "kind": "binary",
+    "coef": 0.1729,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.237
+   },
+   {
+    "key": "over60",
+    "label": "Longer than a minute",
+    "kind": "binary",
+    "coef": -0.0663,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.475
+   },
+   {
+    "key": "logDuration",
+    "label": "Length (log seconds)",
+    "kind": "continuous",
+    "coef": 0.1413,
+    "mean": 4.029476,
+    "sd": 0.659795,
+    "prevalence": null
+   },
+   {
+    "key": "weekend",
+    "label": "Posted on a weekend",
+    "kind": "binary",
+    "coef": 0.2325,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.19
+   },
+   {
+    "key": "morning",
+    "label": "Posted 6 to 11am Eastern",
+    "kind": "binary",
+    "coef": 0.0598,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.153
+   },
+   {
+    "key": "evening",
+    "label": "Posted 6 to 11pm Eastern",
+    "kind": "binary",
+    "coef": 0.0672,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.306
+   },
+   {
+    "key": "night",
+    "label": "Posted midnight to 5am Eastern",
+    "kind": "binary",
+    "coef": -0.1035,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.011
+   },
+   {
+    "key": "logMedian",
+    "label": "Channel size (log median views)",
+    "kind": "continuous",
+    "coef": 0.3203,
+    "mean": 4.357161,
+    "sd": 0.874697,
+    "prevalence": null
+   },
+   {
+    "key": "family:Reform",
+    "label": "Reform",
+    "kind": "family",
+    "coef": -0.0507,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.065
+   },
+   {
+    "key": "family:Voting rights",
+    "label": "Voting rights",
+    "kind": "family",
+    "coef": -0.5619,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.044
+   },
+   {
+    "key": "family:Nonpartisan media",
+    "label": "Nonpartisan media",
+    "kind": "family",
+    "coef": -0.0155,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.079
+   },
+   {
+    "key": "family:Candidates & officials",
+    "label": "Candidates & officials",
+    "kind": "family",
+    "coef": 1.2135,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.268
+   },
+   {
+    "key": "family:Partisan media",
+    "label": "Partisan media",
+    "kind": "family",
+    "coef": -0.0041,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.539
+   },
+   {
+    "key": "family:UK",
+    "label": "UK",
+    "kind": "family",
+    "coef": -0.5812,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.005
+   },
+   {
+    "key": "noTranscript",
+    "label": "No transcript",
+    "kind": "binary",
+    "coef": -0.0378,
+    "mean": 0.0,
+    "sd": 1.0,
+    "prevalence": 0.815
+   },
+   {
+    "key": "tf:in the",
+    "label": "Says \u201cin the\u201d",
+    "kind": "continuous",
+    "coef": -0.0087,
+    "mean": 0.007537,
+    "sd": 0.025599,
+    "prevalence": null
+   },
+   {
+    "key": "tf:of the",
+    "label": "Says \u201cof the\u201d",
+    "kind": "continuous",
+    "coef": -0.0084,
+    "mean": 0.007845,
+    "sd": 0.026809,
+    "prevalence": null
+   },
+   {
+    "key": "tf:if",
+    "label": "Says \u201cif\u201d",
+    "kind": "continuous",
+    "coef": -0.0071,
+    "mean": 0.00767,
+    "sd": 0.026407,
+    "prevalence": null
+   },
+   {
+    "key": "tf:can",
+    "label": "Says \u201ccan\u201d",
+    "kind": "continuous",
+    "coef": -0.0199,
+    "mean": 0.00782,
+    "sd": 0.027722,
+    "prevalence": null
+   },
+   {
+    "key": "tf:or",
+    "label": "Says \u201cor\u201d",
+    "kind": "continuous",
+    "coef": -0.0377,
+    "mean": 0.007297,
+    "sd": 0.025915,
+    "prevalence": null
+   },
+   {
+    "key": "tf:know",
+    "label": "Says \u201cknow\u201d",
+    "kind": "continuous",
+    "coef": -0.0388,
+    "mean": 0.007581,
+    "sd": 0.026958,
+    "prevalence": null
+   },
+   {
+    "key": "tf:from",
+    "label": "Says \u201cfrom\u201d",
+    "kind": "continuous",
+    "coef": 0.0444,
+    "mean": 0.007376,
+    "sd": 0.026714,
+    "prevalence": null
+   },
+   {
+    "key": "tf:as",
+    "label": "Says \u201cas\u201d",
+    "kind": "continuous",
+    "coef": -0.0209,
+    "mean": 0.007602,
+    "sd": 0.027778,
+    "prevalence": null
+   },
+   {
+    "key": "tf:because",
+    "label": "Says \u201cbecause\u201d",
+    "kind": "continuous",
+    "coef": -0.0104,
+    "mean": 0.006922,
+    "sd": 0.024806,
+    "prevalence": null
+   },
+   {
+    "key": "tf:was",
+    "label": "Says \u201cwas\u201d",
+    "kind": "continuous",
+    "coef": -0.0482,
+    "mean": 0.008503,
+    "sd": 0.03095,
+    "prevalence": null
+   },
+   {
+    "key": "tf:who",
+    "label": "Says \u201cwho\u201d",
+    "kind": "continuous",
+    "coef": -0.0256,
+    "mean": 0.007406,
+    "sd": 0.027363,
+    "prevalence": null
+   },
+   {
+    "key": "tf:our",
+    "label": "Says \u201cour\u201d",
+    "kind": "continuous",
+    "coef": 0.0086,
+    "mean": 0.008432,
+    "sd": 0.031974,
+    "prevalence": null
+   },
+   {
+    "key": "tf:that's",
+    "label": "Says \u201cthat's\u201d",
+    "kind": "continuous",
+    "coef": -0.0254,
+    "mean": 0.006897,
+    "sd": 0.025515,
+    "prevalence": null
+   },
+   {
+    "key": "tf:one",
+    "label": "Says \u201cone\u201d",
+    "kind": "continuous",
+    "coef": 0.0424,
+    "mean": 0.006798,
+    "sd": 0.025719,
+    "prevalence": null
+   },
+   {
+    "key": "tf:don't",
+    "label": "Says \u201cdon't\u201d",
+    "kind": "continuous",
+    "coef": 0.0772,
+    "mean": 0.006986,
+    "sd": 0.026135,
+    "prevalence": null
+   },
+   {
+    "key": "tf:think",
+    "label": "Says \u201cthink\u201d",
+    "kind": "continuous",
+    "coef": -0.1153,
+    "mean": 0.007175,
+    "sd": 0.027063,
+    "prevalence": null
+   },
+   {
+    "key": "tf:more",
+    "label": "Says \u201cmore\u201d",
+    "kind": "continuous",
+    "coef": -0.001,
+    "mean": 0.006962,
+    "sd": 0.026686,
+    "prevalence": null
+   },
+   {
+    "key": "tf:an",
+    "label": "Says \u201can\u201d",
+    "kind": "continuous",
+    "coef": 0.1101,
+    "mean": 0.006496,
+    "sd": 0.024666,
+    "prevalence": null
+   },
+   {
+    "key": "tf:when",
+    "label": "Says \u201cwhen\u201d",
+    "kind": "continuous",
+    "coef": 0.0086,
+    "mean": 0.006499,
+    "sd": 0.024804,
+    "prevalence": null
+   },
+   {
+    "key": "tf:right",
+    "label": "Says \u201cright\u201d",
+    "kind": "continuous",
+    "coef": -0.0344,
+    "mean": 0.006605,
+    "sd": 0.025388,
+    "prevalence": null
+   },
+   {
+    "key": "tf:their",
+    "label": "Says \u201ctheir\u201d",
+    "kind": "continuous",
+    "coef": -0.0157,
+    "mean": 0.006903,
+    "sd": 0.027428,
+    "prevalence": null
+   },
+   {
+    "key": "tf:out",
+    "label": "Says \u201cout\u201d",
+    "kind": "continuous",
+    "coef": -0.0162,
+    "mean": 0.006295,
+    "sd": 0.02513,
+    "prevalence": null
+   },
+   {
+    "key": "tf:has",
+    "label": "Says \u201chas\u201d",
+    "kind": "continuous",
+    "coef": -0.0141,
+    "mean": 0.006701,
+    "sd": 0.026585,
+    "prevalence": null
+   },
+   {
+    "key": "tf:there",
+    "label": "Says \u201cthere\u201d",
+    "kind": "continuous",
+    "coef": 0.0161,
+    "mean": 0.006192,
+    "sd": 0.024335,
+    "prevalence": null
+   },
+   {
+    "key": "tf:now",
+    "label": "Says \u201cnow\u201d",
+    "kind": "continuous",
+    "coef": -0.0068,
+    "mean": 0.006389,
+    "sd": 0.025335,
+    "prevalence": null
+   },
+   {
+    "key": "tf:no",
+    "label": "Says \u201cno\u201d",
+    "kind": "continuous",
+    "coef": 0.0084,
+    "mean": 0.006786,
+    "sd": 0.02727,
+    "prevalence": null
+   },
+   {
+    "key": "tf:by",
+    "label": "Says \u201cby\u201d",
+    "kind": "continuous",
+    "coef": -0.0496,
+    "mean": 0.00638,
+    "sd": 0.025575,
+    "prevalence": null
+   },
+   {
+    "key": "tf:your",
+    "label": "Says \u201cyour\u201d",
+    "kind": "continuous",
+    "coef": 0.0562,
+    "mean": 0.007297,
+    "sd": 0.029937,
+    "prevalence": null
+   },
+   {
+    "key": "tf:going",
+    "label": "Says \u201cgoing\u201d",
+    "kind": "continuous",
+    "coef": -0.1005,
+    "mean": 0.00641,
+    "sd": 0.026592,
+    "prevalence": null
+   },
+   {
+    "key": "tf:up",
+    "label": "Says \u201cup\u201d",
+    "kind": "continuous",
+    "coef": -0.0321,
+    "mean": 0.005915,
+    "sd": 0.024426,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i'm",
+    "label": "Says \u201ci'm\u201d",
+    "kind": "continuous",
+    "coef": 0.0637,
+    "mean": 0.007019,
+    "sd": 0.029662,
+    "prevalence": null
+   },
+   {
+    "key": "tf:my",
+    "label": "Says \u201cmy\u201d",
+    "kind": "continuous",
+    "coef": -0.0567,
+    "mean": 0.006939,
+    "sd": 0.029447,
+    "prevalence": null
+   },
+   {
+    "key": "tf:how",
+    "label": "Says \u201chow\u201d",
+    "kind": "continuous",
+    "coef": 0.0377,
+    "mean": 0.005997,
+    "sd": 0.025248,
+    "prevalence": null
+   },
+   {
+    "key": "tf:get",
+    "label": "Says \u201cget\u201d",
+    "kind": "continuous",
+    "coef": -0.0238,
+    "mean": 0.006109,
+    "sd": 0.02595,
+    "prevalence": null
+   },
+   {
+    "key": "tf:these",
+    "label": "Says \u201cthese\u201d",
+    "kind": "continuous",
+    "coef": -0.0419,
+    "mean": 0.006076,
+    "sd": 0.026014,
+    "prevalence": null
+   },
+   {
+    "key": "tf:them",
+    "label": "Says \u201cthem\u201d",
+    "kind": "continuous",
+    "coef": 0.0616,
+    "mean": 0.006046,
+    "sd": 0.026223,
+    "prevalence": null
+   },
+   {
+    "key": "tf:us",
+    "label": "Says \u201cus\u201d",
+    "kind": "continuous",
+    "coef": -0.0391,
+    "mean": 0.006188,
+    "sd": 0.027049,
+    "prevalence": null
+   },
+   {
+    "key": "tf:this is",
+    "label": "Says \u201cthis is\u201d",
+    "kind": "continuous",
+    "coef": -0.0895,
+    "mean": 0.005752,
+    "sd": 0.024747,
+    "prevalence": null
+   },
+   {
+    "key": "tf:would",
+    "label": "Says \u201cwould\u201d",
+    "kind": "continuous",
+    "coef": 0.0605,
+    "mean": 0.006085,
+    "sd": 0.026479,
+    "prevalence": null
+   },
+   {
+    "key": "tf:to be",
+    "label": "Says \u201cto be\u201d",
+    "kind": "continuous",
+    "coef": -0.0315,
+    "mean": 0.005442,
+    "sd": 0.023544,
+    "prevalence": null
+   },
+   {
+    "key": "tf:want",
+    "label": "Says \u201cwant\u201d",
+    "kind": "continuous",
+    "coef": -0.0664,
+    "mean": 0.005783,
+    "sd": 0.025271,
+    "prevalence": null
+   },
+   {
+    "key": "tf:me",
+    "label": "Says \u201cme\u201d",
+    "kind": "continuous",
+    "coef": 0.0307,
+    "mean": 0.006181,
+    "sd": 0.027077,
+    "prevalence": null
+   },
+   {
+    "key": "tf:to the",
+    "label": "Says \u201cto the\u201d",
+    "kind": "continuous",
+    "coef": 0.0372,
+    "mean": 0.005337,
+    "sd": 0.023328,
+    "prevalence": null
+   },
+   {
+    "key": "tf:say",
+    "label": "Says \u201csay\u201d",
+    "kind": "continuous",
+    "coef": 0.0239,
+    "mean": 0.005281,
+    "sd": 0.023427,
+    "prevalence": null
+   },
+   {
+    "key": "tf:will",
+    "label": "Says \u201cwill\u201d",
+    "kind": "continuous",
+    "coef": 0.0479,
+    "mean": 0.005994,
+    "sd": 0.027854,
+    "prevalence": null
+   },
+   {
+    "key": "tf:going to",
+    "label": "Says \u201cgoing to\u201d",
+    "kind": "continuous",
+    "coef": 0.1105,
+    "mean": 0.005668,
+    "sd": 0.026246,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i think",
+    "label": "Says \u201ci think\u201d",
+    "kind": "continuous",
+    "coef": 0.0578,
+    "mean": 0.005348,
+    "sd": 0.024574,
+    "prevalence": null
+   },
+   {
+    "key": "tf:been",
+    "label": "Says \u201cbeen\u201d",
+    "kind": "continuous",
+    "coef": 0.0508,
+    "mean": 0.005106,
+    "sd": 0.023532,
+    "prevalence": null
+   },
+   {
+    "key": "tf:really",
+    "label": "Says \u201creally\u201d",
+    "kind": "continuous",
+    "coef": -0.0061,
+    "mean": 0.005164,
+    "sd": 0.024107,
+    "prevalence": null
+   },
+   {
+    "key": "tf:you know",
+    "label": "Says \u201cyou know\u201d",
+    "kind": "continuous",
+    "coef": 0.0049,
+    "mean": 0.005276,
+    "sd": 0.024664,
+    "prevalence": null
+   },
+   {
+    "key": "tf:time",
+    "label": "Says \u201ctime\u201d",
+    "kind": "continuous",
+    "coef": -0.0675,
+    "mean": 0.004816,
+    "sd": 0.022599,
+    "prevalence": null
+   },
+   {
+    "key": "tf:make",
+    "label": "Says \u201cmake\u201d",
+    "kind": "continuous",
+    "coef": -0.1204,
+    "mean": 0.005015,
+    "sd": 0.023674,
+    "prevalence": null
+   },
+   {
+    "key": "tf:where",
+    "label": "Says \u201cwhere\u201d",
+    "kind": "continuous",
+    "coef": -0.0227,
+    "mean": 0.004846,
+    "sd": 0.022885,
+    "prevalence": null
+   },
+   {
+    "key": "tf:go",
+    "label": "Says \u201cgo\u201d",
+    "kind": "continuous",
+    "coef": 0.0461,
+    "mean": 0.004777,
+    "sd": 0.023003,
+    "prevalence": null
+   },
+   {
+    "key": "tf:you're",
+    "label": "Says \u201cyou're\u201d",
+    "kind": "continuous",
+    "coef": 0.0894,
+    "mean": 0.005285,
+    "sd": 0.025304,
+    "prevalence": null
+   },
+   {
+    "key": "tf:on the",
+    "label": "Says \u201con the\u201d",
+    "kind": "continuous",
+    "coef": 0.066,
+    "mean": 0.004723,
+    "sd": 0.022919,
+    "prevalence": null
+   },
+   {
+    "key": "tf:were",
+    "label": "Says \u201cwere\u201d",
+    "kind": "continuous",
+    "coef": 0.0113,
+    "mean": 0.005067,
+    "sd": 0.024258,
+    "prevalence": null
+   },
+   {
+    "key": "tf:why",
+    "label": "Says \u201cwhy\u201d",
+    "kind": "continuous",
+    "coef": 0.1098,
+    "mean": 0.004887,
+    "sd": 0.023931,
+    "prevalence": null
+   },
+   {
+    "key": "tf:is a",
+    "label": "Says \u201cis a\u201d",
+    "kind": "continuous",
+    "coef": 0.0784,
+    "mean": 0.004521,
+    "sd": 0.021942,
+    "prevalence": null
+   },
+   {
+    "key": "tf:even",
+    "label": "Says \u201ceven\u201d",
+    "kind": "continuous",
+    "coef": -0.0173,
+    "mean": 0.004604,
+    "sd": 0.022251,
+    "prevalence": null
+   },
+   {
+    "key": "tf:than",
+    "label": "Says \u201cthan\u201d",
+    "kind": "continuous",
+    "coef": -0.0253,
+    "mean": 0.00474,
+    "sd": 0.022885,
+    "prevalence": null
+   },
+   {
+    "key": "tf:then",
+    "label": "Says \u201cthen\u201d",
+    "kind": "continuous",
+    "coef": 0.0322,
+    "mean": 0.004546,
+    "sd": 0.022171,
+    "prevalence": null
+   },
+   {
+    "key": "tf:which",
+    "label": "Says \u201cwhich\u201d",
+    "kind": "continuous",
+    "coef": 0.0239,
+    "mean": 0.004581,
+    "sd": 0.022404,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and the",
+    "label": "Says \u201cand the\u201d",
+    "kind": "continuous",
+    "coef": 0.0299,
+    "mean": 0.004632,
+    "sd": 0.022881,
+    "prevalence": null
+   },
+   {
+    "key": "tf:he",
+    "label": "Says \u201che\u201d",
+    "kind": "continuous",
+    "coef": -0.0242,
+    "mean": 0.006357,
+    "sd": 0.032072,
+    "prevalence": null
+   },
+   {
+    "key": "tf:other",
+    "label": "Says \u201cother\u201d",
+    "kind": "continuous",
+    "coef": 0.0037,
+    "mean": 0.004419,
+    "sd": 0.022071,
+    "prevalence": null
+   },
+   {
+    "key": "tf:well",
+    "label": "Says \u201cwell\u201d",
+    "kind": "continuous",
+    "coef": 0.063,
+    "mean": 0.004327,
+    "sd": 0.021972,
+    "prevalence": null
+   },
+   {
+    "key": "tf:we're",
+    "label": "Says \u201cwe're\u201d",
+    "kind": "continuous",
+    "coef": -0.0185,
+    "mean": 0.004966,
+    "sd": 0.025263,
+    "prevalence": null
+   },
+   {
+    "key": "tf:way",
+    "label": "Says \u201cway\u201d",
+    "kind": "continuous",
+    "coef": -0.0557,
+    "mean": 0.00432,
+    "sd": 0.021494,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and i",
+    "label": "Says \u201cand i\u201d",
+    "kind": "continuous",
+    "coef": -0.0259,
+    "mean": 0.004522,
+    "sd": 0.022894,
+    "prevalence": null
+   },
+   {
+    "key": "tf:want to",
+    "label": "Says \u201cwant to\u201d",
+    "kind": "continuous",
+    "coef": -0.0407,
+    "mean": 0.004405,
+    "sd": 0.022532,
+    "prevalence": null
+   },
+   {
+    "key": "tf:here",
+    "label": "Says \u201chere\u201d",
+    "kind": "continuous",
+    "coef": 0.0414,
+    "mean": 0.004489,
+    "sd": 0.022946,
+    "prevalence": null
+   },
+   {
+    "key": "tf:over",
+    "label": "Says \u201cover\u201d",
+    "kind": "continuous",
+    "coef": 0.0572,
+    "mean": 0.004403,
+    "sd": 0.022207,
+    "prevalence": null
+   },
+   {
+    "key": "tf:had",
+    "label": "Says \u201chad\u201d",
+    "kind": "continuous",
+    "coef": 0.0156,
+    "mean": 0.004564,
+    "sd": 0.023312,
+    "prevalence": null
+   },
+   {
+    "key": "tf:some",
+    "label": "Says \u201csome\u201d",
+    "kind": "continuous",
+    "coef": -0.0566,
+    "mean": 0.004307,
+    "sd": 0.022043,
+    "prevalence": null
+   },
+   {
+    "key": "tf:also",
+    "label": "Says \u201calso\u201d",
+    "kind": "continuous",
+    "coef": -0.0219,
+    "mean": 0.004028,
+    "sd": 0.020471,
+    "prevalence": null
+   },
+   {
+    "key": "tf:first",
+    "label": "Says \u201cfirst\u201d",
+    "kind": "continuous",
+    "coef": -0.0064,
+    "mean": 0.004281,
+    "sd": 0.022045,
+    "prevalence": null
+   },
+   {
+    "key": "tf:country",
+    "label": "Says \u201ccountry\u201d",
+    "kind": "continuous",
+    "coef": 0.0445,
+    "mean": 0.004505,
+    "sd": 0.023183,
+    "prevalence": null
+   },
+   {
+    "key": "tf:very",
+    "label": "Says \u201cvery\u201d",
+    "kind": "continuous",
+    "coef": -0.0106,
+    "mean": 0.00419,
+    "sd": 0.02163,
+    "prevalence": null
+   },
+   {
+    "key": "tf:actually",
+    "label": "Says \u201cactually\u201d",
+    "kind": "continuous",
+    "coef": 0.0298,
+    "mean": 0.004196,
+    "sd": 0.021862,
+    "prevalence": null
+   },
+   {
+    "key": "tf:should",
+    "label": "Says \u201cshould\u201d",
+    "kind": "continuous",
+    "coef": 0.021,
+    "mean": 0.004527,
+    "sd": 0.023718,
+    "prevalence": null
+   },
+   {
+    "key": "tf:see",
+    "label": "Says \u201csee\u201d",
+    "kind": "continuous",
+    "coef": -0.0815,
+    "mean": 0.004277,
+    "sd": 0.022524,
+    "prevalence": null
+   },
+   {
+    "key": "tf:only",
+    "label": "Says \u201conly\u201d",
+    "kind": "continuous",
+    "coef": -0.0348,
+    "mean": 0.004148,
+    "sd": 0.022183,
+    "prevalence": null
+   },
+   {
+    "key": "tf:most",
+    "label": "Says \u201cmost\u201d",
+    "kind": "continuous",
+    "coef": -0.0905,
+    "mean": 0.004205,
+    "sd": 0.022295,
+    "prevalence": null
+   },
+   {
+    "key": "tf:for the",
+    "label": "Says \u201cfor the\u201d",
+    "kind": "continuous",
+    "coef": -0.0077,
+    "mean": 0.004108,
+    "sd": 0.021818,
+    "prevalence": null
+   },
+   {
+    "key": "tf:if you",
+    "label": "Says \u201cif you\u201d",
+    "kind": "continuous",
+    "coef": 0.0259,
+    "mean": 0.004062,
+    "sd": 0.021793,
+    "prevalence": null
+   },
+   {
+    "key": "tf:need",
+    "label": "Says \u201cneed\u201d",
+    "kind": "continuous",
+    "coef": 0.0357,
+    "mean": 0.004404,
+    "sd": 0.023636,
+    "prevalence": null
+   },
+   {
+    "key": "tf:could",
+    "label": "Says \u201ccould\u201d",
+    "kind": "continuous",
+    "coef": -0.0268,
+    "mean": 0.004088,
+    "sd": 0.022266,
+    "prevalence": null
+   },
+   {
+    "key": "tf:things",
+    "label": "Says \u201cthings\u201d",
+    "kind": "continuous",
+    "coef": -0.0161,
+    "mean": 0.003909,
+    "sd": 0.020857,
+    "prevalence": null
+   },
+   {
+    "key": "tf:vote",
+    "label": "Says \u201cvote\u201d",
+    "kind": "continuous",
+    "coef": -0.0137,
+    "mean": 0.005563,
+    "sd": 0.030506,
+    "prevalence": null
+   },
+   {
+    "key": "tf:said",
+    "label": "Says \u201csaid\u201d",
+    "kind": "continuous",
+    "coef": 0.0073,
+    "mean": 0.004077,
+    "sd": 0.021997,
+    "prevalence": null
+   },
+   {
+    "key": "tf:into",
+    "label": "Says \u201cinto\u201d",
+    "kind": "continuous",
+    "coef": -0.0439,
+    "mean": 0.00392,
+    "sd": 0.021474,
+    "prevalence": null
+   },
+   {
+    "key": "tf:every",
+    "label": "Says \u201cevery\u201d",
+    "kind": "continuous",
+    "coef": 0.023,
+    "mean": 0.004198,
+    "sd": 0.023026,
+    "prevalence": null
+   },
+   {
+    "key": "tf:lot",
+    "label": "Says \u201clot\u201d",
+    "kind": "continuous",
+    "coef": -0.134,
+    "mean": 0.003891,
+    "sd": 0.021014,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i don't",
+    "label": "Says \u201ci don't\u201d",
+    "kind": "continuous",
+    "coef": 0.0046,
+    "mean": 0.003998,
+    "sd": 0.022077,
+    "prevalence": null
+   },
+   {
+    "key": "tf:those",
+    "label": "Says \u201cthose\u201d",
+    "kind": "continuous",
+    "coef": 0.0036,
+    "mean": 0.003962,
+    "sd": 0.021787,
+    "prevalence": null
+   },
+   {
+    "key": "tf:at the",
+    "label": "Says \u201cat the\u201d",
+    "kind": "continuous",
+    "coef": 0.0306,
+    "mean": 0.003798,
+    "sd": 0.02083,
+    "prevalence": null
+   },
+   {
+    "key": "tf:a lot",
+    "label": "Says \u201ca lot\u201d",
+    "kind": "continuous",
+    "coef": 0.1407,
+    "mean": 0.003789,
+    "sd": 0.020781,
+    "prevalence": null
+   },
+   {
+    "key": "tf:something",
+    "label": "Says \u201csomething\u201d",
+    "kind": "continuous",
+    "coef": -0.012,
+    "mean": 0.003845,
+    "sd": 0.021331,
+    "prevalence": null
+   },
+   {
+    "key": "tf:being",
+    "label": "Says \u201cbeing\u201d",
+    "kind": "continuous",
+    "coef": -0.0167,
+    "mean": 0.003818,
+    "sd": 0.021198,
+    "prevalence": null
+   },
+   {
+    "key": "tf:did",
+    "label": "Says \u201cdid\u201d",
+    "kind": "continuous",
+    "coef": -0.0331,
+    "mean": 0.003899,
+    "sd": 0.02152,
+    "prevalence": null
+   },
+   {
+    "key": "tf:they're",
+    "label": "Says \u201cthey're\u201d",
+    "kind": "continuous",
+    "coef": 0.0329,
+    "mean": 0.004366,
+    "sd": 0.024798,
+    "prevalence": null
+   },
+   {
+    "key": "tf:there's",
+    "label": "Says \u201cthere's\u201d",
+    "kind": "continuous",
+    "coef": 0.0102,
+    "mean": 0.003969,
+    "sd": 0.022228,
+    "prevalence": null
+   },
+   {
+    "key": "tf:to do",
+    "label": "Says \u201cto do\u201d",
+    "kind": "continuous",
+    "coef": 0.048,
+    "mean": 0.003729,
+    "sd": 0.020919,
+    "prevalence": null
+   },
+   {
+    "key": "tf:that the",
+    "label": "Says \u201cthat the\u201d",
+    "kind": "continuous",
+    "coef": 0.0192,
+    "mean": 0.003779,
+    "sd": 0.021296,
+    "prevalence": null
+   },
+   {
+    "key": "tf:many",
+    "label": "Says \u201cmany\u201d",
+    "kind": "continuous",
+    "coef": 0.0472,
+    "mean": 0.003698,
+    "sd": 0.020634,
+    "prevalence": null
+   },
+   {
+    "key": "tf:thing",
+    "label": "Says \u201cthing\u201d",
+    "kind": "continuous",
+    "coef": -0.0151,
+    "mean": 0.003481,
+    "sd": 0.019668,
+    "prevalence": null
+   },
+   {
+    "key": "tf:years",
+    "label": "Says \u201cyears\u201d",
+    "kind": "continuous",
+    "coef": -0.0499,
+    "mean": 0.003777,
+    "sd": 0.021642,
+    "prevalence": null
+   },
+   {
+    "key": "tf:is the",
+    "label": "Says \u201cis the\u201d",
+    "kind": "continuous",
+    "coef": -0.0246,
+    "mean": 0.00362,
+    "sd": 0.020843,
+    "prevalence": null
+   },
+   {
+    "key": "tf:have to",
+    "label": "Says \u201chave to\u201d",
+    "kind": "continuous",
+    "coef": -0.0217,
+    "mean": 0.003739,
+    "sd": 0.021785,
+    "prevalence": null
+   },
+   {
+    "key": "tf:back",
+    "label": "Says \u201cback\u201d",
+    "kind": "continuous",
+    "coef": 0.0464,
+    "mean": 0.00365,
+    "sd": 0.02092,
+    "prevalence": null
+   },
+   {
+    "key": "tf:trump",
+    "label": "Says \u201ctrump\u201d",
+    "kind": "continuous",
+    "coef": -0.0587,
+    "mean": 0.004953,
+    "sd": 0.029146,
+    "prevalence": null
+   },
+   {
+    "key": "tf:it is",
+    "label": "Says \u201cit is\u201d",
+    "kind": "continuous",
+    "coef": 0.0391,
+    "mean": 0.003682,
+    "sd": 0.021523,
+    "prevalence": null
+   },
+   {
+    "key": "tf:much",
+    "label": "Says \u201cmuch\u201d",
+    "kind": "continuous",
+    "coef": 0.0377,
+    "mean": 0.003637,
+    "sd": 0.021053,
+    "prevalence": null
+   },
+   {
+    "key": "tf:mean",
+    "label": "Says \u201cmean\u201d",
+    "kind": "continuous",
+    "coef": 0.0039,
+    "mean": 0.00351,
+    "sd": 0.020388,
+    "prevalence": null
+   },
+   {
+    "key": "tf:take",
+    "label": "Says \u201ctake\u201d",
+    "kind": "continuous",
+    "coef": -0.0472,
+    "mean": 0.003668,
+    "sd": 0.021436,
+    "prevalence": null
+   },
+   {
+    "key": "tf:have a",
+    "label": "Says \u201chave a\u201d",
+    "kind": "continuous",
+    "coef": -0.0625,
+    "mean": 0.003506,
+    "sd": 0.020439,
+    "prevalence": null
+   },
+   {
+    "key": "tf:any",
+    "label": "Says \u201cany\u201d",
+    "kind": "continuous",
+    "coef": 0.0159,
+    "mean": 0.00352,
+    "sd": 0.02052,
+    "prevalence": null
+   },
+   {
+    "key": "tf:we have",
+    "label": "Says \u201cwe have\u201d",
+    "kind": "continuous",
+    "coef": -0.01,
+    "mean": 0.003692,
+    "sd": 0.02212,
+    "prevalence": null
+   },
+   {
+    "key": "tf:his",
+    "label": "Says \u201chis\u201d",
+    "kind": "continuous",
+    "coef": 0.0504,
+    "mean": 0.004387,
+    "sd": 0.026634,
+    "prevalence": null
+   },
+   {
+    "key": "tf:in a",
+    "label": "Says \u201cin a\u201d",
+    "kind": "continuous",
+    "coef": 0.0192,
+    "mean": 0.003374,
+    "sd": 0.019681,
+    "prevalence": null
+   },
+   {
+    "key": "tf:new",
+    "label": "Says \u201cnew\u201d",
+    "kind": "continuous",
+    "coef": -0.0381,
+    "mean": 0.004263,
+    "sd": 0.025488,
+    "prevalence": null
+   },
+   {
+    "key": "tf:you can",
+    "label": "Says \u201cyou can\u201d",
+    "kind": "continuous",
+    "coef": -0.0202,
+    "mean": 0.003777,
+    "sd": 0.022827,
+    "prevalence": null
+   },
+   {
+    "key": "tf:is that",
+    "label": "Says \u201cis that\u201d",
+    "kind": "continuous",
+    "coef": -0.0245,
+    "mean": 0.003319,
+    "sd": 0.019796,
+    "prevalence": null
+   },
+   {
+    "key": "tf:okay",
+    "label": "Says \u201cokay\u201d",
+    "kind": "continuous",
+    "coef": 0.0295,
+    "mean": 0.003811,
+    "sd": 0.023303,
+    "prevalence": null
+   },
+   {
+    "key": "tf:state",
+    "label": "Says \u201cstate\u201d",
+    "kind": "continuous",
+    "coef": -0.0208,
+    "mean": 0.004516,
+    "sd": 0.027454,
+    "prevalence": null
+   },
+   {
+    "key": "tf:states",
+    "label": "Says \u201cstates\u201d",
+    "kind": "continuous",
+    "coef": -0.0216,
+    "mean": 0.004017,
+    "sd": 0.024349,
+    "prevalence": null
+   },
+   {
+    "key": "tf:that we",
+    "label": "Says \u201cthat we\u201d",
+    "kind": "continuous",
+    "coef": 0.0107,
+    "mean": 0.003449,
+    "sd": 0.020734,
+    "prevalence": null
+   },
+   {
+    "key": "tf:got",
+    "label": "Says \u201cgot\u201d",
+    "kind": "continuous",
+    "coef": 0.037,
+    "mean": 0.003677,
+    "sd": 0.022513,
+    "prevalence": null
+   },
+   {
+    "key": "tf:two",
+    "label": "Says \u201ctwo\u201d",
+    "kind": "continuous",
+    "coef": 0.0048,
+    "mean": 0.003581,
+    "sd": 0.022064,
+    "prevalence": null
+   },
+   {
+    "key": "tf:voters",
+    "label": "Says \u201cvoters\u201d",
+    "kind": "continuous",
+    "coef": 0.0449,
+    "mean": 0.004996,
+    "sd": 0.03033,
+    "prevalence": null
+   },
+   {
+    "key": "tf:american",
+    "label": "Says \u201camerican\u201d",
+    "kind": "continuous",
+    "coef": 0.0465,
+    "mean": 0.004001,
+    "sd": 0.024525,
+    "prevalence": null
+   },
+   {
+    "key": "tf:do you",
+    "label": "Says \u201cdo you\u201d",
+    "kind": "continuous",
+    "coef": 0.0039,
+    "mean": 0.003553,
+    "sd": 0.022102,
+    "prevalence": null
+   },
+   {
+    "key": "tf:that is",
+    "label": "Says \u201cthat is\u201d",
+    "kind": "continuous",
+    "coef": 0.0665,
+    "mean": 0.003422,
+    "sd": 0.020848,
+    "prevalence": null
+   },
+   {
+    "key": "tf:uh",
+    "label": "Says \u201cuh\u201d",
+    "kind": "continuous",
+    "coef": 0.033,
+    "mean": 0.004175,
+    "sd": 0.02682,
+    "prevalence": null
+   },
+   {
+    "key": "tf:work",
+    "label": "Says \u201cwork\u201d",
+    "kind": "continuous",
+    "coef": 0.0218,
+    "mean": 0.003722,
+    "sd": 0.023095,
+    "prevalence": null
+   },
+   {
+    "key": "tf:yeah",
+    "label": "Says \u201cyeah\u201d",
+    "kind": "continuous",
+    "coef": 0.0302,
+    "mean": 0.003718,
+    "sd": 0.023163,
+    "prevalence": null
+   },
+   {
+    "key": "tf:is not",
+    "label": "Says \u201cis not\u201d",
+    "kind": "continuous",
+    "coef": 0.0256,
+    "mean": 0.003419,
+    "sd": 0.021443,
+    "prevalence": null
+   },
+   {
+    "key": "tf:does",
+    "label": "Says \u201cdoes\u201d",
+    "kind": "continuous",
+    "coef": 0.0397,
+    "mean": 0.003273,
+    "sd": 0.020114,
+    "prevalence": null
+   },
+   {
+    "key": "tf:election",
+    "label": "Says \u201celection\u201d",
+    "kind": "continuous",
+    "coef": 0.0798,
+    "mean": 0.004414,
+    "sd": 0.027838,
+    "prevalence": null
+   },
+   {
+    "key": "tf:look",
+    "label": "Says \u201clook\u201d",
+    "kind": "continuous",
+    "coef": 0.0092,
+    "mean": 0.003272,
+    "sd": 0.020543,
+    "prevalence": null
+   },
+   {
+    "key": "tf:good",
+    "label": "Says \u201cgood\u201d",
+    "kind": "continuous",
+    "coef": 0.0336,
+    "mean": 0.003376,
+    "sd": 0.021309,
+    "prevalence": null
+   },
+   {
+    "key": "tf:president",
+    "label": "Says \u201cpresident\u201d",
+    "kind": "continuous",
+    "coef": 0.0623,
+    "mean": 0.004249,
+    "sd": 0.02715,
+    "prevalence": null
+   },
+   {
+    "key": "tf:doing",
+    "label": "Says \u201cdoing\u201d",
+    "kind": "continuous",
+    "coef": 0.0015,
+    "mean": 0.003248,
+    "sd": 0.020376,
+    "prevalence": null
+   },
+   {
+    "key": "tf:it was",
+    "label": "Says \u201cit was\u201d",
+    "kind": "continuous",
+    "coef": -0.0341,
+    "mean": 0.00332,
+    "sd": 0.020834,
+    "prevalence": null
+   },
+   {
+    "key": "tf:can't",
+    "label": "Says \u201ccan't\u201d",
+    "kind": "continuous",
+    "coef": -0.028,
+    "mean": 0.003197,
+    "sd": 0.020115,
+    "prevalence": null
+   },
+   {
+    "key": "tf:lot of",
+    "label": "Says \u201clot of\u201d",
+    "kind": "continuous",
+    "coef": -0.0416,
+    "mean": 0.003083,
+    "sd": 0.019134,
+    "prevalence": null
+   },
+   {
+    "key": "tf:yes",
+    "label": "Says \u201cyes\u201d",
+    "kind": "continuous",
+    "coef": -0.0358,
+    "mean": 0.003451,
+    "sd": 0.022489,
+    "prevalence": null
+   },
+   {
+    "key": "tf:um",
+    "label": "Says \u201cum\u201d",
+    "kind": "continuous",
+    "coef": -0.0558,
+    "mean": 0.003798,
+    "sd": 0.024813,
+    "prevalence": null
+   },
+   {
+    "key": "tf:one of",
+    "label": "Says \u201cone of\u201d",
+    "kind": "continuous",
+    "coef": 0.0163,
+    "mean": 0.003116,
+    "sd": 0.019618,
+    "prevalence": null
+   },
+   {
+    "key": "tf:voting",
+    "label": "Says \u201cvoting\u201d",
+    "kind": "continuous",
+    "coef": 0.1198,
+    "mean": 0.004845,
+    "sd": 0.031267,
+    "prevalence": null
+   },
+   {
+    "key": "tf:with the",
+    "label": "Says \u201cwith the\u201d",
+    "kind": "continuous",
+    "coef": 0.0015,
+    "mean": 0.002975,
+    "sd": 0.018874,
+    "prevalence": null
+   },
+   {
+    "key": "tf:doesn't",
+    "label": "Says \u201cdoesn't\u201d",
+    "kind": "continuous",
+    "coef": 0.0141,
+    "mean": 0.003004,
+    "sd": 0.019235,
+    "prevalence": null
+   },
+   {
+    "key": "tf:year",
+    "label": "Says \u201cyear\u201d",
+    "kind": "continuous",
+    "coef": -0.0052,
+    "mean": 0.00338,
+    "sd": 0.021755,
+    "prevalence": null
+   },
+   {
+    "key": "tf:same",
+    "label": "Says \u201csame\u201d",
+    "kind": "continuous",
+    "coef": -0.0733,
+    "mean": 0.003053,
+    "sd": 0.019751,
+    "prevalence": null
+   },
+   {
+    "key": "tf:elections",
+    "label": "Says \u201celections\u201d",
+    "kind": "continuous",
+    "coef": -0.0049,
+    "mean": 0.004209,
+    "sd": 0.027606,
+    "prevalence": null
+   },
+   {
+    "key": "tf:to get",
+    "label": "Says \u201cto get\u201d",
+    "kind": "continuous",
+    "coef": 0.0212,
+    "mean": 0.003203,
+    "sd": 0.020942,
+    "prevalence": null
+   },
+   {
+    "key": "tf:you have",
+    "label": "Says \u201cyou have\u201d",
+    "kind": "continuous",
+    "coef": -0.0091,
+    "mean": 0.003052,
+    "sd": 0.020175,
+    "prevalence": null
+   },
+   {
+    "key": "tf:come",
+    "label": "Says \u201ccome\u201d",
+    "kind": "continuous",
+    "coef": -0.0353,
+    "mean": 0.003028,
+    "sd": 0.019949,
+    "prevalence": null
+   },
+   {
+    "key": "tf:government",
+    "label": "Says \u201cgovernment\u201d",
+    "kind": "continuous",
+    "coef": -0.0349,
+    "mean": 0.00382,
+    "sd": 0.025566,
+    "prevalence": null
+   },
+   {
+    "key": "tf:power",
+    "label": "Says \u201cpower\u201d",
+    "kind": "continuous",
+    "coef": -0.0365,
+    "mean": 0.003601,
+    "sd": 0.024238,
+    "prevalence": null
+   },
+   {
+    "key": "tf:still",
+    "label": "Says \u201cstill\u201d",
+    "kind": "continuous",
+    "coef": 0.0055,
+    "mean": 0.003033,
+    "sd": 0.020363,
+    "prevalence": null
+   },
+   {
+    "key": "tf:saying",
+    "label": "Says \u201csaying\u201d",
+    "kind": "continuous",
+    "coef": 0.0193,
+    "mean": 0.002887,
+    "sd": 0.01894,
+    "prevalence": null
+   },
+   {
+    "key": "tf:that you",
+    "label": "Says \u201cthat you\u201d",
+    "kind": "continuous",
+    "coef": 0.0443,
+    "mean": 0.002866,
+    "sd": 0.0193,
+    "prevalence": null
+   },
+   {
+    "key": "tf:last",
+    "label": "Says \u201clast\u201d",
+    "kind": "continuous",
+    "coef": 0.0221,
+    "mean": 0.00301,
+    "sd": 0.019843,
+    "prevalence": null
+   },
+   {
+    "key": "tf:money",
+    "label": "Says \u201cmoney\u201d",
+    "kind": "continuous",
+    "coef": 0.0887,
+    "mean": 0.003932,
+    "sd": 0.027084,
+    "prevalence": null
+   },
+   {
+    "key": "tf:out of",
+    "label": "Says \u201cout of\u201d",
+    "kind": "continuous",
+    "coef": 0.0226,
+    "mean": 0.003123,
+    "sd": 0.021095,
+    "prevalence": null
+   },
+   {
+    "key": "tf:day",
+    "label": "Says \u201cday\u201d",
+    "kind": "continuous",
+    "coef": -0.0543,
+    "mean": 0.003285,
+    "sd": 0.022249,
+    "prevalence": null
+   },
+   {
+    "key": "tf:right now",
+    "label": "Says \u201cright now\u201d",
+    "kind": "continuous",
+    "coef": 0.0824,
+    "mean": 0.002828,
+    "sd": 0.018764,
+    "prevalence": null
+   },
+   {
+    "key": "tf:as a",
+    "label": "Says \u201cas a\u201d",
+    "kind": "continuous",
+    "coef": 0.0183,
+    "mean": 0.002885,
+    "sd": 0.019202,
+    "prevalence": null
+   },
+   {
+    "key": "tf:we are",
+    "label": "Says \u201cwe are\u201d",
+    "kind": "continuous",
+    "coef": -0.0162,
+    "mean": 0.003315,
+    "sd": 0.022544,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and then",
+    "label": "Says \u201cand then\u201d",
+    "kind": "continuous",
+    "coef": -0.0454,
+    "mean": 0.002787,
+    "sd": 0.018687,
+    "prevalence": null
+   },
+   {
+    "key": "tf:didn't",
+    "label": "Says \u201cdidn't\u201d",
+    "kind": "continuous",
+    "coef": 0.0598,
+    "mean": 0.002761,
+    "sd": 0.018578,
+    "prevalence": null
+   },
+   {
+    "key": "tf:to make",
+    "label": "Says \u201cto make\u201d",
+    "kind": "continuous",
+    "coef": 0.096,
+    "mean": 0.00287,
+    "sd": 0.019183,
+    "prevalence": null
+   },
+   {
+    "key": "tf:before",
+    "label": "Says \u201cbefore\u201d",
+    "kind": "continuous",
+    "coef": 0.0004,
+    "mean": 0.002905,
+    "sd": 0.019445,
+    "prevalence": null
+   },
+   {
+    "key": "tf:from the",
+    "label": "Says \u201cfrom the\u201d",
+    "kind": "continuous",
+    "coef": 0.042,
+    "mean": 0.00275,
+    "sd": 0.01845,
+    "prevalence": null
+   },
+   {
+    "key": "tf:political",
+    "label": "Says \u201cpolitical\u201d",
+    "kind": "continuous",
+    "coef": 0.0121,
+    "mean": 0.003359,
+    "sd": 0.02264,
+    "prevalence": null
+   },
+   {
+    "key": "tf:kind",
+    "label": "Says \u201ckind\u201d",
+    "kind": "continuous",
+    "coef": -0.2175,
+    "mean": 0.002812,
+    "sd": 0.018901,
+    "prevalence": null
+   },
+   {
+    "key": "tf:today",
+    "label": "Says \u201ctoday\u201d",
+    "kind": "continuous",
+    "coef": 0.0417,
+    "mean": 0.003149,
+    "sd": 0.021365,
+    "prevalence": null
+   },
+   {
+    "key": "tf:down",
+    "label": "Says \u201cdown\u201d",
+    "kind": "continuous",
+    "coef": 0.0376,
+    "mean": 0.002922,
+    "sd": 0.019983,
+    "prevalence": null
+   },
+   {
+    "key": "tf:through",
+    "label": "Says \u201cthrough\u201d",
+    "kind": "continuous",
+    "coef": 0.0141,
+    "mean": 0.002981,
+    "sd": 0.020512,
+    "prevalence": null
+   },
+   {
+    "key": "tf:in this",
+    "label": "Says \u201cin this\u201d",
+    "kind": "continuous",
+    "coef": -0.0186,
+    "mean": 0.002808,
+    "sd": 0.018831,
+    "prevalence": null
+   },
+   {
+    "key": "tf:need to",
+    "label": "Says \u201cneed to\u201d",
+    "kind": "continuous",
+    "coef": 0.0167,
+    "mean": 0.003061,
+    "sd": 0.020979,
+    "prevalence": null
+   },
+   {
+    "key": "tf:the same",
+    "label": "Says \u201cthe same\u201d",
+    "kind": "continuous",
+    "coef": 0.0601,
+    "mean": 0.002741,
+    "sd": 0.018642,
+    "prevalence": null
+   },
+   {
+    "key": "tf:after",
+    "label": "Says \u201cafter\u201d",
+    "kind": "continuous",
+    "coef": 0.0486,
+    "mean": 0.002953,
+    "sd": 0.020297,
+    "prevalence": null
+   },
+   {
+    "key": "tf:kind of",
+    "label": "Says \u201ckind of\u201d",
+    "kind": "continuous",
+    "coef": 0.1788,
+    "mean": 0.002752,
+    "sd": 0.018812,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i mean",
+    "label": "Says \u201ci mean\u201d",
+    "kind": "continuous",
+    "coef": 0.0141,
+    "mean": 0.002714,
+    "sd": 0.018833,
+    "prevalence": null
+   },
+   {
+    "key": "tf:system",
+    "label": "Says \u201csystem\u201d",
+    "kind": "continuous",
+    "coef": -0.0323,
+    "mean": 0.003432,
+    "sd": 0.024175,
+    "prevalence": null
+   },
+   {
+    "key": "tf:oh",
+    "label": "Says \u201coh\u201d",
+    "kind": "continuous",
+    "coef": -0.0469,
+    "mean": 0.003056,
+    "sd": 0.022604,
+    "prevalence": null
+   },
+   {
+    "key": "tf:trying",
+    "label": "Says \u201ctrying\u201d",
+    "kind": "continuous",
+    "coef": -0.045,
+    "mean": 0.002712,
+    "sd": 0.018974,
+    "prevalence": null
+   },
+   {
+    "key": "tf:give",
+    "label": "Says \u201cgive\u201d",
+    "kind": "continuous",
+    "coef": -0.0063,
+    "mean": 0.002762,
+    "sd": 0.019575,
+    "prevalence": null
+   },
+   {
+    "key": "tf:congress",
+    "label": "Says \u201ccongress\u201d",
+    "kind": "continuous",
+    "coef": -0.0077,
+    "mean": 0.003946,
+    "sd": 0.02832,
+    "prevalence": null
+   },
+   {
+    "key": "tf:about the",
+    "label": "Says \u201cabout the\u201d",
+    "kind": "continuous",
+    "coef": -0.0484,
+    "mean": 0.002632,
+    "sd": 0.018451,
+    "prevalence": null
+   },
+   {
+    "key": "tf:against",
+    "label": "Says \u201cagainst\u201d",
+    "kind": "continuous",
+    "coef": -0.0426,
+    "mean": 0.002928,
+    "sd": 0.020793,
+    "prevalence": null
+   },
+   {
+    "key": "tf:important",
+    "label": "Says \u201cimportant\u201d",
+    "kind": "continuous",
+    "coef": 0.015,
+    "mean": 0.002803,
+    "sd": 0.019628,
+    "prevalence": null
+   },
+   {
+    "key": "tf:never",
+    "label": "Says \u201cnever\u201d",
+    "kind": "continuous",
+    "coef": 0.0188,
+    "mean": 0.002789,
+    "sd": 0.020088,
+    "prevalence": null
+   },
+   {
+    "key": "tf:that i",
+    "label": "Says \u201cthat i\u201d",
+    "kind": "continuous",
+    "coef": 0.0081,
+    "mean": 0.002568,
+    "sd": 0.018224,
+    "prevalence": null
+   },
+   {
+    "key": "tf:all of",
+    "label": "Says \u201call of\u201d",
+    "kind": "continuous",
+    "coef": 0.0361,
+    "mean": 0.002699,
+    "sd": 0.019057,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and it",
+    "label": "Says \u201cand it\u201d",
+    "kind": "continuous",
+    "coef": 0.0571,
+    "mean": 0.002548,
+    "sd": 0.017814,
+    "prevalence": null
+   },
+   {
+    "key": "tf:of a",
+    "label": "Says \u201cof a\u201d",
+    "kind": "continuous",
+    "coef": 0.0121,
+    "mean": 0.002664,
+    "sd": 0.018702,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and we",
+    "label": "Says \u201cand we\u201d",
+    "kind": "continuous",
+    "coef": -0.0168,
+    "mean": 0.002701,
+    "sd": 0.019033,
+    "prevalence": null
+   },
+   {
+    "key": "tf:too",
+    "label": "Says \u201ctoo\u201d",
+    "kind": "continuous",
+    "coef": -0.0589,
+    "mean": 0.002626,
+    "sd": 0.018867,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i was",
+    "label": "Says \u201ci was\u201d",
+    "kind": "continuous",
+    "coef": 0.0115,
+    "mean": 0.003027,
+    "sd": 0.02194,
+    "prevalence": null
+   },
+   {
+    "key": "tf:him",
+    "label": "Says \u201chim\u201d",
+    "kind": "continuous",
+    "coef": -0.0111,
+    "mean": 0.002944,
+    "sd": 0.021426,
+    "prevalence": null
+   },
+   {
+    "key": "tf:trying to",
+    "label": "Says \u201ctrying to\u201d",
+    "kind": "continuous",
+    "coef": 0.0644,
+    "mean": 0.002602,
+    "sd": 0.018836,
+    "prevalence": null
+   },
+   {
+    "key": "tf:americans",
+    "label": "Says \u201camericans\u201d",
+    "kind": "continuous",
+    "coef": -0.0063,
+    "mean": 0.003125,
+    "sd": 0.022595,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and you",
+    "label": "Says \u201cand you\u201d",
+    "kind": "continuous",
+    "coef": 0.044,
+    "mean": 0.002424,
+    "sd": 0.017199,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and so",
+    "label": "Says \u201cand so\u201d",
+    "kind": "continuous",
+    "coef": -0.0194,
+    "mean": 0.002497,
+    "sd": 0.017837,
+    "prevalence": null
+   },
+   {
+    "key": "tf:what's",
+    "label": "Says \u201cwhat's\u201d",
+    "kind": "continuous",
+    "coef": 0.0088,
+    "mean": 0.002717,
+    "sd": 0.01955,
+    "prevalence": null
+   },
+   {
+    "key": "tf:world",
+    "label": "Says \u201cworld\u201d",
+    "kind": "continuous",
+    "coef": 0.0417,
+    "mean": 0.002946,
+    "sd": 0.021627,
+    "prevalence": null
+   },
+   {
+    "key": "tf:so i",
+    "label": "Says \u201cso i\u201d",
+    "kind": "continuous",
+    "coef": 0.0444,
+    "mean": 0.002386,
+    "sd": 0.017043,
+    "prevalence": null
+   },
+   {
+    "key": "tf:law",
+    "label": "Says \u201claw\u201d",
+    "kind": "continuous",
+    "coef": 0.0027,
+    "mean": 0.003329,
+    "sd": 0.024551,
+    "prevalence": null
+   },
+   {
+    "key": "tf:real",
+    "label": "Says \u201creal\u201d",
+    "kind": "continuous",
+    "coef": -0.0871,
+    "mean": 0.002635,
+    "sd": 0.018961,
+    "prevalence": null
+   },
+   {
+    "key": "tf:talk",
+    "label": "Says \u201ctalk\u201d",
+    "kind": "continuous",
+    "coef": -0.0269,
+    "mean": 0.002418,
+    "sd": 0.017577,
+    "prevalence": null
+   },
+   {
+    "key": "tf:democracy",
+    "label": "Says \u201cdemocracy\u201d",
+    "kind": "continuous",
+    "coef": -0.0791,
+    "mean": 0.003468,
+    "sd": 0.025487,
+    "prevalence": null
+   },
+   {
+    "key": "tf:feel",
+    "label": "Says \u201cfeel\u201d",
+    "kind": "continuous",
+    "coef": -0.0538,
+    "mean": 0.00277,
+    "sd": 0.020244,
+    "prevalence": null
+   },
+   {
+    "key": "tf:party",
+    "label": "Says \u201cparty\u201d",
+    "kind": "continuous",
+    "coef": 0.0289,
+    "mean": 0.003608,
+    "sd": 0.026757,
+    "prevalence": null
+   },
+   {
+    "key": "tf:in our",
+    "label": "Says \u201cin our\u201d",
+    "kind": "continuous",
+    "coef": -0.0027,
+    "mean": 0.002808,
+    "sd": 0.020712,
+    "prevalence": null
+   },
+   {
+    "key": "tf:person",
+    "label": "Says \u201cperson\u201d",
+    "kind": "continuous",
+    "coef": -0.0219,
+    "mean": 0.002669,
+    "sd": 0.019777,
+    "prevalence": null
+   },
+   {
+    "key": "tf:made",
+    "label": "Says \u201cmade\u201d",
+    "kind": "continuous",
+    "coef": 0.0353,
+    "mean": 0.002518,
+    "sd": 0.018547,
+    "prevalence": null
+   },
+   {
+    "key": "tf:part",
+    "label": "Says \u201cpart\u201d",
+    "kind": "continuous",
+    "coef": 0.0396,
+    "mean": 0.002515,
+    "sd": 0.018237,
+    "prevalence": null
+   },
+   {
+    "key": "tf:sure",
+    "label": "Says \u201csure\u201d",
+    "kind": "continuous",
+    "coef": 0.0895,
+    "mean": 0.002553,
+    "sd": 0.01871,
+    "prevalence": null
+   },
+   {
+    "key": "tf:talking",
+    "label": "Says \u201ctalking\u201d",
+    "kind": "continuous",
+    "coef": -0.0482,
+    "mean": 0.00251,
+    "sd": 0.018245,
+    "prevalence": null
+   },
+   {
+    "key": "tf:tell",
+    "label": "Says \u201ctell\u201d",
+    "kind": "continuous",
+    "coef": 0.0368,
+    "mean": 0.002474,
+    "sd": 0.018146,
+    "prevalence": null
+   },
+   {
+    "key": "tf:believe",
+    "label": "Says \u201cbelieve\u201d",
+    "kind": "continuous",
+    "coef": 0.0092,
+    "mean": 0.002753,
+    "sd": 0.020489,
+    "prevalence": null
+   },
+   {
+    "key": "tf:big",
+    "label": "Says \u201cbig\u201d",
+    "kind": "continuous",
+    "coef": 0.003,
+    "mean": 0.002707,
+    "sd": 0.019914,
+    "prevalence": null
+   },
+   {
+    "key": "tf:united",
+    "label": "Says \u201cunited\u201d",
+    "kind": "continuous",
+    "coef": -0.0037,
+    "mean": 0.00285,
+    "sd": 0.021133,
+    "prevalence": null
+   },
+   {
+    "key": "tf:they are",
+    "label": "Says \u201cthey are\u201d",
+    "kind": "continuous",
+    "coef": -0.0006,
+    "mean": 0.002679,
+    "sd": 0.020063,
+    "prevalence": null
+   },
+   {
+    "key": "tf:court",
+    "label": "Says \u201ccourt\u201d",
+    "kind": "continuous",
+    "coef": -0.0356,
+    "mean": 0.003852,
+    "sd": 0.0289,
+    "prevalence": null
+   },
+   {
+    "key": "tf:it's not",
+    "label": "Says \u201cit's not\u201d",
+    "kind": "continuous",
+    "coef": 0.0049,
+    "mean": 0.002408,
+    "sd": 0.017715,
+    "prevalence": null
+   },
+   {
+    "key": "tf:that they",
+    "label": "Says \u201cthat they\u201d",
+    "kind": "continuous",
+    "coef": -0.0281,
+    "mean": 0.002495,
+    "sd": 0.018534,
+    "prevalence": null
+   },
+   {
+    "key": "tf:the most",
+    "label": "Says \u201cthe most\u201d",
+    "kind": "continuous",
+    "coef": 0.0576,
+    "mean": 0.002491,
+    "sd": 0.018167,
+    "prevalence": null
+   },
+   {
+    "key": "tf:point",
+    "label": "Says \u201cpoint\u201d",
+    "kind": "continuous",
+    "coef": 0.0409,
+    "mean": 0.002351,
+    "sd": 0.017264,
+    "prevalence": null
+   },
+   {
+    "key": "tf:let",
+    "label": "Says \u201clet\u201d",
+    "kind": "continuous",
+    "coef": 0.0566,
+    "mean": 0.002767,
+    "sd": 0.021692,
+    "prevalence": null
+   },
+   {
+    "key": "tf:the people",
+    "label": "Says \u201cthe people\u201d",
+    "kind": "continuous",
+    "coef": 0.0592,
+    "mean": 0.002761,
+    "sd": 0.020796,
+    "prevalence": null
+   },
+   {
+    "key": "tf:different",
+    "label": "Says \u201cdifferent\u201d",
+    "kind": "continuous",
+    "coef": 0.0446,
+    "mean": 0.00247,
+    "sd": 0.018304,
+    "prevalence": null
+   },
+   {
+    "key": "tf:life",
+    "label": "Says \u201clife\u201d",
+    "kind": "continuous",
+    "coef": -0.0625,
+    "mean": 0.002679,
+    "sd": 0.020234,
+    "prevalence": null
+   },
+   {
+    "key": "tf:there are",
+    "label": "Says \u201cthere are\u201d",
+    "kind": "continuous",
+    "coef": -0.0715,
+    "mean": 0.002428,
+    "sd": 0.01793,
+    "prevalence": null
+   },
+   {
+    "key": "tf:again",
+    "label": "Says \u201cagain\u201d",
+    "kind": "continuous",
+    "coef": 0.0046,
+    "mean": 0.002372,
+    "sd": 0.017579,
+    "prevalence": null
+   },
+   {
+    "key": "tf:people who",
+    "label": "Says \u201cpeople who\u201d",
+    "kind": "continuous",
+    "coef": 0.0169,
+    "mean": 0.002427,
+    "sd": 0.018105,
+    "prevalence": null
+   },
+   {
+    "key": "tf:already",
+    "label": "Says \u201calready\u201d",
+    "kind": "continuous",
+    "coef": 0.0127,
+    "mean": 0.00249,
+    "sd": 0.018559,
+    "prevalence": null
+   },
+   {
+    "key": "tf:across",
+    "label": "Says \u201cacross\u201d",
+    "kind": "continuous",
+    "coef": -0.0163,
+    "mean": 0.002591,
+    "sd": 0.019333,
+    "prevalence": null
+   },
+   {
+    "key": "tf:own",
+    "label": "Says \u201cown\u201d",
+    "kind": "continuous",
+    "coef": -0.0265,
+    "mean": 0.002481,
+    "sd": 0.018704,
+    "prevalence": null
+   },
+   {
+    "key": "tf:public",
+    "label": "Says \u201cpublic\u201d",
+    "kind": "continuous",
+    "coef": -0.0181,
+    "mean": 0.002844,
+    "sd": 0.021913,
+    "prevalence": null
+   },
+   {
+    "key": "tf:let's",
+    "label": "Says \u201clet's\u201d",
+    "kind": "continuous",
+    "coef": -0.033,
+    "mean": 0.00252,
+    "sd": 0.01959,
+    "prevalence": null
+   },
+   {
+    "key": "tf:everything",
+    "label": "Says \u201ceverything\u201d",
+    "kind": "continuous",
+    "coef": -0.0024,
+    "mean": 0.002358,
+    "sd": 0.01813,
+    "prevalence": null
+   },
+   {
+    "key": "tf:by the",
+    "label": "Says \u201cby the\u201d",
+    "kind": "continuous",
+    "coef": 0.041,
+    "mean": 0.002295,
+    "sd": 0.017246,
+    "prevalence": null
+   },
+   {
+    "key": "tf:there is",
+    "label": "Says \u201cthere is\u201d",
+    "kind": "continuous",
+    "coef": -0.029,
+    "mean": 0.002354,
+    "sd": 0.017772,
+    "prevalence": null
+   },
+   {
+    "key": "tf:to vote",
+    "label": "Says \u201cto vote\u201d",
+    "kind": "continuous",
+    "coef": -0.0056,
+    "mean": 0.003085,
+    "sd": 0.023503,
+    "prevalence": null
+   },
+   {
+    "key": "tf:better",
+    "label": "Says \u201cbetter\u201d",
+    "kind": "continuous",
+    "coef": 0.0204,
+    "mean": 0.00244,
+    "sd": 0.018595,
+    "prevalence": null
+   },
+   {
+    "key": "tf:around",
+    "label": "Says \u201caround\u201d",
+    "kind": "continuous",
+    "coef": 0.0262,
+    "mean": 0.002283,
+    "sd": 0.017201,
+    "prevalence": null
+   },
+   {
+    "key": "tf:to have",
+    "label": "Says \u201cto have\u201d",
+    "kind": "continuous",
+    "coef": 0.0108,
+    "mean": 0.002339,
+    "sd": 0.01776,
+    "prevalence": null
+   },
+   {
+    "key": "tf:off",
+    "label": "Says \u201coff\u201d",
+    "kind": "continuous",
+    "coef": 0.0021,
+    "mean": 0.002382,
+    "sd": 0.018367,
+    "prevalence": null
+   },
+   {
+    "key": "tf:its",
+    "label": "Says \u201cits\u201d",
+    "kind": "continuous",
+    "coef": 0.0165,
+    "mean": 0.002802,
+    "sd": 0.021585,
+    "prevalence": null
+   },
+   {
+    "key": "tf:put",
+    "label": "Says \u201cput\u201d",
+    "kind": "continuous",
+    "coef": 0.01,
+    "mean": 0.002336,
+    "sd": 0.017713,
+    "prevalence": null
+   },
+   {
+    "key": "tf:all the",
+    "label": "Says \u201call the\u201d",
+    "kind": "continuous",
+    "coef": 0.0517,
+    "mean": 0.002289,
+    "sd": 0.017676,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i've",
+    "label": "Says \u201ci've\u201d",
+    "kind": "continuous",
+    "coef": 0.0337,
+    "mean": 0.00236,
+    "sd": 0.018199,
+    "prevalence": null
+   },
+   {
+    "key": "tf:but i",
+    "label": "Says \u201cbut i\u201d",
+    "kind": "continuous",
+    "coef": -0.0686,
+    "mean": 0.002125,
+    "sd": 0.016076,
+    "prevalence": null
+   },
+   {
+    "key": "tf:was a",
+    "label": "Says \u201cwas a\u201d",
+    "kind": "continuous",
+    "coef": 0.0462,
+    "mean": 0.002245,
+    "sd": 0.017213,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and that",
+    "label": "Says \u201cand that\u201d",
+    "kind": "continuous",
+    "coef": -0.0865,
+    "mean": 0.002267,
+    "sd": 0.017233,
+    "prevalence": null
+   },
+   {
+    "key": "tf:everyone",
+    "label": "Says \u201ceveryone\u201d",
+    "kind": "continuous",
+    "coef": -0.0104,
+    "mean": 0.002436,
+    "sd": 0.018845,
+    "prevalence": null
+   },
+   {
+    "key": "tf:we can",
+    "label": "Says \u201cwe can\u201d",
+    "kind": "continuous",
+    "coef": 0.0461,
+    "mean": 0.002478,
+    "sd": 0.019465,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i have",
+    "label": "Says \u201ci have\u201d",
+    "kind": "continuous",
+    "coef": -0.1031,
+    "mean": 0.002335,
+    "sd": 0.01825,
+    "prevalence": null
+   },
+   {
+    "key": "tf:problem",
+    "label": "Says \u201cproblem\u201d",
+    "kind": "continuous",
+    "coef": -0.0274,
+    "mean": 0.002387,
+    "sd": 0.01868,
+    "prevalence": null
+   },
+   {
+    "key": "tf:little",
+    "label": "Says \u201clittle\u201d",
+    "kind": "continuous",
+    "coef": -0.015,
+    "mean": 0.002264,
+    "sd": 0.017626,
+    "prevalence": null
+   },
+   {
+    "key": "tf:america",
+    "label": "Says \u201camerica\u201d",
+    "kind": "continuous",
+    "coef": 0.0077,
+    "mean": 0.002673,
+    "sd": 0.021515,
+    "prevalence": null
+   },
+   {
+    "key": "tf:fact",
+    "label": "Says \u201cfact\u201d",
+    "kind": "continuous",
+    "coef": 0.0423,
+    "mean": 0.002281,
+    "sd": 0.017858,
+    "prevalence": null
+   },
+   {
+    "key": "tf:of this",
+    "label": "Says \u201cof this\u201d",
+    "kind": "continuous",
+    "coef": 0.0472,
+    "mean": 0.002266,
+    "sd": 0.017615,
+    "prevalence": null
+   },
+   {
+    "key": "tf:the way",
+    "label": "Says \u201cthe way\u201d",
+    "kind": "continuous",
+    "coef": 0.0034,
+    "mean": 0.002176,
+    "sd": 0.016707,
+    "prevalence": null
+   },
+   {
+    "key": "tf:the country",
+    "label": "Says \u201cthe country\u201d",
+    "kind": "continuous",
+    "coef": 0.0293,
+    "mean": 0.002356,
+    "sd": 0.018334,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i would",
+    "label": "Says \u201ci would\u201d",
+    "kind": "continuous",
+    "coef": 0.0128,
+    "mean": 0.002273,
+    "sd": 0.017847,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and they",
+    "label": "Says \u201cand they\u201d",
+    "kind": "continuous",
+    "coef": -0.0689,
+    "mean": 0.00219,
+    "sd": 0.017103,
+    "prevalence": null
+   },
+   {
+    "key": "tf:she",
+    "label": "Says \u201cshe\u201d",
+    "kind": "continuous",
+    "coef": -0.062,
+    "mean": 0.003216,
+    "sd": 0.026081,
+    "prevalence": null
+   },
+   {
+    "key": "tf:for a",
+    "label": "Says \u201cfor a\u201d",
+    "kind": "continuous",
+    "coef": 0.0308,
+    "mean": 0.002261,
+    "sd": 0.017713,
+    "prevalence": null
+   },
+   {
+    "key": "tf:it's a",
+    "label": "Says \u201cit's a\u201d",
+    "kind": "continuous",
+    "coef": -0.0111,
+    "mean": 0.00228,
+    "sd": 0.017971,
+    "prevalence": null
+   },
+   {
+    "key": "tf:next",
+    "label": "Says \u201cnext\u201d",
+    "kind": "continuous",
+    "coef": 0.0006,
+    "mean": 0.002509,
+    "sd": 0.020209,
+    "prevalence": null
+   },
+   {
+    "key": "tf:have been",
+    "label": "Says \u201chave been\u201d",
+    "kind": "continuous",
+    "coef": -0.0515,
+    "mean": 0.002255,
+    "sd": 0.017718,
+    "prevalence": null
+   },
+   {
+    "key": "tf:support",
+    "label": "Says \u201csupport\u201d",
+    "kind": "continuous",
+    "coef": -0.0491,
+    "mean": 0.002601,
+    "sd": 0.020744,
+    "prevalence": null
+   },
+   {
+    "key": "tf:getting",
+    "label": "Says \u201cgetting\u201d",
+    "kind": "continuous",
+    "coef": -0.0096,
+    "mean": 0.002307,
+    "sd": 0.018306,
+    "prevalence": null
+   },
+   {
+    "key": "tf:he's",
+    "label": "Says \u201che's\u201d",
+    "kind": "continuous",
+    "coef": 0.0575,
+    "mean": 0.002724,
+    "sd": 0.021995,
+    "prevalence": null
+   },
+   {
+    "key": "tf:federal",
+    "label": "Says \u201cfederal\u201d",
+    "kind": "continuous",
+    "coef": 0.0162,
+    "mean": 0.00299,
+    "sd": 0.024169,
+    "prevalence": null
+   },
+   {
+    "key": "tf:think that",
+    "label": "Says \u201cthink that\u201d",
+    "kind": "continuous",
+    "coef": 0.0429,
+    "mean": 0.002182,
+    "sd": 0.017093,
+    "prevalence": null
+   },
+   {
+    "key": "tf:someone",
+    "label": "Says \u201csomeone\u201d",
+    "kind": "continuous",
+    "coef": 0.0227,
+    "mean": 0.002227,
+    "sd": 0.017564,
+    "prevalence": null
+   },
+   {
+    "key": "tf:under",
+    "label": "Says \u201cunder\u201d",
+    "kind": "continuous",
+    "coef": 0.0317,
+    "mean": 0.002481,
+    "sd": 0.019987,
+    "prevalence": null
+   },
+   {
+    "key": "tf:both",
+    "label": "Says \u201cboth\u201d",
+    "kind": "continuous",
+    "coef": -0.0401,
+    "mean": 0.002465,
+    "sd": 0.019929,
+    "prevalence": null
+   },
+   {
+    "key": "tf:help",
+    "label": "Says \u201chelp\u201d",
+    "kind": "continuous",
+    "coef": 0.0134,
+    "mean": 0.002445,
+    "sd": 0.019596,
+    "prevalence": null
+   },
+   {
+    "key": "tf:the first",
+    "label": "Says \u201cthe first\u201d",
+    "kind": "continuous",
+    "coef": 0.039,
+    "mean": 0.002251,
+    "sd": 0.01792,
+    "prevalence": null
+   },
+   {
+    "key": "tf:without",
+    "label": "Says \u201cwithout\u201d",
+    "kind": "continuous",
+    "coef": 0.012,
+    "mean": 0.002399,
+    "sd": 0.019654,
+    "prevalence": null
+   },
+   {
+    "key": "tf:don't know",
+    "label": "Says \u201cdon't know\u201d",
+    "kind": "continuous",
+    "coef": -0.0521,
+    "mean": 0.002161,
+    "sd": 0.017341,
+    "prevalence": null
+   },
+   {
+    "key": "tf:more than",
+    "label": "Says \u201cmore than\u201d",
+    "kind": "continuous",
+    "coef": 0.0293,
+    "mean": 0.002337,
+    "sd": 0.018407,
+    "prevalence": null
+   },
+   {
+    "key": "tf:to go",
+    "label": "Says \u201cto go\u201d",
+    "kind": "continuous",
+    "coef": 0.0053,
+    "mean": 0.002146,
+    "sd": 0.017019,
+    "prevalence": null
+   },
+   {
+    "key": "tf:you think",
+    "label": "Says \u201cyou think\u201d",
+    "kind": "continuous",
+    "coef": 0.0374,
+    "mean": 0.002166,
+    "sd": 0.01741,
+    "prevalence": null
+   },
+   {
+    "key": "tf:am",
+    "label": "Says \u201cam\u201d",
+    "kind": "continuous",
+    "coef": -0.0535,
+    "mean": 0.00227,
+    "sd": 0.018323,
+    "prevalence": null
+   },
+   {
+    "key": "tf:administration",
+    "label": "Says \u201cadministration\u201d",
+    "kind": "continuous",
+    "coef": -0.0506,
+    "mean": 0.002871,
+    "sd": 0.023533,
+    "prevalence": null
+   },
+   {
+    "key": "tf:care",
+    "label": "Says \u201ccare\u201d",
+    "kind": "continuous",
+    "coef": -0.0792,
+    "mean": 0.002471,
+    "sd": 0.020463,
+    "prevalence": null
+   },
+   {
+    "key": "tf:which is",
+    "label": "Says \u201cwhich is\u201d",
+    "kind": "continuous",
+    "coef": -0.0049,
+    "mean": 0.002115,
+    "sd": 0.016898,
+    "prevalence": null
+   },
+   {
+    "key": "tf:change",
+    "label": "Says \u201cchange\u201d",
+    "kind": "continuous",
+    "coef": -0.0112,
+    "mean": 0.00242,
+    "sd": 0.019532,
+    "prevalence": null
+   },
+   {
+    "key": "tf:be a",
+    "label": "Says \u201cbe a\u201d",
+    "kind": "continuous",
+    "coef": 0.0006,
+    "mean": 0.002155,
+    "sd": 0.017548,
+    "prevalence": null
+   },
+   {
+    "key": "tf:able",
+    "label": "Says \u201cable\u201d",
+    "kind": "continuous",
+    "coef": -0.1512,
+    "mean": 0.002195,
+    "sd": 0.017809,
+    "prevalence": null
+   },
+   {
+    "key": "tf:able to",
+    "label": "Says \u201cable to\u201d",
+    "kind": "continuous",
+    "coef": 0.1791,
+    "mean": 0.00218,
+    "sd": 0.017738,
+    "prevalence": null
+   },
+   {
+    "key": "tf:house",
+    "label": "Says \u201chouse\u201d",
+    "kind": "continuous",
+    "coef": -0.0186,
+    "mean": 0.002516,
+    "sd": 0.020738,
+    "prevalence": null
+   },
+   {
+    "key": "tf:you are",
+    "label": "Says \u201cyou are\u201d",
+    "kind": "continuous",
+    "coef": -0.0047,
+    "mean": 0.002322,
+    "sd": 0.019559,
+    "prevalence": null
+   },
+   {
+    "key": "tf:go to",
+    "label": "Says \u201cgo to\u201d",
+    "kind": "continuous",
+    "coef": -0.0152,
+    "mean": 0.002192,
+    "sd": 0.01796,
+    "prevalence": null
+   },
+   {
+    "key": "tf:her",
+    "label": "Says \u201cher\u201d",
+    "kind": "continuous",
+    "coef": 0.0348,
+    "mean": 0.002936,
+    "sd": 0.025063,
+    "prevalence": null
+   },
+   {
+    "key": "tf:making",
+    "label": "Says \u201cmaking\u201d",
+    "kind": "continuous",
+    "coef": -0.0156,
+    "mean": 0.002157,
+    "sd": 0.017481,
+    "prevalence": null
+   },
+   {
+    "key": "tf:we've",
+    "label": "Says \u201cwe've\u201d",
+    "kind": "continuous",
+    "coef": 0.0073,
+    "mean": 0.002285,
+    "sd": 0.018663,
+    "prevalence": null
+   },
+   {
+    "key": "tf:great",
+    "label": "Says \u201cgreat\u201d",
+    "kind": "continuous",
+    "coef": 0.0094,
+    "mean": 0.002116,
+    "sd": 0.017439,
+    "prevalence": null
+   },
+   {
+    "key": "tf:question",
+    "label": "Says \u201cquestion\u201d",
+    "kind": "continuous",
+    "coef": -0.0203,
+    "mean": 0.002192,
+    "sd": 0.017975,
+    "prevalence": null
+   },
+   {
+    "key": "tf:to say",
+    "label": "Says \u201cto say\u201d",
+    "kind": "continuous",
+    "coef": -0.0245,
+    "mean": 0.001995,
+    "sd": 0.016423,
+    "prevalence": null
+   },
+   {
+    "key": "tf:keep",
+    "label": "Says \u201ckeep\u201d",
+    "kind": "continuous",
+    "coef": -0.0253,
+    "mean": 0.002346,
+    "sd": 0.019335,
+    "prevalence": null
+   },
+   {
+    "key": "tf:united states",
+    "label": "Says \u201cunited states\u201d",
+    "kind": "continuous",
+    "coef": 0.1338,
+    "mean": 0.002296,
+    "sd": 0.01897,
+    "prevalence": null
+   },
+   {
+    "key": "tf:have the",
+    "label": "Says \u201chave the\u201d",
+    "kind": "continuous",
+    "coef": -0.0176,
+    "mean": 0.0021,
+    "sd": 0.017058,
+    "prevalence": null
+   },
+   {
+    "key": "tf:rights",
+    "label": "Says \u201crights\u201d",
+    "kind": "continuous",
+    "coef": -0.0222,
+    "mean": 0.002761,
+    "sd": 0.023297,
+    "prevalence": null
+   },
+   {
+    "key": "tf:says",
+    "label": "Says \u201csays\u201d",
+    "kind": "continuous",
+    "coef": 0.0334,
+    "mean": 0.002299,
+    "sd": 0.01951,
+    "prevalence": null
+   },
+   {
+    "key": "tf:when you",
+    "label": "Says \u201cwhen you\u201d",
+    "kind": "continuous",
+    "coef": 0.0423,
+    "mean": 0.002017,
+    "sd": 0.016479,
+    "prevalence": null
+   },
+   {
+    "key": "tf:the united",
+    "label": "Says \u201cthe united\u201d",
+    "kind": "continuous",
+    "coef": -0.1071,
+    "mean": 0.002284,
+    "sd": 0.018945,
+    "prevalence": null
+   },
+   {
+    "key": "tf:use",
+    "label": "Says \u201cuse\u201d",
+    "kind": "continuous",
+    "coef": 0.0029,
+    "mean": 0.00219,
+    "sd": 0.017962,
+    "prevalence": null
+   },
+   {
+    "key": "tf:while",
+    "label": "Says \u201cwhile\u201d",
+    "kind": "continuous",
+    "coef": 0.0275,
+    "mean": 0.002164,
+    "sd": 0.017831,
+    "prevalence": null
+   },
+   {
+    "key": "tf:called",
+    "label": "Says \u201ccalled\u201d",
+    "kind": "continuous",
+    "coef": 0.0127,
+    "mean": 0.002105,
+    "sd": 0.017354,
+    "prevalence": null
+   },
+   {
+    "key": "tf:we need",
+    "label": "Says \u201cwe need\u201d",
+    "kind": "continuous",
+    "coef": -0.0732,
+    "mean": 0.002391,
+    "sd": 0.019896,
+    "prevalence": null
+   },
+   {
+    "key": "tf:of our",
+    "label": "Says \u201cof our\u201d",
+    "kind": "continuous",
+    "coef": -0.0178,
+    "mean": 0.002248,
+    "sd": 0.018916,
+    "prevalence": null
+   },
+   {
+    "key": "tf:part of",
+    "label": "Says \u201cpart of\u201d",
+    "kind": "continuous",
+    "coef": -0.0383,
+    "mean": 0.00204,
+    "sd": 0.016839,
+    "prevalence": null
+   },
+   {
+    "key": "tf:who are",
+    "label": "Says \u201cwho are\u201d",
+    "kind": "continuous",
+    "coef": 0.0405,
+    "mean": 0.002129,
+    "sd": 0.017802,
+    "prevalence": null
+   },
+   {
+    "key": "tf:away",
+    "label": "Says \u201caway\u201d",
+    "kind": "continuous",
+    "coef": 0.0041,
+    "mean": 0.002116,
+    "sd": 0.01749,
+    "prevalence": null
+   },
+   {
+    "key": "tf:are you",
+    "label": "Says \u201care you\u201d",
+    "kind": "continuous",
+    "coef": 0.0238,
+    "mean": 0.002141,
+    "sd": 0.018118,
+    "prevalence": null
+   },
+   {
+    "key": "tf:politics",
+    "label": "Says \u201cpolitics\u201d",
+    "kind": "continuous",
+    "coef": 0.018,
+    "mean": 0.002609,
+    "sd": 0.022181,
+    "prevalence": null
+   },
+   {
+    "key": "tf:three",
+    "label": "Says \u201cthree\u201d",
+    "kind": "continuous",
+    "coef": 0.0116,
+    "mean": 0.002282,
+    "sd": 0.019729,
+    "prevalence": null
+   },
+   {
+    "key": "tf:to a",
+    "label": "Says \u201cto a\u201d",
+    "kind": "continuous",
+    "coef": -0.0191,
+    "mean": 0.002016,
+    "sd": 0.016639,
+    "prevalence": null
+   },
+   {
+    "key": "tf:done",
+    "label": "Says \u201cdone\u201d",
+    "kind": "continuous",
+    "coef": -0.0395,
+    "mean": 0.002102,
+    "sd": 0.017675,
+    "prevalence": null
+   },
+   {
+    "key": "tf:should be",
+    "label": "Says \u201cshould be\u201d",
+    "kind": "continuous",
+    "coef": -0.0456,
+    "mean": 0.00208,
+    "sd": 0.017429,
+    "prevalence": null
+   },
+   {
+    "key": "tf:show",
+    "label": "Says \u201cshow\u201d",
+    "kind": "continuous",
+    "coef": 0.0004,
+    "mean": 0.002146,
+    "sd": 0.01816,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and it's",
+    "label": "Says \u201cand it's\u201d",
+    "kind": "continuous",
+    "coef": 0.0085,
+    "mean": 0.001984,
+    "sd": 0.016481,
+    "prevalence": null
+   },
+   {
+    "key": "tf:like a",
+    "label": "Says \u201clike a\u201d",
+    "kind": "continuous",
+    "coef": 0.0144,
+    "mean": 0.002024,
+    "sd": 0.01703,
+    "prevalence": null
+   },
+   {
+    "key": "tf:long",
+    "label": "Says \u201clong\u201d",
+    "kind": "continuous",
+    "coef": 0.0578,
+    "mean": 0.002026,
+    "sd": 0.016873,
+    "prevalence": null
+   },
+   {
+    "key": "tf:act",
+    "label": "Says \u201cact\u201d",
+    "kind": "continuous",
+    "coef": -0.0015,
+    "mean": 0.002576,
+    "sd": 0.022014,
+    "prevalence": null
+   },
+   {
+    "key": "tf:ballot",
+    "label": "Says \u201cballot\u201d",
+    "kind": "continuous",
+    "coef": 0.0313,
+    "mean": 0.002724,
+    "sd": 0.023258,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i'm not",
+    "label": "Says \u201ci'm not\u201d",
+    "kind": "continuous",
+    "coef": -0.0066,
+    "mean": 0.001966,
+    "sd": 0.016748,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and that's",
+    "label": "Says \u201cand that's\u201d",
+    "kind": "continuous",
+    "coef": -0.0013,
+    "mean": 0.001927,
+    "sd": 0.01617,
+    "prevalence": null
+   },
+   {
+    "key": "tf:talking about",
+    "label": "Says \u201ctalking about\u201d",
+    "kind": "continuous",
+    "coef": 0.068,
+    "mean": 0.001945,
+    "sd": 0.016439,
+    "prevalence": null
+   },
+   {
+    "key": "tf:you don't",
+    "label": "Says \u201cyou don't\u201d",
+    "kind": "continuous",
+    "coef": 0.0172,
+    "mean": 0.002015,
+    "sd": 0.016976,
+    "prevalence": null
+   },
+   {
+    "key": "tf:find",
+    "label": "Says \u201cfind\u201d",
+    "kind": "continuous",
+    "coef": -0.0409,
+    "mean": 0.001989,
+    "sd": 0.0167,
+    "prevalence": null
+   },
+   {
+    "key": "tf:means",
+    "label": "Says \u201cmeans\u201d",
+    "kind": "continuous",
+    "coef": -0.005,
+    "mean": 0.00211,
+    "sd": 0.017853,
+    "prevalence": null
+   },
+   {
+    "key": "tf:million",
+    "label": "Says \u201cmillion\u201d",
+    "kind": "continuous",
+    "coef": 0.0171,
+    "mean": 0.002475,
+    "sd": 0.021922,
+    "prevalence": null
+   },
+   {
+    "key": "tf:you want",
+    "label": "Says \u201cyou want\u201d",
+    "kind": "continuous",
+    "coef": 0.0423,
+    "mean": 0.001973,
+    "sd": 0.016925,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i am",
+    "label": "Says \u201ci am\u201d",
+    "kind": "continuous",
+    "coef": 0.0743,
+    "mean": 0.002074,
+    "sd": 0.017814,
+    "prevalence": null
+   },
+   {
+    "key": "tf:of people",
+    "label": "Says \u201cof people\u201d",
+    "kind": "continuous",
+    "coef": 0.0327,
+    "mean": 0.001927,
+    "sd": 0.016386,
+    "prevalence": null
+   },
+   {
+    "key": "tf:always",
+    "label": "Says \u201calways\u201d",
+    "kind": "continuous",
+    "coef": 0.0261,
+    "mean": 0.002025,
+    "sd": 0.017272,
+    "prevalence": null
+   },
+   {
+    "key": "tf:end",
+    "label": "Says \u201cend\u201d",
+    "kind": "continuous",
+    "coef": 0.03,
+    "mean": 0.002139,
+    "sd": 0.018776,
+    "prevalence": null
+   },
+   {
+    "key": "tf:donald",
+    "label": "Says \u201cdonald\u201d",
+    "kind": "continuous",
+    "coef": 0.0639,
+    "mean": 0.002277,
+    "sd": 0.020129,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i want",
+    "label": "Says \u201ci want\u201d",
+    "kind": "continuous",
+    "coef": 0.0597,
+    "mean": 0.002002,
+    "sd": 0.017778,
+    "prevalence": null
+   },
+   {
+    "key": "tf:another",
+    "label": "Says \u201canother\u201d",
+    "kind": "continuous",
+    "coef": 0.0062,
+    "mean": 0.002039,
+    "sd": 0.017496,
+    "prevalence": null
+   },
+   {
+    "key": "tf:know that",
+    "label": "Says \u201cknow that\u201d",
+    "kind": "continuous",
+    "coef": 0.0386,
+    "mean": 0.0019,
+    "sd": 0.016503,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i i",
+    "label": "Says \u201ci i\u201d",
+    "kind": "continuous",
+    "coef": -0.0309,
+    "mean": 0.001857,
+    "sd": 0.016019,
+    "prevalence": null
+   },
+   {
+    "key": "tf:whether",
+    "label": "Says \u201cwhether\u201d",
+    "kind": "continuous",
+    "coef": 0.0023,
+    "mean": 0.002063,
+    "sd": 0.017623,
+    "prevalence": null
+   },
+   {
+    "key": "tf:place",
+    "label": "Says \u201cplace\u201d",
+    "kind": "continuous",
+    "coef": 0.0054,
+    "mean": 0.001934,
+    "sd": 0.01661,
+    "prevalence": null
+   },
+   {
+    "key": "tf:working",
+    "label": "Says \u201cworking\u201d",
+    "kind": "continuous",
+    "coef": 0.0414,
+    "mean": 0.002165,
+    "sd": 0.019203,
+    "prevalence": null
+   },
+   {
+    "key": "tf:together",
+    "label": "Says \u201ctogether\u201d",
+    "kind": "continuous",
+    "coef": -0.0163,
+    "mean": 0.00224,
+    "sd": 0.01989,
+    "prevalence": null
+   },
+   {
+    "key": "tf:agree",
+    "label": "Says \u201cagree\u201d",
+    "kind": "continuous",
+    "coef": 0.0525,
+    "mean": 0.001854,
+    "sd": 0.016212,
+    "prevalence": null
+   },
+   {
+    "key": "tf:live",
+    "label": "Says \u201clive\u201d",
+    "kind": "continuous",
+    "coef": -0.0179,
+    "mean": 0.002147,
+    "sd": 0.019121,
+    "prevalence": null
+   },
+   {
+    "key": "tf:since",
+    "label": "Says \u201csince\u201d",
+    "kind": "continuous",
+    "coef": 0.0468,
+    "mean": 0.00201,
+    "sd": 0.017528,
+    "prevalence": null
+   },
+   {
+    "key": "tf:with a",
+    "label": "Says \u201cwith a\u201d",
+    "kind": "continuous",
+    "coef": 0.0115,
+    "mean": 0.001826,
+    "sd": 0.015845,
+    "prevalence": null
+   },
+   {
+    "key": "tf:like the",
+    "label": "Says \u201clike the\u201d",
+    "kind": "continuous",
+    "coef": -0.0348,
+    "mean": 0.001802,
+    "sd": 0.015544,
+    "prevalence": null
+   },
+   {
+    "key": "tf:love",
+    "label": "Says \u201clove\u201d",
+    "kind": "continuous",
+    "coef": 0.0409,
+    "mean": 0.00212,
+    "sd": 0.01975,
+    "prevalence": null
+   },
+   {
+    "key": "tf:has been",
+    "label": "Says \u201chas been\u201d",
+    "kind": "continuous",
+    "coef": 0.0431,
+    "mean": 0.001972,
+    "sd": 0.017179,
+    "prevalence": null
+   },
+   {
+    "key": "tf:choice",
+    "label": "Says \u201cchoice\u201d",
+    "kind": "continuous",
+    "coef": 0.053,
+    "mean": 0.003292,
+    "sd": 0.029721,
+    "prevalence": null
+   },
+   {
+    "key": "tf:ever",
+    "label": "Says \u201cever\u201d",
+    "kind": "continuous",
+    "coef": -0.0728,
+    "mean": 0.002046,
+    "sd": 0.01822,
+    "prevalence": null
+   },
+   {
+    "key": "tf:understand",
+    "label": "Says \u201cunderstand\u201d",
+    "kind": "continuous",
+    "coef": -0.0083,
+    "mean": 0.002,
+    "sd": 0.017936,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and a",
+    "label": "Says \u201cand a\u201d",
+    "kind": "continuous",
+    "coef": -0.0204,
+    "mean": 0.00193,
+    "sd": 0.016962,
+    "prevalence": null
+   },
+   {
+    "key": "tf:used",
+    "label": "Says \u201cused\u201d",
+    "kind": "continuous",
+    "coef": -0.0345,
+    "mean": 0.002029,
+    "sd": 0.017963,
+    "prevalence": null
+   },
+   {
+    "key": "tf:across the",
+    "label": "Says \u201cacross the\u201d",
+    "kind": "continuous",
+    "coef": -0.0071,
+    "mean": 0.002028,
+    "sd": 0.017674,
+    "prevalence": null
+   },
+   {
+    "key": "tf:seen",
+    "label": "Says \u201cseen\u201d",
+    "kind": "continuous",
+    "coef": 0.0222,
+    "mean": 0.001961,
+    "sd": 0.017265,
+    "prevalence": null
+   },
+   {
+    "key": "tf:know what",
+    "label": "Says \u201cknow what\u201d",
+    "kind": "continuous",
+    "coef": 0.0417,
+    "mean": 0.001805,
+    "sd": 0.01577,
+    "prevalence": null
+   },
+   {
+    "key": "tf:case",
+    "label": "Says \u201ccase\u201d",
+    "kind": "continuous",
+    "coef": -0.0093,
+    "mean": 0.002081,
+    "sd": 0.01865,
+    "prevalence": null
+   },
+   {
+    "key": "tf:stop",
+    "label": "Says \u201cstop\u201d",
+    "kind": "continuous",
+    "coef": -0.0156,
+    "mean": 0.001969,
+    "sd": 0.017448,
+    "prevalence": null
+   },
+   {
+    "key": "tf:republicans",
+    "label": "Says \u201crepublicans\u201d",
+    "kind": "continuous",
+    "coef": -0.0146,
+    "mean": 0.002186,
+    "sd": 0.019745,
+    "prevalence": null
+   },
+   {
+    "key": "tf:that are",
+    "label": "Says \u201cthat are\u201d",
+    "kind": "continuous",
+    "coef": 0.0002,
+    "mean": 0.001862,
+    "sd": 0.016517,
+    "prevalence": null
+   },
+   {
+    "key": "tf:the world",
+    "label": "Says \u201cthe world\u201d",
+    "kind": "continuous",
+    "coef": 0.0056,
+    "mean": 0.002054,
+    "sd": 0.018494,
+    "prevalence": null
+   },
+   {
+    "key": "tf:people are",
+    "label": "Says \u201cpeople are\u201d",
+    "kind": "continuous",
+    "coef": 0.0032,
+    "mean": 0.001894,
+    "sd": 0.017445,
+    "prevalence": null
+   },
+   {
+    "key": "tf:and this",
+    "label": "Says \u201cand this\u201d",
+    "kind": "continuous",
+    "coef": -0.0227,
+    "mean": 0.001819,
+    "sd": 0.015896,
+    "prevalence": null
+   },
+   {
+    "key": "tf:anything",
+    "label": "Says \u201canything\u201d",
+    "kind": "continuous",
+    "coef": 0.0215,
+    "mean": 0.001784,
+    "sd": 0.015845,
+    "prevalence": null
+   },
+   {
+    "key": "tf:democrats",
+    "label": "Says \u201cdemocrats\u201d",
+    "kind": "continuous",
+    "coef": 0.0412,
+    "mean": 0.002172,
+    "sd": 0.019717,
+    "prevalence": null
+   },
+   {
+    "key": "tf:free",
+    "label": "Says \u201cfree\u201d",
+    "kind": "continuous",
+    "coef": 0.0076,
+    "mean": 0.002134,
+    "sd": 0.019416,
+    "prevalence": null
+   },
+   {
+    "key": "tf:guys",
+    "label": "Says \u201cguys\u201d",
+    "kind": "continuous",
+    "coef": -0.1307,
+    "mean": 0.002197,
+    "sd": 0.02064,
+    "prevalence": null
+   },
+   {
+    "key": "tf:here's",
+    "label": "Says \u201chere's\u201d",
+    "kind": "continuous",
+    "coef": -0.0331,
+    "mean": 0.001824,
+    "sd": 0.016022,
+    "prevalence": null
+   },
+   {
+    "key": "tf:happening",
+    "label": "Says \u201chappening\u201d",
+    "kind": "continuous",
+    "coef": -0.0076,
+    "mean": 0.001942,
+    "sd": 0.017494,
+    "prevalence": null
+   },
+   {
+    "key": "tf:might",
+    "label": "Says \u201cmight\u201d",
+    "kind": "continuous",
+    "coef": 0.0228,
+    "mean": 0.001822,
+    "sd": 0.016196,
+    "prevalence": null
+   },
+   {
+    "key": "tf:not a",
+    "label": "Says \u201cnot a\u201d",
+    "kind": "continuous",
+    "coef": -0.0005,
+    "mean": 0.001833,
+    "sd": 0.016384,
+    "prevalence": null
+   },
+   {
+    "key": "tf:000",
+    "label": "Says \u201c000\u201d",
+    "kind": "continuous",
+    "coef": 0.0138,
+    "mean": 0.002145,
+    "sd": 0.019386,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i just",
+    "label": "Says \u201ci just\u201d",
+    "kind": "continuous",
+    "coef": 0.033,
+    "mean": 0.001843,
+    "sd": 0.017067,
+    "prevalence": null
+   },
+   {
+    "key": "tf:i know",
+    "label": "Says \u201ci know\u201d",
+    "kind": "continuous",
+    "coef": -0.0555,
+    "mean": 0.00185,
+    "sd": 0.016671,
+    "prevalence": null
+   },
+   {
+    "key": "tf:matter",
+    "label": "Says \u201cmatter\u201d",
+    "kind": "continuous",
+    "coef": 0.0376,
+    "mean": 0.001935,
+    "sd": 0.017423,
+    "prevalence": null
+   },
+   {
+    "key": "tf:donald trump",
+    "label": "Says \u201cdonald trump\u201d",
+    "kind": "continuous",
+    "coef": -0.0135,
+    "mean": 0.002071,
+    "sd": 0.018687,
+    "prevalence": null
+   },
+   {
+    "key": "tf:talk about",
+    "label": "Says \u201ctalk about\u201d",
+    "kind": "continuous",
+    "coef": 0.038,
+    "mean": 0.001729,
+    "sd": 0.015727,
+    "prevalence": null
+   },
+   {
+    "key": "tf:example",
+    "label": "Says \u201cexample\u201d",
+    "kind": "continuous",
+    "coef": 0.0196,
+    "mean": 0.001723,
+    "sd": 0.015426,
+    "prevalence": null
+   },
+   {
+    "key": "tf:man",
+    "label": "Says \u201cman\u201d",
+    "kind": "continuous",
+    "coef": -0.0247,
+    "mean": 0.001938,
+    "sd": 0.017967,
+    "prevalence": null
+   },
+   {
+    "key": "tf:what i",
+    "label": "Says \u201cwhat i\u201d",
+    "kind": "continuous",
+    "coef": 0.0078,
+    "mean": 0.001675,
+    "sd": 0.015007,
+    "prevalence": null
+   },
+   {
+    "key": "tf:republican",
+    "label": "Says \u201crepublican\u201d",
+    "kind": "continuous",
+    "coef": 0.0044,
+    "mean": 0.002219,
+    "sd": 0.020656,
+    "prevalence": null
+   },
+   {
+    "key": "tf:may",
+    "label": "Says \u201cmay\u201d",
+    "kind": "continuous",
+    "coef": -0.0078,
+    "mean": 0.002022,
+    "sd": 0.018272,
+    "prevalence": null
+   },
+   {
+    "key": "tf:second",
+    "label": "Says \u201csecond\u201d",
+    "kind": "continuous",
+    "coef": 0.0013,
+    "mean": 0.001869,
+    "sd": 0.016801,
+    "prevalence": null
+   },
+   {
+    "key": "tf:family",
+    "label": "Says \u201cfamily\u201d",
+    "kind": "continuous",
+    "coef": -0.0203,
+    "mean": 0.001977,
+    "sd": 0.018098,
+    "prevalence": null
+   }
+  ],
+  "metrics": {
+   "leaveOneChannelOut": {
+    "auc": 0.597,
+    "aucChannelOnly": 0.556,
+    "withinChannelAuc": 0.552,
+    "withinChannelAucChannelOnly": 0.5,
+    "topDecileRate": 0.218,
+    "topDecileLift": 1.47,
+    "bottomDecileRate": 0.114,
+    "deciles": [
+     {
+      "decile": 1,
+      "n": 1845,
+      "predicted": 0.395,
+      "observed": 0.218
+     },
+     {
+      "decile": 2,
+      "n": 1846,
+      "predicted": 0.242,
+      "observed": 0.193
+     },
+     {
+      "decile": 3,
+      "n": 1845,
+      "predicted": 0.199,
+      "observed": 0.197
+     },
+     {
+      "decile": 4,
+      "n": 1846,
+      "predicted": 0.164,
+      "observed": 0.178
+     },
+     {
+      "decile": 5,
+      "n": 1845,
+      "predicted": 0.137,
+      "observed": 0.158
+     },
+     {
+      "decile": 6,
+      "n": 1846,
+      "predicted": 0.119,
+      "observed": 0.127
+     },
+     {
+      "decile": 7,
+      "n": 1845,
+      "predicted": 0.103,
+      "observed": 0.121
+     },
+     {
+      "decile": 8,
+      "n": 1846,
+      "predicted": 0.086,
+      "observed": 0.089
+     },
+     {
+      "decile": 9,
+      "n": 1845,
+      "predicted": 0.066,
+      "observed": 0.087
+     },
+     {
+      "decile": 10,
+      "n": 1846,
+      "predicted": 0.026,
+      "observed": 0.114
+     }
+    ],
+    "withinChannel": [
+     {
+      "channel": "Brian Tyler Cohen",
+      "n": 1793,
+      "auc": 0.561
+     },
+     {
+      "channel": "Turning Point USA",
+      "n": 1684,
+      "auc": 0.586
+     },
+     {
+      "channel": "Ben Shapiro",
+      "n": 1584,
+      "auc": 0.595
+     },
+     {
+      "channel": "Benny Johnson",
+      "n": 1342,
+      "auc": 0.563
+     },
+     {
+      "channel": "PragerU",
+      "n": 1224,
+      "auc": 0.547
+     },
+     {
+      "channel": "MeidasTouch",
+      "n": 976,
+      "auc": 0.629
+     },
+     {
+      "channel": "The Democrats",
+      "n": 891,
+      "auc": 0.622
+     },
+     {
+      "channel": "Jubilee",
+      "n": 841,
+      "auc": 0.541
+     },
+     {
+      "channel": "Pod Save America",
+      "n": 798,
+      "auc": 0.485
+     },
+     {
+      "channel": "Abdul El-Sayed",
+      "n": 633,
+      "auc": 0.499
+     },
+     {
+      "channel": "The Daily Wire",
+      "n": 541,
+      "auc": 0.59
+     },
+     {
+      "channel": "Vivek Ramaswamy",
+      "n": 511,
+      "auc": 0.627
+     },
+     {
+      "channel": "Cory Booker",
+      "n": 461,
+      "auc": 0.55
+     },
+     {
+      "channel": "The Free Press",
+      "n": 417,
+      "auc": 0.47
+     },
+     {
+      "channel": "James Talarico",
+      "n": 415,
+      "auc": 0.447
+     },
+     {
+      "channel": "Brennan Center for Justice",
+      "n": 404,
+      "auc": 0.496
+     },
+     {
+      "channel": "The Hometown Holler",
+      "n": 275,
+      "auc": 0.375
+     },
+     {
+      "channel": "Sherrod Brown",
+      "n": 260,
+      "auc": 0.438
+     },
+     {
+      "channel": "JB Pritzker",
+      "n": 223,
+      "auc": 0.413
+     },
+     {
+      "channel": "No Labels",
+      "n": 223,
+      "auc": 0.5
+     },
+     {
+      "channel": "Democracy Forward",
+      "n": 211,
+      "auc": 0.527
+     },
+     {
+      "channel": "Congresswoman Nancy Mace",
+      "n": 204,
+      "auc": 0.531
+     },
+     {
+      "channel": "Bernie Sanders",
+      "n": 200,
+      "auc": 0.492
+     },
+     {
+      "channel": "Ro Khanna",
+      "n": 190,
+      "auc": 0.568
+     },
+     {
+      "channel": "Voters Not Politicians",
+      "n": 185,
+      "auc": 0.527
+     },
+     {
+      "channel": "Gavin Newsom",
+      "n": 166,
+      "auc": 0.534
+     },
+     {
+      "channel": "Mallory McMorrow",
+      "n": 163,
+      "auc": 0.536
+     },
+     {
+      "channel": "Mary Peltola",
+      "n": 159,
+      "auc": 0.493
+     },
+     {
+      "channel": "Pete Buttigieg",
+      "n": 155,
+      "auc": 0.506
+     },
+     {
+      "channel": "Rep Maxwell Alejandro Frost",
+      "n": 112,
+      "auc": 0.607
+     }
+    ],
+    "perFamily": [
+     {
+      "family": "Candidates & officials",
+      "n": 4950,
+      "baseRate": 0.166,
+      "auc": 0.555
+     },
+     {
+      "family": "Nonpartisan media",
+      "n": 1453,
+      "baseRate": 0.196,
+      "auc": 0.535
+     },
+     {
+      "family": "Partisan media",
+      "n": 9942,
+      "baseRate": 0.141,
+      "auc": 0.636
+     },
+     {
+      "family": "Reform",
+      "n": 1196,
+      "baseRate": 0.132,
+      "auc": 0.521
+     },
+     {
+      "family": "UK",
+      "n": 98,
+      "baseRate": 0.01,
+      "auc": 0.485
+     },
+     {
+      "family": "Voting rights",
+      "n": 816,
+      "baseRate": 0.08,
+      "auc": 0.497
+     }
+    ],
+    "bySegment": {
+     "withTranscript": {
+      "n": 3412,
+      "baseRate": 0.154,
+      "auc": 0.571,
+      "withinChannelAuc": 0.512
+     },
+     "withoutTranscript": {
+      "n": 15043,
+      "baseRate": 0.147,
+      "auc": 0.61,
+      "withinChannelAuc": 0.557
+     }
+    }
+   },
+   "timeSplit": {
+    "cut": "2026-07-01",
+    "train": 13617,
+    "test": 4838,
+    "testBaseRate": 0.126,
+    "auc": 0.564
+   }
+  },
+  "checks": [
+   {
+    "id": "vqojtbL7Gqs",
+    "input": {
+     "title": "The History of Dueling in the United States",
+     "description": "Dueling was once common in the United States. Here\u2019s how states helped change that. Visit the link below to sign up to receive the free State Court Report newsletter and learn more about what's happening in state courts.\n\nhttps://bit.ly/3RinoZG",
+     "tags": [],
+     "durationSec": 76,
+     "published": "2025-04-15T18:13:06Z",
+     "group": "voting-rights",
+     "channelMedian": 1160
+    },
+    "transcript": true,
+    "p": 0.070758
+   },
+   {
+    "id": "qym5hK52LQI",
+    "input": {
+     "title": "Why Aren't Young Men Reading in 2025?",
+     "description": "Why are young men and boys not reading in America in 2025?\n\nShilo Brooks: \u201cI suspect there\u2019s plenty of trash that they\u2019re willing to ingest. But what they\u2019re reading are ephemeral things rather than enduring things.\u201d\n\nShilo Brooks wants to save men from despair. His prescription? Books.\n\nThis is the driving vision of the new podcast he just launched with The Free Press called Old School, where he talks to guests about the books that shaped their lives.\n\nGet it now on Spotify, Apple podcasts, and YouTube.",
+     "tags": [],
+     "durationSec": 78,
+     "published": "2025-10-31T16:20:08Z",
+     "group": "media-nonpartisan",
+     "channelMedian": 9068
+    },
+    "transcript": true,
+    "p": 0.004329
+   },
+   {
+    "id": "K8XPVwhiqMg",
+    "input": {
+     "title": "A bipartisan fiscal commission could finally force action",
+     "description": "America\u2019s debt keeps climbing\u2014now over $31 trillion. Lawmakers in both parties think a bipartisan fiscal commission could finally force action\u2014read the story at NoLabels.org/The-Latest and let us know what you think.",
+     "tags": [],
+     "durationSec": 49,
+     "published": "2026-03-19T17:31:46Z",
+     "group": "reform",
+     "channelMedian": 1273
+    },
+    "transcript": true,
+    "p": 0.006712
+   },
+   {
+    "id": "pRzWL_pH_ZI",
+    "input": {
+     "title": "Do you believe in aliens? #aliens #stevenspielberg #filmtok #thesplit #jubilee",
+     "description": "Hey you \ud83d\udc48 Wanna be in a Jubilee video? https://bit.ly/be-in-a-video\n\nLET\u2019S BE FRIENDS\nInstagram: https://www.instagram.com/jubileemedia/\nTikTok: https://www.tiktok.com/@jubilee?lang=en\nWebsite: https://www.jubileemedia.com\n\nOUR LOVE + DATING CHANNEL \ud83c\udf51\nYouTube: https://www.youtube.com/@lovecommanectar\nInstagram: https://www.instagram.com/lovecommanectar  \nNectar app: https://lovecommanectar.co/m/download-nectar\n\nARE YOU A BRAND? WANNA WORK WITH US?\nEmail partnerships@jubileemedia.com\n\nFEATURING \n\n\nTIMECODES\n00:00 Intro",
+     "tags": [
+      "jubilee",
+      "jubilee media",
+      "jubilee project",
+      "middle ground",
+      "spectrum",
+      "odd man out",
+      "versus 1",
+      "embrace empathy",
+      "live deeper",
+      "love language",
+      "blind devotion",
+      "Odd One Out",
+      "Game Show",
+      "Dating Show",
+      "Nectar",
+      "Ask Me Anything",
+      "Gen Z",
+      "Millennial",
+      "loveprint",
+      "jason y lee"
+     ],
+     "durationSec": 76,
+     "published": "2026-07-09T18:00:13Z",
+     "group": "media-nonpartisan",
+     "channelMedian": 44999
+    },
+    "transcript": true,
+    "p": 0.053281
+   },
+   {
+    "id": "D6kGj4LdBh8",
+    "input": {
+     "title": "@CrainAndCone takes on Washington \ud83c\uddfa\ud83c\uddf8\ud83c\udfc8",
+     "description": "",
+     "tags": [],
+     "durationSec": 44,
+     "published": "2025-04-15T15:34:49Z",
+     "group": "media-R",
+     "channelMedian": 28551
+    },
+    "transcript": false,
+    "p": 0.080525
+   },
+   {
+    "id": "Q_okD3_gA0U",
+    "input": {
+     "title": "Well said Franklin! \ud83e\udd0c \ud83d\ude2e\u200d\ud83d\udca8",
+     "description": "",
+     "tags": [],
+     "durationSec": 45,
+     "published": "2025-10-04T19:00:22Z",
+     "group": "media-R",
+     "channelMedian": 12145.5
+    },
+    "transcript": false,
+    "p": 0.075604
+   },
+   {
+    "id": "AYtA2AllGLE",
+    "input": {
+     "title": "Does Location Determine a Baby\u2019s Worth?",
+     "description": "#charliekirk #2026 #america #politics #debate #abortiondebate #trending",
+     "tags": [
+      "turning point usa",
+      "turning point",
+      "tpusa",
+      "Charlie kirk",
+      "viral",
+      "trending"
+     ],
+     "durationSec": 62,
+     "published": "2026-03-15T22:00:08Z",
+     "group": "media-R",
+     "channelMedian": 131371.5
+    },
+    "transcript": false,
+    "p": 0.164047
+   },
+   {
+    "id": "g2qKqqijkmU",
+    "input": {
+     "title": "Happy 250th Birthday, America!",
+     "description": "250 years ago, our Founders built something new: a nation governed by the people, endowed with the unalienable rights to Life, Liberty, and the Pursuit of Happiness. \n\nThe work toward a \"more perfect union\" is far from finished. At 250, it's just beginning. It's on all of us to keep it alive. \ud83c\uddfa\ud83c\uddf8",
+     "tags": [],
+     "durationSec": 37,
+     "published": "2026-07-04T13:30:42Z",
+     "group": "candidate-D",
+     "channelMedian": 1898
+    },
+    "transcript": false,
+    "p": 0.083014
+   }
+  ],
+  "transcriptFeatures": {
+   "vocab": {
+    "terms": [
+     "in the",
+     "of the",
+     "if",
+     "can",
+     "or",
+     "know",
+     "from",
+     "as",
+     "because",
+     "was",
+     "who",
+     "our",
+     "that's",
+     "one",
+     "don't",
+     "think",
+     "more",
+     "an",
+     "when",
+     "right",
+     "their",
+     "out",
+     "has",
+     "there",
+     "now",
+     "no",
+     "by",
+     "your",
+     "going",
+     "up",
+     "i'm",
+     "my",
+     "how",
+     "get",
+     "these",
+     "them",
+     "us",
+     "this is",
+     "would",
+     "to be",
+     "want",
+     "me",
+     "to the",
+     "say",
+     "will",
+     "going to",
+     "i think",
+     "been",
+     "really",
+     "you know",
+     "time",
+     "make",
+     "where",
+     "go",
+     "you're",
+     "on the",
+     "were",
+     "why",
+     "is a",
+     "even",
+     "than",
+     "then",
+     "which",
+     "and the",
+     "he",
+     "other",
+     "well",
+     "we're",
+     "way",
+     "and i",
+     "want to",
+     "here",
+     "over",
+     "had",
+     "some",
+     "also",
+     "first",
+     "country",
+     "very",
+     "actually",
+     "should",
+     "see",
+     "only",
+     "most",
+     "for the",
+     "if you",
+     "need",
+     "could",
+     "things",
+     "vote",
+     "said",
+     "into",
+     "every",
+     "lot",
+     "i don't",
+     "those",
+     "at the",
+     "a lot",
+     "something",
+     "being",
+     "did",
+     "they're",
+     "there's",
+     "to do",
+     "that the",
+     "many",
+     "thing",
+     "years",
+     "is the",
+     "have to",
+     "back",
+     "trump",
+     "it is",
+     "much",
+     "mean",
+     "take",
+     "have a",
+     "any",
+     "we have",
+     "his",
+     "in a",
+     "new",
+     "you can",
+     "is that",
+     "okay",
+     "state",
+     "states",
+     "that we",
+     "got",
+     "two",
+     "voters",
+     "american",
+     "do you",
+     "that is",
+     "uh",
+     "work",
+     "yeah",
+     "is not",
+     "does",
+     "election",
+     "look",
+     "good",
+     "president",
+     "doing",
+     "it was",
+     "can't",
+     "lot of",
+     "yes",
+     "um",
+     "one of",
+     "voting",
+     "with the",
+     "doesn't",
+     "year",
+     "same",
+     "elections",
+     "to get",
+     "you have",
+     "come",
+     "government",
+     "power",
+     "still",
+     "saying",
+     "that you",
+     "last",
+     "money",
+     "out of",
+     "day",
+     "right now",
+     "as a",
+     "we are",
+     "and then",
+     "didn't",
+     "to make",
+     "before",
+     "from the",
+     "political",
+     "kind",
+     "today",
+     "down",
+     "through",
+     "in this",
+     "need to",
+     "the same",
+     "after",
+     "kind of",
+     "i mean",
+     "system",
+     "oh",
+     "trying",
+     "give",
+     "congress",
+     "about the",
+     "against",
+     "important",
+     "never",
+     "that i",
+     "all of",
+     "and it",
+     "of a",
+     "and we",
+     "too",
+     "i was",
+     "him",
+     "trying to",
+     "americans",
+     "and you",
+     "and so",
+     "what's",
+     "world",
+     "so i",
+     "law",
+     "real",
+     "talk",
+     "democracy",
+     "feel",
+     "party",
+     "in our",
+     "person",
+     "made",
+     "part",
+     "sure",
+     "talking",
+     "tell",
+     "believe",
+     "big",
+     "united",
+     "they are",
+     "court",
+     "it's not",
+     "that they",
+     "the most",
+     "point",
+     "let",
+     "the people",
+     "different",
+     "life",
+     "there are",
+     "again",
+     "people who",
+     "already",
+     "across",
+     "own",
+     "public",
+     "let's",
+     "everything",
+     "by the",
+     "there is",
+     "to vote",
+     "better",
+     "around",
+     "to have",
+     "off",
+     "its",
+     "put",
+     "all the",
+     "i've",
+     "but i",
+     "was a",
+     "and that",
+     "everyone",
+     "we can",
+     "i have",
+     "problem",
+     "little",
+     "america",
+     "fact",
+     "of this",
+     "the way",
+     "the country",
+     "i would",
+     "and they",
+     "she",
+     "for a",
+     "it's a",
+     "next",
+     "have been",
+     "support",
+     "getting",
+     "he's",
+     "federal",
+     "think that",
+     "someone",
+     "under",
+     "both",
+     "help",
+     "the first",
+     "without",
+     "don't know",
+     "more than",
+     "to go",
+     "you think",
+     "am",
+     "administration",
+     "care",
+     "which is",
+     "change",
+     "be a",
+     "able",
+     "able to",
+     "house",
+     "you are",
+     "go to",
+     "her",
+     "making",
+     "we've",
+     "great",
+     "question",
+     "to say",
+     "keep",
+     "united states",
+     "have the",
+     "rights",
+     "says",
+     "when you",
+     "the united",
+     "use",
+     "while",
+     "called",
+     "we need",
+     "of our",
+     "part of",
+     "who are",
+     "away",
+     "are you",
+     "politics",
+     "three",
+     "to a",
+     "done",
+     "should be",
+     "show",
+     "and it's",
+     "like a",
+     "long",
+     "act",
+     "ballot",
+     "i'm not",
+     "and that's",
+     "talking about",
+     "you don't",
+     "find",
+     "means",
+     "million",
+     "you want",
+     "i am",
+     "of people",
+     "always",
+     "end",
+     "donald",
+     "i want",
+     "another",
+     "know that",
+     "i i",
+     "whether",
+     "place",
+     "working",
+     "together",
+     "agree",
+     "live",
+     "since",
+     "with a",
+     "like the",
+     "love",
+     "has been",
+     "choice",
+     "ever",
+     "understand",
+     "and a",
+     "used",
+     "across the",
+     "seen",
+     "know what",
+     "case",
+     "stop",
+     "republicans",
+     "that are",
+     "the world",
+     "people are",
+     "and this",
+     "anything",
+     "democrats",
+     "free",
+     "guys",
+     "here's",
+     "happening",
+     "might",
+     "not a",
+     "000",
+     "i just",
+     "i know",
+     "matter",
+     "donald trump",
+     "talk about",
+     "example",
+     "man",
+     "what i",
+     "republican",
+     "may",
+     "second",
+     "family"
+    ],
+    "idf": [
+     1.694613,
+     1.6952,
+     1.71957,
+     1.746401,
+     1.772067,
+     1.786759,
+     1.793215,
+     1.80691,
+     1.80691,
+     1.814158,
+     1.832177,
+     1.842329,
+     1.857408,
+     1.867124,
+     1.872017,
+     1.897569,
+     1.899008,
+     1.904784,
+     1.912781,
+     1.922315,
+     1.94996,
+     1.960623,
+     1.967538,
+     1.969081,
+     1.972175,
+     1.975278,
+     1.991729,
+     1.995687,
+     2.052798,
+     2.05532,
+     2.062077,
+     2.076589,
+     2.077449,
+     2.086961,
+     2.100078,
+     2.10892,
+     2.126842,
+     2.127746,
+     2.131373,
+     2.134101,
+     2.147857,
+     2.14878,
+     2.158066,
+     2.192225,
+     2.222604,
+     2.252909,
+     2.269456,
+     2.270499,
+     2.280992,
+     2.286281,
+     2.302315,
+     2.310973,
+     2.314239,
+     2.321902,
+     2.328518,
+     2.334064,
+     2.335177,
+     2.356562,
+     2.3577,
+     2.366854,
+     2.373774,
+     2.379578,
+     2.379578,
+     2.381909,
+     2.410313,
+     2.426043,
+     2.428485,
+     2.430933,
+     2.432159,
+     2.445748,
+     2.449486,
+     2.450735,
+     2.458263,
+     2.470938,
+     2.477336,
+     2.481194,
+     2.495471,
+     2.4994,
+     2.503345,
+     2.508629,
+     2.511282,
+     2.525998,
+     2.543673,
+     2.545046,
+     2.547797,
+     2.557486,
+     2.561667,
+     2.574316,
+     2.574316,
+     2.585696,
+     2.587128,
+     2.591435,
+     2.595761,
+     2.595761,
+     2.613254,
+     2.613254,
+     2.619154,
+     2.626578,
+     2.628069,
+     2.629563,
+     2.631059,
+     2.63556,
+     2.637065,
+     2.643107,
+     2.658375,
+     2.661456,
+     2.695997,
+     2.697595,
+     2.699197,
+     2.7008,
+     2.704016,
+     2.710478,
+     2.718615,
+     2.72025,
+     2.721888,
+     2.723529,
+     2.726818,
+     2.736752,
+     2.741756,
+     2.74343,
+     2.746786,
+     2.746786,
+     2.756921,
+     2.775773,
+     2.777505,
+     2.777505,
+     2.780977,
+     2.784461,
+     2.787958,
+     2.787958,
+     2.791467,
+     2.796753,
+     2.809197,
+     2.814579,
+     2.825429,
+     2.830898,
+     2.830898,
+     2.832728,
+     2.836398,
+     2.841928,
+     2.841928,
+     2.85308,
+     2.856826,
+     2.858703,
+     2.860585,
+     2.871949,
+     2.873855,
+     2.875765,
+     2.897022,
+     2.900936,
+     2.900936,
+     2.918741,
+     2.920739,
+     2.920739,
+     2.924747,
+     2.934838,
+     2.936868,
+     2.951198,
+     2.95948,
+     2.95948,
+     2.978368,
+     2.978368,
+     2.980489,
+     2.980489,
+     2.982614,
+     2.984744,
+     2.984744,
+     2.986879,
+     2.99331,
+     2.995462,
+     3.001949,
+     3.00412,
+     3.008478,
+     3.008478,
+     3.01725,
+     3.019455,
+     3.021665,
+     3.02388,
+     3.028324,
+     3.030554,
+     3.030554,
+     3.032788,
+     3.035028,
+     3.046302,
+     3.055414,
+     3.055414,
+     3.057705,
+     3.057705,
+     3.069239,
+     3.076224,
+     3.087975,
+     3.095092,
+     3.097476,
+     3.097476,
+     3.102261,
+     3.109481,
+     3.111899,
+     3.114324,
+     3.114324,
+     3.114324,
+     3.116754,
+     3.128994,
+     3.13641,
+     3.138895,
+     3.138895,
+     3.141386,
+     3.141386,
+     3.148895,
+     3.148895,
+     3.148895,
+     3.151411,
+     3.153933,
+     3.158996,
+     3.158996,
+     3.161537,
+     3.161537,
+     3.164085,
+     3.166639,
+     3.166639,
+     3.171768,
+     3.171768,
+     3.171768,
+     3.171768,
+     3.171768,
+     3.174342,
+     3.174342,
+     3.184704,
+     3.187312,
+     3.189926,
+     3.189926,
+     3.195176,
+     3.197811,
+     3.200453,
+     3.203102,
+     3.203102,
+     3.205758,
+     3.208421,
+     3.211091,
+     3.213769,
+     3.216453,
+     3.219145,
+     3.232714,
+     3.238193,
+     3.238193,
+     3.240944,
+     3.246469,
+     3.252025,
+     3.254814,
+     3.254814,
+     3.257611,
+     3.260416,
+     3.260416,
+     3.263229,
+     3.268879,
+     3.268879,
+     3.274561,
+     3.274561,
+     3.280275,
+     3.280275,
+     3.283144,
+     3.286022,
+     3.288908,
+     3.291803,
+     3.294705,
+     3.297617,
+     3.300536,
+     3.300536,
+     3.300536,
+     3.300536,
+     3.306401,
+     3.309347,
+     3.312301,
+     3.315264,
+     3.318236,
+     3.318236,
+     3.318236,
+     3.321216,
+     3.321216,
+     3.327204,
+     3.327204,
+     3.330212,
+     3.330212,
+     3.339289,
+     3.339289,
+     3.342333,
+     3.342333,
+     3.342333,
+     3.342333,
+     3.351522,
+     3.351522,
+     3.351522,
+     3.354603,
+     3.363906,
+     3.367026,
+     3.367026,
+     3.367026,
+     3.373296,
+     3.376445,
+     3.379605,
+     3.385954,
+     3.385954,
+     3.385954,
+     3.395554,
+     3.395554,
+     3.398775,
+     3.398775,
+     3.402006,
+     3.405247,
+     3.405247,
+     3.408499,
+     3.408499,
+     3.411762,
+     3.411762,
+     3.411762,
+     3.411762,
+     3.415035,
+     3.415035,
+     3.415035,
+     3.421614,
+     3.428237,
+     3.431564,
+     3.434903,
+     3.434903,
+     3.438253,
+     3.441615,
+     3.441615,
+     3.441615,
+     3.441615,
+     3.444987,
+     3.451767,
+     3.451767,
+     3.455174,
+     3.455174,
+     3.455174,
+     3.462024,
+     3.462024,
+     3.462024,
+     3.465466,
+     3.465466,
+     3.465466,
+     3.472386,
+     3.472386,
+     3.475865,
+     3.482858,
+     3.486373,
+     3.486373,
+     3.4899,
+     3.49344,
+     3.496992,
+     3.496992,
+     3.500557,
+     3.500557,
+     3.504135,
+     3.504135,
+     3.514946,
+     3.514946,
+     3.518576,
+     3.525875,
+     3.525875,
+     3.529545,
+     3.529545,
+     3.533228,
+     3.536925,
+     3.540636,
+     3.54436,
+     3.54436,
+     3.54436,
+     3.548098,
+     3.548098,
+     3.551851,
+     3.551851,
+     3.555617,
+     3.559398,
+     3.559398,
+     3.563193,
+     3.567002,
+     3.567002,
+     3.570827,
+     3.574665,
+     3.574665,
+     3.574665,
+     3.574665,
+     3.578519,
+     3.578519,
+     3.582387,
+     3.582387,
+     3.582387,
+     3.586271,
+     3.586271,
+     3.586271,
+     3.586271,
+     3.59017,
+     3.594083,
+     3.598013,
+     3.598013,
+     3.598013,
+     3.601957,
+     3.605918,
+     3.605918,
+     3.609894
+    ]
+   },
+   "rule": "src/lib/transcript-features.ts; vocabulary: unigrams and bigrams in at least 20 transcripts and at most 50% of them, the 400 most frequent; idf ln((1+N)/(1+df))+1; a transcript counts at 10 words or more",
+   "definition": "src/lib/transcript-features.ts",
+   "builtAt": "2026-10-19T02:21:33.221Z",
+   "counts": {
+    "settledRows": 18455,
+    "transcripts": 3424,
+    "withTranscript": 3412,
+    "vocabulary": 400,
+    "byFamily": {
+     "Partisan media": {
+      "rows": 9942,
+      "withTranscript": 0
+     },
+     "Candidates & officials": {
+      "rows": 4950,
+      "withTranscript": 30
+     },
+     "Voting rights": {
+      "rows": 816,
+      "withTranscript": 788
+     },
+     "Nonpartisan media": {
+      "rows": 1453,
+      "withTranscript": 1438
+     },
+     "Reform": {
+      "rows": 1196,
+      "withTranscript": 1156
+     },
+     "UK": {
+      "rows": 98,
+      "withTranscript": 0
+     }
+    }
+   }
+  }
+ },
+ "variants": {
+  "tfidf": {
+   "version": "var-2-tfidf",
+   "metrics": {
+    "leaveOneChannelOut": {
+     "auc": 0.597,
+     "withinChannelAuc": 0.552,
+     "topDecileLift": 1.47,
+     "bySegment": {
+      "withTranscript": {
+       "n": 3412,
+       "baseRate": 0.154,
+       "auc": 0.571,
+       "withinChannelAuc": 0.512
+      },
+      "withoutTranscript": {
+       "n": 15043,
+       "baseRate": 0.147,
+       "auc": 0.61,
+       "withinChannelAuc": 0.557
+      }
+     },
+     "perFamily": [
+      {
+       "family": "Candidates & officials",
+       "n": 4950,
+       "baseRate": 0.166,
+       "auc": 0.555
+      },
+      {
+       "family": "Nonpartisan media",
+       "n": 1453,
+       "baseRate": 0.196,
+       "auc": 0.535
+      },
+      {
+       "family": "Partisan media",
+       "n": 9942,
+       "baseRate": 0.141,
+       "auc": 0.636
+      },
+      {
+       "family": "Reform",
+       "n": 1196,
+       "baseRate": 0.132,
+       "auc": 0.521
+      },
+      {
+       "family": "UK",
+       "n": 98,
+       "baseRate": 0.01,
+       "auc": 0.485
+      },
+      {
+       "family": "Voting rights",
+       "n": 816,
+       "baseRate": 0.08,
+       "auc": 0.497
+      }
+     ]
+    },
+    "timeSplit": {
+     "cut": "2026-07-01",
+     "train": 13617,
+     "test": 4838,
+     "testBaseRate": 0.126,
+     "auc": 0.564
+    }
+   }
+  },
+  "rate": {
+   "version": "var-2-rate",
+   "metrics": {
+    "leaveOneChannelOut": {
+     "auc": 0.597,
+     "withinChannelAuc": 0.551,
+     "topDecileLift": 1.46,
+     "bySegment": {
+      "withTranscript": {
+       "n": 3412,
+       "baseRate": 0.154,
+       "auc": 0.569,
+       "withinChannelAuc": 0.51
+      },
+      "withoutTranscript": {
+       "n": 15043,
+       "baseRate": 0.147,
+       "auc": 0.61,
+       "withinChannelAuc": 0.557
+      }
+     },
+     "perFamily": [
+      {
+       "family": "Candidates & officials",
+       "n": 4950,
+       "baseRate": 0.166,
+       "auc": 0.555
+      },
+      {
+       "family": "Nonpartisan media",
+       "n": 1453,
+       "baseRate": 0.196,
+       "auc": 0.531
+      },
+      {
+       "family": "Partisan media",
+       "n": 9942,
+       "baseRate": 0.141,
+       "auc": 0.636
+      },
+      {
+       "family": "Reform",
+       "n": 1196,
+       "baseRate": 0.132,
+       "auc": 0.523
+      },
+      {
+       "family": "UK",
+       "n": 98,
+       "baseRate": 0.01,
+       "auc": 0.474
+      },
+      {
+       "family": "Voting rights",
+       "n": 816,
+       "baseRate": 0.08,
+       "auc": 0.495
+      }
+     ]
+    },
+    "timeSplit": {
+     "cut": "2026-07-01",
+     "train": 13617,
+     "test": 4838,
+     "testBaseRate": 0.126,
+     "auc": 0.564
+    }
+   }
+  },
+  "overlap": {
+   "version": "var-2-overlap",
+   "metrics": {
+    "leaveOneChannelOut": {
+     "auc": 0.597,
+     "withinChannelAuc": 0.551,
+     "topDecileLift": 1.45,
+     "bySegment": {
+      "withTranscript": {
+       "n": 3412,
+       "baseRate": 0.154,
+       "auc": 0.569,
+       "withinChannelAuc": 0.51
+      },
+      "withoutTranscript": {
+       "n": 15043,
+       "baseRate": 0.147,
+       "auc": 0.61,
+       "withinChannelAuc": 0.557
+      }
+     },
+     "perFamily": [
+      {
+       "family": "Candidates & officials",
+       "n": 4950,
+       "baseRate": 0.166,
+       "auc": 0.555
+      },
+      {
+       "family": "Nonpartisan media",
+       "n": 1453,
+       "baseRate": 0.196,
+       "auc": 0.53
+      },
+      {
+       "family": "Partisan media",
+       "n": 9942,
+       "baseRate": 0.141,
+       "auc": 0.636
+      },
+      {
+       "family": "Reform",
+       "n": 1196,
+       "baseRate": 0.132,
+       "auc": 0.522
+      },
+      {
+       "family": "UK",
+       "n": 98,
+       "baseRate": 0.01,
+       "auc": 0.474
+      },
+      {
+       "family": "Voting rights",
+       "n": 816,
+       "baseRate": 0.08,
+       "auc": 0.495
+      }
+     ]
+    },
+    "timeSplit": {
+     "cut": "2026-07-01",
+     "train": 13617,
+     "test": 4838,
+     "testBaseRate": 0.126,
+     "auc": 0.563
+    }
+   }
+  }
+ },
+ "parity": {
+  "v1": {
+   "auc": 0.604,
+   "withinChannelAuc": 0.55
+  },
+  "here": {
+   "auc": 0.604,
+   "withinChannelAuc": 0.55
+  },
+  "match": true
+ },
+ "gates": {
+  "transcript": {
+   "passed": false,
+   "rule": "pre-registered 2026-10-18: the transcript variant with the highest pooled leave-one-channel-out AUC; passes when that AUC is at least 0.624 (v1 0.604 plus 0.02) and its within-channel AUC is not below 0.55",
+   "candidate": "tfidf",
+   "transcript": {
+    "auc": 0.597,
+    "withinChannelAuc": 0.552
+   },
+   "metadata": {
+    "auc": 0.604,
+    "withinChannelAuc": 0.55
+   },
+   "variants": {
+    "metadata": {
+     "auc": 0.604,
+     "withinChannelAuc": 0.55,
+     "features": 35
+    },
+    "tfidf": {
+     "auc": 0.597,
+     "withinChannelAuc": 0.552,
+     "features": 436
+    },
+    "rate": {
+     "auc": 0.597,
+     "withinChannelAuc": 0.551,
+     "features": 438
+    },
+    "overlap": {
+     "auc": 0.597,
+     "withinChannelAuc": 0.551,
+     "features": 439
+    }
+   }
+  }
+ },
+ "caveats": [
+  "Observational: a word's coefficient is association within and across channels, not the effect of saying it.",
+  "Transcripts are YouTube's auto-captions for the reform, voting-rights and nonpartisan channels; an original's transcript is its script.",
+  "The label is relative to the channel's own median, so a fast-growing channel's new shorts read low.",
+  "Probabilities are calibrated on the catalog's mix of channels; a new channel inherits its family's rate until it has a median."
+ ]
 }

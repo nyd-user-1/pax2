@@ -41,13 +41,13 @@ Update the row: `src/lib/recipes/memorable.ts` (progress, next, status, note) an
 
 ## Current state (the lead keeps this current; a fork reads it first)
 
-Updated 2026-10-19 00:35 UTC.
+Updated 2026-10-19 02:35 UTC.
 
-- Production runs 4237af2 since 23:51 UTC on 2026-10-18 (Amplify job 6, built clean). Brendan recorded through the camera flow on the live site and it worked; he will not send a video of himself, so the end-to-end test of publish and analysis on production uses a Studio render or an uploaded file.
-- Committed since the push, not pushed (Brendan's word pushes): the teleprompter that paces the reader word by word with space or tap to pause; requirement 7's code (the YouTube grant route, the upload on approval, the watch-list write, the connect link on /publishing) waiting on his Google OAuth client, `scripts/youtube/grant.sh --apply` and the channel's grant; requirement 13's affinity term in the For you sort.
-- The caption run is back on the ids not yet attempted (2,925 of 3,465 at 00:30 UTC, about 4 a minute); Brief 7's chain waits for 3,465, then trains PAX2 Classifier v2 on one c7i.xlarge; the lead's waiter then starts the PAX2 Encoder retrain, about $1.40. Caffeinate is loaded; the hourly watchdog is not.
-- Waits on Brendan: the push; the Google OAuth client and the channel's grant (7, 9, the retention model's real data); the proxy (4's last step, 10's content features, frames, audio); labels; reader rows.
-- Spend by the lead: about $0.50; the weekend about $2.3 before tonight's two boxes.
+- The captions reached 3,465 at 02:20 UTC; the run continues on the remaining shorts. Brief 7's chain merged 3,424 transcripts, trained PAX2 Classifier v2 on one c7i.xlarge in about six minutes and failed Gate C (0.597 against 0.604); the app keeps v1 by rule; `data/generated/model/var-model-v2.json` carries the run.
+- The PAX2 Encoder retrain is running: box i-044ab0db20eb874ee, g6e.2xlarge, run 20261019-022545-train, launched 02:28 UTC, watchdog 90 minutes, log at `s3://nsr-embed-v2/pax2/runs/20261019-022545-train/box.log`. When it terminates: `node scripts/encoder/rescore.mjs 20261019-022545-train`, pull `data/generated/model/encoder.json` as Part C did, update the encoder and reranker cards and rows; if Gate E passes, publish the weights the way the headline model went up.
+- Committed, not pushed, since the 23:46 UTC push: the teleprompter, the publish step, the affinity term, the Studio's voice, music, pace, text and cards with the style record, the script renames, the Send step. Production has none of these until Brendan pushes.
+- Waits on Brendan: the push; the Google OAuth client and a channel's grant; the proxy; labels; reader rows.
+- Spend by the lead: about $0.52 before the encoder box, about $2 after it; the weekend about $4.
 
 ## Stopping
 

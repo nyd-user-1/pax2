@@ -1,5 +1,5 @@
 {
- "builtAt": "2026-10-18T08:21:08.370Z",
+ "builtAt": "2026-10-19T02:21:30.998Z",
  "source": {
   "catalog": "2026-10-15T15:22:02.105Z",
   "catalogSource": "YouTube Data API v3, shorts playlists, 18-month lookback"
@@ -27,7 +27,7 @@
   "UK": 98
  },
  "withContent": 50,
- "withTranscript": 855,
+ "withTranscript": 3424,
  "withVelocity": 236,
  "withUsage": 0,
  "usageSource": {

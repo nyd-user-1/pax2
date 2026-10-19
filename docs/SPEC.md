@@ -24,7 +24,7 @@ Built: seven library scripts, each line annotated with the Swayable evidence beh
 
 Closed 2026-10-18: a seventh editor check codes the draft on Bedrock on request and sets it against the coded reform shorts' delivery patterns (`src/app/draft-actions.ts`, `patternCheck` in `src/lib/organic-evidence.ts`); the writer asks for 45 to 60 words, about 20 seconds, ruled from the reform channels' under-20-second lift of +6.5 points (90% range 1 to 13, 6 channels, 56 shorts).
 
-### 3. A pre-release prediction — Partial
+### 3. A pre-release prediction — Partial, measured
 
 Status 2026-10-18 06:00 UTC: PAX2 Classifier's chance of a Hit and the views to expect show on the Scored tab and in the findings email, with the strength of the model that answered. PAX2 Classifier v2, with transcript features, is not trained yet: `scripts/classifier/when-captions-land.sh` runs detached on the Mac and, when the caption run reaches the 3,465 reform, voting-rights and nonpartisan shorts (about 17:00 UTC on 2026-10-18), merges the captions, rebuilds the Model Training Library, launches one c7i.xlarge (about 5 cents, ceiling $1) and rescores its output on the Mac; its progress is in `data/raw/captions/chain.log`. Originals read v2, with the script as the transcript, only if Gate C passes: pooled leave-one-channel-out AUC at least 0.624 and within-channel AUC not below 0.55. Until then they read the metadata model.
 
@@ -41,7 +41,7 @@ Measured strength of the metadata forecast, leave-one-channel-out:
 | Top decile breakout rate | 21% against a 14.8% base, 1.4x |
 | Reform family AUC | 0.47 on 1,196 shorts |
 
-Reading: metadata is a weak prior and, within one channel, nearly none. The signal has to come from the video (requirement 4b) and from the first hours of the curve. Resonance as built is a paid-attention score that needs impressions from Ads Manager; it cannot be forecast for an organic short and is not the pre-release target. The targets, in order: P(breakout), then expected views (built 2026-10-18 as the channel's median times p of a Hit's median ratio, 5.8, plus 1 - p of the rest's, 0.86; the breakout probability times the median alone would put a typical video far below its channel's median), then the paid Resonance components once a video has a flight.
+Measured again 2026-10-19 with 3,424 transcripts from YouTube's captions (PAX2 Classifier v2, `scripts/classifier/train_v2.py`): TF-IDF of the words, speaking rate and the title's overlap with the opening added nothing, pooled AUC 0.597 against 0.604 for the metadata alone, Gate C failed, the app keeps v1. Reading: metadata is a weak prior and, within one channel, nearly none. The signal has to come from the video (requirement 4b) and from the first hours of the curve. Resonance as built is a paid-attention score that needs impressions from Ads Manager; it cannot be forecast for an organic short and is not the pre-release target. The targets, in order: P(breakout), then expected views (built 2026-10-18 as the channel's median times p of a Hit's median ratio, 5.8, plus 1 - p of the rest's, 0.86; the breakout probability times the median alone would put a typical video far below its channel's median), then the paid Resonance components once a video has a flight.
 
 ### 4. Every available factor — Partial
 
