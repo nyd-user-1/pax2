@@ -106,9 +106,9 @@ const MODEL_PLAN: Record<string, Plan> = {
     { what: "A trained multi-label classifier at a few hundred labeled videos.", share: 40, effort: "an hour and a c7i box, once the labels exist" },
   ] },
   "m-encoder": { start: "2026-10-17", end: "2026-11-21", importance: 4, utility: 2, ease: 2, steps: [
-    { what: "Captions for the rest of the catalog; 3,424 of 18,455 documents carried a transcript in the 2026-10-19 run, which missed Gate E by 0.0002 (pooled +0.0198 of the +0.02 required).", share: 50, effort: "the caption run, days at one connection's pace", blocker: true },
-    { what: "Retrain on the fuller corpus and benchmark on the same held-out channels.", share: 30, effort: "about 35 minutes and $1.33 measured" },
-    { what: "Gate E again; publish the weights if it passes.", share: 20, effort: "an hour" },
+    { what: "The retrain on 5,232 transcripts (Whisper over our own audio replaced the caption run) is on a box now; the 3,424 run missed Gate E by 0.0002 (pooled +0.0198 of the +0.02 required).", share: 50, effort: "running, about 46 minutes and $1.43" },
+    { what: "Gate E on the rerun; publish the weights if it passes, and the fleet's audio can push the corpus toward 9,500 if the curve says more helps.", share: 30, effort: "an hour, then Brendan's call on more GPU" },
+    { what: "On a pass, its neighbors become the forecast feature on requirement 3.", share: 20, effort: "half a day" },
   ] },
   "m-vision": { start: "2026-10-17", end: "2026-12-15", importance: 2, utility: 2, ease: 3, steps: [
     { what: "Frames from downloaded video, not only the thumbnail.", share: 62, effort: "after the proxy" },
