@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PAX2 UX audit · 2026-10-19</title>
+<style>
+  :root {
+    --navy: #033882;
+    --blue: #2563eb;
+    --lavender: #dbe7fa;
+    --mist: #f3f6fb;
+    --ink: #0f172a;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --red: #8f1d2c;
+    --red-soft: #fdeaec;
+    --amber: #92590a;
+    --amber-soft: #fdf2df;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--mist);
+    color: var(--ink);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .page { max-width: 980px; margin: 0 auto; padding: 56px 28px 96px; }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 600; color: var(--ink); line-height: 1.2; }
+  h1 { font-size: 2.3rem; margin: 0 0 6px; }
+  h2 { font-size: 1.5rem; margin: 64px 0 18px; }
+  h3 { font-size: 1.1rem; margin: 28px 0 10px; color: var(--navy); }
+  .byline { color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; }
+  .byline b { color: var(--navy); font-weight: 600; }
+  p { margin: 0 0 14px; }
+  code { background: #e8edf6; border-radius: 5px; padding: 1px 5px; font-size: 0.86em; color: var(--navy); }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px 26px; margin: 0 0 16px; box-shadow: 0 1px 2px rgb(15 23 42 / 0.04); }
+  .card p:last-child { margin-bottom: 0; }
+  .card .kicker { display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue); margin-bottom: 6px; }
+  .card.ruled .kicker { color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; font-size: 0.92rem; margin: 0 0 28px; }
+  thead th { text-align: left; background: #eef2f9; color: var(--navy); font-weight: 600; padding: 10px 14px; }
+  td { padding: 11px 14px; border-top: 1px solid var(--line); vertical-align: top; }
+  td:first-child { white-space: nowrap; }
+  .chip { display: inline-block; border-radius: 999px; padding: 1px 10px; font-size: 0.76rem; font-weight: 700; margin-right: 6px; white-space: nowrap; }
+  .chip.keep   { background: var(--lavender); color: var(--navy); }
+  .chip.merge  { background: var(--amber-soft); color: var(--amber); }
+  .chip.retire { background: var(--red-soft); color: var(--red); }
+  .chip.orphan { background: #e2e8f0; color: #475569; }
+  .chip.gate   { background: #0f172a; color: #fff; }
+  .map { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 10px; }
+  .map .col { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; }
+  .map .col h3 { margin: 0 0 4px; }
+  .map .who { font-size: 0.8rem; color: var(--muted); margin-bottom: 12px; }
+  .map ul { margin: 0; padding: 0; list-style: none; }
+  .map li { padding: 6px 0; border-top: 1px solid #f1f5f9; font-size: 0.93rem; }
+  .map li:first-child { border-top: 0; }
+  .map li .sub { color: var(--muted); font-size: 0.84rem; }
+  .takeaway { background: var(--navy); color: #fff; border-radius: 16px; padding: 20px 26px; margin: 18px 0 0; font-size: 1.02rem; }
+  .takeaway b { color: #cfe0fa; }
+  ul.flat { padding-left: 0; list-style: none; }
+  ul.flat li { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 20px; margin-bottom: 10px; }
+  ul.flat b { color: var(--navy); }
+  ol.punch { counter-reset: punch; padding-left: 0; list-style: none; }
+  ol.punch li { counter-increment: punch; position: relative; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 20px 14px 62px; margin-bottom: 10px; }
+  ol.punch li::before { content: counter(punch); position: absolute; left: 18px; top: 13px; width: 28px; height: 28px; border-radius: 999px; background: var(--lavender); color: var(--navy); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  ol.punch b { color: var(--navy); }
+  .note { color: var(--muted); font-size: 0.9rem; }
+  @media print { body { background: #fff; } .page { padding: 24px; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>PAX2 UX audit</h1>
+<p class="byline">2026-10-19 · all 45 routes and the shell, read in full against <b>docs/SPEC.md</b> · recommendations only, nothing changed</p>
+
+<h2>The structural problems — two live, one ruled intentional</h2>
+
+<div class="card">
+  <span class="kicker">Problem 1</span>
+  <p><b>The app serves two audiences on one nav and admits it out loud.</b> The sidebar's four real items (Home, Chat, Dashboard, Channels) sit above nineteen items labeled "Work in progress" — a label a newly onboarded creator reads as "most of this product is unfinished," when the spec marks Recording, Scoring, Publishing and Scripts as Built. Meanwhile genuinely internal surfaces (Pipeline, Build, Project Management, ML, Evals, Endgame, Loop) sit in the same list as the product, in internal vocabulary ("iWAR", "Evals", "Feature lift", "Endgame"). The fix is not reordering; it is splitting the nav by audience: a creator surface, a research surface, and an admin surface gated on <code>user.admin</code>.</p>
+</div>
+
+<div class="card">
+  <span class="kicker">Problem 2</span>
+  <p><b>One video's journey is scattered across sibling pages instead of being a workflow.</b> A video moves from draft to scored to published, but the app renders that as three separate sidebar destinations (<code>/drafts</code>, <code>/scoring</code>, <code>/publishing</code>) that are literally the same component — <code>OriginalsQueue</code> with a different <code>queue</code> prop — plus a fourth page (<code>/v/[id]</code>) for the video itself. Three nav entries for one pipeline, and no page shows the pipeline.</p>
+</div>
+
+<div class="card ruled">
+  <span class="kicker">Ruled intentional · 2026-10-19</span>
+  <p><b>The front door.</b> <code>/</code> re-exports <code>/record/page</code> (the marketing landing) and the flow starts at <code>/recording</code>. The ruling: the landing is a honey trap by design — a visitor begins creating a video immediately and meets sign-in only at the point of saving (the Studio already takes a bare email when signed out). The funnel stands; no change recommended. What remains is developer-facing only — the flow's steps live under <code>/record/*</code> while its entry is <code>/recording</code> — a naming wrinkle to absorb, not fix.</p>
+</div>
+
+<h2>Page-by-page verdicts</h2>
+
+<h3>Creator surface</h3>
+<table>
+  <thead><tr><th>Route</th><th>What it is</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td><code>/</code></td><td>Landing (re-export of /record)</td><td><span class="chip keep">Keep</span> The honey trap: start creating first, sign in to save (ruled intentional 2026-10-19)</td></tr>
+    <tr><td><code>/record</code></td><td>Same landing, second URL</td><td><span class="chip keep">Keep</span> Part of the ruling; no change asked for</td></tr>
+    <tr><td><code>/recording</code></td><td>Flow start (RecordOptions)</td><td><span class="chip keep">Keep</span> As is</td></tr>
+    <tr><td><code>/record/*</code></td><td>Library, personal, script, camera, studio, guide — the flow's steps</td><td><span class="chip keep">Keep</span> The one well-built workflow. Gap: <code>StepBar</code> shows step 1 on library, personal, script and guide alike; the bar should advance (start, script, record, done) or it isn't a step bar</td></tr>
+    <tr><td><code>/record/start</code></td><td>Redirect to /recording</td><td><span class="chip keep">Keep</span> Until links age out</td></tr>
+    <tr><td><code>/app/home</code></td><td>Chat, create tiles, promos, shelf</td><td><span class="chip keep">Keep</span> As Home</td></tr>
+    <tr><td><code>/chat</code></td><td>The same <code>Chat</code> component, bare</td><td><span class="chip merge">Merge</span> Fold into /app/home (redirect) — two nav entries for one component</td></tr>
+    <tr><td><code>/drafts</code> <code>/scoring</code> <code>/publishing</code></td><td><code>OriginalsQueue</code> three times</td><td><span class="chip merge">Merge</span> Into one page — see "My videos" below</td></tr>
+    <tr><td><code>/v/[id]</code></td><td>Video detail (original, short, take)</td><td><span class="chip keep">Keep</span> The strongest page in the app</td></tr>
+    <tr><td><code>/scripts</code></td><td>Script catalog with evidence per line</td><td><span class="chip keep">Keep</span></td></tr>
+    <tr><td><code>/channels</code> <code>/channels/[id]</code></td><td>Connected channels and their analysis</td><td><span class="chip keep">Keep</span></td></tr>
+    <tr><td><code>/signup/welcome</code></td><td>Onboarding stepper</td><td><span class="chip keep">Keep</span></td></tr>
+    <tr><td><code>/labeling</code> <code>/labeling/*</code></td><td>Teach a Model courses</td><td><span class="chip keep">Keep</span> With retouches (below)</td></tr>
+  </tbody>
+</table>
+
+<h3>Research surface</h3>
+<table>
+  <thead><tr><th>Route</th><th>What it is</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td><code>/outliers</code></td><td>Settled shorts: hits/misses scatter and table</td><td><span class="chip merge">Merge</span> Into one Tracking page</td></tr>
+    <tr><td><code>/live-tracking</code></td><td>Shorts inside the 72-hour window</td><td><span class="chip merge">Merge</span> Into the same Tracking page</td></tr>
+    <tr><td><code>/velocity-tracker</code></td><td>Curve cards for the same shorts</td><td><span class="chip merge">Merge</span> Curves are a detail view of a tracked short, not a sibling page. The outliers table already links each row's "Curve" into it; that link is the merge telling you it wants to happen</td></tr>
+    <tr><td><code>/feature-lift</code></td><td>Within-channel trait lifts, Upworthy priors</td><td><span class="chip merge">Merge</span> With /patterns into one Evidence page</td></tr>
+    <tr><td><code>/patterns</code></td><td><code>patternsData()</code> chart sections</td><td><span class="chip merge">Merge</span> Same corpus, same question ("what travels") — and /ml imports <code>featureLift()</code> too, so the lift numbers already show in two places</td></tr>
+    <tr><td><code>/polling</code></td><td>Question 3 standing, other ballots, uncontested map</td><td><span class="chip keep">Keep</span> Campaign context, distinct job</td></tr>
+    <tr><td><code>/graph</code></td><td>Channel and video graph explorer</td><td><span class="chip keep">Keep</span> In research</td></tr>
+    <tr><td><code>/flow</code></td><td>Production steps on an xyflow canvas: templates, add-step palette, flows saved in the browser</td><td><span class="chip keep">Keep</span> In research. Note what it proves: every step card must link to "the page that runs it today" — the app drawing a map of its own scatter. Once My videos renders the pipeline at runtime, /flow is the authoring sketch of it, not a substitute for it</td></tr>
+    <tr><td><code>/tags</code></td><td>Videos by delivery tag</td><td><span class="chip orphan">Orphan</span> In no nav list (only the TITLES map knows it). Add to the research nav or delete; today it is dead weight that still ships</td></tr>
+    <tr><td><code>/campaigns</code></td><td>2026 channel shorts browser</td><td><span class="chip keep">Keep</span> In Lab (already there)</td></tr>
+    <tr><td><code>/library</code> <code>/library/[slug]</code></td><td>Dataset catalog</td><td><span class="chip keep">Keep</span> Group as Reference with Glossary</td></tr>
+    <tr><td><code>/glossary</code></td><td>Terms table</td><td><span class="chip keep">Keep</span></td></tr>
+    <tr><td><code>/scoring/method</code></td><td>How the score works, what tests found</td><td><span class="chip merge">Move</span> Under the Models/Reference group; it is documentation, not a queue sibling of /scoring</td></tr>
+  </tbody>
+</table>
+
+<h3>Admin surface</h3>
+<table>
+  <thead><tr><th>Route</th><th>What it is</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td><code>/dashboard</code></td><td>Campaign ops, readers, poller and pipeline controls</td><td><span class="chip keep">Keep</span> <span class="chip gate">Gate</span> And split the sample-data story (below)</td></tr>
+    <tr><td><code>/pipeline</code></td><td>Analyze-run monitor with costs</td><td><span class="chip keep">Keep</span> <span class="chip gate">Gate</span></td></tr>
+    <tr><td><code>/build</code></td><td>Build tracker (data/build.json)</td><td><span class="chip keep">Keep</span> <span class="chip gate">Gate</span></td></tr>
+    <tr><td><code>/project-management</code></td><td>Requirements and model inventory</td><td><span class="chip keep">Keep</span> <span class="chip gate">Gate</span></td></tr>
+    <tr><td><code>/ml</code></td><td>Model inventory, formulas</td><td><span class="chip keep">Keep</span> In research; it overlaps /project-management's Models tab — pick one home for the model inventory and link the other to it</td></tr>
+    <tr><td><code>/evals</code></td><td>Partner decisions on the synthetic takes</td><td><span class="chip keep">Keep</span> <span class="chip gate">Gate</span> It reads the old takes world and leans on sample data; it is not a creator page</td></tr>
+    <tr><td><code>/endgame</code></td><td>Pitch for channel connect, sample retention readout</td><td><span class="chip retire">Retire</span> Its promise — retention curves through the YouTube Analytics API — is what <code>/channels/[id]</code> now actually does. Fold the sample readout into /channels' empty state and delete the page</td></tr>
+    <tr><td><code>/loop</code></td><td>The closed loop demoed on one real short</td><td><span class="chip keep">Keep</span> As a demo page, admin or research</td></tr>
+    <tr><td><code>/videos</code> <code>/scored</code></td><td>Redirects to the queues</td><td><span class="chip keep">Keep</span> Until links age out</td></tr>
+  </tbody>
+</table>
+
+<h2>The target sitemap</h2>
+
+<div class="map">
+  <div class="col">
+    <h3>Creator</h3>
+    <ul>
+      <li>Home <span class="sub">/app/home, absorbs /chat</span></li>
+      <li>Create <span class="sub">the landing's flow: start, script, camera, studio, guide</span></li>
+      <li>My videos <span class="sub">Drafts · Scored · Published tabs; /v/[id] detail</span></li>
+      <li>Scripts</li>
+      <li>Channels <span class="sub">absorbs /endgame's pitch as its empty state</span></li>
+      <li>Teach a Model</li>
+    </ul>
+  </div>
+  <div class="col">
+    <h3>Research</h3>
+    <p class="who">admin or power users</p>
+    <ul>
+      <li>Tracking <span class="sub">Live · Settled · Curves — live-tracking + outliers + velocity-tracker</span></li>
+      <li>Evidence <span class="sub">feature-lift + patterns</span></li>
+      <li>Polling</li>
+      <li>Graph, Flow, Tags</li>
+      <li>Models <span class="sub">/ml + /scoring/method; /evals linked from it</span></li>
+      <li>Reference <span class="sub">Library, Glossary</span></li>
+    </ul>
+  </div>
+  <div class="col">
+    <h3>Admin</h3>
+    <p class="who">gated</p>
+    <ul>
+      <li>Dashboard</li>
+      <li>Pipeline</li>
+      <li>Build</li>
+      <li>Project Management</li>
+      <li>Loop</li>
+      <li>Lab <span class="sub">Campaigns</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="takeaway">The sidebar goes from <b>28 destinations to about 12</b> for a creator, and the "Work in progress" label disappears — shipped features stop apologizing for themselves.</div>
+
+<h2>The missing workflow: My videos</h2>
+<div class="card">
+  <p>The merge of the three queues should not be three tabs bolted on. The page one owner needs is their videos as a pipeline: each video a row or card showing where it stands (draft, scored with the number, approved, published, tracking), with the next action inline — score it, read the findings, approve, publish, see the curve. Everything to build it exists: <code>OriginalsQueue</code> has the rows, <code>/v/[id]</code> has the actions, the ledger has the events. Today the user plays the pipeline in their head across four pages; the app should draw it once.</p>
+  <p>The new <code>/flow</code> page is the clearest witness: its step cards each name and link the page that runs that step, a hand-drawn wayfinding map for a pipeline no page renders live.</p>
+</div>
+
+<h2>Design retouches on the keepers</h2>
+<ul class="flat">
+  <li><b>Two page-finders in one header.</b> HeaderSearch (⌘K) and the title-pill PageSwitcher open the same list of the same pages, side by side. Keep ⌘K search; make the title a plain title.</li>
+  <li><b>Mobile loses the app.</b> The mobile header renders only the four NAV items plus Record; search and the switcher are desktop-only. On a phone, 23 pages are reachable only by typing a URL. The consolidated nav (12 items) fits a mobile sheet; today's 28 never will — one more reason to consolidate.</li>
+  <li><b>Dashboard mixes real, sample, and admin.</b> One <code>demo</code> flag swaps whole sections to sample numbers, a second swaps the Readers block independently, and poller and pipeline controls sit above partner-facing stats. Split it: an admin ops row, and a stats body that shows real numbers or an honest empty state — the two-badge sample system reads as real at a glance, which is the one thing a dashboard must never do.</li>
+  <li><b>Teach a Model violates the block rule.</b> /labeling's course cards and the classifier's chapter layout are bare article and div surfaces, not MainBlock-family blocks, and both pages render their own h1 under a shell header that already names the page.</li>
+  <li><b>/library opens with a lead-in paragraph</b> under the header describing what the page is — the standing rule says delete these; the browser below carries it.</li>
+  <li><b>Naming drift: iWAR vs. outliers.</b> The route is /outliers, the reader-facing rename to "outlier" is done, but the sidebar and title still say "iWAR". One name everywhere.</li>
+  <li><b>Hand-rolled tables.</b> /outliers, /live-tracking and /pipeline each write their own table markup with near-identical header styling inside TableBlock. One shared table pattern (the nova Table that /glossary and /build already use) ends the drift.</li>
+  <li><b>The announcement banner is hardcoded</b> (<code>pax2:banner:elevenlabs-voices</code> in shell.tsx). Fine for now; it will go stale silently. Move the text and key to one constant file so shipping a new banner is a one-line change, or drop the banner between ships.</li>
+  <li><b>StepBar never advances</b> — every flow step passes step 1. Either wire the steps or remove the numbers.</li>
+</ul>
+
+<h2>Punch list, by impact</h2>
+<ol class="punch">
+  <li><b>Merge the queue trio into My videos</b> (one page, pipeline view). Largest UX gain; smallest risk — one component already renders all three.</li>
+  <li><b>Sidebar restructure</b>: creator, research, admin groups; admin gated; "Work in progress" label gone; iWAR renamed. Pure nav-array edits in shell.tsx.</li>
+  <li><b>/chat folds into /app/home</b> (redirect). One component, one nav entry.</li>
+  <li><b>Tracking merge</b>: Live · Settled · Curves as one page; /velocity-tracker and /live-tracking redirect in.</li>
+  <li><b>Retire /endgame</b> into /channels' empty state.</li>
+  <li><b>Evidence merge</b>: /feature-lift + /patterns.</li>
+  <li><b>Dashboard split</b>: admin ops vs. honest stats; one sample-data policy.</li>
+  <li><b>Retouches</b>: Teach a Model onto blocks, double h1s removed, library lead-in removed, one page-finder, shared table pattern, StepBar wired.</li>
+  <li><b>Decide /tags</b>: into the research nav or deleted.</li>
+</ol>
+<p class="note">Items 1 to 3 change what the product feels like for the client kickoff; 4 to 7 pay down the research sprawl; 8 and 9 are an afternoon of sweeping.</p>
+
+</div>
+</body>
+</html>
