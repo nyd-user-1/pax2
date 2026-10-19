@@ -1,0 +1,90 @@
+{
+ "builtAt": "2026-10-19T04:30:44.690Z",
+ "name": "PAX2 Classifier",
+ "version": "pairwise-0-reform-votingrights",
+ "scope": [
+  "Reform",
+  "Voting rights"
+ ],
+ "method": "Bradley-Terry logistic (no intercept, L2 0.001, standardized winner-minus-loser differences of PAX2 Classifier v1's 35 pre-publish features) on same-channel pairs published within 45 days whose settled ratios differ by at least 1.5x, trained and judged on Reform and Voting rights pairs only; held-out channels are the encoder run's.",
+ "pairs": {
+  "train": 17148,
+  "eval": 4621,
+  "channels": 64,
+  "heldOutChannels": 10,
+  "capPerChannel": 4000
+ },
+ "accuracy": {
+  "train": 0.589689759738745,
+  "heldOut": 0.5503137848950443,
+  "v1OnSamePairs": 0.5120103873620429
+ },
+ "gateP": {
+  "rule": "held-out pairwise accuracy at least 0.02 above PAX2 Classifier v1's ordering of the same pairs",
+  "v0": 0.5503137848950443,
+  "v1": 0.5120103873620429,
+  "pass": true
+ },
+ "perFamily": {
+  "Reform": {
+   "pairs": 3906,
+   "accuracy": 0.5419866871479775,
+   "v1": 0.5
+  },
+  "Voting rights": {
+   "pairs": 715,
+   "accuracy": 0.5958041958041959,
+   "v1": 0.5776223776223777
+  }
+ },
+ "topWeights": [
+  {
+   "key": "under20",
+   "w": 0.3036292163085212
+  },
+  {
+   "key": "shortTitle",
+   "w": 0.24866287240980578
+  },
+  {
+   "key": "tagCount",
+   "w": -0.20022014617920766
+  },
+  {
+   "key": "trump",
+   "w": 0.18102044382667856
+  },
+  {
+   "key": "over60",
+   "w": -0.16007631123085744
+  },
+  {
+   "key": "tags",
+   "w": 0.1477308556898663
+  },
+  {
+   "key": "titleWords",
+   "w": 0.13847872993611304
+  },
+  {
+   "key": "you",
+   "w": -0.12593467436490227
+  },
+  {
+   "key": "link",
+   "w": -0.11469926334350466
+  },
+  {
+   "key": "exclaim",
+   "w": -0.10934767138655131
+  },
+  {
+   "key": "caps",
+   "w": 0.09749539646344868
+  },
+  {
+   "key": "morning",
+   "w": -0.09731006424200517
+  }
+ ]
+}

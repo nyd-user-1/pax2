@@ -72,9 +72,16 @@ for (const [ch, vids] of byChannel) {
   for (const p of pairs) (heldChannels.has(ch) ? evalPairs : trainPairs).push(p)
 }
 
+// FAMILIES=Reform,"Voting rights" node scripts/pairwise/train.mjs — train and judge on those families
+// alone; the output file carries the scope in its name and its method line (rule 24).
+const FAMILIES = process.env.FAMILIES ? new Set(process.env.FAMILIES.split(",").map((s) => s.trim())) : null
+const inScope = ([hi]) => !FAMILIES || FAMILIES.has(hi.family)
+const trainScoped = trainPairs.filter(inScope)
+const evalScoped = evalPairs.filter(inScope)
+
 const diff = ([hi, lo]) => KEYS.map((k) => (hi.x[k] ?? 0) - (lo.x[k] ?? 0))
-const Xtr = trainPairs.map(diff)
-const Xev = evalPairs.map(diff)
+const Xtr = trainScoped.map(diff)
+const Xev = evalScoped.map(diff)
 
 // Standardize by the training diffs' spread.
 const sd = KEYS.map((_, f) => {
@@ -118,29 +125,31 @@ const v1acc = (P) => {
 
 const accTrain = acc(Xtr)
 const accEval = acc(Xev)
-const base = v1acc(evalPairs)
+const base = v1acc(evalScoped)
 const perFamily = {}
-for (const fam of new Set(evalPairs.map(([hi]) => hi.family))) {
-  const P = evalPairs.filter(([hi]) => hi.family === fam)
-  const idx = evalPairs.map((p, i) => (p[0].family === fam ? i : -1)).filter((i) => i >= 0)
+for (const fam of new Set(evalScoped.map(([hi]) => hi.family))) {
+  const P = evalScoped.filter(([hi]) => hi.family === fam)
+  const idx = evalScoped.map((p, i) => (p[0].family === fam ? i : -1)).filter((i) => i >= 0)
   perFamily[fam] = { pairs: P.length, accuracy: acc(idx.map((i) => Xev[i])), v1: v1acc(P) }
 }
 
 const gate = { rule: `held-out pairwise accuracy at least 0.02 above PAX2 Classifier v1's ordering of the same pairs`, v0: accEval, v1: base, pass: accEval >= base + 0.02 }
 const top = KEYS.map((k, f) => ({ key: k, w: w[f] })).sort((a, b) => Math.abs(b.w) - Math.abs(a.w)).slice(0, 12)
+const scopeSlug = FAMILIES ? "-" + [...FAMILIES].join("-").toLowerCase().replace(/[^a-z0-9-]+/g, "") : ""
 const out = {
   builtAt: new Date().toISOString(),
   name: "PAX2 Classifier",
-  version: "pairwise-0",
-  method: `Bradley-Terry logistic (no intercept, L2 ${LAMBDA}, standardized winner-minus-loser differences of PAX2 Classifier v1's ${KEYS.length} pre-publish features) on same-channel pairs published within ${WINDOW_DAYS} days whose settled ratios differ by at least ${GAP}x; held-out channels are the encoder run's.`,
-  pairs: { train: trainPairs.length, eval: evalPairs.length, channels: byChannel.size, heldOutChannels: heldChannels.size, capPerChannel: CAP_PER_CHANNEL },
+  version: `pairwise-0${scopeSlug}`,
+  scope: FAMILIES ? [...FAMILIES] : "all families",
+  method: `Bradley-Terry logistic (no intercept, L2 ${LAMBDA}, standardized winner-minus-loser differences of PAX2 Classifier v1's ${KEYS.length} pre-publish features) on same-channel pairs published within ${WINDOW_DAYS} days whose settled ratios differ by at least ${GAP}x${FAMILIES ? `, trained and judged on ${[...FAMILIES].join(" and ")} pairs only` : ""}; held-out channels are the encoder run's.`,
+  pairs: { train: trainScoped.length, eval: evalScoped.length, channels: byChannel.size, heldOutChannels: heldChannels.size, capPerChannel: CAP_PER_CHANNEL },
   accuracy: { train: accTrain, heldOut: accEval, v1OnSamePairs: base },
   gateP: gate,
   perFamily,
   topWeights: top,
 }
-fs.writeFileSync(path.join(ROOT, "data/generated/model/pairwise-v0.json"), JSON.stringify(out, null, 1) + "\n")
-console.log(`pairs: train ${trainPairs.length}, eval ${evalPairs.length} (held-out channels ${heldChannels.size})`)
+fs.writeFileSync(path.join(ROOT, `data/generated/model/pairwise-v0${scopeSlug}.json`), JSON.stringify(out, null, 1) + "\n")
+console.log(`pairs: train ${trainScoped.length}, eval ${evalScoped.length} (held-out channels ${heldChannels.size}${FAMILIES ? `, scope ${[...FAMILIES].join(", ")}` : ""})`)
 console.log(`accuracy: train ${accTrain.toFixed(4)}, held out ${accEval.toFixed(4)}, v1 on the same pairs ${base.toFixed(4)}`)
 console.log(`Gate P (${gate.rule}): ${gate.pass ? "PASS" : "FAIL"}`)
 for (const [fam, v] of Object.entries(perFamily)) console.log(`  ${fam}: ${v.pairs} pairs, v0 ${v.accuracy.toFixed(3)}, v1 ${v.v1.toFixed(3)}`)
