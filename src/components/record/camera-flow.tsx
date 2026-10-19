@@ -25,7 +25,6 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
   const [prompter, setPrompter] = React.useState(false)
   const [clip, setClip] = React.useState<Clip | null>(null)
   const [drag, setDrag] = React.useState(false)
-  const [consent, setConsent] = React.useState(false)
   const [state, setState] = React.useState<"idle" | "sending" | "sent" | "error">("idle")
   const [err, setErr] = React.useState<string | null>(null)
   const file = React.useRef<HTMLInputElement>(null)
@@ -58,7 +57,7 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
       const u = await uploadUrl(clip.mime.split(";")[0])
       const r = await fetch(u.url, { method: "PUT", body: clip.blob, headers: { "Content-Type": clip.mime.split(";")[0] } })
       if (!r.ok) throw new Error(`Upload failed (${r.status})`)
-      await submitOriginal({ id: u.id, key: u.key, email: me ? undefined : email, scriptId: draft.scriptId, title: draft.title, text: draft.text, name: draft.name, role: draft.role, town: draft.town, seconds: Math.round(clip.seconds), consent, parent: draft.again, publishAt: draft.publishAt ?? nextWeekdayNine() })
+      await submitOriginal({ id: u.id, key: u.key, email: me ? undefined : email, scriptId: draft.scriptId, title: draft.title, text: draft.text, name: draft.name, role: draft.role, town: draft.town, seconds: Math.round(clip.seconds), consent: true, parent: draft.again, publishAt: draft.publishAt ?? nextWeekdayNine() })
       update({ again: undefined })
       setState("sent")
     } catch (e) {
@@ -113,13 +112,9 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-lg border bg-pax2-mist px-3 py-2 outline-none focus:border-primary" />
                   </label>
                 )}
-                <label className="mt-4 flex items-start gap-2">
-                  <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 accent-[var(--primary)]" />
-                  <span className="text-slate-800">The campaign may edit this video, run it as a paid ad, and describe me by what I wrote above.</span>
-                </label>
               </div>
               <div className="flex flex-wrap items-center gap-4">
-                <button type="button" disabled={!consent || state === "sending" || (me === null && !/^\S+@\S+\.\S+$/.test(email))} onClick={send} className="flex items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
+                <button type="button" disabled={state === "sending" || (me === null && !/^\S+@\S+\.\S+$/.test(email))} onClick={send} className="flex items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 font-medium text-white shadow-lg disabled:opacity-40">
                   {state === "sending" ? <Loader2 className="size-4 animate-spin" /> : null} Send it <ArrowRight className="size-4" />
                 </button>
                 <button type="button" onClick={() => setClip(null)} className="flex items-center gap-2 font-medium text-primary">
