@@ -22,6 +22,8 @@ const safePath = (p: string | null) => (p && p.startsWith("/") && !p.startsWith(
 export async function GET(req: Request) {
   const user = await currentUser()
   if (!user) return NextResponse.redirect(`${SITE}/signin?next=${encodeURIComponent("/signup/welcome")}`)
+  // A demo account never holds a grant: no stored token, no channel row, no ingest run.
+  if (user.demo) return NextResponse.redirect(`${SITE}/channels?youtube_error=${encodeURIComponent("A demo account can't connect a channel.")}`)
   if (!configured()) return NextResponse.json({ error: "PAX2_GOOGLE_CLIENT_ID and PAX2_GOOGLE_CLIENT_SECRET are not set on the server." }, { status: 503 })
   const url = new URL(req.url)
   const code = url.searchParams.get("code")

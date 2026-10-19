@@ -4,7 +4,7 @@ import { DescribeInstancesCommand, EC2Client, StartInstancesCommand } from "@aws
 import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3"
 import { DescribeInstanceInformationCommand, SendCommandCommand, SSMClient } from "@aws-sdk/client-ssm"
 
-import { requireAdmin } from "@/lib/auth"
+import { forbidDemo, requireAdmin } from "@/lib/auth"
 
 // A pipeline run on the worker box: every video in s3://…/videos/ without a features/ file yet goes
 // through worker/analyze_organic.py (transcript, Pegasus notes, measured sound — no Rekognition).
@@ -39,7 +39,7 @@ export async function pipelineQueue(): Promise<PipelineQueue> {
 
 /** Start the box, wait for it to report in, and run the analyzer over the queue. Admins only. */
 export async function runPipeline(): Promise<{ started: number; commandId: string }> {
-  await requireAdmin()
+  forbidDemo(await requireAdmin())
   const { queued } = await pipelineQueue()
   if (!queued.length) throw new Error("Nothing is queued.")
   await ec2.send(new StartInstancesCommand({ InstanceIds: [BOX] }))

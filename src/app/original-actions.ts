@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 
-import { currentUser, requireAdmin } from "@/lib/auth"
+import { currentUser, forbidDemo, requireAdmin } from "@/lib/auth"
 import { evaluate } from "@/lib/evaluate"
 import { ADMINS, layout, send, SITE } from "@/lib/mail"
 import { addEvent, createOriginal, gainOf, latestEvaluation, originalRow, type Evaluation, type OriginalRow, playableKey } from "@/lib/originals"
@@ -87,13 +87,14 @@ async function score(id: string) {
 }
 
 export async function scoreOriginal(id: string) {
-  await requireAdmin()
+  forbidDemo(await requireAdmin())
   await score(id)
   refresh(id)
 }
 
 export async function saveNote(id: string, note: string) {
   const admin = await requireAdmin()
+  forbidDemo(admin)
   if (note.trim()) await addEvent(id, { kind: "note", by: admin.email, note: note.trim() })
   refresh(id)
 }
@@ -130,6 +131,7 @@ async function publish(row: OriginalRow, by: string) {
  *  versions can both go out and each be watched against the other. */
 export async function review(id: string, decision: "rerecord" | "approved" | "enhance", note: string) {
   const admin = await requireAdmin()
+  forbidDemo(admin)
   const row = await must(id)
   const evaluation = latestEvaluation(row.events)
   if (!evaluation) throw new Error("Score the video first.")
@@ -165,6 +167,7 @@ export async function ownerPublish(id: string) {
   const user = await currentUser()
   const row = await must(id)
   if (!user || (user.email !== row.owner && !user.admin)) throw new Error("Sign in as the video's owner to publish it.")
+  forbidDemo(user)
   if (row.stage !== "with-owner") throw new Error("This video isn't waiting on you.")
   await addEvent(id, { kind: "owner-publish", by: user.email })
   await publish(row, user.email)
@@ -174,6 +177,7 @@ export async function ownerPublish(id: string) {
 /** The Enrichment Engine's enhanced cut comes back as the next version, and is scored like any recording. */
 export async function submitEnhanced(input: { parent: string; id: string; key: string; seconds: number }) {
   const admin = await requireAdmin()
+  forbidDemo(admin)
   const parent = await must(input.parent)
   await createOriginal({ id: input.id, owner: parent.owner, key: input.key, version: parent.version + 1, parent: parent.id, title: parent.title, text: parent.text, name: parent.name, role: parent.role, town: parent.town, seconds: input.seconds, consent: parent.consent })
   await addEvent(parent.id, { kind: "replaced", by: admin.email, child: input.id })
@@ -186,6 +190,7 @@ export async function submitEnhanced(input: { parent: string; id: string; key: s
 /** Once the video is live on YouTube, the poller watches it like every catalog short. */
 export async function watchOnYouTube(id: string, url: string) {
   const admin = await requireAdmin()
+  forbidDemo(admin)
   const youtubeId = url.match(/(?:shorts\/|v=|youtu\.be\/)([\w-]{11})/)?.[1] ?? (/^[\w-]{11}$/.test(url.trim()) ? url.trim() : null)
   if (!youtubeId) throw new Error("That doesn't look like a YouTube link.")
   await addToWatch({ youtubeId, original: id, at: new Date().toISOString() })

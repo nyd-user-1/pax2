@@ -1,6 +1,7 @@
 import "server-only"
 
 import type { Contribution, ModelKind, Recommendation as Distribution } from "@/lib/forecast"
+import { DEMO_EMAILS } from "@/lib/demo"
 import { get, now, putOnce, query, type Item } from "@/lib/ledger"
 
 // Original content: a video a user records for PAX2, from the recording to the wild.
@@ -179,11 +180,16 @@ export type OriginalRow = Original & { stage: Stage; events: OriginalEvent[]; ev
 
 const rowOf = (o: Original, evs: OriginalEvent[]): OriginalRow => ({ ...o, stage: stageOf(evs), events: evs, evaluation: latestEvaluation(evs), analysis: latestAnalysis(evs), replacedBy: evs.filter((e) => e.kind === "replaced").at(-1)?.child ?? null })
 
-/** Every original with its stage, newest first; owners see their own, admins see all. */
-export async function originals(viewer: { email: string; admin: boolean } | null): Promise<OriginalRow[]> {
+/** Every original with its stage, newest first; owners see their own, admins see all — except the
+ *  demo admin, whose "all" is the demo accounts' videos only, so a public demo never shows a real
+ *  person's work. */
+type Viewer = { email: string; admin: boolean; demo?: boolean }
+const inScope = (viewer: Viewer, owner: string) => (viewer.admin && !viewer.demo) || owner === viewer.email || (viewer.admin && !!viewer.demo && DEMO_EMAILS.has(owner))
+
+export async function originals(viewer: Viewer | null): Promise<OriginalRow[]> {
   if (!viewer) return []
   const index = await query<Item & { at: string; owner: string }>("ORIGINALS")
-  const mine = index.filter((r) => viewer.admin || r.owner === viewer.email)
+  const mine = index.filter((r) => inScope(viewer, r.owner))
   const rows = await Promise.all(
     mine.map(async (r) => {
       const [o, evs] = await Promise.all([original(r.sk), events(r.sk)])
@@ -200,8 +206,8 @@ export async function originalRow(id: string): Promise<OriginalRow | null> {
 
 export const isOriginalId = (id: string) => /^(sub|orig)-[\w-]+$/.test(id)
 
-/** An original before it is published is its owner's and the admins' only. */
-export const canSee = (row: OriginalRow, viewer: { email: string; admin: boolean } | null) => !!viewer && (viewer.admin || viewer.email === row.owner)
+/** An original before it is published is its owner's and the admins' only; the demo admin sees demo rows alone. */
+export const canSee = (row: OriginalRow, viewer: Viewer | null) => !!viewer && inScope(viewer, row.owner)
 
 /** A distribution change's measured gain, signed for the change: dropping a trait that costs
  *  points gains them. Percentage points of breakout rate with the 90% range. */

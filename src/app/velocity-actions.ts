@@ -5,7 +5,7 @@ import { InvokeCommand, LambdaClient } from "@aws-sdk/client-lambda"
 import { revalidatePath } from "next/cache"
 
 import { polledCards, type VelocityCard } from "@/lib/lab"
-import { requireAdmin } from "@/lib/auth"
+import { forbidDemo, requireAdmin } from "@/lib/auth"
 import { baselines, pollerState, recentPolls } from "@/lib/velocity-store"
 
 const REGION = process.env.PAX2_REGION ?? "us-east-1"
@@ -29,7 +29,7 @@ export async function pollerStatus(): Promise<PollerStatus> {
 
 /** Turn the 15-minute poller schedule on or off. Admins only. */
 export async function setPoller(enabled: boolean): Promise<PollerStatus> {
-  await requireAdmin()
+  forbidDemo(await requireAdmin())
   await events.send(enabled ? new EnableRuleCommand({ Name: RULE }) : new DisableRuleCommand({ Name: RULE }))
   revalidatePath("/dashboard")
   return pollerStatus()

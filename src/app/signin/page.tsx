@@ -1,4 +1,5 @@
 import { AuthForm } from "@/components/auth/auth-form"
+import { DemoAccess } from "@/components/auth/demo-access"
 import { LandingGrid } from "@/components/landing-grid"
 import { LandingHeader } from "@/components/record/landing-header"
 import TextType from "@/components/text-type"
@@ -23,6 +24,7 @@ export default function SignInPage() {
           <AuthForm mode="signin" />
         </div>
       </section>
+      <DemoAccess />
     </div>
   )
 }

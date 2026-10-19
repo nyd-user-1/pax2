@@ -1,3 +1,4 @@
+import { DemoAccess } from "@/components/auth/demo-access"
 import { LandingGrid } from "@/components/landing-grid"
 import { LandingHeader } from "@/components/record/landing-header"
 import { SignUpPanel } from "./sign-up-panel"
@@ -20,6 +21,7 @@ export default function SignUpPage() {
           <SignUpPanel />
         </div>
       </section>
+      <DemoAccess />
     </div>
   )
 }

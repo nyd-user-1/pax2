@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ArrowRight, MailCheck } from "lucide-react"
 
+import { DEMO_ACCOUNTS } from "@/lib/demo"
 import { cn } from "@/ui/lib/utils"
 
 type Mode = "signup" | "signin"
@@ -42,6 +43,16 @@ export function AuthForm({ mode, onStep }: { mode: Mode; onStep?: (step: AuthSte
   // The ?next= return address rides along when switching between sign in and sign up.
   const [qs, setQs] = React.useState("")
   React.useEffect(() => setQs(window.location.search), [])
+  // Arriving from the demo-access corner (?demo=<role>) fills the form, ready to send.
+  React.useEffect(() => {
+    if (mode !== "signin") return
+    const role = new URLSearchParams(window.location.search).get("demo")
+    const a = role && DEMO_ACCOUNTS.find((x) => x.role.toLowerCase() === role.toLowerCase())
+    if (a) {
+      setEmail(a.email)
+      setPassword(a.password)
+    }
+  }, [mode])
 
   const signin = async () => {
     const r = await post("signin", { email, password })
