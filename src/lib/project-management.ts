@@ -38,10 +38,10 @@ export const REQUIREMENTS: Item[] = [
   { id: "2", name: "2. Scripts", start: "2026-10-03", end: "2026-10-24", progress: 100, next: "",
     note: "The writer, the editor's six checks and each library script's prior read the reform channels' lifts and the coded shorts' patterns; the editor codes a draft on Bedrock on request and sets it against the coded shorts' delivery; the writer's length is 45 to 60 words, ruled 2026-10-18 from the under-20-second lift.",
     steps: [    ] },
-  { id: "3", name: "3. A pre-release prediction", start: "2026-10-17", end: "2026-11-07", progress: 80, next: "The first hours are the strong predictor; the encoder retrain on 3,424 transcripts tests the words another way; audio and frames follow the proxy.",
+  { id: "3", name: "3. A pre-release prediction", start: "2026-10-17", end: "2026-11-07", progress: 80, next: "The first hours are the strong predictor; the encoder's retrain on 3,424 transcripts missed its gate by 0.0002 and waits on the rest of the captions; audio and frames follow the proxy.",
     note: "The chance of a Hit and the views to expect are on the Scored tab and in the findings email with the model's strength stated. PAX2 Classifier v2 trained 2026-10-19 on 3,424 transcripts and failed Gate C: the words, read as a linear model reads them, added nothing to the title, length and posting time (pooled AUC 0.597 against 0.604), so the app keeps v1 by rule.",
     steps: [
-      { what: "PAX2 Encoder retrained with the transcripts in its corpus; if it passes Gate E its neighbors become a forecast feature.", share: 40, effort: "running, about $1.50" },
+      { what: "PAX2 Encoder retrained 2026-10-19 on 3,424 transcripts and missed Gate E by 0.0002; retrain when the captions cover the catalog, and on a pass its neighbors become a forecast feature.", share: 40, effort: "$1.33 measured; the next run about the same" },
       { what: "Audio and frame features once the catalog's files exist.", share: 40, effort: "after the proxy" },
       { what: "The forecast at hour 1, 3 and 6 after publish, the velocity model's call, shown on the video page beside the pre-release number.", share: 20, effort: "half a day, no spend" },
     ] },
@@ -109,8 +109,8 @@ const MODEL_PLAN: Record<string, Plan> = {
     { what: "A trained multi-label classifier at a few hundred labeled videos.", share: 40, effort: "an hour and a c7i box, once the labels exist" },
   ] },
   "m-encoder": { start: "2026-10-17", end: "2026-11-21", importance: 4, utility: 2, ease: 2, steps: [
-    { what: "Transcripts into the corpus; 35 of 18,455 documents had one.", share: 30, effort: "30 minutes after the caption merge" },
-    { what: "Retrain on one g6e.xlarge and benchmark on the same held-out channels.", share: 50, effort: "about 35 minutes and $1", blocker: true },
+    { what: "Captions for the rest of the catalog; 3,424 of 18,455 documents carried a transcript in the 2026-10-19 run, which missed Gate E by 0.0002 (pooled +0.0198 of the +0.02 required).", share: 50, effort: "the caption run, days at one connection's pace", blocker: true },
+    { what: "Retrain on the fuller corpus and benchmark on the same held-out channels.", share: 30, effort: "about 35 minutes and $1.33 measured" },
     { what: "Gate E again; publish the weights if it passes.", share: 20, effort: "an hour" },
   ] },
   "m-vision": { start: "2026-10-17", end: "2026-12-15", importance: 2, utility: 2, ease: 3, steps: [
@@ -123,9 +123,7 @@ const MODEL_PLAN: Record<string, Plan> = {
     { what: "On the video page.", share: 10, effort: "an hour" },
   ] },
   "m-reranker": { start: "2026-10-17", end: "2026-11-21", importance: 2, utility: 1, ease: 2, waits: ["m-encoder"], steps: [
-    { what: "PAX2 Encoder passes its gate first.", share: 60, effort: "waits on the encoder" },
-    { what: "Retrain on the new pairs, same box.", share: 30, effort: "about 20 minutes and under $1" },
-    { what: "Gate R again.", share: 10, effort: "30 minutes" },
+    { what: "Gate R passed 2026-10-19 (pooled 0.572 over the encoder's 0.571, within 0.563 over 0.559), but it rescores the encoder's neighbors, so it publishes only with an encoder that passes Gate E.", share: 100, effort: "waits on the encoder" },
   ] },
   "m-simulator": { start: "2026-10-17", end: "2026-12-15", importance: 2, utility: 1, ease: 2, steps: [
     { what: "Fit a seed-test model to the velocity curves; sim-0 describes 442 today.", share: 60, effort: "a day, after about 1,000 curves" },

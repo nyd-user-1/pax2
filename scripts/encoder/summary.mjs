@@ -29,9 +29,10 @@ const hf = {
 const out = {
   builtAt: new Date().toISOString(),
   run: RUN,
+  // The hf id goes on only after the weights are actually uploaded and listed (rule 26): --published.
   models: {
-    "PAX2 Encoder": { base: "BAAI/bge-m3", hf: gateE.pass ? hf.encoder : null, s3: `s3://nsr-embed-v2/pax2/models/${RUN}/encoder/` },
-    "PAX2 Reranker": { base: "Alibaba-NLP/gte-reranker-modernbert-base", hf: gateR.pass ? hf.reranker : null, s3: `s3://nsr-embed-v2/pax2/models/${RUN}/reranker/` },
+    "PAX2 Encoder": { base: "BAAI/bge-m3", hf: gateE.pass && process.argv.includes("--published") ? hf.encoder : null, s3: `s3://nsr-embed-v2/pax2/models/${RUN}/encoder/` },
+    "PAX2 Reranker": { base: "Alibaba-NLP/gte-reranker-modernbert-base", hf: gateR.pass && process.argv.includes("--published") ? hf.reranker : null, s3: `s3://nsr-embed-v2/pax2/models/${RUN}/reranker/` },
   },
   // Staged in s3://nsr-embed-v2/pax2/publish/<run>/; published only once the upload is listed and matches.
   datasets: { benchmark: { hf: hf.benchmark, published: process.argv.includes("--published") }, trainingSet: { hf: hf.trainingSet, published: process.argv.includes("--published") }, staged: `s3://nsr-embed-v2/pax2/publish/${RUN}/` },

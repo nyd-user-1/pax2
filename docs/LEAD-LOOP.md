@@ -41,13 +41,14 @@ Update the row: `src/lib/recipes/memorable.ts` (progress, next, status, note) an
 
 ## Current state (the lead keeps this current; a fork reads it first)
 
-Updated 2026-10-19 02:35 UTC.
+Updated 2026-10-19 03:20 UTC.
 
-- The captions reached 3,465 at 02:20 UTC; the run continues on the remaining shorts. Brief 7's chain merged 3,424 transcripts, trained PAX2 Classifier v2 on one c7i.xlarge in about six minutes and failed Gate C (0.597 against 0.604); the app keeps v1 by rule; `data/generated/model/var-model-v2.json` carries the run.
-- The PAX2 Encoder retrain is running: box i-044ab0db20eb874ee, g6e.2xlarge, run 20261019-022545-train, launched 02:28 UTC, watchdog 90 minutes, log at `s3://nsr-embed-v2/pax2/runs/20261019-022545-train/box.log`. When it terminates: `node scripts/encoder/rescore.mjs 20261019-022545-train`, pull `data/generated/model/encoder.json` as Part C did, update the encoder and reranker cards and rows; if Gate E passes, publish the weights the way the headline model went up.
-- Committed, not pushed, since the 23:46 UTC push: the teleprompter, the publish step, the affinity term, the Studio's voice, music, pace, text and cards with the style record, the script renames, the Send step. Production has none of these until Brendan pushes.
-- Waits on Brendan: the push; the Google OAuth client and a channel's grant; the proxy; labels; reader rows.
-- Spend by the lead: about $0.52 before the encoder box, about $2 after it; the weekend about $4.
+- The PAX2 Encoder retrain finished: run 20261019-022545-train, g6e.2xlarge, 02:28 to 03:03 UTC, $1.33 measured. Gate E failed by 0.0002 (pooled 0.5706 against stock 0.5509, +0.0198 of the +0.02 required; within channel +0.0156); Gate R passed (reranker 0.5717 pooled, 0.5629 within, over the encoder's top 50). Mac rescore agrees with the box on all three arms, no leakage. Nothing publishes: Gate E rules, and the Hugging Face token in SSM still waits on Brendan. Cards, rows and `encoder.json` updated. The next retrain waits on the rest of the captions.
+- The caption run continues on the Mac. Brendan wants it 10x faster. The one-box rehearsal (capreh-20261019-031138, t3.micro, about a cent, log in `s3://nsr-embed-v2/pax2/captions-rehearsal/`) re-measured the script header's lesson at 03:13 UTC: 0 of 24 ids answered from the EC2 IP, web and android clients both bot-walled, so no fleet of our own boxes can help. Done instead at 03:20: the download archive backfilled with 2,149 fetched ids it was missing (a restart no longer re-extracts them), and the run restarted at SLEEP=4 REQ_SLEEP=1 — the log shows a video every 8 to 10 seconds, about double the old pace, still far below the measured 429 threshold of bursts a second apart. The 10x itself is Brendan's purchase: a transcript API (about $16 to $50 for the ~16,000 remaining, an hour of parallel calls) or the residential proxy account already on his list as requirement 4's blocker.
+- Brief 7's chain had merged 3,424 transcripts and trained PAX2 Classifier v2, which failed Gate C (0.597 against 0.604); the app keeps v1 by rule; `data/generated/model/var-model-v2.json` carries the run.
+- Committed, not pushed, since the 23:46 UTC push: the teleprompter, the publish step, the affinity term, the Studio's voice, music, pace, text and cards with the style record, the script renames, the Send step, the handoff. Production has none of these until Brendan pushes.
+- Waits on Brendan: the push; the Google OAuth client and a channel's grant; the proxy; the Hugging Face token; labels; reader rows.
+- Spend: the lead about $1.86 measured ($0.52 on the 18th, $1.33 the encoder retrain, a cent the caption rehearsal); the weekend about $3.75 of the $10.
 
 ## Stopping
 
