@@ -1,9 +1,7 @@
-import "@xyflow/react/dist/style.css"
+import { FlowsHome } from "@/components/flow/flows-home"
 
-import { FlowBuilder } from "@/components/flow-builder"
-
-export const metadata = { title: "Flow" }
+export const metadata = { title: "Flows" }
 
 export default function FlowPage() {
-  return <FlowBuilder />
+  return <FlowsHome />
 }

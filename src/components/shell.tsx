@@ -35,7 +35,7 @@ const WIP = [
   { href: "/loop", label: "Loop", icon: RefreshCw },
   { href: "/patterns", label: "Patterns", icon: ChartColumn },
   { href: "/graph", label: "Graph", icon: Workflow },
-  { href: "/flow", label: "Flow", icon: GitBranch },
+  { href: "/flow", label: "Flows", icon: GitBranch },
   { href: "/project-management", label: "Project Management", icon: GanttChart },
   { href: "/endgame", label: "Endgame", icon: Flag },
   { href: "/ml", label: "ML", icon: Brain },
@@ -83,7 +83,7 @@ const TITLES: [string, string][] = [
   ["/loop", "Loop"],
   ["/patterns", "Patterns"],
   ["/graph", "Graph"],
-  ["/flow", "Flow"],
+  ["/flow", "Flows"],
   ["/endgame", "Endgame"],
   ["/ml", "ML"],
   ["/tags", "Tags"],
@@ -309,7 +309,7 @@ export function Shell({ children, drawer, signedIn = false }: { children: React.
   const paired = open && !takeover
   const closePanel = () => (panelOpen ? router.back() : setDiscuss(false))
   // /chat fills the content card edge to edge, as solar's chat fills its main area; /app/home is the same chat dressed as the home.
-  const full = path.startsWith("/chat") || path.startsWith("/graph") || path.startsWith("/app/home")
+  const full = path.startsWith("/chat") || path.startsWith("/graph") || path.startsWith("/app/home") || path.startsWith("/flow/")
   return (
     <PanelCtx.Provider value={panel}>
       <div className="flex min-h-dvh md:h-dvh md:overflow-hidden md:bg-slate-200/60 md:p-[18px]">
