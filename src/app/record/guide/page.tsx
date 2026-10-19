@@ -1,3 +1,6 @@
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
+
 import { FlowPage, StepBar } from "@/components/record/chrome"
 
 export const metadata = { title: "Volunteer guide" }
@@ -24,6 +27,9 @@ export default function GuidePage() {
               </ul>
             </section>
           ))}
+          <Link href="/record/library" className="press mt-2 flex w-fit items-center gap-2 rounded-full bg-pax2-blue px-7 py-4 font-medium text-white shadow-lg">
+            Choose a script <ArrowRight className="size-4" />
+          </Link>
         </div>
       </FlowPage>
     </>

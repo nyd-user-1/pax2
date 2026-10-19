@@ -204,6 +204,9 @@ export function ScriptBox({ text, onText, onPickDifferent, onRecord }: { text: s
             Pick a different script
           </Link>
         )}
+        <Link href="/record/studio" className="font-medium text-slate-500 transition-colors hover:text-primary">
+          Make it without a camera
+        </Link>
       </div>
     </div>
   )

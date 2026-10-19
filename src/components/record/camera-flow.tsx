@@ -6,7 +6,7 @@ import { ArrowRight, CheckCircle2, Loader2, RotateCcw, Upload, Video } from "luc
 
 import { uploadUrl } from "@/app/actions"
 import { againDraft, submitOriginal, viewer } from "@/app/original-actions"
-import { FlowPage } from "@/components/record/chrome"
+import { FlowPage, StepBar } from "@/components/record/chrome"
 import { useDraft } from "@/components/record/draft"
 import { Teleprompter } from "@/components/record/teleprompter"
 import { RevealFx } from "@/components/reveal-fx"
@@ -68,7 +68,7 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
 
   if (state === "sent")
     return (
-      <Frame embedded={!!embedded} step={3} back={{ href: "/record", label: "Home" }} title="Thanks, we'll send you a link to your video soon.">
+      <Frame embedded={!!embedded} back={{ href: "/recording", label: "Start" }} title="Thanks, we'll send you a link to your video soon.">
           <div className="flex flex-col gap-4 surface p-7">
             <CheckCircle2 className="size-10 text-primary" />
             <div className="flex flex-wrap gap-4">
@@ -81,20 +81,13 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
 
   if (clip)
     return (
-      <Frame embedded={!!embedded} step={3} back={{ href: "/record/script", label: "Script" }} title="Looks good?" lead="Watch it back. Send it, or try again.">
+      <Frame embedded={!!embedded} back={{ href: "/record/script", label: "Script" }} title="Looks good?" lead="Watch it back. Send it, or try again.">
           <div className="grid gap-6 md:grid-cols-[280px_1fr]">
             <video src={clip.url} controls playsInline className="aspect-[9/16] w-full rounded-3xl bg-black object-cover shadow-xl" />
             <div className="flex flex-col gap-4">
               <div className="surface p-6 text-sm">
                 <p className="font-medium text-pax2-blue">{draft.title ?? "Your video"}</p>
                 <p className="text-slate-800">{Math.round(clip.seconds)} seconds</p>
-                <ol className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-slate-800">
-                  {["Select script", "Record video", "Submit video"].map((step, i) => (
-                    <li key={step} className="flex items-center gap-1.5">
-                      <span className="tabular text-pax2-blue">{i + 1}.</span> {step}
-                    </li>
-                  ))}
-                </ol>
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   {(["name", "lastName"] as const).map((k) => (
                     <label key={k} className="flex flex-col gap-1">
@@ -127,7 +120,7 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
 
   return (
     <>
-      <Frame embedded={!!embedded} step={2} back={{ href: "/record/script", label: "Script" }} title="Ready when you are." lead="Your script will scroll on screen while you record. Don't worry about getting it perfect — you can always try again.">
+      <Frame embedded={!!embedded} back={{ href: "/record/script", label: "Script" }} title="Ready when you are." lead="Your script will scroll on screen while you record. Don't worry about getting it perfect — you can always try again.">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-5 surface p-6 shadow-sm">
             <div className="flex items-center gap-4">
@@ -201,9 +194,9 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
   )
 }
 
-/** A stage's chrome: the step bar and page on /record/camera; in place on the landing, a heading
- *  over the stage, wiping in as each stage replaces the last. */
-function Frame({ embedded, step, back, title, lead, children }: { embedded: boolean; step: 1 | 2 | 3; back: { href: string; label: string }; title: string; lead?: string; children: React.ReactNode }) {
+/** A stage's chrome: the way back and the page on /record/camera; in place on the landing, a
+ *  heading over the stage, wiping in as each stage replaces the last. */
+function Frame({ embedded, back, title, lead, children }: { embedded: boolean; back: { href: string; label: string }; title: string; lead?: string; children: React.ReactNode }) {
   if (embedded)
     return (
       <RevealFx key={title} translateY={4} className="flex flex-col gap-8">
@@ -215,8 +208,11 @@ function Frame({ embedded, step, back, title, lead, children }: { embedded: bool
       </RevealFx>
     )
   return (
-    <FlowPage title={title} lead={lead}>
-      {children}
-    </FlowPage>
+    <>
+      <StepBar back={back} />
+      <FlowPage title={title} lead={lead}>
+        {children}
+      </FlowPage>
+    </>
   )
 }

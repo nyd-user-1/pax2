@@ -1,8 +1,9 @@
 import { Suspense } from "react"
 
 import model from "../../../../data/generated/model/reference-model.json"
-import { FlowPage, StepBar } from "@/components/record/chrome"
+import { FlowPage } from "@/components/record/chrome"
 import { Editor, type Research } from "@/components/record/editor"
+import { ScriptBack } from "@/components/record/script-back"
 
 export const metadata = { title: "Make it yours" }
 
@@ -11,7 +12,9 @@ export default function ScriptPage() {
   const research = Object.fromEntries(vc.map((f) => [f.key, f]))
   return (
     <>
-      <StepBar back={{ href: "/record/library", label: "Scripts" }} />
+      <Suspense>
+        <ScriptBack />
+      </Suspense>
       <FlowPage title="Make it yours." lead="Change anything you'd like. It should sound like you." wide>
         <Suspense>
           <Editor research={research} />
