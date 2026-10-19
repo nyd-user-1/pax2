@@ -5,8 +5,8 @@ import { createHash } from "node:crypto"
 import { linesOf, VOICES, type MusicId, type VoiceId, type WordMark } from "@/lib/studio-style"
 
 // The Studio's audio, made on the server and served back through /api/studio/audio so the browser's
-// renderer reads it from the app's own origin (the bucket has no CORS). Narration is Amazon Polly's
-// generative engine: one mp3 and the word timings (speech marks) the composition paces its lines by,
+// renderer reads it from the app's own origin (the bucket has no CORS). Narration is Amazon Polly:
+// one mp3 and the word timings (speech marks) the composition paces its lines by,
 // kept under studio/voice/<hash of voice and text> so the same script is never synthesized twice.
 // The neural engine, because it returns word marks and the generative engine does not (checked
 // 2026-10-18), and the lines must light up with the voice. Cost: a 20-second script is about 300
@@ -36,8 +36,8 @@ export async function narrate(text: string, voice: VoiceId): Promise<Narration> 
   }
   const { PollyClient, SynthesizeSpeechCommand } = await import("@aws-sdk/client-polly")
   const polly = new PollyClient({ region: REGION })
-  // Newlines read as pauses: each line is its own sentence to the voice.
-  const ssmlText = spoken.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+  // Plain text, not SSML: nothing is escaped, and a newline reads as a pause between lines.
+  const ssmlText = spoken
   const audio = await polly.send(new SynthesizeSpeechCommand({ Engine: "neural", VoiceId: voice, OutputFormat: "mp3", Text: ssmlText, TextType: "text" }))
   const marksOut = await polly.send(new SynthesizeSpeechCommand({ Engine: "neural", VoiceId: voice, OutputFormat: "json", SpeechMarkTypes: ["word"], Text: ssmlText, TextType: "text" }))
   const mp3 = Buffer.from(await audio.AudioStream!.transformToByteArray())
