@@ -27,3 +27,7 @@ data/raw/captions
 data/generated/model/transcript-features.json
 data/generated/model/predictions-v2.jsonl
 data/studio/music
+# TranscriptAPI raw responses (scripts/captions/fetch-transcriptapi.mjs); merged into data/generated/transcripts.json
+data/raw/captions-api
+# Catalog media staging (scripts/catalog-media/fetch-videos.sh); each file goes to S3 and is deleted
+data/raw/videos
