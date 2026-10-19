@@ -39,15 +39,24 @@ export const POSITIONS: { id: Position; label: string }[] = [
   { id: "lower", label: "Lower third" },
 ]
 
-/** Amazon Polly neural voices, the three the project used for its stand-in takes and one more. */
-export type VoiceId = "none" | "Ruth" | "Stephen" | "Danielle" | "Matthew"
-export const VOICES: { id: VoiceId; label: string }[] = [
-  { id: "none", label: "Silent" },
-  { id: "Ruth", label: "Ruth" },
-  { id: "Danielle", label: "Danielle" },
-  { id: "Stephen", label: "Stephen" },
-  { id: "Matthew", label: "Matthew" },
+/** Voices: four from ElevenLabs (premade, American; ids as its /v1/voices lists them), which read more
+ *  naturally and return character timings, and four Amazon Polly neural voices, the three the project
+ *  used for its stand-in takes and one more, which need no outside account. ElevenLabs voices need
+ *  ELEVENLABS_API_KEY on the server; the free tier is 10,000 characters a month, about 30 scripts. */
+export type VoiceId = "none" | "Ruth" | "Stephen" | "Danielle" | "Matthew" | `el:${string}`
+export type Voice = { id: VoiceId; label: string; provider: "ElevenLabs" | "Polly" | "none" }
+export const VOICES: Voice[] = [
+  { id: "none", label: "Silent", provider: "none" },
+  { id: "el:EXAVITQu4vr4xnSDxMaL", label: "Sarah", provider: "ElevenLabs" },
+  { id: "el:XrExE9yKIg1WjnnlVkGX", label: "Matilda", provider: "ElevenLabs" },
+  { id: "el:cjVigY5qzO86Huf0OWal", label: "Eric", provider: "ElevenLabs" },
+  { id: "el:nPczCjzI2devNBz1zQrb", label: "Brian", provider: "ElevenLabs" },
+  { id: "Ruth", label: "Ruth", provider: "Polly" },
+  { id: "Danielle", label: "Danielle", provider: "Polly" },
+  { id: "Stephen", label: "Stephen", provider: "Polly" },
+  { id: "Matthew", label: "Matthew", provider: "Polly" },
 ]
+export const voiceLabel = (id: VoiceId) => VOICES.find((v) => v.id === id)?.label ?? id
 
 /** The sound beds scripts/studio/music-beds.mjs synthesizes, under studio/music/ in the bucket. */
 export type MusicId = "none" | "calm" | "pulse" | "bright"

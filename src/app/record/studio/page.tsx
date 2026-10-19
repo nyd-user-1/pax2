@@ -172,6 +172,7 @@ export default function StudioPage() {
             </div>
             <div className="surface flex flex-col gap-5 p-5">
               <Group title="Voice">{VOICES.map((v) => toggle(style.voice === v.id, v.label, () => set({ voice: v.id })))}</Group>
+              <p className="-mt-3 text-xs text-slate-500">Sarah, Matilda, Eric and Brian by ElevenLabs; Ruth, Danielle, Stephen and Matthew by Amazon Polly.</p>
               <Group title="Sound bed">{MUSIC.map((m) => toggle(style.music === m.id, m.label, () => set({ music: m.id })))}</Group>
             </div>
             <div className="surface flex flex-col gap-5 p-5">
