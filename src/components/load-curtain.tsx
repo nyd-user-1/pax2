@@ -78,7 +78,8 @@ export function LoadCurtain({ onDone }: { onDone?: () => void }) {
             <StrokeText
               text="PAX"
               strokeColor="currentColor"
-              fillMode="none"
+              fillMode="wipe"
+              fillColor="#dc2626"
               fontSize={144}
               fontFamily="'PAX Curtain', monospace"
               letterSpacing={0}

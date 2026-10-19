@@ -1,9 +1,11 @@
 "use client"
 
 import * as React from "react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 import { ScrollCue } from "@/components/record/scroll-cue"
 import SplitFlapText from "@/components/split-flap-text"
+import { whiteButton } from "@/components/white-button"
 
 // The hero board, two rows in lockstep: one word per row, every row the same
 // eleven boards, both rows driven through the three messages by one clock so
@@ -16,7 +18,8 @@ const STEPS: { rows: [string, string]; tile: string; text: string }[] = [
 ]
 /** Boards per row. Words start in box 1; the board itself stays centered on the page. */
 const WIDTH = 10
-/** Once the opening is done, each hover over row 2 flips it to the next of the product's parts. */
+/** Once the opening is done, row 2 steps through the product's parts: each hover moves on, and the
+ *  chevrons beneath the board step either way. */
 const PARTS: [string, string][] = [
   ["RECORDING", "🎬"],
   ["SCORING", "🎯"],
@@ -64,6 +67,8 @@ export function FlapHero() {
   const [step, setStep] = React.useState(-1)
   const [cue, setCue] = React.useState(false)
   const [part, setPart] = React.useState(0)
+  /** The left chevron joins once the reader has stepped with the right one. */
+  const [stepped, setStepped] = React.useState(false)
   const turn = (by: number) => setPart((p) => (p + by + ROW_TWO.length) % ROW_TWO.length)
   React.useEffect(() => {
     const timers = [
@@ -91,6 +96,25 @@ export function FlapHero() {
               charBg={i === 0 && step >= 3 ? { chars: "VIDEO", bg: "var(--pax2-red)" } : undefined}
             />
           ))}
+          {/* Under the board, flush with its right edge; out of the flow so the board keeps its centre. */}
+          <div className={`absolute right-0 top-full mt-4 flex gap-2 text-base transition-opacity duration-700 ${cue ? "opacity-100" : "pointer-events-none opacity-0"}`}>
+            {stepped && (
+              <button type="button" aria-label="Previous" onClick={() => turn(-1)} className={whiteButton("circle", "flex size-8")}>
+                <ChevronLeft className="size-4" />
+              </button>
+            )}
+            <button
+              type="button"
+              aria-label="Next"
+              onClick={() => {
+                turn(1)
+                setStepped(true)
+              }}
+              className={whiteButton("circle", "flex size-8")}
+            >
+              <ChevronRight className="size-4" />
+            </button>
+          </div>
         </div>
       ) : (
         <div style={{ height: "2.38em" }} />
