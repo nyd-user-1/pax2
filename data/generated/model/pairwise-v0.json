@@ -1,0 +1,106 @@
+{
+ "builtAt": "2026-10-19T04:29:02.319Z",
+ "name": "PAX2 Classifier",
+ "version": "pairwise-0",
+ "method": "Bradley-Terry logistic (no intercept, L2 0.001, standardized winner-minus-loser differences of PAX2 Classifier v1's 35 pre-publish features) on same-channel pairs published within 45 days whose settled ratios differ by at least 1.5x; held-out channels are the encoder run's.",
+ "pairs": {
+  "train": 90043,
+  "eval": 21923,
+  "channels": 64,
+  "heldOutChannels": 10,
+  "capPerChannel": 4000
+ },
+ "accuracy": {
+  "train": 0.5784291949401953,
+  "heldOut": 0.5460019157961957,
+  "v1OnSamePairs": 0.5629703963873558
+ },
+ "gateP": {
+  "rule": "held-out pairwise accuracy at least 0.02 above PAX2 Classifier v1's ordering of the same pairs",
+  "v0": 0.5460019157961957,
+  "v1": 0.5629703963873558,
+  "pass": false
+ },
+ "perFamily": {
+  "Candidates & officials": {
+   "pairs": 8963,
+   "accuracy": 0.5367622447841125,
+   "v1": 0.5534977128193685
+  },
+  "Nonpartisan media": {
+   "pairs": 4306,
+   "accuracy": 0.49372967951695307,
+   "v1": 0.5908035299581978
+  },
+  "Partisan media": {
+   "pairs": 4000,
+   "accuracy": 0.5905,
+   "v1": 0.61275
+  },
+  "Reform": {
+   "pairs": 3906,
+   "accuracy": 0.5609318996415771,
+   "v1": 0.5
+  },
+  "UK": {
+   "pairs": 33,
+   "accuracy": 0.5454545454545454,
+   "v1": 0.6060606060606061
+  },
+  "Voting rights": {
+   "pairs": 715,
+   "accuracy": 0.6461538461538462,
+   "v1": 0.5776223776223777
+  }
+ },
+ "topWeights": [
+  {
+   "key": "under20",
+   "w": 0.1768818020823635
+  },
+  {
+   "key": "trump",
+   "w": 0.16933221577517552
+  },
+  {
+   "key": "exclaim",
+   "w": -0.13566569956092728
+  },
+  {
+   "key": "descWords",
+   "w": -0.12825668961008882
+  },
+  {
+   "key": "over60",
+   "w": -0.12601538069185642
+  },
+  {
+   "key": "under35",
+   "w": 0.12150068640447895
+  },
+  {
+   "key": "noDescription",
+   "w": -0.11879712293332736
+  },
+  {
+   "key": "titleWords",
+   "w": 0.08241925596237555
+  },
+  {
+   "key": "caps",
+   "w": 0.07999926860757478
+  },
+  {
+   "key": "weekend",
+   "w": 0.07556224362230408
+  },
+  {
+   "key": "you",
+   "w": -0.07067360476777644
+  },
+  {
+   "key": "shortTitle",
+   "w": 0.06136821140119973
+  }
+ ]
+}
