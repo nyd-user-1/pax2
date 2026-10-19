@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import { CardBlock, ListBlock, TableBlock } from "@/components/blocks"
+import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { OriginalAdmin, OwnerPublish, ScoreButton, WatchForm } from "@/components/original-admin"
 import { TabRail, type RailTab } from "@/components/tab-rail"
 import { UsageOpen } from "@/components/usage-beacon"
@@ -83,7 +84,9 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
           ) : (
             <Player src={`/api/video/${row.id}`} subject={row.id} className="shadow-e2" />
           )}
-          <div className="flex min-w-0 flex-col gap-6">
+          <div className="min-w-0">
+          <BlockOrder page="v-recorded" initial={["recording", ...(row.text ? ["script"] : []), ...(row.analysis ? ["content"] : []), "history", ...(admin && !row.evaluation ? ["score"] : [])]}>
+            <OrderedBlock id="recording" label="Recording">
             <CardBlock title="Recording" height="auto">
               <div className="grid grid-cols-2 gap-4 @lg:grid-cols-4">
                 {[
@@ -99,12 +102,16 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
                 ))}
               </div>
             </CardBlock>
+            </OrderedBlock>
             {row.text && (
+              <OrderedBlock id="script" label="Script">
               <ListBlock title="Script" height="auto">
                 <p className="whitespace-pre-line text-sm leading-relaxed text-slate-700">{row.text}</p>
               </ListBlock>
+              </OrderedBlock>
             )}
             {row.analysis && (
+              <OrderedBlock id="content" label="Content">
               <ListBlock title="Content" height="auto" footer={`Measured ${when(row.analysis.at)} from the upload: Whisper transcript, audio by second, one frame every five seconds.${row.analysis.errors.length ? ` Failed: ${row.analysis.errors.join(", ")}.` : ""}`}>
                 <div className="grid grid-cols-2 gap-4 @lg:grid-cols-4">
                   {(
@@ -149,7 +156,9 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
                 {row.analysis.summary.delivery?.hook && <p className="mt-3 text-sm text-slate-700">Hook at {row.analysis.summary.delivery.hookAt ?? 0}s: “{row.analysis.summary.delivery.hook}”</p>}
                 {row.analysis.transcript && <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-slate-700">{row.analysis.transcript}</p>}
               </ListBlock>
+              </OrderedBlock>
             )}
+            <OrderedBlock id="history" label="History">
             <ListBlock title="History" height="auto">
               <div className="flex flex-col divide-y divide-slate-100">
                 {row.events.map((e) => (
@@ -160,20 +169,33 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
                 ))}
               </div>
             </ListBlock>
+            </OrderedBlock>
             {admin && !row.evaluation && (
+              <OrderedBlock id="score" label="Score">
               <CardBlock title="Score" height="auto">
                 <ScoreButton id={row.id} />
               </CardBlock>
+              </OrderedBlock>
             )}
+          </BlockOrder>
           </div>
         </div>
       )}
 
       {active === "scored" && row.evaluation && (
-        <div className="flex flex-col gap-6">
-          {admin && row.stage === "scored" && <OriginalAdmin id={row.id} enhancing={false} />}
-          {admin && row.stage === "enhancing" && <OriginalAdmin id={row.id} enhancing plan={row.events.filter((e) => e.kind === "enhance").at(-1)?.plan ?? []} />}
+        <BlockOrder page="v-scored" initial={[...(admin && (row.stage === "scored" || row.stage === "enhancing") ? ["review"] : []), "evaluation", ...(row.evaluation.forecast ? ["forecast"] : []), "recommendations", "traits", ...(notes.length > 0 ? ["notes"] : [])]}>
+          {admin && row.stage === "scored" && (
+            <OrderedBlock id="review" label="Review">
+              <OriginalAdmin id={row.id} enhancing={false} />
+            </OrderedBlock>
+          )}
+          {admin && row.stage === "enhancing" && (
+            <OrderedBlock id="review" label="Review">
+              <OriginalAdmin id={row.id} enhancing plan={row.events.filter((e) => e.kind === "enhance").at(-1)?.plan ?? []} />
+            </OrderedBlock>
+          )}
 
+          <OrderedBlock id="evaluation" label="Evaluation">
           <CardBlock title="Evaluation" height="auto" footer={`Scored ${when(row.events.filter((e) => e.kind === "scored").at(-1)!.at)}`}>
             <div className="flex flex-col gap-5">
               <p className="text-sm leading-relaxed text-slate-700">{row.evaluation.summary}</p>
@@ -193,9 +215,15 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
               </div>
             </div>
           </CardBlock>
+          </OrderedBlock>
 
-          {row.evaluation.forecast && <ForecastCard f={row.evaluation.forecast} />}
+          {row.evaluation.forecast && (
+            <OrderedBlock id="forecast" label="Forecast">
+              <ForecastCard f={row.evaluation.forecast} />
+            </OrderedBlock>
+          )}
 
+          <OrderedBlock id="recommendations" label="Recommendations">
           <ListBlock title="Recommendations" height="auto">
             <div className="flex flex-col divide-y divide-slate-100">
               {row.evaluation.recommendations.map((r) => (
@@ -244,7 +272,9 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
               </details>
             )}
           </ListBlock>
+          </OrderedBlock>
 
+          <OrderedBlock id="traits" label="Traits">
           <TableBlock title="Traits" height="auto">
             <div className="overflow-x-auto">
               <table className="tabular w-full text-sm">
@@ -269,8 +299,10 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
               </table>
             </div>
           </TableBlock>
+          </OrderedBlock>
 
           {notes.length > 0 && (
+            <OrderedBlock id="notes" label="Notes">
             <ListBlock title="Notes" height="auto">
               <div className="flex flex-col divide-y divide-slate-100">
                 {notes.map((n) => (
@@ -283,8 +315,9 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
                 ))}
               </div>
             </ListBlock>
+            </OrderedBlock>
           )}
-        </div>
+        </BlockOrder>
       )}
 
       {active === "published" && <Published row={row} admin={admin} />}
@@ -405,7 +438,8 @@ async function Published({ row, admin }: { row: OriginalRow; admin: boolean }) {
   for (const d of watching?.destinations ?? []) links.set(d.platform, d.url)
   const mail = await outbox(row.id)
   return (
-    <div className="flex flex-col gap-6">
+    <BlockOrder page="v-published" initial={["destinations", ...(admin && !watching ? ["watch"] : []), ...(admin && mail.length > 0 ? ["emails"] : [])]}>
+      <OrderedBlock id="destinations" label="Destinations">
       <TableBlock title="Destinations" height="auto" footer={`Published ${when(published.at)}`}>
         <table className="w-full text-sm">
           <tbody className="[&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2 [&_td]:pr-6 first:[&_tr_td]:border-t-0">
@@ -426,12 +460,16 @@ async function Published({ row, admin }: { row: OriginalRow; admin: boolean }) {
           </tbody>
         </table>
       </TableBlock>
+      </OrderedBlock>
       {admin && !watching && (
+        <OrderedBlock id="watch" label="Watch it">
         <CardBlock title="Watch it" height="auto">
           <WatchForm id={row.id} />
         </CardBlock>
+        </OrderedBlock>
       )}
       {admin && mail.length > 0 && (
+        <OrderedBlock id="emails" label="Emails">
         <ListBlock title="Emails" height="auto">
           <div className="flex flex-col divide-y divide-slate-100">
             {mail.map((m) => (
@@ -446,8 +484,9 @@ async function Published({ row, admin }: { row: OriginalRow; admin: boolean }) {
             ))}
           </div>
         </ListBlock>
+        </OrderedBlock>
       )}
-    </div>
+    </BlockOrder>
   )
 }
 

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { CheckIcon, EllipsisVerticalIcon, RefreshCwIcon } from "lucide-react"
+import { CheckIcon, CopyIcon, EllipsisVerticalIcon, RefreshCwIcon } from "lucide-react"
 
 import { CardTitle } from "@/ui/components/nova/card"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
@@ -29,21 +29,20 @@ export function CardAnchor({ children, id, className }: { children: string; id?:
   }
   return (
     <CardTitle id={anchor} className={cn("scroll-mt-20", className)}>
-      {/* hq's copy chip (app/ui/copy-code.tsx), as Brendan asked on 2026-09-07: a
-          rounded box that is plain at rest, violet on the muted ground on hover,
-          and green while the link is on the clipboard. */}
+      {/* hq's copy chip (app/ui/copy-code.tsx), reworked as Brendan asked on 2026-10-19: plain at
+          rest; on hover the title keeps its own color on the muted ground and the copy icon
+          surfaces where the check lands once copied, as lucide.dev's icon titles do. */}
       <button
         type="button"
         onClick={copy}
         title="Copy link to this card"
         className={cn(
-          "inline-flex cursor-pointer items-center gap-1.5 rounded px-1.5 py-0.5 text-left transition-colors select-none focus-visible:outline-1 focus-visible:outline-ring",
-          // Plain at rest; the violet and the muted ground on hover; green once copied (Brendan, 2026-09-07).
-          copied ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-300" : "text-foreground hover:bg-muted hover:text-violet-600 dark:hover:text-violet-300"
+          "group/anchor inline-flex cursor-pointer items-center gap-1.5 rounded px-1.5 py-0.5 text-left transition-colors select-none focus-visible:outline-1 focus-visible:outline-ring",
+          copied ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-300" : "text-foreground hover:bg-muted"
         )}
       >
         {children}
-        {copied && <CheckIcon className="size-3.5 text-green-600" />}
+        {copied ? <CheckIcon className="size-3.5 text-green-600" /> : <CopyIcon className="size-3.5 opacity-0 transition-opacity group-hover/anchor:opacity-100" />}
       </button>
     </CardTitle>
   )

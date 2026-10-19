@@ -6,6 +6,7 @@ import { Loader2, Upload } from "lucide-react"
 
 import { uploadUrl } from "@/app/actions"
 import { ownerPublish, review, scoreOriginal, submitEnhanced, watchOnYouTube } from "@/app/original-actions"
+import { CardBlock } from "@/components/blocks"
 import { cn } from "@/ui/lib/utils"
 import { whiteButton } from "@/components/white-button"
 
@@ -71,39 +72,42 @@ export function OriginalAdmin({ id, enhancing, plan = [] }: { id: string; enhanc
 
   if (enhancing)
     return (
-      <div className="surface flex flex-col gap-4 p-5">
-        <p className="font-semibold text-slate-900">PAX2 Enrichment Engine</p>
-        <ol className="flex list-decimal flex-col gap-1.5 pl-5 text-sm text-slate-700">
-          {plan.map((p) => (
-            <li key={p}>{p}</li>
-          ))}
-        </ol>
-        <div>
-          <button type="button" disabled={!!busy} onClick={() => file.current?.click()} className={primary}>
-            {busy === "upload" ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />} Upload the enhanced cut
-          </button>
-          <input ref={file} type="file" accept="video/*" className="hidden" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
+      <CardBlock title="PAX2 Enrichment Engine" height="auto">
+        <div className="flex flex-col gap-4">
+          <ol className="flex list-decimal flex-col gap-1.5 pl-5 text-sm text-slate-700">
+            {plan.map((p) => (
+              <li key={p}>{p}</li>
+            ))}
+          </ol>
+          <div>
+            <button type="button" disabled={!!busy} onClick={() => file.current?.click()} className={primary}>
+              {busy === "upload" ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />} Upload the enhanced cut
+            </button>
+            <input ref={file} type="file" accept="video/*" className="hidden" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
+          </div>
+          {err && <p className="text-sm text-below">{err}</p>}
         </div>
-        {err && <p className="text-sm text-below">{err}</p>}
-      </div>
+      </CardBlock>
     )
 
   return (
-    <div className="surface flex flex-col gap-4 p-5">
-      <textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} placeholder="Notes" className="w-full resize-y rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-pax2-light-blue" />
-      <div className="flex flex-wrap gap-2">
-        <button type="button" disabled={!!busy} onClick={run("rerecord", () => review(id, "rerecord", note))} className={secondary}>
-          <Spin on={busy === "rerecord"} /> Re-Record
-        </button>
-        <button type="button" disabled={!!busy} onClick={run("approved", () => review(id, "approved", note))} className={secondary}>
-          <Spin on={busy === "approved"} /> Approved
-        </button>
-        <button type="button" disabled={!!busy} onClick={run("enhance", () => review(id, "enhance", note))} className={primary}>
-          <Spin on={busy === "enhance"} /> Enhance
-        </button>
+    <CardBlock title="Review" height="auto">
+      <div className="flex flex-col gap-4">
+        <textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} placeholder="Notes" className="w-full resize-y rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-pax2-light-blue" />
+        <div className="flex flex-wrap gap-2">
+          <button type="button" disabled={!!busy} onClick={run("rerecord", () => review(id, "rerecord", note))} className={secondary}>
+            <Spin on={busy === "rerecord"} /> Re-Record
+          </button>
+          <button type="button" disabled={!!busy} onClick={run("approved", () => review(id, "approved", note))} className={secondary}>
+            <Spin on={busy === "approved"} /> Approved
+          </button>
+          <button type="button" disabled={!!busy} onClick={run("enhance", () => review(id, "enhance", note))} className={primary}>
+            <Spin on={busy === "enhance"} /> Enhance
+          </button>
+        </div>
+        {err && <p className="text-sm text-below">{err}</p>}
       </div>
-      {err && <p className="text-sm text-below">{err}</p>}
-    </div>
+    </CardBlock>
   )
 }
 
