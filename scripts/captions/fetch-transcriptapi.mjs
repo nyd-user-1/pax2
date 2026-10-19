@@ -25,7 +25,7 @@ const JSON3_DIR = path.join(ROOT, "data/raw/captions")
 const TRANSCRIPTS = path.join(ROOT, "data/generated/transcripts.json")
 const BASE = "https://transcriptapi.com/api/v2/youtube/transcript"
 const RPM = 180 // under the plan's 200
-const WORKERS = 8
+const WORKERS = 12 // per key; the first run measured about 90 a minute from 8 workers, latency-bound
 const argv = process.argv.slice(2)
 const APPLY = argv.includes("--apply")
 const MERGE = argv.includes("--merge")
@@ -34,11 +34,15 @@ const CEILING = argv.includes("--ceiling") ? Number(argv[argv.indexOf("--ceiling
 
 fs.mkdirSync(CACHE, { recursive: true })
 
-function key() {
+// Every TRANSCRIPT*_API_KEY in .env.local is a key on its own account: its own 200-a-minute limit and
+// its own credits. Each key gets its own pacer and workers; a key that 402s drops out and hands its
+// remaining work to the keys still alive.
+function keys() {
   const env = fs.readFileSync(path.join(ROOT, ".env.local"), "utf8")
-  const m = env.match(/^TRANSCRIPT_API_KEY=["']?([^"'\n]*)["']?$/m)
-  if (!m || !m[1].trim()) throw new Error("TRANSCRIPT_API_KEY is empty in .env.local")
-  return m[1].trim()
+  const out = []
+  for (const m of env.matchAll(/^TRANSCRIPT\d*_API_KEY=["']?([^"'\n]+?)["']?\s*$/gm)) if (m[1].trim()) out.push(m[1].trim())
+  if (!out.length) throw new Error("no TRANSCRIPT*_API_KEY with a value in .env.local")
+  return out
 }
 
 // ── census ────────────────────────────────────────────────────────────────────
@@ -78,25 +82,26 @@ if (MERGE) {
 if (!APPLY && !SAMPLE) process.exit(0)
 
 // ── fetch ─────────────────────────────────────────────────────────────────────
-const KEY = key()
+const KEYS = keys().map((k, j) => ({ k, n: j + 1, next: Date.now(), dead: false }))
+console.log(`${KEYS.length} key${KEYS.length > 1 ? "s" : ""}, ${RPM} requests a minute each`)
 const list = SAMPLE ? todo.slice(0, SAMPLE) : todo
-let next = Date.now()
-const slot = () => {
-  const at = (next = Math.max(next + 60000 / RPM, Date.now()))
+const slot = (st) => {
+  const at = (st.next = Math.max(st.next + 60000 / RPM, Date.now()))
   return new Promise((r) => setTimeout(r, at - Date.now()))
 }
 let ok = 0, noCaptions = 0, unavailable = 0, failed = 0, stop = null
 const t0 = Date.now()
 
-async function one(id) {
+// true = the id is settled (fetched, 404 or failed); false = the key died first, give the id back.
+async function one(id, st) {
   for (let attempt = 0; attempt < 3; attempt++) {
-    if (stop) return
-    await slot()
-    if (stop) return
+    if (stop || st.dead) return false
+    await slot(st)
+    if (stop || st.dead) return false
     let res
     try {
       res = await fetch(`${BASE}?video_url=${id}&format=json&language=en,asr-en`, {
-        headers: { Authorization: `Bearer ${KEY}` },
+        headers: { Authorization: `Bearer ${st.k}` },
         signal: AbortSignal.timeout(30000),
       })
     } catch (e) {
@@ -108,7 +113,7 @@ async function one(id) {
       fs.writeFileSync(path.join(CACHE, `${id}.json`), body)
       ok++
       if (ok >= CEILING) stop = `ceiling of ${CEILING} credits reached`
-      return
+      return true
     }
     if (res.status === 404) {
       const body = await res.text()
@@ -116,29 +121,39 @@ async function one(id) {
       let code = ""
       try { code = JSON.parse(body).code } catch {}
       code === "video_unavailable" ? unavailable++ : noCaptions++
-      return
+      return true
     }
-    if (res.status === 402) { stop = "402: credits exhausted; top up and rerun --apply, the cache resumes"; return }
+    if (res.status === 402) {
+      st.dead = true
+      console.log(`key ${st.n}: credits exhausted after ${ok} fetched`)
+      return false
+    }
     if (res.status === 429) {
       const wait = Number(res.headers.get("retry-after") || 5)
-      next = Math.max(next, Date.now() + wait * 1000)
+      st.next = Math.max(st.next, Date.now() + wait * 1000)
       attempt-- // a 429 is pacing, not a failure
       continue
     }
     if (attempt === 2) { failed++; console.log(`${id}: HTTP ${res.status}`) }
   }
+  return true
 }
 
 let i = 0
-await Promise.all(Array.from({ length: Math.min(WORKERS, list.length) }, async () => {
-  while (i < list.length && !stop) {
-    const id = list[i++]
-    await one(id)
-    const done = ok + noCaptions + unavailable + failed
-    if (done % 200 === 0 && done) console.log(`${done}/${list.length} ok=${ok} noCaptions=${noCaptions} unavailable=${unavailable} failed=${failed} ${(done / ((Date.now() - t0) / 60000)).toFixed(0)}/min`)
-  }
-}))
+const handedBack = []
+const nextId = () => (handedBack.length ? handedBack.pop() : i < list.length ? list[i++] : undefined)
+await Promise.all(KEYS.flatMap((st) =>
+  Array.from({ length: WORKERS }, async () => {
+    for (let id; (id = nextId()) !== undefined && !stop; ) {
+      if (st.dead) { handedBack.push(id); return }
+      if (!(await one(id, st))) { handedBack.push(id); if (st.dead) return; continue }
+      const done = ok + noCaptions + unavailable + failed
+      if (done % 200 === 0 && done) console.log(`${done}/${list.length} ok=${ok} noCaptions=${noCaptions} unavailable=${unavailable} failed=${failed} ${(done / ((Date.now() - t0) / 60000)).toFixed(0)}/min`)
+    }
+  }),
+))
 console.log(`done in ${Math.round((Date.now() - t0) / 1000)}s: ok=${ok} (credits), noCaptions=${noCaptions}, unavailable=${unavailable}, failed=${failed}, remaining=${list.length - ok - noCaptions - unavailable - failed}`)
+if (KEYS.every((s) => s.dead)) stop = "every key's credits are exhausted; top up and rerun --apply, the cache resumes"
 if (stop) console.log(`STOPPED: ${stop}`)
 if (SAMPLE) for (const id of list) {
   const p = path.join(CACHE, `${id}.json`)

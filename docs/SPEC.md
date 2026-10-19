@@ -45,7 +45,7 @@ Measured again 2026-10-19 with 3,424 transcripts from YouTube's captions (PAX2 C
 
 ### 4. Every available factor — Partial
 
-a. Tracking and polling. Built: the velocity poller (`lambda/velocity`), 15-minute readings for 72 hours per short, 65 channels, daily baselines, the 18-month catalog with breakout labels, each video's tags, category, topics, captions and length (`meta.json`). Ten days of readings sit in S3 (2026-10-06 to 10-15). The EventBridge rule is DISABLED as of 2026-10-15 13:25 UTC. Within-channel lifts for 23 pre-publish traits are computed (`scripts/metadata-lift.mjs`). Since 2026-10-18 the readings are joined to the Model Training Library as views at 1, 6, 24 and 72 hours (`scripts/velocity-features.mjs`; 815 shorts, 236 settled rows), and PAX2 Velocity Classifier's chance of a Hit shows on `/live-tracking` for every watched short.
+a. Tracking and polling. Built: the velocity poller (`lambda/velocity`), 15-minute readings for 72 hours per short, 65 channels, daily baselines, the 18-month catalog with breakout labels, each video's tags, category, topics, captions and length (`meta.json`). The EventBridge rule is ENABLED again since 2026-10-17 (Brendan: it never goes off again); verified 2026-10-19 03:44 UTC, the day's poll file freshly written, 60 MB of readings in the bucket. Within-channel lifts for 23 pre-publish traits are computed (`scripts/metadata-lift.mjs`). Since 2026-10-18 the readings are joined to the Model Training Library as views at 1, 6, 24 and 72 hours (`scripts/velocity-features.mjs`; 815 shorts, 236 settled rows), and PAX2 Velocity Classifier's chance of a Hit shows on `/live-tracking` for every watched short.
 
 b. Content analysis. Built: the worker (`worker/analyze_organic.py`) measured the 40 campaign shorts and 11 synthetic takes (Transcribe, Pegasus notes, loudness, pitch, pauses, delivery coding, Swayable coding); since 2026-10-18 every new upload is measured by the `pax2-analyze` chain (Whisper, the same audio measures, CLIP frames, memorability) on a box that starts itself and stops itself. Since 08:23 UTC the same chain reads the video through Pegasus 1.2 on Bedrock with the worker's prompt, so an upload carries its hook, energy, tone, frame and pace as the 40 shorts do. Missing: the content model needs hundreds of analyzed shorts, which wait on the catalog's audio and video through the proxy.
 
@@ -103,7 +103,7 @@ The home feed is one static file for everyone (`scripts/home-feed.mjs`). Depends
 |---|---|
 | Amplify app `pax-2` | live, last build 2026-10-15 |
 | Ledger `pax2-ledger` | 316 items; zero originals; zero mail |
-| Velocity poller | rule DISABLED; last run 2026-10-15 13:25 UTC; 10 days of readings, 41 MB |
+| Velocity poller | rule ENABLED since 2026-10-17, every 15 minutes; 60 MB of readings as of 2026-10-19 |
 | Worker box | gone; the pipeline run button on `/dashboard` will fail |
 | S3 `pax-2-638175140432` | 63 videos, 51 feature files, 0 uploads |
 | SES | sandbox; verified addresses only |
@@ -116,7 +116,7 @@ One convention, no exceptions: the project name and the kind of model. PAX2 Clas
 
 ## Decisions for Brendan
 
-1. Turn the poller back on. It costs cents a day and the velocity data only grows while it runs. Off since 2026-10-15.
+1. Done 2026-10-17: the poller is back on, and Brendan's word is it never goes off again.
 2. The worker's replacement: a Lambda (ffmpeg layer plus Transcribe and Pegasus calls) fired by the S3 upload event, or a new self-stopping box. The Lambda is the fit for one-video-at-a-time uploads. Needs approval to deploy.
 3. The YouTube channel and OAuth client for publishing. Only Brendan can create these.
 4. SES production access, so the findings and publish emails reach real owners.
