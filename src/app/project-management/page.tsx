@@ -1,6 +1,10 @@
 import { Check } from "lucide-react"
 
-import { ProgressBlock, TableBlock } from "@/components/blocks"
+import type * as React from "react"
+
+import { ListBlock, ProgressBlock, TableBlock } from "@/components/blocks"
+import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
+import { PunchlistRows } from "@/components/punchlist"
 import { TabRail } from "@/components/tab-rail"
 import { MODEL_TERMS } from "@/lib/model-terms"
 import { MODELS, REQUIREMENTS, blockedBy, type Item } from "@/lib/project-management"
@@ -47,7 +51,8 @@ function Row({ b, n, list, rated, today }: { b: Item; n: number; list: Item[]; r
         <span className="tabular text-slate-500">{n}</span>
         <p className="truncate font-medium text-slate-900">{plainName(b.name)}</p>
         <div className={cn("h-3 overflow-hidden rounded-full", done ? "bg-green-100" : late ? "bg-red-100" : "bg-slate-100")} title={`${b.progress}%`}>
-          <div className={cn("h-full rounded-full", done ? "bg-green-500" : late ? "bg-red-400" : "bg-pax2-light-blue")} style={{ width: `${b.progress}%` }} />
+          {/* The fill grows from the left on arrival, staggered down the list (pax2.css .grow). */}
+          <div className={cn("grow h-full rounded-full", done ? "bg-green-500" : late ? "bg-red-400" : "bg-pax2-light-blue")} style={{ width: `${b.progress}%`, "--i": n } as React.CSSProperties} />
         </div>
         <div className="flex items-center justify-end gap-1 tabular text-slate-700">
           {done ? <Check className="h-4 w-4 text-green-600" strokeWidth={3} aria-label="Complete" /> : `${b.progress}%`}
@@ -136,6 +141,30 @@ function Specs() {
 
 const summary = (list: Item[]) => `${list.filter((b) => b.progress >= 100).length} of ${list.length} complete · ${Math.round(list.reduce((s, b) => s + b.progress, 0) / list.length)}% on average`
 
+// The overnight session of October 19, 2026: what it attempted against what landed.
+const PUNCHLIST: { item: string; done: boolean }[] = [
+  { item: "/app/home on the ElevenLabs reference: the chat under the headline, ten create tiles, the promo carousel at the foot of the first viewport", done: true },
+  { item: "The tiles' hover cells meeting edge to edge, the More menu wearing icon chips, the type at the reference's size", done: true },
+  { item: "The promo slides rebuilt with layered light and grain; the pager resting as liquid dots, its chip and arrows surfacing on hover", done: true },
+  { item: "The shell header's search, ⌘K from any page, and the announcement banner above it", done: true },
+  { item: "Recents and Quickstarts past the fold; a quickstart stages the Studio with a voice, a bed and a look in one click", done: true },
+  { item: "The Google OAuth client end to end: consent screen published to production, three redirect URIs, keys on Amplify and the dev server", done: true },
+  { item: "/privacy written and shipped; its push carried the night's publish-step commits and built green", done: true },
+  { item: "The PAX channel created wearing the curtain-font mark; the grant approved and its refresh token verified in SSM", done: true },
+  { item: "The Voter Freedom rule folded into the spec: the back catalog scores as originals and never joins the watch list", done: true },
+  { item: "/signin wearing the PAX mark in place of the parallax wordmark", done: true },
+  { item: "The take panel's blocks: move arrows on every stack, the review box a true block, the header hover corrected", done: true },
+  { item: "The blocks-are-blocks rule written into standing memory", done: true },
+  { item: "The first video through the entire loop: a Voter Freedom-scripted proxy, scored an 11% chance of a Hit, published unlisted to the PAX channel, the poller reading it since 06:29 UTC", done: true },
+  { item: "The night's interface work committed and pushed", done: true },
+  { item: "The onboarding-and-channel-connect lane briefed and handed to a fresh window (docs/briefs/ONBOARDING-CHANNEL-CONNECT.md)", done: true },
+  { item: "/signup still wears the old wordmark", done: false },
+  { item: "The IPRoyal proxy purchase, blocked on phone verification; Webshare, which signs up by email alone, the fallback", done: false },
+  { item: "The 679 catalog audio files through Whisper on the transcription box, then encoder retrain #3 behind them", done: false },
+  { item: "The owner's publish banner: a block or a prompt, Brendan's call", done: false },
+  { item: "The client secret file still sits in Downloads", done: false },
+]
+
 const VIEWS = ["requirements", "models", "specs"] as const
 type View = (typeof VIEWS)[number]
 
@@ -150,23 +179,43 @@ export default async function ProjectManagementPage({ searchParams }: { searchPa
     { key: "specs", label: "Specs", href: "/project-management?view=specs", count: specsInModelOrder().length },
   ]
   return (
-    <div className="flex flex-col gap-6">
+    // No gap of its own: each OrderedBlock's mt-5 sets the 20px rhythm, tabs to block and block to block.
+    <div className="flex flex-col">
       <TabRail tabs={tabs} active={active} />
-      {active === "requirements" && (
-        <ProgressBlock title="Requirements" search="Search requirements…" rows={rows(REQUIREMENTS)} name="requirements" height="h-[calc(100dvh-220px)]" footer={summary(REQUIREMENTS)}>
-          <Rows list={REQUIREMENTS} rated={false} today={today} />
-        </ProgressBlock>
-      )}
-      {active === "models" && (
-        <ProgressBlock title="Models" search="Search models…" rows={rows(MODELS)} name="models" height="h-[calc(100dvh-220px)]" footer={summary(MODELS)}>
-          <Rows list={MODELS} rated today={today} />
-        </ProgressBlock>
-      )}
-      {active === "specs" && (
-        <TableBlock title="Specs" search="Search specs…" rows={specsInModelOrder().map(({ name, target, loss, algorithm }, i) => ({ no: i + 1, item: name, target, loss, algorithm }))} name="model-specs" height="h-[calc(100dvh-220px)]">
-          <Specs />
-        </TableBlock>
-      )}
+      <BlockOrder page="project-management" initial={["board", "punchlist"]}>
+        {active === "requirements" && (
+          <OrderedBlock id="board" label="Requirements">
+          <ProgressBlock title="Requirements" search="Search requirements…" rows={rows(REQUIREMENTS)} name="requirements" height="h-[calc(100dvh-226px)]" footer={summary(REQUIREMENTS)}>
+            <Rows list={REQUIREMENTS} rated={false} today={today} />
+          </ProgressBlock>
+          </OrderedBlock>
+        )}
+        {active === "models" && (
+          <OrderedBlock id="board" label="Models">
+          <ProgressBlock title="Models" search="Search models…" rows={rows(MODELS)} name="models" height="h-[calc(100dvh-226px)]" footer={summary(MODELS)}>
+            <Rows list={MODELS} rated today={today} />
+          </ProgressBlock>
+          </OrderedBlock>
+        )}
+        {active === "specs" && (
+          <OrderedBlock id="board" label="Specs">
+          <TableBlock title="Specs" search="Search specs…" rows={specsInModelOrder().map(({ name, target, loss, algorithm }, i) => ({ no: i + 1, item: name, target, loss, algorithm }))} name="model-specs" height="h-[calc(100dvh-226px)]">
+            <Specs />
+          </TableBlock>
+          </OrderedBlock>
+        )}
+        <OrderedBlock id="punchlist" label="Punchlist">
+        <ListBlock
+          title="Punchlist"
+          height="h-[calc(100dvh-226px)]"
+          rows={PUNCHLIST.map((p, i) => ({ no: i + 1, item: p.item, status: p.done ? "Done" : "Open" }))}
+          name="punchlist"
+          footer="The overnight session, October 19, 2026"
+        >
+          <PunchlistRows items={PUNCHLIST} storageKey="pax2:punchlist:2026-10-19" />
+        </ListBlock>
+        </OrderedBlock>
+      </BlockOrder>
     </div>
   )
 }
