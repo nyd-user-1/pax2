@@ -61,12 +61,12 @@ export async function againDraft(id: string) {
 /** A recording lands. It is scored straight away, the prediction made the moment the button is
  *  pressed (requirement 5); PAX2_AUTOSCORE=0 turns that off for a dev session that must not call
  *  Bedrock, and then it waits on /drafts for an admin to press Score. */
-export async function submitOriginal(input: { id: string; key: string; email?: string; scriptId?: string; title?: string; text?: string; name?: string; role?: string; town?: string; seconds: number; consent: boolean; parent?: string; publishAt?: string; draft?: boolean }) {
+export async function submitOriginal(input: { id: string; key: string; email?: string; scriptId?: string; title?: string; text?: string; name?: string; role?: string; town?: string; seconds: number; consent: boolean; parent?: string; publishAt?: string; draft?: boolean; style?: string; styleLabel?: string }) {
   const user = await currentUser()
   const owner = (user?.email ?? input.email ?? "").trim().toLowerCase()
   if (!/^\S+@\S+\.\S+$/.test(owner)) throw new Error("An email address is needed, so PAX2 can send the link.")
   const parent = input.parent ? await originalRow(input.parent) : null
-  await createOriginal({ id: input.id, owner, key: input.key, version: parent ? parent.version + 1 : 1, parent: parent?.id, title: input.title, text: input.text, name: input.name, role: input.role, town: input.town, seconds: input.seconds, consent: input.consent, publishAt: input.publishAt && !Number.isNaN(Date.parse(input.publishAt)) ? new Date(input.publishAt).toISOString() : undefined })
+  await createOriginal({ id: input.id, owner, key: input.key, version: parent ? parent.version + 1 : 1, parent: parent?.id, title: input.title, text: input.text, name: input.name, role: input.role, town: input.town, seconds: input.seconds, consent: input.consent, publishAt: input.publishAt && !Number.isNaN(Date.parse(input.publishAt)) ? new Date(input.publishAt).toISOString() : undefined, style: input.style, styleLabel: input.styleLabel })
   if (parent) await addEvent(parent.id, { kind: "replaced", by: owner, child: input.id })
   // Save scores at once; Draft keeps the recording on /drafts for the admin's Score button.
   if (process.env.PAX2_AUTOSCORE !== "0" && !input.draft) await score(input.id)

@@ -33,6 +33,9 @@ export type OriginalInput = {
   town?: string
   seconds: number
   consent: boolean
+  /** A Studio take's design choices as JSON (src/lib/studio-style.ts StyleRecord) and their one-line label. */
+  style?: string
+  styleLabel?: string
   /** When the owner means it to go out, ISO; the forecast reads its day and hour. */
   publishAt?: string
   /** Made off the platform and entered after the fact (scripts/backfill-voter-freedom.mjs). */
