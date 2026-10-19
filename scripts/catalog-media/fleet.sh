@@ -9,7 +9,10 @@
 #   APPLY=1 REHEARSAL=1 ./scripts/catalog-media/fleet.sh # one box, 10 ids, one IP (the gate on EC2)
 #   APPLY=1 ./scripts/catalog-media/fleet.sh             # the fleet; stop the Mac run first
 #   MODE=audio TARGETS=path ./scripts/catalog-media/fleet.sh  # audio-only over another id list
-# Census is S3 itself (an id's .m4a under catalog-media/ means done); rerun any time, done ids skip.
+#   MODE=captions TARGETS=data/raw/captions/fleet-targets.txt ./scripts/catalog-media/fleet.sh
+#       # auto-captions only, no media: json3 to s3://…/catalog-captions/, yt-captions.sh's pacing
+# Census is S3 itself (an id's .m4a under catalog-media/, or .en.json3 under catalog-captions/,
+# means done); rerun any time, done ids skip.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 REGION=us-east-1
@@ -21,12 +24,17 @@ RUN=fleet-$(date -u +%Y%m%d-%H%M%S)
 case $MODE in
   pairs) FMT='bv*[height<=360][ext=mp4],ba[ext=m4a]' ;;
   audio) FMT='ba[ext=m4a]' ;;
-  *) echo "MODE must be pairs or audio"; exit 1 ;;
+  captions) FMT='' ;;
+  *) echo "MODE must be pairs, audio or captions"; exit 1 ;;
 esac
 
-# Remaining = targets minus ids whose m4a already sits in S3 (same census whisper.sh trusts).
+# Remaining = targets minus ids already in S3 (.m4a under catalog-media/, .en.json3 under catalog-captions/).
 DONE=$(mktemp); REMAIN=$(mktemp)
-aws s3 ls s3://$BUCKET/catalog-media/ --region $REGION | awk '{print $4}' | grep '\.m4a$' | sed 's/\.m4a$//' > "$DONE" || true
+if [ "$MODE" = captions ]; then
+  aws s3 ls s3://$BUCKET/catalog-captions/ --region $REGION | awk '{print $4}' | grep '\.en\.json3$' | sed 's/\.en\.json3$//' > "$DONE" || true
+else
+  aws s3 ls s3://$BUCKET/catalog-media/ --region $REGION | awk '{print $4}' | grep '\.m4a$' | sed 's/\.m4a$//' > "$DONE" || true
+fi
 grep -vxF -f "$DONE" "$TARGETS" > "$REMAIN" || true
 N_REMAIN=$(wc -l < "$REMAIN" | tr -d ' ')
 if [ "${REHEARSAL:-}" = 1 ]; then BOXES=1; tail -10 "$REMAIN" > "$REMAIN.r"; mv "$REMAIN.r" "$REMAIN"; N_REMAIN=$(wc -l < "$REMAIN" | tr -d ' '); WATCHDOG_MIN=${WATCHDOG_MIN:-30}; else WATCHDOG_MIN=${WATCHDOG_MIN:-150}; fi
@@ -73,18 +81,28 @@ LINE=\$(aws ssm get-parameter --with-decryption --name /pax2/webshare/proxies --
 PIP=\$(cut -d: -f1 <<<"\$LINE"); PPORT=\$(cut -d: -f2 <<<"\$LINE"); PUSER=\$(cut -d: -f3 <<<"\$LINE"); PPASS=\$(cut -d: -f4 <<<"\$LINE")
 PROXY="http://\$PUSER:\$PPASS@\$PIP:\$PPORT"
 echo "box $BOX proxy \$PIP ids \$(wc -l < ids.txt)"
-OK=0; TRIED=0
+OK=0; TRIED=0; FAILED=0
 while read -r id; do
   [ -z "\$id" ] && continue
   TRIED=\$((TRIED+1))
-  /opt/yt/bin/yt-dlp -f "$FMT" --max-filesize 100M --proxy "\$PROXY" --socket-timeout 30 --sleep-requests 1 --retries 3 --retry-sleep http:30 --no-warnings -o "/work/%(id)s.%(ext)s" -- "\$id" || echo "FAIL \$id"
-  GOT=0
-  for f in "/work/\$id.mp4" "/work/\$id.m4a"; do
-    if [ -f "\$f" ]; then aws s3 cp --only-show-errors "\$f" "s3://$BUCKET/catalog-media/\$(basename "\$f")" && rm -f "\$f" && GOT=\$((GOT+1)); fi
-  done
+  if [ "$MODE" = captions ]; then
+    # yt-captions.sh's fetch through the box's own residential IP; no media, requests 2s apart.
+    /opt/yt/bin/yt-dlp --skip-download --write-auto-subs --sub-langs en --sub-format json3 --extractor-args "youtube:skip=hls,dash" --proxy "\$PROXY" --socket-timeout 30 --sleep-requests 2 --retries 3 --retry-sleep http:30 --no-warnings -o "/work/%(id)s" -- "\$id" || { echo "FAIL \$id"; FAILED=\$((FAILED+1)); }
+    GOT=0
+    if [ -f "/work/\$id.en.json3" ]; then aws s3 cp --only-show-errors "/work/\$id.en.json3" "s3://$BUCKET/catalog-captions/\$id.en.json3" && rm -f "/work/\$id.en.json3" && GOT=1; fi
+  else
+    /opt/yt/bin/yt-dlp -f "$FMT" --max-filesize 100M --proxy "\$PROXY" --socket-timeout 30 --sleep-requests 1 --retries 3 --retry-sleep http:30 --no-warnings -o "/work/%(id)s.%(ext)s" -- "\$id" || { echo "FAIL \$id"; FAILED=\$((FAILED+1)); }
+    GOT=0
+    for f in "/work/\$id.mp4" "/work/\$id.m4a"; do
+      if [ -f "\$f" ]; then aws s3 cp --only-show-errors "\$f" "s3://$BUCKET/catalog-media/\$(basename "\$f")" && rm -f "\$f" && GOT=\$((GOT+1)); fi
+    done
+  fi
   [ "\$GOT" -gt 0 ] && OK=\$((OK+1))
-  # Five straight empty-handed attempts at the top means the IP is walled, not the files (rule 14).
-  if [ "\$TRIED" -eq 5 ] && [ "\$OK" -eq 0 ]; then echo "ABORT box $BOX: 0 of first 5"; break; fi
+  # Five straight errors at the top means the IP is walled (rule 14). A short with no captions exits
+  # clean and empty-handed, so in captions mode only real failures count against the gate.
+  if [ "$MODE" = captions ]; then
+    if [ "\$TRIED" -eq 5 ] && [ "\$FAILED" -eq 5 ]; then echo "ABORT box $BOX: 5 errors of first 5"; break; fi
+  elif [ "\$TRIED" -eq 5 ] && [ "\$OK" -eq 0 ]; then echo "ABORT box $BOX: 0 of first 5"; break; fi
   [ \$((TRIED % 25)) -eq 0 ] && echo "progress \$OK/\$TRIED \$(date -u +%FT%TZ)"
   sleep 8
 done < ids.txt

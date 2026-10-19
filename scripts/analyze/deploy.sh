@@ -59,8 +59,9 @@ echo "box role $BOX_ROLE: inline pax2-analyze (dynamodb PutItem $TABLE, bedrock 
 # The rig code the box pulls.
 aws s3 cp --only-show-errors scripts/rig/analyze_common.py s3://$BUCKET/code/rig/analyze_common.py
 aws s3 cp --only-show-errors scripts/rig/analyze_upload.py s3://$BUCKET/code/rig/analyze_upload.py
+aws s3 cp --only-show-errors scripts/rig/encoder_neighbors.py s3://$BUCKET/code/rig/encoder_neighbors.py
 aws s3 cp --only-show-errors scripts/rig/requirements.txt s3://$BUCKET/code/rig/requirements.txt
-echo "code: s3://$BUCKET/code/rig/ analyze_common.py analyze_upload.py requirements.txt"
+echo "code: s3://$BUCKET/code/rig/ analyze_common.py analyze_upload.py encoder_neighbors.py requirements.txt"
 
 # The execution role.
 if [ -z "$ROLE_ARN" ]; then

@@ -7,6 +7,7 @@ import { forecast, recommendations, type VideoInput } from "@/lib/forecast"
 import { titlePatterns } from "@/lib/headline-patterns"
 import { scoreHeadlinesV1 } from "@/lib/headline-v1"
 import type { Evaluation, Original, Recommendation, Trait } from "@/lib/originals"
+import { pairwiseVersus } from "@/lib/pairwise"
 
 // The PAX2 evaluation of an original video. One model pass reads the script the messenger recorded
 // and codes it on Swayable's traits, quoting the line that shows each one, and writes a concrete
@@ -112,7 +113,14 @@ export async function evaluate(o: Original): Promise<Evaluation> {
   const input = videoInputOf(o)
   const f = forecast(input, null, input.transcript)
   const d = recommendations(input)
+  let versus = null
+  if (o.parent) {
+    const { originalRow } = await import("@/lib/originals")
+    const parent = await originalRow(o.parent)
+    if (parent) versus = pairwiseVersus(input, videoInputOf(parent))
+  }
   return {
+    versus,
     model: MODEL,
     summary: coded.summary,
     traits,

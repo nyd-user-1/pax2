@@ -61,6 +61,8 @@ export type Evaluation = {
   lean: number
   title: { key: string; label: string; has: boolean; won: number; lost: number }[]
   recommendations: Recommendation[]
+  /** The pairwise call against the parent version, on the families Gate P passed; absent elsewhere. */
+  versus?: import("@/lib/pairwise").Versus | null
   /** PAX2 Classifier: the chance of a Hit from what the video will carry at publish, with its measured strength. */
   forecast?: {
     p: number

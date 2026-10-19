@@ -57,6 +57,8 @@ echo "installed $(date -u +%FT%TZ)"
 aws s3 cp --only-show-errors /var/log/analyze.log s3://${bucket}/${logKey}
 cd /work/code && BUCKET=${bucket} KEY=${key} ORIGINAL=${id} TABLE=${TABLE} /opt/rig/bin/python analyze_upload.py
 echo "EXIT=$? $(date -u +%FT%TZ)"
+/opt/rig/bin/pip install -q sentence-transformers || echo "sentence-transformers install FAILED"
+BUCKET=${bucket} ORIGINAL=${id} TABLE=${TABLE} /opt/rig/bin/python encoder_neighbors.py || echo "NEIGHBORS FAILED (non-fatal)"
 aws s3 cp --only-show-errors /var/log/analyze.log s3://${bucket}/${logKey}
 shutdown -h now
 `
