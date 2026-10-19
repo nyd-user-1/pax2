@@ -36,9 +36,11 @@ exec > /var/log/pax2-whisper.log 2>&1
 set -ux
 export AWS_DEFAULT_REGION=$REGION
 PY=/opt/pytorch/bin/python3
-# -U on av too: the DLAMI preinstalls an older PyAV whose open() lacks metadata_errors, and
-# faster-whisper atop it fails on every file (measured 2026-10-19, run whisper-20261019-070759, 0 of 684).
-\$PY -m pip install -q -U faster-whisper av 2>&1 | tail -2
+# av pinned: newer PyAV (19.0.1 on run 073557, and the DLAMI preinstall on run 070759) rejects the
+# metadata_errors argument faster-whisper passes to av.open(), so both runs died on file one. -U av was
+# the wrong direction. faster-whisper 1.2.1 + av 15.1.0 decoded the exact failing m4a on the Mac
+# (2026-10-19 07:53 UTC, -6iChOmLosA.m4a, 2,058,588 samples).
+\$PY -m pip install -q -U faster-whisper 'av==15.1.0' 2>&1 | tail -2
 \$PY -c 'import av, faster_whisper; print("av", av.__version__, "faster-whisper ok")'
 mkdir -p /opt/work && cd /opt/work
 aws s3 ls s3://$BUCKET/catalog-media/ | awk '{print \$4}' | grep '\.m4a\$' > audio.txt
@@ -46,6 +48,15 @@ aws s3 ls s3://$BUCKET/catalog-media-transcripts/ 2>/dev/null | awk '{print \$4}
 \$PY - <<'PYEOF'
 import json, os, subprocess, time, datetime
 from faster_whisper import WhisperModel
+# Preflight on the decode path itself: runs 070759 and 073557 both passed the import check and then
+# died inside av.open(), so the probe must make the same call decode makes — a bare import proves nothing.
+import wave
+with wave.open("./probe.wav", "wb") as w:
+    w.setnchannels(1); w.setsampwidth(2); w.setframerate(16000); w.writeframes(b"\x00\x00" * 16000)
+from faster_whisper.audio import decode_audio
+decode_audio("./probe.wav")
+os.remove("./probe.wav")
+print("decode probe ok", flush=True)
 bucket = "$BUCKET"
 done = set(open("done.txt").read().split())
 todo = [l.strip() for l in open("audio.txt") if l.strip() and l.strip()[:-4] not in done]
