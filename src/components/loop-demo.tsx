@@ -152,7 +152,7 @@ export function LoopDemo({ data }: { data: LoopData }) {
   return (
     <div style={{ height: "calc(100dvh - 130px)", minHeight: 560 }}>
       <ReactFlowProvider>
-        <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} edgeTypes={edgeTypes} fitView fitViewOptions={{ padding: 0.12 }} proOptions={{ hideAttribution: true }} nodesConnectable={false} zoomOnScroll={false} preventScrolling={false}>
+        <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} edgeTypes={edgeTypes} fitView fitViewOptions={{ padding: 0.12 }} proOptions={{ hideAttribution: true }} nodesConnectable={false} nodesDraggable={false} zoomOnScroll={false} preventScrolling={false}>
           <Background variant={BackgroundVariant.Dots} gap={20} size={1} />
           <Panel position="bottom-left" className="max-w-md text-xs text-slate-500">
             Every number read live from the serving model files and the poller's rows.
