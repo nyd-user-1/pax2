@@ -36,3 +36,5 @@ data/raw/whisper-transcripts
 
 # PLUM work files: the serving index copied down from S3 (scripts/plum/)
 data/plum/
+# Composition extraction raw outputs and the pulled serving index (scripts/composition/)
+data/raw/composition
