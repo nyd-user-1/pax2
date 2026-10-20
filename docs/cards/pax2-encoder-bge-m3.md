@@ -50,6 +50,8 @@ Gate E, pre-registered: pooled at least 0.02 above stock and within not below. P
 
 Earlier runs on fewer transcripts missed the gate: 35 transcripts (pooled +0.010) and 3,424 (+0.0198).
 
+A later run on more transcripts also missed it, so this model keeps serving: run 20261020-070703-train, 9,289 of 18,544 corpus documents with a transcript, scored on the holdout split rebuilt 2026-10-20 07:06 UTC (same 10 channels, 3,870 shorts, 89 ids moved against this card's split). Stock 0.582 pooled and 0.571 within; the retrained encoder 0.602 and 0.590 (+0.0198 and +0.0186). The box and the Mac agree on every arm. Its reranker scored 0.610 pooled, but a reranker ships only over an encoder that passed.
+
 ## Caveats
 
 - The labels are observational and channel-relative: an outlier is a short whose lifetime views reached 3x its channel's median.

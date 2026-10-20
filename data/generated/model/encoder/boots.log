@@ -56,3 +56,46 @@
 2026-10-19T15:07:11Z launched i-0e702e96a0fbd69dd t3.small publish NYSgpt/pax2-reranker
 2026-10-19T15:25:43Z launched i-0fd01519496b73416 t3.small publish NYSgpt/pax2-reranker
 2026-10-19T15:27:27Z launched i-0cc94c98bc72dd076 t3.small publish NYSgpt/pax2-encoder
+2026-10-20T07:06:43Z no g6e.xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
+2026-10-20T07:06:44Z no g6e.xlarge in subnet-0aeeab33ec7ee352e: Unsupported
+2026-10-20T07:06:49Z no g6e.xlarge in subnet-06b1914b54fc3e0c5: InsufficientInstanceCapacity
+2026-10-20T07:06:53Z no g6e.xlarge in subnet-0407bd1ff7e9d8c44: InsufficientInstanceCapacity
+2026-10-20T07:06:54Z no g6e.xlarge in subnet-00eb48e9ed20f5c9a: Unsupported
+2026-10-20T07:06:59Z no g6e.xlarge in subnet-09e840612db030382: InsufficientInstanceCapacity
+2026-10-20T07:07:13Z no g6e.2xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
+2026-10-20T07:07:14Z no g6e.2xlarge in subnet-0aeeab33ec7ee352e: Unsupported
+2026-10-20T07:07:20Z no g6e.2xlarge in subnet-06b1914b54fc3e0c5: InsufficientInstanceCapacity
+2026-10-20T07:07:24Z no g6e.2xlarge in subnet-0407bd1ff7e9d8c44: InsufficientInstanceCapacity
+2026-10-20T07:07:26Z no g6e.2xlarge in subnet-00eb48e9ed20f5c9a: Unsupported
+2026-10-20T07:07:30Z no g6e.2xlarge in subnet-09e840612db030382: InsufficientInstanceCapacity
+2026-10-20T07:07:32Z launched i-0f1507d2998917ed3 g5.xlarge subnet-0200d8f947fcf9090 run=20261020-070703-train mode=train
+2026-10-20T07:13:17Z no g6e.xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
+2026-10-20T07:13:18Z no g6e.xlarge in subnet-0aeeab33ec7ee352e: Unsupported
+2026-10-20T07:13:23Z no g6e.xlarge in subnet-06b1914b54fc3e0c5: InsufficientInstanceCapacity
+2026-10-20T07:13:27Z no g6e.xlarge in subnet-0407bd1ff7e9d8c44: InsufficientInstanceCapacity
+2026-10-20T07:13:28Z no g6e.xlarge in subnet-00eb48e9ed20f5c9a: Unsupported
+2026-10-20T07:13:33Z no g6e.xlarge in subnet-09e840612db030382: InsufficientInstanceCapacity
+2026-10-20T07:13:38Z no g6.xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
+2026-10-20T07:13:42Z no g6.xlarge in subnet-0aeeab33ec7ee352e: InsufficientInstanceCapacity
+2026-10-20T07:13:44Z launched i-058fb160bf9979dd2 g6.xlarge subnet-06b1914b54fc3e0c5 run=20261020-071306-resonance-rehearse mode=rehearse
+2026-10-20T07:16:29Z no g6e.xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
+2026-10-20T07:16:30Z no g6e.xlarge in subnet-0aeeab33ec7ee352e: Unsupported
+2026-10-20T07:16:34Z no g6e.xlarge in subnet-06b1914b54fc3e0c5: InsufficientInstanceCapacity
+2026-10-20T07:16:38Z no g6e.xlarge in subnet-0407bd1ff7e9d8c44: InsufficientInstanceCapacity
+2026-10-20T07:16:39Z no g6e.xlarge in subnet-00eb48e9ed20f5c9a: Unsupported
+2026-10-20T07:16:44Z no g6e.xlarge in subnet-09e840612db030382: InsufficientInstanceCapacity
+2026-10-20T07:16:50Z no g6.xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
+2026-10-20T07:16:54Z no g6.xlarge in subnet-0aeeab33ec7ee352e: InsufficientInstanceCapacity
+2026-10-20T07:16:57Z no g6.xlarge in subnet-06b1914b54fc3e0c5: InsufficientInstanceCapacity
+2026-10-20T07:16:59Z launched i-05b5fcdf237ad679a g6.xlarge subnet-0407bd1ff7e9d8c44 run=20261020-071618-resonance-rehearse mode=rehearse
+2026-10-20T07:29:49Z no g6e.xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
+2026-10-20T07:29:51Z no g6e.xlarge in subnet-0aeeab33ec7ee352e: Unsupported
+2026-10-20T07:29:55Z no g6e.xlarge in subnet-06b1914b54fc3e0c5: InsufficientInstanceCapacity
+2026-10-20T07:30:01Z no g6e.xlarge in subnet-0407bd1ff7e9d8c44: InsufficientInstanceCapacity
+2026-10-20T07:30:02Z no g6e.xlarge in subnet-00eb48e9ed20f5c9a: Unsupported
+2026-10-20T07:30:07Z no g6e.xlarge in subnet-09e840612db030382: InsufficientInstanceCapacity
+2026-10-20T07:30:11Z no g6e.2xlarge in subnet-0200d8f947fcf9090: InsufficientInstanceCapacity
+2026-10-20T07:30:12Z no g6e.2xlarge in subnet-0aeeab33ec7ee352e: Unsupported
+2026-10-20T07:30:18Z launched i-05aa0bc3aaec0add4 g6e.2xlarge subnet-06b1914b54fc3e0c5 run=20261020-072936-resonance-train mode=train
+2026-10-20T08:09:38Z launched i-018813b5dd518bb96 t3.small publish NYSgpt/pax2-resonance-encoder
+2026-10-20T08:09:42Z launched i-0a38a316722a19b9d t3.small publish NYSgpt/pax2-resonance-encoder-full

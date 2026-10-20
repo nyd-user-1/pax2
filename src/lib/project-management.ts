@@ -135,6 +135,7 @@ const MODEL_PLAN: Record<string, Plan> = {
     base: "BAAI/bge-m3", tags: ["Text embeddings"],
     steps: [
     { what: "Gate E PASSED 2026-10-19 at 5,232 transcripts (pooled 0.608 against stock 0.578, +0.0305 of the +0.02 required; within +0.0216); published private on Hugging Face as NYSgpt/pax2-encoder.", share: 50, effort: "done 2026-10-19" },
+    { what: "Retrain 2026-10-20 at 9,289 transcripts missed Gate E by 0.0002 (pooled 0.602 against stock 0.582, +0.0198; within +0.0186; holdout split rebuilt 07:06 UTC, same 10 channels); the 2026-10-19 model keeps serving. A full-corpus retrain follows the captions and Whisper.", share: 0, effort: "about $1.45 a run" },
     { what: "Its neighbors become the forecast feature on requirement 3.", share: 50, effort: "half a day" },
   ] },
   "m-vision": { start: "2026-10-17", end: "2026-12-15", importance: 2, utility: 2, ease: 3,
@@ -159,7 +160,7 @@ const MODEL_PLAN: Record<string, Plan> = {
     value: "Sharper neighbors for the same forecast; its gate is already passed.",
     base: "gte-reranker-modernbert-base", tags: ["Text ranking", "cross-encoder"],
     steps: [
-    { what: "Gate R FAILED on the 5,232-transcript run (0.596 pooled against the passing encoder's 0.608): the earlier edge did not survive the stronger neighbors. Retrain against them, or retire.", share: 100, effort: "a retrain ride-along on the next encoder run, or a ruling" },
+    { what: "Gate R FAILED on the 5,232-transcript run (0.596 pooled against the passing encoder's 0.608): the earlier edge did not survive the stronger neighbors. Retrain against them, or retire. On the 2026-10-20 run it scored 0.610 pooled over an encoder that missed Gate E, so it waits on a passing encoder.", share: 100, effort: "a retrain ride-along on the next encoder run, or a ruling" },
   ] },
   "m-simulator": { start: "2026-10-17", end: "2026-12-15", importance: 2, utility: 1, ease: 2,
     func: "Fits a seed-and-test model to view curves and plays a short's path forward from hour one.",

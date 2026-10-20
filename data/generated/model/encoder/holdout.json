@@ -1,17 +1,17 @@
 {
- "builtAt": "2026-10-19T09:39:56.986Z",
+ "builtAt": "2026-10-20T07:06:11.818Z",
  "rule": "Within each family, the family's channel ids sorted by their last hexadecimal-looking character (0-9, a-f, case-folded; ties by the full id); every channel ranked above seven eighths of the family is held out, ceil(n / 8) channels and at least one. Paid-ad rows are never held out.",
  "corpus": {
   "file": "corpus.jsonl",
-  "rows": 18455,
-  "sha256": "69ba3826af17530994c1602c5a316f55aff7c1f1721d6867a4955c8cbbaad0d1",
+  "rows": 18544,
+  "sha256": "34e8b00cae9b0f2659b9877061c8e481a5070ad4f53172d240ec65c835e8a595",
   "textRecipe": "title, description, transcript text (the analyzed transcript when content is present, else YouTube's auto-captions from transcripts.json); non-empty parts joined by newlines; first 1,200 characters (scripts/encoder/corpus.mjs)"
  },
  "paidRows": 0,
  "heldOutChannels": 10,
- "heldOutDocs": 3869,
- "heldOutBreakouts": 654,
- "trainingDocs": 14586,
+ "heldOutDocs": 3870,
+ "heldOutBreakouts": 666,
+ "trainingDocs": 14674,
  "families": {
   "Candidates & officials": {
    "channels": 20,
@@ -20,22 +20,22 @@
      "channelId": "UClkO4MArT2WKWj32YDD_-Ew",
      "channel": "The Democrats",
      "lastHex": "e",
-     "docs": 891,
-     "breakouts": 173
+     "docs": 906,
+     "breakouts": 179
     },
     {
      "channelId": "UCY-3GVY7vhOuuixr1QBMWEg",
      "channel": "Gavin Newsom",
      "lastHex": "e",
      "docs": 166,
-     "breakouts": 33
+     "breakouts": 32
     },
     {
      "channelId": "UChm_bCQMmaxljPge4-V9fVQ",
      "channel": "Mallory McMorrow",
      "lastHex": "f",
-     "docs": 163,
-     "breakouts": 15
+     "docs": 157,
+     "breakouts": 14
     }
    ]
   },
@@ -53,8 +53,8 @@
      "channelId": "UCSRRURbKlPf1HwPUhjmufTg",
      "channel": "The Free Press",
      "lastHex": "f",
-     "docs": 417,
-     "breakouts": 70
+     "docs": 420,
+     "breakouts": 72
     }
    ]
   },
@@ -65,8 +65,8 @@
      "channelId": "UCQANb2YPwAtK-IQJrLaaUFw",
      "channel": "Brian Tyler Cohen",
      "lastHex": "f",
-     "docs": 1793,
-     "breakouts": 334
+     "docs": 1779,
+     "breakouts": 340
     }
    ]
   },
@@ -77,14 +77,14 @@
      "channelId": "UCdFZ5b8bpOLRgbOATyPRtdw",
      "channel": "No Labels",
      "lastHex": "d",
-     "docs": 223,
+     "docs": 221,
      "breakouts": 20
     },
     {
      "channelId": "UCgIuEJP3M3zg-vt5Z1UVfdg",
      "channel": "Voter Freedom",
      "lastHex": "d",
-     "docs": 90,
+     "docs": 92,
      "breakouts": 0
     }
    ]
@@ -96,7 +96,7 @@
      "channelId": "UCKTPks8QcY-i8l7YeW5OdjA",
      "channel": "openDemocracy",
      "lastHex": "a",
-     "docs": 26,
+     "docs": 28,
      "breakouts": 0
     }
    ]
@@ -108,57 +108,13 @@
      "channelId": "UCnpLmnN_7TxPdpGODs-JXxg",
      "channel": "End Citizens United",
      "lastHex": "d",
-     "docs": 54,
+     "docs": 55,
      "breakouts": 8
     }
    ]
   }
  },
  "ids": [
-  "f5XaHndGth4",
-  "yfaTmwBM1O0",
-  "nFYHtiskoVE",
-  "PD17Wk8XZW4",
-  "oC3OCGuqVY4",
-  "O1o7c_EtiWQ",
-  "F0nIgHedqrk",
-  "I4McP8EUzig",
-  "1r-ME3EogDw",
-  "6e66nrV6J4E",
-  "ge0GaUiRqOg",
-  "KmHbv2--aQ4",
-  "lEP-ha-1pPQ",
-  "L8L31FzicMM",
-  "CNNl9fpDtOQ",
-  "lZyhDwDEgUM",
-  "OaJPQpyYHBM",
-  "Eg9jex0GviM",
-  "zrNMXAVmLhA",
-  "wHCk59L4JN4",
-  "HObrA5Kq0t0",
-  "aWlFCs1BCRw",
-  "BBsXPJj-tXk",
-  "Iblv9LndDPI",
-  "WDIQ3BkWH6I",
-  "rzllGXOugZw",
-  "of4QW8N9Hzg",
-  "Pd6pkj5NLdc",
-  "Orre66DpqGg",
-  "X-YLdoAhd4k",
-  "oImDex3ZmOk",
-  "Vpc7ZeWnUd4",
-  "NhzrUG9X3io",
-  "HlfbZBoWU_E",
-  "GUcLA0OfP8Q",
-  "tT1sHlxWFgo",
-  "J0tydUJSKHM",
-  "lLHcmX1OBTs",
-  "JAhPqIDB_JY",
-  "HOiRTcTSLMA",
-  "RXrHJfV4-ww",
-  "L1qnguK0r8A",
-  "Rw7_5Uvpmz4",
-  "sBRIzA0RPm0",
   "alEYq7Hhr1U",
   "yXqEd2HVuXY",
   "zK4QssQTcag",
@@ -3983,6 +3939,51 @@
   "gZXrocRzZEw",
   "knIFRxvZ10Q",
   "Yz__fP3poHo",
-  "n3UIGKJAJ2w"
+  "n3UIGKJAJ2w",
+  "E9rZ1JvePeA",
+  "Zqe1ALpx8o8",
+  "NbtJOVKkdyY",
+  "OB-6uRlZYD4",
+  "uaqzBBvbXFE",
+  "T14-6_ESg8U",
+  "2oeJG79otAc",
+  "TupNXxMzuMw",
+  "2mPVL0JCg9I",
+  "y2GzUrhMwEc",
+  "pDNGOSh3BNw",
+  "Fn18s1ZGUCk",
+  "G201LwRiJEk",
+  "kuMks2PVFFM",
+  "0QnOViQtf9o",
+  "wa7_ig1b6c0",
+  "QSt90rj0gSU",
+  "C7QnUxELDwQ",
+  "p6nox6r0ccA",
+  "2V83IwsSbH8",
+  "SqS1TYZbwy4",
+  "0568DeKOfCk",
+  "UqeT60wChEY",
+  "jE-3Ld0bCMQ",
+  "RL9xYoZz6dw",
+  "hhQn5piNB7A",
+  "pcFeLhZ3zy8",
+  "LeGgFeoi08s",
+  "QOFfkzMNbw4",
+  "WGxQ_SR9lxw",
+  "hUvOMJH37XA",
+  "Vrg6kdLI5ko",
+  "MqDXl6zVe_A",
+  "sJlCjFwvCOE",
+  "rH5K1hFO-lA",
+  "Bcnudo-XtjQ",
+  "2DNh9SBrrfY",
+  "xQFeNiUqH6I",
+  "Ffh8Xxh7-fg",
+  "3lt0f0Yaqtg",
+  "BFezIH29Pk0",
+  "A51osHdbPJA",
+  "i1iFZYk2-I0",
+  "8CxDNNnp-rI",
+  "KNqReUASmoQ"
  ]
 }
