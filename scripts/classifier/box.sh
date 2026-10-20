@@ -27,7 +27,7 @@ T0=$(date +%s)
 cd /work/code && BUCKET=$BUCKET RUN=$RUN OUT=$OUT PYTHONUNBUFFERED=1 /opt/c/bin/python $TRAINER
 RC=$?
 echo "$TRAINER EXIT=$RC wall=$(( $(date +%s) - T0 ))s"
-for f in var-model-v2.json predictions-v2.jsonl var-model-v3.json predictions-v3.jsonl; do
+for f in var-model-v2.json predictions-v2.jsonl var-model-v3.json predictions-v3.jsonl var-model-v3b.json predictions-v3b.jsonl; do
   [ -f "$OUT/$f" ] && aws s3 cp --only-show-errors "$OUT/$f" "$S3$f" --region us-east-1 && echo "uploaded $f $(stat -c %s "$OUT/$f") bytes"
 done
 echo "EXIT=$RC $(date -u +%FT%TZ)"

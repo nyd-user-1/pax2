@@ -35,7 +35,7 @@ LIVE=$(aws ec2 describe-instances --region $REGION --filters Name=tag:Name,Value
 [ -z "$LIVE" ] || { echo "a PAX2 Classifier v2 box is already up: $LIVE"; exit 1; }
 
 INPUTS="training-set.jsonl training-set.manifest.json transcript-features.json"
-[ "$TRAINER" = train_v3.py ] && INPUTS="$INPUTS embeddings.npy rows.json holdout.json"
+[ "$TRAINER" = train_v3.py ] && INPUTS="$INPUTS embeddings.npy rows.json holdout.json"; [ "${COMPOSITION:-}" = 1 ] && INPUTS="$INPUTS composition.json"
 for k in $INPUTS; do
   aws s3api head-object --region $REGION --bucket $BUCKET --key "$RUN$k" >/dev/null || { echo "missing s3://$BUCKET/$RUN$k"; exit 1; }
 done
@@ -60,7 +60,7 @@ echo "user-data \$(date -u +%FT%TZ)"
 apt-get update -q && apt-get install -y -q python3-venv awscli >/dev/null
 echo "apt EXIT=\$?"
 mkdir -p /work/code && aws s3 cp --only-show-errors --recursive s3://$BUCKET/${RUN}code/ /work/code/
-BUCKET=$BUCKET RUN=$RUN TRAINER=$TRAINER bash /work/code/box.sh
+BUCKET=$BUCKET RUN=$RUN TRAINER=$TRAINER COMPOSITION=${COMPOSITION:-} bash /work/code/box.sh
 echo "box.sh returned \$? \$(date -u +%FT%TZ)"
 aws s3 cp --only-show-errors /var/log/pax2-classifier.log s3://$BUCKET/${RUN}box.log
 shutdown -h now
