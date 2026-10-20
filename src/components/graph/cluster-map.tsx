@@ -43,6 +43,14 @@ const liftColor = (lift: number | null) => {
 type MapCluster = { id: number; n: number; channels: number; rate: number | null; lift: number | null; labels: string[] }
 type MapData = { run: string; builtAt: string; n: number; k: number; clusters: MapCluster[]; points: MapPoint[] }
 
+const TOUR: string[] = [
+  "Every dot is a short. Shorts that sit close together say similar things; distance is similarity, and the axes themselves carry no meaning.",
+  "The list ranks neighborhoods by lift: how far their shorts run above their own channels' usual hit rate. A neighborhood spread across many channels is a content finding, not one channel's audience.",
+  "By cluster colors each neighborhood, By tier colors each short by its outcome, and Resonance colors by lift: green above the channels' own baselines, red below, full strength at ±12 points.",
+  "Click a neighborhood to pick it and dim the rest. Click it again to open its shorts as points.",
+  "In Composition, each chip keeps the shorts that match it (pace, hook, on-screen text, speech, length, headline) and dims the rest.",
+]
+
 const hue = (c: number) => `hsl(${(c * 47) % 360} 68% 52%)`
 const TIER: Record<string, string> = { breakout: "#16a34a", baseline: "#94a3b8", killed: "#dc2626" }
 const title = (c: MapCluster) => c.labels[0] ?? `Cluster ${c.id}`
@@ -208,7 +216,8 @@ export function ClusterMap({ onClose, initialLayer = "network" }: { onClose: () 
   const [filters, setFilters] = React.useState<Set<CompFilter>>(new Set())
   const [picked, setPicked] = React.useState<number | null>(null)
   const [hoverId, setHoverId] = React.useState<number | null>(null)
-  const [hover, setHover] = React.useState<{ sx: number; sy: number; title: string; sub: string } | null>(null)
+  const [tour, setTour] = React.useState<number | null>(null)
+  const [hover,setHover] = React.useState<{ sx: number; sy: number; title: string; sub: string } | null>(null)
   const view = React.useRef({ k: 1, tx: 0, ty: 0 })
   const drag = React.useRef<{ x: number; y: number; moved: boolean } | null>(null)
 
@@ -345,7 +354,10 @@ export function ClusterMap({ onClose, initialLayer = "network" }: { onClose: () 
             ))}
           </div>
         )}
-        <button onClick={onClose} aria-label="Close the cluster map" className="ml-auto inline-flex size-8 items-center justify-center rounded-md text-slate-800 hover:bg-muted">
+        <button onClick={() => setTour(tour == null ? 0 : null)} className={cn("ml-auto h-7 rounded-full border px-3 text-xs font-medium transition-colors", tour != null ? "border-pax2-light-blue bg-pax2-lavender/60 text-pax2-blue" : "border-slate-200 text-slate-500 hover:text-pax2-blue")}>
+          Tour
+        </button>
+        <button onClick={onClose} aria-label="Close the cluster map" className="inline-flex size-8 items-center justify-center rounded-md text-slate-800 hover:bg-muted">
           <X className="size-4" />
         </button>
       </div>
