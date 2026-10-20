@@ -52,7 +52,7 @@ The holdout is pinned at `data/generated/model/plum/holdout.json` (from git 2910
 
 ## Part 1b — the PAX2 Semantic-ID Model (`scripts/plum/semantic_id_model.py`, Mac, no spend)
 
-The quantizer as a predictor: a held-out short scores the outlier share of the training shorts in its (c1, c2) cell. Codebooks are fit on the 14,586 training shorts only; the 3,869 held-out shorts are assigned to them. Gate S (pooled AUC above stock bge-m3's 0.5775) failed both allowed attempts, 0.5584 then 0.5708. A 40-way, then 64-way cell table carries less than the 20 nearest neighbors do: the encoder's own kNN score reads 0.6080 on the same shorts, stock's 0.5775. Within-channel, both attempts (0.571) sit below stock (0.582) and the encoder (0.604). The model is recorded and not served.
+The quantizer as a predictor: a held-out short scores the outlier share of the training shorts in its (c1, c2) cell. Codebooks are fit on the 14,586 training shorts only; the 3,869 held-out shorts are assigned to them. Gate S (pooled AUC above stock bge-m3's 0.5775) failed both allowed attempts, 0.5584 then 0.5708. A 40-way, then 64-way cell table carries less than the 20 nearest neighbors do: the encoder's own kNN score reads 0.6080 on the same shorts, stock's 0.5775. Within-channel, both attempts (0.571) sit below stock (0.582) and the encoder (0.604). The model is recorded and not served; published private as NYSgpt/pax2-semantic-id-model in the PAX collection, its card stating the failure.
 
 ## Part 3 — the resonance encoder, pre-registered before launch (07:15 UTC)
 
