@@ -46,9 +46,11 @@ export function ChatDock({ context, open, onOpenChange, attached, onAttach }: {
         onDragOver={accepts}
         onDragLeave={() => setDragOver(false)}
         onDrop={drop}
-        className={whiteButton("md", "absolute bottom-4 right-4 z-10 h-8 px-3.5 py-0 text-[13px]", dragOver && DROP)}
+        aria-label="Open the chat"
+        title="Chat"
+        className={whiteButton("circle", "absolute right-4 top-4 z-10 size-9", dragOver && DROP)}
       >
-        <MessageSquare className="h-3.5 w-3.5" /> Chat
+        <MessageSquare className="h-4 w-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
       </button>
     )
 
@@ -57,11 +59,11 @@ export function ChatDock({ context, open, onOpenChange, attached, onAttach }: {
       onDragOver={accepts}
       onDragLeave={(e) => { if (!e.currentTarget.contains(e.relatedTarget as globalThis.Node | null)) setDragOver(false) }}
       onDrop={drop}
-      className={cn("absolute bottom-4 right-4 z-10 flex h-[32rem] max-h-[calc(100%-2rem)] w-[28rem] max-w-[calc(100%-2rem)] flex-col overflow-hidden rounded-2xl border border-slate-300 bg-white shadow-e2", dragOver && DROP)}
+      className={cn("absolute inset-y-0 right-0 z-20 flex w-[26rem] max-w-[calc(100%-2rem)] flex-col overflow-hidden border-l border-slate-200 bg-white shadow-[-16px_0_40px_-24px_rgb(15_23_42/0.45)]", dragOver && DROP)}
     >
-      <div className="flex shrink-0 items-center justify-between border-b border-slate-200 px-4 py-2">
-        <p className="text-sm font-semibold text-slate-900">Chat</p>
-        <button onClick={() => onOpenChange(false)} className="text-slate-400 hover:text-slate-900" aria-label="Close"><X className="h-4 w-4" /></button>
+      <div className="flex shrink-0 items-center justify-between border-b border-slate-200 px-4 py-2.5">
+        <p className="font-display text-[17px] text-slate-900">Chat</p>
+        <button onClick={() => onOpenChange(false)} className={whiteButton("circle", "size-8")} aria-label="Close"><X className="h-4 w-4" /></button>
       </div>
       <div className="flex min-h-0 flex-1 flex-col">
         <Chat

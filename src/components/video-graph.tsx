@@ -9,8 +9,8 @@ import {
 import dagre from "@dagrejs/dagre"
 import { toast } from "sonner"
 import {
-  ArrowLeft, BookOpen, Boxes, Check, ChevronLeft, ChevronRight, Clapperboard, Crosshair, ExternalLink, FileText, GripVertical, Hash, History, Layers, Loader2,
-  MessageSquare, Minus, MoreHorizontal, PanelLeftClose, PanelLeftOpen, Play, Plus, Save, Search, Settings2, Tv, Users, X,
+  ArrowLeft, BookOpen, Boxes, Check, ChevronRight, Clapperboard, Crosshair, ExternalLink, FileText, GripVertical, Hash, History, Layers, Loader2,
+  MessageSquare, Minus, MoreHorizontal, PanelLeftClose, PanelLeftOpen, Play, Plus, Save, Search, Share2, Tv, Users, X,
 } from "lucide-react"
 
 import { canvasUploadUrl, listCanvases, listCanvasFiles, loadCanvas, saveCanvas, type CanvasFile } from "@/app/graph-actions"
@@ -426,8 +426,8 @@ function RowMenu({ g, onPick, onAdd, onAsk }: { g: GNode; onPick: (g: GNode) => 
   )
 }
 
-const RAIL = "hidden w-60 shrink-0 flex-col border-r border-slate-200 bg-white lg:flex"
-const RAIL_ROW = "flex items-center gap-2 px-3 py-1.5 text-sm text-slate-900 transition-colors hover:bg-slate-50"
+const RAIL = "hidden w-64 shrink-0 flex-col border-r border-slate-200 bg-white lg:flex"
+const RAIL_ROW = "mx-1.5 flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50 hover:text-pax2-blue"
 
 function RailHeader({ label, count, onBack }: { label: string; count?: number; onBack: () => void }) {
   return (
@@ -478,9 +478,12 @@ type RailProps = {
   onAddFile: (f: CanvasFile) => void
   onLoad: (id: string) => void
   onMap: () => void
+  /** The fixed rows over the lists (the Networks and Recipes modes) and the config that scrolls beneath. */
+  top?: React.ReactNode
+  extras?: React.ReactNode
 }
 
-function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad, onMap }: RailProps) {
+function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad, onMap, top, extras }: RailProps) {
   const [browse, setBrowse] = useState<string | null>(null)
   const [filter, setFilter] = useState("")
   const [files, setFiles] = useState<CanvasFile[] | null>(null)
@@ -555,6 +558,8 @@ function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad
   }
   return (
     <div className={RAIL}>
+      <div className="shrink-0 pb-2">
+      {top}
       <p className="px-3 pb-1 pt-3 text-[10px] uppercase tracking-wide text-slate-400">Tracked</p>
       {RAIL_TYPES.map(({ key, label, icon: Icon }) => (
         <button key={key} onClick={() => setBrowse(key)} className={RAIL_ROW}>
@@ -574,12 +579,14 @@ function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad
           <span>{label}</span>
         </button>
       ))}
+      </div>
+      {extras && <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-200">{extras}</div>}
     </div>
   )
 }
 
 /** The recipe builder's rail: the templates (constants) and the saved recipes (the ledger). */
-function RecipeRail({ refresh, onTemplate, onLoad }: { refresh: number; onTemplate: (t: RecipeTemplate) => void; onLoad: (id: string) => void }) {
+function RecipeRail({ refresh, onTemplate, onLoad, top, extras }: { refresh: number; onTemplate: (t: RecipeTemplate) => void; onLoad: (id: string) => void; top?: React.ReactNode; extras?: React.ReactNode }) {
   const [browse, setBrowse] = useState<"templates" | "saved" | null>(null)
   const [filter, setFilter] = useState("")
   const [saved, setSaved] = useState<CanvasRow[] | null>(null)
@@ -611,10 +618,14 @@ function RecipeRail({ refresh, onTemplate, onLoad }: { refresh: number; onTempla
     )
   return (
     <div className={RAIL}>
+      <div className="shrink-0 pb-2">
+      {top}
       <p className="px-3 pb-1 pt-3 text-[10px] uppercase tracking-wide text-slate-400">Recipes</p>
       <button onClick={() => setBrowse("templates")} className={RAIL_ROW}><Layers className="h-3.5 w-3.5 text-slate-400" /><span>Templates</span><span className="tabular ml-auto text-xs text-slate-400">{TEMPLATES.length}</span></button>
       <button onClick={() => onTemplate(LOOPS)} className={RAIL_ROW}><Play className="h-3.5 w-3.5 text-slate-400" /><span>Loops</span></button>
       <button onClick={() => setBrowse("saved")} className={RAIL_ROW}><BookOpen className="h-3.5 w-3.5 text-slate-400" /><span>Saved recipes</span></button>
+      </div>
+      {extras && <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-200">{extras}</div>}
     </div>
   )
 }
@@ -738,7 +749,6 @@ const RECIPE_TOOLS: [RecipeType, string][] = [["ingredient", "Ingredient"], ["st
 /** An undo step: the canvas's content, never pan, zoom or selection. */
 type Snap = { store: [string, GNode][]; expand: [string, { loaded: number; total: number }][]; edges: Edge[]; pos: [string, { x: number; y: number }][]; at: number }
 
-const PILL = whiteButton("md", "h-8 px-3.5 py-0 text-[13px] shadow-none")
 const PILL_ICON = whiteButton("circle", "size-8 shadow-none")
 const GROUP_BAR = "flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/90 p-1 shadow-e1 backdrop-blur-sm"
 
@@ -776,7 +786,6 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   layoutModeRef.current = layoutMode
   const [flowProps, setFlowProps] = useState<FlowProps>(DEFAULT_FLOW_PROPS)
   const propsLoaded = useRef(false)
-  const [settingsOpen, setSettingsOpen] = useState(false)
   const [dataset, setDataset] = useState("top-reform-core")
   const [dockOpen, setDockOpen] = useState(false)
   const [attached, setAttached] = useState<DragEntity | null>(null)
@@ -1553,37 +1562,91 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
 
   const run = traceOpen ? runs.find((r) => r.id === traceOpen) : null
 
+  // The sidebar's fixed head: the two canvases as rows, the way the app sidebar draws its pages.
+  const sidebarTop = (
+    <nav className="flex flex-col gap-0.5 pt-2">
+      <button onClick={() => enterMode("networks")} aria-pressed={mode === "networks"} className={cn(RAIL_ROW, "text-left", mode === "networks" && "bg-pax2-lavender/50 font-semibold text-pax2-blue")}>
+        <Share2 className="h-4 w-4 shrink-0 text-slate-400" /> Networks
+      </button>
+      {admin && (
+        <button onClick={() => enterMode("recipes")} aria-pressed={mode === "recipes"} className={cn(RAIL_ROW, "text-left", mode === "recipes" && "bg-pax2-lavender/50 font-semibold text-pax2-blue")}>
+          <BookOpen className="h-4 w-4 shrink-0 text-slate-400" /> Recipes
+        </button>
+      )}
+    </nav>
+  )
+  // Beneath the fixed rows, scrolling: the canvas's actions, the join chips, and every config row.
+  const sidebarExtras = (
+    <div className="flex flex-col pb-4">
+      <p className="px-3 pb-1 pt-3 text-[10px] uppercase tracking-wide text-slate-400">Canvas</p>
+      <nav className="flex flex-col gap-0.5">
+        {mode === "recipes" ? (
+          <>
+            {canvas?.name === "Loops" && (
+              <button className={RAIL_ROW} onClick={playLoop} disabled={playingLoop}>
+                {playingLoop ? <Loader2 className="h-4 w-4 shrink-0 animate-spin text-slate-400" /> : <Play className="h-4 w-4 shrink-0 text-slate-400" />} Play
+              </button>
+            )}
+            {RECIPE_TOOLS.map(([type, label]) => (
+              <button key={type} className={RAIL_ROW} onClick={() => addRecipeNode(type)}>
+                <Plus className="h-4 w-4 shrink-0 text-slate-400" /> {label}
+              </button>
+            ))}
+          </>
+        ) : (
+          <>
+            <button className={RAIL_ROW} onClick={() => addPromptNode(paneCenter())}>
+              <Plus className="h-4 w-4 shrink-0 text-slate-400" /> Prompt
+            </button>
+            <button className={cn(RAIL_ROW, (!hasPrompts || !!running) && "pointer-events-none opacity-40")} onClick={runAll} disabled={!hasPrompts || !!running}>
+              {running ? <Loader2 className="h-4 w-4 shrink-0 animate-spin text-slate-400" /> : <Play className="h-4 w-4 shrink-0 text-slate-400" />} Run
+            </button>
+          </>
+        )}
+        <button className={RAIL_ROW} onClick={() => { if (!email) { toast.error("Sign in to save a canvas."); return } setSaveName(canvas?.name ?? ""); setSaveOpen(true) }}>
+          <Save className="h-4 w-4 shrink-0 text-slate-400" /> Save
+        </button>
+        {mode === "networks" && runs.length > 0 && (
+          <button className={RAIL_ROW} onClick={() => { setTraceOpen(runs[0].id); setTraceStep(null); setSelectedKey(null); setEdgeInfo(null) }}>
+            <History className="h-4 w-4 shrink-0 text-slate-400" /> Run history
+          </button>
+        )}
+      </nav>
+      {mode === "networks" && (
+        <>
+          <p className="px-3 pb-1 pt-3 text-[10px] uppercase tracking-wide text-slate-400">Join on select</p>
+          <div className="flex flex-wrap gap-1.5 px-3">
+            {(["channel", "group", "topic", "tag"] as const).map((k) => (
+              <button
+                key={k}
+                onClick={() => setJoinKinds((j) => ({ ...j, [k]: !j[k] }))}
+                className={cn("h-7 rounded-full px-3 text-xs font-semibold transition-colors", joinKinds[k] ? "bg-pax2-lavender text-pax2-blue" : "bg-slate-100 text-slate-400")}
+              >
+                {k}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+      <FlowSettingsPanel
+        value={flowProps}
+        onChange={setFlowProps}
+        dataset={dataset}
+        onDataset={applyDataset}
+        datasets={datasets.map(({ id, label }) => ({ id, label }))}
+        layoutMode={layoutMode}
+        onLayoutMode={changeLayoutMode}
+        onReset={() => setFlowProps(DEFAULT_FLOW_PROPS)}
+      />
+    </div>
+  )
+
   return (
     <div className="flex min-h-0 flex-1">
       {mapOpen && <ClusterMap onClose={() => setMapOpen(false)} />}
-      {/* The config panel holds the left; the tracked/workspace rail is stored behind it, opened
-          by the tab on the panel's right edge — govblock's rail tab, to the pixel. */}
-      {settingsOpen && (
-        <div className="relative z-10 hidden shrink-0 md:flex">
-          <FlowSettingsPanel
-            value={flowProps}
-            onChange={setFlowProps}
-            dataset={dataset}
-            onDataset={applyDataset}
-            datasets={datasets.map(({ id, label }) => ({ id, label }))}
-            layoutMode={layoutMode}
-            onLayoutMode={changeLayoutMode}
-            onClose={() => setSettingsOpen(false)}
-            onReset={() => setFlowProps(DEFAULT_FLOW_PROPS)}
-          />
-          <button
-            type="button"
-            onClick={toggleRail}
-            aria-expanded={railOpen}
-            aria-label={railOpen ? "Hide the tracked panel" : "Show the tracked panel"}
-            title={railOpen ? "Hide the tracked panel" : "Show the tracked panel"}
-            className="absolute -right-4 top-[200px] z-20 flex h-8 w-4 items-center justify-center rounded-r-[10px] bg-[rgb(24,24,27)] text-zinc-500 shadow-[0_4px_16px_rgba(0,0,0,0.35)] transition-colors hover:text-zinc-300"
-          >
-            {railOpen ? <ChevronLeft className="size-4" /> : <ChevronRight className="size-4" />}
-          </button>
-        </div>
-      )}
-      {!railOpen ? null : mode === "recipes" ? <RecipeRail refresh={railRefresh} onTemplate={loadTemplate} onLoad={loadView} /> : <RecordRail
+      {!railOpen ? null : mode === "recipes" ? <RecipeRail refresh={railRefresh} onTemplate={loadTemplate} onLoad={loadView} top={sidebarTop} extras={sidebarExtras} /> : <RecordRail
+        top={sidebarTop}
+        extras={sidebarExtras}
         R={R}
         admin={admin}
         refresh={railRefresh}
@@ -1661,15 +1724,6 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
                 {railOpen ? <PanelLeftClose className="h-4 w-4" /> : <PanelLeftOpen className="h-4 w-4" />}
               </button>
             </div>
-            {admin && (
-              <div className={GROUP_BAR}>
-                {(["networks", "recipes"] as const).map((m) => (
-                  <button key={m} onClick={() => enterMode(m)} aria-pressed={mode === m} className={cn("h-8 rounded-full px-3.5 text-[13px] font-semibold transition-colors", mode === m ? "bg-pax2-lavender text-pax2-blue" : "text-slate-500 hover:text-pax2-blue")}>
-                    {m === "networks" ? "Networks" : "Recipes"}
-                  </button>
-                ))}
-              </div>
-            )}
             {mode === "networks" && <div className="relative">
               <div className="rounded-full border border-slate-200 bg-white/90 p-1 shadow-e1 backdrop-blur-sm">
                 <div className="flex h-8 w-96 max-w-[calc(100vw-3rem)] items-center gap-2 overflow-hidden rounded-full border border-slate-200 bg-white px-3">
@@ -1710,52 +1764,12 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
               )}
             </div>}
             </div>
-            <div className="pointer-events-auto ml-auto flex flex-col items-end gap-2">
-              <div className={cn(GROUP_BAR, "flex-wrap justify-end")}>
-                {mode === "recipes" ? <>
-                {canvas?.name === "Loops" && (
-                  <button className={PILL} onClick={playLoop} disabled={playingLoop}>
-                    {playingLoop ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5" />} Play
-                  </button>
-                )}
-                {RECIPE_TOOLS.map(([type, label]) => (
-                  <button key={type} className={PILL} onClick={() => addRecipeNode(type)}><Plus className="h-3.5 w-3.5" /> {label}</button>
-                ))}
-                </> : <>
-                <button className={PILL} onClick={() => addPromptNode(paneCenter())}><Plus className="h-3.5 w-3.5" /> Prompt</button>
-                <button className={PILL} onClick={runAll} disabled={!hasPrompts || !!running}>
-                  {running ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5" />} Run
-                </button>
-                </>}
-                <button className={PILL} onClick={() => { if (!email) { toast.error("Sign in to save a canvas."); return } setSaveName(canvas?.name ?? ""); setSaveOpen(true) }}><Save className="h-3.5 w-3.5" /> Save</button>
-                {mode === "networks" && runs.length > 0 && (
-                  <button className={PILL_ICON} aria-label="Run history" title="Run history" onClick={() => { setTraceOpen(runs[0].id); setTraceStep(null); setSelectedKey(null); setEdgeInfo(null) }}>
-                    <History className="h-4 w-4" />
-                  </button>
-                )}
-                <button className={cn(PILL_ICON, settingsOpen && "border-pax2-blue bg-slate-50")} aria-pressed={settingsOpen} aria-label="Canvas settings" title="Canvas settings" onClick={() => { if (!settingsOpen) setRailOpen(false); setSettingsOpen((v) => !v) }}>
-                  <Settings2 className="h-4 w-4" />
-                </button>
-              </div>
-              {mode === "networks" && <div className={cn(GROUP_BAR, "pl-3")}>
-                <span className="text-xs text-slate-500">Join on select</span>
-                {(["channel", "group", "topic", "tag"] as const).map((k) => (
-                  <button
-                    key={k}
-                    onClick={() => setJoinKinds((j) => ({ ...j, [k]: !j[k] }))}
-                    className={cn("h-7 rounded-full px-3 text-xs font-semibold transition-colors", joinKinds[k] ? "bg-pax2-lavender text-pax2-blue" : "bg-slate-100 text-slate-400")}
-                  >
-                    {k}
-                  </button>
-                ))}
-              </div>}
-            </div>
           </Panel>
         </ReactFlow>
         <ChatDock context={canvasContext} open={dockOpen} onOpenChange={setDockOpen} attached={attached} onAttach={setAttached} />
       </div>
 
-      {!settingsOpen && sel && isRecipeType(sel.type) && (
+      {sel && isRecipeType(sel.type) && (
         <div className={SIDE}>
           <SideHeader badge={RECIPE_LABEL[sel.type]} onClose={() => setSelectedKey(null)} />
           <RecipeForm
@@ -1768,7 +1782,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
           />
         </div>
       )}
-      {!settingsOpen && sel && sel.type !== "more" && !isRecipeType(sel.type) && (
+      {sel && sel.type !== "more" && !isRecipeType(sel.type) && (
         <div className={SIDE}>
           <SideHeader badge={sel.type} onClose={() => setSelectedKey(null)} />
           {sel.type === "prompt" ? (
@@ -1796,7 +1810,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
           )}
         </div>
       )}
-      {!settingsOpen && !sel && edgeInfo && (() => {
+      {!sel && edgeInfo && (() => {
         const r = receipt(edgeInfo.source, edgeInfo.target, edgeInfo.meta)
         return (
           <div className={SIDE}>
@@ -1815,7 +1829,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
           </div>
         )
       })()}
-      {!settingsOpen && !sel && !edgeInfo && run && (() => {
+      {!sel && !edgeInfo && run && (() => {
         const step = traceStep != null ? run.steps[traceStep] : null
         return (
           <div className={SIDE}>
