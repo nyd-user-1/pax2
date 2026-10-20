@@ -33,3 +33,6 @@ data/raw/captions-api
 data/raw/videos
 # Whisper catalog transcripts (scripts/catalog-audio/merge.mjs syncs them); merged into data/generated/transcripts.json
 data/raw/whisper-transcripts
+
+# PLUM work files: the serving index copied down from S3 (scripts/plum/)
+data/plum/
