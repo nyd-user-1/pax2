@@ -1,0 +1,4999 @@
+{
+ "name": "PAX2 Semantic-ID Model (PLUM baseline)",
+ "builtAt": "2026-10-20T07:17:25Z",
+ "tag": "attempt2",
+ "sizes": [
+  40,
+  64,
+  64
+ ],
+ "minCell": 20,
+ "smooth": 20.0,
+ "seed": 20261020,
+ "index": "serving index 20261019-094112-train (PAX2 Encoder)",
+ "method": "Codebooks: the residual k-means of semantic_ids.py, fit on the training documents' serving-index embeddings only (corpus split 'train': not held out, not paid); held-out documents are assigned to the nearest centroid level by level, so no held-out vector shapes a codebook. Score: a held-out document's score is the outlier share of the training documents sharing its (c1, c2) cell; when that cell holds fewer than MIN_CELL training documents it backs off to the c1 cell. Benchmark: scripts/encoder/common.py's summarize() on the same held-out documents (data/generated/model/plum/ holdout.json, the holdout run 20261019-094112-train was judged on), pooled AUC and count-weighted within-channel AUC \u2014 the Gate E rows' protocol with the cell share in place of the 20-neighbor share.",
+ "trainingDocs": 14586,
+ "heldOutDocs": 3869,
+ "scoredBy": {
+  "c1c2": 3762,
+  "c1": 107,
+  "base": 0
+ },
+ "trainBaseRate": 0.1429,
+ "gate": {
+  "name": "S",
+  "rule": "pooled AUC on the held-out channels above stock bge-m3 kNN-AUC 0.5775",
+  "stockPooled": 0.5775310209691764,
+  "pooled": 0.5707632418755737,
+  "pooledDelta": -0.0067677790936027105,
+  "pass": false
+ },
+ "bench": {
+  "n": 3869,
+  "breakouts": 654,
+  "pooled": 0.5707632418755737,
+  "within": 0.5709396411303389,
+  "withinUnweighted": 0.5144500158629985,
+  "withinChannels": 8,
+  "perChannel": [
+   {
+    "channelId": "UCKTPks8QcY-i8l7YeW5OdjA",
+    "family": "UK",
+    "n": 26,
+    "breakouts": 0,
+    "auc": null
+   },
+   {
+    "channelId": "UCQANb2YPwAtK-IQJrLaaUFw",
+    "family": "Partisan media",
+    "n": 1793,
+    "breakouts": 334,
+    "auc": 0.5528651401788609
+   },
+   {
+    "channelId": "UCSRRURbKlPf1HwPUhjmufTg",
+    "family": "Nonpartisan media",
+    "n": 417,
+    "breakouts": 70,
+    "auc": 0.3765129682997118
+   },
+   {
+    "channelId": "UCY-3GVY7vhOuuixr1QBMWEg",
+    "family": "Candidates & officials",
+    "n": 166,
+    "breakouts": 33,
+    "auc": 0.7251082251082251
+   },
+   {
+    "channelId": "UCbPojIVZdVhfBTRwj64j0Cw",
+    "family": "Nonpartisan media",
+    "n": 46,
+    "breakouts": 1,
+    "auc": 0.05555555555555555
+   },
+   {
+    "channelId": "UCdFZ5b8bpOLRgbOATyPRtdw",
+    "family": "Reform",
+    "n": 223,
+    "breakouts": 20,
+    "auc": 0.5727832512315271
+   },
+   {
+    "channelId": "UCgIuEJP3M3zg-vt5Z1UVfdg",
+    "family": "Reform",
+    "n": 90,
+    "breakouts": 0,
+    "auc": null
+   },
+   {
+    "channelId": "UChm_bCQMmaxljPge4-V9fVQ",
+    "family": "Candidates & officials",
+    "n": 163,
+    "breakouts": 15,
+    "auc": 0.6668918918918919
+   },
+   {
+    "channelId": "UClkO4MArT2WKWj32YDD_-Ew",
+    "family": "Candidates & officials",
+    "n": 891,
+    "breakouts": 173,
+    "auc": 0.6835461381164764
+   },
+   {
+    "channelId": "UCnpLmnN_7TxPdpGODs-JXxg",
+    "family": "Voting rights",
+    "n": 54,
+    "breakouts": 8,
+    "auc": 0.48233695652173914
+   }
+  ],
+  "perFamily": [
+   {
+    "family": "Candidates & officials",
+    "n": 1220,
+    "breakouts": 221,
+    "auc": 0.6817722700075641
+   },
+   {
+    "family": "Nonpartisan media",
+    "n": 463,
+    "breakouts": 71,
+    "auc": 0.37598807128485195
+   },
+   {
+    "family": "Partisan media",
+    "n": 1793,
+    "breakouts": 334,
+    "auc": 0.5528651401788609
+   },
+   {
+    "family": "Reform",
+    "n": 313,
+    "breakouts": 20,
+    "auc": 0.4933447098976109
+   },
+   {
+    "family": "UK",
+    "n": 26,
+    "breakouts": 0,
+    "auc": null
+   },
+   {
+    "family": "Voting rights",
+    "n": 54,
+    "breakouts": 8,
+    "auc": 0.48233695652173914
+   }
+  ]
+ },
+ "cells": {
+  "c1": {
+   "0": {
+    "n": 230,
+    "outlierShare": 0.0957
+   },
+   "1": {
+    "n": 214,
+    "outlierShare": 0.0935
+   },
+   "2": {
+    "n": 101,
+    "outlierShare": 0.1683
+   },
+   "3": {
+    "n": 307,
+    "outlierShare": 0.0163
+   },
+   "4": {
+    "n": 309,
+    "outlierShare": 0.1489
+   },
+   "5": {
+    "n": 286,
+    "outlierShare": 0.1399
+   },
+   "6": {
+    "n": 333,
+    "outlierShare": 0.0961
+   },
+   "7": {
+    "n": 509,
+    "outlierShare": 0.1729
+   },
+   "8": {
+    "n": 289,
+    "outlierShare": 0.2042
+   },
+   "9": {
+    "n": 372,
+    "outlierShare": 0.0591
+   },
+   "10": {
+    "n": 356,
+    "outlierShare": 0.0843
+   },
+   "11": {
+    "n": 797,
+    "outlierShare": 0.1179
+   },
+   "12": {
+    "n": 398,
+    "outlierShare": 0.0804
+   },
+   "13": {
+    "n": 1103,
+    "outlierShare": 0.1813
+   },
+   "14": {
+    "n": 40,
+    "outlierShare": 0.0
+   },
+   "15": {
+    "n": 448,
+    "outlierShare": 0.067
+   },
+   "16": {
+    "n": 158,
+    "outlierShare": 0.2215
+   },
+   "17": {
+    "n": 93,
+    "outlierShare": 0.0215
+   },
+   "18": {
+    "n": 128,
+    "outlierShare": 0.2188
+   },
+   "19": {
+    "n": 574,
+    "outlierShare": 0.0784
+   },
+   "20": {
+    "n": 813,
+    "outlierShare": 0.2165
+   },
+   "21": {
+    "n": 119,
+    "outlierShare": 0.084
+   },
+   "22": {
+    "n": 456,
+    "outlierShare": 0.0702
+   },
+   "23": {
+    "n": 380,
+    "outlierShare": 0.0526
+   },
+   "24": {
+    "n": 322,
+    "outlierShare": 0.0714
+   },
+   "25": {
+    "n": 48,
+    "outlierShare": 0.0
+   },
+   "26": {
+    "n": 580,
+    "outlierShare": 0.0845
+   },
+   "27": {
+    "n": 643,
+    "outlierShare": 0.1011
+   },
+   "28": {
+    "n": 370,
+    "outlierShare": 0.0514
+   },
+   "29": {
+    "n": 100,
+    "outlierShare": 0.04
+   },
+   "30": {
+    "n": 189,
+    "outlierShare": 0.0794
+   },
+   "31": {
+    "n": 142,
+    "outlierShare": 0.169
+   },
+   "32": {
+    "n": 336,
+    "outlierShare": 0.0655
+   },
+   "33": {
+    "n": 571,
+    "outlierShare": 0.1874
+   },
+   "34": {
+    "n": 426,
+    "outlierShare": 0.5798
+   },
+   "35": {
+    "n": 450,
+    "outlierShare": 0.1556
+   },
+   "36": {
+    "n": 584,
+    "outlierShare": 0.3425
+   },
+   "37": {
+    "n": 630,
+    "outlierShare": 0.1587
+   },
+   "38": {
+    "n": 182,
+    "outlierShare": 0.1319
+   },
+   "39": {
+    "n": 200,
+    "outlierShare": 0.155
+   }
+  },
+  "c1c2": {
+   "0": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "1": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "2": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "4": {
+    "n": 15,
+    "outlierShare": 0.0
+   },
+   "5": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "7": {
+    "n": 18,
+    "outlierShare": 0.0556
+   },
+   "8": {
+    "n": 7,
+    "outlierShare": 0.1429
+   },
+   "10": {
+    "n": 16,
+    "outlierShare": 0.1875
+   },
+   "11": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "14": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "15": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "18": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "19": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "24": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "30": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "31": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "32": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "33": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "34": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "40": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "42": {
+    "n": 8,
+    "outlierShare": 0.125
+   },
+   "43": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "44": {
+    "n": 8,
+    "outlierShare": 0.125
+   },
+   "47": {
+    "n": 11,
+    "outlierShare": 0.4545
+   },
+   "48": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "49": {
+    "n": 25,
+    "outlierShare": 0.2
+   },
+   "52": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "54": {
+    "n": 19,
+    "outlierShare": 0.0526
+   },
+   "55": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "59": {
+    "n": 14,
+    "outlierShare": 0.2143
+   },
+   "64": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "65": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "66": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "68": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "70": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "71": {
+    "n": 11,
+    "outlierShare": 0.0
+   },
+   "72": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "74": {
+    "n": 17,
+    "outlierShare": 0.0
+   },
+   "75": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "79": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "82": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "83": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "94": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "95": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "96": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "97": {
+    "n": 12,
+    "outlierShare": 0.0833
+   },
+   "98": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "100": {
+    "n": 14,
+    "outlierShare": 0.0
+   },
+   "104": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "106": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "107": {
+    "n": 11,
+    "outlierShare": 0.2727
+   },
+   "108": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "109": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "111": {
+    "n": 13,
+    "outlierShare": 0.1538
+   },
+   "112": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "113": {
+    "n": 4,
+    "outlierShare": 0.25
+   },
+   "116": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "118": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "120": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "121": {
+    "n": 44,
+    "outlierShare": 0.2045
+   },
+   "123": {
+    "n": 13,
+    "outlierShare": 0.2308
+   },
+   "127": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "128": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "129": {
+    "n": 15,
+    "outlierShare": 0.0667
+   },
+   "130": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "132": {
+    "n": 6,
+    "outlierShare": 0.3333
+   },
+   "133": {
+    "n": 11,
+    "outlierShare": 0.0909
+   },
+   "135": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "138": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "139": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "147": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "152": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "159": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "160": {
+    "n": 16,
+    "outlierShare": 0.4375
+   },
+   "162": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "172": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "175": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "176": {
+    "n": 7,
+    "outlierShare": 0.1429
+   },
+   "177": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "180": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "184": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "187": {
+    "n": 9,
+    "outlierShare": 0.3333
+   },
+   "192": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "193": {
+    "n": 24,
+    "outlierShare": 0.0
+   },
+   "194": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "196": {
+    "n": 17,
+    "outlierShare": 0.0588
+   },
+   "198": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "199": {
+    "n": 53,
+    "outlierShare": 0.0189
+   },
+   "200": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "202": {
+    "n": 18,
+    "outlierShare": 0.0
+   },
+   "203": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "206": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "207": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "210": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "211": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "216": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "220": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "223": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "224": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "225": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "226": {
+    "n": 30,
+    "outlierShare": 0.0
+   },
+   "231": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "232": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "234": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "235": {
+    "n": 13,
+    "outlierShare": 0.0
+   },
+   "236": {
+    "n": 11,
+    "outlierShare": 0.0909
+   },
+   "239": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "240": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "241": {
+    "n": 21,
+    "outlierShare": 0.0
+   },
+   "244": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "246": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "247": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "249": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "250": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "251": {
+    "n": 28,
+    "outlierShare": 0.0714
+   },
+   "256": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "257": {
+    "n": 24,
+    "outlierShare": 0.0
+   },
+   "258": {
+    "n": 11,
+    "outlierShare": 0.2727
+   },
+   "260": {
+    "n": 21,
+    "outlierShare": 0.0
+   },
+   "261": {
+    "n": 16,
+    "outlierShare": 0.0
+   },
+   "263": {
+    "n": 18,
+    "outlierShare": 0.4444
+   },
+   "264": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "266": {
+    "n": 16,
+    "outlierShare": 0.25
+   },
+   "270": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "271": {
+    "n": 4,
+    "outlierShare": 0.5
+   },
+   "274": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "275": {
+    "n": 28,
+    "outlierShare": 0.0714
+   },
+   "278": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "280": {
+    "n": 19,
+    "outlierShare": 0.1053
+   },
+   "286": {
+    "n": 3,
+    "outlierShare": 0.6667
+   },
+   "287": {
+    "n": 21,
+    "outlierShare": 0.1429
+   },
+   "288": {
+    "n": 17,
+    "outlierShare": 0.1765
+   },
+   "289": {
+    "n": 4,
+    "outlierShare": 0.5
+   },
+   "290": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "292": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "295": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "296": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "298": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "299": {
+    "n": 2,
+    "outlierShare": 1.0
+   },
+   "300": {
+    "n": 18,
+    "outlierShare": 0.2222
+   },
+   "302": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "303": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "304": {
+    "n": 14,
+    "outlierShare": 0.2143
+   },
+   "305": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "308": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "310": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "311": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "315": {
+    "n": 31,
+    "outlierShare": 0.1613
+   },
+   "320": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "321": {
+    "n": 13,
+    "outlierShare": 0.0769
+   },
+   "322": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "324": {
+    "n": 15,
+    "outlierShare": 0.0667
+   },
+   "325": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "327": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "330": {
+    "n": 71,
+    "outlierShare": 0.0141
+   },
+   "334": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "335": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "338": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "339": {
+    "n": 10,
+    "outlierShare": 0.3
+   },
+   "344": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "350": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "351": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "352": {
+    "n": 47,
+    "outlierShare": 0.383
+   },
+   "353": {
+    "n": 14,
+    "outlierShare": 0.0714
+   },
+   "362": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "363": {
+    "n": 7,
+    "outlierShare": 0.2857
+   },
+   "364": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "367": {
+    "n": 9,
+    "outlierShare": 0.3333
+   },
+   "368": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "369": {
+    "n": 11,
+    "outlierShare": 0.3636
+   },
+   "372": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "374": {
+    "n": 4,
+    "outlierShare": 0.25
+   },
+   "375": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "379": {
+    "n": 37,
+    "outlierShare": 0.0541
+   },
+   "384": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "385": {
+    "n": 11,
+    "outlierShare": 0.0
+   },
+   "386": {
+    "n": 14,
+    "outlierShare": 0.0714
+   },
+   "388": {
+    "n": 9,
+    "outlierShare": 0.1111
+   },
+   "389": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "390": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "391": {
+    "n": 24,
+    "outlierShare": 0.125
+   },
+   "392": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "394": {
+    "n": 11,
+    "outlierShare": 0.3636
+   },
+   "395": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "398": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "399": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "400": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "402": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "403": {
+    "n": 15,
+    "outlierShare": 0.1333
+   },
+   "405": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "406": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "408": {
+    "n": 16,
+    "outlierShare": 0.0
+   },
+   "414": {
+    "n": 22,
+    "outlierShare": 0.1818
+   },
+   "415": {
+    "n": 20,
+    "outlierShare": 0.05
+   },
+   "416": {
+    "n": 9,
+    "outlierShare": 0.2222
+   },
+   "417": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "418": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "420": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "421": {
+    "n": 17,
+    "outlierShare": 0.0
+   },
+   "423": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "424": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "426": {
+    "n": 19,
+    "outlierShare": 0.1579
+   },
+   "427": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "428": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "431": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "432": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "433": {
+    "n": 21,
+    "outlierShare": 0.0476
+   },
+   "435": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "436": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "437": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "438": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "439": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "441": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "443": {
+    "n": 22,
+    "outlierShare": 0.2727
+   },
+   "446": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "447": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "448": {
+    "n": 56,
+    "outlierShare": 0.1071
+   },
+   "449": {
+    "n": 21,
+    "outlierShare": 0.0952
+   },
+   "450": {
+    "n": 55,
+    "outlierShare": 0.2909
+   },
+   "452": {
+    "n": 11,
+    "outlierShare": 0.0909
+   },
+   "453": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "455": {
+    "n": 10,
+    "outlierShare": 0.2
+   },
+   "456": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "458": {
+    "n": 18,
+    "outlierShare": 0.1667
+   },
+   "461": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "462": {
+    "n": 21,
+    "outlierShare": 0.0476
+   },
+   "467": {
+    "n": 12,
+    "outlierShare": 0.0833
+   },
+   "472": {
+    "n": 27,
+    "outlierShare": 0.1852
+   },
+   "475": {
+    "n": 56,
+    "outlierShare": 0.3036
+   },
+   "476": {
+    "n": 36,
+    "outlierShare": 0.2222
+   },
+   "480": {
+    "n": 35,
+    "outlierShare": 0.0857
+   },
+   "482": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "488": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "490": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "491": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "492": {
+    "n": 6,
+    "outlierShare": 0.3333
+   },
+   "495": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "496": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "497": {
+    "n": 7,
+    "outlierShare": 0.2857
+   },
+   "500": {
+    "n": 26,
+    "outlierShare": 0.3077
+   },
+   "502": {
+    "n": 26,
+    "outlierShare": 0.1923
+   },
+   "503": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "504": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "507": {
+    "n": 10,
+    "outlierShare": 0.2
+   },
+   "509": {
+    "n": 57,
+    "outlierShare": 0.0175
+   },
+   "512": {
+    "n": 13,
+    "outlierShare": 0.0769
+   },
+   "513": {
+    "n": 17,
+    "outlierShare": 0.1765
+   },
+   "514": {
+    "n": 8,
+    "outlierShare": 0.375
+   },
+   "516": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "519": {
+    "n": 27,
+    "outlierShare": 0.0741
+   },
+   "520": {
+    "n": 19,
+    "outlierShare": 0.1053
+   },
+   "522": {
+    "n": 28,
+    "outlierShare": 0.2857
+   },
+   "523": {
+    "n": 8,
+    "outlierShare": 0.25
+   },
+   "526": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "527": {
+    "n": 14,
+    "outlierShare": 0.3571
+   },
+   "530": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "531": {
+    "n": 7,
+    "outlierShare": 0.1429
+   },
+   "536": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "540": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "542": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "543": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "544": {
+    "n": 10,
+    "outlierShare": 0.6
+   },
+   "545": {
+    "n": 18,
+    "outlierShare": 0.0556
+   },
+   "546": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "548": {
+    "n": 16,
+    "outlierShare": 0.375
+   },
+   "552": {
+    "n": 8,
+    "outlierShare": 0.125
+   },
+   "554": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "555": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "556": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "559": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "560": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "561": {
+    "n": 10,
+    "outlierShare": 0.2
+   },
+   "564": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "567": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "569": {
+    "n": 3,
+    "outlierShare": 0.6667
+   },
+   "571": {
+    "n": 35,
+    "outlierShare": 0.3143
+   },
+   "576": {
+    "n": 14,
+    "outlierShare": 0.0
+   },
+   "577": {
+    "n": 21,
+    "outlierShare": 0.0476
+   },
+   "578": {
+    "n": 23,
+    "outlierShare": 0.1304
+   },
+   "580": {
+    "n": 15,
+    "outlierShare": 0.0667
+   },
+   "583": {
+    "n": 19,
+    "outlierShare": 0.1053
+   },
+   "584": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "586": {
+    "n": 37,
+    "outlierShare": 0.0
+   },
+   "587": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "590": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "591": {
+    "n": 10,
+    "outlierShare": 0.2
+   },
+   "594": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "595": {
+    "n": 20,
+    "outlierShare": 0.0
+   },
+   "598": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "600": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "603": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "607": {
+    "n": 7,
+    "outlierShare": 0.1429
+   },
+   "608": {
+    "n": 18,
+    "outlierShare": 0.0
+   },
+   "609": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "610": {
+    "n": 11,
+    "outlierShare": 0.0
+   },
+   "612": {
+    "n": 5,
+    "outlierShare": 0.4
+   },
+   "616": {
+    "n": 40,
+    "outlierShare": 0.025
+   },
+   "618": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "619": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "620": {
+    "n": 16,
+    "outlierShare": 0.125
+   },
+   "623": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "624": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "625": {
+    "n": 11,
+    "outlierShare": 0.2727
+   },
+   "627": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "628": {
+    "n": 14,
+    "outlierShare": 0.0
+   },
+   "630": {
+    "n": 4,
+    "outlierShare": 0.25
+   },
+   "631": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "635": {
+    "n": 24,
+    "outlierShare": 0.0417
+   },
+   "640": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "641": {
+    "n": 8,
+    "outlierShare": 0.125
+   },
+   "642": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "644": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "647": {
+    "n": 8,
+    "outlierShare": 0.25
+   },
+   "648": {
+    "n": 13,
+    "outlierShare": 0.1538
+   },
+   "650": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "651": {
+    "n": 29,
+    "outlierShare": 0.0345
+   },
+   "655": {
+    "n": 12,
+    "outlierShare": 0.0
+   },
+   "658": {
+    "n": 31,
+    "outlierShare": 0.0323
+   },
+   "659": {
+    "n": 11,
+    "outlierShare": 0.0
+   },
+   "672": {
+    "n": 7,
+    "outlierShare": 0.4286
+   },
+   "673": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "674": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "680": {
+    "n": 15,
+    "outlierShare": 0.2667
+   },
+   "682": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "683": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "687": {
+    "n": 53,
+    "outlierShare": 0.1132
+   },
+   "688": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "689": {
+    "n": 12,
+    "outlierShare": 0.1667
+   },
+   "694": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "695": {
+    "n": 102,
+    "outlierShare": 0.0392
+   },
+   "699": {
+    "n": 13,
+    "outlierShare": 0.2308
+   },
+   "701": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "704": {
+    "n": 30,
+    "outlierShare": 0.1
+   },
+   "705": {
+    "n": 19,
+    "outlierShare": 0.2105
+   },
+   "706": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "708": {
+    "n": 22,
+    "outlierShare": 0.1364
+   },
+   "709": {
+    "n": 16,
+    "outlierShare": 0.125
+   },
+   "710": {
+    "n": 4,
+    "outlierShare": 0.25
+   },
+   "711": {
+    "n": 55,
+    "outlierShare": 0.3818
+   },
+   "712": {
+    "n": 7,
+    "outlierShare": 0.1429
+   },
+   "714": {
+    "n": 18,
+    "outlierShare": 0.3333
+   },
+   "718": {
+    "n": 13,
+    "outlierShare": 0.0769
+   },
+   "719": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "722": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "723": {
+    "n": 32,
+    "outlierShare": 0.0312
+   },
+   "728": {
+    "n": 28,
+    "outlierShare": 0.2143
+   },
+   "731": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "734": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "735": {
+    "n": 36,
+    "outlierShare": 0.0278
+   },
+   "736": {
+    "n": 9,
+    "outlierShare": 0.1111
+   },
+   "737": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "738": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "740": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "743": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "746": {
+    "n": 23,
+    "outlierShare": 0.2174
+   },
+   "747": {
+    "n": 120,
+    "outlierShare": 0.1083
+   },
+   "748": {
+    "n": 12,
+    "outlierShare": 0.0
+   },
+   "749": {
+    "n": 168,
+    "outlierShare": 0.0536
+   },
+   "750": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "752": {
+    "n": 12,
+    "outlierShare": 0.0
+   },
+   "753": {
+    "n": 63,
+    "outlierShare": 0.0952
+   },
+   "756": {
+    "n": 14,
+    "outlierShare": 0.1429
+   },
+   "758": {
+    "n": 12,
+    "outlierShare": 0.0
+   },
+   "759": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "763": {
+    "n": 46,
+    "outlierShare": 0.1739
+   },
+   "768": {
+    "n": 16,
+    "outlierShare": 0.0625
+   },
+   "769": {
+    "n": 24,
+    "outlierShare": 0.125
+   },
+   "770": {
+    "n": 11,
+    "outlierShare": 0.0909
+   },
+   "771": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "772": {
+    "n": 34,
+    "outlierShare": 0.0588
+   },
+   "775": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "776": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "778": {
+    "n": 18,
+    "outlierShare": 0.1667
+   },
+   "779": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "781": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "782": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "783": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "786": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "787": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "790": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "792": {
+    "n": 25,
+    "outlierShare": 0.0
+   },
+   "795": {
+    "n": 40,
+    "outlierShare": 0.05
+   },
+   "796": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "797": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "799": {
+    "n": 5,
+    "outlierShare": 0.4
+   },
+   "800": {
+    "n": 15,
+    "outlierShare": 0.2667
+   },
+   "802": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "807": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "808": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "810": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "811": {
+    "n": 18,
+    "outlierShare": 0.2222
+   },
+   "812": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "815": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "816": {
+    "n": 50,
+    "outlierShare": 0.06
+   },
+   "817": {
+    "n": 21,
+    "outlierShare": 0.0952
+   },
+   "820": {
+    "n": 28,
+    "outlierShare": 0.1429
+   },
+   "822": {
+    "n": 18,
+    "outlierShare": 0.0
+   },
+   "823": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "824": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "827": {
+    "n": 17,
+    "outlierShare": 0.0
+   },
+   "832": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "833": {
+    "n": 12,
+    "outlierShare": 0.1667
+   },
+   "834": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "836": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "837": {
+    "n": 47,
+    "outlierShare": 0.0638
+   },
+   "838": {
+    "n": 8,
+    "outlierShare": 0.25
+   },
+   "839": {
+    "n": 119,
+    "outlierShare": 0.1261
+   },
+   "840": {
+    "n": 52,
+    "outlierShare": 0.1538
+   },
+   "842": {
+    "n": 9,
+    "outlierShare": 0.2222
+   },
+   "843": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "847": {
+    "n": 7,
+    "outlierShare": 0.2857
+   },
+   "850": {
+    "n": 17,
+    "outlierShare": 0.1765
+   },
+   "851": {
+    "n": 40,
+    "outlierShare": 0.075
+   },
+   "852": {
+    "n": 22,
+    "outlierShare": 0.1818
+   },
+   "854": {
+    "n": 68,
+    "outlierShare": 0.1176
+   },
+   "856": {
+    "n": 11,
+    "outlierShare": 0.0
+   },
+   "862": {
+    "n": 9,
+    "outlierShare": 0.3333
+   },
+   "863": {
+    "n": 26,
+    "outlierShare": 0.0769
+   },
+   "864": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "865": {
+    "n": 7,
+    "outlierShare": 0.2857
+   },
+   "866": {
+    "n": 13,
+    "outlierShare": 0.2308
+   },
+   "867": {
+    "n": 298,
+    "outlierShare": 0.2416
+   },
+   "868": {
+    "n": 61,
+    "outlierShare": 0.2951
+   },
+   "871": {
+    "n": 10,
+    "outlierShare": 0.3
+   },
+   "872": {
+    "n": 7,
+    "outlierShare": 0.4286
+   },
+   "874": {
+    "n": 22,
+    "outlierShare": 0.0455
+   },
+   "875": {
+    "n": 115,
+    "outlierShare": 0.1565
+   },
+   "876": {
+    "n": 12,
+    "outlierShare": 0.25
+   },
+   "879": {
+    "n": 4,
+    "outlierShare": 0.25
+   },
+   "880": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "881": {
+    "n": 50,
+    "outlierShare": 0.2
+   },
+   "884": {
+    "n": 4,
+    "outlierShare": 0.5
+   },
+   "886": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "887": {
+    "n": 4,
+    "outlierShare": 0.25
+   },
+   "889": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "890": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "891": {
+    "n": 28,
+    "outlierShare": 0.1429
+   },
+   "896": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "897": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "898": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "903": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "906": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "915": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "928": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "929": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "955": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "960": {
+    "n": 45,
+    "outlierShare": 0.0444
+   },
+   "961": {
+    "n": 34,
+    "outlierShare": 0.0294
+   },
+   "962": {
+    "n": 15,
+    "outlierShare": 0.0
+   },
+   "964": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "967": {
+    "n": 17,
+    "outlierShare": 0.2353
+   },
+   "968": {
+    "n": 10,
+    "outlierShare": 0.1
+   },
+   "970": {
+    "n": 26,
+    "outlierShare": 0.0385
+   },
+   "971": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "973": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "974": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "975": {
+    "n": 24,
+    "outlierShare": 0.0
+   },
+   "977": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "978": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "979": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "982": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "984": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "987": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "989": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "991": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "992": {
+    "n": 15,
+    "outlierShare": 0.2667
+   },
+   "993": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "994": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "996": {
+    "n": 10,
+    "outlierShare": 0.2
+   },
+   "999": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1000": {
+    "n": 16,
+    "outlierShare": 0.0
+   },
+   "1001": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1002": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1003": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "1004": {
+    "n": 12,
+    "outlierShare": 0.0
+   },
+   "1007": {
+    "n": 14,
+    "outlierShare": 0.0714
+   },
+   "1008": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "1009": {
+    "n": 14,
+    "outlierShare": 0.0714
+   },
+   "1010": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1011": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1012": {
+    "n": 24,
+    "outlierShare": 0.0417
+   },
+   "1014": {
+    "n": 8,
+    "outlierShare": 0.375
+   },
+   "1015": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1019": {
+    "n": 46,
+    "outlierShare": 0.1304
+   },
+   "1021": {
+    "n": 51,
+    "outlierShare": 0.0196
+   },
+   "1024": {
+    "n": 16,
+    "outlierShare": 0.0625
+   },
+   "1025": {
+    "n": 14,
+    "outlierShare": 0.3571
+   },
+   "1026": {
+    "n": 4,
+    "outlierShare": 0.5
+   },
+   "1028": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1029": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1031": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "1032": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1034": {
+    "n": 15,
+    "outlierShare": 0.0
+   },
+   "1038": {
+    "n": 7,
+    "outlierShare": 0.2857
+   },
+   "1039": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "1043": {
+    "n": 17,
+    "outlierShare": 0.2941
+   },
+   "1048": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "1054": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1055": {
+    "n": 12,
+    "outlierShare": 0.5833
+   },
+   "1056": {
+    "n": 2,
+    "outlierShare": 1.0
+   },
+   "1058": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1067": {
+    "n": 19,
+    "outlierShare": 0.3684
+   },
+   "1068": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1071": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1072": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "1073": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1076": {
+    "n": 7,
+    "outlierShare": 0.1429
+   },
+   "1078": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "1083": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "1089": {
+    "n": 59,
+    "outlierShare": 0.0169
+   },
+   "1098": {
+    "n": 27,
+    "outlierShare": 0.037
+   },
+   "1110": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1135": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1147": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1152": {
+    "n": 12,
+    "outlierShare": 0.0
+   },
+   "1153": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1154": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "1156": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1157": {
+    "n": 6,
+    "outlierShare": 0.5
+   },
+   "1159": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1162": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1170": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1171": {
+    "n": 6,
+    "outlierShare": 0.3333
+   },
+   "1176": {
+    "n": 12,
+    "outlierShare": 0.25
+   },
+   "1183": {
+    "n": 3,
+    "outlierShare": 0.6667
+   },
+   "1184": {
+    "n": 15,
+    "outlierShare": 0.2
+   },
+   "1194": {
+    "n": 8,
+    "outlierShare": 0.125
+   },
+   "1195": {
+    "n": 4,
+    "outlierShare": 0.5
+   },
+   "1196": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1198": {
+    "n": 34,
+    "outlierShare": 0.1471
+   },
+   "1199": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1200": {
+    "n": 6,
+    "outlierShare": 0.5
+   },
+   "1204": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1206": {
+    "n": 4,
+    "outlierShare": 0.5
+   },
+   "1211": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "1216": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "1217": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "1220": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "1221": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1222": {
+    "n": 6,
+    "outlierShare": 0.3333
+   },
+   "1223": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1224": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1226": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1230": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1231": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1234": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1235": {
+    "n": 13,
+    "outlierShare": 0.0
+   },
+   "1240": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1241": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1244": {
+    "n": 214,
+    "outlierShare": 0.0981
+   },
+   "1247": {
+    "n": 15,
+    "outlierShare": 0.0
+   },
+   "1248": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1249": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1250": {
+    "n": 11,
+    "outlierShare": 0.0
+   },
+   "1252": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1256": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1259": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1260": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "1265": {
+    "n": 17,
+    "outlierShare": 0.0
+   },
+   "1268": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1271": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1274": {
+    "n": 243,
+    "outlierShare": 0.0823
+   },
+   "1275": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1280": {
+    "n": 9,
+    "outlierShare": 0.1111
+   },
+   "1281": {
+    "n": 44,
+    "outlierShare": 0.2273
+   },
+   "1282": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1284": {
+    "n": 41,
+    "outlierShare": 0.2927
+   },
+   "1285": {
+    "n": 18,
+    "outlierShare": 0.0556
+   },
+   "1286": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "1287": {
+    "n": 194,
+    "outlierShare": 0.0464
+   },
+   "1288": {
+    "n": 41,
+    "outlierShare": 0.3659
+   },
+   "1290": {
+    "n": 18,
+    "outlierShare": 0.2778
+   },
+   "1291": {
+    "n": 11,
+    "outlierShare": 0.2727
+   },
+   "1294": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1295": {
+    "n": 29,
+    "outlierShare": 0.1379
+   },
+   "1298": {
+    "n": 19,
+    "outlierShare": 0.2105
+   },
+   "1299": {
+    "n": 42,
+    "outlierShare": 0.1667
+   },
+   "1304": {
+    "n": 16,
+    "outlierShare": 0.375
+   },
+   "1307": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1310": {
+    "n": 13,
+    "outlierShare": 0.5385
+   },
+   "1311": {
+    "n": 36,
+    "outlierShare": 0.1667
+   },
+   "1312": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1313": {
+    "n": 16,
+    "outlierShare": 0.125
+   },
+   "1314": {
+    "n": 18,
+    "outlierShare": 0.4444
+   },
+   "1316": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "1319": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1320": {
+    "n": 5,
+    "outlierShare": 0.4
+   },
+   "1322": {
+    "n": 18,
+    "outlierShare": 0.1667
+   },
+   "1323": {
+    "n": 84,
+    "outlierShare": 0.4286
+   },
+   "1324": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "1327": {
+    "n": 15,
+    "outlierShare": 0.0
+   },
+   "1328": {
+    "n": 36,
+    "outlierShare": 0.4167
+   },
+   "1329": {
+    "n": 43,
+    "outlierShare": 0.3023
+   },
+   "1332": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "1334": {
+    "n": 11,
+    "outlierShare": 0.0
+   },
+   "1335": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1339": {
+    "n": 12,
+    "outlierShare": 0.25
+   },
+   "1344": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "1345": {
+    "n": 11,
+    "outlierShare": 0.0
+   },
+   "1346": {
+    "n": 10,
+    "outlierShare": 0.2
+   },
+   "1348": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "1349": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "1351": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "1354": {
+    "n": 22,
+    "outlierShare": 0.0
+   },
+   "1357": {
+    "n": 10,
+    "outlierShare": 0.2
+   },
+   "1359": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1363": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1368": {
+    "n": 10,
+    "outlierShare": 0.1
+   },
+   "1369": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1375": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1376": {
+    "n": 16,
+    "outlierShare": 0.125
+   },
+   "1384": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "1388": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1393": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1396": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1398": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1403": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "1408": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "1409": {
+    "n": 18,
+    "outlierShare": 0.0
+   },
+   "1410": {
+    "n": 9,
+    "outlierShare": 0.2222
+   },
+   "1412": {
+    "n": 36,
+    "outlierShare": 0.0556
+   },
+   "1413": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "1415": {
+    "n": 24,
+    "outlierShare": 0.0417
+   },
+   "1416": {
+    "n": 8,
+    "outlierShare": 0.125
+   },
+   "1418": {
+    "n": 12,
+    "outlierShare": 0.1667
+   },
+   "1421": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1422": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1423": {
+    "n": 13,
+    "outlierShare": 0.0769
+   },
+   "1426": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "1427": {
+    "n": 20,
+    "outlierShare": 0.05
+   },
+   "1432": {
+    "n": 16,
+    "outlierShare": 0.0
+   },
+   "1435": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "1436": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1438": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1439": {
+    "n": 30,
+    "outlierShare": 0.0333
+   },
+   "1440": {
+    "n": 17,
+    "outlierShare": 0.0588
+   },
+   "1441": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "1442": {
+    "n": 30,
+    "outlierShare": 0.0
+   },
+   "1446": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1448": {
+    "n": 8,
+    "outlierShare": 0.25
+   },
+   "1450": {
+    "n": 29,
+    "outlierShare": 0.0345
+   },
+   "1451": {
+    "n": 37,
+    "outlierShare": 0.1892
+   },
+   "1452": {
+    "n": 16,
+    "outlierShare": 0.0
+   },
+   "1455": {
+    "n": 12,
+    "outlierShare": 0.1667
+   },
+   "1456": {
+    "n": 15,
+    "outlierShare": 0.0667
+   },
+   "1457": {
+    "n": 16,
+    "outlierShare": 0.0625
+   },
+   "1460": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "1462": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "1463": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1464": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1467": {
+    "n": 33,
+    "outlierShare": 0.0606
+   },
+   "1472": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "1473": {
+    "n": 17,
+    "outlierShare": 0.0
+   },
+   "1474": {
+    "n": 15,
+    "outlierShare": 0.0667
+   },
+   "1476": {
+    "n": 19,
+    "outlierShare": 0.0
+   },
+   "1477": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "1479": {
+    "n": 16,
+    "outlierShare": 0.0625
+   },
+   "1480": {
+    "n": 7,
+    "outlierShare": 0.1429
+   },
+   "1482": {
+    "n": 23,
+    "outlierShare": 0.087
+   },
+   "1483": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1487": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1490": {
+    "n": 15,
+    "outlierShare": 0.0
+   },
+   "1491": {
+    "n": 23,
+    "outlierShare": 0.0
+   },
+   "1494": {
+    "n": 14,
+    "outlierShare": 0.0
+   },
+   "1496": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "1502": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1503": {
+    "n": 21,
+    "outlierShare": 0.0
+   },
+   "1504": {
+    "n": 9,
+    "outlierShare": 0.3333
+   },
+   "1505": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "1506": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1508": {
+    "n": 4,
+    "outlierShare": 0.5
+   },
+   "1511": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "1512": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1514": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "1515": {
+    "n": 49,
+    "outlierShare": 0.0408
+   },
+   "1516": {
+    "n": 18,
+    "outlierShare": 0.0
+   },
+   "1519": {
+    "n": 6,
+    "outlierShare": 0.3333
+   },
+   "1520": {
+    "n": 11,
+    "outlierShare": 0.0909
+   },
+   "1521": {
+    "n": 20,
+    "outlierShare": 0.1
+   },
+   "1524": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1526": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1527": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "1531": {
+    "n": 34,
+    "outlierShare": 0.0588
+   },
+   "1536": {
+    "n": 19,
+    "outlierShare": 0.1053
+   },
+   "1537": {
+    "n": 14,
+    "outlierShare": 0.0
+   },
+   "1538": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "1539": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1540": {
+    "n": 17,
+    "outlierShare": 0.0
+   },
+   "1541": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1542": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1543": {
+    "n": 17,
+    "outlierShare": 0.0588
+   },
+   "1544": {
+    "n": 7,
+    "outlierShare": 0.1429
+   },
+   "1546": {
+    "n": 12,
+    "outlierShare": 0.0
+   },
+   "1548": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1550": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1551": {
+    "n": 9,
+    "outlierShare": 0.1111
+   },
+   "1554": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1555": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1558": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1560": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "1563": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "1566": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1567": {
+    "n": 10,
+    "outlierShare": 0.1
+   },
+   "1568": {
+    "n": 9,
+    "outlierShare": 0.1111
+   },
+   "1569": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "1570": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1572": {
+    "n": 26,
+    "outlierShare": 0.1538
+   },
+   "1573": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1575": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "1576": {
+    "n": 14,
+    "outlierShare": 0.0
+   },
+   "1578": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1579": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "1580": {
+    "n": 17,
+    "outlierShare": 0.1765
+   },
+   "1583": {
+    "n": 11,
+    "outlierShare": 0.0
+   },
+   "1584": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "1585": {
+    "n": 18,
+    "outlierShare": 0.0556
+   },
+   "1587": {
+    "n": 15,
+    "outlierShare": 0.0667
+   },
+   "1588": {
+    "n": 12,
+    "outlierShare": 0.0
+   },
+   "1590": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "1591": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1595": {
+    "n": 25,
+    "outlierShare": 0.16
+   },
+   "1596": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1597": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1599": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1601": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "1602": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1606": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1607": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1608": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1610": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "1611": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1615": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1618": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1619": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1633": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1634": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1636": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1640": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1642": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1643": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1649": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1657": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1659": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1664": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1665": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "1666": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "1668": {
+    "n": 15,
+    "outlierShare": 0.0
+   },
+   "1669": {
+    "n": 24,
+    "outlierShare": 0.125
+   },
+   "1671": {
+    "n": 15,
+    "outlierShare": 0.2667
+   },
+   "1672": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1674": {
+    "n": 9,
+    "outlierShare": 0.1111
+   },
+   "1675": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1678": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1679": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1682": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1683": {
+    "n": 31,
+    "outlierShare": 0.2903
+   },
+   "1688": {
+    "n": 39,
+    "outlierShare": 0.1282
+   },
+   "1691": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1694": {
+    "n": 11,
+    "outlierShare": 0.1818
+   },
+   "1695": {
+    "n": 31,
+    "outlierShare": 0.0645
+   },
+   "1696": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "1697": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1698": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1700": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1701": {
+    "n": 98,
+    "outlierShare": 0.0
+   },
+   "1703": {
+    "n": 25,
+    "outlierShare": 0.16
+   },
+   "1704": {
+    "n": 103,
+    "outlierShare": 0.0485
+   },
+   "1706": {
+    "n": 10,
+    "outlierShare": 0.1
+   },
+   "1707": {
+    "n": 69,
+    "outlierShare": 0.1159
+   },
+   "1708": {
+    "n": 7,
+    "outlierShare": 0.1429
+   },
+   "1710": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "1711": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1712": {
+    "n": 11,
+    "outlierShare": 0.0
+   },
+   "1713": {
+    "n": 17,
+    "outlierShare": 0.0
+   },
+   "1716": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1718": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1719": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1723": {
+    "n": 10,
+    "outlierShare": 0.2
+   },
+   "1728": {
+    "n": 14,
+    "outlierShare": 0.0
+   },
+   "1729": {
+    "n": 36,
+    "outlierShare": 0.0278
+   },
+   "1730": {
+    "n": 12,
+    "outlierShare": 0.1667
+   },
+   "1732": {
+    "n": 45,
+    "outlierShare": 0.0
+   },
+   "1733": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1734": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1735": {
+    "n": 12,
+    "outlierShare": 0.0833
+   },
+   "1736": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "1737": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1738": {
+    "n": 14,
+    "outlierShare": 0.0
+   },
+   "1739": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1740": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1742": {
+    "n": 83,
+    "outlierShare": 0.0964
+   },
+   "1743": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1746": {
+    "n": 11,
+    "outlierShare": 0.0
+   },
+   "1747": {
+    "n": 16,
+    "outlierShare": 0.125
+   },
+   "1752": {
+    "n": 17,
+    "outlierShare": 0.1176
+   },
+   "1758": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1759": {
+    "n": 6,
+    "outlierShare": 0.3333
+   },
+   "1760": {
+    "n": 16,
+    "outlierShare": 0.125
+   },
+   "1761": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1762": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1764": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1768": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1770": {
+    "n": 15,
+    "outlierShare": 0.0
+   },
+   "1771": {
+    "n": 30,
+    "outlierShare": 0.2
+   },
+   "1772": {
+    "n": 25,
+    "outlierShare": 0.08
+   },
+   "1776": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "1777": {
+    "n": 17,
+    "outlierShare": 0.0588
+   },
+   "1779": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1780": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "1782": {
+    "n": 127,
+    "outlierShare": 0.1575
+   },
+   "1783": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "1784": {
+    "n": 79,
+    "outlierShare": 0.1646
+   },
+   "1787": {
+    "n": 21,
+    "outlierShare": 0.0952
+   },
+   "1788": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1792": {
+    "n": 13,
+    "outlierShare": 0.0769
+   },
+   "1793": {
+    "n": 13,
+    "outlierShare": 0.0769
+   },
+   "1794": {
+    "n": 10,
+    "outlierShare": 0.1
+   },
+   "1796": {
+    "n": 16,
+    "outlierShare": 0.0
+   },
+   "1797": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1799": {
+    "n": 36,
+    "outlierShare": 0.0833
+   },
+   "1800": {
+    "n": 19,
+    "outlierShare": 0.0526
+   },
+   "1802": {
+    "n": 14,
+    "outlierShare": 0.0714
+   },
+   "1803": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1804": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "1806": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1807": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "1808": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1809": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "1810": {
+    "n": 13,
+    "outlierShare": 0.2308
+   },
+   "1811": {
+    "n": 12,
+    "outlierShare": 0.1667
+   },
+   "1815": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1822": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1823": {
+    "n": 18,
+    "outlierShare": 0.0
+   },
+   "1824": {
+    "n": 12,
+    "outlierShare": 0.0833
+   },
+   "1825": {
+    "n": 16,
+    "outlierShare": 0.0
+   },
+   "1826": {
+    "n": 24,
+    "outlierShare": 0.0
+   },
+   "1828": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1832": {
+    "n": 14,
+    "outlierShare": 0.0
+   },
+   "1834": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1835": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1836": {
+    "n": 19,
+    "outlierShare": 0.0
+   },
+   "1839": {
+    "n": 21,
+    "outlierShare": 0.0
+   },
+   "1840": {
+    "n": 13,
+    "outlierShare": 0.0
+   },
+   "1841": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1843": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1844": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1846": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "1847": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1851": {
+    "n": 32,
+    "outlierShare": 0.0938
+   },
+   "1853": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1855": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1858": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1863": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1864": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1866": {
+    "n": 8,
+    "outlierShare": 0.125
+   },
+   "1870": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "1889": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1896": {
+    "n": 38,
+    "outlierShare": 0.0263
+   },
+   "1915": {
+    "n": 44,
+    "outlierShare": 0.0455
+   },
+   "1920": {
+    "n": 8,
+    "outlierShare": 0.125
+   },
+   "1921": {
+    "n": 26,
+    "outlierShare": 0.0
+   },
+   "1922": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "1924": {
+    "n": 11,
+    "outlierShare": 0.1818
+   },
+   "1927": {
+    "n": 8,
+    "outlierShare": 0.25
+   },
+   "1930": {
+    "n": 40,
+    "outlierShare": 0.05
+   },
+   "1934": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1935": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1939": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1944": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "1945": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1951": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "1952": {
+    "n": 32,
+    "outlierShare": 0.1562
+   },
+   "1953": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1954": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1960": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "1963": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1964": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1967": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1968": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "1969": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1972": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1974": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "1979": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "1984": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "1985": {
+    "n": 13,
+    "outlierShare": 0.0
+   },
+   "1986": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "1988": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "1989": {
+    "n": 10,
+    "outlierShare": 0.3
+   },
+   "1991": {
+    "n": 9,
+    "outlierShare": 0.2222
+   },
+   "1992": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1994": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "1995": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1997": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "1998": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "1999": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2002": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2003": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "2008": {
+    "n": 9,
+    "outlierShare": 0.1111
+   },
+   "2009": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "2011": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "2015": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "2016": {
+    "n": 13,
+    "outlierShare": 0.3077
+   },
+   "2017": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "2018": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2020": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2026": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2027": {
+    "n": 4,
+    "outlierShare": 0.5
+   },
+   "2028": {
+    "n": 4,
+    "outlierShare": 0.5
+   },
+   "2031": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "2032": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "2033": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "2035": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2036": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2038": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2039": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2043": {
+    "n": 17,
+    "outlierShare": 0.1765
+   },
+   "2048": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2050": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "2051": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2052": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "2055": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "2056": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "2058": {
+    "n": 26,
+    "outlierShare": 0.0
+   },
+   "2059": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "2060": {
+    "n": 23,
+    "outlierShare": 0.0
+   },
+   "2062": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2063": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "2066": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2067": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2070": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "2072": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2076": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "2079": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "2080": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2081": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "2082": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2084": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2085": {
+    "n": 58,
+    "outlierShare": 0.0
+   },
+   "2088": {
+    "n": 15,
+    "outlierShare": 0.0
+   },
+   "2090": {
+    "n": 21,
+    "outlierShare": 0.0
+   },
+   "2091": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2092": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2095": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2096": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2097": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2099": {
+    "n": 18,
+    "outlierShare": 0.0
+   },
+   "2100": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "2102": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2107": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "2108": {
+    "n": 74,
+    "outlierShare": 0.2703
+   },
+   "2112": {
+    "n": 42,
+    "outlierShare": 0.0238
+   },
+   "2113": {
+    "n": 20,
+    "outlierShare": 0.1
+   },
+   "2114": {
+    "n": 9,
+    "outlierShare": 0.3333
+   },
+   "2116": {
+    "n": 15,
+    "outlierShare": 0.1333
+   },
+   "2117": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2119": {
+    "n": 33,
+    "outlierShare": 0.1818
+   },
+   "2120": {
+    "n": 22,
+    "outlierShare": 0.3182
+   },
+   "2122": {
+    "n": 13,
+    "outlierShare": 0.0
+   },
+   "2124": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2126": {
+    "n": 16,
+    "outlierShare": 0.0
+   },
+   "2127": {
+    "n": 10,
+    "outlierShare": 0.2
+   },
+   "2130": {
+    "n": 10,
+    "outlierShare": 0.1
+   },
+   "2131": {
+    "n": 31,
+    "outlierShare": 0.2258
+   },
+   "2136": {
+    "n": 9,
+    "outlierShare": 0.2222
+   },
+   "2139": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2140": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2142": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2143": {
+    "n": 17,
+    "outlierShare": 0.2941
+   },
+   "2144": {
+    "n": 31,
+    "outlierShare": 0.0968
+   },
+   "2145": {
+    "n": 21,
+    "outlierShare": 0.4286
+   },
+   "2146": {
+    "n": 6,
+    "outlierShare": 0.3333
+   },
+   "2148": {
+    "n": 13,
+    "outlierShare": 0.2308
+   },
+   "2151": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2152": {
+    "n": 16,
+    "outlierShare": 0.0625
+   },
+   "2154": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "2155": {
+    "n": 18,
+    "outlierShare": 0.2222
+   },
+   "2156": {
+    "n": 23,
+    "outlierShare": 0.2174
+   },
+   "2159": {
+    "n": 24,
+    "outlierShare": 0.25
+   },
+   "2160": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "2161": {
+    "n": 36,
+    "outlierShare": 0.1389
+   },
+   "2163": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "2164": {
+    "n": 41,
+    "outlierShare": 0.3171
+   },
+   "2166": {
+    "n": 11,
+    "outlierShare": 0.2727
+   },
+   "2167": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "2168": {
+    "n": 4,
+    "outlierShare": 0.5
+   },
+   "2171": {
+    "n": 30,
+    "outlierShare": 0.3
+   },
+   "2172": {
+    "n": 8,
+    "outlierShare": 0.375
+   },
+   "2176": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2177": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "2178": {
+    "n": 4,
+    "outlierShare": 0.5
+   },
+   "2180": {
+    "n": 14,
+    "outlierShare": 0.5
+   },
+   "2183": {
+    "n": 6,
+    "outlierShare": 0.6667
+   },
+   "2184": {
+    "n": 34,
+    "outlierShare": 0.6765
+   },
+   "2186": {
+    "n": 45,
+    "outlierShare": 0.6889
+   },
+   "2187": {
+    "n": 34,
+    "outlierShare": 0.4412
+   },
+   "2190": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "2191": {
+    "n": 4,
+    "outlierShare": 0.75
+   },
+   "2194": {
+    "n": 21,
+    "outlierShare": 0.5238
+   },
+   "2195": {
+    "n": 16,
+    "outlierShare": 0.375
+   },
+   "2200": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "2208": {
+    "n": 70,
+    "outlierShare": 0.5714
+   },
+   "2209": {
+    "n": 4,
+    "outlierShare": 0.75
+   },
+   "2210": {
+    "n": 26,
+    "outlierShare": 0.5385
+   },
+   "2212": {
+    "n": 31,
+    "outlierShare": 0.6774
+   },
+   "2216": {
+    "n": 19,
+    "outlierShare": 0.5263
+   },
+   "2218": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2219": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "2220": {
+    "n": 8,
+    "outlierShare": 0.5
+   },
+   "2223": {
+    "n": 31,
+    "outlierShare": 0.6452
+   },
+   "2224": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "2225": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2228": {
+    "n": 2,
+    "outlierShare": 1.0
+   },
+   "2231": {
+    "n": 10,
+    "outlierShare": 0.4
+   },
+   "2233": {
+    "n": 3,
+    "outlierShare": 1.0
+   },
+   "2235": {
+    "n": 29,
+    "outlierShare": 0.6552
+   },
+   "2240": {
+    "n": 20,
+    "outlierShare": 0.0
+   },
+   "2241": {
+    "n": 16,
+    "outlierShare": 0.0625
+   },
+   "2242": {
+    "n": 7,
+    "outlierShare": 0.4286
+   },
+   "2244": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "2247": {
+    "n": 14,
+    "outlierShare": 0.1429
+   },
+   "2248": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "2250": {
+    "n": 13,
+    "outlierShare": 0.1538
+   },
+   "2251": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2254": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2255": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2258": {
+    "n": 6,
+    "outlierShare": 0.1667
+   },
+   "2259": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "2262": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "2264": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2265": {
+    "n": 147,
+    "outlierShare": 0.1769
+   },
+   "2266": {
+    "n": 112,
+    "outlierShare": 0.1786
+   },
+   "2271": {
+    "n": 9,
+    "outlierShare": 0.3333
+   },
+   "2272": {
+    "n": 9,
+    "outlierShare": 0.3333
+   },
+   "2273": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "2276": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2277": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2279": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2280": {
+    "n": 9,
+    "outlierShare": 0.3333
+   },
+   "2282": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "2283": {
+    "n": 16,
+    "outlierShare": 0.125
+   },
+   "2284": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "2287": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2288": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2289": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "2292": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "2295": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2299": {
+    "n": 13,
+    "outlierShare": 0.0769
+   },
+   "2304": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "2305": {
+    "n": 21,
+    "outlierShare": 0.2381
+   },
+   "2306": {
+    "n": 3,
+    "outlierShare": 0.6667
+   },
+   "2308": {
+    "n": 36,
+    "outlierShare": 0.3611
+   },
+   "2309": {
+    "n": 13,
+    "outlierShare": 0.4615
+   },
+   "2311": {
+    "n": 10,
+    "outlierShare": 0.4
+   },
+   "2312": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "2314": {
+    "n": 15,
+    "outlierShare": 0.3333
+   },
+   "2317": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2318": {
+    "n": 8,
+    "outlierShare": 0.375
+   },
+   "2319": {
+    "n": 5,
+    "outlierShare": 0.0
+   },
+   "2322": {
+    "n": 3,
+    "outlierShare": 0.3333
+   },
+   "2323": {
+    "n": 43,
+    "outlierShare": 0.2558
+   },
+   "2328": {
+    "n": 33,
+    "outlierShare": 0.1818
+   },
+   "2331": {
+    "n": 21,
+    "outlierShare": 0.2857
+   },
+   "2332": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "2334": {
+    "n": 5,
+    "outlierShare": 0.6
+   },
+   "2335": {
+    "n": 28,
+    "outlierShare": 0.4643
+   },
+   "2336": {
+    "n": 22,
+    "outlierShare": 0.3182
+   },
+   "2337": {
+    "n": 5,
+    "outlierShare": 0.6
+   },
+   "2338": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "2340": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "2343": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2344": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2346": {
+    "n": 16,
+    "outlierShare": 0.1875
+   },
+   "2347": {
+    "n": 59,
+    "outlierShare": 0.4068
+   },
+   "2348": {
+    "n": 11,
+    "outlierShare": 0.2727
+   },
+   "2351": {
+    "n": 8,
+    "outlierShare": 0.0
+   },
+   "2352": {
+    "n": 46,
+    "outlierShare": 0.4348
+   },
+   "2353": {
+    "n": 39,
+    "outlierShare": 0.3077
+   },
+   "2356": {
+    "n": 60,
+    "outlierShare": 0.3833
+   },
+   "2358": {
+    "n": 21,
+    "outlierShare": 0.2381
+   },
+   "2359": {
+    "n": 5,
+    "outlierShare": 0.4
+   },
+   "2360": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "2363": {
+    "n": 26,
+    "outlierShare": 0.4231
+   },
+   "2364": {
+    "n": 7,
+    "outlierShare": 0.5714
+   },
+   "2368": {
+    "n": 6,
+    "outlierShare": 0.3333
+   },
+   "2369": {
+    "n": 27,
+    "outlierShare": 0.1852
+   },
+   "2370": {
+    "n": 12,
+    "outlierShare": 0.25
+   },
+   "2372": {
+    "n": 11,
+    "outlierShare": 0.2727
+   },
+   "2375": {
+    "n": 23,
+    "outlierShare": 0.1739
+   },
+   "2376": {
+    "n": 47,
+    "outlierShare": 0.2553
+   },
+   "2378": {
+    "n": 67,
+    "outlierShare": 0.1343
+   },
+   "2379": {
+    "n": 72,
+    "outlierShare": 0.0833
+   },
+   "2382": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "2383": {
+    "n": 27,
+    "outlierShare": 0.0741
+   },
+   "2386": {
+    "n": 55,
+    "outlierShare": 0.1273
+   },
+   "2387": {
+    "n": 13,
+    "outlierShare": 0.0769
+   },
+   "2392": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2399": {
+    "n": 7,
+    "outlierShare": 0.2857
+   },
+   "2400": {
+    "n": 5,
+    "outlierShare": 0.4
+   },
+   "2401": {
+    "n": 18,
+    "outlierShare": 0.0556
+   },
+   "2402": {
+    "n": 29,
+    "outlierShare": 0.1724
+   },
+   "2404": {
+    "n": 53,
+    "outlierShare": 0.1509
+   },
+   "2408": {
+    "n": 25,
+    "outlierShare": 0.08
+   },
+   "2410": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2412": {
+    "n": 7,
+    "outlierShare": 0.0
+   },
+   "2415": {
+    "n": 57,
+    "outlierShare": 0.1228
+   },
+   "2416": {
+    "n": 3,
+    "outlierShare": 0.6667
+   },
+   "2417": {
+    "n": 16,
+    "outlierShare": 0.125
+   },
+   "2422": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2425": {
+    "n": 12,
+    "outlierShare": 0.3333
+   },
+   "2427": {
+    "n": 31,
+    "outlierShare": 0.3226
+   },
+   "2432": {
+    "n": 11,
+    "outlierShare": 0.1818
+   },
+   "2433": {
+    "n": 25,
+    "outlierShare": 0.28
+   },
+   "2436": {
+    "n": 28,
+    "outlierShare": 0.1786
+   },
+   "2439": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2440": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "2442": {
+    "n": 35,
+    "outlierShare": 0.1143
+   },
+   "2446": {
+    "n": 12,
+    "outlierShare": 0.0
+   },
+   "2450": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2451": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "2456": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2463": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2464": {
+    "n": 15,
+    "outlierShare": 0.0
+   },
+   "2465": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "2466": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "2472": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2474": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "2475": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2476": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2479": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2480": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "2484": {
+    "n": 2,
+    "outlierShare": 0.0
+   },
+   "2486": {
+    "n": 11,
+    "outlierShare": 0.0909
+   },
+   "2491": {
+    "n": 7,
+    "outlierShare": 0.1429
+   },
+   "2496": {
+    "n": 13,
+    "outlierShare": 0.0769
+   },
+   "2497": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "2498": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "2500": {
+    "n": 5,
+    "outlierShare": 0.2
+   },
+   "2501": {
+    "n": 18,
+    "outlierShare": 0.2222
+   },
+   "2503": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "2504": {
+    "n": 10,
+    "outlierShare": 0.1
+   },
+   "2506": {
+    "n": 18,
+    "outlierShare": 0.0556
+   },
+   "2507": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2510": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2511": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2514": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2515": {
+    "n": 23,
+    "outlierShare": 0.3043
+   },
+   "2520": {
+    "n": 4,
+    "outlierShare": 0.5
+   },
+   "2526": {
+    "n": 1,
+    "outlierShare": 1.0
+   },
+   "2527": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "2528": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2529": {
+    "n": 3,
+    "outlierShare": 0.6667
+   },
+   "2530": {
+    "n": 11,
+    "outlierShare": 0.0
+   },
+   "2532": {
+    "n": 2,
+    "outlierShare": 1.0
+   },
+   "2535": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "2536": {
+    "n": 2,
+    "outlierShare": 0.5
+   },
+   "2538": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2539": {
+    "n": 10,
+    "outlierShare": 0.0
+   },
+   "2540": {
+    "n": 9,
+    "outlierShare": 0.0
+   },
+   "2543": {
+    "n": 6,
+    "outlierShare": 0.0
+   },
+   "2545": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2548": {
+    "n": 3,
+    "outlierShare": 0.0
+   },
+   "2550": {
+    "n": 4,
+    "outlierShare": 0.0
+   },
+   "2551": {
+    "n": 1,
+    "outlierShare": 0.0
+   },
+   "2555": {
+    "n": 12,
+    "outlierShare": 0.5833
+   }
+  }
+ },
+ "codebooksNote": "centroids are not stored; the cell table plus semantic_ids.py reproduce the model from the index and seed",
+ "attempts": [
+  {
+   "tag": "attempt1",
+   "rule": "hard backoff: c1c2 cell when it holds 20+ training docs, else c1",
+   "pooled": 0.5583610369968753,
+   "within": 0.571070661107235,
+   "scoredBy": {
+    "c1c2": 1481,
+    "c1": 2388,
+    "base": 0
+   },
+   "pass": false
+  },
+  {
+   "tag": "attempt2",
+   "rule": "c1c2 share shrunk toward the c1 share with 20 pseudo-documents",
+   "pooled": 0.5707632418755737,
+   "within": 0.5709396411303389,
+   "scoredBy": {
+    "c1c2": 3762,
+    "c1": 107,
+    "base": 0
+   },
+   "pass": false
+  }
+ ],
+ "status": "Gate S failed on both allowed attempts; recorded, not served"
+}

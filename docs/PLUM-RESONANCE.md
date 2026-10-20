@@ -32,8 +32,10 @@ The "before" column was snapshotted at 2026-10-20 07:00 UTC, before any part of 
 | Semantic-ID uniqueness, 40/128/128 and 40/256/256 | did not exist | 0.452 and 0.541 | new | same, sweep only; not written |
 | Semantic-ID neighbor agreement with raw cosine (share of raw top-10 sharing the code) | did not exist | c1 0.811 (chance 0.035), c1c2 0.384 (0.0024), full ID 0.130 (0.0003) | new | 40/64/64; recall@10 on reconstructed vectors 0.193; mean cosine raw to reconstructed 0.925 |
 | Semantic-ID level 1 against the cluster map's k=40 | did not exist | NMI 0.862, adjusted Rand 0.717 | new | the map clusters PCA-50 of the same index with its own seed |
-| Behavioral-neighbor coverage, any signal | did not exist | 8,924 of 18,544 settled shorts (48.1%); 6,988 of 14,674 training shorts have a training-side neighbor | new | `co-occurrence.json`, cap 10 per signal |
-| (a) co-outlier coverage | did not exist | 2,731 shorts, 58,307 pairs | new | same channel, within 45 days, both outliers; 2,760 outliers in all |
+| PAX2 Semantic-ID Model, Gate S attempt 1, pooled / within AUC | did not exist | 0.5584 / 0.5711, failed (bar 0.5775) | −0.0192 vs stock | `semantic-id-model.json`; codebooks fit on training docs only; c1c2 cell share, hard backoff to c1 under 20 docs (2,388 of 3,869 backed off) |
+| PAX2 Semantic-ID Model, Gate S attempt 2, pooled / within AUC | did not exist | 0.5708 / 0.5709, failed | −0.0068 vs stock | same codebooks; c1c2 share shrunk toward c1 with 20 pseudo-docs; the last attempt the brief allows |
+| Behavioral-neighbor coverage, any signal | did not exist | 8,924 of 18,544 settled shorts (48.1%); 7,005 of 14,719 training shorts have a training-side neighbor | new | `co-occurrence.json`, cap 10 per signal |
+| (a) co-outlier coverage | did not exist | 2,731 shorts, 58,307 pairs; 2,089 training shorts with a training-side neighbor | new | same channel, within 45 days, both outliers; 2,760 outliers in all |
 | (b) co-surge coverage | did not exist | 8,809 shorts, 31,741 pairs (9,532 cross-channel; 255 with both crossings measured) | new | same ISO week at the 1x line, same k=40 cluster; 99 crossings measured by the poller, 9,121 dated by publish (proxy) |
 | (c) co-commenter coverage | did not exist | 0 | new | no commenter identities stored in PAX2 |
 | Gate B: held-out same-channel pair ranking by cosine to known outliers | did not exist | pending | | Part 3, pre-registered below |
@@ -44,4 +46,10 @@ Level 1 takes 82% of the embedding energy (mean squared residual 1.0 → 0.184);
 
 ## Part 2 — the behavioral table (`scripts/plum/co-occurrence.mjs`, Mac, no spend)
 
-The settled set read 18,544 rows tonight (the brief's 18,531 was an earlier training-set build). Co-surge is mostly a proxy: the poller has read 858 shorts over 12 days, and only 99 of them crossed their channel median inside 72 hours; the other 9,121 crossings are dated by publish week because the catalog's settled ratio says a short crossed, not when. Co-commenter is empty: PAX2 has never stored who commented. Held-out channels carry 3,870 settled shorts; no pair touching one is used in training.
+The settled set read 18,544 rows tonight (the brief's 18,531 was an earlier training-set build). Co-surge is mostly a proxy: the poller has read 858 shorts over 12 days, and only 99 of them crossed their channel median inside 72 hours; the other 9,121 crossings are dated by publish week because the catalog's settled ratio says a short crossed, not when. Co-commenter is empty: PAX2 has never stored who commented. Held-out channels carry 3,825 settled shorts under the pinned holdout; no pair touching one is used in training.
+
+The holdout is pinned at `data/generated/model/plum/holdout.json` (from git 2910dbb, the one run 20261019-094112-train was judged on): window A's corpus rebuild at 07:06 UTC rewrote `encoder/holdout.json`, moving 89 ids, after this table was first built against it. Rebuilt on the pinned file; Gate B's before numbers reproduced exactly.
+
+## Part 1b — the PAX2 Semantic-ID Model (`scripts/plum/semantic_id_model.py`, Mac, no spend)
+
+The quantizer as a predictor: a held-out short scores the outlier share of the training shorts in its (c1, c2) cell. Codebooks are fit on the 14,586 training shorts only; the 3,869 held-out shorts are assigned to them. Gate S (pooled AUC above stock bge-m3's 0.5775) failed both allowed attempts, 0.5584 then 0.5708. A 40-way, then 64-way cell table carries less than the 20 nearest neighbors do: the encoder's own kNN score reads 0.6080 on the same shorts, stock's 0.5775. Within-channel, both attempts (0.571) sit between stock (0.582) and below the encoder (0.604). The model is recorded and not served.

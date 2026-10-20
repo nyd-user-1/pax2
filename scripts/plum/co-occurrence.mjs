@@ -14,10 +14,12 @@
 //                    app reads YouTube comment threads live for display only. Coverage 0, said plainly.
 //
 // Each short keeps at most CAP neighbors per signal, nearest in publish time first. The held-out channels
-// (data/generated/model/encoder/holdout.json) are marked; a pair touching one is never a training pair.
+// (data/generated/model/plum/holdout.json: the holdout run 20261019-094112-train was judged on, pinned from
+// git 2910dbb because corpus rebuilds rewrite encoder/holdout.json) are marked; a pair touching one is
+// never a training pair.
 //
 // Usage: node scripts/plum/co-occurrence.mjs
-// Reads  data/generated/model/training-set.jsonl, velocity-features.json, encoder/holdout.json,
+// Reads  data/generated/model/training-set.jsonl, velocity-features.json, plum/holdout.json,
 //        data/plum/map.json (aws s3 cp from the index prefix)
 // Writes data/generated/model/co-occurrence.json
 import fs from "node:fs"
@@ -36,17 +38,17 @@ const rows = fs
   .filter(Boolean)
   .map((l) => JSON.parse(l))
 const settled = rows.filter((r) => r.group !== "paid-ad" && r.ratio != null && r.channelId && r.published)
-const held = new Set(read("data/generated/model/encoder/holdout.json").ids)
+const held = new Set(read("data/generated/model/plum/holdout.json").ids)
 const heldChannels = new Set(settled.filter((r) => held.has(r.id)).map((r) => r.channelId))
 const vel = read("data/generated/model/velocity-features.json").byId
 const map = read("data/plum/map.json")
 const cluster = new Map(map.points.map((p) => [p.id, p.cluster]))
 const t = (r) => new Date(r.published).getTime()
 
-const nbrs = new Map() // id -> { a: Set, b: Set }
+const nbrs = new Map() // id -> { a, b, bm: co-surge pairs whose two crossings are both measured }
 const add = (sig, x, y) => {
   for (const [p, q] of [[x, y], [y, x]]) {
-    if (!nbrs.has(p.id)) nbrs.set(p.id, { a: [], b: [] })
+    if (!nbrs.has(p.id)) nbrs.set(p.id, { a: [], b: [], bm: [] })
     nbrs.get(p.id)[sig].push({ id: q.id, dt: Math.abs(t(p) - t(q)) })
   }
 }
@@ -110,20 +112,23 @@ for (const vids of buckets.values())
     for (let j = i + 1; j < vids.length; j++) {
       add("b", vids[i], vids[j])
       bPairs++
-      if (crossing.get(vids[i].id).measured && crossing.get(vids[j].id).measured) bPairsMeasured++
+      if (crossing.get(vids[i].id).measured && crossing.get(vids[j].id).measured) {
+        add("bm", vids[i], vids[j])
+        bPairsMeasured++
+      }
       if (vids[i].channelId !== vids[j].channelId) bCrossChannel++
     }
 
 // Cap, nearest in publish time first, and the coverage counts.
 const out = {}
-const cov = { a: 0, b: 0, any: 0, aTrain: 0, bTrain: 0, anyTrain: 0, aHeld: 0, bHeld: 0 }
-const kept = { a: 0, b: 0 }
+const cov = { a: 0, b: 0, bm: 0, any: 0, aTrain: 0, bTrain: 0, bmTrain: 0, anyTrain: 0, aHeld: 0, bHeld: 0, bmHeld: 0 }
+const kept = { a: 0, b: 0, bm: 0 }
 for (const r of settled) {
   const n = nbrs.get(r.id)
   if (!n) continue
   const isHeld = held.has(r.id)
   const e = {}
-  for (const s of ["a", "b"]) {
+  for (const s of ["a", "b", "bm"]) {
     if (!n[s].length) continue
     const list = n[s].sort((x, y) => x.dt - y.dt || x.id.localeCompare(y.id)).slice(0, CAP).map((x) => x.id)
     e[s] = list
@@ -173,6 +178,7 @@ const result = {
       trainingShortsWithTrainingNeighbor: cov.bTrain,
       heldOutShortsWithNeighbor: cov.bHeld,
       neighborsKept: kept.b,
+      measuredOnly: { shortsWithNeighbor: cov.bm, trainingShortsWithTrainingNeighbor: cov.bmTrain, heldOutShortsWithNeighbor: cov.bmHeld, neighborsKept: kept.bm, note: "bm in neighbors: the subset of b whose two crossings the poller measured" },
       caveat: "crossing date is measured only for poller-read shorts; elsewhere it is the publish date",
     },
     c: {
