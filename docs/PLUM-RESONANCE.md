@@ -38,7 +38,7 @@ The "before" column was snapshotted at 2026-10-20 07:00 UTC, before any part of 
 | (a) co-outlier coverage | did not exist | 2,731 shorts, 58,307 pairs; 2,089 training shorts with a training-side neighbor | new | same channel, within 45 days, both outliers; 2,760 outliers in all |
 | (b) co-surge coverage | did not exist | 8,809 shorts, 31,741 pairs (9,532 cross-channel; 255 with both crossings measured) | new | same ISO week at the 1x line, same k=40 cluster; 99 crossings measured by the poller, 9,121 dated by publish (proxy) |
 | (c) co-commenter coverage | did not exist | 0 | new | no commenter identities stored in PAX2 |
-| Gate B: held-out same-channel pair ranking by cosine to known outliers | did not exist | pending | | Part 3, pre-registered below |
+| Gate B: held-out same-channel pair ranking by cosine to known outliers | 0.5618 semantic encoder, 0.5311 stock (run 20261019-094112-train embeddings, measured 2026-10-20 07:15) | pending | | 13,983 pairs, 7 channels; pre-registered below |
 
 ## Part 1 — semantic IDs (`scripts/plum/semantic_ids.py`, Mac, 22 s, no spend)
 
@@ -52,4 +52,13 @@ The holdout is pinned at `data/generated/model/plum/holdout.json` (from git 2910
 
 ## Part 1b — the PAX2 Semantic-ID Model (`scripts/plum/semantic_id_model.py`, Mac, no spend)
 
-The quantizer as a predictor: a held-out short scores the outlier share of the training shorts in its (c1, c2) cell. Codebooks are fit on the 14,586 training shorts only; the 3,869 held-out shorts are assigned to them. Gate S (pooled AUC above stock bge-m3's 0.5775) failed both allowed attempts, 0.5584 then 0.5708. A 40-way, then 64-way cell table carries less than the 20 nearest neighbors do: the encoder's own kNN score reads 0.6080 on the same shorts, stock's 0.5775. Within-channel, both attempts (0.571) sit between stock (0.582) and below the encoder (0.604). The model is recorded and not served.
+The quantizer as a predictor: a held-out short scores the outlier share of the training shorts in its (c1, c2) cell. Codebooks are fit on the 14,586 training shorts only; the 3,869 held-out shorts are assigned to them. Gate S (pooled AUC above stock bge-m3's 0.5775) failed both allowed attempts, 0.5584 then 0.5708. A 40-way, then 64-way cell table carries less than the 20 nearest neighbors do: the encoder's own kNN score reads 0.6080 on the same shorts, stock's 0.5775. Within-channel, both attempts (0.571) sit below stock (0.582) and the encoder (0.604). The model is recorded and not served.
+
+## Part 3 — the resonance encoder, pre-registered before launch (07:15 UTC)
+
+Two arms, one g6e/g6 box (`scripts/plum/launch.sh`, `box.sh`, `con_pairs.py`), both on the pinned corpus and holdout of run 20261019-094112-train, so the co-occurrence term is the only change against the serving encoder. FlagEmbedding's loss is InfoNCE over each group and the batch; appending co-occurrence groups (anchor, up to 3 behavioral neighbors, 7 random training negatives) to the 14,573 semantic groups gives L = L_sem + λ·L_con.
+
+- **behavior**: co-outlier and poller-measured co-surge neighbors only; 2,116 groups, λ = 0.145.
+- **full**: the same anchors plus publish-week co-surge anchors to λ = 0.25 (3,643 groups). The arms differ by the proxy alone — the test of whether the proxy teaches behavior or only topic, in place of reading Gate B off a 400-document rehearsal, which holds one held-out channel.
+
+Gate E unchanged. **Gate B** (`scripts/plum/gate_b.py`): in each held-out channel, every outlier/non-outlier pair published within 45 days, scored by mean cosine to the 5 most similar of the channel's outliers published before both (at least 3 required); 13,983 pairs over 7 channels. Before: semantic encoder 0.5618, stock 0.5311 (delta +0.031, channel-block bootstrap 95% interval −0.003 to +0.060). Ships only if pooled Gate B is at least 0.01 above 0.5618 and Gate E passes; if both arms pass, the higher Gate B ships.
