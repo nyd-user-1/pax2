@@ -1,6 +1,6 @@
 # Handoff, overnight window A (the data chain), 2026-10-20
 
-Written 11:45 UTC while the chain still runs; updated as steps close. Brief: `docs/briefs/OVERNIGHT-A-DATA-CHAIN.md`. Every number is measured unless marked estimate. Nothing is pushed.
+Written 11:45 UTC, closed 13:30 UTC; nothing of this window is running. Brief: `docs/briefs/OVERNIGHT-A-DATA-CHAIN.md`. Every number is measured unless marked estimate. Nothing is pushed.
 
 ## Closed
 
@@ -14,10 +14,13 @@ Written 11:45 UTC while the chain still runs; updated as steps close. Brief: `do
   - Protocol: this run stands on the holdout split rebuilt 2026-10-20 07:06:11 UTC (same 10 channels, 3,870 shorts, sha 37a7d785383b); the passing 094112 run stood on the 2026-10-19 09:39 split (3,869 shorts). 89 ids moved (44 out, 45 in), so the two runs are not one series. Within each run, stock and encoder are scored on the identical holdout; the Mac rescore confirmed.
 - **Captions** (step 1): transcripts.json holds 14,632 with text (was 9,368); the training set's settled rows with a transcript of 10+ words went from 3,412 (v2) to 14,438.
 
-## Running at writing
+- **The full-corpus encoder retrain missed Gate E** (step 5, run 20261020-115427-train, 14,855 transcripts): pooled 0.5587 against stock 0.5464 (+0.0123), within +0.0088, reranker 0.5818; the Mac agrees on every arm, no held-out document in the 14,661 pairs. Same holdout ids as the 9,289-transcript run (rebuilt 11:54 UTC, corpus hash changed, ids unchanged), so the two read as one series: stock 0.582 to 0.546, encoder 0.602 to 0.559 as transcripts grew. 7,925 documents now hit the 1,200-character cap (5,107 before); transcript text crowds out title and description. A reading, not a tested cause; the next encoder run should change the corpus recipe, not add transcripts. No index, pointer or map rebuild; the 094112 encoder and Classifier v3 keep serving, and window B's conditional re-quantize does not fire.
+- **Fetching stopped at 11:5x UTC** by the models window, relaying your word that 14,438 transcripts is enough; this window confirmed the boxes were shutting down before launching the retrain. Media fleet and Whisper (steps 2 and 4) were not run; census resumes any day.
 
-- Captions retry fleets fleet-20261020-102620 (9 boxes, 3,803 ids that failed on a bot wall or HTTP 429; 3 boxes aborted on walled lines 1, 5, 9) and fleet-20261020-113016 (5 boxes on lines 2, 8, 11, 12, 13, the 1,268 ids those three never tried; line 2 has since walled). Watchdogs end them by 13:30 UTC.
-- Then: the media fleet with the remaining gap ids first, Whisper on the gaps (budget $3 hard stop), the full-corpus encoder retrain and the rebuilds if it passes.
+## Earlier in the night (superseded)
+
+- (At 11:45) Captions retry fleets fleet-20261020-102620 (9 boxes, 3,803 ids that failed on a bot wall or HTTP 429; 3 boxes aborted on walled lines 1, 5, 9) and fleet-20261020-113016 (5 boxes on lines 2, 8, 11, 12, 13, the 1,268 ids those three never tried; line 2 has since walled). Watchdogs end them by 13:30 UTC.
+- (At 11:45) The plan was then the media fleet, Whisper and the full-corpus retrain; the fetching was stopped, the retrain ran (above).
 
 ## What changed on the AWS side (for review)
 
@@ -34,10 +37,11 @@ Written 11:45 UTC while the chain still runs; updated as steps close. Brief: `do
 |---|---|---|
 | Encoder retrain 20261020-070703-train, g5.xlarge (no g6e capacity in any zone) | 07:07 to about 08:33 | about $1.43 |
 | Captions fleet 070525, 11 t3.micro | about 3 h each | about $0.35 |
-| Captions retries 102620 and 113016 | running; watchdogs cap $0.28 and $0.10 | at most $0.38 |
+| Captions retries 102620 and 113016 | 10:26 to about 11:55 and 11:30 to about 11:55, stopped | about $0.12 |
+| Full-corpus retrain 20261020-115427-train, g5.xlarge | 11:55 to about 13:23 | about $1.48 |
 | Classifier v3 and v3b, c7i.xlarge | about 5 min each | about $0.04 |
 | Neighbors test, c7i.large | about 5 min | about $0.01 |
-| **Total so far** | | **about $2.21 of the $8 ceiling** |
+| **Total** | | **about $3.43 of the $8 ceiling** |
 
 ## Yours
 

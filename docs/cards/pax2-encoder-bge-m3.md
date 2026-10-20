@@ -50,7 +50,7 @@ Gate E, pre-registered: pooled at least 0.02 above stock and within not below. P
 
 Earlier runs on fewer transcripts missed the gate: 35 transcripts (pooled +0.010) and 3,424 (+0.0198).
 
-A later run on more transcripts also missed it, so this model keeps serving: run 20261020-070703-train, 9,289 of 18,544 corpus documents with a transcript, scored on the holdout split rebuilt 2026-10-20 07:06 UTC (same 10 channels, 3,870 shorts, 89 ids moved against this card's split). Stock 0.582 pooled and 0.571 within; the retrained encoder 0.602 and 0.590 (+0.0198 and +0.0186). The box and the Mac agree on every arm. Its reranker scored 0.610 pooled, but a reranker ships only over an encoder that passed.
+A later run on more transcripts also missed it, so this model keeps serving: run 20261020-070703-train, 9,289 of 18,544 corpus documents with a transcript, scored on the holdout split rebuilt 2026-10-20 07:06 UTC (same 10 channels, 3,870 shorts, 89 ids moved against this card's split). Stock 0.582 pooled and 0.571 within; the retrained encoder 0.602 and 0.590 (+0.0198 and +0.0186). The box and the Mac agree on every arm. Its reranker scored 0.610 pooled, but a reranker ships only over an encoder that passed. The full-corpus run that followed (20261020-115427-train, 14,855 transcripts, the same 07:06 holdout ids) missed further: stock 0.546 and the encoder 0.559 pooled (+0.0123), within +0.0088, reranker 0.582. On the same split, more transcripts lowered both stock and the fine-tuned encoder; 7,925 documents now reach the 1,200-character cap against 5,107, so transcript text displaces title and description — a reading, not a tested cause.
 
 ## Caveats
 
