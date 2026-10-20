@@ -32,9 +32,16 @@ The "before" column was snapshotted at 2026-10-20 07:00 UTC, before any part of 
 | Semantic-ID uniqueness, 40/128/128 and 40/256/256 | did not exist | 0.452 and 0.541 | new | same, sweep only; not written |
 | Semantic-ID neighbor agreement with raw cosine (share of raw top-10 sharing the code) | did not exist | c1 0.811 (chance 0.035), c1c2 0.384 (0.0024), full ID 0.130 (0.0003) | new | 40/64/64; recall@10 on reconstructed vectors 0.193; mean cosine raw to reconstructed 0.925 |
 | Semantic-ID level 1 against the cluster map's k=40 | did not exist | NMI 0.862, adjusted Rand 0.717 | new | the map clusters PCA-50 of the same index with its own seed |
-| Behavioral-neighbor coverage | did not exist | pending | | Part 2 |
+| Behavioral-neighbor coverage, any signal | did not exist | 8,924 of 18,544 settled shorts (48.1%); 6,988 of 14,674 training shorts have a training-side neighbor | new | `co-occurrence.json`, cap 10 per signal |
+| (a) co-outlier coverage | did not exist | 2,731 shorts, 58,307 pairs | new | same channel, within 45 days, both outliers; 2,760 outliers in all |
+| (b) co-surge coverage | did not exist | 8,809 shorts, 31,741 pairs (9,532 cross-channel; 255 with both crossings measured) | new | same ISO week at the 1x line, same k=40 cluster; 99 crossings measured by the poller, 9,121 dated by publish (proxy) |
+| (c) co-commenter coverage | did not exist | 0 | new | no commenter identities stored in PAX2 |
 | Gate B: held-out same-channel pair ranking by cosine to known outliers | did not exist | pending | | Part 3, pre-registered below |
 
 ## Part 1 — semantic IDs (`scripts/plum/semantic_ids.py`, Mac, 22 s, no spend)
 
 Level 1 takes 82% of the embedding energy (mean squared residual 1.0 → 0.184); levels 2 and 3 take another 2.5 and 1.5 points (→ 0.159 → 0.144). The space is tightly packed: the median short's nearest neighbor sits at cosine 0.92, 3,657 shorts have a neighbor at 0.95 or above, and only 816 at 0.98 or above (`scripts/plum/dupes.py`) — so near-twin texts explain little of the 69% that share an ID; the residual codebooks do. PLUM reports 91.8–96.7% uniqueness on its own learned quantizer and corpus; the two are not comparable numbers, and this one is the floor later versions answer to.
+
+## Part 2 — the behavioral table (`scripts/plum/co-occurrence.mjs`, Mac, no spend)
+
+The settled set read 18,544 rows tonight (the brief's 18,531 was an earlier training-set build). Co-surge is mostly a proxy: the poller has read 858 shorts over 12 days, and only 99 of them crossed their channel median inside 72 hours; the other 9,121 crossings are dated by publish week because the catalog's settled ratio says a short crossed, not when. Co-commenter is empty: PAX2 has never stored who commented. Held-out channels carry 3,870 settled shorts; no pair touching one is used in training.
