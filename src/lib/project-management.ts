@@ -48,7 +48,7 @@ export const REQUIREMENTS: Item[] = [
   { id: "3", name: "3. A pre-release prediction", start: "2026-10-17", end: "2026-11-07", progress: 85, next: "The embedding model passed its gate at 5,232 transcripts (0.608 against stock 0.578); its neighbors become the forecast feature next, and the fleet is landing audio and frames.",
     note: "The chance of a Hit and the views to expect are on the Scored tab and in the findings email with the model's strength stated. PAX2 Classifier v2 trained 2026-10-19 on 3,424 transcripts and failed Gate C: the words, read as a linear model reads them, added nothing to the title, length and posting time (pooled AUC 0.597 against 0.604), so the app keeps v1 by rule.",
     steps: [
-      { what: "PAX2 Encoder passed Gate E 2026-10-19 on 5,232 Whisper-backed transcripts ($1.40 measured); its neighbors become a forecast feature.", share: 40, effort: "half a day of wiring" },
+      { what: "PAX2 Classifier v3 reads each original's PAX2 Encoder embedding with its transcript (Gate C passed 2026-10-20, 0.648 on held-out channels); the forecast uses it once an upload's neighbors step has run.", share: 40, effort: "done 2026-10-20" },
       { what: "Audio and frame features; the fleet is landing the catalog's files this morning.", share: 40, effort: "a measurement run after the fleet" },
       { what: "The forecast at hour 1, 3 and 6 after publish, the velocity model's call, shown on the video page beside the pre-release number.", share: 20, effort: "half a day, no spend" },
     ] },
@@ -112,8 +112,8 @@ const MODEL_PLAN: Record<string, Plan> = {
     value: "The pre-release number on the Scored tab and in the findings email.",
     base: "from scratch", tags: ["Tabular classification"],
     steps: [
-    { what: "v2 with transcript features from the caption run; its chain is running and launches the box itself when the priority families land.", share: 62, effort: "automatic, about 17:00 UTC on 2026-10-18; about 5 cents" },
-    { what: "Audio and frame features once files exist.", share: 38, effort: "after the proxy" },
+    { what: "v3 passed Gate C 2026-10-20: 14,438 transcripts and 32 PAX2 Encoder components, 0.648 AUC on the encoder's 10 held-out channels against the metadata arm's 0.596 on the same rows, within-channel 0.630, top-decile lift 2.03x; serving beside each original's embedding, published private.", share: 62, effort: "done 2026-10-20, about 2 cents" },
+    { what: "v3b with composition failed Gate C (0.589): media features exist only on the label-picked pair set. Composition waits on media for the whole catalog.", share: 38, effort: "after the media fleet" },
   ] },
   "m-headline": { start: "2026-10-17", end: "2026-11-07", importance: 3, utility: 3, ease: 4,
     func: "Scores a headline on its own; two scores pick the stronger title.",

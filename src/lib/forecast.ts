@@ -1,9 +1,11 @@
 import ratios from "../../data/generated/model/outcome-ratios.json"
 import model from "../../data/generated/model/var-model.json"
 import modelV2 from "../../data/generated/model/var-model-v2.json"
+import modelV3 from "../../data/generated/model/var-model-v3.json"
 import lift from "../../data/velocity/metadata-lift.json"
 import { transcriptFeatures, type Vocabulary } from "@/lib/transcript-features"
 import { extract, familyOf, type VideoInput } from "@/lib/video-features"
+import type { Embedding } from "@/lib/originals"
 
 // The pre-publish forecast: before a video is posted, how likely it is to be pushed past its
 // channel's median (the breakout label on /outliers), from PAX2 Classifier
@@ -37,16 +39,33 @@ const M = MODELS.metadata
 // A placeholder until the v2 run lands: { status, gates: { transcript: { passed: false } } }.
 type ModelsV2 = { builtAt?: string; transcript?: Model & { transcriptFeatures: { vocab: Vocabulary } }; gates: { transcript: { passed: boolean } } }
 const V2 = modelV2 as unknown as ModelsV2
+// PAX2 Classifier v3 (data/generated/model/var-model-v3.json, scripts/classifier/train_v3.py): v2's transcript
+// features plus 32 principal components of the PAX2 Encoder embedding. Its strength is read on the
+// encoder's held-out channels only (the encoder trained on the label everywhere else), so that is the
+// number it reports. It answers only beside an embedding from the index run it was fit on.
+type ModelV3 = Model & {
+  transcriptFeatures: { vocab: Vocabulary }
+  embedding: { components: number; mean: number[]; basis: number[][]; indexRun: string }
+  metrics: Model["metrics"] & { encoderHeldOut: { auc: number; withinChannelAuc: number | null; topDecileLift: number } }
+}
+type ModelsV3 = { builtAt: string; candidate: ModelV3; gates: { embedding: { passed: boolean } } }
+const V3 = modelV3 as unknown as ModelsV3
 const RATIOS = ratios as { hit: { n: number; medianRatio: number }; rest: { n: number; medianRatio: number } }
 
-export type ModelKind = "metadata" | "image" | "transcript"
+export type ModelKind = "metadata" | "image" | "transcript" | "embedding"
 
 /** A thumbnail's PAX2 Vision Encoder features, as scripts/rig/encode_images.py computes them. */
 export type ImageFeatures = { mem: number | null; bright: number; contrast: number; color: number; pca: number[] }
 
-/** The model a forecast reads: the transcript model when a transcript is supplied and Gate C passed,
- *  else the image model when image features are supplied and its gate passed, else the metadata model. */
-export function modelFor(image?: ImageFeatures | null, transcript?: string | null): { model: Model; kind: ModelKind; builtAt: string } {
+const v3Fits = (embedding?: Embedding | null) =>
+  !!embedding && V3.gates.embedding.passed && embedding.run === V3.candidate.embedding.indexRun && embedding.vector.length === V3.candidate.embedding.mean.length
+
+/** The model a forecast reads: v3's transcript-and-embedding model when a transcript and an embedding from
+ *  its index run are supplied and its Gate C passed; else the transcript model when a transcript is
+ *  supplied and v2's Gate C passed; else the image model when image features are supplied and its gate
+ *  passed; else the metadata model. */
+export function modelFor(image?: ImageFeatures | null, transcript?: string | null, embedding?: Embedding | null): { model: Model; kind: ModelKind; builtAt: string } {
+  if (transcript?.trim() && v3Fits(embedding)) return { model: V3.candidate, kind: "embedding", builtAt: V3.builtAt }
   if (transcript?.trim() && V2.gates.transcript.passed && V2.transcript) return { model: V2.transcript, kind: "transcript", builtAt: V2.builtAt ?? MODELS.builtAt }
   return image && MODELS.gates.image.passed ? { model: MODELS.image, kind: "image", builtAt: MODELS.builtAt } : { model: M, kind: "metadata", builtAt: MODELS.builtAt }
 }
@@ -81,10 +100,24 @@ export type Forecast = {
 
 const sigmoid = (z: number) => 1 / (1 + Math.exp(-z))
 
-export function forecast(input: VideoInput, image?: ImageFeatures | null, transcript?: string | null): Forecast {
-  const { model: Mx, kind, builtAt } = modelFor(image, transcript)
+/** An embedding projected onto v3's principal components, as train_v3.py projected the index. */
+function embeddingX(vector: number[]): Record<string, number> {
+  const { mean, basis } = V3.candidate.embedding
+  const x: Record<string, number> = { noEmbedding: 0 }
+  basis.forEach((row, j) => {
+    let z = 0
+    for (let i = 0; i < row.length; i++) z += (vector[i] - mean[i]) * row[i]
+    x[`emb${j}`] = z
+  })
+  return x
+}
+
+export function forecast(input: VideoInput, image?: ImageFeatures | null, transcript?: string | null, embedding?: Embedding | null): Forecast {
+  const { model: Mx, kind, builtAt } = modelFor(image, transcript, embedding)
   const x =
-    kind === "transcript" && V2.transcript
+    kind === "embedding" && embedding
+      ? { ...extract(input), ...transcriptFeatures({ text: transcript ?? null, title: input.title, durationSec: input.durationSec }, V3.candidate.transcriptFeatures.vocab), ...embeddingX(embedding.vector) }
+      : kind === "transcript" && V2.transcript
       ? { ...extract(input), ...transcriptFeatures({ text: transcript ?? null, title: input.title, durationSec: input.durationSec }, V2.transcript.transcriptFeatures.vocab) }
       : kind === "image" && image
         ? { ...extract(input), ...imageX(image) }
@@ -105,7 +138,10 @@ export function forecast(input: VideoInput, image?: ImageFeatures | null, transc
     anchor: { median: input.channelMedian, breakoutViews: input.channelMedian ? Math.round(input.channelMedian * 3) : null },
     expected: input.channelMedian ? { views: Math.round(input.channelMedian * (p * hit.medianRatio + (1 - p) * rest.medianRatio)), hitRatio: hit.medianRatio, restRatio: rest.medianRatio } : null,
     contributions: contributions.filter((c) => Math.abs(c.pull) > 1e-9).sort((a, b) => Math.abs(b.pull) - Math.abs(a.pull)),
-    strength: { auc: Mx.metrics.leaveOneChannelOut.auc, withinChannelAuc: Mx.metrics.leaveOneChannelOut.withinChannelAuc, topDecileLift: Mx.metrics.leaveOneChannelOut.topDecileLift, familyAuc: perFamily?.auc ?? null, n: Mx.n, version: Mx.version, builtAt },
+    strength:
+      kind === "embedding"
+        ? { auc: V3.candidate.metrics.encoderHeldOut.auc, withinChannelAuc: V3.candidate.metrics.encoderHeldOut.withinChannelAuc, topDecileLift: V3.candidate.metrics.encoderHeldOut.topDecileLift, familyAuc: null, n: Mx.n, version: Mx.version, builtAt }
+        : { auc: Mx.metrics.leaveOneChannelOut.auc, withinChannelAuc: Mx.metrics.leaveOneChannelOut.withinChannelAuc, topDecileLift: Mx.metrics.leaveOneChannelOut.topDecileLift, familyAuc: perFamily?.auc ?? null, n: Mx.n, version: Mx.version, builtAt },
     model: kind,
   }
 }

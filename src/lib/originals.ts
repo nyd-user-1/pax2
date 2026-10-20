@@ -178,9 +178,24 @@ export function latestAnalysis(evs: OriginalEvent[]): Analysis | null {
 }
 
 /** A video that was re-recorded or enhanced points at the version that replaced it. */
-export type OriginalRow = Original & { stage: Stage; events: OriginalEvent[]; evaluation: Evaluation | null; analysis: Analysis | null; replacedBy: string | null }
+export type OriginalRow = Original & { stage: Stage; events: OriginalEvent[]; evaluation: Evaluation | null; analysis: Analysis | null; embedding: Embedding | null; replacedBy: string | null }
 
-const rowOf = (o: Original, evs: OriginalEvent[]): OriginalRow => ({ ...o, stage: stageOf(evs), events: evs, evaluation: latestEvaluation(evs), analysis: latestAnalysis(evs), replacedBy: evs.filter((e) => e.kind === "replaced").at(-1)?.child ?? null })
+/** The PAX2 Encoder embedding of the original's text in the corpus recipe, from the latest neighbors event
+ *  (scripts/rig/encoder_neighbors.py), with the index run it came from; null before one carries it. */
+export type Embedding = { run: string; vector: number[] }
+export function latestEmbedding(evs: OriginalEvent[]): Embedding | null {
+  const e = evs.filter((x) => (x.kind as string) === "neighbors" && typeof x.embedding === "string").at(-1)
+  const run = e?.run
+  if (!e || typeof run !== "string") return null
+  try {
+    const vector = JSON.parse(e.embedding as string) as number[]
+    return Array.isArray(vector) && vector.length > 0 ? { run, vector } : null
+  } catch {
+    return null
+  }
+}
+
+const rowOf = (o: Original, evs: OriginalEvent[]): OriginalRow => ({ ...o, stage: stageOf(evs), events: evs, evaluation: latestEvaluation(evs), analysis: latestAnalysis(evs), embedding: latestEmbedding(evs), replacedBy: evs.filter((e) => e.kind === "replaced").at(-1)?.child ?? null })
 
 /** Every original with its stage, newest first; owners see their own, admins see all — except the
  *  demo admin, whose "all" is the demo accounts' videos only, so a public demo never shows a real

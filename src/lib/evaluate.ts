@@ -6,7 +6,7 @@ import patterns from "../../data/generated/swayable-patterns.json"
 import { forecast, recommendations, type VideoInput } from "@/lib/forecast"
 import { titlePatterns } from "@/lib/headline-patterns"
 import { scoreHeadlinesV1 } from "@/lib/headline-v1"
-import type { Evaluation, Original, Recommendation, Trait } from "@/lib/originals"
+import type { Embedding, Evaluation, Original, Recommendation, Trait } from "@/lib/originals"
 import { pairwiseVersus } from "@/lib/pairwise"
 
 // The PAX2 evaluation of an original video. One model pass reads the script the messenger recorded
@@ -34,7 +34,7 @@ const MEDIAN_SOURCE = STAND_IN_ROW ? `${STAND_IN_ROW.channel}'s median of settle
 const CHANNELS = Number((model as { method: string }).method.match(/from (\d+) channels/)?.[1]) || null
 
 /** What PAX2 Classifier reads from an original. The script stands in for the description and is the transcript. */
-export function videoInputOf(o: Original): VideoInput & { transcript: string | null } {
+export function videoInputOf(o: Original): VideoInput & { transcript: string | null; embedding: Embedding | null } {
   const firstLine = (o.text ?? "").split("\n").map((l) => l.trim()).find(Boolean) ?? ""
   return {
     title: o.title?.trim() || firstLine,
@@ -46,6 +46,8 @@ export function videoInputOf(o: Original): VideoInput & { transcript: string | n
     channelMedian: CHANNEL_MEDIAN,
     // The measured transcript once the upload has been analyzed (an analyzed event on the row); the script until then.
     transcript: (o as { analysis?: { transcript?: string | null } | null }).analysis?.transcript?.trim() || o.text?.trim() || null,
+    // PAX2 Encoder's embedding of the original's text, once the neighbors step has stored one on the row.
+    embedding: (o as { embedding?: Embedding | null }).embedding ?? null,
   }
 }
 
@@ -111,7 +113,7 @@ export async function evaluate(o: Original): Promise<Evaluation> {
       : []
 
   const input = videoInputOf(o)
-  const f = forecast(input, null, input.transcript)
+  const f = forecast(input, null, input.transcript, input.embedding)
   const d = recommendations(input)
   let versus = null
   if (o.parent) {

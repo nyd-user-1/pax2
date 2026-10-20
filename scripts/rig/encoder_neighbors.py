@@ -10,6 +10,13 @@ Reads  model/encoder-index/current.json (absent means the index is not built; ex
 Query text is the measured transcript capped at 1,200 characters — the corpus documents lead with
 title and description, so similarity leans on the spoken words, which carry most of the tokens.
 Writes a "neighbors" event on the original and a neighbors section into features/<ORIGINAL>.json.
+
+Also the embedding PAX2 Classifier v3 reads (2026-10-20): the original's text in the corpus's own recipe
+(scripts/encoder/corpus.mjs docText: title, then description, then transcript, non-empty parts joined by
+newlines, the first 1,200 characters), embedded the way scripts/encoder/index.py embedded the catalog. The
+title and description are the META item's title and text (GetItem, scoped to ORIG# keys). Stored on the
+event as "embedding" (JSON, 4 decimals) with the index run, so the app reads it only beside the model
+fit on that run's index. A failed read skips the embedding, never the neighbors.
 """
 import json, os, subprocess, time
 
@@ -47,7 +54,23 @@ log(f"index {run}: {len(rows)} documents")
 
 from sentence_transformers import SentenceTransformer
 
-q = SentenceTransformer("/work/encoder", device="cpu").encode([text], normalize_embeddings=True, convert_to_numpy=True)[0].astype(np.float32)
+encoder = SentenceTransformer("/work/encoder", device="cpu")
+q = encoder.encode([text], normalize_embeddings=True, convert_to_numpy=True)[0].astype(np.float32)
+
+embedding = None
+try:
+    meta = ddb.get_item(TableName=TABLE, Key={"pk": {"S": f"ORIG#{ORIGINAL}"}, "sk": {"S": "META"}}).get("Item", {})
+    title = (meta.get("title", {}).get("S") or "").strip()
+    description = (meta.get("text", {}).get("S") or "").strip()[:600]  # the training set cuts descriptions at 600
+    transcript = ((features.get("transcript") or {}).get("text") or "").strip()
+    clean = lambda t: t.encode("utf-8", "replace").decode("utf-8").replace("\ufffd", "").strip()
+    doc = "\n".join(p for p in (clean(title), clean(description), clean(transcript)) if p)[:1200]
+    if doc:
+        v = encoder.encode([doc], normalize_embeddings=True, convert_to_numpy=True)[0].astype(np.float32)
+        embedding = [round(float(x), 4) for x in v]
+        log(f"embedding: {len(embedding)} dims over {len(doc)} characters (title {bool(title)}, description {bool(description)})")
+except Exception as e:
+    log(f"embedding skipped: {e}")
 sims = E @ q
 top = np.argsort(-sims)[:K]
 neighbors = [{**rows[int(i)], "sim": round(float(sims[int(i)]), 4)} for i in top]
@@ -61,9 +84,10 @@ ddb.put_item(
     Item={"pk": {"S": f"ORIG#{ORIGINAL}"}, "sk": {"S": f"EVENT#{at}"},
           "kind": {"S": "neighbors"}, "at": {"S": at}, "run": {"S": run},
           "outlierShare": {"N": str(share)} if share is not None else {"NULL": True},
-          "neighbors": {"S": json.dumps(neighbors)}},
+          "neighbors": {"S": json.dumps(neighbors)},
+          **({"embedding": {"S": json.dumps(embedding)}} if embedding else {})},
     ConditionExpression="attribute_not_exists(sk)",
 )
-features["neighbors"] = {"run": run, "at": at, "outlierShare": share, "top": neighbors}
+features["neighbors"] = {"run": run, "at": at, "outlierShare": share, "top": neighbors, **({"embedding": embedding} if embedding else {})}
 s3.put_object(Bucket=BUCKET, Key=feat_key, Body=json.dumps(features).encode(), ContentType="application/json")
 log("EXIT=0")

@@ -50,11 +50,13 @@ echo "trigger:  s3://$BUCKET uploads/*.mp4, notification $NOTIFY_ID (pax2-transc
 STAGE=$(mktemp -d)
 trap 'rm -rf "$STAGE"' EXIT
 
-# The box's extra rights: the event in DynamoDB and the features file.
+# The box's extra rights: the event in DynamoDB and the features file; GetItem on ORIG# keys only, so
+# encoder_neighbors.py can read the original's title and description (PAX2 Classifier v3, 2026-10-20).
 aws iam put-role-policy --role-name $BOX_ROLE --policy-name pax2-analyze --policy-document "{\"Version\":\"2012-10-17\",\"Statement\":[
   {\"Effect\":\"Allow\",\"Action\":\"dynamodb:PutItem\",\"Resource\":\"arn:aws:dynamodb:$REGION:$ACCOUNT:table/$TABLE\"},
+  {\"Effect\":\"Allow\",\"Action\":\"dynamodb:GetItem\",\"Resource\":\"arn:aws:dynamodb:$REGION:$ACCOUNT:table/$TABLE\",\"Condition\":{\"ForAllValues:StringLike\":{\"dynamodb:LeadingKeys\":[\"ORIG#*\"]}}},
   {\"Effect\":\"Allow\",\"Action\":\"bedrock:InvokeModel\",\"Resource\":[\"arn:aws:bedrock:*::foundation-model/twelvelabs.pegasus-1-2-v1:0\",\"arn:aws:bedrock:$REGION:$ACCOUNT:inference-profile/us.twelvelabs.pegasus-1-2-v1:0\"]}]}"
-echo "box role $BOX_ROLE: inline pax2-analyze (dynamodb PutItem $TABLE, bedrock InvokeModel Pegasus 1.2); S3 comes from its pax2-rig policy"
+echo "box role $BOX_ROLE: inline pax2-analyze (dynamodb PutItem $TABLE, GetItem on ORIG# keys, bedrock InvokeModel Pegasus 1.2); S3 comes from its pax2-rig policy"
 
 # The rig code the box pulls.
 aws s3 cp --only-show-errors scripts/rig/analyze_common.py s3://$BUCKET/code/rig/analyze_common.py

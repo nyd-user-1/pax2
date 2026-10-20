@@ -394,7 +394,7 @@ async function Versions({ id }: { id: string }) {
   )
 }
 
-const MODEL_NAME = { metadata: "The metadata model", image: "The image model", transcript: "The transcript model" } as const
+const MODEL_NAME = { metadata: "The metadata model", image: "The image model", transcript: "The transcript model", embedding: "The transcript and resemblance model" } as const
 
 /** PAX2 Classifier's chance of a Hit and the views to expect, with the measured strength of the model that answered and the six strongest pulls. */
 function ForecastCard({ f }: { f: NonNullable<Evaluation["forecast"]> }) {

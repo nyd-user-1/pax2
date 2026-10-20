@@ -60,7 +60,7 @@ echo "user-data \$(date -u +%FT%TZ)"
 apt-get update -q && apt-get install -y -q python3-venv awscli >/dev/null
 echo "apt EXIT=\$?"
 mkdir -p /work/code && aws s3 cp --only-show-errors --recursive s3://$BUCKET/${RUN}code/ /work/code/
-BUCKET=$BUCKET RUN=$RUN TRAINER=$TRAINER COMPOSITION=${COMPOSITION:-} bash /work/code/box.sh
+BUCKET=$BUCKET RUN=$RUN TRAINER=$TRAINER COMPOSITION=${COMPOSITION:-} INDEX_RUN=${INDEX_RUN:-} bash /work/code/box.sh
 echo "box.sh returned \$? \$(date -u +%FT%TZ)"
 aws s3 cp --only-show-errors /var/log/pax2-classifier.log s3://$BUCKET/${RUN}box.log
 shutdown -h now

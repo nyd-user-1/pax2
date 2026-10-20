@@ -35,7 +35,8 @@ word times exist). The media subset is the breakout-and-control pair set, chosen
 the same gate, and the report adds every arm's AUC on the held-out rows that carry media features.
 
 Env: BUCKET, RUN (s3 prefix model/v3/<run>/), OUT (local output dir), LIMIT (every Nth row; rehearsal only),
-     COMPOSITION=1 (task 7b; reads <RUN>composition.json, writes var-model-v3b.json)
+     COMPOSITION=1 (task 7b; reads <RUN>composition.json, writes var-model-v3b.json),
+     INDEX_RUN (the serving index's run id, stamped on the model so the app pairs it with that index's embeddings)
 Reads  <RUN>training-set.jsonl, <RUN>training-set.manifest.json, <RUN>transcript-features.json,
        <RUN>embeddings.npy, <RUN>rows.json (the serving index), <RUN>holdout.json (the encoder run's)
 Writes var-model-v3.json, predictions-v3.jsonl
@@ -216,7 +217,7 @@ log(f"train_v3: gate C {'PASSED' if passed else 'FAILED'}: {json.dumps(gate)}")
 
 cand = models[best]
 cand["transcriptFeatures"] = {"vocab": vocab, "rule": tf["rule"], "builtAt": tf["builtAt"], "counts": tf["counts"]}
-cand["embedding"] = {"components": K, "explained": round(float(explained), 4), "mean": [round(float(v), 6) for v in mu], "basis": [[round(float(v), 6) for v in row] for row in basis]}
+cand["embedding"] = {"indexRun": os.environ.get("INDEX_RUN"), "components": K, "explained": round(float(explained), 4), "mean": [round(float(v), 6) for v in mu], "basis": [[round(float(v), 6) for v in row] for row in basis]}
 out = {
     "builtAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     "name": "PAX2 Classifier",
