@@ -105,12 +105,10 @@ export async function MyVideos({ filter }: { filter?: string }) {
         rows={shown.map((r) => ({ video: r.title ?? "Untitled video", stage: STAGE_LABEL[r.stage], score: score(r), version: r.version, recorded: r.at }))}
         name="my-videos"
         footer={
-          user.admin
-            ? yt
-              ? `Publishing to ${yt.title} on YouTube, granted by ${yt.by} ${new Date(yt.at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}.`
-              : configured()
-                ? <Link href="/api/youtube/oauth" className="text-pax2-light-blue hover:underline">Connect the YouTube channel</Link>
-                : "No YouTube channel yet; the Google OAuth client is not configured on the server."
+          user.admin && !yt
+            ? configured()
+              ? <Link href="/api/youtube/oauth" className="text-pax2-light-blue hover:underline">Connect the YouTube channel</Link>
+              : "No YouTube channel yet; the Google OAuth client is not configured on the server."
             : undefined
         }
       >
@@ -143,7 +141,6 @@ export async function MyVideos({ filter }: { filter?: string }) {
                         <span className="flex items-center gap-3">
                           <Pipeline stage={r.stage} />
                           <span className="text-xs text-slate-600">{STAGE_LABEL[r.stage]}</span>
-                          {r.provenance === "backfilled" && <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">Backfilled</span>}
                         </span>
                       </td>
                       <td className="tabular font-semibold text-slate-900">{score(r)}</td>

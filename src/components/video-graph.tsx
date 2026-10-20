@@ -10,7 +10,7 @@ import dagre from "@dagrejs/dagre"
 import { toast } from "sonner"
 import {
   ArrowLeft, BookOpen, Boxes, Check, ChevronRight, Clapperboard, Crosshair, ExternalLink, FileText, GripVertical, Hash, History, Layers, Loader2,
-  MessageSquare, Minus, MoreHorizontal, PanelLeftClose, PanelLeftOpen, Play, Plus, Save, Search, Share2, Tv, Users, X,
+  ChevronDown, MessageSquare, Minus, MoreHorizontal, PanelLeftClose, PanelLeftOpen, Play, Plus, Save, Search, Share2, Tv, Users, Waypoints, X,
 } from "lucide-react"
 
 import { canvasUploadUrl, listCanvases, listCanvasFiles, loadCanvas, saveCanvas, type CanvasFile } from "@/app/graph-actions"
@@ -24,6 +24,8 @@ import { LOOPS } from "@/lib/recipes/loops"
 import { TEMPLATES, type RecipeTemplate } from "@/lib/recipes/memorable"
 import { fmtCompact } from "@/lib/velocity-meta"
 import { Dialog, DialogContent, DialogTitle } from "@/ui/components/nova/dialog"
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/ui/components/nova/tooltip"
 import { cn } from "@/ui/lib/utils"
 
 export type { GraphChannel, GraphData, GraphVideo } from "@/lib/graph-data"
@@ -216,8 +218,14 @@ function nodeHeight(g: GNode, R: Rels): number {
   return h
 }
 
-type LayoutMode = "none" | "dagre-lr" | "dagre-tb"
-const LAYOUT_MODES: LayoutMode[] = ["none", "dagre-lr", "dagre-tb"]
+type LayoutMode = "none" | "dagre-lr" | "dagre-tb" | "radial" | "orbit" | "spine"
+const LAYOUT_MODES: LayoutMode[] = ["none", "dagre-lr", "dagre-tb", "radial", "orbit", "spine"]
+
+const dims = (n: Node, R: Rels) => {
+  const d = n.data as GNode
+  return { w: NODE_W[d.type] ?? 160, h: nodeHeight(d, R) }
+}
+const isConnector = (t: GType) => t === "topic" || t === "group" || t === "tag"
 
 function layout(nodes: Node[], edges: Edge[], R: Rels, rankdir: "LR" | "TB"): Node[] {
   const g = new dagre.graphlib.Graph()
@@ -233,6 +241,155 @@ function layout(nodes: Node[], edges: Edge[], R: Rels, rankdir: "LR" | "TB"): No
     const p = g.node(n.id)
     return { ...n, position: { x: p.x - p.width / 2, y: p.y - p.height / 2 } }
   })
+}
+
+/** Radial: the connectors (topics, groups, tags) in the middle, everything else evenly on a
+ *  ring around them; each connector stands at the centroid of the cards it joins. */
+function radialLayout(nodes: Node[], edges: Edge[], R: Rels): Node[] {
+  const hubs = nodes.filter((n) => isConnector((n.data as GNode).type))
+  const ring = nodes.filter((n) => !isConnector((n.data as GNode).type))
+  if (!ring.length || !hubs.length) return orbitLayout(nodes, edges, R)
+  const totalW = ring.reduce((sum, n) => sum + dims(n, R).w, 0)
+  const r = Math.max(380, (totalW * 1.6) / (2 * Math.PI))
+  const pos = new Map<string, { x: number; y: number }>()
+  ring.forEach((n, i) => {
+    const a = (i / ring.length) * 2 * Math.PI - Math.PI / 2
+    pos.set(n.id, { x: Math.cos(a) * r, y: Math.sin(a) * r })
+  })
+  const adj = new Map<string, string[]>()
+  for (const e of edges) {
+    adj.set(e.source, [...(adj.get(e.source) ?? []), e.target])
+    adj.set(e.target, [...(adj.get(e.target) ?? []), e.source])
+  }
+  const placed: { x: number; y: number; r: number }[] = []
+  for (const h of hubs) {
+    const near = (adj.get(h.id) ?? []).map((id) => pos.get(id)).filter((p): p is { x: number; y: number } => !!p)
+    let x = near.length ? (near.reduce((sum, p) => sum + p.x, 0) / near.length) * 0.45 : 0
+    let y = near.length ? (near.reduce((sum, p) => sum + p.y, 0) / near.length) * 0.45 : 0
+    const d = dims(h, R)
+    const rad = Math.max(d.w, d.h) / 2 + 24
+    for (let k = 0; k < 60; k++) {
+      const hit = placed.find((p) => Math.hypot(p.x - x, p.y - y) < p.r + rad)
+      if (!hit) break
+      const dd = Math.hypot(x - hit.x, y - hit.y) || 1
+      x += ((x - hit.x) / dd) * 40
+      y += ((y - hit.y) / dd) * 40
+    }
+    placed.push({ x, y, r: rad })
+    pos.set(h.id, { x, y })
+  }
+  return nodes.map((n) => {
+    const d = dims(n, R)
+    const p = pos.get(n.id)!
+    return { ...n, position: { x: p.x - d.w / 2, y: p.y - d.h / 2 } }
+  })
+}
+
+/** Orbit: a settled force layout — edges pull like springs, every pair repels, cards keep their
+ *  room — so distance reads as shared subject matter. Deterministic: same canvas, same shape. */
+function orbitLayout(nodes: Node[], edges: Edge[], R: Rels): Node[] {
+  const ns = nodes.map((n, i) => {
+    const d = dims(n, R)
+    const a = (i / Math.max(1, nodes.length)) * 2 * Math.PI
+    const rr = 300 + (i % 2) * 140
+    return { id: n.id, x: Math.cos(a) * rr, y: Math.sin(a) * rr, r: Math.max(d.w, d.h) / 2 }
+  })
+  const byId = new Map(ns.map((n) => [n.id, n]))
+  const links = edges.flatMap((e) => {
+    const a = byId.get(e.source)
+    const b = byId.get(e.target)
+    return a && b ? [{ a, b }] : []
+  })
+  for (let it = 0; it < 260; it++) {
+    for (let i = 0; i < ns.length; i++) {
+      for (let j = i + 1; j < ns.length; j++) {
+        const a = ns[i]
+        const b = ns[j]
+        const dx = b.x - a.x
+        const dy = b.y - a.y
+        const d2 = dx * dx + dy * dy || 1
+        const d = Math.sqrt(d2)
+        const push = Math.min(26000 / d2, 18)
+        a.x -= (dx / d) * push
+        a.y -= (dy / d) * push
+        b.x += (dx / d) * push
+        b.y += (dy / d) * push
+        const min = a.r + b.r + 46
+        if (d < min) {
+          const k = (min - d) / 2
+          a.x -= (dx / d) * k
+          a.y -= (dy / d) * k
+          b.x += (dx / d) * k
+          b.y += (dy / d) * k
+        }
+      }
+    }
+    for (const { a, b } of links) {
+      const dx = b.x - a.x
+      const dy = b.y - a.y
+      const d = Math.hypot(dx, dy) || 1
+      const rest = a.r + b.r + 160
+      const f = ((d - rest) / d) * 0.04
+      a.x += dx * f
+      a.y += dy * f
+      b.x -= dx * f
+      b.y -= dy * f
+    }
+    for (const n of ns) {
+      n.x *= 0.995
+      n.y *= 0.995
+    }
+  }
+  return nodes.map((n) => {
+    const d = dims(n, R)
+    const p = byId.get(n.id)!
+    return { ...n, position: { x: p.x - d.w / 2, y: p.y - d.h / 2 } }
+  })
+}
+
+/** Spine: groups across the middle, channels and videos above, topics and tags below, the outer
+ *  bands ordered by where their middle neighbors stand. */
+function spineLayout(nodes: Node[], edges: Edge[], R: Rels): Node[] {
+  const bandOf = (t: GType) => (t === "group" ? 1 : t === "topic" || t === "tag" ? 2 : 0)
+  const rows: Node[][] = [[], [], []]
+  for (const n of nodes) rows[bandOf((n.data as GNode).type)].push(n)
+  const adj = new Map<string, string[]>()
+  for (const e of edges) {
+    adj.set(e.source, [...(adj.get(e.source) ?? []), e.target])
+    adj.set(e.target, [...(adj.get(e.target) ?? []), e.source])
+  }
+  const pos = new Map<string, { x: number; y: number }>()
+  const place = (row: Node[], y: number) => {
+    const gap = 48
+    const total = row.reduce((sum, n) => sum + dims(n, R).w, 0) + gap * Math.max(0, row.length - 1)
+    let x = -total / 2
+    for (const n of row) {
+      const d = dims(n, R)
+      pos.set(n.id, { x: x + d.w / 2, y })
+      x += d.w + gap
+    }
+  }
+  place(rows[1], 0)
+  const bary = (n: Node, i: number) => {
+    const xs = (adj.get(n.id) ?? []).map((id) => pos.get(id)?.x).filter((x): x is number => x != null)
+    return xs.length ? xs.reduce((sum, x) => sum + x, 0) / xs.length : i * 1e4
+  }
+  for (const band of [0, 2]) {
+    const keyed = rows[band].map((n, i) => ({ n, k: bary(n, i) }))
+    place(keyed.sort((a, b) => a.k - b.k).map((x) => x.n), band === 0 ? -420 : 420)
+  }
+  return nodes.map((n) => {
+    const d = dims(n, R)
+    const p = pos.get(n.id)!
+    return { ...n, position: { x: p.x - d.w / 2, y: p.y - d.h / 2 } }
+  })
+}
+
+function applyLayout(nodes: Node[], edges: Edge[], R: Rels, m: LayoutMode): Node[] {
+  if (m === "radial") return radialLayout(nodes, edges, R)
+  if (m === "orbit") return orbitLayout(nodes, edges, R)
+  if (m === "spine") return spineLayout(nodes, edges, R)
+  return layout(nodes, edges, R, m === "dagre-tb" ? "TB" : "LR")
 }
 
 /* ── node card ───────────────────────────────────────────────────────────── */
@@ -425,8 +582,33 @@ function RowMenu({ g, onPick, onAdd, onAsk }: { g: GNode; onPick: (g: GNode) => 
   )
 }
 
-const RAIL = "hidden w-64 shrink-0 flex-col border-r border-slate-200 bg-white lg:flex"
-const RAIL_ROW = "mx-1.5 flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50 hover:text-pax2-blue"
+// The rail wears the app sidebar's clothes: its mist, its row shape, its icon treatment, its headers.
+const RAIL = "hidden w-60 shrink-0 flex-col border-r border-slate-200 bg-pax2-mist lg:flex"
+const RAIL_ROW = "group relative flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-slate-500 outline-none transition-[color,background-color,box-shadow] hover:bg-white/70 hover:text-pax2-blue hover:shadow-e1"
+const RAIL_ROW_ON = "bg-white font-semibold text-pax2-blue shadow-e1"
+const RAIL_HEAD = "px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400"
+const RAIL_ICON = "icon-pop size-[18px] shrink-0 text-slate-400 transition-colors group-hover:fill-pax2-lavender group-hover:text-pax2-blue"
+
+function RailSection({ label, storageKey, children }: { label: string; storageKey: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(true)
+  useEffect(() => {
+    const v = localStorage.getItem(`pax2:rail:${storageKey}`)
+    if (v != null) setOpen(v === "1")
+  }, [storageKey])
+  const toggle = () => setOpen((o) => {
+    localStorage.setItem(`pax2:rail:${storageKey}`, o ? "0" : "1")
+    return !o
+  })
+  return (
+    <div className="mt-2 border-t border-slate-200/70 pt-1">
+      <button type="button" aria-expanded={open} onClick={toggle} className={cn(RAIL_HEAD, "flex w-full items-center justify-between text-left transition-colors hover:text-slate-600")}>
+        {label}
+        <ChevronDown className={cn("size-3.5 transition-transform", !open && "-rotate-90")} />
+      </button>
+      {open && children}
+    </div>
+  )
+}
 
 function RailHeader({ label, count, onBack }: { label: string; count?: number; onBack: () => void }) {
   return (
@@ -455,7 +637,7 @@ function SavedRows({ rows, filter, onLoad }: { rows: CanvasRow[] | null; filter:
   return (
     <>
       {rows.filter((v) => !f || `${v.name} ${v.by}`.toLowerCase().includes(f)).map((v) => (
-        <button key={v.id} onClick={() => onLoad(v.id)} className="flex w-full flex-col gap-0.5 border-b border-slate-100 px-3 py-2 text-left transition-colors hover:bg-slate-50">
+        <button key={v.id} onClick={() => onLoad(v.id)} className="flex w-full flex-col gap-0.5 border-b border-slate-200/70 px-3 py-2 text-left transition-colors hover:bg-white/70">
           <span className="flex w-full items-baseline justify-between gap-2">
             <span className="truncate text-xs font-semibold text-slate-900">{v.name}</span>
             <span className="tabular shrink-0 text-[10px] text-slate-400">{v.nodes} nodes</span>
@@ -469,7 +651,6 @@ function SavedRows({ rows, filter, onLoad }: { rows: CanvasRow[] | null; filter:
 
 type RailProps = {
   R: Rels
-  admin: boolean
   refresh: number
   onPick: (g: GNode) => void
   onAdd: (g: GNode) => void
@@ -482,7 +663,7 @@ type RailProps = {
   extras?: React.ReactNode
 }
 
-function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad, onMap, top, extras }: RailProps) {
+function RecordRail({ R, refresh, onPick, onAdd, onAsk, onAddFile, onLoad, onMap, top, extras }: RailProps) {
   const [browse, setBrowse] = useState<string | null>(null)
   const [filter, setFilter] = useState("")
   const [files, setFiles] = useState<CanvasFile[] | null>(null)
@@ -503,7 +684,7 @@ function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad
         <div className="min-h-0 flex-1 overflow-y-auto">
           {!files && <Loader2 className="m-3 h-4 w-4 animate-spin text-slate-400" />}
           {items.map((x) => (
-            <button key={x.key} onClick={() => onAddFile(x)} className="flex w-full items-center gap-2 border-b border-slate-100 px-3 py-2 text-left transition-colors hover:bg-slate-50">
+            <button key={x.key} onClick={() => onAddFile(x)} className="flex w-full items-center gap-2 border-b border-slate-200/70 px-3 py-2 text-left transition-colors hover:bg-white/70">
               <FileText className="h-3.5 w-3.5 shrink-0 text-slate-400" />
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-xs text-slate-900">{x.name}</span>
@@ -534,12 +715,12 @@ function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad
         <RailFilter value={filter} onChange={setFilter} />
         <div className="min-h-0 flex-1 overflow-y-auto">
           {all.filter((g) => !f || `${g.label} ${g.sub ?? ""}`.toLowerCase().includes(f)).slice(0, 200).map((g) => (
-            <div key={keyOf(g)} className="group/row relative border-b border-slate-100">
+            <div key={keyOf(g)} className="group/row relative border-b border-slate-200/70">
               <button
                 onClick={() => onPick(g)}
                 draggable
                 onDragStart={(e) => setDragEntity(e.dataTransfer, g)}
-                className={browse === "channels" ? "flex w-full items-center gap-2.5 px-3 py-2 pr-7 text-left transition-colors hover:bg-slate-50" : "flex w-full flex-col gap-0.5 px-3 py-2 pr-7 text-left transition-colors hover:bg-slate-50"}
+                className={browse === "channels" ? "flex w-full items-center gap-2.5 px-3 py-2 pr-7 text-left transition-colors hover:bg-white/70" : "flex w-full flex-col gap-0.5 px-3 py-2 pr-7 text-left transition-colors hover:bg-white/70"}
               >
                 {browse === "channels" && (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -557,29 +738,35 @@ function RecordRail({ R, admin, refresh, onPick, onAdd, onAsk, onAddFile, onLoad
   }
   return (
     <div className={RAIL}>
-      <div className="shrink-0 pb-2">
-      {top}
-      <p className="px-3 pb-1 pt-3 text-[10px] uppercase tracking-wide text-slate-400">Tracked</p>
-      {RAIL_TYPES.map(({ key, label, icon: Icon }) => (
-        <button key={key} onClick={() => setBrowse(key)} className={RAIL_ROW}>
-          <Icon className="h-3.5 w-3.5 text-slate-400" />
-          <span>{label}</span>
-          <span className="tabular ml-auto text-xs text-slate-400">{railItems(key, R).length.toLocaleString()}</span>
-        </button>
-      ))}
-      <p className="px-3 pb-1 pt-4 text-[10px] uppercase tracking-wide text-slate-400">Workspace</p>
-      <button onClick={onMap} className={RAIL_ROW}>
-        <Boxes className="h-3.5 w-3.5 text-slate-400" />
-        <span>Clusters</span>
-      </button>
-      {([["library", "Library", FileText], ["views", "Views", Layers], ...(admin ? [["recipes", "Recipes", BookOpen] as const] : [])] as const).map(([key, label, Icon]) => (
-        <button key={key} onClick={() => setBrowse(key)} className={RAIL_ROW}>
-          <Icon className="h-3.5 w-3.5 text-slate-400" />
-          <span>{label}</span>
-        </button>
-      ))}
+      <div className="shrink-0 px-3 pb-2">{top}</div>
+      <div className="mx-3 min-h-0 flex-1 overflow-y-auto overflow-x-hidden pb-3">
+        <RailSection label="Tracked" storageKey="tracked">
+          <nav className="flex flex-col gap-0.5">
+            {RAIL_TYPES.map(({ key, label, icon: Icon }) => (
+              <button key={key} onClick={() => setBrowse(key)} className={RAIL_ROW}>
+                <Icon className={RAIL_ICON} strokeWidth={1.75} />
+                <span>{label}</span>
+                <span className="tabular ml-auto text-xs text-slate-400">{railItems(key, R).length.toLocaleString()}</span>
+              </button>
+            ))}
+          </nav>
+        </RailSection>
+        <RailSection label="Workspace" storageKey="workspace">
+          <nav className="flex flex-col gap-0.5">
+            <button onClick={onMap} className={RAIL_ROW}>
+              <Waypoints className={RAIL_ICON} strokeWidth={1.75} />
+              <span>Clusters</span>
+            </button>
+            {([["library", "Library", FileText], ["views", "Views", Layers]] as const).map(([key, label, Icon]) => (
+              <button key={key} onClick={() => setBrowse(key)} className={RAIL_ROW}>
+                <Icon className={RAIL_ICON} strokeWidth={1.75} />
+                <span>{label}</span>
+              </button>
+            ))}
+          </nav>
+        </RailSection>
+        {extras}
       </div>
-      {extras && <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-200">{extras}</div>}
     </div>
   )
 }
@@ -599,7 +786,7 @@ function RecipeRail({ refresh, onTemplate, onLoad, top, extras }: { refresh: num
         <RailHeader label="Templates" count={TEMPLATES.length} onBack={back} />
         <div className="min-h-0 flex-1 overflow-y-auto">
           {TEMPLATES.map((t) => (
-            <button key={t.id} onClick={() => onTemplate(t)} className="flex w-full items-baseline justify-between gap-2 border-b border-slate-100 px-3 py-2 text-left transition-colors hover:bg-slate-50">
+            <button key={t.id} onClick={() => onTemplate(t)} className="flex w-full items-baseline justify-between gap-2 border-b border-slate-200/70 px-3 py-2 text-left transition-colors hover:bg-white/70">
               <span className="truncate text-xs font-semibold text-slate-900">{t.name}</span>
               <span className="tabular shrink-0 text-[10px] text-slate-400">{t.nodes.length} nodes</span>
             </button>
@@ -617,14 +804,15 @@ function RecipeRail({ refresh, onTemplate, onLoad, top, extras }: { refresh: num
     )
   return (
     <div className={RAIL}>
-      <div className="shrink-0 pb-2">
-      {top}
-      <p className="px-3 pb-1 pt-3 text-[10px] uppercase tracking-wide text-slate-400">Recipes</p>
-      <button onClick={() => setBrowse("templates")} className={RAIL_ROW}><Layers className="h-3.5 w-3.5 text-slate-400" /><span>Templates</span><span className="tabular ml-auto text-xs text-slate-400">{TEMPLATES.length}</span></button>
-      <button onClick={() => onTemplate(LOOPS)} className={RAIL_ROW}><Play className="h-3.5 w-3.5 text-slate-400" /><span>Loops</span></button>
-      <button onClick={() => setBrowse("saved")} className={RAIL_ROW}><BookOpen className="h-3.5 w-3.5 text-slate-400" /><span>Saved recipes</span></button>
+      <div className="shrink-0 px-3 pb-2">{top}</div>
+      <div className="mx-3 min-h-0 flex-1 overflow-y-auto overflow-x-hidden border-t border-slate-200/70 pb-3 pt-2">
+        <nav className="flex flex-col gap-0.5">
+          <button onClick={() => setBrowse("templates")} className={RAIL_ROW}><Layers className={RAIL_ICON} strokeWidth={1.75} /><span>Templates</span><span className="tabular ml-auto text-xs text-slate-400">{TEMPLATES.length}</span></button>
+          <button onClick={() => onTemplate(LOOPS)} className={RAIL_ROW}><Play className={RAIL_ICON} strokeWidth={1.75} /><span>Loops</span></button>
+          <button onClick={() => setBrowse("saved")} className={RAIL_ROW}><BookOpen className={RAIL_ICON} strokeWidth={1.75} /><span>Saved recipes</span></button>
+        </nav>
+        {extras}
       </div>
-      {extras && <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-200">{extras}</div>}
     </div>
   )
 }
@@ -890,7 +1078,7 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
         }
         return { id: k, type: rfType(g.type), position: position ?? { x: 0, y: 0 }, data: { ...g } }
       })
-      if (relayout && lm !== "none") next = layout(next, allEdges, R, lm === "dagre-tb" ? "TB" : "LR")
+      if (relayout && lm !== "none") next = applyLayout(next, allEdges, R, lm)
       return next
     })
   }, [setNodes, R])
@@ -1135,6 +1323,31 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     }
   }
 
+  /** The default canvas is an actual network: the most-tracked channels bound to each other
+   *  through the groups and topics they share, every edge a record PAX2 holds. */
+  const seedNetwork = useCallback(() => {
+    const chans = [...R.channel.values()].sort((a, b) => b.pushed - a.pushed || b.n - a.n).slice(0, 6)
+    if (!chans.length) return
+    const nodes: GNode[] = chans.map(channelNode)
+    const groups = new Map<string, number>()
+    for (const c of chans) groups.set(c.group, (groups.get(c.group) ?? 0) + 1)
+    for (const [g, n] of groups) if (n >= 2) nodes.push(groupOf(g, R))
+    const shared = new Map<string, number>()
+    for (const c of chans) for (const [t] of R.channelTopics.get(c.id) ?? []) shared.set(t, (shared.get(t) ?? 0) + 1)
+    for (const [t] of [...shared].filter(([, n]) => n >= 2).sort((a, b) => b[1] - a[1]).slice(0, 5)) nodes.push(topicOf(t, R))
+    const edges: Edge[] = []
+    for (let i = 0; i < nodes.length; i++)
+      for (let j = i + 1; j < nodes.length; j++)
+        if (related(nodes[i], nodes[j], R)) edges.push({ id: `${keyOf(nodes[i])}->${keyOf(nodes[j])}`, source: keyOf(nodes[i]), target: keyOf(nodes[j]) })
+    store.current = new Map(nodes.map((n) => [keyOf(n), n]))
+    expandState.current = new Map()
+    setSelectedKey(null)
+    setEdgeInfo(null)
+    setCanvas(null)
+    commitEdges(edges, true)
+    fit()
+  }, [R, commitEdges, fit])
+
   const booted = useRef(false)
   useEffect(() => {
     if (booted.current) return
@@ -1144,11 +1357,10 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     const c = boot.center
     const [type, ...rest] = c?.includes(":") ? c.split(":") : []
     const found = type ? findEntity(type, rest.join(":")) : null
-    const top = [...R.channel.values()].sort((a, b) => b.pushed - a.pushed)[0]
     if (found) center(found)
-    else if (top) center(channelNode(top))
+    else seedNetwork()
     past.current = []
-  }, [boot, R, center, findEntity, loadView])
+  }, [boot, R, center, findEntity, loadView, seedNetwork])
 
   /* ── the settings panel's two extra sections: seed datasets and the layout library ── */
 
@@ -1392,8 +1604,8 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
     fit()
   }, [enterMode, snapshot, setEdges, setNodes, R, fit])
 
-  /* ── the cluster layer over the canvas ── */
-  const [mapOpen, setMapOpen] = useState(false)
+  /* ── the cluster layer over the canvas: as the network, or as the vector graph ── */
+  const [mapOpen, setMapOpen] = useState<false | "network" | "vector">(false)
 
   /* ── the Loops recipe's walk: Play triggers each stage in order, one pass, then rests ── */
   const [playingLoop, setPlayingLoop] = useState(false)
@@ -1550,14 +1762,28 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   const run = traceOpen ? runs.find((r) => r.id === traceOpen) : null
 
   // The sidebar's fixed head: the two canvases as rows, the way the app sidebar draws its pages.
+  const modeRow = (m: "networks" | "recipes", label: string, Icon: typeof Share2) => {
+    const on = mode === m
+    return (
+      <button onClick={() => enterMode(m)} aria-pressed={on} className={cn(RAIL_ROW, "text-left", on && RAIL_ROW_ON)}>
+        {on && <span aria-hidden className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-pax2-light-blue" />}
+        <Icon className={cn(RAIL_ICON, on && "fill-pax2-lavender text-pax2-blue")} strokeWidth={on ? 2.25 : 1.75} /> {label}
+      </button>
+    )
+  }
   const sidebarTop = (
-    <nav className="flex flex-col gap-0.5 pt-2">
-      <button onClick={() => enterMode("networks")} aria-pressed={mode === "networks"} className={cn(RAIL_ROW, "text-left", mode === "networks" && "bg-pax2-lavender/50 font-semibold text-pax2-blue")}>
-        <Share2 className="h-4 w-4 shrink-0 text-slate-400" /> Networks
+    <nav className="flex flex-col gap-0.5 pt-3">
+      {modeRow("networks", "Networks", Share2)}
+      {admin && modeRow("recipes", "Recipes", BookOpen)}
+      <button onClick={() => setMapOpen("network")} className={cn(RAIL_ROW, "text-left")}>
+        <Waypoints className={RAIL_ICON} strokeWidth={1.75} /> Clusters
+      </button>
+      <button onClick={() => setMapOpen("vector")} className={cn(RAIL_ROW, "text-left")}>
+        <Crosshair className={RAIL_ICON} strokeWidth={1.75} /> Vector
       </button>
       {admin && (
-        <button onClick={() => enterMode("recipes")} aria-pressed={mode === "recipes"} className={cn(RAIL_ROW, "text-left", mode === "recipes" && "bg-pax2-lavender/50 font-semibold text-pax2-blue")}>
-          <BookOpen className="h-4 w-4 shrink-0 text-slate-400" /> Recipes
+        <button onClick={() => loadTemplate(LOOPS)} className={cn(RAIL_ROW, "text-left")}>
+          <Play className={RAIL_ICON} strokeWidth={1.75} /> Loops
         </button>
       )}
     </nav>
@@ -1565,56 +1791,62 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   // Beneath the fixed rows, scrolling: the canvas's actions, the join chips, and every config row.
   const sidebarExtras = (
     <div className="flex flex-col pb-4">
-      <p className="px-3 pb-1 pt-3 text-[10px] uppercase tracking-wide text-slate-400">Canvas</p>
+      <RailSection label="Canvas" storageKey="canvas">
       <nav className="flex flex-col gap-0.5">
         {mode === "recipes" ? (
           <>
             {canvas?.name === "Loops" && (
               <button className={RAIL_ROW} onClick={playLoop} disabled={playingLoop}>
-                {playingLoop ? <Loader2 className="h-4 w-4 shrink-0 animate-spin text-slate-400" /> : <Play className="h-4 w-4 shrink-0 text-slate-400" />} Play
+                {playingLoop ? <Loader2 className="size-[18px] shrink-0 animate-spin text-slate-400" /> : <Play className={RAIL_ICON} strokeWidth={1.75} />} Play
               </button>
             )}
             {RECIPE_TOOLS.map(([type, label]) => (
               <button key={type} className={RAIL_ROW} onClick={() => addRecipeNode(type)}>
-                <Plus className="h-4 w-4 shrink-0 text-slate-400" /> {label}
+                <Plus className={RAIL_ICON} strokeWidth={1.75} /> {label}
               </button>
             ))}
           </>
         ) : (
           <>
             <button className={RAIL_ROW} onClick={() => addPromptNode(paneCenter())}>
-              <Plus className="h-4 w-4 shrink-0 text-slate-400" /> Prompt
+              <Plus className={RAIL_ICON} strokeWidth={1.75} /> Prompt
             </button>
             <button className={cn(RAIL_ROW, (!hasPrompts || !!running) && "pointer-events-none opacity-40")} onClick={runAll} disabled={!hasPrompts || !!running}>
-              {running ? <Loader2 className="h-4 w-4 shrink-0 animate-spin text-slate-400" /> : <Play className="h-4 w-4 shrink-0 text-slate-400" />} Run
+              {running ? <Loader2 className="size-[18px] shrink-0 animate-spin text-slate-400" /> : <Play className={RAIL_ICON} strokeWidth={1.75} />} Run
             </button>
           </>
         )}
         <button className={RAIL_ROW} onClick={() => { if (!email) { toast.error("Sign in to save a canvas."); return } setSaveName(canvas?.name ?? ""); setSaveOpen(true) }}>
-          <Save className="h-4 w-4 shrink-0 text-slate-400" /> Save
+          <Save className={RAIL_ICON} strokeWidth={1.75} /> Save
         </button>
         {mode === "networks" && runs.length > 0 && (
           <button className={RAIL_ROW} onClick={() => { setTraceOpen(runs[0].id); setTraceStep(null); setSelectedKey(null); setEdgeInfo(null) }}>
-            <History className="h-4 w-4 shrink-0 text-slate-400" /> Run history
+            <History className={RAIL_ICON} strokeWidth={1.75} /> Run history
           </button>
         )}
       </nav>
       {mode === "networks" && (
         <>
-          <p className="px-3 pb-1 pt-3 text-[10px] uppercase tracking-wide text-slate-400">Join on select</p>
-          <div className="flex flex-wrap gap-1.5 px-3">
-            {(["channel", "group", "topic", "tag"] as const).map((k) => (
-              <button
-                key={k}
-                onClick={() => setJoinKinds((j) => ({ ...j, [k]: !j[k] }))}
-                className={cn("h-7 rounded-full px-3 text-xs font-semibold transition-colors", joinKinds[k] ? "bg-pax2-lavender text-pax2-blue" : "bg-slate-100 text-slate-400")}
-              >
-                {k}
-              </button>
-            ))}
+          <p className={cn(RAIL_HEAD, "pt-4")}>Joins</p>
+          <div className="px-3">
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex h-8 w-full items-center justify-between gap-2 rounded-md border border-slate-200 bg-white px-2.5 text-xs text-slate-900 outline-none transition-colors hover:border-slate-300 data-[popup-open]:border-slate-300">
+                <span className="truncate">{(["channel", "group", "topic", "tag"] as const).filter((k) => joinKinds[k]).join(", ") || "None"}</span>
+                <ChevronDown className="size-3.5 shrink-0 text-slate-400" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-(--anchor-width) rounded-xl">
+                {(["channel", "group", "topic", "tag"] as const).map((k) => (
+                  <DropdownMenuCheckboxItem key={k} checked={joinKinds[k]} onCheckedChange={() => setJoinKinds((j) => ({ ...j, [k]: !j[k] }))}>
+                    {k}
+                  </DropdownMenuCheckboxItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </>
       )}
+      </RailSection>
+      <RailSection label="Configuration" storageKey="configuration">
       <FlowSettingsPanel
         value={flowProps}
         onChange={setFlowProps}
@@ -1623,25 +1855,24 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
         datasets={datasets.map(({ id, label }) => ({ id, label }))}
         layoutMode={layoutMode}
         onLayoutMode={changeLayoutMode}
-        onReset={() => setFlowProps(DEFAULT_FLOW_PROPS)}
       />
+      </RailSection>
     </div>
   )
 
   return (
     <div className="flex min-h-0 flex-1">
-      {mapOpen && <ClusterMap onClose={() => setMapOpen(false)} />}
+      {mapOpen && <ClusterMap initialLayer={mapOpen} onClose={() => setMapOpen(false)} />}
       {!railOpen ? null : mode === "recipes" ? <RecipeRail refresh={railRefresh} onTemplate={loadTemplate} onLoad={loadView} top={sidebarTop} extras={sidebarExtras} /> : <RecordRail
         top={sidebarTop}
         extras={sidebarExtras}
         R={R}
-        admin={admin}
         refresh={railRefresh}
         onPick={center}
         onAdd={addToCanvas}
         onAddFile={(f) => addToCanvas({ type: "file", id: f.key, label: f.name, sub: kb(f.size), fileKey: f.key })}
         onLoad={loadView}
-        onMap={() => setMapOpen(true)}
+        onMap={() => setMapOpen("network")}
       />}
 
       <div ref={paneRef} className="relative min-h-0 min-w-0 flex-1" onDragOver={(e) => e.preventDefault()} onDrop={onDrop}>
@@ -1706,9 +1937,14 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
           <Panel position="top-left" className="pointer-events-none !right-0 flex flex-wrap items-start justify-between gap-2">
             <div className="pointer-events-auto flex flex-wrap items-start gap-2">
             <div className={cn(GROUP_BAR, "hidden lg:flex")}>
-              <button className={PILL_ICON} onClick={toggleRail} aria-label={railOpen ? "Hide the rail" : "Show the rail"} title={railOpen ? "Hide the rail" : "Show the rail"}>
-                {railOpen ? <PanelLeftClose className="h-4 w-4" /> : <PanelLeftOpen className="h-4 w-4" />}
-              </button>
+              <Tooltip>
+                <TooltipTrigger className={PILL_ICON} onClick={toggleRail} aria-label={railOpen ? "Hide the rail" : "Show the rail"}>
+                  {railOpen ? <PanelLeftClose className="h-4 w-4" /> : <PanelLeftOpen className="h-4 w-4" />}
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="bg-white text-slate-800 shadow-e2 ring-1 ring-slate-200 [&>:last-child]:bg-white [&>:last-child]:fill-white">
+                  {railOpen ? "Hide the rail" : "Show the rail"}
+                </TooltipContent>
+              </Tooltip>
             </div>
             {mode === "networks" && <div className="relative">
               <div className="rounded-full border border-slate-200 bg-white/90 p-1 shadow-e1 backdrop-blur-sm">

@@ -540,9 +540,6 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
       {toast && (
         <p className="text-center text-[11px] text-[var(--muted)] mt-2 animate-in fade-in">{toast}</p>
       )}
-      <p className="text-center text-[10px] text-[var(--muted2)] mt-2">
-        Answers draw on the scored takes, the scripts and the Swayable archive · Design &amp; Development by NYSgpt
-      </p>
     </div>
   )
 

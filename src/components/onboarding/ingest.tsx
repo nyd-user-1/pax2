@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { Check, Loader2, Lock, TriangleAlert } from "lucide-react"
+import { Check, ChevronDown, Loader2, TriangleAlert } from "lucide-react"
 
 import { pollIngest, privateVideos, savePicks } from "@/app/onboarding-actions"
 import type { Progress } from "@/lib/channel-ingest"
@@ -85,24 +85,25 @@ export function ChannelChip({ channelId, title, thumbnail, initial, className }:
   )
 }
 
-/** A connected channel with its private and unlisted videos: the picker for which of them to include.
- *  `pickerOpen` shows the picker straight away (onboarding); otherwise a line says how many are left out. */
-export function ChannelCard({ channelId, title, thumbnail, initial, className, pickerOpen = false }: { channelId: string; title: string; thumbnail: string | null; initial: Progress | null; className?: string; pickerOpen?: boolean }) {
+/** A connected channel with its private and unlisted videos behind an accordion: one collapsed
+ *  question row, the picker unfolding only when the user opens it. */
+export function ChannelCard({ channelId, title, thumbnail, initial, className }: { channelId: string; title: string; thumbnail: string | null; initial: Progress | null; className?: string }) {
   const { progress, error, restart } = useIngest(channelId, initial)
-  const [open, setOpen] = React.useState(pickerOpen)
+  const [open, setOpen] = React.useState(false)
   const hidden = progress?.hidden ?? 0
   const listed = progress != null && progress.phase !== "catalog"
   return (
     <div className={cn("rounded-2xl border border-slate-200 bg-white", className)}>
       <Row title={title} thumbnail={thumbnail} progress={progress} error={error} />
       {listed && hidden > 0 && (
-        <div className="border-t border-slate-100 px-3 py-3">
-          {open ? (
-            <Picker channelId={channelId} onCancel={pickerOpen ? null : () => setOpen(false)} onSaved={() => (setOpen(false), restart())} />
-          ) : (
-            <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-slate-600">
-              <span className="flex items-center gap-1.5"><Lock className="size-3.5 text-slate-400" />{hidden} private or unlisted {hidden === 1 ? "video" : "videos"} left out</span>
-              <button type="button" onClick={() => setOpen(true)} className="font-medium text-slate-950 underline-offset-2 hover:underline">Choose</button>
+        <div className="border-t border-slate-100">
+          <button type="button" aria-expanded={open} onClick={() => setOpen((v) => !v)} className="flex w-full items-center justify-between gap-2 px-3 py-3 text-left text-[15px] text-slate-950 transition-colors hover:bg-slate-50">
+            Include unlisted &amp; private videos?
+            <ChevronDown className={cn("size-4 shrink-0 text-slate-400 transition-transform", open && "rotate-180")} />
+          </button>
+          {open && (
+            <div className="px-3 pb-3">
+              <Picker channelId={channelId} onCancel={() => setOpen(false)} onSaved={() => (setOpen(false), restart())} />
             </div>
           )}
         </div>

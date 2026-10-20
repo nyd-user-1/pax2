@@ -49,7 +49,6 @@ export async function OriginalView({ row, tab, publish }: { row: OriginalRow; ta
         <h1 className="font-display text-3xl text-slate-900">{row.title ?? "Untitled video"}</h1>
         <p className="text-sm text-slate-500">
           {[row.name, row.role, row.town].filter(Boolean).join(", ") || row.owner} · version {row.version} · {STAGE_LABEL[row.stage]}
-          {row.provenance === "backfilled" && <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">Backfilled</span>}
           {row.parent && (
             <>
               {" · "}
@@ -380,7 +379,6 @@ async function Versions({ id }: { id: string }) {
                 </td>
                 <td>
                   {r.stage}
-                  {r.backfilled && <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">Backfilled</span>}
                 </td>
                 <td>{r.lean == null ? "-" : pts(r.lean)}</td>
                 <td>{r.p == null ? "-" : pct(r.p)}</td>

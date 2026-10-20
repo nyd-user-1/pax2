@@ -1,7 +1,9 @@
 
 "use client"
 
-import { X } from "lucide-react"
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/ui/components/nova/select"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/ui/components/nova/tooltip"
 
 // The canvas control panel, ported whole from NSR's FlowSettings: reactflow.dev's props
 // playground in PAX2's skin, bound to the live canvas. Every row is a <ReactFlow /> prop (or the
@@ -195,21 +197,25 @@ const SECTIONS: Section[] = [
   },
 ]
 
-const ROW = "flex items-center justify-between gap-3 py-1"
+const ROW = "flex items-center justify-between gap-3 px-3 py-1"
+const HEAD = "px-3 pb-1 pt-4 text-[11px] font-semibold uppercase tracking-wider text-slate-400"
 const LABEL = "text-xs text-slate-500"
 
-function Tip({ tip }: { tip: string }) {
+function TipLabel({ label, tip }: { label: string; tip: string }) {
   const [name, ...rest] = tip.split(" — ")
   return (
-    <span className="pointer-events-none absolute right-full top-0 z-20 mr-2 hidden w-56 rounded-lg bg-white p-2.5 shadow-e2 ring-1 ring-slate-200 group-hover:block">
-      <span className="block font-mono text-[10px] text-slate-500">{name} #</span>
-      <span className="mt-1 block text-xs leading-snug text-slate-900">{rest.join(" — ")}</span>
-    </span>
+    <Tooltip>
+      <TooltipTrigger render={<span className={LABEL} />}>{label}</TooltipTrigger>
+      <TooltipContent side="right" className="w-56 flex-col items-start bg-white text-slate-800 shadow-e2 ring-1 ring-slate-200 [&>:last-child]:bg-white [&>:last-child]:fill-white">
+        <span className="block font-mono text-[10px] text-slate-500">{name} #</span>
+        <span className="mt-1 block text-xs leading-snug text-slate-900">{rest.join(" — ")}</span>
+      </TooltipContent>
+    </Tooltip>
   )
 }
 
 export function FlowSettingsPanel({
-  value, onChange, dataset, onDataset, datasets, layoutMode, onLayoutMode, onClose, onReset,
+  value, onChange, dataset, onDataset, datasets, layoutMode, onLayoutMode,
 }: {
   value: FlowProps
   onChange: (p: FlowProps) => void
@@ -218,48 +224,46 @@ export function FlowSettingsPanel({
   datasets: { id: string; label: string }[]
   layoutMode: string
   onLayoutMode: (m: string) => void
-  /** Standing alone it carried its own close; inside the graph's sidebar there is nothing to close. */
-  onClose?: () => void
-  onReset: () => void
 }) {
   const set = (key: keyof FlowProps, v: unknown) => onChange({ ...value, [key]: v })
-  const SELECT = "h-7 rounded-md border border-slate-200 bg-white px-2 font-mono text-xs text-slate-900"
 
   return (
-    <div className="px-3 pt-3">
-      <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-slate-900">{"<ReactFlow /> Props"}</h2>
-        <div className="flex items-center gap-3">
-          <button onClick={onReset} className="text-xs text-slate-500 hover:text-pax2-blue">Reset</button>
-          {onClose && <button onClick={onClose} className="text-slate-400 hover:text-slate-900" aria-label="Close"><X className="h-4 w-4" /></button>}
-        </div>
+    <div>
+      <p className={HEAD}>Dataset</p>
+      <div className="px-3">
+        <Select value={dataset} onValueChange={(v) => v && onDataset(String(v))}>
+          <SelectTrigger className="w-full" size="sm" aria-label="Dataset">
+            <SelectValue>{() => datasets.find((d) => d.id === dataset)?.label ?? dataset}</SelectValue>
+          </SelectTrigger>
+          <SelectContent className="rounded-xl">
+            {datasets.map((d) => <SelectItem key={d.id} value={d.id}>{d.label}</SelectItem>)}
+          </SelectContent>
+        </Select>
       </div>
 
-      <p className="mb-1 text-[10px] uppercase tracking-wide text-slate-400">Nodes &amp; Edges</p>
-      <div className={ROW}>
-        <span className={LABEL}>Dataset</span>
-        <select value={dataset} onChange={(e) => onDataset(e.target.value)} className={SELECT}>
-          {datasets.map((d) => <option key={d.id} value={d.id}>{d.label}</option>)}
-        </select>
-      </div>
-
-      <p className="mb-1 mt-4 text-[10px] uppercase tracking-wide text-slate-400">Layouting algorithms</p>
-      <div className={ROW}>
-        <span className={LABEL}>Library</span>
-        <select value={layoutMode} onChange={(e) => onLayoutMode(e.target.value)} className={SELECT}>
-          <option value="none">None</option>
-          <option value="dagre-lr">Dagre (LR)</option>
-          <option value="dagre-tb">Dagre (TB)</option>
-        </select>
+      <p className={HEAD}>Layout algorithms</p>
+      <div className="px-3">
+        <Select value={layoutMode} onValueChange={(v) => v && onLayoutMode(String(v))}>
+          <SelectTrigger className="w-full" size="sm" aria-label="Layout algorithm">
+            <SelectValue>{() => ({ none: "None", "dagre-lr": "Dagre (LR)", "dagre-tb": "Dagre (TB)", radial: "Radial", orbit: "Orbit", spine: "Spine" })[layoutMode] ?? layoutMode}</SelectValue>
+          </SelectTrigger>
+          <SelectContent className="rounded-xl">
+            <SelectItem value="none">None</SelectItem>
+            <SelectItem value="dagre-lr">Dagre (LR)</SelectItem>
+            <SelectItem value="dagre-tb">Dagre (TB)</SelectItem>
+            <SelectItem value="radial">Radial</SelectItem>
+            <SelectItem value="orbit">Orbit</SelectItem>
+            <SelectItem value="spine">Spine</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {SECTIONS.map((s) => (
-        <div key={s.title} className="mt-4">
-          <p className="mb-1 text-[10px] uppercase tracking-wide text-slate-400">{s.title}</p>
+        <div key={s.title}>
+          <p className={HEAD}>{s.title}</p>
           {s.rows.map((r) => (
-            <div key={String(r.key)} className={`${ROW} group relative`}>
-              <span className={LABEL}>{r.label}</span>
-              <Tip tip={r.tip} />
+            <div key={String(r.key)} className={ROW}>
+              <TipLabel label={r.label} tip={r.tip} />
               {r.kind === "bool" && (
                 <button
                   onClick={() => set(r.key, !value[r.key])}
@@ -291,9 +295,14 @@ export function FlowSettingsPanel({
                 />
               )}
               {r.kind === "select" && (
-                <select value={String(value[r.key])} onChange={(e) => set(r.key, e.target.value)} className={SELECT}>
-                  {r.options.map((o) => <option key={o} value={o}>{o}</option>)}
-                </select>
+                <Select value={String(value[r.key])} onValueChange={(v) => v && set(r.key, String(v))}>
+                  <SelectTrigger className="w-max min-w-24 font-mono text-xs" size="sm" aria-label={r.label}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="w-max rounded-xl">
+                    {r.options.map((o) => <SelectItem key={o} value={o} className="font-mono text-xs">{o}</SelectItem>)}
+                  </SelectContent>
+                </Select>
               )}
             </div>
           ))}

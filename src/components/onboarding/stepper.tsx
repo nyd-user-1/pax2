@@ -1,11 +1,11 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { BarChart3, Check, ChevronLeft, Clapperboard, Gauge, LineChart, PenLine, Send, Sparkles, Upload, Video } from "lucide-react"
 
 import { linkUpload, myVideos, saveProfile, videoUploadUrl, type Profile } from "@/app/onboarding-actions"
+import { whiteButton } from "@/components/white-button"
 import { ChannelCard, ChannelChip } from "@/components/onboarding/ingest"
 import type { Progress } from "@/lib/channel-ingest"
 import { cn } from "@/ui/lib/utils"
@@ -72,7 +72,7 @@ export function Stepper({ initial, channels }: { initial: Profile | null; channe
       const d = JSON.parse(sessionStorage.getItem(k) ?? "{}")
       sessionStorage.setItem(k, JSON.stringify({ ...d, name: profile.name, lastName: profile.lastName, role: profile.role, town: profile.town }))
     } catch {}
-    router.push("/app/home")
+    router.push(channels.length ? "/my-channels" : "/app/home")
   }
   const toggle = (field: "makes" | "wants", key: string) => setProfile((p) => ({ ...p, [field]: p[field].includes(key) ? p[field].filter((k) => k !== key) : [...p[field], key] }))
 
@@ -97,17 +97,15 @@ export function Stepper({ initial, channels }: { initial: Profile | null; channe
             <Field label="How did you hear about us?" optional>
               <input value={profile.heard} onChange={(e) => setProfile({ ...profile, heard: e.target.value })} placeholder="A friend, a campaign, social media..." className={FIELD} />
             </Field>
-            <div>
-              <button type="button" disabled={busy || !profile.name.trim()} onClick={next} className={BLACK}>Next</button>
-            </div>
+            <Actions back={null} busy={busy || !profile.name.trim()} ready onContinue={next} />
           </div>
         )}
 
         {step === "makes" && (
           <div className="flex flex-col gap-8">
-            <Tailor question="What content do you produce?" />
+            <Heading>What content do you produce?</Heading>
             <div className="flex flex-col gap-3">
-              <p className="text-sm text-slate-500">Select one or more</p>
+              <Sub>Select one or more</Sub>
               {MAKES.map((m) => (
                 <Option key={m.key} label={m.label} on={profile.makes.includes(m.key)} onClick={() => toggle("makes", m.key)} />
               ))}
@@ -120,7 +118,7 @@ export function Stepper({ initial, channels }: { initial: Profile | null; channe
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
               <Heading>What would you like to do with PAX?</Heading>
-              <p className="text-[15px] text-slate-500">Select all that apply</p>
+              <Sub>Select all that apply</Sub>
             </div>
             <div className="grid grid-cols-3 gap-2.5">
               {WANTS.map((w) => (
@@ -136,19 +134,12 @@ export function Stepper({ initial, channels }: { initial: Profile | null; channe
             <Heading>Connect YouTube</Heading>
             {ytError && <p className="rounded-xl bg-pax2-red-deep/10 px-4 py-3 text-sm text-pax2-red-deep">{ytError === "access_denied" ? "Google's consent was cancelled; nothing was connected." : ytError}</p>}
             {channels.map((c) => (
-              <ChannelCard key={c.channelId} channelId={c.channelId} title={c.title} thumbnail={c.thumbnail} initial={c.progress} pickerOpen />
+              <ChannelCard key={c.channelId} channelId={c.channelId} title={c.title} thumbnail={c.thumbnail} initial={c.progress} />
             ))}
             <a href={connectHref} className={cn(OUTLINE, "h-12 w-full")}>
               <YouTubeMark /> {channels.length ? "Connect another channel" : "Connect YouTube"}
             </a>
-            <div className="flex items-center gap-3">
-              {back && <BackChevron onClick={back} />}
-              {channels.length ? (
-                <button type="button" onClick={skip} className={cn(BLACK, "h-12 flex-1")}>Continue</button>
-              ) : (
-                <button type="button" onClick={skip} className={OUTLINE}>Skip</button>
-              )}
-            </div>
+            <Actions back={back} ready={channels.length > 0} onContinue={skip} onSkip={skip} />
             <p className="text-center text-sm text-slate-500">*Provides read-only analytics authorization.</p>
           </div>
         )}
@@ -171,11 +162,7 @@ export function Stepper({ initial, channels }: { initial: Profile | null; channe
                 ))}
               </div>
             )}
-            <div className="flex items-center gap-3">
-              {back && <BackChevron onClick={back} />}
-              <button type="button" disabled={busy} onClick={finish} className={BLACK}>Go to PAX</button>
-              {channels.length > 0 && <Link href="/my-channels" className="text-[15px] font-medium text-slate-500 hover:text-slate-950">See the analysis</Link>}
-            </div>
+            <Actions back={back} busy={busy} ready onContinue={finish} label={channels.length ? "View analysis" : "Go to PAX"} />
           </div>
         )}
       </section>
@@ -193,14 +180,8 @@ function Heading({ children }: { children: React.ReactNode }) {
   return <h1 className="m-0 text-[30px] font-normal leading-tight tracking-[-0.01em] text-slate-950">{children}</h1>
 }
 
-/** ElevenLabs' two-tone question: the grey lead line, then the question. */
-function Tailor({ question }: { question: string }) {
-  return (
-    <h1 className="m-0 text-[30px] font-normal leading-tight tracking-[-0.01em]">
-      <span className="block text-slate-400">Let&apos;s tailor the experience.</span>
-      <span className="block text-slate-950">{question}</span>
-    </h1>
-  )
+function Sub({ children }: { children: React.ReactNode }) {
+  return <p className="text-[15px] text-slate-500">{children}</p>
 }
 
 function Field({ label, optional, children }: { label: string; optional?: boolean; children: React.ReactNode }) {
@@ -241,22 +222,26 @@ function Tile({ icon: Icon, label, on, onClick }: { icon: React.ComponentType<{ 
 
 function BackChevron({ onClick }: { onClick: () => void }) {
   return (
-    <button type="button" onClick={onClick} aria-label="Back" className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg text-slate-950 transition-colors hover:bg-slate-100">
-      <ChevronLeft className="size-5" />
+    <button type="button" onClick={onClick} aria-label="Back" className={whiteButton("circle")}>
+      <ChevronLeft className="size-4" />
     </button>
   )
 }
 
-/** The action row: the back chevron, then Skip until something is picked, then Continue. */
-function Actions({ back, busy, ready, onContinue, onSkip }: { back: (() => void) | null; busy: boolean; ready: boolean; onContinue: () => void; onSkip: () => void }) {
+/** Every step's action row: the circled back chevron on the left, the action on the right —
+ *  Skip until something is picked, then Continue. */
+function Actions({ back, busy, ready, onContinue, onSkip, label = "Continue", extra }: { back: (() => void) | null; busy?: boolean; ready: boolean; onContinue: () => void; onSkip?: () => void; label?: string; extra?: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-3">
-      {back && <BackChevron onClick={back} />}
-      {ready ? (
-        <button type="button" disabled={busy} onClick={onContinue} className={BLACK}>Continue</button>
-      ) : (
-        <button type="button" onClick={onSkip} className={OUTLINE}>Skip</button>
-      )}
+    <div className="flex items-center justify-between gap-3">
+      {back ? <BackChevron onClick={back} /> : <span />}
+      <span className="flex items-center gap-4">
+        {extra}
+        {ready || !onSkip ? (
+          <button type="button" disabled={busy} onClick={onContinue} className={BLACK}>{label}</button>
+        ) : (
+          <button type="button" onClick={onSkip} className={OUTLINE}>Skip</button>
+        )}
+      </span>
     </div>
   )
 }

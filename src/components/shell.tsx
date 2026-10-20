@@ -14,17 +14,17 @@ import { whiteButton } from "@/components/white-button"
 
 // The sidebar by audience (the UX audit's split, ruled 2026-10-19): the creator's product plain
 // at the top, the research behind it under its own label, and the admin surfaces for admins only.
-const NAV = [
+const NAV: { href: string; label: string; icon: typeof House; sub?: boolean }[] = [
   { href: "/app/home", label: "Home", icon: House },
+  { href: "/my-videos", label: "My videos", icon: Film, sub: true },
+  { href: "/my-channels", label: "My channels", icon: TvMinimal, sub: true },
   { href: "/chat", label: "Chat", icon: MessagesSquare },
   { href: "/recording", label: "Create", icon: Video },
   { href: "/scripts", label: "Scripts", icon: NotebookPen },
-  { href: "/my-videos", label: "My videos", icon: Film },
-  { href: "/my-channels", label: "My channels", icon: TvMinimal },
   { href: "/tags", label: "Tags", icon: Tag },
   { href: "/videos", label: "Videos", icon: Clapperboard },
   { href: "/channels", label: "Channels", icon: Tv },
-  { href: "/learn", label: "Teach a Model", icon: ListChecks },
+  { href: "/learn", label: "Learn", icon: ListChecks },
 ]
 const RESEARCH = [
   { href: "/tracking", label: "Tracking", icon: Activity },
@@ -50,6 +50,7 @@ const LAB = [{ href: "/campaigns", label: "Campaigns", icon: Clapperboard }]
 // The header names the page; the first match wins, so a deeper route comes before its parent.
 const TITLES: [string, string][] = [
   ["/app/home", "Home"],
+  ["/home", "Home"],
   ["/chat", "Chat"],
   ["/recording", "Create"],
   ["/record/", "Create"],
@@ -59,7 +60,7 @@ const TITLES: [string, string][] = [
   ["/scripts", "Scripts"],
   ["/channels", "Channels"],
   ["/learn/classifier", "The Classifier"],
-  ["/learn", "Teach a Model"],
+  ["/learn", "Learn"],
   ["/v/", "Video"],
   ["/tracking", "Tracking"],
   ["/evidence", "Evidence"],
@@ -219,7 +220,31 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
       <Link href="/" aria-label="Home" className="mb-4 flex px-3 pt-1">
         <Wordmark size={20} />
       </Link>
-      <nav className="flex flex-col gap-0.5">{NAV.map((n) => item(n.href, n.label, n.icon))}</nav>
+      {/* Sub-pages hang off their parent on the comment thread's tree lines: the trunk down
+          from the parent's icon, a rounded elbow turning into each sub-page. */}
+      <nav className="flex flex-col gap-0.5">
+        {NAV.map((n, i) => {
+          if (n.sub) return null
+          const subs = []
+          for (let j = i + 1; j < NAV.length && NAV[j].sub; j++) subs.push(NAV[j])
+          return (
+            <React.Fragment key={n.href}>
+              {item(n.href, n.label, n.icon)}
+              {subs.length > 0 && (
+                <div className="flex flex-col">
+                  {subs.map((s, k) => (
+                    <div key={s.href} className="relative pl-8">
+                      {k < subs.length - 1 && <span aria-hidden className="absolute bottom-0 left-[21px] top-0 w-px bg-slate-300" />}
+                      <span aria-hidden className="absolute left-[21px] top-0 h-4 w-5 rounded-bl-[10px] border-b-[1.5px] border-l-[1.5px] border-slate-300" />
+                      {item(s.href, s.label, s.icon, true)}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </React.Fragment>
+          )
+        })}
+      </nav>
       <div className="mt-3 min-h-0 flex-1 overflow-y-auto border-t border-slate-200/70 pt-3">
         <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Research</p>
         <nav className="flex flex-col gap-0.5">{RESEARCH.map((n) => item(n.href, n.label, n.icon))}</nav>

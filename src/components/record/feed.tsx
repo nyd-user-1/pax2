@@ -418,7 +418,7 @@ const rotate = <T,>(xs: T[], n: number) => {
 
 /** One pass through the catalog as a mixed layout: a trio and a Shorts shelf first, then pairs,
  *  until the items run out. */
-function Cycle({ items }: { items: FeedVideo[] }) {
+function Cycle({ items, ruled }: { items: FeedVideo[]; ruled?: boolean }) {
   const blocks: React.ReactNode[] = []
   const pattern = ["trio", "shorts", "list", "list", "list", "list"] as const
   let i = 0
@@ -438,6 +438,8 @@ function Cycle({ items }: { items: FeedVideo[] }) {
     }
     p += 1
   }
+  // On the catalog page, YouTube's rule stands between groupings (the shelf's pill stays its own).
+  if (ruled) return <>{blocks.flatMap((b, n) => (n ? [<span key={`rule-${n}`} className="h-px w-full bg-black/10" />, b] : [b]))}</>
   return <>{blocks}</>
 }
 
@@ -914,10 +916,10 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
               ))}
             </div>
           ) : (
-            <Cycle items={ordered} />
+            <Cycle items={ordered} ruled={!landing} />
           )
         ) : (
-          Array.from({ length: cycles }, (_, c) => <Cycle key={c} items={rotate(ordered, c * 7)} />)
+          Array.from({ length: cycles }, (_, c) => <Cycle key={c} items={rotate(ordered, c * 7)} ruled={!landing} />)
         )}
       </div>
 
