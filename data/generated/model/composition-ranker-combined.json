@@ -1,0 +1,253 @@
+{
+ "builtAt": "2026-10-20T08:21:52.184Z",
+ "name": "PAX2 Composition Ranker",
+ "version": "composition-ranker-0-combined",
+ "variant": "combined",
+ "attempt": 1,
+ "embedding": {
+  "run": "20261019-094112-train",
+  "builtAt": "2026-10-20T07:17:33.573Z",
+  "k": 20,
+  "pool": 14586,
+  "rule": "neighbors from labeled training-channel shorts only, never the short's own channel"
+ },
+ "method": "Bradley-Terry logistic, no intercept, L2 0.001, 600 steps at 0.5, on standardized breakout-minus-control differences of 25 features (23 measured compositional, 2 embedding evidence) (log1p on counts and durations; a difference is 0 unless both sides are measured). Pairs: every settled breakout with its nearest-in-time same-channel non-breakout control. Held-out channels are the encoder's.",
+ "composition": "2026-10-20T08:20:46.930Z",
+ "pairs": {
+  "all": 2770,
+  "train": 2104,
+  "heldOut": 666,
+  "heldOutWithMedia": 590,
+  "trainWithMedia": 1891,
+  "heldOutChannels": [
+   "UClkO4MArT2WKWj32YDD_-Ew",
+   "UCY-3GVY7vhOuuixr1QBMWEg",
+   "UChm_bCQMmaxljPge4-V9fVQ",
+   "UCbPojIVZdVhfBTRwj64j0Cw",
+   "UCSRRURbKlPf1HwPUhjmufTg",
+   "UCQANb2YPwAtK-IQJrLaaUFw",
+   "UCdFZ5b8bpOLRgbOATyPRtdw",
+   "UCgIuEJP3M3zg-vt5Z1UVfdg",
+   "UCKTPks8QcY-i8l7YeW5OdjA",
+   "UCnpLmnN_7TxPdpGODs-JXxg"
+  ]
+ },
+ "accuracy": {
+  "train": 0.5931558935361216,
+  "heldOut": 0.5945945945945946,
+  "heldOutWithMedia": 0.5898305084745763,
+  "leaveOneChannelOut": 0.5743682310469314,
+  "leaveOneChannelOutWithMedia": 0.573559048770657,
+  "v1OnSameHeldOutPairs": 0.5945945945945946,
+  "v1Pairs": 666
+ },
+ "gateX": {
+  "rule": "held-out pair accuracy at least 0.55 over every held-out pair",
+  "threshold": 0.55,
+  "value": 0.5945945945945946,
+  "pass": true
+ },
+ "features": [
+  {
+   "key": "durationSec",
+   "log1p": true,
+   "mean": 4.072751175216365,
+   "sd": 0.6738821739990732,
+   "weight": -0.08607175362219716,
+   "description": "length in seconds (the media file; the catalog where no media)"
+  },
+  {
+   "key": "cutsPerSec",
+   "log1p": true,
+   "mean": 0.162242674105032,
+   "sd": 0.14190453549464213,
+   "weight": -0.023453814854306476,
+   "description": "scene cuts per second (a local peak of the ffmpeg scene score, at least 0.1 and 5x the short's median)"
+  },
+  {
+   "key": "firstCutSec",
+   "log1p": true,
+   "mean": 1.9638426819870083,
+   "sd": 1.1089883045823559,
+   "weight": -0.14035945390625454,
+   "description": "seconds to the first cut (the duration when there is none)"
+  },
+  {
+   "key": "cutsHook",
+   "log1p": true,
+   "mean": 0.17334358047718643,
+   "sd": 0.3376676175342985,
+   "weight": -0.041453584652611015,
+   "description": "cuts in the first 2 s"
+  },
+  {
+   "key": "visualActivity",
+   "log1p": true,
+   "mean": 0.009283180072578343,
+   "sd": 0.006786898459026275,
+   "weight": -0.01757936347290603,
+   "description": "mean frame-to-frame scene score (motion and change)"
+  },
+  {
+   "key": "loudnessLufs",
+   "log1p": false,
+   "mean": -20.280385517061735,
+   "sd": 6.0757875909279635,
+   "weight": -0.010339989436982855,
+   "description": "integrated loudness, LUFS"
+  },
+  {
+   "key": "loudnessRange",
+   "log1p": true,
+   "mean": 1.8264908952507064,
+   "sd": 0.4782282815860982,
+   "weight": 0.13041663905887824,
+   "description": "loudness range, LU"
+  },
+  {
+   "key": "hookLoudnessDelta",
+   "log1p": false,
+   "mean": -0.9752283998955826,
+   "sd": 3.4656364592446165,
+   "weight": 0.03763541689491703,
+   "description": "loudness of the first 2 s minus the whole short's, LU"
+  },
+  {
+   "key": "textWordsPerFrame",
+   "log1p": true,
+   "mean": 0.39621626834440915,
+   "sd": 0.45176590052043586,
+   "weight": 0.022562567479648382,
+   "description": "on-screen words per sampled frame (OCR, 1 frame a second)"
+  },
+  {
+   "key": "textFrameShare",
+   "log1p": false,
+   "mean": 0.1387513007284063,
+   "sd": 0.22391582138952779,
+   "weight": 0.007951750448473776,
+   "description": "share of sampled frames carrying on-screen text (2+ words)"
+  },
+  {
+   "key": "textHook",
+   "log1p": true,
+   "mean": 0.5669979107635981,
+   "sd": 0.7954851063391077,
+   "weight": -0.000567442542051917,
+   "description": "on-screen words in the first 2 s of frames"
+  },
+  {
+   "key": "brightness",
+   "log1p": false,
+   "mean": 91.6233064516131,
+   "sd": 30.223351931852573,
+   "weight": 0.02595613277522482,
+   "description": "mean frame brightness, 0 to 255"
+  },
+  {
+   "key": "saturation",
+   "log1p": false,
+   "mean": 94.7506737773152,
+   "sd": 34.69057711648879,
+   "weight": -0.02227573259755742,
+   "description": "mean frame saturation, 0 to 255"
+  },
+  {
+   "key": "speechWps",
+   "log1p": false,
+   "mean": 3.1244379232505652,
+   "sd": 0.6679977410426798,
+   "weight": 0.22435539367789964,
+   "description": "spoken words per second between the first and last word"
+  },
+  {
+   "key": "firstWordSec",
+   "log1p": true,
+   "mean": 0.12864217454588284,
+   "sd": 0.3532584124778215,
+   "weight": -0.1762981671366847,
+   "description": "seconds to the first spoken word"
+  },
+  {
+   "key": "wordsHook",
+   "log1p": true,
+   "mean": 1.9996286482995964,
+   "sd": 0.4735952514835783,
+   "weight": -0.07128755237090939,
+   "description": "spoken words in the first 2 s"
+  },
+  {
+   "key": "speechShare",
+   "log1p": false,
+   "mean": 0.9158084696823995,
+   "sd": 0.14173779111340842,
+   "weight": -0.18056091713127329,
+   "description": "share of audible seconds carrying speech"
+  },
+  {
+   "key": "titleChars",
+   "log1p": true,
+   "mean": 3.87342769333245,
+   "sd": 0.4908203374054188,
+   "weight": -0.03357699519083918,
+   "description": "title length in characters"
+  },
+  {
+   "key": "titleWords",
+   "log1p": true,
+   "mean": 2.2149312385744064,
+   "sd": 0.40430917090373425,
+   "weight": 0.03214146493031821,
+   "description": "title length in words"
+  },
+  {
+   "key": "titleQuestion",
+   "log1p": false,
+   "mean": 0.1366444866920152,
+   "sd": 0.3434716450432132,
+   "weight": -0.020898782680583462,
+   "description": "title carries a question mark (0/1)"
+  },
+  {
+   "key": "titleNumber",
+   "log1p": false,
+   "mean": 0.08008555133079848,
+   "sd": 0.2714255990116613,
+   "weight": -0.045501124298641886,
+   "description": "title carries a digit (0/1)"
+  },
+  {
+   "key": "titleCapsRun",
+   "log1p": false,
+   "mean": 0.3997148288973384,
+   "sd": 0.7279195277155092,
+   "weight": 0.02473577647523431,
+   "description": "longest run of all-caps words of 3+ letters in the title"
+  },
+  {
+   "key": "titleEmoji",
+   "log1p": false,
+   "mean": 0.22742395437262358,
+   "sd": 0.41916858106272276,
+   "weight": 0.07594075754094899,
+   "description": "title carries an emoji (0/1)"
+  },
+  {
+   "key": "knnShare",
+   "log1p": false,
+   "mean": 0.16524891251812415,
+   "sd": 0.1283448502467054,
+   "weight": 0.20908712418021252,
+   "description": "outlier share of the 20 nearest training-channel shorts by encoder cosine"
+  },
+  {
+   "key": "outlierMargin",
+   "log1p": false,
+   "mean": -0.01815803769937171,
+   "sd": 0.012458920691653002,
+   "weight": 0.19904825309679863,
+   "description": "mean cosine to the 20 nearest training-channel outliers minus to the 20 nearest non-outliers"
+  }
+ ],
+ "score": "score(short) = sum_f weight_f * (x_f - mean_f) / sd_f over measured features (x log1p where marked); the higher-scoring short of a same-channel pair is the predicted breakout"
+}
