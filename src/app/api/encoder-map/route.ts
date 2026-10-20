@@ -12,6 +12,46 @@ import { NextResponse } from "next/server"
 export const dynamic = "force-dynamic"
 
 type Point = { id: string; x: number; y: number; cluster: number; tier: string; breakout: number | null; family: string; channelId: string; label: string }
+type CompFile = { builtAt: string; shorts: Record<string, Record<string, number>> }
+type Chip = { key: string; label: string; field: string; op: "gte" | "lt" | "lte"; value: number; measured: number }
+
+// The fields the Composition chips read, per point, from data/generated/model/composition.json
+// (scripts/composition/merge.mjs). Duration covers every catalog short; the media and speech fields
+// only the shorts that were extracted, so a point without one never matches its chip.
+const COMP_FIELDS = ["durationSec", "cutsPerSec", "cutsHook", "textHook", "firstWordSec", "speechWps"] as const
+
+const pct = (xs: number[], q: number) => {
+  const s = [...xs].sort((a, b) => a - b)
+  return s[Math.min(s.length - 1, Math.floor(q * s.length))]
+}
+const round = (x: number, d: number) => Math.round(x * 10 ** d) / 10 ** d
+
+/** Chip thresholds come from the measured spread: "fast" is the top third of the shorts measured. */
+function chipsFor(rows: Record<string, number>[]): Chip[] {
+  const vals = (f: string) => rows.map((r) => r[f]).filter((v): v is number => v != null)
+  const chips: Chip[] = []
+  const add = (key: string, label: string, field: string, op: Chip["op"], value: number) => {
+    const xs = vals(field)
+    if (xs.length) chips.push({ key, label, field, op, value, measured: xs.length })
+  }
+  add("short", "Under 30 s", "durationSec", "lt", 30)
+  add("long", "60 s and over", "durationSec", "gte", 60)
+  const cuts = vals("cutsPerSec")
+  if (cuts.length) {
+    const t = round(pct(cuts, 2 / 3), 2)
+    add("fast-cuts", `${t}+ cuts/s`, "cutsPerSec", "gte", t)
+  }
+  add("cut-hook", "Cut in the first 2 s", "cutsHook", "gte", 1)
+  add("text-hook", "Text on screen in the first 2 s", "textHook", "gte", 2)
+  add("first-word", "Speaks within 0.5 s", "firstWordSec", "lte", 0.5)
+  const wps = vals("speechWps")
+  if (wps.length) {
+    const t = round(pct(wps, 2 / 3), 1)
+    add("fast-talk", `${t}+ words/s`, "speechWps", "gte", t)
+  }
+  return chips
+}
+
 type MapFile = { run: string; builtAt: string; n: number; k: number; clusters: { id: number; n: number; outlierRate: number | null; labels: string[] }[]; points: Point[] }
 
 let cached: { body: unknown; at: number } | null = null
@@ -37,13 +77,25 @@ export async function GET() {
     const lift = labeled.length ? (labeled.reduce((t, pt) => t + (pt.breakout! - base(pt.channelId)!), 0) / labeled.length) * 100 : null
     return { id: c.id, n: c.n, channels: new Set(pts.map((pt) => pt.channelId)).size, rate: c.outlierRate, lift: lift == null ? null : Math.round(lift * 10) / 10, labels: c.labels }
   })
+  const cp = path.join(process.cwd(), "data/generated/model/composition.json")
+  const comp = fs.existsSync(cp) ? (JSON.parse(fs.readFileSync(cp, "utf8")) as CompFile) : null
+  const compOf = (id: string) => {
+    const s = comp?.shorts[id]
+    if (!s) return undefined
+    const f: Record<string, number> = {}
+    for (const k of COMP_FIELDS) if (s[k] != null) f[k] = s[k]
+    return f
+  }
+  const points = m.points.map((pt) => ({ id: pt.id, x: pt.x, y: pt.y, cluster: pt.cluster, tier: pt.tier, label: pt.label, f: compOf(pt.id) }))
   const body = {
     run: m.run,
     builtAt: m.builtAt,
     n: m.n,
     k: m.k,
     clusters,
-    points: m.points.map((pt) => ({ id: pt.id, x: pt.x, y: pt.y, cluster: pt.cluster, tier: pt.tier, label: pt.label })),
+    composition: comp?.builtAt ?? null,
+    chips: chipsFor(points.map((p) => p.f ?? {})),
+    points,
   }
   cached = { body, at: Date.now() }
   return NextResponse.json(body)

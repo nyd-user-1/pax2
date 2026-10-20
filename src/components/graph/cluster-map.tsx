@@ -20,15 +20,28 @@ import { cn } from "@/ui/lib/utils"
 // cluster zooms to it. The ranking statistic is lift: percentage points above each short's own
 // channel's outlier rate, so one hot channel cannot masquerade as a content finding.
 
-type MapPoint = { id: string; x: number; y: number; cluster: number; tier: string; label: string }
+type MapPoint = { id: string; x: number; y: number; cluster: number; tier: string; label: string; f?: Record<string, number> }
 
 /* The two proposed readings of the same vector space (2026-10-20):
    Resonance — semantic positions with the behavioral correction as the lens: every short colored
    by its cluster's lift over its own channels (green above, red below, gray where unmeasured).
-   Composition — the same reading with compositional filters laid over it: headline traits
-   computable today (question, number, length); pace, hook and audio join when extraction runs. */
-type CompFilter = "question" | "number" | "short-title" | "long-title"
-const COMP_FILTERS: { key: CompFilter; label: string; test: (p: MapPoint) => boolean }[] = [
+   Composition — the same reading with compositional filters laid over it: headline traits read
+   from every title here, and the measured media chips (length, pace, hook, on-screen text, speech)
+   served by /api/encoder-map from scripts/composition/, a point without the measurement never
+   matching its chip. */
+type CompChip = { key: string; label: string; field: string; op: "gte" | "lt" | "lte"; value: number; measured: number }
+type CompFilter = { key: string; label: string; title?: string; test: (p: MapPoint) => boolean }
+const chipFilter = (c: CompChip): CompFilter => ({
+  key: c.key,
+  label: c.label,
+  title: `${c.measured.toLocaleString()} shorts measured`,
+  test: (p) => {
+    const v = p.f?.[c.field]
+    if (v == null) return false
+    return c.op === "gte" ? v >= c.value : c.op === "lt" ? v < c.value : v <= c.value
+  },
+})
+const HEADLINE_FILTERS: CompFilter[] = [
   { key: "question", label: "Question headline", test: (p) => /\?/.test(p.label) },
   { key: "number", label: "Carries a number", test: (p) => /\d/.test(p.label) },
   { key: "short-title", label: "Title under 40 chars", test: (p) => p.label.length < 40 },
@@ -41,7 +54,7 @@ const liftColor = (lift: number | null) => {
   return lift > 0 ? `hsl(145 ${45 + t * 30}% ${55 - t * 20}%)` : `hsl(0 ${45 + t * 30}% ${60 - t * 18}%)`
 }
 type MapCluster = { id: number; n: number; channels: number; rate: number | null; lift: number | null; labels: string[] }
-type MapData = { run: string; builtAt: string; n: number; k: number; clusters: MapCluster[]; points: MapPoint[] }
+type MapData = { run: string; builtAt: string; n: number; k: number; clusters: MapCluster[]; points: MapPoint[]; chips?: CompChip[] }
 
 const TOUR: string[] = [
   "Every dot is a short. Shorts that sit close together say similar things; distance is similarity, and the axes themselves carry no meaning.",
@@ -213,7 +226,7 @@ export function ClusterMap({ onClose, initialLayer = "network" }: { onClose: () 
   const [failed, setFailed] = React.useState(false)
   const [layer, setLayer] = React.useState<"network" | "points" | "vector">(initialLayer)
   const [mode, setMode] = React.useState<"cluster" | "tier" | "resonance" | "composition">(initialLayer === "vector" ? "resonance" : "cluster")
-  const [filters, setFilters] = React.useState<Set<CompFilter>>(new Set())
+  const [filters, setFilters] = React.useState<Set<string>>(new Set())
   const [picked, setPicked] = React.useState<number | null>(null)
   const [hoverId, setHoverId] = React.useState<number | null>(null)
   const [tour, setTour] = React.useState<number | null>(null)
@@ -226,6 +239,7 @@ export function ClusterMap({ onClose, initialLayer = "network" }: { onClose: () 
   }, [])
 
   const layout = React.useMemo(() => (data ? layoutClusters(data) : null), [data])
+  const compFilters = React.useMemo(() => [...(data?.chips ?? []).map(chipFilter), ...HEADLINE_FILTERS], [data])
 
   const fitPoints = React.useCallback((cluster: number | null) => {
     const el = wrapRef.current
@@ -266,7 +280,7 @@ export function ClusterMap({ onClose, initialLayer = "network" }: { onClose: () 
       ctx.setLineDash([])
     }
     const liftOf = new Map(data.clusters.map((c) => [c.id, c.lift]))
-    const active = COMP_FILTERS.filter((f) => filters.has(f.key))
+    const active = compFilters.filter((f) => filters.has(f.key))
     for (const p of data.points) {
       const filtered = mode === "composition" && active.length > 0 && !active.every((f) => f.test(p))
       const dim = (picked != null && p.cluster !== picked) || filtered
@@ -277,7 +291,7 @@ export function ClusterMap({ onClose, initialLayer = "network" }: { onClose: () 
       ctx.fill()
     }
     ctx.globalAlpha = 1
-  }, [data, mode, picked, filters, layer])
+  }, [data, mode, picked, filters, layer, compFilters])
 
   // The points canvas frames the picked cluster (or the whole corpus) whenever the pick,
   // the layer or the data changes; the network's ReactFlow canvas frames itself.
@@ -342,12 +356,13 @@ export function ClusterMap({ onClose, initialLayer = "network" }: { onClose: () 
           ))}
         </div>
         {layer !== "network" && mode === "composition" && (
-          <div className="flex items-center gap-1.5">
-            {COMP_FILTERS.map((f) => (
+          <div className="flex min-w-0 items-center gap-1.5 overflow-x-auto">
+            {compFilters.map((f) => (
               <button
                 key={f.key}
+                title={f.title}
                 onClick={() => setFilters((s) => { const n = new Set(s); if (n.has(f.key)) n.delete(f.key); else n.add(f.key); return n })}
-                className={cn("h-7 rounded-full border px-3 text-xs font-medium transition-colors", filters.has(f.key) ? "border-pax2-light-blue bg-pax2-lavender/60 text-pax2-blue" : "border-slate-200 text-slate-500 hover:text-pax2-blue")}
+                className={cn("h-7 shrink-0 whitespace-nowrap rounded-full border px-3 text-xs font-medium transition-colors", filters.has(f.key) ? "border-pax2-light-blue bg-pax2-lavender/60 text-pax2-blue" : "border-slate-200 text-slate-500 hover:text-pax2-blue")}
               >
                 {f.label}
               </button>
