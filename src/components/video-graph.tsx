@@ -14,11 +14,10 @@ import {
 } from "lucide-react"
 
 import { canvasUploadUrl, listCanvases, listCanvasFiles, loadCanvas, saveCanvas, type CanvasFile } from "@/app/graph-actions"
-import { ChatDock } from "@/components/graph/chat-dock"
 import { DEFAULT_FLOW_PROPS, FlowSettingsPanel, type FlowProps } from "@/components/graph/flow-settings"
 import { RECIPE_DEFAULTS, RECIPE_H, RECIPE_LABEL, RECIPE_W, RecipeForm, RecipeNode } from "@/components/graph/recipe-nodes"
 import { whiteButton } from "@/components/white-button"
-import { describeEntity, readDragEntity, setDragEntity, type DragEntity } from "@/lib/drag-entity"
+import { describeEntity, readDragEntity, setDragEntity } from "@/lib/drag-entity"
 import { isRecipeType, similarTo, type CanvasRow, type CanvasState, type GraphChannel, type GraphData, type GraphVideo, type RecipeType, type SavedEdge } from "@/lib/graph-data"
 import { ClusterMap } from "@/components/graph/cluster-map"
 import { LOOPS } from "@/lib/recipes/loops"
@@ -787,8 +786,6 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   const [flowProps, setFlowProps] = useState<FlowProps>(DEFAULT_FLOW_PROPS)
   const propsLoaded = useRef(false)
   const [dataset, setDataset] = useState("top-reform-core")
-  const [dockOpen, setDockOpen] = useState(false)
-  const [attached, setAttached] = useState<DragEntity | null>(null)
   const [canvas, setCanvas] = useState<{ id?: string; name: string } | null>(null)
   const [saveOpen, setSaveOpen] = useState(false)
   const [saveName, setSaveName] = useState("")
@@ -1549,16 +1546,6 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
   const sel = selectedKey ? store.current.get(selectedKey) : null
   const hasPrompts = nodes.some((n) => (n.data as GNode).type === "prompt")
 
-  /** What the dock knows: an attached entity, the canvas inventory, the selection. */
-  const canvasContext = useCallback(() => {
-    const ents = [...store.current.values()].filter((g) => g.type !== "more")
-    const parts: string[] = []
-    if (attached) parts.push(`ACTIVE CONTEXT. The reader attached this to the conversation:\n${describeEntity(attached, data)}`)
-    parts.push(ents.length ? `The reader is on the PAX2 graph canvas, which shows:\n${ents.slice(0, 30).map((g) => `${g.type} ${g.label}`).join("\n")}` : "The reader is on the PAX2 graph canvas, which is empty.")
-    if (selectedKey) parts.push(`The reader has ${selectedKey} selected.`)
-    parts.push("When naming a tracked video, link it as [its title](/v/yt-<id>); the link centers it on the canvas.")
-    return parts.join("\n\n")
-  }, [attached, data, selectedKey])
 
   const run = traceOpen ? runs.find((r) => r.id === traceOpen) : null
 
@@ -1652,7 +1639,6 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
         refresh={railRefresh}
         onPick={center}
         onAdd={addToCanvas}
-        onAsk={(g) => { setAttached(g); setDockOpen(true) }}
         onAddFile={(f) => addToCanvas({ type: "file", id: f.key, label: f.name, sub: kb(f.size), fileKey: f.key })}
         onLoad={loadView}
         onMap={() => setMapOpen(true)}
@@ -1766,7 +1752,6 @@ function VideoGraphInner({ data, email, admin, boot }: Props) {
             </div>
           </Panel>
         </ReactFlow>
-        <ChatDock context={canvasContext} open={dockOpen} onOpenChange={setDockOpen} attached={attached} onAttach={setAttached} />
       </div>
 
       {sel && isRecipeType(sel.type) && (
