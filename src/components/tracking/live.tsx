@@ -1,3 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
+import { existsSync } from "node:fs"
+import { join } from "node:path"
+
 import Link from "next/link"
 
 import { tierOf, type PollRow } from "@/lib/lab"
@@ -5,13 +9,13 @@ import { CURVE_TIER as TIER } from "@/lib/velocity-meta"
 
 import { TableBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
-import { liveForecast, VELOCITY_STRENGTH } from "@/lib/velocity-live"
+import { liveForecast } from "@/lib/velocity-live"
 import { baselines, recentPolls, videoMeta, type VideoMeta } from "@/lib/velocity-store"
 import { cn } from "@/ui/lib/utils"
 
 // The Live tab of /tracking: every watched short inside or just past its 72-hour window.
 
-type Watched = { id: string; channel: string; title: string; age: number; views: number; ratio: number | null; series: [number, number][]; p: number | null; horizon: 1 | 3 | 6 | null }
+type Watched = { id: string; channel: string; channelId: string; title: string; age: number; views: number; ratio: number | null; series: [number, number][]; p: number | null; horizon: 1 | 3 | 6 | null }
 
 /** Every watched short from the poller's rows, with its latest count, its readings inside the 72-hour
  *  window, and PAX2 Velocity Classifier's chance of a Hit: from the readings so far while it is under
@@ -35,6 +39,7 @@ function watched(rows: PollRow[], medians: Record<string, { median: number | nul
       horizon: f?.horizon ?? null,
       id: last.id,
       channel: last.channel,
+      channelId: last.channelId,
       title: last.title.replace(/\s*#\w+/g, "").trim() || last.title,
       age,
       views: last.views,
@@ -66,20 +71,18 @@ export async function LiveTab() {
   const all = watched(rows, medians, meta)
   const inProgress = all.filter((w) => w.age < 72).sort((a, b) => (b.ratio ?? -1) - (a.ratio ?? -1))
   const complete = all.filter((w) => w.age >= 72).sort((a, b) => (b.ratio ?? -1) - (a.ratio ?? -1))
-  const lastPoll = rows.length ? new Date(rows.reduce((t, r) => (r.at > t ? r.at : t), rows[0].at)).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : null
   const csv = (ws: Watched[]) => ws.map((w) => ({ channel: w.channel, video: w.title, ageHours: Math.round(w.age * 10) / 10, views: w.views, ratio: w.ratio == null ? "" : Math.round(w.ratio * 100) / 100, chance: w.p == null ? "" : Math.round(w.p * 100) / 100, horizonHours: w.horizon ?? "" }))
-  const strength = VELOCITY_STRENGTH.auc6 != null ? `PAX2 Velocity Classifier: leave-one-channel-out AUC ${VELOCITY_STRENGTH.auc6} at 6 hours${VELOCITY_STRENGTH.auc3 != null ? `, ${VELOCITY_STRENGTH.auc3} at 3` : ""}${VELOCITY_STRENGTH.auc1 != null ? `, ${VELOCITY_STRENGTH.auc1} at 1` : ""}, on ${VELOCITY_STRENGTH.shorts} shorts.` : ""
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 md:gap-9">
       <BlockOrder page="live-tracking" initial={["in-progress", "complete"]}>
         {(
           [
-            ["in-progress", "In Progress", inProgress, `${inProgress.length} under watch · polled every 15 minutes${lastPoll ? ` · last poll ${lastPoll}` : ""}. ${strength}`, "No short is inside its 72-hour window."],
-            ["complete", "Complete", complete, `Verdict at 72 hours beside the call the model could have made at hour 6. ${strength}`, "No short has finished its 72 hours yet."],
+            ["in-progress", "In Progress", inProgress, "No short is inside its 72-hour window."],
+            ["complete", "Complete", complete, "No short has finished its 72 hours yet."],
           ] as const
-        ).map(([key, title, list, footer, empty]) => (
+        ).map(([key, title, list, empty]) => (
           <OrderedBlock key={key} id={key} label={title}>
-            <TableBlock title={title} search="Search videos…" rows={csv(list)} name={`velocity-${key}`} footer={footer}>
+            <TableBlock title={title} search="Search videos…" rows={csv(list)} name={`velocity-${key}`} height="h-[calc(100dvh-154px)] md:h-[calc(100dvh-246px)]">
               <table className="tabular w-full text-sm">
                 <thead className="text-left">
                   <tr className="bg-muted/60 [&_th]:h-10 [&_th]:whitespace-nowrap [&_th]:px-4 [&_th]:font-medium [&_th]:text-foreground">
@@ -101,11 +104,21 @@ export async function LiveTab() {
                     const tier = w.ratio == null ? null : tierOf(w.ratio)
                     const pushed = tier === "breakout"
                     const chip = key === "complete" && tier ? TIER[tier].chip : pushed ? TIER.breakout.chip : "bg-slate-100 text-slate-600"
+                    const logo = existsSync(join(process.cwd(), "public", "logos", "channels", `${w.channelId}.jpg`))
                     return (
                       <tr key={w.id} className="border-t border-slate-100">
-                        <td className="whitespace-nowrap px-4 py-2.5 text-slate-500">{w.channel}</td>
+                        <td className="whitespace-nowrap px-4 py-2.5 text-slate-500">
+                          <a href={`https://youtube.com/channel/${w.channelId}`} target="_blank" rel="noreferrer" className="flex items-center gap-2.5 hover:text-pax2-light-blue">
+                            {logo ? (
+                              <img src={`/logos/channels/${w.channelId}.jpg`} alt="" className="size-7 shrink-0 rounded-full object-cover" />
+                            ) : (
+                              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-pax2-lavender text-xs font-semibold text-pax2-blue">{w.channel.charAt(0)}</span>
+                            )}
+                            {w.channel}
+                          </a>
+                        </td>
                         <td className="max-w-96 px-4 py-2.5">
-                          <Link href={`/v/yt-${w.id}`} className="line-clamp-1 text-slate-900 hover:text-pax2-light-blue">{w.title}</Link>
+                          <Link href={`/v/yt-${w.id}`} className="whitespace-nowrap text-slate-900 hover:text-pax2-light-blue">{w.title.length > 55 ? `${w.title.slice(0, 55).trimEnd()}…` : w.title}</Link>
                         </td>
                         <td className="whitespace-nowrap px-4 py-2.5 text-right text-slate-500">{Math.min(72, Math.floor(w.age))}h</td>
                         <td className="px-4 py-2.5">

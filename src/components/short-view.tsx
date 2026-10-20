@@ -106,15 +106,20 @@ const LOREM = [
 let loremAt = 0
 const toComment = (id: string, c: YtSnippet): ThreadComment => ({ id, author: c.authorDisplayName, avatar: c.authorProfileImageUrl, text: LOREM[loremAt++ % LOREM.length], likes: c.likeCount, published: c.publishedAt })
 
-/** The stand-in threads every video shows until its real comments arrive: lorem through and through. */
+/** The approved stand-in conversation (Brendan, 2026-10-20): two comments, each carrying a handful
+ *  of replies, in the first comments block's shape. Every video without a real conversation shows it. */
 const PLACEHOLDER_THREADS: Thread[] = [
-  { id: "ph-1", author: "Lorem Ipsum", avatar: "", text: LOREM[0], likes: 24, published: "2026-10-12T14:00:00Z", replyCount: 2, replies: [
-    { id: "ph-1a", author: "Dolor Sit", avatar: "", text: LOREM[3], likes: 6, published: "2026-10-12T18:00:00Z" },
-    { id: "ph-1b", author: "Amet Consectetur", avatar: "", text: LOREM[5], likes: 2, published: "2026-10-13T09:00:00Z" },
+  { id: "ph-1", author: "Lorem Ipsum", avatar: "", text: LOREM[3], likes: 24, published: "2026-10-12T14:00:00Z", replyCount: 6, replies: [
+    { id: "ph-1a", author: "Dolor Sit", avatar: "", text: LOREM[2], likes: 6, published: "2026-10-12T18:00:00Z" },
+    { id: "ph-1b", author: "Lorem Ipsum", avatar: "", text: LOREM[1], likes: 2, published: "2026-10-13T09:00:00Z" },
+    { id: "ph-1c", author: "Dolor Sit", avatar: "", text: LOREM[0], likes: 1, published: "2026-10-13T15:00:00Z" },
+    { id: "ph-1d", author: "Lorem Ipsum", avatar: "", text: LOREM[5], likes: 0, published: "2026-10-14T08:00:00Z" },
   ] },
-  { id: "ph-2", author: "Adipiscing Elit", avatar: "", text: LOREM[1], likes: 11, published: "2026-10-14T11:00:00Z", replyCount: 0, replies: [] },
-  { id: "ph-3", author: "Tempor Incididunt", avatar: "", text: LOREM[2], likes: 7, published: "2026-10-15T16:00:00Z", replyCount: 0, replies: [] },
-  { id: "ph-4", author: "Magna Aliqua", avatar: "", text: LOREM[4], likes: 3, published: "2026-10-17T08:00:00Z", replyCount: 0, replies: [] },
+  { id: "ph-2", author: "Adipiscing Elit", avatar: "", text: LOREM[1], likes: 11, published: "2026-10-14T11:00:00Z", replyCount: 3, replies: [
+    { id: "ph-2a", author: "Tempor Incididunt", avatar: "", text: LOREM[4], likes: 3, published: "2026-10-14T19:00:00Z" },
+    { id: "ph-2b", author: "Adipiscing Elit", avatar: "", text: LOREM[5], likes: 1, published: "2026-10-15T10:00:00Z" },
+    { id: "ph-2c", author: "Tempor Incididunt", avatar: "", text: LOREM[0], likes: 0, published: "2026-10-15T16:00:00Z" },
+  ] },
 ]
 
 /** The video's top comment threads from YouTube (by relevance) with the replies YouTube sends along,
@@ -250,7 +255,8 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "comments",
       "Comments",
       <ListBlock key="comments" title="Comments" height="auto">
-        <CommentThread videoId={ytId} threads={comments?.length ? comments : PLACEHOLDER_THREADS} />
+        {/* Real threads only when they carry a conversation; a bare comment or two falls back to the approved stand-in. */}
+        <CommentThread videoId={ytId} threads={comments?.length && (comments.length >= 2 || comments.some((t) => t.replies.length > 0)) ? comments : PLACEHOLDER_THREADS} />
       </ListBlock>,
     ],
   ]
@@ -525,13 +531,13 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         rightClassName={inDrawer ? "@xl:-mt-5" : "@4xl:-mt-5"}
         left={
           <>
-            {/* Portrait while the column is narrow; past 28rem the video turns landscape. */}
+            {/* The original page's portrait: 300px wide, 9/16, centered in its column. */}
             {real ? (
-              <div className="mx-auto aspect-[9/16] max-h-[80svh] w-full overflow-hidden rounded-2xl bg-black shadow-e2 @md/video:aspect-video">
-                <Player src={`/api/video/${id}`} subject={id} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} className="aspect-auto size-full max-w-none rounded-none object-cover shadow-none @md/video:object-contain" />
+              <div className="mx-auto aspect-[9/16] w-full max-w-[300px] overflow-hidden rounded-2xl bg-black shadow-e2">
+                <Player src={`/api/video/${id}`} subject={id} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} className="aspect-auto size-full max-w-none rounded-none object-cover shadow-none" />
               </div>
             ) : (
-              <div className="mx-auto aspect-[9/16] max-h-[80svh] w-full overflow-hidden rounded-2xl bg-slate-900 shadow-e2 @md/video:aspect-video">
+              <div className="mx-auto aspect-[9/16] w-full max-w-[300px] overflow-hidden rounded-2xl bg-slate-900 shadow-e2">
                 <iframe
                   src={`https://www.youtube.com/embed/${ytId}`}
                   title={v?.title ?? "YouTube short"}

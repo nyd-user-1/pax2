@@ -1,6 +1,6 @@
 // Every metric and term on screen: the short label used in tables, its full name, and what it means.
 
-export type Term = { id: string; short: string; full: string; definition: string; group: "Score" | "Delivery" | "Engagement" | "Campaigns" }
+export type Term = { id: string; short: string; full: string; definition: string; group: "Score" | "Delivery" | "Engagement" | "Campaigns" | "Graph" }
 
 export const GLOSSARY: Term[] = [
   { id: "resonance", short: "Resonance", full: "Resonance score", group: "Score", definition: "A 0–100 score for how well a paid video earned and kept attention and got people to act, per person reached. 50 is the average of the first round of results. It is built from Engage, Interest and Act, weighted 25%, 40% and 35%." },
@@ -36,6 +36,13 @@ export const GLOSSARY: Term[] = [
   { id: "war", short: "WAR", full: "Wins above replacement", group: "Campaigns", definition: "A video's views divided by the median views of every short across all 65 followed channels together. It measures raw reach in the whole field, so big channels lead it simply by being big." },
   { id: "views-per-day", short: "Views/day", full: "Views per day since posting", group: "Campaigns", definition: "Public YouTube views divided by the days since the video was posted. Organic, not paid, and not comparable to Resonance." },
   { id: "median-length", short: "Median length", full: "Median video length", group: "Campaigns", definition: "The middle length across a channel's recent shorts." },
+  { id: "share-3x", short: "Share ≥ 3×", full: "Share at or over 3× channel median", group: "Graph", definition: "Of a group of shorts, the share whose views reached at least three times their own channel's median. The 3× line is the threshold the tracking pages use throughout." },
+  { id: "lift", short: "Lift (pp)", full: "Lift, in percentage points", group: "Graph", definition: "For a content neighborhood: each short's over-3× result minus its own channel's usual over-3× rate, averaged, in percentage points. Measured against each channel's own baseline so one hot channel cannot read as a content finding." },
+  { id: "neighborhood", short: "Neighborhood", full: "Content neighborhood", group: "Graph", definition: "A cluster of shorts the embedding model reads as similar in content, from k-means over the serving index. The vector graph draws one dot per short and one circle per neighborhood." },
+  { id: "resonance-band", short: "Resonance band", full: "Resonance band", group: "Graph", definition: "The top tenth of content neighborhoods by lift, counting only neighborhoods spanning five or more channels — content that outruns its channels' own baselines no matter who posts it." },
+  { id: "outperformer", short: "Outperformer", full: "Outperformer (5–10×)", group: "Graph", definition: "A PAX working term: a short whose views run five to ten times its channel's median — past the 3× threshold and into the range where distribution has clearly shifted beyond the channel's usual audience. The band, not the word, is the definition." },
+  { id: "viometric-frequency", short: "Viometric frequency", full: "Multi-Modal Viometric Frequency", group: "Graph", definition: "A PAX term: one video's measured signature across every mode it carries — visual, sound, speech, title, embedding — rendered as a single deterministic visual unique to that video. Drawn only from measured variables, so similar videos draw similar signatures and a video's signature never changes unless its measurements do." },
+  { id: "biometric-frequency", short: "Biometric frequency", full: "Multi-Modal Biometric Frequency", group: "Graph", definition: "The human-measurement analogy that named the viometric version: vitals measured across modes — pressure, rate, rhythm — identify a person without describing their whole body. PAX measures videos, never people; the term survives only as the analogy." },
 ]
 
 export const termById = (id: string) => GLOSSARY.find((t) => t.id === id)

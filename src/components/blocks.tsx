@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { ChevronDown } from "lucide-react"
 
 import { CardAnchor, CardTools } from "@/components/dash/card-tools"
@@ -39,7 +40,7 @@ export type BlockProps = {
   defaultOpen?: boolean
   /** Open height when the block shouldn't be BLOCK_HEIGHT: "auto" sizes it to its content. */
   height?: string
-  /** The block's footer line: when its data was last run or read. */
+  /** Ignored (Brendan, 2026-10-20): every block's footer is the Glossary link alone. */
   footer?: React.ReactNode
   /** What stays showing when the block is collapsed (the first rows of a stats grid); nothing by default. */
   peek?: React.ReactNode
@@ -50,7 +51,7 @@ export type BlockProps = {
   className?: string
 }
 
-export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, footer, height, peek, id, menuItems, className }: BlockProps) {
+export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, height, peek, id, menuItems, className }: BlockProps) {
   const [open, setOpen] = React.useState(defaultOpen)
   return (
     <PAX2Table2 value={searchValue} onChange={onSearch}>
@@ -72,7 +73,11 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
         </CardHeader>
         {!open && peek && <CardContent>{peek}</CardContent>}
         {open && <CardContent className="min-h-0 flex-1 overflow-y-auto [&_[data-slot=table-container]]:overflow-visible [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10 [&_thead]:bg-card">{children}</CardContent>}
-        {open && footer && <CardFooter className="bg-transparent py-3 text-xs text-slate-800">{footer}</CardFooter>}
+        {open && (
+          <CardFooter className="bg-transparent py-3 text-xs text-slate-800">
+            <Link href="/glossary" className="font-medium text-slate-800 underline underline-offset-2 hover:text-pax2-light-blue">Glossary</Link>
+          </CardFooter>
+        )}
       </Card>
     </PAX2Table2>
   )
