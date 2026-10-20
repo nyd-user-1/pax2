@@ -1,0 +1,460 @@
+{
+ "built": "2026-10-20T11:04:13.188Z",
+ "source": "data/generated/model/training-set.jsonl",
+ "shorts": 18544,
+ "channels": 64,
+ "definitions": {
+  "outperform": "3x the channel's median views or more (tier breakout)",
+  "underperform": "half the channel's median or less (tier killed)"
+ },
+ "overall": {
+  "outperform": 14.88,
+  "underperform": 19.86
+ },
+ "crossing": {
+  "pooled": {
+   "seconds": 24.1,
+   "share": 17.06
+  },
+  "within": {
+   "seconds": 25.1,
+   "share": 16.59
+  }
+ },
+ "bins": [
+  {
+   "from": 0,
+   "to": 10,
+   "mid": 5,
+   "n": 259,
+   "channels": 23,
+   "pooled": {
+    "outperform": 21.24,
+    "underperform": 5.02
+   },
+   "within": {
+    "outperform": 21.16,
+    "underperform": 6.17
+   },
+   "outperformShort": {
+    "id": "k3Mmiq8icII",
+    "title": "Happy Easter!",
+    "channel": "Vivek Ramaswamy",
+    "family": "Candidates & officials",
+    "ratio": 4.56,
+    "seconds": 9
+   },
+   "underperformShort": {
+    "id": "kB2kWBOskaM",
+    "title": "Did you vote yet?",
+    "channel": "JB Pritzker",
+    "family": "Candidates & officials",
+    "ratio": 0.43,
+    "seconds": 3
+   }
+  },
+  {
+   "from": 10,
+   "to": 15,
+   "mid": 12.5,
+   "n": 535,
+   "channels": 34,
+   "pooled": {
+    "outperform": 22.62,
+    "underperform": 9.53
+   },
+   "within": {
+    "outperform": 21.73,
+    "underperform": 9.81
+   },
+   "outperformShort": {
+    "id": "5LHXjjQW0ug",
+    "title": "We Ain't Leavin'!",
+    "channel": "Courageous Colorado",
+    "family": "Reform",
+    "ratio": 5.32,
+    "seconds": 10
+   },
+   "underperformShort": {
+    "id": "jkIo38o-T60",
+    "title": "Nightmare On Main Street",
+    "channel": "No Labels",
+    "family": "Reform",
+    "ratio": 0.12,
+    "seconds": 10
+   }
+  },
+  {
+   "from": 15,
+   "to": 20,
+   "mid": 17.5,
+   "n": 721,
+   "channels": 46,
+   "pooled": {
+    "outperform": 18.86,
+    "underperform": 13.87
+   },
+   "within": {
+    "outperform": 18.16,
+    "underperform": 12.68
+   },
+   "outperformShort": {
+    "id": "WDgvQv6v-0w",
+    "title": "the comedian-in-chief",
+    "channel": "The Daily Wire",
+    "family": "Partisan media",
+    "ratio": 215.19,
+    "seconds": 18
+   },
+   "underperformShort": {
+    "id": "z7lxxsIaN8A",
+    "title": "We Fight Because We Love",
+    "channel": "Rep Maxwell Alejandro Frost",
+    "family": "Candidates & officials",
+    "ratio": 0.04,
+    "seconds": 19
+   }
+  },
+  {
+   "from": 20,
+   "to": 25,
+   "mid": 22.5,
+   "n": 797,
+   "channels": 53,
+   "pooled": {
+    "outperform": 17.31,
+    "underperform": 16.06
+   },
+   "within": {
+    "outperform": 16.77,
+    "underperform": 14.81
+   },
+   "outperformShort": {
+    "id": "ESd0cmnOy0Q",
+    "title": "NC is the BBQ GOAT",
+    "channel": "The Hometown Holler",
+    "family": "Reform",
+    "ratio": 11.27,
+    "seconds": 21
+   },
+   "underperformShort": {
+    "id": "en-GWJo4vGs",
+    "title": "What is an Open Primary",
+    "channel": "Courageous Colorado",
+    "family": "Reform",
+    "ratio": 0.05,
+    "seconds": 21
+   }
+  },
+  {
+   "from": 25,
+   "to": 30,
+   "mid": 27.5,
+   "n": 889,
+   "channels": 50,
+   "pooled": {
+    "outperform": 16.54,
+    "underperform": 19.12
+   },
+   "within": {
+    "outperform": 16.42,
+    "underperform": 18.21
+   },
+   "outperformShort": {
+    "id": "ZELWDSSpo8Y",
+    "title": "How tall is Ben Shapiro?",
+    "channel": "Ben Shapiro",
+    "family": "Partisan media",
+    "ratio": 33.38,
+    "seconds": 27
+   },
+   "underperformShort": {
+    "id": "mVoooAphF_Q",
+    "title": "We Are All Cat Ladies",
+    "channel": "The Hometown Holler",
+    "family": "Reform",
+    "ratio": 0.08,
+    "seconds": 29
+   }
+  },
+  {
+   "from": 30,
+   "to": 35,
+   "mid": 32.5,
+   "n": 1022,
+   "channels": 54,
+   "pooled": {
+    "outperform": 13.5,
+    "underperform": 19.47
+   },
+   "within": {
+    "outperform": 13.53,
+    "underperform": 18.76
+   },
+   "outperformShort": {
+    "id": "c4cDB3nVxMg",
+    "title": "Homeownership & Housing",
+    "channel": "No Labels",
+    "family": "Reform",
+    "ratio": 5.51,
+    "seconds": 33
+   },
+   "underperformShort": {
+    "id": "ApEUdIWUx7A",
+    "title": "Not Party Driven",
+    "channel": "Voter Freedom",
+    "family": "Reform",
+    "ratio": 0.09,
+    "seconds": 33
+   }
+  },
+  {
+   "from": 35,
+   "to": 40,
+   "mid": 37.5,
+   "n": 958,
+   "channels": 52,
+   "pooled": {
+    "outperform": 14.61,
+    "underperform": 20.77
+   },
+   "within": {
+    "outperform": 14.99,
+    "underperform": 20.74
+   },
+   "outperformShort": {
+    "id": "KymjAM9kvWY",
+    "title": "U.S. Presidents & NATO",
+    "channel": "No Labels",
+    "family": "Reform",
+    "ratio": 3.18,
+    "seconds": 38
+   },
+   "underperformShort": {
+    "id": "zsTqMp1wcA4",
+    "title": "The Lost Founder",
+    "channel": "Brennan Center for Justice",
+    "family": "Voting rights",
+    "ratio": 0.24,
+    "seconds": 35
+   }
+  },
+  {
+   "from": 40,
+   "to": 45,
+   "mid": 42.5,
+   "n": 1058,
+   "channels": 55,
+   "pooled": {
+    "outperform": 13.52,
+    "underperform": 20.32
+   },
+   "within": {
+    "outperform": 13.9,
+    "underperform": 20.2
+   },
+   "outperformShort": {
+    "id": "mhIabB80DOY",
+    "title": "Was FEMA There???",
+    "channel": "The Hometown Holler",
+    "family": "Reform",
+    "ratio": 5.31,
+    "seconds": 42
+   },
+   "underperformShort": {
+    "id": "3g7jIYPhVsc",
+    "title": "Citizens United",
+    "channel": "Brennan Center for Justice",
+    "family": "Voting rights",
+    "ratio": 0.26,
+    "seconds": 43
+   }
+  },
+  {
+   "from": 45,
+   "to": 50,
+   "mid": 47.5,
+   "n": 1049,
+   "channels": 51,
+   "pooled": {
+    "outperform": 14.97,
+    "underperform": 18.59
+   },
+   "within": {
+    "outperform": 15.41,
+    "underperform": 18.78
+   },
+   "outperformShort": {
+    "id": "ebukr40HKf4",
+    "title": "Tariffs Test the Court",
+    "channel": "Brennan Center for Justice",
+    "family": "Voting rights",
+    "ratio": 12.41,
+    "seconds": 46
+   },
+   "underperformShort": {
+    "id": "7MWoAAjWDfc",
+    "title": "Locked Out of Democracy",
+    "channel": "No Labels",
+    "family": "Reform",
+    "ratio": 0.2,
+    "seconds": 47
+   }
+  },
+  {
+   "from": 50,
+   "to": 60,
+   "mid": 55,
+   "n": 2176,
+   "channels": 56,
+   "pooled": {
+    "outperform": 12.13,
+    "underperform": 20.08
+   },
+   "within": {
+    "outperform": 13.2,
+    "underperform": 21.1
+   },
+   "outperformShort": {
+    "id": "hyzpBky9BqQ",
+    "title": "Remember the Sabbath",
+    "channel": "James Talarico",
+    "family": "Candidates & officials",
+    "ratio": 99.7,
+    "seconds": 54
+   },
+   "underperformShort": {
+    "id": "TNzy0MOziI8",
+    "title": "Who Declares War?",
+    "channel": "Voter Freedom",
+    "family": "Reform",
+    "ratio": 0.01,
+    "seconds": 58
+   }
+  },
+  {
+   "from": 60,
+   "to": 75,
+   "mid": 67.5,
+   "n": 2558,
+   "channels": 55,
+   "pooled": {
+    "outperform": 11.61,
+    "underperform": 21.66
+   },
+   "within": {
+    "outperform": 11.9,
+    "underperform": 22.26
+   },
+   "outperformShort": {
+    "id": "K1Br9F28--A",
+    "title": "STOP the SAVE Act",
+    "channel": "Brennan Center for Justice",
+    "family": "Voting rights",
+    "ratio": 16.02,
+    "seconds": 64
+   },
+   "underperformShort": {
+    "id": "XI539hV0--M",
+    "title": "Low Turnout. Big Impact.",
+    "channel": "Voter Freedom",
+    "family": "Reform",
+    "ratio": 0,
+    "seconds": 65
+   }
+  },
+  {
+   "from": 75,
+   "to": 90,
+   "mid": 82.5,
+   "n": 2023,
+   "channels": 53,
+   "pooled": {
+    "outperform": 14.53,
+    "underperform": 24.12
+   },
+   "within": {
+    "outperform": 13.86,
+    "underperform": 23.73
+   },
+   "outperformShort": {
+    "id": "VDluCeGcbxk",
+    "title": "Mail-in voting IS secure",
+    "channel": "Democracy Forward",
+    "family": "Voting rights",
+    "ratio": 4.63,
+    "seconds": 89
+   },
+   "underperformShort": {
+    "id": "t1xy7hwE8i4",
+    "title": "Are Politics Broken?",
+    "channel": "Courageous Colorado",
+    "family": "Reform",
+    "ratio": 0.22,
+    "seconds": 84
+   }
+  },
+  {
+   "from": 90,
+   "to": 120,
+   "mid": 105,
+   "n": 2249,
+   "channels": 51,
+   "pooled": {
+    "outperform": 14.18,
+    "underperform": 23.61
+   },
+   "within": {
+    "outperform": 14.07,
+    "underperform": 23.57
+   },
+   "outperformShort": {
+    "id": "kOueZq5ipcE",
+    "title": "Interracial Marriage???",
+    "channel": "The Hometown Holler",
+    "family": "Reform",
+    "ratio": 3.18,
+    "seconds": 118
+   },
+   "underperformShort": {
+    "id": "p7stIziwJkE",
+    "title": "What's The Real Story?",
+    "channel": "Voter Freedom",
+    "family": "Reform",
+    "ratio": 0.01,
+    "seconds": 95
+   }
+  },
+  {
+   "from": 120,
+   "to": 181,
+   "mid": 150,
+   "n": 2243,
+   "channels": 52,
+   "pooled": {
+    "outperform": 18.19,
+    "underperform": 17.79
+   },
+   "within": {
+    "outperform": 17.66,
+    "underperform": 17.83
+   },
+   "outperformShort": {
+    "id": "FRO7TW74oC0",
+    "title": "What Are Zombie Votes?",
+    "channel": "FairVote",
+    "family": "Reform",
+    "ratio": 3.92,
+    "seconds": 127
+   },
+   "underperformShort": {
+    "id": "QB8hQ5YdC44",
+    "title": "Meet CLLARO!",
+    "channel": "Courageous Colorado",
+    "family": "Reform",
+    "ratio": 0.03,
+    "seconds": 122
+   }
+  }
+ ]
+}

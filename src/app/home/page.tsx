@@ -1,17 +1,14 @@
 import { MainBlock } from "@/components/blocks"
+import { HOME_BLOCK } from "./height"
 
-// Four empty blocks, each a full viewport less the page margin, waiting for their content.
+// The fourth block, still empty, waiting for its content. The first three are the layout's slots.
 
 export const metadata = { title: "Home" }
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-6 md:gap-9">
-      {[1, 2, 3, 4].map((n) => (
-        <MainBlock key={n} title="" name={`block-${n}`} id={`block-${n}`} height="h-[calc(100dvh-90px)] md:h-[calc(100dvh-182px)]">
-          <div />
-        </MainBlock>
-      ))}
-    </div>
+    <MainBlock title="" name="block-4" id="block-4" height={HOME_BLOCK}>
+      <div />
+    </MainBlock>
   )
 }

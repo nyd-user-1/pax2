@@ -80,7 +80,8 @@ const TITLES: [string, string][] = [
   ["/campaigns", "Campaigns"],
 ]
 
-const PANEL_THIRD = "md:w-[clamp(420px,34vw,620px)]"
+// 420px: the width the discussion and take panels open at (Brendan, 2026-10-20).
+const PANEL_THIRD = "md:w-[420px]"
 const PANEL_HALF = "md:w-[50vw]"
 // A dragged split: the panel's width as a share of the viewport, carried in --split.
 const PANEL_CUSTOM = "md:w-(--split)"
@@ -138,12 +139,11 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
     }),
     [wide, size, nextSize, panelOpen, sidebarOpen, discuss],
   )
-  // The split is remembered between visits; a takeover of the whole page is not.
+  // The dragged split is remembered between visits, but a panel always opens at the third.
   React.useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem(SPLIT_KEY) ?? "null") as { size?: PanelSize; split?: number } | null
       if (typeof saved?.split === "number") setSplit(saved.split)
-      if (saved?.size && saved.size !== "full") setSize(saved.size)
     } catch {}
   }, [])
   React.useEffect(() => {
@@ -152,6 +152,11 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
   }, [size, split, dragging])
   // Closing the panel after the page was closed beside it brings the page back at its old split.
   const open = panelOpen || discuss
+  // Every panel opens at the one-third view, 420px (Brendan's rule, 2026-10-20); a drag resizes it after.
+  // A video opening or closing beside the discussion counts: each lands at the third.
+  React.useEffect(() => {
+    if (open) setSize("third")
+  }, [open, panelOpen])
   React.useEffect(() => {
     if (open || !restore.current) return
     setSize(restore.current)
@@ -270,7 +275,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
         <div aria-hidden onClick={() => (setSidebarOpen(false), setDiscuss(false))} className={cn("fixed inset-0 z-[60] bg-slate-900/20 transition-opacity duration-300", sidebarOpen || discuss ? "opacity-100" : "pointer-events-none opacity-0")} />
         <div className={cn("fixed inset-y-[18px] left-[18px] z-[61] transition-transform duration-300 ease-in-out", sidebarOpen ? "translate-x-0" : "-translate-x-[calc(100%+18px)]")}>{sidebar}</div>
         {signedIn && (
-          <div className={cn("fixed inset-y-[18px] right-[18px] z-[61] w-[min(620px,calc(100vw-36px))] transition-transform duration-300 ease-in-out", discuss ? "translate-x-0" : "translate-x-[calc(100%+18px)]")}>
+          <div className={cn("fixed inset-y-[18px] right-[18px] z-[61] w-[min(420px,calc(100vw-36px))] transition-transform duration-300 ease-in-out", discuss ? "translate-x-0" : "translate-x-[calc(100%+18px)]")}>
             {discuss && <DiscussionPanel onClose={() => setDiscuss(false)} />}
           </div>
         )}
@@ -313,7 +318,8 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
               <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className={whiteButton("circle")}>
                 {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
               </button>
-              <h1 className="font-display max-w-[220px] truncate pl-1 text-[17px] text-slate-900">{title}</h1>
+              {/* /home's title is the context switcher again (restored 2026-10-20); everywhere else it stays plain. */}
+              {path === "/home" ? <PageSwitcher title={title} items={findable} /> : <h1 className="font-display max-w-[220px] truncate pl-1 text-[17px] text-slate-900">{title}</h1>}
               <div className="flex min-w-0 flex-1 justify-center px-4">
                 <HeaderSearch items={findable} />
               </div>
@@ -329,7 +335,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
             </div>
             <main className={cn("flex-1", full ? "flex min-h-0 flex-col md:overflow-hidden" : "md:overflow-y-auto")} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
               {/* Each page arrives with RevealFx's wipe; the front door has its curtain instead. */}
-              <RevealFx key={animKey.current} translateY={4} className={cn("@container w-full", full ? "flex min-h-0 flex-1 flex-col" : "px-5 py-6 md:px-10 md:py-9")}>
+              <RevealFx key={animKey.current} translateY={4} className={cn("@container w-full", full ? "flex min-h-0 flex-1 flex-col" : path === "/home" ? "px-5 pb-6 md:px-10 md:pb-9" : "px-5 py-6 md:px-10 md:py-9")}>
                 {children}
               </RevealFx>
             </main>
@@ -379,6 +385,14 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
             {paired && <CornerClose label="Close" onClose={closePanel} />}
           </div>
         </div>
+        {/* A video opened beside the discussion: the drawer takes the column above, between the page and
+            the discussion, and the discussion keeps its own 420px column on the far right. Close the page
+            and the video takes the room that's left. */}
+        {discuss && panelOpen && (
+          <div className="shrink-0 md:ml-[18px] md:w-[420px]">
+            <DiscussionPanel onClose={() => setDiscuss(false)} />
+          </div>
+        )}
       </div>
     </PanelCtx.Provider>
   )
@@ -439,6 +453,89 @@ function Announcement() {
 }
 
 // The header's search: every page behind one field, ⌘K from anywhere, Enter takes the first match.
+// The page name is also the jump menu: a pill that opens a filterable list of every page (the leuk
+// context switcher, in pax2 clothes). Retired in the UX audit (c19e82f), restored on /home; it lists
+// the same pages the search does.
+function PageSwitcher({ title, items }: { title: string; items: { href: string; label: string; icon: typeof Gauge }[] }) {
+  const router = useRouter()
+  const [open, setOpen] = React.useState(false)
+  const [q, setQ] = React.useState("")
+  const ref = React.useRef<HTMLDivElement>(null)
+
+  React.useEffect(() => {
+    if (!open) return
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false)
+    }
+    document.addEventListener("mousedown", onDown)
+    document.addEventListener("keydown", onKey)
+    return () => {
+      document.removeEventListener("mousedown", onDown)
+      document.removeEventListener("keydown", onKey)
+    }
+  }, [open])
+
+  const go = (href: string) => {
+    setOpen(false)
+    setQ("")
+    router.push(href)
+  }
+  const needle = q.trim().toLowerCase()
+  const filtered = needle ? items.filter((d) => d.label.toLowerCase().includes(needle)) : items
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label={`${title} — switch page`}
+        className={cn("flex h-9 items-center gap-1.5 rounded-full pl-3 pr-2 transition-colors", open ? "bg-slate-200/70" : "hover:bg-slate-200/70")}
+      >
+        <span className="font-display max-w-[220px] truncate text-[17px] text-slate-900">{title}</span>
+        <ChevronsUpDown className="size-3.5 shrink-0 text-slate-400" />
+      </button>
+      <h1 className="sr-only">{title}</h1>
+      {open && (
+        <div role="menu" className="absolute left-0 top-full z-50 mt-1.5 w-64 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-e3">
+          <div className="border-b border-slate-200/70 p-2">
+            <input
+              autoFocus
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Find…"
+              aria-label="Find a page"
+              className="w-full rounded-lg bg-pax2-mist px-2.5 py-1.5 text-sm text-slate-900 outline-none placeholder:text-slate-400"
+            />
+          </div>
+          <div className="no-scrollbar max-h-72 overflow-y-auto p-1.5">
+            {filtered.length === 0 ? (
+              <p className="px-2.5 py-3 text-sm text-slate-500">No matches.</p>
+            ) : (
+              filtered.map((d) => (
+                <button
+                  key={d.href}
+                  type="button"
+                  role="menuitem"
+                  onClick={() => go(d.href)}
+                  className="group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm font-medium text-slate-600 transition-colors hover:bg-pax2-mist hover:text-pax2-blue"
+                >
+                  <d.icon className="size-4 shrink-0 text-slate-400 transition-colors group-hover:fill-pax2-lavender group-hover:text-pax2-blue" strokeWidth={1.75} />
+                  <span className="flex-1 truncate">{d.label}</span>
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 function HeaderSearch({ items }: { items: { href: string; label: string; icon: typeof Gauge }[] }) {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)

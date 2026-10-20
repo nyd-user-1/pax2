@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 
+import { RevealFx } from "@/components/reveal-fx"
 import { cn } from "@/ui/lib/utils"
 
 /** The flow's top bar: the way back, nothing else — the numbered steps never advanced and are gone. */
@@ -37,5 +38,19 @@ export function HelpLine() {
         Volunteer Guide
       </Link>
     </p>
+  )
+}
+
+/** A step shown in place on the landing: its heading over the step, wiping in as each step replaces the
+ *  last. Takes FlowPage's props, so a step can swap one for the other; the landing sets the width. */
+export function InPlace({ title, lead, children }: { title: string; lead?: string; children: React.ReactNode; wide?: boolean }) {
+  return (
+    <RevealFx key={title} translateY={4} className="flex flex-col gap-8">
+      <header className="flex flex-col gap-3">
+        <h2 className="font-display text-4xl font-semibold leading-tight text-pax2-blue md:text-5xl">{title}</h2>
+        {lead && <p className="text-lg text-slate-800">{lead}</p>}
+      </header>
+      {children}
+    </RevealFx>
   )
 }

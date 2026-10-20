@@ -31,8 +31,14 @@ export function useDraft() {
     setReady(true)
   }, [])
   const update = React.useCallback((patch: Partial<Draft>) => {
+    // Merged onto what's stored, not this hook's copy: several steps hold their own useDraft, and a
+    // stale copy would otherwise write back over another step's fields.
     setDraft((d) => {
-      const next = { ...d, ...patch }
+      let stored: Draft = d
+      try {
+        stored = JSON.parse(sessionStorage.getItem(KEY) ?? "null") ?? d
+      } catch {}
+      const next = { ...stored, ...patch }
       sessionStorage.setItem(KEY, JSON.stringify(next))
       return next
     })

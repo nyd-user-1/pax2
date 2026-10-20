@@ -12,6 +12,7 @@ import { LandingOnly, LandingSurface } from "@/components/record/landing-only"
 import { HelpLine } from "@/components/record/chrome"
 import { PhoneMock } from "@/components/record/phone-mock"
 import { RecordChooser } from "@/components/record/record-options"
+import { ResonanceSection } from "@/components/record/resonance-section"
 import { ScrollCue, ScrollTop } from "@/components/record/scroll-cue"
 import { currentUser } from "@/lib/auth"
 import { tagsFor } from "@/lib/tags"
@@ -76,7 +77,7 @@ export default async function RecordLanding() {
                 <Link href="/#record" className={whiteButton("lg", "w-44")}>
                   <Video className="size-5" style={{ color: "#033882", fill: "#dbe7fa" }} /> Create
                 </Link>
-                <Link href="#learn" className="press flex w-44 items-center justify-center gap-2 rounded-full bg-pax2-blue px-7 py-4 text-base font-medium text-white shadow-md transition-shadow hover:shadow-e3">
+                <Link href="#resonance" className="press flex w-44 items-center justify-center gap-2 rounded-full bg-pax2-blue px-7 py-4 text-base font-medium text-white shadow-md transition-shadow hover:shadow-e3">
                   <FlaskConical className="size-5" /> Analyze
                 </Link>
               </div>
@@ -85,9 +86,11 @@ export default async function RecordLanding() {
             <PhoneMock videoId={`yt-${top.id}`} timer={timerOf(top.duration)} />
           </div>
           {/* As high as the hero's, clear of the bottom blur band. */}
-          <ScrollCue next="record" className="bottom-[171px]" />
+          <ScrollCue next="resonance" className="bottom-[171px]" />
         </section>
-        {/* Section three: the ways into recording, as on /recording; Choose a script opens the scripts here. Positioned, so it paints above the fixed grid. */}
+        {/* Section three: Resonant Amplification. */}
+        <ResonanceSection />
+        {/* Section four: the ways into recording, as on /recording; every path opens here, in place. Positioned, so it paints above the fixed grid. Above the feed, which never ends. */}
         <section id="record" className="relative flex min-h-dvh scroll-mt-16 flex-col justify-center">
           <div className="mx-auto w-full max-w-6xl px-5 pb-60 pt-12">
             <RecordChooser>

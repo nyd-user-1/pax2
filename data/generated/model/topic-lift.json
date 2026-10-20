@@ -1,0 +1,219 @@
+{
+ "built": "2026-10-20T12:47:52.109Z",
+ "source": "data/generated/model/encoder-map.json",
+ "run": "20261019-094112-train",
+ "minChannels": 5,
+ "minSizedChannels": 3,
+ "topics": [
+  {
+   "id": 7,
+   "name": "Campaign pitches",
+   "lift": 11.9,
+   "low": 7.5,
+   "high": 14.9,
+   "shorts": 942,
+   "channels": 37,
+   "channelsUp": 13,
+   "channelsSized": 17,
+   "example": {
+    "id": "z0lVpMt5veo",
+    "title": "TEACHER DESTROYS VOUCHERS"
+   }
+  },
+  {
+   "id": 27,
+   "name": "Interviews and hearings",
+   "lift": 4.9,
+   "low": 2.5,
+   "high": 8.7,
+   "shorts": 629,
+   "channels": 32,
+   "channelsUp": 12,
+   "channelsSized": 16,
+   "example": {
+    "id": "Hl7FMBCBhkg",
+    "title": "Rest in Peace Lindsey Graham"
+   }
+  },
+  {
+   "id": 38,
+   "name": "Debates and big ideas",
+   "lift": 3.5,
+   "low": 1.2,
+   "high": 8.3,
+   "shorts": 833,
+   "channels": 42,
+   "channelsUp": 9,
+   "channelsSized": 14,
+   "example": {
+    "id": "YIZ_u5Fhfuw",
+    "title": "What is the IMF?"
+   }
+  },
+  {
+   "id": 13,
+   "name": "Rule of law and voting rights",
+   "lift": 1.4,
+   "low": 0.3,
+   "high": 4.7,
+   "shorts": 610,
+   "channels": 33,
+   "channelsUp": 4,
+   "channelsSized": 6,
+   "example": {
+    "id": "1pcIYsmFd2s",
+    "title": "Abuse of Executive Power"
+   }
+  },
+  {
+   "id": 28,
+   "name": "Electoral reform explainers",
+   "lift": 0,
+   "low": -1.2,
+   "high": 1.1,
+   "shorts": 641,
+   "channels": 40,
+   "channelsUp": 4,
+   "channelsSized": 14,
+   "example": {
+    "id": "dkWfQ-PwHbI",
+    "title": "Why Congress is Broken"
+   }
+  },
+  {
+   "id": 19,
+   "name": "Culture-war questions",
+   "lift": -0.8,
+   "low": -4.1,
+   "high": 1.3,
+   "shorts": 521,
+   "channels": 24,
+   "channelsUp": 1,
+   "channelsSized": 6,
+   "example": {
+    "id": "EywrJL_FhPQ",
+    "title": "What took them so long?"
+   }
+  },
+  {
+   "id": 9,
+   "name": "James Talarico clips",
+   "lift": -3.2,
+   "low": -8.8,
+   "high": -2.5,
+   "shorts": 335,
+   "channels": 6,
+   "channelsUp": 0,
+   "channelsSized": 3,
+   "example": {
+    "id": "MSMm4A32_lA",
+    "title": "Puppies for Talarico"
+   }
+  },
+  {
+   "id": 37,
+   "name": "Trump news",
+   "lift": -3.2,
+   "low": -11.4,
+   "high": 2.5,
+   "shorts": 471,
+   "channels": 17,
+   "channelsUp": 1,
+   "channelsSized": 6,
+   "example": {
+    "id": "rT5LVnDIbQ0",
+    "title": "TRUMP LIED ABOUT IVF"
+   }
+  },
+  {
+   "id": 11,
+   "name": "Outrage headlines",
+   "lift": -3.5,
+   "low": -5.8,
+   "high": -0.6,
+   "shorts": 450,
+   "channels": 19,
+   "channelsUp": 1,
+   "channelsSized": 7,
+   "example": {
+    "id": "D6ZoYVI7wKE",
+    "title": "RELEASE THE FILES"
+   }
+  },
+  {
+   "id": 1,
+   "name": "Reaction one-liners",
+   "lift": -4.4,
+   "low": -7.9,
+   "high": -1.8,
+   "shorts": 462,
+   "channels": 21,
+   "channelsUp": 0,
+   "channelsSized": 6,
+   "example": {
+    "id": "4Ibb2PAlyig",
+    "title": "Climate change"
+   }
+  },
+  {
+   "id": 36,
+   "name": "Conservative culture clips",
+   "lift": -5,
+   "low": -11.2,
+   "high": -3,
+   "shorts": 549,
+   "channels": 29,
+   "channelsUp": 1,
+   "channelsSized": 6,
+   "example": {
+    "id": "UE7Y6C9Bpx8",
+    "title": "NEW: Season 2 of The Hustle!"
+   }
+  },
+  {
+   "id": 18,
+   "name": "Calling out Republicans",
+   "lift": -5.5,
+   "low": -8.8,
+   "high": -0.2,
+   "shorts": 475,
+   "channels": 26,
+   "channelsUp": 2,
+   "channelsSized": 12,
+   "example": {
+    "id": "gw3ttWErYsM",
+    "title": "SHAME ON GOV. ABBOTT"
+   }
+  },
+  {
+   "id": 39,
+   "name": "Thank-yous and home-state pride",
+   "lift": -6.5,
+   "low": -9.8,
+   "high": -3.7,
+   "shorts": 757,
+   "channels": 28,
+   "channelsUp": 2,
+   "channelsSized": 14,
+   "example": {
+    "id": "AfSO7lQWzZc",
+    "title": "A song for trying times."
+   }
+  },
+  {
+   "id": 0,
+   "name": "Policy explainers",
+   "lift": -7.9,
+   "low": -10.3,
+   "high": -4.2,
+   "shorts": 599,
+   "channels": 22,
+   "channelsUp": 3,
+   "channelsSized": 13,
+   "example": {
+    "id": "ZvMMdgDnHUU",
+    "title": "Public pressure works."
+   }
+  }
+ ]
+}

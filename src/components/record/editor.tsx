@@ -172,8 +172,9 @@ export function Editor({ research }: { research: Record<string, Research> }) {
 
 /** The script's text box with its word count and length, and the two ways on: record, or pick a
  *  different script. Shared by /record/script and the landing, where a picked script opens in
- *  place; there `onPickDifferent` returns to the scripts instead of going to /record/library. */
-export function ScriptBox({ text, onText, onPickDifferent, onRecord }: { text: string; onText: (t: string) => void; onPickDifferent?: () => void; onRecord?: () => void }) {
+ *  place; there `onPickDifferent` returns to the scripts instead of going to /record/library, and
+ *  `onStudio` opens the no-camera studio in place instead of going to /record/studio. */
+export function ScriptBox({ text, onText, onPickDifferent, onRecord, onStudio }: { text: string; onText: (t: string) => void; onPickDifferent?: () => void; onRecord?: () => void; onStudio?: () => void }) {
   const router = useRouter()
   return (
     <div className="flex flex-col gap-6">
@@ -204,9 +205,15 @@ export function ScriptBox({ text, onText, onPickDifferent, onRecord }: { text: s
             Pick a different script
           </Link>
         )}
-        <Link href="/record/studio" className="font-medium text-slate-500 transition-colors hover:text-primary">
-          Make it without a camera
-        </Link>
+        {onStudio ? (
+          <button type="button" onClick={onStudio} className="font-medium text-slate-500 transition-colors hover:text-primary">
+            Make it without a camera
+          </button>
+        ) : (
+          <Link href="/record/studio" className="font-medium text-slate-500 transition-colors hover:text-primary">
+            Make it without a camera
+          </Link>
+        )}
       </div>
     </div>
   )

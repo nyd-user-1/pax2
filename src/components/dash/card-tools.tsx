@@ -13,7 +13,7 @@ import { cn } from "@/ui/lib/utils"
 // anchor — and the standard three-dot menu in the top right, with whatever
 // control the card already had sitting to its left.
 
-const slug = (s: string) =>
+export const slug = (s: string) =>
   s
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")

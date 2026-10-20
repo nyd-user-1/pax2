@@ -2,14 +2,14 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { ArrowRight, CheckCircle2, Loader2, RotateCcw, Upload, Video } from "lucide-react"
 
 import { uploadUrl } from "@/app/actions"
 import { againDraft, submitOriginal, viewer } from "@/app/original-actions"
-import { FlowPage, StepBar } from "@/components/record/chrome"
+import { FlowPage, InPlace, StepBar } from "@/components/record/chrome"
 import { useDraft } from "@/components/record/draft"
 import { Teleprompter } from "@/components/record/teleprompter"
-import { RevealFx } from "@/components/reveal-fx"
 import { cn } from "@/ui/lib/utils"
 
 type Clip = { blob: Blob; url: string; seconds: number; mime: string; source: "recorded" | "uploaded" }
@@ -17,9 +17,11 @@ type Clip = { blob: Blob; url: string; seconds: number; mime: string; source: "r
 const TIPS = ["Find a quiet spot with light on your face, not behind you.", "Hold your phone upright, around eye level.", "Talk to the lens like you're talking to a friend."]
 
 /** The recording step: the teleprompter or an upload, then watch it back and send it. /record/camera
- *  shows it with the step bar; the landing shows it in place after Make it yours, `embedded`, where
- *  each stage wipes in under its own heading and `onBack` returns to the script. */
-export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) {
+ *  shows it with the step bar; the landing shows it in place, `embedded`, where each stage wipes in
+ *  under its own heading, `onPick` goes back to the options for a script, and recording or uploading
+ *  is the moment a signed-out reader is asked to sign in (and carries on at /record/camera). */
+export function CameraFlow({ embedded }: { embedded?: { onPick: () => void } }) {
+  const router = useRouter()
   const { draft, update, ready } = useDraft()
   const [prompter, setPrompter] = React.useState(false)
   const [clip, setClip] = React.useState<Clip | null>(null)
@@ -39,6 +41,10 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
     const again = new URLSearchParams(window.location.search).get("again")
     if (again && draft.again !== again) againDraft(again).then((d) => d && update({ ...d, again }))
   }, [ready, draft.again, update])
+
+  // On the landing, a signed-out reader signs in before recording; the draft rides along in this tab.
+  const gate = !!embedded && me === null
+  const signIn = (next: string) => router.push(`/signin?next=${encodeURIComponent(next)}`)
 
   const take = (f: File) => {
     const url = URL.createObjectURL(f)
@@ -132,12 +138,20 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
                 <span className="text-slate-800">PAX2 opens your camera and scrolls your words for you.</span>
               </span>
             </div>
-            <button type="button" disabled={!ready || !draft.text} onClick={() => setPrompter(true)} className="flex items-center justify-center gap-2 rounded-full bg-pax2-blue py-4 font-medium text-white shadow-lg disabled:opacity-40">
+            <button type="button" disabled={!ready || !draft.text} onClick={() => (gate ? signIn("/record/camera") : setPrompter(true))} className="flex items-center justify-center gap-2 rounded-full bg-pax2-blue py-4 font-medium text-white shadow-lg disabled:opacity-40">
               <Video className="size-4" /> Start recording
             </button>
             {ready && !draft.text && (
               <p className="text-sm text-slate-800">
-                No script yet. <Link href="/recording" className="text-primary underline">Pick or write one first</Link>, or upload a video below.
+                No script yet.{" "}
+                {embedded ? (
+                  <button type="button" onClick={embedded.onPick} className="text-primary underline">
+                    Pick or write one first
+                  </button>
+                ) : (
+                  <Link href="/recording" className="text-primary underline">Pick or write one first</Link>
+                )}
+                , or upload a video below.
               </p>
             )}
           </div>
@@ -149,9 +163,10 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
               e.preventDefault()
               setDrag(false)
               const f = e.dataTransfer.files[0]
-              if (f) take(f)
+              if (gate) signIn("/record/camera#upload")
+              else if (f) take(f)
             }}
-            onClick={() => file.current?.click()}
+            onClick={() => (gate ? signIn("/record/camera#upload") : file.current?.click())}
             className={cn("flex cursor-pointer items-center gap-4 rounded-3xl border-2 border-dashed bg-pax2-mist p-6 transition-colors", drag && "border-primary bg-white")}
           >
             <span className="flex size-12 items-center justify-center rounded-full bg-white">
@@ -173,11 +188,6 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
               ))}
             </ul>
           </div>
-          {embedded && (
-            <button type="button" onClick={embedded.onBack} className="self-start font-medium text-primary">
-              Back to the script
-            </button>
-          )}
         </div>
       </Frame>
       {prompter && draft.text && (
@@ -199,13 +209,9 @@ export function CameraFlow({ embedded }: { embedded?: { onBack: () => void } }) 
 function Frame({ embedded, back, title, lead, children }: { embedded: boolean; back: { href: string; label: string }; title: string; lead?: string; children: React.ReactNode }) {
   if (embedded)
     return (
-      <RevealFx key={title} translateY={4} className="flex flex-col gap-8">
-        <header className="flex flex-col gap-3">
-          <h2 className="font-display text-4xl font-semibold leading-tight text-pax2-blue md:text-5xl">{title}</h2>
-          {lead && <p className="text-lg text-slate-800">{lead}</p>}
-        </header>
+      <InPlace title={title} lead={lead}>
         {children}
-      </RevealFx>
+      </InPlace>
     )
   return (
     <>
