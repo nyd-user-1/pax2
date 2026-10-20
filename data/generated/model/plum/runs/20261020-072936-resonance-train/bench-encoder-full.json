@@ -1,0 +1,141 @@
+{
+ "arm": "encoder",
+ "k": 20,
+ "definition": "The corpus text is read from corpus.jsonl, never rebuilt (rig rule 15; scripts/encoder/corpus.mjs is the\none definition). The kNN benchmark: for every held-out document, the K nearest training documents by\ncosine; its score is the share of those neighbors that broke out; AUC of that score against the held-out\ndocument's own breakout label, pooled over every held-out document and within each held-out channel.\n\nwithin = the mean of per-channel AUCs weighted by the channel's held-out document count, over channels\nholding at least one breakout and one non-breakout. A second implementation of the same AUC reads the\nuploaded neighbor lists on the Mac (scripts/encoder/rescore.mjs, rig rule 25).",
+ "builtAt": "2026-10-20T08:07:04Z",
+ "corpusRows": 18455,
+ "trainingDocs": 14586,
+ "n": 3869,
+ "breakouts": 654,
+ "pooled": 0.6145999495864664,
+ "within": 0.6014328557350076,
+ "withinUnweighted": 0.6007077591526462,
+ "withinChannels": 8,
+ "perChannel": [
+  {
+   "channelId": "UCKTPks8QcY-i8l7YeW5OdjA",
+   "family": "UK",
+   "n": 26,
+   "breakouts": 0,
+   "auc": null
+  },
+  {
+   "channelId": "UCQANb2YPwAtK-IQJrLaaUFw",
+   "family": "Partisan media",
+   "n": 1793,
+   "breakouts": 334,
+   "auc": 0.585956257464509
+  },
+  {
+   "channelId": "UCSRRURbKlPf1HwPUhjmufTg",
+   "family": "Nonpartisan media",
+   "n": 417,
+   "breakouts": 70,
+   "auc": 0.4770893371757925
+  },
+  {
+   "channelId": "UCY-3GVY7vhOuuixr1QBMWEg",
+   "family": "Candidates & officials",
+   "n": 166,
+   "breakouts": 33,
+   "auc": 0.6349965823650034
+  },
+  {
+   "channelId": "UCbPojIVZdVhfBTRwj64j0Cw",
+   "family": "Nonpartisan media",
+   "n": 46,
+   "breakouts": 1,
+   "auc": 0.5
+  },
+  {
+   "channelId": "UCdFZ5b8bpOLRgbOATyPRtdw",
+   "family": "Reform",
+   "n": 223,
+   "breakouts": 20,
+   "auc": 0.454679802955665
+  },
+  {
+   "channelId": "UCgIuEJP3M3zg-vt5Z1UVfdg",
+   "family": "Reform",
+   "n": 90,
+   "breakouts": 0,
+   "auc": null
+  },
+  {
+   "channelId": "UChm_bCQMmaxljPge4-V9fVQ",
+   "family": "Candidates & officials",
+   "n": 163,
+   "breakouts": 15,
+   "auc": 0.6792792792792792
+  },
+  {
+   "channelId": "UClkO4MArT2WKWj32YDD_-Ew",
+   "family": "Candidates & officials",
+   "n": 891,
+   "breakouts": 173,
+   "auc": 0.7019216835461382
+  },
+  {
+   "channelId": "UCnpLmnN_7TxPdpGODs-JXxg",
+   "family": "Voting rights",
+   "n": 54,
+   "breakouts": 8,
+   "auc": 0.7717391304347826
+  }
+ ],
+ "perFamily": [
+  {
+   "family": "Candidates & officials",
+   "n": 1220,
+   "breakouts": 221,
+   "auc": 0.6854863913687443
+  },
+  {
+   "family": "Nonpartisan media",
+   "n": 463,
+   "breakouts": 71,
+   "auc": 0.4826279103190572
+  },
+  {
+   "family": "Partisan media",
+   "n": 1793,
+   "breakouts": 334,
+   "auc": 0.585956257464509
+  },
+  {
+   "family": "Reform",
+   "n": 313,
+   "breakouts": 20,
+   "auc": 0.5516211604095563
+  },
+  {
+   "family": "UK",
+   "n": 26,
+   "breakouts": 0,
+   "auc": null
+  },
+  {
+   "family": "Voting rights",
+   "n": 54,
+   "breakouts": 8,
+   "auc": 0.7717391304347826
+  }
+ ],
+ "meanScore": 0.17486430602222797,
+ "model": "PAX2 Encoder",
+ "gate": {
+  "name": "E",
+  "rule": "pooled kNN-AUC on held-out channels at least 0.02 above stock bge-m3, and within-channel kNN-AUC not below stock",
+  "stock": {
+   "pooled": 0.5776668045904851,
+   "within": 0.582048703483625
+  },
+  "encoder": {
+   "pooled": 0.6145999495864664,
+   "within": 0.6014328557350076
+  },
+  "pooledDelta": 0.036933144995981215,
+  "withinDelta": 0.01938415225138257,
+  "pass": true
+ }
+}

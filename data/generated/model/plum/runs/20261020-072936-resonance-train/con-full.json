@@ -1,0 +1,14 @@
+{
+ "arm": "full",
+ "semanticGroups": 14573,
+ "conGroups": 3643,
+ "lambda": 0.25,
+ "narrowAnchorsAvailable": 2091,
+ "proxyOnlyAnchorsAvailable": 4872,
+ "positivesBySignal": {
+  "a": 6042,
+  "bm": 108,
+  "b": 4232
+ },
+ "heldOutInGroups": 0
+}

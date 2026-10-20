@@ -1,0 +1,213 @@
+{
+ "builtAt": "2026-10-20T08:08:25Z",
+ "pairs": 13983,
+ "channels": 7,
+ "heldOutChannelsInCorpus": 10,
+ "protocol": "Pairs: inside each held-out channel (data/generated/model/plum/holdout.json), every (outlier, non-outlier) pair of corpus shorts published within 45 days of each other (scripts/pairwise/train.mjs's window), capped at 4,000 per channel by a seeded sample. Exemplars: that channel's outliers published strictly before the earlier of the two; a pair needs at least 3. A short's resonance score is the mean cosine to its 5 most similar exemplars (all of them when fewer). The pair is right when the outlier scores higher; a tie counts half.",
+ "arms": {
+  "semantic": {
+   "pooled": 0.5618,
+   "perChannel": [
+    {
+     "channelId": "UCQANb2YPwAtK-IQJrLaaUFw",
+     "pairs": 4000,
+     "accuracy": 0.5737
+    },
+    {
+     "channelId": "UCSRRURbKlPf1HwPUhjmufTg",
+     "pairs": 4000,
+     "accuracy": 0.5345
+    },
+    {
+     "channelId": "UCY-3GVY7vhOuuixr1QBMWEg",
+     "pairs": 911,
+     "accuracy": 0.6213
+    },
+    {
+     "channelId": "UCdFZ5b8bpOLRgbOATyPRtdw",
+     "pairs": 561,
+     "accuracy": 0.5722
+    },
+    {
+     "channelId": "UChm_bCQMmaxljPge4-V9fVQ",
+     "pairs": 381,
+     "accuracy": 0.727
+    },
+    {
+     "channelId": "UClkO4MArT2WKWj32YDD_-Ew",
+     "pairs": 4000,
+     "accuracy": 0.5467
+    },
+    {
+     "channelId": "UCnpLmnN_7TxPdpGODs-JXxg",
+     "pairs": 130,
+     "accuracy": 0.5462
+    }
+   ]
+  },
+  "behavior": {
+   "pooled": 0.5824,
+   "perChannel": [
+    {
+     "channelId": "UCQANb2YPwAtK-IQJrLaaUFw",
+     "pairs": 4000,
+     "accuracy": 0.5855
+    },
+    {
+     "channelId": "UCSRRURbKlPf1HwPUhjmufTg",
+     "pairs": 4000,
+     "accuracy": 0.5673
+    },
+    {
+     "channelId": "UCY-3GVY7vhOuuixr1QBMWEg",
+     "pairs": 911,
+     "accuracy": 0.6575
+    },
+    {
+     "channelId": "UCdFZ5b8bpOLRgbOATyPRtdw",
+     "pairs": 561,
+     "accuracy": 0.5651
+    },
+    {
+     "channelId": "UChm_bCQMmaxljPge4-V9fVQ",
+     "pairs": 381,
+     "accuracy": 0.7507
+    },
+    {
+     "channelId": "UClkO4MArT2WKWj32YDD_-Ew",
+     "pairs": 4000,
+     "accuracy": 0.563
+    },
+    {
+     "channelId": "UCnpLmnN_7TxPdpGODs-JXxg",
+     "pairs": 130,
+     "accuracy": 0.6077
+    }
+   ]
+  },
+  "full": {
+   "pooled": 0.5781,
+   "perChannel": [
+    {
+     "channelId": "UCQANb2YPwAtK-IQJrLaaUFw",
+     "pairs": 4000,
+     "accuracy": 0.5823
+    },
+    {
+     "channelId": "UCSRRURbKlPf1HwPUhjmufTg",
+     "pairs": 4000,
+     "accuracy": 0.5615
+    },
+    {
+     "channelId": "UCY-3GVY7vhOuuixr1QBMWEg",
+     "pairs": 911,
+     "accuracy": 0.6334
+    },
+    {
+     "channelId": "UCdFZ5b8bpOLRgbOATyPRtdw",
+     "pairs": 561,
+     "accuracy": 0.5651
+    },
+    {
+     "channelId": "UChm_bCQMmaxljPge4-V9fVQ",
+     "pairs": 381,
+     "accuracy": 0.727
+    },
+    {
+     "channelId": "UClkO4MArT2WKWj32YDD_-Ew",
+     "pairs": 4000,
+     "accuracy": 0.5665
+    },
+    {
+     "channelId": "UCnpLmnN_7TxPdpGODs-JXxg",
+     "pairs": 130,
+     "accuracy": 0.5462
+    }
+   ]
+  },
+  "stock": {
+   "pooled": 0.5311,
+   "perChannel": [
+    {
+     "channelId": "UCQANb2YPwAtK-IQJrLaaUFw",
+     "pairs": 4000,
+     "accuracy": 0.586
+    },
+    {
+     "channelId": "UCSRRURbKlPf1HwPUhjmufTg",
+     "pairs": 4000,
+     "accuracy": 0.473
+    },
+    {
+     "channelId": "UCY-3GVY7vhOuuixr1QBMWEg",
+     "pairs": 911,
+     "accuracy": 0.5445
+    },
+    {
+     "channelId": "UCdFZ5b8bpOLRgbOATyPRtdw",
+     "pairs": 561,
+     "accuracy": 0.5865
+    },
+    {
+     "channelId": "UChm_bCQMmaxljPge4-V9fVQ",
+     "pairs": 381,
+     "accuracy": 0.7454
+    },
+    {
+     "channelId": "UClkO4MArT2WKWj32YDD_-Ew",
+     "pairs": 4000,
+     "accuracy": 0.5085
+    },
+    {
+     "channelId": "UCnpLmnN_7TxPdpGODs-JXxg",
+     "pairs": 130,
+     "accuracy": 0.3615
+    }
+   ]
+  }
+ },
+ "deltas": {
+  "behavior-semantic": {
+   "delta": 0.0207,
+   "ci95": [
+    0.012,
+    0.0314
+   ]
+  },
+  "full-semantic": {
+   "delta": 0.0163,
+   "ci95": [
+    0.0042,
+    0.0232
+   ]
+  },
+  "full-behavior": {
+   "delta": -0.0044,
+   "ci95": [
+    -0.0139,
+    0.0003
+   ]
+  },
+  "stock-semantic": {
+   "delta": -0.0307,
+   "ci95": [
+    -0.0597,
+    0.0027
+   ]
+  },
+  "stock-behavior": {
+   "delta": -0.0513,
+   "ci95": [
+    -0.0906,
+    -0.0089
+   ]
+  },
+  "stock-full": {
+   "delta": -0.047,
+   "ci95": [
+    -0.0812,
+    -0.0033
+   ]
+  }
+ }
+}

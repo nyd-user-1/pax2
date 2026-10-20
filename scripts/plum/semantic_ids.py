@@ -104,12 +104,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--sizes', default='40,64,64')
     ap.add_argument('--write', default='1')
+    ap.add_argument('--src', default=SRC, help='a directory holding embeddings.npy, rows.json, meta.json (map.json is read from data/plum)')
     args = ap.parse_args()
     sizes = [int(s) for s in args.sizes.split(',')]
     t0 = time.time()
-    meta = json.load(open(f'{SRC}/meta.json'))
-    rows = json.load(open(f'{SRC}/rows.json'))
-    E = np.load(f'{SRC}/embeddings.npy').astype(np.float32)
+    meta = json.load(open(f'{args.src}/meta.json'))
+    rows = json.load(open(f'{args.src}/rows.json'))
+    E = np.load(f'{args.src}/embeddings.npy').astype(np.float32)
     E /= np.linalg.norm(E, axis=1, keepdims=True)
     assert E.shape == (meta['n'], meta['dim']) == (len(rows), 1024), E.shape
     rng = np.random.default_rng(SEED)

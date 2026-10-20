@@ -1,0 +1,9 @@
+{
+ "pairs": 14573,
+ "anchors": 14586,
+ "skippedNoPositive": 13,
+ "fewerThan3Positives": 24,
+ "negativesPerPair": 7,
+ "heldOutInPairs": 0,
+ "corpusRows": 18455
+}

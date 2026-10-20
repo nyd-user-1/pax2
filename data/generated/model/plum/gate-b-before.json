@@ -1,0 +1,98 @@
+{
+ "builtAt": "2026-10-20T07:14:33Z",
+ "pairs": 13983,
+ "channels": 7,
+ "heldOutChannelsInCorpus": 10,
+ "protocol": "Pairs: inside each held-out channel (data/generated/model/plum/holdout.json), every (outlier, non-outlier) pair of corpus shorts published within 45 days of each other (scripts/pairwise/train.mjs's window), capped at 4,000 per channel by a seeded sample. Exemplars: that channel's outliers published strictly before the earlier of the two; a pair needs at least 3. A short's resonance score is the mean cosine to its 5 most similar exemplars (all of them when fewer). The pair is right when the outlier scores higher; a tie counts half.",
+ "arms": {
+  "stock": {
+   "pooled": 0.5311,
+   "perChannel": [
+    {
+     "channelId": "UCQANb2YPwAtK-IQJrLaaUFw",
+     "pairs": 4000,
+     "accuracy": 0.586
+    },
+    {
+     "channelId": "UCSRRURbKlPf1HwPUhjmufTg",
+     "pairs": 4000,
+     "accuracy": 0.473
+    },
+    {
+     "channelId": "UCY-3GVY7vhOuuixr1QBMWEg",
+     "pairs": 911,
+     "accuracy": 0.5445
+    },
+    {
+     "channelId": "UCdFZ5b8bpOLRgbOATyPRtdw",
+     "pairs": 561,
+     "accuracy": 0.5865
+    },
+    {
+     "channelId": "UChm_bCQMmaxljPge4-V9fVQ",
+     "pairs": 381,
+     "accuracy": 0.7454
+    },
+    {
+     "channelId": "UClkO4MArT2WKWj32YDD_-Ew",
+     "pairs": 4000,
+     "accuracy": 0.5085
+    },
+    {
+     "channelId": "UCnpLmnN_7TxPdpGODs-JXxg",
+     "pairs": 130,
+     "accuracy": 0.3615
+    }
+   ]
+  },
+  "semantic": {
+   "pooled": 0.5618,
+   "perChannel": [
+    {
+     "channelId": "UCQANb2YPwAtK-IQJrLaaUFw",
+     "pairs": 4000,
+     "accuracy": 0.5737
+    },
+    {
+     "channelId": "UCSRRURbKlPf1HwPUhjmufTg",
+     "pairs": 4000,
+     "accuracy": 0.5345
+    },
+    {
+     "channelId": "UCY-3GVY7vhOuuixr1QBMWEg",
+     "pairs": 911,
+     "accuracy": 0.6213
+    },
+    {
+     "channelId": "UCdFZ5b8bpOLRgbOATyPRtdw",
+     "pairs": 561,
+     "accuracy": 0.5722
+    },
+    {
+     "channelId": "UChm_bCQMmaxljPge4-V9fVQ",
+     "pairs": 381,
+     "accuracy": 0.727
+    },
+    {
+     "channelId": "UClkO4MArT2WKWj32YDD_-Ew",
+     "pairs": 4000,
+     "accuracy": 0.5467
+    },
+    {
+     "channelId": "UCnpLmnN_7TxPdpGODs-JXxg",
+     "pairs": 130,
+     "accuracy": 0.5462
+    }
+   ]
+  }
+ },
+ "deltas": {
+  "semantic-stock": {
+   "delta": 0.0307,
+   "ci95": [
+    -0.0027,
+    0.0597
+   ]
+  }
+ }
+}
