@@ -6,6 +6,10 @@ Brendan signed off 2026-10-20 ~03:00 Eastern. Context: arXiv 2510.07784 (PLUM �
 
 Quantize the passing encoder's corpus embeddings (serving index under `s3://pax-2-638175140432/model/encoder-index/`, pointer in `current.json`) into hierarchical semantic IDs: residual k-means, 3 levels, codebook sizes chosen so level-1 ≈ the existing k=40 clusters remain legible. New scripts under `scripts/plum/`, pure Node or a small Python venv on the Mac. Outputs: `data/generated/model/semantic-ids.json` (id → [c1,c2,c3]), plus measured ID uniqueness and a nearest-neighbor agreement check against raw cosine neighbors. This is the baseline every later version is judged against.
 
+## Part 1b — the baseline PLUM MODEL (added at Brendan's word, ~03:25 Eastern; Mac-scale, no spend)
+
+Brendan's raised bar: tonight ends in three gated PLUM *models*, and this is the first. The quantizer alone is an artifact; turn it into a predictor: score each held-out document by the outlier share of the training documents sharing its c1c2 code (back off to c1 when the cell is thin), the exact held-out protocol of the Gate E rows. **Gate S, pre-registered: pooled AUC above stock bge-m3's 0.5775.** A pass ships `semantic-id-model.json`, publishes private under NYSgpt into the PAX collection, and takes a ledger row. A failed gate gets ONE more measured attempt (codebook size from your sweep, backoff rule) at the same bar — then report plainly.
+
 ## Part 2 — the behavioral signal table (Mac-scale, no spend)
 
 One table, `data/generated/model/co-occurrence.json`: for each short, its behavioral neighbors by signals we actually have — (a) same-channel outcome pairs (the 18,531 settled rows `src/lib/pairwise.ts` reads), (b) co-surge: shorts crossing their channel's 1x line in the same week within the same cluster (the poller's series + catalog), (c) same-commenter overlap where comment data exists. Document each signal's coverage honestly — how many shorts have at least one behavioral neighbor.
