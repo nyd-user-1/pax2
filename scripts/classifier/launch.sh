@@ -5,6 +5,7 @@
 # ceiling $1. The type is fixed to c7i.xlarge, so the menu walks subnets only.
 #
 #   RUN=model/v2/<run>/ ./scripts/classifier/launch.sh
+#   TRAINER=train_v3.py RUN=model/v3/<run>/ ./scripts/classifier/launch.sh   # v3 also needs embeddings.npy, rows.json, holdout.json under RUN
 # The inputs (training-set.jsonl, training-set.manifest.json, transcript-features.json) must already be
 # under s3://pax-2-638175140432/<RUN>; scripts/classifier/when-captions-land.sh puts them there.
 # Prints "instance: <id>" on success.
@@ -18,6 +19,8 @@ PRICE=0.1785
 WATCHDOG_MIN=45
 CEILING=1.00
 RUN=${RUN:?set RUN=model/v2/<run>/}
+TRAINER=${TRAINER:-train_v2.py}
+NAME=pax2-classifier-$(sed -E 's/^train_(v[0-9]+)\.py$/\1/' <<<"$TRAINER")
 
 # Rule 6: time and money, this box and the next rung (not authorized; for the record).
 awk -v wd=$WATCHDOG_MIN -v p=$PRICE -v c=$CEILING 'BEGIN {
@@ -28,14 +31,16 @@ awk -v wd=$WATCHDOG_MIN -v p=$PRICE -v c=$CEILING 'BEGIN {
 }'
 
 # One box only: refuse when a v2 box is already pending or running.
-LIVE=$(aws ec2 describe-instances --region $REGION --filters Name=tag:Name,Values=pax2-classifier-v2 Name=instance-state-name,Values=pending,running --query 'Reservations[].Instances[].InstanceId' --output text)
+LIVE=$(aws ec2 describe-instances --region $REGION --filters Name=tag:Name,Values=$NAME Name=instance-state-name,Values=pending,running --query 'Reservations[].Instances[].InstanceId' --output text)
 [ -z "$LIVE" ] || { echo "a PAX2 Classifier v2 box is already up: $LIVE"; exit 1; }
 
-for k in training-set.jsonl training-set.manifest.json transcript-features.json; do
+INPUTS="training-set.jsonl training-set.manifest.json transcript-features.json"
+[ "$TRAINER" = train_v3.py ] && INPUTS="$INPUTS embeddings.npy rows.json holdout.json"
+for k in $INPUTS; do
   aws s3api head-object --region $REGION --bucket $BUCKET --key "$RUN$k" >/dev/null || { echo "missing s3://$BUCKET/$RUN$k"; exit 1; }
 done
 STAGE=$(mktemp -d)
-cp scripts/classifier/box.sh scripts/classifier/train_v2.py scripts/rig/common.py "$STAGE/"
+cp scripts/classifier/box.sh scripts/classifier/$TRAINER scripts/rig/common.py "$STAGE/"
 aws s3 cp --only-show-errors --recursive "$STAGE/" "s3://$BUCKET/${RUN}code/" --region $REGION
 rm -rf "$STAGE"
 echo "code: s3://$BUCKET/${RUN}code/"
@@ -55,7 +60,7 @@ echo "user-data \$(date -u +%FT%TZ)"
 apt-get update -q && apt-get install -y -q python3-venv awscli >/dev/null
 echo "apt EXIT=\$?"
 mkdir -p /work/code && aws s3 cp --only-show-errors --recursive s3://$BUCKET/${RUN}code/ /work/code/
-BUCKET=$BUCKET RUN=$RUN bash /work/code/box.sh
+BUCKET=$BUCKET RUN=$RUN TRAINER=$TRAINER bash /work/code/box.sh
 echo "box.sh returned \$? \$(date -u +%FT%TZ)"
 aws s3 cp --only-show-errors /var/log/pax2-classifier.log s3://$BUCKET/${RUN}box.log
 shutdown -h now
@@ -67,7 +72,7 @@ for SUBNET in "${SUBNETS[@]}"; do
     --subnet-id "$SUBNET" --iam-instance-profile Name=$PROFILE --security-group-ids "$SG" \
     --instance-initiated-shutdown-behavior terminate \
     --block-device-mappings '[{"DeviceName":"/dev/sda1","Ebs":{"VolumeSize":20,"VolumeType":"gp3","DeleteOnTermination":true}}]' \
-    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=pax2-classifier-v2},{Key=Run,Value=$RUN}]" \
+    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$NAME},{Key=Run,Value=$RUN}]" \
     --user-data "$USERDATA" --query 'Instances[0].InstanceId' --output text 2>&1); then
     echo "launched $TYPE in $SUBNET"
     echo "instance: $OUT"

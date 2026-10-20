@@ -11,6 +11,10 @@
 #   MODE=audio TARGETS=path ./scripts/catalog-media/fleet.sh  # audio-only over another id list
 #   MODE=captions TARGETS=data/raw/captions/fleet-targets.txt ./scripts/catalog-media/fleet.sh
 #       # auto-captions only, no media: json3 to s3://…/catalog-captions/, yt-captions.sh's pacing
+#   PROXY_LINES="0 1 2 4" ./scripts/catalog-media/fleet.sh
+#       # box i rides SSM line PROXY_LINES[i] (0-based) and BOXES follows; skip lines that probe walled
+# Ids are dealt round-robin, so each box walks its share in the target file's order: put the ids
+# that matter most at the top of TARGETS and every box reaches them first.
 # Census is S3 itself (an id's .m4a under catalog-media/, or .en.json3 under catalog-captions/,
 # means done); rerun any time, done ids skip.
 set -euo pipefail
@@ -19,7 +23,7 @@ REGION=us-east-1
 BUCKET=pax-2-638175140432
 MODE=${MODE:-pairs}            # pairs: 360p mp4 + m4a; audio: m4a only
 TARGETS=${TARGETS:-data/raw/videos/targets.txt}
-BOXES=${BOXES:-20}
+if [ -n "${PROXY_LINES:-}" ]; then read -r -a LINES <<<"$PROXY_LINES"; BOXES=${#LINES[@]}; else BOXES=${BOXES:-20}; LINES=($(seq 0 $((BOXES-1)))); fi
 RUN=fleet-$(date -u +%Y%m%d-%H%M%S)
 case $MODE in
   pairs) FMT='bv*[height<=360][ext=mp4],ba[ext=m4a]' ;;
@@ -47,11 +51,10 @@ echo "plan: $BOXES t3.micro \$0.0104/h, $PER_BOX ids a box, about $EST_MIN min, 
 
 # Id slices to S3, box i takes slice i and proxy line i (US proxies ordered first in the parameter).
 aws s3 rm --only-show-errors --recursive s3://$BUCKET/code/fleet/$RUN/ --region $REGION 2>/dev/null || true
-split -d -a 2 -n l/$BOXES "$REMAIN" /tmp/pax2-fleet-slice- 2>/dev/null || split -d -a 2 -l $PER_BOX "$REMAIN" /tmp/pax2-fleet-slice-
-i=0
-for f in /tmp/pax2-fleet-slice-*; do
-  aws s3 cp --only-show-errors "$f" s3://$BUCKET/code/fleet/$RUN/box$i.txt --region $REGION
-  i=$((i+1)); rm -f "$f"
+for i in $(seq 0 $((BOXES-1))); do
+  awk -v n=$BOXES -v b=$i '(NR-1)%n==b' "$REMAIN" > /tmp/pax2-fleet-slice-$i
+  aws s3 cp --only-show-errors /tmp/pax2-fleet-slice-$i s3://$BUCKET/code/fleet/$RUN/box$i.txt --region $REGION
+  rm -f /tmp/pax2-fleet-slice-$i
 done
 rm -f "$DONE" "$REMAIN"
 
@@ -77,9 +80,10 @@ apt-get update -q >/dev/null && apt-get install -y -q python3-venv awscli >/dev/
 python3 -m venv /opt/yt && /opt/yt/bin/pip install -q -U yt-dlp
 mkdir -p /work && cd /work
 aws s3 cp --only-show-errors s3://$BUCKET/code/fleet/$RUN/box$BOX.txt ids.txt
-LINE=\$(aws ssm get-parameter --with-decryption --name /pax2/webshare/proxies --query Parameter.Value --output text | sed -n "$((BOX+1))p")
+LINE=\$(aws ssm get-parameter --with-decryption --name /pax2/webshare/proxies --query Parameter.Value --output text | sed -n "$((${LINES[$BOX]}+1))p")
 PIP=\$(cut -d: -f1 <<<"\$LINE"); PPORT=\$(cut -d: -f2 <<<"\$LINE"); PUSER=\$(cut -d: -f3 <<<"\$LINE"); PPASS=\$(cut -d: -f4 <<<"\$LINE")
 PROXY="http://\$PUSER:\$PPASS@\$PIP:\$PPORT"
+if [ -z "\$PIP" ]; then echo "ABORT box $BOX: no proxy line ${LINES[$BOX]}"; aws s3 cp --only-show-errors /var/log/pax2-fleet.log s3://$BUCKET/$LOG_KEY; shutdown -h now; exit 0; fi
 echo "box $BOX proxy \$PIP ids \$(wc -l < ids.txt)"
 OK=0; TRIED=0; FAILED=0
 while read -r id; do

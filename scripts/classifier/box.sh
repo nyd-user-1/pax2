@@ -2,10 +2,11 @@
 # PAX2 Classifier v2, the CPU box. Launched by scripts/classifier/launch.sh on Ubuntu 22.04; the user-data's
 # first line is the watchdog (shutdown -h +45), it installs the AWS CLI, pulls this code, runs this file and
 # shuts down. numpy and boto3 only: the regression is common.py's Newton fit, no torch.
-#   env: BUCKET RUN (model/v2/<run>/)
+#   env: BUCKET RUN (model/v2/<run>/ or model/v3/<run>/) TRAINER (train_v2.py, the default, or train_v3.py)
 # Every step's exit code is logged as EXIT=<code>, and the log is uploaded after each step (rule 14).
 set -uo pipefail
 : "${BUCKET:?}" "${RUN:?}"
+TRAINER=${TRAINER:-train_v2.py}
 LOG=/var/log/pax2-classifier.log
 S3=s3://$BUCKET/$RUN
 OUT=/work/out
@@ -21,12 +22,12 @@ RC=$?
 echo "install EXIT=$RC"
 [ $RC -eq 0 ] || { echo "EXIT=$RC"; up; exit $RC; }
 
-step "train_v2"
+step "$TRAINER"
 T0=$(date +%s)
-cd /work/code && BUCKET=$BUCKET RUN=$RUN OUT=$OUT PYTHONUNBUFFERED=1 /opt/c/bin/python train_v2.py
+cd /work/code && BUCKET=$BUCKET RUN=$RUN OUT=$OUT PYTHONUNBUFFERED=1 /opt/c/bin/python $TRAINER
 RC=$?
-echo "train_v2 EXIT=$RC wall=$(( $(date +%s) - T0 ))s"
-for f in var-model-v2.json predictions-v2.jsonl; do
+echo "$TRAINER EXIT=$RC wall=$(( $(date +%s) - T0 ))s"
+for f in var-model-v2.json predictions-v2.jsonl var-model-v3.json predictions-v3.jsonl; do
   [ -f "$OUT/$f" ] && aws s3 cp --only-show-errors "$OUT/$f" "$S3$f" --region us-east-1 && echo "uploaded $f $(stat -c %s "$OUT/$f") bytes"
 done
 echo "EXIT=$RC $(date -u +%FT%TZ)"

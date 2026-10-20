@@ -8,6 +8,8 @@
 #
 #   ./scripts/catalog-audio/whisper.sh          # prints the census and the plan, no launch
 #   APPLY=1 ./scripts/catalog-audio/whisper.sh  # launches
+#   IDS=path SHARDS=2 APPLY=1 ./scripts/catalog-audio/whisper.sh
+#       # only the ids in the file (one per line), split round-robin over SHARDS boxes
 # Then: node scripts/catalog-audio/merge.mjs    # folds finished transcripts into transcripts.json
 set -euo pipefail
 REGION=us-east-1; ROLE=nsr-embed
@@ -15,15 +17,25 @@ AMI=ami-012ba162b9cd2729c
 BUCKET=pax-2-638175140432
 RUN=whisper-$(date -u +%Y%m%d-%H%M%S)
 WATCHDOG_MIN=${WATCHDOG_MIN:-90}
-
-N_AUDIO=$(aws s3 ls s3://$BUCKET/catalog-media/ --region $REGION | grep -c '\.m4a$' || true)
-N_DONE=$(aws s3 ls s3://$BUCKET/catalog-media-transcripts/ --region $REGION 2>/dev/null | grep -c '\.json$' || true)
-# Rule 6: minutes and dollars. Catalog shorts average about 45 seconds; faster-whisper large-v3 on an
-# L4 runs well above 10x real time, so minutes ~ files * 45 / 600 plus about 8 of boot and install.
-EST_MIN=$(( (N_AUDIO - N_DONE) * 45 / 600 + 8 ))
-echo "audio files $N_AUDIO, transcribed $N_DONE, to do $((N_AUDIO - N_DONE))"
-echo "plan: g6.xlarge (L4) \$0.8048/h, about $EST_MIN min, about \$$(echo "$EST_MIN" | awk '{printf "%.2f", $1/60*0.8048}'); watchdog $WATCHDOG_MIN min caps \$$(echo "$WATCHDOG_MIN" | awk '{printf "%.2f", $1/60*0.8048}')"
-[ "${APPLY:-}" = 1 ] || { echo "dry run; APPLY=1 launches"; exit 0; }
+SHARDS=${SHARDS:-1}
+AUDIO=$(mktemp); DONE=$(mktemp); TODO=$(mktemp)
+aws s3 ls s3://$BUCKET/catalog-media/ --region $REGION | awk '{print $4}' | grep '\.m4a$' | sed 's/\.m4a$//' > "$AUDIO" || true
+aws s3 ls s3://$BUCKET/catalog-media-transcripts/ --region $REGION 2>/dev/null | awk '{print $4}' | grep '\.json$' | sed 's/\.json$//' > "$DONE" || true
+grep -vxF -f "$DONE" "$AUDIO" > "$TODO" || true
+if [ -n "${IDS:-}" ]; then grep -xF -f "$IDS" "$TODO" > "$TODO.i" || true; mv "$TODO.i" "$TODO"; fi
+N_TODO=$(wc -l < "$TODO" | tr -d ' ')
+# Rule 6: minutes and dollars. Run whisper-20261019-075312 measured 9.5 files a minute on one L4
+# (847 files in 5,306 s), so minutes ~ files / 9.5 per box plus about 10 of boot and install.
+EST_MIN=$(( N_TODO / SHARDS * 10 / 95 + 10 ))
+echo "audio files $(wc -l < "$AUDIO" | tr -d ' '), transcribed $(wc -l < "$DONE" | tr -d ' '), to do $N_TODO${IDS:+ (restricted to $IDS)}"
+echo "plan: $SHARDS g6.xlarge (L4) \$0.8048/h, about $EST_MIN min each, about \$$(echo "$SHARDS $EST_MIN" | awk '{printf "%.2f", $1*$2/60*0.8048}'); watchdog $WATCHDOG_MIN min caps \$$(echo "$SHARDS $WATCHDOG_MIN" | awk '{printf "%.2f", $1*$2/60*0.8048}')"
+[ "${APPLY:-}" = 1 ] || { echo "dry run; APPLY=1 launches"; rm -f "$AUDIO" "$DONE" "$TODO"; exit 0; }
+for i in $(seq 0 $((SHARDS-1))); do
+  awk -v n=$SHARDS -v b=$i '(NR-1)%n==b' "$TODO" > "$TODO.$i"
+  aws s3 cp --only-show-errors "$TODO.$i" s3://$BUCKET/code/whisper/$RUN/ids$i.txt --region $REGION
+  rm -f "$TODO.$i"
+done
+rm -f "$AUDIO" "$DONE" "$TODO"
 
 VPC=$(aws ec2 describe-vpcs --region $REGION --filters Name=is-default,Values=true --query 'Vpcs[0].VpcId' --output text)
 SG=$(aws ec2 describe-security-groups --region $REGION --filters Name=group-name,Values=nsr-embed-sg Name=vpc-id,Values=$VPC --query 'SecurityGroups[0].GroupId' --output text)
@@ -43,7 +55,8 @@ PY=/opt/pytorch/bin/python3
 \$PY -m pip install -q -U faster-whisper 'av==15.1.0' 2>&1 | tail -2
 \$PY -c 'import av, faster_whisper; print("av", av.__version__, "faster-whisper ok")'
 mkdir -p /opt/work && cd /opt/work
-aws s3 ls s3://$BUCKET/catalog-media/ | awk '{print \$4}' | grep '\.m4a\$' > audio.txt
+aws s3 cp --only-show-errors s3://$BUCKET/code/whisper/$RUN/ids__SHARD__.txt ids.txt
+sed 's/\$/.m4a/' ids.txt > audio.txt
 aws s3 ls s3://$BUCKET/catalog-media-transcripts/ 2>/dev/null | awk '{print \$4}' | sed 's/\.json\$//' > done.txt || true
 \$PY - <<'PYEOF'
 import json, os, subprocess, time, datetime
@@ -94,25 +107,29 @@ if first_error is not None:
     raise SystemExit(1)
 PYEOF
 echo "EXIT=\$?"
-aws s3 cp --only-show-errors /var/log/pax2-whisper.log s3://$BUCKET/logs/pax2-$RUN.log
+aws s3 cp --only-show-errors /var/log/pax2-whisper.log s3://$BUCKET/logs/pax2-$RUN-__SHARD__.log
 shutdown -h now
 EOS
 )
 
+launch() {
+SHARD=$1
 for TYPE in g6.xlarge g5.xlarge; do
   for SUBNET in "${SUBNETS[@]}"; do
     if OUT=$(aws ec2 run-instances --region $REGION --image-id "$AMI" --instance-type "$TYPE" --count 1 \
       --subnet-id "$SUBNET" --iam-instance-profile Name=$ROLE --security-group-ids "$SG" \
       --instance-initiated-shutdown-behavior terminate \
       --block-device-mappings '[{"DeviceName":"/dev/sda1","Ebs":{"VolumeSize":100,"VolumeType":"gp3","DeleteOnTermination":true}}]' \
-      --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=pax2-$RUN}]" \
-      --user-data "$USERDATA" --query 'Instances[0].InstanceId' --output text 2>&1); then
-      echo "$(date -u +%FT%TZ) launched $OUT $TYPE $SUBNET run=$RUN"
-      echo "log: s3://$BUCKET/logs/pax2-$RUN.log"
-      exit 0
+      --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=pax2-$RUN-$SHARD}]" \
+      --user-data "${USERDATA//__SHARD__/$SHARD}" --query 'Instances[0].InstanceId' --output text 2>&1); then
+      echo "$(date -u +%FT%TZ) launched $OUT $TYPE $SUBNET run=$RUN shard $SHARD"
+      echo "log: s3://$BUCKET/logs/pax2-$RUN-$SHARD.log"
+      return 0
     fi
     grep -q -E 'InsufficientInstanceCapacity|Unsupported' <<<"$OUT" && { echo "no $TYPE in $SUBNET"; continue; }
     echo "run-instances failed: $OUT"; exit 1
   done
 done
-echo "no capacity on the menu"; exit 1
+echo "no capacity on the menu for shard $SHARD"; exit 1
+}
+for i in $(seq 0 $((SHARDS-1))); do launch $i; done
