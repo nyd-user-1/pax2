@@ -1,6 +1,6 @@
 // Every metric and term on screen: the short label used in tables, its full name, and what it means.
 
-export type Term = { id: string; short: string; full: string; definition: string; group: "Score" | "Delivery" | "Engagement" | "Campaigns" | "Graph" }
+export type Term = { id: string; short: string; full: string; definition: string; group: "Score" | "Delivery" | "Engagement" | "Campaigns" | "Graph" | "Script" }
 
 export const GLOSSARY: Term[] = [
   { id: "resonance", short: "Resonance", full: "Resonance score", group: "Score", definition: "A 0–100 score for how well a paid video earned and kept attention and got people to act, per person reached. 50 is the average of the first round of results. It is built from Engage, Interest and Act, weighted 25%, 40% and 35%." },
@@ -26,6 +26,7 @@ export const GLOSSARY: Term[] = [
   { id: "plays3s", short: "3s plays", full: "3-second video plays", group: "Engagement", definition: "Times the video played for at least 3 seconds." },
   { id: "avg-watch", short: "Avg. watch", full: "Average watch time", group: "Engagement", definition: "Seconds the average viewer watched." },
   { id: "thruplays", short: "ThruPlays", full: "ThruPlays", group: "Engagement", definition: "Plays to the end, or to 15 seconds for longer videos (Meta's definition)." },
+  { id: "boost", short: "Boost", full: "Boost", group: "Engagement", definition: "Stronger than a like, short of a share: a boost says the reader values and supports the video, not that it held their attention. A reader's boosts weight their For you feed toward more like them, and each video shows its running count." },
   { id: "paid", short: "Paid", full: "Paid run", group: "Campaigns", definition: "The numbers from a video's paid run, as the ad platform exports them: what was spent, how many saw it, how far they watched (3 seconds, 25%, 50%, 75%, to the end), and what they did after (shares, saves, comments, reactions, clicks), with the cost of each." },
   { id: "hits-and-misses", short: "Hits and Misses", full: "Hits and Misses", group: "Campaigns", definition: "Every short PAX2 tracks, as a dot: publish date across, and views over the channel's usual (its median) up, on a log scale. Green dots broke out well above their channel's usual, red ones fell well below it, grey landed near it. Each dot opens its video." },
   { id: "formula", short: "Formula", full: "Feature lift formula", group: "Campaigns", definition: "How PAX2 measures whether a trait helps videos break out. Within each channel, the share of videos with the trait that broke out is compared with the share of those without it; each channel counts in proportion to how many videos it has on both sides; the channels are pooled into one difference in points; and a 90% range comes from redrawing the channels a thousand times." },
@@ -43,6 +44,9 @@ export const GLOSSARY: Term[] = [
   { id: "outperformer", short: "Outperformer", full: "Outperformer (5–10×)", group: "Graph", definition: "A PAX working term: a short whose views run five to ten times its channel's median — past the 3× threshold and into the range where distribution has clearly shifted beyond the channel's usual audience. The band, not the word, is the definition." },
   { id: "viometric-frequency", short: "Viometric frequency", full: "Multi-Modal Viometric Frequency", group: "Graph", definition: "A PAX term: one video's measured signature across every mode it carries — visual, sound, speech, title, embedding — rendered as a single deterministic visual unique to that video. Drawn only from measured variables, so similar videos draw similar signatures and a video's signature never changes unless its measurements do." },
   { id: "biometric-frequency", short: "Biometric frequency", full: "Multi-Modal Biometric Frequency", group: "Graph", definition: "The human-measurement analogy that named the viometric version: vitals measured across modes — pressure, rate, rhythm — identify a person without describing their whole body. PAX measures videos, never people; the term survives only as the analogy." },
+  { id: "hook", short: "Hook", full: "Hook", group: "Script", definition: "The opening words of a script — what a viewer hears before deciding to stay or scroll. PAX2 asks for a hook under 12 words: on the headline model trained on Upworthy's 10,452 tested pairs (held-out accuracy 0.672), short, concrete first lines rank high." },
+  { id: "concrete-number", short: "Concrete number", full: "Concrete number", group: "Script", definition: "One specific figure in the script — \"106 out of 160,\" never \"most.\" A single checkable number keeps the claim in evidence; PAX2 scripts carry exactly one so it lands." },
+  { id: "the-ask", short: "The ask", full: "Explicit ask", group: "Script", definition: "What the viewer is told to do at the end. In Swayable's 617 control-tested political ads, an explicit ask ran +0.59 points of persuasion (0.2 to 1.0) over ads without one." },
 ]
 
 export const termById = (id: string) => GLOSSARY.find((t) => t.id === id)

@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation"
 import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, EllipsisVertical, Forward, ListPlus, MessageCircle, Play, Rocket, Search, SlidersHorizontal, TrendingUp, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
 
 import { viewer } from "@/app/original-actions"
-import { myUsageSince, usageSince } from "@/app/usage-actions"
+import { boostState, boostToggle, myUsageSince, usageSince } from "@/app/usage-actions"
 import { useShellPanel } from "@/components/shell"
 import { readerId, useUsage } from "@/components/usage-beacon"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
@@ -113,9 +113,44 @@ function Avatar({ id, className }: { id: string; className?: string }) {
  *  cards add Boost on the left. */
 const CORNER_ITEM = "flex h-9 min-w-9 items-center justify-center gap-1.5 rounded-full px-2 transition-colors hover:bg-slate-200/70"
 
+/** The feed's Boost state: the reader's current boosts and every card's count, loaded once and
+ *  shared, so a rocket stays filled across visits and a press updates one place. */
+const BoostCtx = React.createContext<{ mine: Set<string>; counts: Record<string, number>; toggle: (id: string) => void } | null>(null)
+
+function useBoostState(videos: FeedVideo[]) {
+  const [mine, setMine] = React.useState<Set<string>>(new Set())
+  const [counts, setCounts] = React.useState<Record<string, number>>({})
+  React.useEffect(() => {
+    boostState(videos.map((v) => v.id), readerId())
+      .then((s) => {
+        setMine(new Set(s.mine))
+        setCounts(s.counts)
+      })
+      .catch(() => {})
+  }, [videos])
+  const toggle = React.useCallback((id: string) => {
+    // Optimistic flip; the server's answer settles the count. The usage row writes server-side.
+    setMine((m) => {
+      const next = new Set(m)
+      const on = !next.has(id)
+      if (on) next.add(id)
+      else next.delete(id)
+      setCounts((c) => ({ ...c, [id]: Math.max(0, (c[id] ?? 0) + (on ? 1 : -1)) }))
+      return next
+    })
+    boostToggle(id, readerId())
+      .then((r) => r && setCounts((c) => ({ ...c, [id]: r.n })))
+      .catch(() => {})
+  }, [])
+  return React.useMemo(() => ({ mine, counts, toggle }), [mine, counts, toggle])
+}
+
+const BOOST_TIP = "Stronger than a like, short of a share: a boost says you value and support this video, and it weights your For you feed toward more like it."
+
 function CardFoot({ v, boost }: { v: FeedVideo; boost?: boolean }) {
-  const log = useUsage()
-  const [boosted, setBoosted] = React.useState(false)
+  const b = React.useContext(BoostCtx)
+  const boosted = b?.mine.has(v.id) ?? false
+  const count = b?.counts[v.id] ?? 0
   return (
     <div className="tabular mt-auto flex items-center justify-between gap-2 text-sm text-pax2-blue">
       {boost ? (
@@ -125,15 +160,15 @@ function CardFoot({ v, boost }: { v: FeedVideo; boost?: boolean }) {
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
-            setBoosted((b) => !b)
-            log("boost", v.id, { on: !boosted })
+            b?.toggle(v.id)
           }}
           aria-label="Boost"
           aria-pressed={boosted}
-          title="Boost"
-          className={whiteButton("md", cn("px-2.5 shadow-none hover:shadow-md", boosted && "border-pax2-blue bg-[#dbe7fa]"))}
+          title={BOOST_TIP}
+          className={whiteButton("md", cn("gap-1.5 px-2.5 shadow-none hover:shadow-md", boosted && "border-pax2-blue bg-[#dbe7fa]"))}
         >
           <Rocket className="size-4" style={{ color: "#033882", fill: boosted ? "#033882" : "#dbe7fa" }} />
+          {count > 0 && <span className="text-xs font-semibold text-[#033882]">{fmt.format(count)}</span>}
         </button>
       ) : (
         <span />
@@ -787,6 +822,7 @@ export function SearchBar({
 }
 
 export function Feed({ videos }: { videos: FeedVideo[] }) {
+  const boost = useBoostState(videos)
   // In local development the feed opens on the paid media: Voter Freedom, paid first, then most viewed.
   const dev = process.env.NODE_ENV === "development"
   const [q, setQ] = React.useState(dev ? "Voter Freedom" : "")
@@ -872,7 +908,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
         .toSorted(orderOf(sorts)),
     [videos, needle, channel, tag, sorts],
   )
-  const ordered = React.useMemo(() => (forYou ? rankFeed(shown, events, Date.now(), mine) : shown), [forYou, shown, events, mine])
+  const ordered = React.useMemo(() => (forYou ? rankFeed(shown, events, Date.now(), mine, [...boost.mine]) : shown), [forYou, shown, events, mine, boost.mine])
   // With a video's drawer open beside the feed, search results lay out as a grid sized to the feed's
   // own width — three, two or one across — so a dragged split works the same as a preset one.
   const { panelOpen } = useShellPanel()
@@ -891,6 +927,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   }, [narrowed])
 
   return (
+    <BoostCtx.Provider value={boost}>
     <section ref={section} onClickCapture={remember} className="@container mx-auto w-full max-w-6xl px-6 pb-16">
       {/* On the landing it sticks just beneath the 4rem header, never inside it; inside the
           shell's scroll pane (a video's page) there is no such header, so it sticks at the top. */}
@@ -929,5 +966,6 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
         </div>
       )}
     </section>
+    </BoostCtx.Provider>
   )
 }

@@ -1,6 +1,7 @@
 "use server"
 
 import { currentUser } from "@/lib/auth"
+import { boostCounts, myBoosts, toggleBoost as flipBoost } from "@/lib/boost"
 import { USAGE_KINDS, usageSince as since, writeUsage, type UsageKind } from "@/lib/usage"
 
 // What a reader does on PAX2, from the browser to the ledger (src/lib/usage.ts). The reader is the
@@ -12,6 +13,27 @@ export async function logUsage(kind: UsageKind, subject: string, meta?: Record<s
   const who = user?.email ?? (reader && /^r-[a-z0-9]{6,16}$/.test(reader) ? reader : "anonymous")
   const m = meta && JSON.stringify(meta).length <= 1000 ? meta : undefined
   await writeUsage(kind, String(subject).slice(0, 200), who, m)
+}
+
+const whoOf = async (reader?: string) => {
+  const user = await currentUser()
+  return user?.email ?? (reader && /^r-[a-z0-9]{6,16}$/.test(reader) ? reader : null)
+}
+
+/** Flip the reader's Boost on a video. Signed-in email or the browser's anonymous reader id;
+ *  without either the press changes nothing and returns null. */
+export async function boostToggle(videoId: string, reader?: string) {
+  const who = await whoOf(reader)
+  if (!who) return null
+  return flipBoost(String(videoId), who)
+}
+
+/** The reader's current boosts and the counts for the videos in view, one call on load. */
+export async function boostState(ids: string[], reader?: string) {
+  const who = await whoOf(reader)
+  const list = ids.slice(0, 500).map(String)
+  const [mine, counts] = await Promise.all([who ? myBoosts(who) : Promise.resolve([]), boostCounts(list)])
+  return { mine, counts }
 }
 
 /** The signed-in reader's own opens and plays, or the anonymous browser's by its reader id, over the

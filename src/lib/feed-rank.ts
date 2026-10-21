@@ -14,7 +14,7 @@ const WINDOW_MS = 7 * 864e5
 /** Subjects arrive as page ids (yt-<id>) or bare YouTube ids; both count for the same video. */
 const bare = (s: string) => s.replace(/^yt-/, "")
 
-export function rankFeed<V extends { id: string; published: string; ratio: number; channelId?: string }>(videos: V[], events: RankEvent[], now = Date.now(), mine: RankEvent[] = []): (V & { rank: RankParts })[] {
+export function rankFeed<V extends { id: string; published: string; ratio: number; channelId?: string }>(videos: V[], events: RankEvent[], now = Date.now(), mine: RankEvent[] = [], boosted: string[] = []): (V & { rank: RankParts })[] {
   const counts = new Map<string, number>()
   for (const e of events) {
     if ((e.kind !== "open" && e.kind !== "play") || now - Date.parse(e.at) > WINDOW_MS) continue
@@ -28,6 +28,12 @@ export function rankFeed<V extends { id: string; published: string; ratio: numbe
     if (e.kind !== "open" && e.kind !== "play") continue
     const ch = channelOf.get(bare(e.subject))
     if (ch) byChannel.set(ch, (byChannel.get(ch) ?? 0) + 1)
+  }
+  // A Boost counts as three opens in the affinity term: a stated support signal over an implicit
+  // one. The 3 is a design constant, held until PAX2 Feed Ranker trains on PAX2's own reader rows.
+  for (const id of boosted) {
+    const ch = channelOf.get(bare(id))
+    if (ch) byChannel.set(ch, (byChannel.get(ch) ?? 0) + 3)
   }
   return videos
     .map((v) => {

@@ -11,6 +11,7 @@ import paidBatch from "../../data/generated/voter-freedom-paid.json"
 import homeFeed from "../../data/generated/home-feed.json"
 import shorts from "../../data/raw/yt-shorts.json"
 import { RangeBar } from "@/components/bits"
+import { boostCounts } from "@/lib/boost"
 import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, TableBlock } from "@/components/blocks"
 import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/components/codebook-blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
@@ -214,6 +215,8 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   /** YouTube returned no like count; a sample video fills it, and the Stats block says so. */
   const sampleLikes = v?.likes == null ? (sample as { likes?: number } | undefined)?.likes : undefined
   const likes = v?.likes ?? sampleLikes ?? null
+  // The video's running Boost count from DynamoDB; the row appears from the first boost.
+  const boosts = (await boostCounts([ytId]).catch(() => ({}) as Record<string, number>))[ytId] ?? 0
   const statRows: [string, string][] = [
     ["Views", n(v?.views)],
     ["Median", n(scored ? Math.round(scored.channelMedian) : null)],
@@ -221,6 +224,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     ["Like rate", pct(likes)],
     ["Comments", n(v?.comments)],
     ["Comment rate", pct(v?.comments)],
+    ...(boosts > 0 ? ([["Boosts", n(boosts)]] as [string, string][]) : []),
     ["iWAR", ratio == null ? DASH : times(ratio)],
     ["WAR", v?.views == null ? DASH : times(v.views / warBaseline.median)],
     ["Subscribers", n(v ? (subscribers as Record<string, number | null>)[v.channelId] : null)],

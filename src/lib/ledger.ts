@@ -1,7 +1,7 @@
 import "server-only"
 
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
-import { DeleteCommand, DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb"
+import { BatchGetCommand, DeleteCommand, DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb"
 
 // The ledger: one DynamoDB table, append-only. Nothing is updated in place;
 // a decision that changes status is a new item, so the history is the table.
@@ -15,6 +15,8 @@ import { DeleteCommand, DynamoDBDocumentClient, GetCommand, PutCommand, QueryCom
 //   TAKE#<take>             CALL#<iso>                      a forecast, locked before the results it predicts
 //   PICK#<claim>            <iso>                           a script choice and the reason for it
 //   VOTE#<conversation>     <voter>#<statement>             a consensus vote
+//   BOOSTED#<reader>        <video id>                      the reader's current Boost state (on, at)
+//   BOOSTCOUNT#<video id>   META                            the running Boost count (n), a total of the usage log's boost events
 
 const TABLE = process.env.PAX2_LEDGER_TABLE ?? "pax2-ledger"
 const client = DynamoDBDocumentClient.from(new DynamoDBClient({ region: process.env.PAX2_REGION ?? "us-east-1" }), { marshallOptions: { removeUndefinedValues: true } })
@@ -30,6 +32,29 @@ export async function putOnce(item: Item): Promise<boolean> {
     if ((e as { name?: string }).name === "ConditionalCheckFailedException") return false
     throw e
   }
+}
+
+/** Write the current state of a row that is a view, not a decision: a reader's Boost state. The
+ *  history stays in the usage log's events; this row only answers "what is it now". */
+export async function put(item: Item) {
+  await client.send(new PutCommand({ TableName: TABLE, Item: item }))
+}
+
+/** Add to a counter row's `n` atomically and return the new total. A counter is a running total of
+ *  append-only events, kept so a page reads one row instead of the whole event log. */
+export async function add(pk: string, sk: string, by: number): Promise<number> {
+  const r = await client.send(new UpdateCommand({ TableName: TABLE, Key: { pk, sk }, UpdateExpression: "ADD n :d", ExpressionAttributeValues: { ":d": by }, ReturnValues: "UPDATED_NEW" }))
+  return Number(r.Attributes?.n ?? 0)
+}
+
+/** The rows for up to 100 keys per call, missing keys skipped. */
+export async function getMany<T extends Item>(keys: { pk: string; sk: string }[]): Promise<T[]> {
+  const out: T[] = []
+  for (let i = 0; i < keys.length; i += 100) {
+    const r = await client.send(new BatchGetCommand({ RequestItems: { [TABLE]: { Keys: keys.slice(i, i + 100) } } }))
+    out.push(...((r.Responses?.[TABLE] as T[]) ?? []))
+  }
+  return out
 }
 
 export async function get<T extends Item>(pk: string, sk: string): Promise<T | null> {
