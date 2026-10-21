@@ -12,7 +12,7 @@
 // and how its last race went (/api/district), and that rides along with the question.
 
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { ArrowUp, Check, ChevronLeft, ChevronRight, Loader2, MapPin, Mic, Paperclip, PlaySquare, Square, X } from 'lucide-react'
+import { ArrowUp, Check, ChevronLeft, ChevronRight, Loader2, MapPin, Mic, Paperclip, PlaySquare, Square, Video, X } from 'lucide-react'
 
 import { MarkdownContent } from '@/components/chat/markdown'
 import { PlusMenu, type ScriptChip, type VideoChip } from '@/components/chat/plus-menu'
@@ -47,6 +47,9 @@ export type PlaceInsight = { district: string | null; state?: string; chamber?: 
 type Recognition = { lang: string; continuous: boolean; interimResults: boolean; start: () => void; stop: () => void; abort: () => void; onresult: ((e: { resultIndex: number; results: ArrayLike<ArrayLike<{ transcript: string }> & { isFinal: boolean }> }) => void) | null; onerror: ((e: { error: string }) => void) | null; onend: (() => void) | null }
 const speechRecognition = () => (typeof window === 'undefined' ? undefined : ((window as unknown as { SpeechRecognition?: new () => Recognition; webkitSpeechRecognition?: new () => Recognition }).SpeechRecognition ?? (window as unknown as { webkitSpeechRecognition?: new () => Recognition }).webkitSpeechRecognition))
 
+// Record mode (the camera button): the conversation becomes an onboarding that ends in a recording.
+const RECORD_GUIDE = `RECORD MODE — the user pressed the camera. From here the conversation is an onboarding that culminates in a recording. Run it one short question at a time: who they are in a few words, their town, then why open primaries matter to them personally. Then draft a script in their own words — hook under 12 words, first person, one concrete number, 50 to 60 words (about 25 seconds spoken), ending with what the viewer should do. Refine it with them until it sounds like them. When they are happy, put the final script alone in a code block and tell them: press Create in the sidebar, paste the script, and the teleprompter will scroll it while they record. Keep every turn to one question or one revision.`
+
 const SKIN = {
   '--txt': '#0f172a',
   '--muted': '#64748b',
@@ -63,7 +66,7 @@ const ask = (v: VideoChip) => `What explains the score on ${v.label}?`
  *  /app/home dresses the same chat as its front page: `heading` stands in for the wordmark,
  *  `below` hangs under the input in the empty state, `explore: false` yields that spot, and
  *  `shelf` renders past the fold — the empty state fills the viewport and the shelf scrolls up. */
-export function Chat({ scripts = [], videos = [], compact = false, context, attachment, heading, below, explore = true, shelf }: { scripts?: ScriptChip[]; videos?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode; heading?: React.ReactNode; below?: React.ReactNode; explore?: boolean; shelf?: React.ReactNode }) {
+export function Chat({ scripts = [], videos = [], shorts = [], compact = false, context, attachment, heading, below, explore = true, shelf }: { scripts?: ScriptChip[]; videos?: VideoChip[]; shorts?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode; heading?: React.ReactNode; below?: React.ReactNode; explore?: boolean; shelf?: React.ReactNode }) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -71,6 +74,7 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
   const [selectedVideo, setSelectedVideo] = useState<VideoChip | null>(null)
   const [isFocused, setIsFocused] = useState(false)
   const [model, setModel] = useChatModel()
+  const [recordMode, setRecordMode] = useState(false)
 
   // A Blocks-shelf tile dropped on the chat attaches as context, after livingston's drag-to-chat: a short
   // carries its own facts; a block is read from its page at drop time (/api/block-context), so the chat
@@ -200,7 +204,7 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: allMessages.map(m => ({ role: m.role, content: m.content })), ...(selectedAddress ? { address: selectedAddress.description, place: placeInsight } : {}), ...((context || attached?.context) ? { systemContext: [context?.(), attached?.context].filter(Boolean).join('\n\n') } : {}), model }),
+        body: JSON.stringify({ messages: allMessages.map(m => ({ role: m.role, content: m.content })), ...(selectedAddress ? { address: selectedAddress.description, place: placeInsight } : {}), ...((context || attached?.context || recordMode) ? { systemContext: [context?.(), attached?.context, recordMode ? RECORD_GUIDE : null].filter(Boolean).join('\n\n') } : {}), model }),
         signal: controller.signal,
       })
       if (!res.ok || !res.body) {
@@ -499,7 +503,7 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
           </button>
         </div>
       )}
-      <div className={`relative flex flex-col rounded-2xl border ${addressMode ? 'border-pax2-light-blue' : recordingState !== 'idle' ? 'border-blue-500' : 'border-[var(--border)]'} bg-[var(--inp-bg)] px-4 pt-3 pb-3 transition-all gap-1 shadow-[0_1px_3px_rgba(0,0,0,0.04)] ${isFocused ? 'shadow-[0_8px_24px_rgba(0,0,0,0.08)]' : ''}`}>
+      <div className={`relative flex flex-col rounded-2xl border ${addressMode || recordMode ? 'border-pax2-light-blue' : recordingState !== 'idle' ? 'border-blue-500' : 'border-[var(--border)]'} bg-[var(--inp-bg)] px-4 pt-3 pb-3 transition-all gap-1 shadow-[0_1px_3px_rgba(0,0,0,0.04)] ${isFocused ? 'shadow-[0_8px_24px_rgba(0,0,0,0.08)]' : ''}`}>
 
         {selectedAddress && (
           <div className="flex items-center gap-2 pb-2.5 mb-1 border-b border-[var(--border)]">
@@ -548,7 +552,7 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
                   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submit(input) }
                 }
               }}
-              placeholder={addressMode ? 'Enter an address…' : selectedAddress ? 'Ask about this address…' : 'Ask about the scores, scripts and results…'}
+              placeholder={addressMode ? 'Enter an address…' : recordMode ? 'Record mode — tell us a little about you…' : selectedAddress ? 'Ask about this address…' : 'Ask about the scores, scripts and results…'}
               className="flex-1 resize-none bg-transparent py-1 text-[17px] text-[var(--txt)] placeholder:text-[var(--muted2)] outline-none leading-relaxed"
               style={{ minHeight: '40px' }}
               onFocus={() => setIsFocused(true)}
@@ -557,15 +561,20 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
         )}
 
         <div className="flex items-center pt-1">
-          <PlusMenu scripts={scripts} videos={videos} onSelect={(text) => { setInput(text); textareaRef.current?.focus() }} />
+          <PlusMenu videos={videos} shorts={shorts} onSelect={(text) => { setInput(text); textareaRef.current?.focus() }} />
 
           <button
-            onClick={() => addressMode ? exitAddressMode() : setAddressMode(true)}
+            onClick={() => {
+              const next = !recordMode
+              setRecordMode(next)
+              if (next && !input.trim() && messages.length === 0) setInput("I'm ready to make my first video — where do we start?")
+              textareaRef.current?.focus()
+            }}
             className={`ml-2 shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
-              addressMode || selectedAddress ? 'text-pax2-light-blue bg-pax2-light-blue/10' : 'text-[var(--muted)] hover:bg-[rgba(0,0,0,0.07)] hover:text-[var(--txt)]'
+              recordMode ? 'text-pax2-light-blue bg-pax2-light-blue/10' : 'text-[var(--muted)] hover:bg-[rgba(0,0,0,0.07)] hover:text-[var(--txt)]'
             }`}
-            title={addressMode ? 'Exit address mode' : 'Look up an address'}>
-            <MapPin className="h-4 w-4" />
+            title={recordMode ? 'Leave record mode' : 'Record mode — build toward a recording'}>
+            <Video className="h-4 w-4" />
           </button>
           <button
             onClick={toggleMic}

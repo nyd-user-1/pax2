@@ -1,49 +1,63 @@
 'use client'
 
 // Ported from solar (src/components/SolarPlusMenu.tsx): the + button, its category list, and the
-// drill-down drawer with its search field. Solar's States and Counties become Scripts and Videos;
-// its Models step is left out (the product never names the model).
+// drill-down drawer with its search field. The categories: Video Analytics (prompts over the record),
+// Scripts (the open-primaries sample batch), Videos (the scored takes), Shorts (the catalog's real
+// shorts), and Voices (the studio's readers — hear one, or write for it). Icons wear the sidebar's
+// clothes: 18px, 1.75 stroke, lavender fill on hover.
 
 import { useState, useRef, useEffect } from 'react'
-import { Plus, ChevronRight, ArrowLeft, X, Lightbulb, NotebookPen, PlaySquare } from 'lucide-react'
+import { Plus, ChevronRight, ArrowLeft, X, ChartColumn, NotebookPen, PlaySquare, Clapperboard, AudioLines, Volume2, Loader2 } from 'lucide-react'
+
+import { narrate } from '@/app/studio-actions'
+import { OPEN_SCRIPTS } from '@/lib/open-scripts'
+import { VOICES } from '@/lib/studio-style'
 
 /* ------------------------------------------------------------------ */
-/*  Sample prompts                                                     */
+/*  Video Analytics prompts                                            */
 /* ------------------------------------------------------------------ */
 
-const SAMPLE_PROMPTS = [
-  { description: 'Which takes are scoring above the reference average, and why?', prompt: 'Which takes are scoring above the reference average, and why?' },
-  { description: 'Which script is landing best so far?', prompt: 'Which script is landing best so far?' },
-  { description: 'What separates the highest-scoring take from the lowest?', prompt: 'What separates the highest-scoring take from the lowest?' },
-  { description: 'Which takes need more evidence before the score can be trusted?', prompt: 'Which takes need more evidence before the score can be trusted?' },
-  { description: 'Does Interest or Engage explain more of the spread between takes?', prompt: 'Does Interest or Engage explain more of the spread between takes?' },
-  { description: 'What should the next round of tests change?', prompt: 'What should the next round of tests change?' },
+const ANALYTICS_PROMPTS = [
+  'Rank the takes by Resonance and explain the spread.',
+  'Compare the highest and lowest scoring takes — name what separates them.',
+  'List the takes whose range still spans the reference average, and what each needs.',
+  'Break the latest take into Engage, Interest and Act, and say which moved its score.',
+  'Say which component — Engage, Interest or Act — explains more of the spread, with numbers.',
+  'Propose the next three tests the evidence supports.',
 ]
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
 /* ------------------------------------------------------------------ */
 
-type DrillStep = 'categories' | 'prompts' | 'pick-script' | 'pick-video'
+type DrillStep = 'categories' | 'prompts' | 'pick-script' | 'pick-video' | 'pick-short' | 'pick-voice'
 
 export type ScriptChip = { id: string; title: string; short: string }
 export type VideoChip = { id: string; label: string; poster?: string; score: number | null }
 
 interface Props {
-  scripts: ScriptChip[]
   videos: VideoChip[]
+  shorts?: VideoChip[]
   onSelect: (text: string) => void
 }
+
+/* Sidebar dress for every menu icon (shell.tsx's item): 18px, 1.75 stroke, lavender fill on row hover. */
+const ICON = 'icon-pop size-[18px] shrink-0 transition-colors text-slate-500 group-hover:fill-pax2-lavender group-hover:text-pax2-blue'
+
+const VOICE_LINE = 'Open primaries let every voter pick the person, not the party.'
 
 /* ------------------------------------------------------------------ */
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 
-export function PlusMenu({ scripts, videos, onSelect }: Props) {
+export function PlusMenu({ videos, shorts = [], onSelect }: Props) {
+  const scripts = OPEN_SCRIPTS
   const [menuOpen, setMenuOpen] = useState(false)
   const [step, setStep] = useState<DrillStep>('categories')
   const [search, setSearch] = useState('')
+  const [hearing, setHearing] = useState<string | null>(null)
   const menuRef = useRef<HTMLDivElement>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
     function h(e: MouseEvent) {
@@ -57,25 +71,49 @@ export function PlusMenu({ scripts, videos, onSelect }: Props) {
   const goBack = () => { setStep('categories'); setSearch('') }
   const handleCategoryClick = (cat: Exclude<DrillStep, 'categories'>) => { setSearch(''); setStep(cat) }
 
+  /** Road test: the voice reads one line, made by the studio's own narrate. */
+  const hear = async (voiceId: string) => {
+    if (hearing) return
+    setHearing(voiceId)
+    try {
+      const n = await narrate(VOICE_LINE, voiceId)
+      audioRef.current?.pause()
+      audioRef.current = new Audio(n.url)
+      await audioRef.current.play()
+    } catch {
+      /* the voice stays silent; the row simply unspins */
+    } finally {
+      setHearing(null)
+    }
+  }
+
   const q = search.toLowerCase()
-  const filteredPrompts = SAMPLE_PROMPTS.filter(p => !search || p.description.toLowerCase().includes(q))
-  const filteredScripts = scripts.filter(s => !search || s.title.toLowerCase().includes(q))
+  const filteredPrompts = ANALYTICS_PROMPTS.filter(p => !search || p.toLowerCase().includes(q))
+  const filteredScripts = scripts.filter(s => !search || s.title.toLowerCase().includes(q) || s.text.toLowerCase().includes(q))
   const filteredVideos = videos.filter(v => !search || v.label.toLowerCase().includes(q))
+  const filteredShorts = shorts.filter(v => !search || v.label.toLowerCase().includes(q))
+  const voices = VOICES.filter(v => v.provider !== 'none').filter(v => !search || v.label.toLowerCase().includes(q))
 
   const getStepLabel = () => {
-    if (step === 'prompts') return 'Sample Questions'
+    if (step === 'prompts') return 'Video Analytics'
     if (step === 'pick-script') return 'Scripts'
     if (step === 'pick-video') return 'Videos'
+    if (step === 'pick-short') return 'Shorts'
+    if (step === 'pick-voice') return 'Voices'
     return ''
   }
 
   const isDrawer = step !== 'categories'
 
   const CATEGORIES: { key: Exclude<DrillStep, 'categories'>; label: string; icon: React.ReactNode }[] = [
-    { key: 'prompts', label: 'Sample Questions', icon: <Lightbulb className="h-5 w-5" /> },
-    ...(scripts.length ? [{ key: 'pick-script' as const, label: 'Scripts', icon: <NotebookPen className="h-5 w-5" /> }] : []),
-    ...(videos.length ? [{ key: 'pick-video' as const, label: 'Videos', icon: <PlaySquare className="h-5 w-5" /> }] : []),
+    { key: 'prompts', label: 'Video Analytics', icon: <ChartColumn className={ICON} strokeWidth={1.75} /> },
+    ...(scripts.length ? [{ key: 'pick-script' as const, label: 'Scripts', icon: <NotebookPen className={ICON} strokeWidth={1.75} /> }] : []),
+    ...(videos.length ? [{ key: 'pick-video' as const, label: 'Videos', icon: <PlaySquare className={ICON} strokeWidth={1.75} /> }] : []),
+    ...(shorts.length ? [{ key: 'pick-short' as const, label: 'Shorts', icon: <Clapperboard className={ICON} strokeWidth={1.75} /> }] : []),
+    { key: 'pick-voice', label: 'Voices', icon: <AudioLines className={ICON} strokeWidth={1.75} /> },
   ]
+
+  const row = (i: number) => `group flex w-full items-center gap-3 px-4 py-3 hover:bg-[var(--inp-bg)] transition-colors ${i > 0 ? 'border-t border-[var(--border)]' : ''}`
 
   return (
     <div className="relative" ref={menuRef}>
@@ -94,12 +132,8 @@ export function PlusMenu({ scripts, videos, onSelect }: Props) {
         <div className="absolute left-0 top-full mt-2 w-56 max-w-[calc(100vw-2rem)] rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-xl overflow-hidden z-20">
           <div className="py-1">
             {CATEGORIES.map((cat, i) => (
-              <button
-                key={cat.key}
-                onClick={() => handleCategoryClick(cat.key)}
-                className={`flex w-full items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-[var(--inp-bg)] transition-colors ${i > 0 ? 'border-t border-[var(--border)]' : ''}`}
-              >
-                <span className="text-[var(--muted)]">{cat.icon}</span>
+              <button key={cat.key} onClick={() => handleCategoryClick(cat.key)} className={row(i) + ' text-sm font-medium'}>
+                {cat.icon}
                 <span className="text-[var(--txt)]">{cat.label}</span>
                 <ChevronRight className="h-4 w-4 ml-auto text-[var(--muted)]" />
               </button>
@@ -129,57 +163,100 @@ export function PlusMenu({ scripts, videos, onSelect }: Props) {
 
           <div className="max-h-[320px] overflow-y-auto no-scrollbar">
 
-            {/* Sample Questions — description only */}
+            {/* Video Analytics — prompts over the record */}
             {step === 'prompts' && (
               <>
                 {filteredPrompts.map((p, i) => (
-                  <button
-                    key={p.description}
-                    onClick={() => { onSelect(p.prompt); closeMenu() }}
-                    className={`flex w-full items-start px-4 py-3 hover:bg-[var(--inp-bg)] transition-colors ${i > 0 ? 'border-t border-[var(--border)]' : ''}`}
-                  >
-                    <span className="text-sm text-[var(--txt)] text-left">{p.description}</span>
+                  <button key={p} onClick={() => { onSelect(p); closeMenu() }} className={row(i) + ' items-start'}>
+                    <span className="text-sm text-[var(--txt)] text-left">{p}</span>
                   </button>
                 ))}
                 {filteredPrompts.length === 0 && <p className="px-4 py-3 text-xs text-[var(--muted)]">No matches</p>}
               </>
             )}
 
-            {/* Scripts */}
+            {/* Scripts — the open-primaries batch; picking one brings its text in to make yours */}
             {step === 'pick-script' && (
               <>
                 {filteredScripts.map((s, i) => (
                   <button
                     key={s.id}
-                    onClick={() => { onSelect(`How is “${s.title}” performing across its takes?`); closeMenu() }}
-                    className={`flex w-full items-center gap-3 px-4 py-3 hover:bg-[var(--inp-bg)] transition-colors ${i > 0 ? 'border-t border-[var(--border)]' : ''}`}
+                    onClick={() => { onSelect(`Make this script mine — keep it under 25 seconds, first person, and end with the ask:\n\n“${s.text}”`); closeMenu() }}
+                    className={row(i)}
                   >
-                    <NotebookPen className="h-5 w-5 text-pax2-light-blue shrink-0" />
-                    <span className="text-sm font-semibold text-[var(--txt)] text-left">{s.title}</span>
+                    <NotebookPen className={ICON} strokeWidth={1.75} />
+                    <span className="min-w-0 flex-1 text-left">
+                      <span className="block text-sm font-semibold text-[var(--txt)]">{s.title}</span>
+                      <span className="block truncate text-xs text-[var(--muted)]">{s.hook}</span>
+                    </span>
                   </button>
                 ))}
                 {filteredScripts.length === 0 && <p className="px-4 py-3 text-xs text-[var(--muted)]">No matches</p>}
               </>
             )}
 
-            {/* Videos */}
+            {/* Videos — the scored takes */}
             {step === 'pick-video' && (
               filteredVideos.length === 0
                 ? <p className="px-4 py-3 text-xs text-[var(--muted)]">No matches</p>
                 : filteredVideos.map((v, i) => (
-                  <button
-                    key={v.id}
-                    onClick={() => { onSelect(`What explains the score on ${v.label}?`); closeMenu() }}
-                    className={`flex w-full items-center gap-3 px-4 py-3 hover:bg-[var(--inp-bg)] transition-colors ${i > 0 ? 'border-t border-[var(--border)]' : ''}`}
-                  >
+                  <button key={v.id} onClick={() => { onSelect(`What explains the score on ${v.label}?`); closeMenu() }} className={row(i)}>
                     {v.poster
                       // eslint-disable-next-line @next/next/no-img-element
                       ? <img src={v.poster} alt="" className="h-8 w-5 object-cover rounded-sm shrink-0 border border-[var(--border)]" />
-                      : <PlaySquare className="h-5 w-5 text-pax2-light-blue shrink-0" />}
+                      : <PlaySquare className={ICON} strokeWidth={1.75} />}
                     <span className="flex-1 text-left text-sm font-semibold text-[var(--txt)]">{v.label}</span>
                     {v.score != null && <span className="text-xs text-[var(--muted)] tabular">{v.score.toFixed(0)}</span>}
                   </button>
                 ))
+            )}
+
+            {/* Shorts — the catalog's real shorts, strongest against their channel median first */}
+            {step === 'pick-short' && (
+              filteredShorts.length === 0
+                ? <p className="px-4 py-3 text-xs text-[var(--muted)]">No matches</p>
+                : filteredShorts.map((v, i) => (
+                  <button key={v.id} onClick={() => { onSelect(`What explains how “${v.label.split(' · ')[0]}” performed?`); closeMenu() }} className={row(i)}>
+                    {v.poster
+                      // eslint-disable-next-line @next/next/no-img-element
+                      ? <img src={v.poster} alt="" className="h-8 w-12 object-cover rounded-sm shrink-0 border border-[var(--border)]" />
+                      : <Clapperboard className={ICON} strokeWidth={1.75} />}
+                    <span className="flex-1 min-w-0 text-left text-sm font-semibold text-[var(--txt)] truncate">{v.label}</span>
+                    {v.score != null && <span className="text-xs text-[var(--muted)] tabular">{v.score >= 10 ? v.score.toFixed(0) : v.score.toFixed(1)}×</span>}
+                  </button>
+                ))
+            )}
+
+            {/* Voices — hear one read a line, or write a script for it */}
+            {step === 'pick-voice' && (
+              <>
+                {voices.map((v, i) => (
+                  <div key={v.id} className={row(i) + ' cursor-default'}>
+                    <AudioLines className={ICON} strokeWidth={1.75} />
+                    <span className="min-w-0 flex-1 text-left">
+                      <span className="block text-sm font-semibold text-[var(--txt)]">{v.label}</span>
+                      <span className="block text-xs text-[var(--muted)]">{v.provider}</span>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => hear(v.id)}
+                      disabled={!!hearing}
+                      title={`Hear ${v.label}`}
+                      className="shrink-0 flex h-7 w-7 items-center justify-center rounded-full text-[var(--muted)] hover:bg-[rgba(0,0,0,0.07)] hover:text-pax2-blue disabled:opacity-40"
+                    >
+                      {hearing === v.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Volume2 className="h-4 w-4" />}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { onSelect(`Write a 25-second open-primaries script for ${v.label} to read — hook under 12 words, first person, one concrete number, end with what the viewer should do.`); closeMenu() }}
+                      className="shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold text-pax2-blue hover:bg-pax2-lavender/60"
+                    >
+                      Write
+                    </button>
+                  </div>
+                ))}
+                {voices.length === 0 && <p className="px-4 py-3 text-xs text-[var(--muted)]">No matches</p>}
+              </>
             )}
 
           </div>
