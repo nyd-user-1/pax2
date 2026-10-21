@@ -2,14 +2,19 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { ArrowUpRight, LayoutGrid, Loader2 } from "lucide-react"
+import { ArrowUpRight, ChevronsDownUp, ChevronsUpDown, EllipsisVertical, LayoutGrid, Link2, Loader2, RefreshCw } from "lucide-react"
+
+import { KebabMenu, MenuFoot, MenuHeader, MenuRow, MenuSeparator } from "@/components/kebab-menu"
 
 import { useShelf } from "@/lib/home-blocks"
+import { cn } from "@/ui/lib/utils"
 
 // A block the chat answers with: the reply names it as [[block:/path#anchor]], and it renders here as the
 // block stands on its page right now (read through /api/block-context), framed with its way back to the
 // page and onto the Blocks shelf. A snapshot: the block's text, tables and drawn charts show; a chart
-// painted on a canvas, and the block's own buttons, wait for the page.
+// painted on a canvas waits for the page. The block's own header works: the title copies its link, the
+// chevron folds it, the info circle opens it on its page (where its tour runs), and a live three-dot menu
+// stands over the pictured one.
 
 export const BLOCK_REF = /\[\[block:(\/[^\]#\s]*)#([\w-]+)\]\]/g
 
@@ -17,6 +22,11 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
   const router = useRouter()
   const { add, has } = useShelf()
   const [state, setState] = React.useState<{ html?: string; error?: string }>({})
+  const [collapsed, setCollapsed] = React.useState(false)
+  const [nonce, setNonce] = React.useState(0)
+  const snap = React.useRef<HTMLDivElement>(null)
+  const frame = React.useRef<HTMLDivElement>(null)
+  const [kebab, setKebab] = React.useState<{ top: number; left: number } | null>(null)
   React.useEffect(() => {
     let alive = true
     fetch("/api/block-context", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ path, anchor, html: true }) })
@@ -26,35 +36,76 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
     return () => {
       alive = false
     }
-  }, [path, anchor])
+  }, [path, anchor, nonce])
+  // Where the pictured three-dot button sits, so the live menu can stand on it.
+  React.useLayoutEffect(() => {
+    const dead = snap.current?.querySelector<HTMLElement>('button[aria-label="Block options"]')
+    const box = frame.current?.getBoundingClientRect()
+    if (!dead || !box) return setKebab(null)
+    const r = dead.getBoundingClientRect()
+    setKebab({ top: r.top - box.top, left: r.left - box.left })
+  }, [state.html, collapsed])
+  const link = () => `${window.location.origin}${path}#${anchor}`
+  // The header's own buttons, by what they say they are.
+  const onSnapClick = (e: React.MouseEvent) => {
+    const b = (e.target as HTMLElement).closest("button")
+    if (!b) return
+    const label = b.getAttribute("aria-label") ?? ""
+    if (/^(Collapse|Expand) /.test(label)) setCollapsed((c) => !c)
+    else if (/How to read|End the tour/.test(label)) router.push(`${path}#${anchor}`)
+    else if (b.closest('[data-slot="card-title"]')) navigator.clipboard.writeText(link())
+  }
   const key = `${path}#${anchor}`
   const title = anchor.replace(/-/g, " ").replace(/^./, (c) => c.toUpperCase())
   const onShelf = has(key)
-  // The snapshot is the block itself; its own controls are only pictures of buttons, so they are hidden,
-  // and the two that work here sit where they stood: onto the shelf, and back to the page.
-  const action = "inline-flex size-8 items-center justify-center rounded-md text-slate-800 transition-colors hover:bg-muted hover:text-foreground disabled:text-pax2-light-blue [&_svg]:size-4"
   return (
-    <figure className="relative my-4 animate-in fade-in slide-in-from-bottom-1 duration-300">
-      {state.html ? (
-        <>
-          <div
-            className="pointer-events-none [&_[data-slot=card-action]]:invisible [&_[data-slot=card-footer]]:hidden [&_[data-slot=card-header]_button]:hidden [&_[data-slot=card]]:!h-auto [&_[data-slot=card]]:max-h-[520px] [&_[data-slot=card-content]]:overflow-hidden"
-            dangerouslySetInnerHTML={{ __html: state.html }}
-          />
-          <span className="absolute right-3 top-3 flex items-center gap-0.5">
-            <button type="button" aria-label={onShelf ? "On the Blocks shelf" : "Add to Blocks"} title={onShelf ? "On the Blocks shelf" : "Add to Blocks"} onClick={() => add({ key, title, path, anchor })} disabled={onShelf} className={action}>
-              <LayoutGrid />
-            </button>
-            <button type="button" aria-label="Open on its page" title="Open on its page" onClick={() => router.push(`${path}#${anchor}`)} className={action}>
-              <ArrowUpRight />
-            </button>
-          </span>
-        </>
-      ) : (
-        <div className="flex items-center justify-center rounded-xl bg-card py-10 text-sm ring-1 ring-foreground/10">
-          {state.error ? <span className="text-slate-500">{state.error}</span> : <Loader2 className="size-5 animate-spin text-slate-400" />}
-        </div>
-      )}
+    <figure className="my-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 animate-in fade-in slide-in-from-bottom-1 duration-300">
+      <div className="flex items-center gap-2 border-b border-slate-200 px-3 py-2 text-[12px] text-slate-500">
+        <LayoutGrid className="size-3.5 text-pax2-blue" />
+        <span className="font-mono">{key}</span>
+        <span className="ml-auto flex items-center gap-1">
+          <button type="button" onClick={() => add({ key, title, path, anchor })} disabled={onShelf} className="rounded-md px-2 py-1 font-medium text-slate-600 transition-colors hover:bg-white hover:text-pax2-blue disabled:text-slate-400">
+            {onShelf ? "On the shelf" : "Add to Blocks"}
+          </button>
+          <button type="button" onClick={() => router.push(`${path}#${anchor}`)} className="flex items-center gap-1 rounded-md px-2 py-1 font-medium text-slate-600 transition-colors hover:bg-white hover:text-pax2-blue">
+            Open <ArrowUpRight className="size-3.5" />
+          </button>
+        </span>
+      </div>
+      <div className={cn("max-h-[480px] overflow-auto p-3 text-sm", !state.html && "flex items-center justify-center py-10")}>
+        {state.html ? (
+          <div ref={frame} className="relative">
+            <div
+              ref={snap}
+              onClick={onSnapClick}
+              className={cn(
+                "[&_[data-slot=card]]:!h-auto [&_[data-slot=card-footer]]:hidden [&_button[aria-label='Block_options']]:invisible",
+                collapsed && "[&_[data-slot=card-content]]:hidden [&_[data-slot=card-header]_.lucide-chevron-down]:!rotate-0 [&_[data-slot=card-header]]:!border-b-0",
+              )}
+              dangerouslySetInnerHTML={{ __html: state.html }}
+            />
+            {kebab && (
+              <span className="absolute" style={{ top: kebab.top, left: kebab.left }}>
+                <KebabMenu label="Block options" trigger={<EllipsisVertical className="size-4" />} triggerClassName="inline-flex size-8 items-center justify-center rounded-md text-slate-800 outline-none hover:bg-muted hover:text-foreground aria-expanded:bg-muted">
+                  <MenuHeader text={`#${anchor}`} copy={typeof window === "undefined" ? key : link()} />
+                  <MenuSeparator />
+                  <MenuRow icon={<LayoutGrid />} label={onShelf ? "On the Blocks shelf" : "Add to Blocks"} checked={onShelf} onClick={() => !onShelf && add({ key, title, path, anchor })} />
+                  <MenuRow icon={<ArrowUpRight />} label="Open on its page" onClick={() => router.push(`${path}#${anchor}`)} />
+                  <MenuRow icon={<Link2 />} label="Copy link" onClick={() => navigator.clipboard.writeText(link())} />
+                  <MenuRow icon={<RefreshCw />} label="Refresh" onClick={() => setNonce((n) => n + 1)} />
+                  <MenuRow icon={collapsed ? <ChevronsUpDown /> : <ChevronsDownUp />} label={collapsed ? "Expand" : "Collapse"} onClick={() => setCollapsed((c) => !c)} />
+                  <MenuSeparator />
+                  <MenuFoot title={title} sub={path} />
+                </KebabMenu>
+              </span>
+            )}
+          </div>
+        ) : state.error ? (
+          <span className="text-slate-500">{state.error}</span>
+        ) : (
+          <Loader2 className="size-5 animate-spin text-slate-400" />
+        )}
+      </div>
     </figure>
   )
 }
