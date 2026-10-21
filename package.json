@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "[ -d .next ] && [ $(du -sk .next | cut -f1) -gt 8388608 ] && rm -rf .next; true",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
