@@ -363,7 +363,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
             </div>
             <main className={cn("flex-1", full ? "flex min-h-0 flex-col md:overflow-hidden" : "md:overflow-y-auto")} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
               {/* Each page arrives with RevealFx's wipe; the front door has its curtain instead. */}
-              <RevealFx key={animKey.current} translateY={4} className={cn("@container w-full", full ? "flex min-h-0 flex-1 flex-col" : path === "/home" ? "px-5 pb-6 md:px-10 md:pb-9" : "px-5 py-6 md:px-10 md:py-9")}>
+              <RevealFx key={animKey.current} translateY={4} className={cn("@container w-full", full ? "flex min-h-0 flex-1 flex-col" : path === "/home" || path === "/scripts" ? "px-5 pb-6 md:px-10 md:pb-9" : "px-5 py-6 md:px-10 md:py-9")}>
                 {children}
               </RevealFx>
             </main>

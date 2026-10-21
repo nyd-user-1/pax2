@@ -6,6 +6,7 @@ import { Check, Minus, PenLine, X } from "lucide-react"
 
 import { AccordionBlock, CardBlock, ListBlock, MainBlock, TwoThirdBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
+import { HOME_BLOCK } from "@/app/home/height"
 import { RecordScript } from "@/components/record/record-script"
 import { toneClasses, toneOf } from "@/lib/tone"
 import { cn } from "@/ui/lib/utils"
@@ -78,8 +79,9 @@ function SourceLink({ source }: { source: { label: string; href: string } }) {
   )
 }
 
-/** The catalog: every script a card, the chosen one read line by line with the reason for every line beside it. */
-export function ScriptCatalog({ scripts, opposition }: { scripts: CatalogScript[]; opposition: { items: string[]; note: string; href: string } }) {
+/** The catalog: every script a card, the chosen one read line by line with the reason for every line beside it.
+ *  `solo` renders the Scripts block alone, at the /home blocks' full-viewport height. */
+export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: CatalogScript[]; opposition?: { items: string[]; note: string; href: string }; solo?: boolean }) {
   const [id, setId] = React.useState(scripts[0]?.id)
   const [hot, setHot] = React.useState<number | null>(null)
   const s = scripts.find((x) => x.id === id) ?? scripts[0]
@@ -89,11 +91,8 @@ export function ScriptCatalog({ scripts, opposition }: { scripts: CatalogScript[
   const scored = s.voices.filter((v) => v.score != null)
   const marksOf = (line: number) => s.why.map((w, k) => ({ w, n: k + 1 })).filter(({ w }) => w.line === line)
 
-  return (
-    <BlockOrder page="scripts" initial={["scripts", "reading", "hear"]}>
-      <OrderedBlock id="scripts" label="Scripts">
-        <CardBlock title="Scripts" search="Search scripts…">
-          <div role="tablist" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  const grid = (
+    <div role="tablist" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <Link
               href="/record/personal"
               data-find
@@ -133,8 +132,20 @@ export function ScriptCatalog({ scripts, opposition }: { scripts: CatalogScript[
                 </button>
               )
             })}
-          </div>
-        </CardBlock>
+    </div>
+  )
+
+  if (solo)
+    return (
+      <CardBlock title="Scripts" search="Search scripts…" height={HOME_BLOCK}>
+        {grid}
+      </CardBlock>
+    )
+
+  return (
+    <BlockOrder page="scripts" initial={["scripts", "reading", "hear"]}>
+      <OrderedBlock id="scripts" label="Scripts">
+        <CardBlock title="Scripts" search="Search scripts…">{grid}</CardBlock>
       </OrderedBlock>
 
       <OrderedBlock id="reading" label="Script">
@@ -279,6 +290,7 @@ export function ScriptCatalog({ scripts, opposition }: { scripts: CatalogScript[
         </TwoThirdBlock>
       </OrderedBlock>
 
+      {opposition && (
       <OrderedBlock id="hear" label="What you’ll hear back">
         <ListBlock title="What you’ll hear back">
           <div className="flex flex-col gap-4">
@@ -301,6 +313,7 @@ export function ScriptCatalog({ scripts, opposition }: { scripts: CatalogScript[
           </div>
         </ListBlock>
       </OrderedBlock>
+      )}
     </BlockOrder>
   )
 }

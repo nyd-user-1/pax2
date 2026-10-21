@@ -1,12 +1,8 @@
-import Link from "next/link"
-import { PenLine, Video } from "lucide-react"
-
 import codes from "../../../data/generated/model/script-codes.json"
 import model from "../../../data/generated/model/reference-model.json"
 import { ScriptCatalog, type CatalogScript } from "@/components/scripts/script-catalog"
 import { SCRIPTS } from "@/lib/catalog"
 import { board, workspace } from "@/lib/review"
-import { whiteButton } from "@/components/white-button"
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Scripts" }
@@ -73,27 +69,5 @@ export default async function ScriptsPage() {
     }
   })
 
-  return (
-    <div className="flex flex-col gap-10">
-      <header className="rise flex flex-wrap items-center justify-end gap-4">
-        <div className="flex items-center gap-2">
-          <Link href="/record/personal" className={whiteButton("md")}>
-            <PenLine className="size-4" /> New
-          </Link>
-          <Link href="/record" className="press inline-flex items-center gap-2 rounded-full bg-pax2-blue px-5 py-2.5 text-sm font-semibold text-white shadow-e2">
-            <Video className="size-4" /> Record
-          </Link>
-        </div>
-      </header>
-
-      <ScriptCatalog
-        scripts={scripts}
-        opposition={{
-          items: ["A top-two primary can leave two candidates of the same party in November", "Favors candidates who can fund their own campaigns", "Squeezes out third parties"],
-          note: "Both state parties and the AFL-CIO oppose Question 3; supporters include officials of both parties and the NAACP.",
-          href: "https://www.wbur.org/news/2026/09/28/massachusetts-ballot-question-3-backers-supporters",
-        }}
-      />
-    </div>
-  )
+  return <ScriptCatalog scripts={scripts} solo />
 }
