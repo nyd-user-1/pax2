@@ -78,6 +78,8 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
   const [attached, setAttached] = useState<{ kind: 'block' | 'video'; title: string; place: string; context: string | null; error?: string; key?: string } | null>(null)
   const blocksShelf = useShelf()
   const [dragOver, setDragOver] = useState(false)
+  // The drop's page is still being read into context; the ribbon shimmers and Send holds until it lands.
+  const reading = !!attached && attached.context == null && !attached.error
   const attach = async (e: React.DragEvent) => {
     const d = readShelfDrag(e.dataTransfer)
     setDragOver(false)
@@ -184,7 +186,7 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
   const submit = async (text: string, base: Message[] = messages) => {
     const trimmed = text.trim()
     // An attachment still being read would go out empty: wait for it.
-    if (!trimmed || loading || streaming || (attached && attached.context == null && !attached.error)) return
+    if (!trimmed || loading || streaming || reading) return
     const userMsg: Message = { id: crypto.randomUUID(), role: 'user', content: trimmed }
     const allMessages = [...base, userMsg]
     setMessages(allMessages)
@@ -475,11 +477,18 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
       )}
       {attachment}
       {attached && (
-        <div className="-mb-2 flex min-w-0 items-center gap-1.5 rounded-t-2xl border border-b-0 border-[var(--border)] bg-slate-100 px-4 pb-4 pt-2 text-[11px] text-slate-600">
-          {attached.context == null && !attached.error ? <Loader2 className="h-3 w-3 shrink-0 animate-spin" /> : <Paperclip className="h-3 w-3 shrink-0" />}
+        <div className={`-mb-2 flex min-w-0 items-center gap-1.5 rounded-t-2xl border border-b-0 border-[var(--border)] px-4 pb-4 pt-2 text-[11px] text-slate-600 ${reading ? 'animate-pulse bg-pax2-lavender/60' : 'bg-slate-100'}`}>
+          {reading ? <Loader2 className="h-3 w-3 shrink-0 animate-spin text-pax2-blue" /> : <Paperclip className="h-3 w-3 shrink-0" />}
           <span className="shrink-0 uppercase tracking-wide">{attached.kind === 'block' ? 'block' : 'short'}</span>
           <span className="truncate font-medium text-slate-900">{attached.title}</span>
-          <span className="shrink-0 text-slate-400">{attached.error ? `· couldn't read it: ${attached.error}` : attached.context == null ? '· reading…' : `· ${attached.place}`}</span>
+          {reading ? (
+            <span className="flex min-w-0 items-center gap-1.5">
+              <span className="shrink-0 font-medium text-pax2-blue">reading its page…</span>
+              <span aria-hidden className="h-2.5 w-20 shrink-0 rounded-full bg-pax2-blue/20" />
+            </span>
+          ) : (
+            <span className="shrink-0 text-slate-400">{attached.error ? `· couldn't read it: ${attached.error}` : `· ${attached.place}`}</span>
+          )}
           {attached.error && attached.key && (
             <button type="button" onClick={() => { blocksShelf.remove(attached.key!); setAttached(null) }} className="shrink-0 rounded px-1.5 font-medium text-pax2-blue hover:underline">
               Take it off the shelf
@@ -598,9 +607,10 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
           ) : (
             <button type="button"
               onClick={() => submit(selectedVideo ? ask(selectedVideo) : input)}
-              disabled={(!input.trim() && !selectedVideo) || loading || (!!attached && attached.context == null && !attached.error)}
+              disabled={(!input.trim() && !selectedVideo) || loading || reading}
+              title={reading ? 'Reading the attachment…' : undefined}
               className="ml-1 flex h-9 w-9 items-center justify-center rounded-xl bg-pax2-blue text-white disabled:opacity-25 hover:opacity-80 transition-opacity">
-              <ArrowUp className="h-4 w-4" />
+              {reading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ArrowUp className="h-4 w-4" />}
             </button>
           )}
         </div>
