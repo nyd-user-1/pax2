@@ -100,3 +100,16 @@ MM-A's staged train_v3.py, common.py and bench_m2.py (md5 40548025…, 4baa6392�
 ## Close-out
 
 Selected head: v3, Gate M3 FAIL, published private to `NYSgpt/martian-video-encoder` with its card (`docs/cards/martian-video-encoder.md`), recipe, groups, benches and this ledger. The serving pointer did not move. Boxes: 8 c7i.xlarge launches (3 plumbing rehearsals, 1 real-vector rehearsal, run 1, run 2, the M2 re-read), each 2 to 6 minutes at $0.1785 an hour, about $0.10 in total, all terminated.
+
+## Variant v3b — the one retry (declared 2026-10-21 05:05 UTC, before it runs)
+
+Brendan's go, relayed by the models window, on the fix the diagnosis named. MM-A embeds 2,500 label-blind catalog shorts (base arm and rung 0).
+
+- **What changes:** each behavioral group's 7 negatives are drawn uniformly (seed 20261020) from the label-blind sample's shorts on training channels, excluding the anchor and its positives. That restores the catalog's outperformer rate in the pool (14.88% across the settled catalog). The negatives' measured outlier share is reported, and an assertion checks that none sits off the train split.
+- **What does not change:** positives, the semantic groups (their tier-based hard negatives included), the head, the loss, λ 1.0, 5 epochs, the seed, every setting of v3. The blind videos' stock vectors enter only as training inputs. In-batch negatives still include other groups' passages, as in every run.
+- **Why:** 48.5% of v3's behavioral negatives were outliers, because the media set was fetched by label.
+- **Bar, unmoved:** Gate M3 exactly as registered: stock base + 0.02 = 0.5776 and above rung 0's 0.5119, on the same 590 held-out pairs, read by gate_m1.py, with the Mac rescore. Selection on validation only.
+- **This is the retry.** One run, then close-out with the numbers whatever they are.
+- **Also reported, not gated:** a bench-bias measurement, stock base's M1 re-read with PCA-32 refit on the label-blind videos off the held-out channels; standardization, Bradley–Terry fit and the 590-pair read are unchanged.
+
+A plumbing rehearsal of the blind path runs first with MM-A's slice-20 base vectors standing in for the blind file. Its numbers are never quoted.

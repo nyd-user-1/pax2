@@ -67,6 +67,14 @@ for (const arm of Object.keys(bench.arms)) {
   ok &&= Object.values(checks).every(Boolean)
   report[arm] = r
 }
+if (bench.benchBias) {
+  const P = preds.filter((p) => p.arm === "stock-blindpca")
+  const c = P.map((p) => right(p.z))
+  const acc = mean(c)
+  const agrees = P.length === 590 && close(acc, bench.benchBias.accuracy, 5e-5)
+  report["stock-blindpca"] = { m1: { pairs: P.length, accuracy: acc, ci95: ci(c, P.map((p) => p.channelId)) }, agrees: { m1: agrees } }
+  ok &&= agrees
+}
 const round = (x) => (typeof x === "number" ? Math.round(x * 1e4) / 1e4 : Array.isArray(x) ? x.map(round) : x && typeof x === "object" ? Object.fromEntries(Object.entries(x).map(([k, v]) => [k, round(v)])) : x)
 const out = { rescoredAt: new Date().toISOString(), dir, allAgree: ok, arms: round(report) }
 fs.writeFileSync(path.join(dir, "rescore.json"), JSON.stringify(out, null, 1))

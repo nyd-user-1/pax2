@@ -71,10 +71,10 @@ def bt_fit(D):
     return w
 
 
-def m1_read(E, fit_pairs, read_pairs):
+def m1_read(E, fit_pairs, read_pairs, pca_ids=None):
     """gate_m1.py's rule exactly: PCA on the distinct embedded videos of the fit pairs, components standardized
     over the embedded sides of the fit pairs, a pair's difference 0 unless both sides are embedded."""
-    fit_ids = sorted({x for p in fit_pairs for x in (p['winner'], p['loser']) if x in E})
+    fit_ids = sorted(pca_ids) if pca_ids is not None else sorted({x for p in fit_pairs for x in (p['winner'], p['loser']) if x in E})
     X = np.stack([E[i] for i in fit_ids]).astype(np.float64)
     mu = X.mean(0)
     _, _, Vt = np.linalg.svd(X - mu, full_matrices=False)
@@ -281,6 +281,8 @@ def main():
     ap.add_argument('--names', required=True)
     ap.add_argument('--out', required=True)
     ap.add_argument('--slice', type=int, default=0, help='keep 1 in N shorts (rehearsal)')
+    ap.add_argument('--blind', default=None, help='label-blind sample, {id, vector} jsonl in the stock space')
+    ap.add_argument('--splits', default=None, help='catalog-splits.json: id -> [channelId, split, breakout]')
     ap.add_argument('--standin', type=int, default=0, help='seeded random vectors of this dimension in place of --stock (plumbing rehearsal)')
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
@@ -330,16 +332,41 @@ def main():
     json.dump(sem, open(f'{a.out}/semantic-groups.json', 'w'))
     log(f'semantic {sem_stats}; behavioral {len(beh)}; held-out/val ids in groups {held_in}')
 
+    blind, pool, blind_info = {}, [], None
+    if a.blind:
+        sp = json.load(open(a.splits))
+        b = load_jsonl(a.blind)
+        b = dict(zip(b.keys(), l2n(np.stack(list(b.values())))))
+        blind = {x: v for x, v in b.items() if x not in stock}
+        placed = {x: sp[x] for x in b if x in sp}
+        pool = sorted(x for x, m in placed.items() if m[1] == 'train')
+        blind_info = {'vectors': len(b), 'alreadyInMediaSet': len(b) - len(blind), 'inTrainingSet': len(placed),
+                      'bySplit': {k: sum(m[1] == k for m in placed.values()) for k in ('train', 'val', 'held')},
+                      'pool': len(pool), 'poolOutlierShare': round(float(np.mean([placed[x][2] == 1 for x in pool])), 4) if pool else None}
+        log(f'blind {blind_info}')
     gpairs = gate_b(stock, G['shorts'])
     bench = {'builtAt': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), 'slice': a.slice, 'standin': a.standin,
              'stockDim': int(X.shape[1]), 'm1PairVideosMissing': len(missing),
              'groups': {'semantic': sem_stats, 'behavioral': len(beh), 'heldOutOrValIdsInGroups': held_in},
+             'blind': blind_info,
              'protocol': __doc__.strip().split('\n\n')[3].replace('\n', ' '), 'arms': {}}
     preds = []
     corr = {}
     res, p, corr['stock'] = score_arm('stock', stock, G, gpairs)
     bench['arms']['stock'] = res
     preds += p
+    if a.blind:
+        sp = json.load(open(a.splits))
+        pca_ids = [x for x in b if x in sp and sp[x][1] != 'held']
+        P = G['m1Pairs']
+        held = [p for p in P if p['split'] == 'held']
+        zb, _ = m1_read(stock_all := {**stock, **blind}, [p for p in P if p['split'] != 'held'], held, pca_ids=pca_ids)
+        cb = correct(zb)
+        bench['benchBias'] = {'rule': 'stock base M1 with PCA-32 refit on the label-blind sample videos off the held-out channels; standardization, Bradley-Terry fit and the 590-pair read unchanged; reported, not gated',
+                              'pcaVideos': len(pca_ids), 'accuracy': round(float(cb.mean()), 4), 'ci95': block_ci(cb, [p['channelId'] for p in held])}
+        preds += [{'arm': 'stock-blindpca', 'bench': 'm1', 'split': 'held', 'winner': p['winner'], 'loser': p['loser'], 'channelId': p['channelId'],
+                   'winnerRatio': p['winnerRatio'], 'z': float(zz)} for p, zz in zip(held, zb)]
+        log('benchBias', bench['benchBias'])
     if a.rung0:
         r0 = load_jsonl(a.rung0)
         r0 = dict(zip(r0.keys(), l2n(np.stack(list(r0.values())))))
@@ -350,8 +377,29 @@ def main():
     for n in names:
         cfg = V[n]
         rows = []
+        beh_n = beh
+        if cfg.get('negPool') == 'blind':
+            assert pool, 'variant needs --blind'
+            r = random.Random(cfg['seed'])
+            beh_n = []
+            for g in beh:
+                taken = {g['anchor'], *g['pos']}
+                neg = []
+                while len(neg) < 7:
+                    x = pool[r.randrange(len(pool))]
+                    if x not in taken:
+                        neg.append(x)
+                        taken.add(x)
+                beh_n.append({**g, 'neg': neg})
+            held_ids_n = {s['id'] for s in G['shorts'] if s['split'] != 'train'}
+            bad = sum(x in held_ids_n or sp[x][1] != 'train' for g in beh_n for x in g['neg'] if x in sp) + sum(x not in sp for g in beh_n for x in g['neg'])
+            assert bad == 0, f'{bad} negatives off the train split'
+            share = float(np.mean([sp[x][2] == 1 for g in beh_n for x in g['neg']]))
+            log(n, f'blind negatives: {len(beh_n)} groups, outlier share {share:.4f}, off-train {bad}')
+            cfg = {**cfg, 'negativesOutlierShare': round(share, 4)}
+            json.dump(beh_n, open(f'{a.out}/behavioral-groups-{n}.json', 'w'))
         t0 = time.time()
-        head, Y, tinfo = train_head(stock, sem, beh, cfg, rows)
+        head, Y, tinfo = train_head({**stock, **blind}, sem, beh_n, cfg, rows)
         res, p, corr[n] = score_arm(n, Y, G, gpairs)
         res['config'] = cfg
         res['training'] = {**tinfo, 'wallSec': round(time.time() - t0, 1), 'curve': rows}

@@ -33,6 +33,18 @@
    "seed": 20261020,
    "name": "v3",
    "hypothesis": "v2 stopped at 5 epochs: the validation drop is drift on the 34 training channels; the behavioral loss flattens by epoch 5 while the semantic loss keeps falling."
+  },
+  {
+   "hidden": "d",
+   "lambda": 1.0,
+   "epochs": 5,
+   "lr": 0.001,
+   "weightDecay": 0.01,
+   "batch": 64,
+   "seed": 20261020,
+   "name": "v3b",
+   "negPool": "blind",
+   "hypothesis": "The one retry of v3 at the same bar (Brendan, via the models window, 2026-10-21): the behavioral groups' 7 negatives drawn uniformly from the label-blind sample on training channels, restoring the catalog's ~14.8% outperformer rate in the pool, so a co-outlier group stops pushing outliers away from outliers; positives, semantic groups and every setting unchanged."
   }
  ]
 }

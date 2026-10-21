@@ -6,6 +6,7 @@
 #
 #   STANDIN=768 SLICE=20 NAMES=v1 APPLY=1 ./scripts/video-resonance/launch.sh            # plumbing rehearsal
 #   STOCK=model/video-embeddings/<run>/base.jsonl RUNG0=.../clip.jsonl NAMES=v1 APPLY=1 ./scripts/video-resonance/launch.sh
+#   BLIND=<s3 key of the label-blind base-arm jsonl> adds the blind negative pool and the bench-bias read
 set -euo pipefail
 REGION=us-east-1; ROLE=nsr-embed
 BUCKET=pax-2-638175140432
@@ -26,6 +27,7 @@ CODE=s3://$BUCKET/code/video-resonance/$RUN
 aws s3 cp --only-show-errors --region $REGION "$HERE/train.py" "$CODE/train.py"
 aws s3 cp --only-show-errors --region $REGION "$HERE/variants.json" "$CODE/variants.json"
 aws s3 cp --only-show-errors --region $REGION "$ROOTDIR/data/generated/model/video-resonance/groups.json" "$CODE/groups.json"
+aws s3 cp --only-show-errors --region $REGION "$ROOTDIR/data/generated/model/video-resonance/catalog-splits.json" "$CODE/catalog-splits.json"
 # Gate M3 is read by MM-A's own Gate M1 scorer and pair file, staged unchanged (md5 in the box log)
 aws s3 cp --only-show-errors --region $REGION "$ROOTDIR/scripts/video/gate_m1.py" "$CODE/gate_m1.py"
 aws s3 cp --only-show-errors --region $REGION "$ROOTDIR/data/generated/model/video-pairs.json" "$CODE/video-pairs.json"
@@ -42,6 +44,7 @@ ARGS="--groups groups.json --variants variants.json --names $NAMES --out out"
 FETCH=""
 [ -n "$STOCK" ] && { FETCH="aws s3 cp --only-show-errors s3://$BUCKET/$STOCK stock.jsonl"; ARGS="$ARGS --stock stock.jsonl"; }
 [ -n "$RUNG0" ] && { FETCH="$FETCH; aws s3 cp --only-show-errors s3://$BUCKET/$RUNG0 rung0.jsonl"; ARGS="$ARGS --rung0 rung0.jsonl"; }
+[ -n "${BLIND:-}" ] && { FETCH="$FETCH; aws s3 cp --only-show-errors s3://$BUCKET/$BLIND blind.jsonl"; ARGS="$ARGS --blind blind.jsonl --splits catalog-splits.json"; }
 
 USERDATA=$(cat <<EOS
 #!/bin/bash
