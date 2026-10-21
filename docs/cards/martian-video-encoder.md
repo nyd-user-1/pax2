@@ -21,8 +21,9 @@ The behavioral term is co-outlier in practice: 4,911 co-outlier positives agains
 | v1 (λ 0.144, 20 epochs) | 0.5508 | 0.4813–0.6191 | 0.5673 | 0.5707 | 0.6018 |
 | v2 (λ 1.0, 20 epochs) | 0.5661 | 0.5196–0.6564 | 0.5726 | 0.5435 | 0.5796 |
 | **v3, this head (λ 1.0, 5 epochs)** | **0.5695** | 0.5327–0.6408 | 0.5805 | 0.6087 | 0.6195 |
+| v3b, the retry (v3 with label-blind negatives) | 0.5508 | 0.4965–0.6094 | 0.5646 | 0.5761 | 0.6018 |
 
-The pair read is the Gate M1 recipe: PCA to 32 components fit on training-pair videos, Bradley–Terry logistic, no intercept, L2 0.001, channel-block bootstrap. v3 was selected over v1 and v2 on the validation channels alone. Every head reads below stock on validation, which halted the variants after three. The 5× and 10× columns are secondary and gate nothing.
+The pair read is the Gate M1 recipe: PCA to 32 components fit on training-pair videos, Bradley–Terry logistic, no intercept, L2 0.001, channel-block bootstrap. v3 was selected over v1, v2 and v3b on the validation channels alone. Every head reads below stock on validation. That halted the variants after three; v3b was the one retry allowed afterward, and it also failed Gate M3. The 5× and 10× columns are secondary and gate nothing.
 
 Reported beside the gate:
 - **Gate B analog** (outlier against non-outlier within 45 days, mean cosine to the channel's 5 most similar prior outliers): 9,039 pairs on 7 channels. Stock 0.5441, this head 0.5470 (+0.0029, interval −0.0105 to +0.0100).
@@ -32,8 +33,12 @@ Every number was reproduced on a second machine from the per-pair predictions.
 
 ## What the failure points at
 
-48.5% of the behavioral groups' random negatives are outliers themselves, because the media set was fetched by outcome label (49.8% outliers). A co-outlier group often pushes an outlier away from other outliers. Other candidates: the behavioral groups are thin (1,669 on 34 channels); the 226 validation pairs cannot separate variants this close; and the head concentrates variance (PCA-32 explains 0.910 of it against stock's 0.543).
+The first candidate was the negatives. The media set was fetched by outcome label (49.8% outliers), so 48.5% of v3's random behavioral negatives were outliers themselves. The retry, v3b, drew them instead from a label-blind catalog sample (16.4% outliers). It read lower, 0.5508 held-out and 0.6018 on validation, so label-heavy negatives do not explain the failure. Its one gain was on the Gate B analog, +0.0154 over stock, with an interval spanning zero.
+
+What remains: the behavioral groups are thin (1,669, co-outlier only, 34 channels); the 226 validation pairs cannot separate heads this close; and the head concentrates variance (PCA-32 explains 0.910 of it against stock's 0.543).
+
+Bench bias, measured: stock VideoPrism with PCA refit on 1,972 label-blind videos reads 0.5661 on the same held-out pairs, against 0.5576, inside the interval.
 
 ## Files
 
-`head-v3.pt` (PyTorch state dict), `variants.json` (every declared variant with its hypothesis), `train.py` and `groups.mjs` (the recipe), `groups.json` (splits, behavioral groups, pairs), `bench-*.json` (every run's reads), `LEDGER.md` (declarations and results in order).
+`head-v3.pt` (PyTorch state dict) and `head-v3b.pt` (the retry), `variants.json` (every declared variant with its hypothesis), `train.py` and `groups.mjs` (the recipe), `groups.json` (splits, behavioral groups, pairs), `bench-*.json` (every run's reads), `LEDGER.md` (declarations and results in order).
