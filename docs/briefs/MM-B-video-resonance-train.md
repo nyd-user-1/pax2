@@ -31,6 +31,8 @@ Date: 2026-10-20. Protocol root: `docs/briefs/MULTIMODAL-SURVEY.md` (commit 4fba
 
 **Iterations:** more than one training run is welcome tonight. Each variant (λ, head width, group mix) is declared in the ledger with its hypothesis BEFORE it runs; selection between variants happens on a validation split carved from training channels — never on the 590 held-out pairs, which are read once per declared variant and reported every time, pass or fail. A failed variant gets one retry at the same bar only if the ledger names what changed and why, the overnight rule.
 
+**Secondary reads at 5× and 10×:** every bench also reports the outperformed-5× and outperformed-10× reads, under MM-A's definitions and rules (pooled only, with interval, subset sizes stated). They pass or fail nothing and never enter variant selection; the training label and Gate M3 stay on outperformed 3×.
+
 **Verification:** upload per-pair predictions; the Mac rescores every arm before any number is reported.
 
 ## Report

@@ -35,6 +35,8 @@ Split and holdout are the Composition Ranker's exactly — read `scripts/composi
 
 **Gate M2 — classifier add, best M1 arm only.** `scripts/classifier/train_v3.py` pattern with a VIDEO=1 arm: v3's features plus the 32 video components, missing values at the feature mean (v3b's exact protocol). Read held-out AUC on the 10 held-out channels, and separately on the 1,212 held-out rows that carry media. **Bar: +0.02 over v3 on the same rows** (composition managed +0.005; v3 reads 0.591 on the media-carrying held-out rows).
 
+**Secondary reads at 5× and 10× (Brendan, 2026-10-20):** every bench also reports the outperformed-5× and outperformed-10× reads. Definitions: on the pair bench, accuracy on the subset of held-out pairs whose winner reached the threshold (state the subset's size); on the classifier bench, held-out AUC with rows re-labeled at the threshold. Rules: pooled only, with a bootstrap interval, no per-channel tables (791 shorts reach 10× across the whole catalog; held-out channels carry few); these reads pass or fail nothing and never enter model or variant selection. The label remains outperformed 3×.
+
 **Verification:** upload per-pair and per-row predictions; the Mac's second scorer recomputes every arm (the `scripts/classifier/rescore.mjs` / `scripts/encoder/rescore.mjs` pattern). No number is reported that the Mac has not reproduced.
 
 ## Report
