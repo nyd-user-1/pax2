@@ -43,7 +43,7 @@ export async function put(item: Item) {
 /** Add to a counter row's `n` atomically and return the new total. A counter is a running total of
  *  append-only events, kept so a page reads one row instead of the whole event log. */
 export async function add(pk: string, sk: string, by: number): Promise<number> {
-  const r = await client.send(new UpdateCommand({ TableName: TABLE, Key: { pk, sk }, UpdateExpression: "ADD n :d", ExpressionAttributeValues: { ":d": by }, ReturnValues: "UPDATED_NEW" }))
+  const r = await client.send(new UpdateCommand({ TableName: TABLE, Key: { pk, sk }, UpdateExpression: "ADD #n :d", ExpressionAttributeNames: { "#n": "n" }, ExpressionAttributeValues: { ":d": by }, ReturnValues: "UPDATED_NEW" }))
   return Number(r.Attributes?.n ?? 0)
 }
 
