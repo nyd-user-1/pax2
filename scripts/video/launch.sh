@@ -17,6 +17,8 @@ SLICE=${SLICE:?set SLICE=20 for the rehearsal or 1 for the full pass}
 WATCHDOG_MIN=${WATCHDOG_MIN:-60}
 V3B=model/v3/20261020T112854Zb/
 RUNID=$(date -u +%Y%m%d-%H%M%S)-$([ "$SLICE" = 1 ] && echo full || echo slice$SLICE)
+# BLIND=<run id> embeds the label-blind sample (data/raw/videos/blind-targets.txt) beside that run as <run id>-blind
+[ -n "${BLIND:-}" ] && RUNID=$BLIND-blind
 RUN=model/video-embeddings/$RUNID/
 NAME=pax2-video-mm-a
 awk -v wd=$WATCHDOG_MIN 'BEGIN { split("g6e.xlarge 1.861|g6.2xlarge 0.9776|g5.2xlarge 1.212", r, "|"); for (i = 1; i <= 3; i++) { split(r[i], p, " "); printf "plan: %s $%.3f/h, watchdog %d min caps it at $%.2f\n", p[1], p[2], wd, wd / 60 * p[2] } }'
@@ -31,6 +33,7 @@ STAGE=$(mktemp -d)
 cp scripts/video/box.sh scripts/video/embed.py scripts/video/clip_embed.py scripts/video/gate_m1.py scripts/video/bench_m2.py scripts/classifier/train_v3.py scripts/rig/common.py "$STAGE/"
 aws s3 cp --only-show-errors --recursive "$STAGE/" "s3://$BUCKET/${RUN}code/" --region $REGION
 aws s3 cp --only-show-errors data/generated/model/video-pairs.json "s3://$BUCKET/${RUN}video-pairs.json" --region $REGION
+[ -n "${BLIND:-}" ] && aws s3 cp --only-show-errors data/raw/videos/blind-targets.txt "s3://$BUCKET/${RUN}ids.txt" --region $REGION
 rm -rf "$STAGE"
 
 VPC=$(aws ec2 describe-vpcs --region $REGION --filters Name=is-default,Values=true --query 'Vpcs[0].VpcId' --output text)
@@ -43,7 +46,7 @@ shutdown -h +$WATCHDOG_MIN
 exec >> /var/log/pax2-video.log 2>&1
 export AWS_DEFAULT_REGION=$REGION
 mkdir -p /work/code && aws s3 cp --only-show-errors --recursive s3://$BUCKET/${RUN}code/ /work/code/
-BUCKET=$BUCKET RUN=$RUN SLICE=$SLICE V3B=$V3B bash /work/code/box.sh
+BUCKET=$BUCKET RUN=$RUN SLICE=$SLICE V3B=$V3B BLIND=$([ -n "${BLIND:-}" ] && echo 1) bash /work/code/box.sh
 echo "box.sh returned \$? \$(date -u +%FT%TZ)"
 aws s3 cp --only-show-errors /var/log/pax2-video.log s3://$BUCKET/${RUN}box.log
 shutdown -h now

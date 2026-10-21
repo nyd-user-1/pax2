@@ -38,11 +38,16 @@ TORCH_LD="$(find "$SP/nvidia" -maxdepth 2 -type d -name lib 2>/dev/null | tr '\n
 step "embed"
 aws s3 ls s3://$BUCKET/catalog-media/ | awk '{print $4}' | grep '\.mp4$' > /work/media.txt
 echo "media: $(wc -l < /work/media.txt) mp4"
+EMBED_ENV=""
+if [ "${BLIND:-}" = 1 ]; then  # the label-blind set: its ids only, base and rung 0, no gates
+  aws s3 cp --only-show-errors s3://$BUCKET/${RUN}ids.txt /work/ids.txt
+  EMBED_ENV="IDS=/work/ids.txt ARMS=base"
+fi
 mkdir -p /work/clipq
 LD_LIBRARY_PATH="$TORCH_LD${LD_LIBRARY_PATH:-}" /opt/pytorch/bin/python3 $CODE/clip_embed.py > /var/log/clip.log 2>&1 &
 CLIP=$!
 T0=$(date +%s)
-XLA_PYTHON_CLIENT_MEM_FRACTION=0.75 MEDIA_LIST=/work/media.txt /opt/jx/bin/python $CODE/embed.py
+env $EMBED_ENV XLA_PYTHON_CLIENT_MEM_FRACTION=0.75 MEDIA_LIST=/work/media.txt /opt/jx/bin/python $CODE/embed.py
 RC=$?; echo "embed.py EXIT=$RC wall=$(( $(date +%s) - T0 ))s"
 [ $RC -eq 0 ] || touch /work/clipq/DONE
 wait $CLIP; echo "clip_embed.py EXIT=$? wall=$(( $(date +%s) - T0 ))s"; tail -3 /var/log/clip.log
@@ -52,6 +57,7 @@ step "upload embeddings"
 put videoprism-base.jsonl videoprism-large.jsonl clip-frame-mean.jsonl embed-summary.json
 wc -l $OUT/*.jsonl
 echo "EMBEDDINGS UPLOADED $(date -u +%FT%TZ)"; up
+[ "${BLIND:-}" = 1 ] && { echo "EXIT=0 blind set, no gates $(date -u +%FT%TZ)"; up; exit 0; }
 
 step "gate M1"
 aws s3 cp --only-show-errors s3://$BUCKET/${RUN}video-pairs.json /work/video-pairs.json

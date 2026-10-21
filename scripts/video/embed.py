@@ -124,6 +124,11 @@ def download(ids):
 def main():
     t0 = time.time()
     ids = sorted({l.strip().rsplit("/", 1)[-1][:-4] for l in open(os.environ["MEDIA_LIST"]) if l.strip().endswith(".mp4")})
+    if os.environ.get("IDS"):  # the label-blind set: only these ids
+        want = {l.strip() for l in open(os.environ["IDS"]) if l.strip()}
+        missing = sorted(want - set(ids))
+        ids = sorted(want & set(ids))
+        log(f"IDS: {len(want)} wanted, {len(ids)} have media, {len(missing)} missing: {missing[:20]}")
     ids = ids[::SLICE]
     log(f"{len(ids)} videos (slice 1 in {SLICE})")
 
@@ -133,7 +138,10 @@ def main():
 
     log("jax devices", jax.devices())
     arms = {}
+    use = os.environ.get("ARMS", "base,large").split(",")
     for arm, name in (("base", "videoprism_lvt_public_v1_base"), ("large", "videoprism_lvt_public_v1_large")):
+        if arm not in use:
+            continue
         model = vp.get_model(name)
         state = vp.load_pretrained_weights(name)
 
@@ -145,9 +153,9 @@ def main():
         log(f"loaded {name}, {mem()}")
 
     files = {a: open(f"{OUT}/videoprism-{a}.jsonl", "w") for a in arms}
-    pending = {"base": [], "large": []}
+    pending = {a: [] for a in arms}
     failures = []
-    norms = {"base": [], "large": []}
+    norms = {a: [] for a in arms}
 
     def flush(arm, force=False):
         q = pending[arm]
@@ -187,10 +195,10 @@ def main():
                     failures.append({"id": vid, "error": err})
                     log(f"fail {vid}: {err}")
                     continue
-                pending["base"].append((vid, base))
-                pending["large"].append((vid, large))
-                flush("base")
-                flush("large")
+                for a, fr in (("base", base), ("large", large)):
+                    if a in arms:
+                        pending[a].append((vid, fr))
+                        flush(a)
                 done += 1
                 if done in (1, 2, 10):
                     log(f"{done} embedded, {time.time() - t0:.0f}s, {mem()}")
