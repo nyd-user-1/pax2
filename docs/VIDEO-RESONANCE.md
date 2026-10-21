@@ -35,3 +35,7 @@ Two launches failed and were fixed before the third: the M1 scorer's signature (
 ## Scorer (03:55 UTC, before any real run)
 
 Gate M3 is read by MM-A's own `scripts/video/gate_m1.py` and pair file `data/generated/model/video-pairs.json`, staged unchanged onto the box, with their md5 in the box log. Each head's embedding goes in as one more arm beside stock and rung 0. train.py's port of the same protocol supplies the validation read and the Gate B analog. Its held-out stock number must equal gate_m1.py's before any head is gated (the models window's condition). The Mac rescores both sets of predictions.
+
+### Run 0b — real-vector rehearsal (04:01–04:03 UTC)
+
+The same path on MM-A's 1-in-20 rehearsal embeddings (run 20261021-035437-slice20, base arm and rung 0): train.py, then gate_m1.py (md5 2f3663978d87526f8c76841cfc5112a2) over stock, rung 0 and v1, then upload; the box terminated itself. Numbers not quoted. One change before the full run: the port now treats a pair with an unembedded side as gate_m1.py does (difference 0) instead of dropping it.

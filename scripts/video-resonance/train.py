@@ -72,19 +72,22 @@ def bt_fit(D):
 
 
 def m1_read(E, fit_pairs, read_pairs):
-    """E: id -> vector. fit_pairs/read_pairs: lists of pair dicts. Returns z per read pair and the fit."""
-    fit_ids = sorted({x for p in fit_pairs for x in (p['winner'], p['loser'])})
+    """gate_m1.py's rule exactly: PCA on the distinct embedded videos of the fit pairs, components standardized
+    over the embedded sides of the fit pairs, a pair's difference 0 unless both sides are embedded."""
+    fit_ids = sorted({x for p in fit_pairs for x in (p['winner'], p['loser']) if x in E})
     X = np.stack([E[i] for i in fit_ids]).astype(np.float64)
     mu = X.mean(0)
     _, _, Vt = np.linalg.svd(X - mu, full_matrices=False)
     V = Vt[:PCA_K].T
-    proj = lambda i: (E[i].astype(np.float64) - mu) @ V
-    side = np.stack([proj(x) for p in fit_pairs for x in (p['winner'], p['loser'])])
-    cm, cs = side.mean(0), np.sqrt(np.maximum(side.var(0), 1e-12))
-    diff = lambda p: (proj(p['winner']) - proj(p['loser'])) / cs
+    proj = {i: (v.astype(np.float64) - mu) @ V for i, v in E.items()}
+    side = np.stack([proj[x] for p in fit_pairs for x in (p['winner'], p['loser']) if x in proj])
+    cs = np.sqrt(np.maximum(side.var(0), 1e-12))
+    def diff(p):
+        a, b = proj.get(p['winner']), proj.get(p['loser'])
+        return np.zeros(PCA_K) if a is None or b is None else (a - b) / cs
     w = bt_fit(np.stack([diff(p) for p in fit_pairs]))
     z = np.array([diff(p) @ w for p in read_pairs]) if read_pairs else np.zeros(0)
-    return z, {'trainAccuracy': float(np.mean([(diff(p) @ w > 0) for p in fit_pairs]))}
+    return z, {'trainAccuracy': float(np.mean(correct(np.array([diff(p) @ w for p in fit_pairs]))))}
 
 
 def correct(z):
@@ -302,8 +305,6 @@ def main():
     need = {x for p in G['m1Pairs'] for x in (p['winner'], p['loser'])}
     missing = sorted(need - set(stock))
     log(f'stock {len(stock)} vectors dim {X.shape[1]}; M1 pair videos missing {len(missing)}')
-    if missing:
-        G['m1Pairs'] = [p for p in G['m1Pairs'] if p['winner'] in stock and p['loser'] in stock]
     beh = [g for g in G['groups'] if g['anchor'] in stock and all(x in stock for x in g['pos'] + g['neg'])]
     if a.slice:
         # a slice keeps a group whose anchor and a positive survive, refilling negatives from the sliced train set
