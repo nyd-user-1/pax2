@@ -71,7 +71,7 @@ def bt_fit(D):
     return w
 
 
-def m1_read(E, pairs, fit_pairs, read_pairs):
+def m1_read(E, fit_pairs, read_pairs):
     """E: id -> vector. fit_pairs/read_pairs: lists of pair dicts. Returns z per read pair and the fit."""
     fit_ids = sorted({x for p in fit_pairs for x in (p['winner'], p['loser'])})
     X = np.stack([E[i] for i in fit_ids]).astype(np.float64)
@@ -83,7 +83,7 @@ def m1_read(E, pairs, fit_pairs, read_pairs):
     cm, cs = side.mean(0), np.sqrt(np.maximum(side.var(0), 1e-12))
     diff = lambda p: (proj(p['winner']) - proj(p['loser'])) / cs
     w = bt_fit(np.stack([diff(p) for p in fit_pairs]))
-    z = np.array([diff(p) @ w for p in read_pairs])
+    z = np.array([diff(p) @ w for p in read_pairs]) if read_pairs else np.zeros(0)
     return z, {'trainAccuracy': float(np.mean([(diff(p) @ w > 0) for p in fit_pairs]))}
 
 
@@ -92,6 +92,8 @@ def correct(z):
 
 
 def block_ci(c, chans, seed=SEED):
+    if not len(c):
+        return None
     u = sorted(set(chans))
     idx = {ch: np.where(np.array(chans) == ch)[0] for ch in u}
     rng = np.random.default_rng(seed)
@@ -149,7 +151,7 @@ def score_arm(name, E, G, gpairs):
     z, info = m1_read(E, fit_all, held)
     c = correct(z)
     chans = [p['channelId'] for p in held]
-    res = {'m1': {'heldOutPairs': len(held), 'accuracy': round(float(c.mean()), 4), 'ci95': block_ci(c, chans),
+    res = {'m1': {'heldOutPairs': len(held), 'accuracy': round(float(c.mean()), 4) if len(c) else None, 'ci95': block_ci(c, chans),
                   'fitPairs': len(fit_all), **info}}
     for k in (5, 10):
         m = np.array([p['winnerRatio'] >= k for p in held])
@@ -158,7 +160,7 @@ def score_arm(name, E, G, gpairs):
     tr = [p for p in P if p['split'] == 'train']
     va = [p for p in P if p['split'] == 'val']
     zv, _ = m1_read(E, tr, va)
-    res['val'] = {'pairs': len(va), 'fitPairs': len(tr), 'accuracy': round(float(correct(zv).mean()), 4)}
+    res['val'] = {'pairs': len(va), 'fitPairs': len(tr), 'accuracy': round(float(correct(zv).mean()), 4) if len(va) else None}
     gs = gate_b_scores(E, gpairs)
     gc = np.array([1.0 if a > b else 0.5 if a == b else 0.0 for a, b in gs])
     res['gateB'] = {'pairs': len(gpairs), 'channels': len({g[0] for g in gpairs}),
@@ -291,6 +293,7 @@ def main():
         stock = load_jsonl(a.stock)
     if a.slice:
         keep = {x for x in stock if (int.from_bytes(x.encode(), 'little') % a.slice) == 0}
+        keep |= {x for k, p in enumerate(G['m1Pairs']) if k % a.slice == 0 for x in (p['winner'], p['loser'])}
         G['shorts'] = [s for s in G['shorts'] if s['id'] in keep]
         G['m1Pairs'] = [p for p in G['m1Pairs'] if p['winner'] in keep and p['loser'] in keep]
         stock = {x: v for x, v in stock.items() if x in keep}
@@ -302,6 +305,23 @@ def main():
     if missing:
         G['m1Pairs'] = [p for p in G['m1Pairs'] if p['winner'] in stock and p['loser'] in stock]
     beh = [g for g in G['groups'] if g['anchor'] in stock and all(x in stock for x in g['pos'] + g['neg'])]
+    if a.slice:
+        # a slice keeps a group whose anchor and a positive survive, refilling negatives from the sliced train set
+        tr_ids = sorted(s['id'] for s in G['shorts'] if s['split'] == 'train')
+        r = random.Random(SEED)
+        beh = []
+        for g in G['groups']:
+            pos = [x for x in g['pos'] if x in stock]
+            if g['anchor'] not in stock or not pos:
+                continue
+            neg = [x for x in g['neg'] if x in stock]
+            taken = {g['anchor'], *g['pos'], *neg}
+            while len(neg) < 7:
+                x = tr_ids[r.randrange(len(tr_ids))]
+                if x not in taken:
+                    neg.append(x)
+                    taken.add(x)
+            beh.append({'anchor': g['anchor'], 'pos': pos, 'neg': neg})
     sem, sem_stats = mine_semantic(stock, G)
     held_ids = {s['id'] for s in G['shorts'] if s['split'] != 'train'}
     held_in = sum(x in held_ids for g in sem + beh for x in [g['anchor'], *g['pos'], *g['neg']])

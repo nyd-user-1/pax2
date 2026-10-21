@@ -27,3 +27,7 @@ Stand-in vectors (seeded Gaussian, 768-d) on a 1-in-20 slice, variant v1, before
 
 Head Linear(d, d) → GELU → Linear(d, 512), L2-normalized; InfoNCE temperature 0.02; L = L_sem + 0.144 · L_con; AdamW lr 0.001, weight decay 0.01, batch 64 groups per term, 20 epochs over the semantic groups, 10% warmup then cosine; seed 20261020.
 Hypothesis: the text recipe's exact shape on video — a head that keeps stock's same-channel, same-tier geometry while pulling co-outliers together separates outliers from controls better than stock on unseen channels.
+
+### Run 0 result (03:41–03:43 UTC)
+
+Two launches failed and were fixed before the third: the M1 scorer's signature (03:37), and a slice that kept no held-out pairs (03:39; the slice now keeps both sides of every 20th pair). Run vres-rehearse-20261021-034125 ran clean end to end: install, groups, semantic mining (0 held-out or validation ids), 20 epochs, every read, uploads; the Mac rescorer agreed on every check; the box terminated itself. Three c7i.xlarge boxes, about 2 to 6 minutes each, under $0.05 together. Numbers not quoted.
