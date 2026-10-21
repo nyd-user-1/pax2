@@ -9,7 +9,7 @@ import { CurveCard } from "@/components/velocity-curve"
 // The tracker's card grid: the first batch arrives server-rendered, the rest load as the
 // sentinel under the grid scrolls into reach.
 
-export function VelocityGrid({ initial, total, focus, sort, filter }: { initial: VelocityCard[]; total: number; focus?: string; sort: VelocitySort; filter: VelocityFilter }) {
+export function VelocityGrid({ initial, total, focus, sort, filter, ids }: { initial: VelocityCard[]; total: number; focus?: string; sort: VelocitySort; filter: VelocityFilter; ids?: string[] }) {
   const [cards, setCards] = useState(initial)
   const [done, setDone] = useState(initial.filter((c) => c.hours != null).length >= total)
   const fetched = useRef(initial.filter((c) => c.hours != null).length)
@@ -21,7 +21,7 @@ export function VelocityGrid({ initial, total, focus, sort, filter }: { initial:
     const io = new IntersectionObserver(async ([e]) => {
       if (!e.isIntersecting || loading.current) return
       loading.current = true
-      const { cards: next, total: t } = await moreVelocityCards(fetched.current, focus, sort, filter)
+      const { cards: next, total: t } = await moreVelocityCards(fetched.current, focus, sort, filter, ids)
       fetched.current += next.length
       setCards((prev) => {
         const seen = new Set(prev.map((c) => c.id))
@@ -32,7 +32,7 @@ export function VelocityGrid({ initial, total, focus, sort, filter }: { initial:
     }, { rootMargin: "600px" })
     io.observe(el)
     return () => io.disconnect()
-  }, [done, focus, sort, filter])
+  }, [done, focus, sort, filter, ids])
   return (
     <>
       <section className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">

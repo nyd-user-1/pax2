@@ -1,11 +1,11 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
-import { CheckIcon, CopyIcon, EllipsisVerticalIcon, RefreshCwIcon } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import { CheckIcon, ChevronsDownUpIcon, ChevronsUpDownIcon, CopyIcon, DownloadIcon, EllipsisVerticalIcon, LayoutListIcon, RefreshCwIcon } from "lucide-react"
 
 import { CardTitle } from "@/ui/components/nova/card"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
+import { KebabMenu, MenuFlyout, MenuFoot, MenuHeader, MenuRow, MenuSeparator } from "@/components/kebab-menu"
 import { cn } from "@/ui/lib/utils"
 
 // Two things every Admin card carries (Brendan, 2026-09-06): a title that
@@ -83,6 +83,8 @@ export function CardTools({
   collapsed,
   onCollapse,
   menuItems,
+  title,
+  anchor,
 }: {
   children?: React.ReactNode
   /** Extra entries for the three-dot menu (a Narrative, an Explain), after the standard ones. */
@@ -97,50 +99,46 @@ export function CardTools({
   name?: string
   collapsed?: boolean
   onCollapse?: () => void
+  /** The block's title and anchor, for the menu's identity line and its foot. */
+  title?: string
+  anchor?: string
 }) {
   const router = useRouter()
+  const path = usePathname()
   return (
     <div className={cn("flex items-center gap-1", className)}>
       {children}
-      <DropdownMenu>
-        <DropdownMenuTrigger aria-label="Card options" className="inline-flex size-8 items-center justify-center rounded-md text-slate-800 outline-none hover:bg-muted hover:text-foreground">
-          <EllipsisVerticalIcon className="size-4" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-max min-w-52">
-          {views && views.length > 1 && (
-            <>
-              <DropdownMenuRadioGroup value={view ?? ""} onValueChange={(v) => onView?.(String(v))}>
-                {views.map((v) => (
-                  <DropdownMenuRadioItem key={v.value} value={v.value} className="whitespace-nowrap">
-                    {v.label}
-                  </DropdownMenuRadioItem>
-                ))}
-              </DropdownMenuRadioGroup>
-              <DropdownMenuSeparator />
-            </>
-          )}
-          <DropdownMenuItem onClick={() => router.refresh()} className="whitespace-nowrap">
-            Refresh
-          </DropdownMenuItem>
-          {onCollapse && (
-            <DropdownMenuItem onClick={onCollapse} className="whitespace-nowrap">
-              {collapsed ? "Expand" : "Collapse"}
-            </DropdownMenuItem>
-          )}
-          {menuItems}
-          {rows && rows.length > 0 && (
-            <>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => download(rows, name, "csv")} className="whitespace-nowrap">
-                Download CSV
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => download(rows, name, "json")} className="whitespace-nowrap">
-                Download JSON
-              </DropdownMenuItem>
-            </>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      {/* Code/hq's row kebab, in PAX's light dress (components/kebab-menu.tsx). */}
+      <KebabMenu label="Block options" trigger={<EllipsisVerticalIcon className="size-4" />} triggerClassName="inline-flex size-8 items-center justify-center rounded-md text-slate-800 outline-none hover:bg-muted hover:text-foreground aria-expanded:bg-muted">
+        {anchor && (
+          <>
+            <MenuHeader text={`#${anchor}`} copy={typeof window === "undefined" ? `${path}#${anchor}` : `${window.location.origin}${path}#${anchor}`} />
+            <MenuSeparator />
+          </>
+        )}
+        <MenuRow icon={<RefreshCwIcon />} label="Refresh" onClick={() => router.refresh()} />
+        {onCollapse && <MenuRow icon={collapsed ? <ChevronsUpDownIcon /> : <ChevronsDownUpIcon />} label={collapsed ? "Expand" : "Collapse"} onClick={onCollapse} />}
+        {views && views.length > 1 && (
+          <MenuFlyout id="view" icon={<LayoutListIcon />} label="View" hint={views.find((v) => v.value === view)?.label}>
+            {views.map((v) => (
+              <MenuRow key={v.value} label={v.label} checked={v.value === view} onClick={() => onView?.(v.value)} />
+            ))}
+          </MenuFlyout>
+        )}
+        {menuItems}
+        {rows && rows.length > 0 && (
+          <MenuFlyout id="download" icon={<DownloadIcon />} label="Download" hint={`${rows.length} rows`}>
+            <MenuRow label="CSV" onClick={() => download(rows, name, "csv")} />
+            <MenuRow label="JSON" onClick={() => download(rows, name, "json")} />
+          </MenuFlyout>
+        )}
+        {title && (
+          <>
+            <MenuSeparator />
+            <MenuFoot title={title} sub={path} />
+          </>
+        )}
+      </KebabMenu>
     </div>
   )
 }

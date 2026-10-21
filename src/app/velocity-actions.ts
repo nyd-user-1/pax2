@@ -59,11 +59,13 @@ function alpha(title: string) {
   return title.replace(/^[^\p{L}\p{N}]+/u, "")
 }
 
-/** One scroll batch of curve cards for /velocity-tracker; the focused video leads when named. */
+/** One scroll batch of curve cards for /tracking; the focused video leads when named, and `ids`, when
+ *  given, keeps only those shorts (each tab's grid shows the shorts in its own table). */
 export type VelocityFilter = "all" | "breakout" | "baseline" | "killed"
 
-export async function moreVelocityCards(offset: number, focus?: string, sort: VelocitySort = "oldest", filter: VelocityFilter = "all"): Promise<{ cards: VelocityCard[]; total: number }> {
-  const every = [...(await allCards())].sort(ORDER[sort] ?? ORDER.oldest)
+export async function moreVelocityCards(offset: number, focus?: string, sort: VelocitySort = "oldest", filter: VelocityFilter = "all", ids?: string[]): Promise<{ cards: VelocityCard[]; total: number }> {
+  const keep = ids ? new Set(ids) : null
+  const every = [...(await allCards())].filter((c) => !keep || keep.has(c.id)).sort(ORDER[sort] ?? ORDER.oldest)
   const all = filter === "all" ? every : every.filter((c) => c.tier === filter)
   const pool = focus ? [...all.filter((c) => c.id === focus), ...all.filter((c) => c.id !== focus)] : all
   return { cards: pool.slice(offset, offset + 12), total: pool.length }

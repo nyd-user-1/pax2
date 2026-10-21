@@ -1,3 +1,4 @@
+import { MODEL_IDS } from "@/lib/model-options"
 import { BedrockRuntimeClient, ConverseStreamCommand, type Message } from "@aws-sdk/client-bedrock-runtime"
 
 import { COMPONENTS } from "@/lib/resonance"
@@ -17,7 +18,9 @@ Resonance is a 0-100 score: 50 is the reference average of the first round of pa
 
 When the record below has a number, use that exact number. When it does not, say so plainly rather than estimating. Delivery (spend, reach) is a condition beside the score, never part of it. Speak like a sharp campaign analyst: lead with the numbers, compare takes, and say what the evidence does and does not support.
 
-Never refer to yourself in the first person and never name the model behind the answers.`
+Never refer to yourself in the first person and never name the model behind the answers.
+
+When the context lists blocks from an attached page, you may show one in the answer by writing its reference alone on its own line, exactly as listed: [[block:/v/yt-ID#anchor]]. The chat renders the block there. Show a block when it carries the evidence you cite; never invent a reference that is not listed.`
 
 async function record(): Promise<string> {
   try {
@@ -69,12 +72,14 @@ export async function POST(req: Request) {
   } catch (e) {
     return new Response(JSON.stringify({ error: (e as Error).message, gate: true }), { status: 402, headers: { "Content-Type": "application/json" } })
   }
-  const { messages, address, place, systemContext } = (await req.json()) as { messages: { role: "user" | "assistant"; content: string }[]; address?: string; place?: Place | null; systemContext?: string }
+  const { messages, address, place, systemContext, model } = (await req.json()) as { messages: { role: "user" | "assistant"; content: string }[]; address?: string; place?: Place | null; systemContext?: string; model?: string }
+  // The picker's choice when it is one of the models this account answers on (lib/model-options); else the default.
+  const modelId = model && MODEL_IDS.has(model) ? model : MODEL
   // Extra context from the caller (the graph canvas: what is on it, an attached entity, a prompt step's wiring), after the record.
   const extra = typeof systemContext === "string" && systemContext.trim() ? `\n\n${systemContext.slice(0, 40_000)}` : ""
   const r = await client.send(
     new ConverseStreamCommand({
-      modelId: MODEL,
+      modelId,
       system: [{ text: BASE_SYSTEM_PROMPT + (await record()) + extra + addressContext(address, place) }],
       messages: messages.filter((m) => m.content.trim()).map((m): Message => ({ role: m.role, content: [{ text: m.content }] })),
       inferenceConfig: { maxTokens: 2000, temperature: 0.3 },

@@ -3,7 +3,7 @@
 import * as React from "react"
 
 // The Blocks shelf in the discussion panel. It holds a handful of shorts, and any block on any page can
-// be added to it from the block's menu. What pressing a shelf item does is still to be decided.
+// be added to it from the block's menu. Pressing a block opens its page; pressing a short opens its drawer.
 // Added blocks live in this browser (localStorage), and every open view hears the list change.
 
 export type ShelfVideo = { id: string; title: string; channel: string; ratio: number; duration: string }
@@ -17,6 +17,12 @@ export const SHELF: ShelfVideo[] = [
   { id: "mV0zO4WIWWc", title: "What are Open Primaries?", channel: "Courageous Colorado", ratio: 4.89, duration: "0:45" },
   { id: "4HJT8ZzXvRE", title: "How We Can Fix Our Broken Elections", channel: "FairVote", ratio: 4.48, duration: "1:28" },
   { id: "THihu1i6k8Q", title: "Are Elections Rigged?", channel: "Courageous Colorado", ratio: 4.44, duration: "0:46" },
+  // The three with the most measured behind their pages, for testing the chat: Fix American Politics is
+  // in all five sources (composition, coded traits, thumbnail, transcript features, viometrics); the
+  // other two in four.
+  { id: "Eg8mPYYr9OU", title: "Fix American Politics", channel: "Unite America", ratio: 2.77, duration: "1:22" },
+  { id: "zuq_oPyuRnY", title: "Make Congress Work Better with the Ranked Choice Voting Act", channel: "FairVote", ratio: 53.41, duration: "0:31" },
+  { id: "A8fnhDBLfnQ", title: "Who's In Charge?", channel: "Unite America", ratio: 1.88, duration: "1:11" },
 ]
 
 /** A block put on the shelf: where it lives (its page and anchor) and what it's called. */

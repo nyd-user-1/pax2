@@ -7,7 +7,8 @@ import type { PatternsData, PatternVideo } from "@/lib/velocity-analytics"
 import { fmtCompact } from "@/lib/velocity-meta"
 import { ChartBlock } from "@/components/blocks"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/ui/components/nova/dialog"
-import { DropdownMenuItem, DropdownMenuSeparator } from "@/ui/components/nova/dropdown-menu"
+import { BookOpen } from "lucide-react"
+import { MenuRow } from "@/components/kebab-menu"
 import { cn } from "@/ui/lib/utils"
 import { whiteButton } from "@/components/white-button"
 
@@ -773,14 +774,7 @@ export function PatternSections({ data }: { data: PatternsData }) {
           views={s.key === "publish" ? [{ value: "published", label: "Published" }, { value: "velocity", label: "Velocity" }] : undefined}
           view={s.key === "publish" ? heatView : undefined}
           onView={s.key === "publish" ? setHeatView : undefined}
-          menuItems={
-            <>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setStory(s.key)} className="whitespace-nowrap">
-                Narrative
-              </DropdownMenuItem>
-            </>
-          }
+          menuItems={<MenuRow icon={<BookOpen />} label="Narrative" onClick={() => setStory(s.key)} />}
         >
           <div className="flex h-full min-h-0 flex-col gap-3">
             {s.key === "velocity" && (

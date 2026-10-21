@@ -10,7 +10,7 @@ export type Category = "Source" | "Produce" | "Measure" | "Publish"
 export const CATEGORIES: Category[] = ["Source", "Produce", "Measure", "Publish"]
 
 export const STEP: Record<StepKey, { name: string; makes: string; href: string; page: string; category: Category; icon: LucideIcon }> = {
-  outliers: { name: "Outliers", makes: "The catalog's Hits to model a short on", href: "/tracking?tab=settled", page: "Tracking", category: "Source", icon: Rocket },
+  outliers: { name: "Outliers", makes: "The catalog's Hits to model a short on", href: "/evidence?tab=outliers", page: "Tracking", category: "Source", icon: Rocket },
   script: { name: "Script", makes: "A draft on one of the library's structures", href: "/scripts", page: "Scripts", category: "Source", icon: NotebookPen },
   record: { name: "Record", makes: "A camera take, paced by the teleprompter", href: "/recording", page: "Recording", category: "Source", icon: Video },
   voice: { name: "Voice", makes: "A read with word timings, ElevenLabs or Amazon Polly", href: "/recording", page: "Recording", category: "Produce", icon: AudioLines },

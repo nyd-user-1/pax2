@@ -1,12 +1,13 @@
 "use client"
 
 import * as React from "react"
-import { ArrowLeft, ChevronRight, Columns2, Columns3, Hash, LayoutGrid, MessagesSquare, X } from "lucide-react"
+import { ArrowLeft, ChevronRight, Loader2, Columns2, Columns3, Hash, LayoutGrid, MessagesSquare, X } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 
 import { Chat } from "@/components/chat/chat"
 import { useShellPanel } from "@/components/shell"
-import { useShelf, type ShelfBlock } from "@/lib/home-blocks"
+import { useShelf, type ShelfBlock, type ShelfItem } from "@/lib/home-blocks"
+import { setShelfDrag } from "@/lib/shelf-drag"
 import { cn } from "@/ui/lib/utils"
 import { whiteButton } from "@/components/white-button"
 
@@ -39,7 +40,10 @@ function Row({ icon, label, sub, onClick }: { icon: React.ReactNode; label: stri
 // The canvas, as Cloudflare's chat canvas: the blocks added from any page's block menu and the shelf's
 // shorts, in the order they're dragged into, then empty dashed tiles waiting for more. Pressing a block
 // opens its page at the block; the panel lives in the shell, beside the page, so it stays where it is.
-const TILES = 12
+// Tiles are at least 120px; the panel's width sets the columns (3 at the 420px third, up to 6 wide), and
+// empty slots fill whatever height is left, as Cloudflare's canvas fills its panel.
+const MIN_TILE = 120
+const GAP = 10
 const PLACE = (path: string) => (path === "/" ? "Landing" : path.slice(1).split("/")[0].replace(/-/g, " ").replace(/^./, (c) => c.toUpperCase()))
 
 function BlocksShelf() {
@@ -48,6 +52,23 @@ function BlocksShelf() {
   const { items, remove, move } = useShelf()
   const [dragging, setDragging] = React.useState<string | null>(null)
   const [over, setOver] = React.useState<string | null>(null)
+  // The panel's box, for the columns and the empty slots that fill it.
+  const box = React.useRef<HTMLDivElement>(null)
+  const [size, setSize] = React.useState({ w: 372, h: 600 })
+  React.useEffect(() => {
+    const el = box.current
+    if (!el) return
+    const ro = new ResizeObserver(([e]) => setSize({ w: e.contentRect.width, h: e.contentRect.height }))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+  const cols = Math.min(6, Math.max(3, Math.floor((size.w + GAP) / (MIN_TILE + GAP))))
+  const tileSide = (size.w - GAP * (cols - 1)) / cols
+  const rows = Math.max(Math.ceil(items.length / cols), Math.ceil((size.h + GAP) / (tileSide + GAP)))
+  const empties = rows * cols - items.length
+  // A block's page can take a moment; its tile spins until the page has arrived.
+  const [pending, startNav] = React.useTransition()
+  const [going, setGoing] = React.useState<string | null>(null)
   // The tile last opened from the shelf wears the feed cards' 1px blue border.
   const [selected, setSelectedState] = React.useState<string | null>(keptSelected)
   const setSelected = (k: string) => setSelectedState((keptSelected = k))
@@ -59,14 +80,24 @@ function BlocksShelf() {
   const open = (b: ShelfBlock) => {
     setSelected(`b:${b.key}`)
     if (b.path === path) document.getElementById(b.anchor)?.scrollIntoView({ behavior: "smooth", block: "start" })
-    else router.push(`${b.path}#${b.anchor}`)
+    else {
+      setGoing(`b:${b.key}`)
+      startNav(() => router.push(`${b.path}#${b.anchor}`))
+    }
   }
-  // Each tile drags; dropping on another puts it there, dropping on an empty tile puts it last.
-  const drag = (key: string) => ({
+  // Each tile drags: onto another tile it moves there, onto an empty slot it goes last, and onto the
+  // chat it attaches as context (it carries the shelf's drag payload, lib/shelf-drag).
+  const drag = (it: ShelfItem) => {
+    const key = it.key
+    return {
     draggable: true,
     onDragStart: (e: React.DragEvent) => {
-      e.dataTransfer.effectAllowed = "move"
-      e.dataTransfer.setData("text/plain", key)
+      setShelfDrag(
+        e.dataTransfer,
+        it.block
+          ? { kind: "block", title: it.block.title, path: it.block.path, anchor: it.block.anchor }
+          : { kind: "video", id: it.video.id, title: it.video.title, channel: it.video.channel, ratio: it.video.ratio, duration: it.video.duration },
+      )
       setDragging(key)
     },
     onDragEnd: () => (setDragging(null), setOver(null)),
@@ -81,7 +112,8 @@ function BlocksShelf() {
       setDragging(null)
       setOver(null)
     },
-  })
+    }
+  }
   const tile = (key: string) =>
     cn(
       "relative aspect-square cursor-grab overflow-hidden rounded-xl border bg-white shadow-e1 transition-[opacity,box-shadow,border-color] active:cursor-grabbing",
@@ -90,11 +122,13 @@ function BlocksShelf() {
       over === key && dragging !== key && "ring-2 ring-pax2-light-blue",
     )
   return (
-    <div className="grid grid-cols-3 gap-2.5 overflow-y-auto px-6 pb-6 pt-1">
+    <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-1">
+    <div ref={box} className="h-full">
+    <div className="grid content-start" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`, gap: GAP }}>
       {items.map((it) =>
         it.block ? (
-          <div key={it.key} {...drag(it.key)} role="button" tabIndex={0} onClick={() => open(it.block)} onKeyDown={(e) => e.key === "Enter" && open(it.block)} aria-label={`Open ${it.block.title}`} className={cn(tile(it.key), "group flex flex-col justify-between p-2.5 hover:shadow-e2")}>
-            <LayoutGrid className="size-4 text-pax2-blue" />
+          <div key={it.key} {...drag(it)} role="button" tabIndex={0} onClick={() => open(it.block)} onKeyDown={(e) => e.key === "Enter" && open(it.block)} aria-label={`Open ${it.block.title}`} className={cn(tile(it.key), "group flex flex-col justify-between p-2.5 hover:shadow-e2")}>
+            {pending && going === it.key ? <Loader2 className="size-4 animate-spin text-pax2-blue" /> : <LayoutGrid className="size-4 text-pax2-blue" />}
             <span className="min-w-0">
               <span className="line-clamp-3 text-[12px] font-semibold leading-snug text-slate-900">{it.block.title}</span>
               <span className="mt-0.5 block truncate text-[10px] text-slate-500">{PLACE(it.block.path)}</span>
@@ -109,7 +143,7 @@ function BlocksShelf() {
             </button>
           </div>
         ) : (
-          <div key={it.key} {...drag(it.key)} role="button" tabIndex={0} onClick={() => play(it.video.id)} onKeyDown={(e) => e.key === "Enter" && play(it.video.id)} aria-label={`Play ${it.video.title}`} className={tile(it.key)}>
+          <div key={it.key} {...drag(it)} role="button" tabIndex={0} onClick={() => play(it.video.id)} onKeyDown={(e) => e.key === "Enter" && play(it.video.id)} aria-label={`Play ${it.video.title}`} className={tile(it.key)}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`https://i.ytimg.com/vi/${it.video.id}/hqdefault.jpg`} alt="" draggable={false} className="absolute inset-0 size-full object-cover" />
             <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/85 to-transparent px-2 pb-1.5 pt-6">
@@ -119,7 +153,7 @@ function BlocksShelf() {
           </div>
         ),
       )}
-      {Array.from({ length: Math.max(0, TILES - items.length) }, (_, i) => (
+      {Array.from({ length: Math.max(0, empties) }, (_, i) => (
         <div
           key={i}
           aria-hidden
@@ -134,6 +168,8 @@ function BlocksShelf() {
           className={cn("aspect-square rounded-xl border border-dashed transition-colors", over === `empty-${i}` ? "border-pax2-light-blue bg-pax2-lavender/40" : "border-slate-300")}
         />
       ))}
+    </div>
+    </div>
     </div>
   )
 }

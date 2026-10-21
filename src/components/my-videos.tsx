@@ -102,7 +102,7 @@ export async function MyVideos({ filter }: { filter?: string }) {
       <TableBlock
         title="Videos"
         height="auto"
-        rows={shown.map((r) => ({ video: r.title ?? "Untitled video", stage: STAGE_LABEL[r.stage], score: score(r), version: r.version, recorded: r.at }))}
+        rows={shown.map((r) => ({ video: r.title ?? "Untitled video", status: STAGE_LABEL[r.stage], score: score(r), version: r.version, recorded: r.at }))}
         name="my-videos"
         footer={
           user.admin && !yt
@@ -119,6 +119,7 @@ export async function MyVideos({ filter }: { filter?: string }) {
                 <tr className="[&_th]:whitespace-nowrap [&_th]:py-2 [&_th]:pr-6 [&_th]:font-medium">
                   <th>Video</th>
                   <th>Pipeline</th>
+                  <th>Status</th>
                   <th>Score</th>
                   <th>Version</th>
                   <th>Recorded</th>
@@ -138,13 +139,11 @@ export async function MyVideos({ filter }: { filter?: string }) {
                         {r.name && <span className="text-slate-500"> · {r.name}</span>}
                       </td>
                       <td>
-                        <span className="flex items-center gap-3">
-                          <Pipeline stage={r.stage} />
-                          <span className="text-xs text-slate-600">{STAGE_LABEL[r.stage]}</span>
-                        </span>
+                        <Pipeline stage={r.stage} />
                       </td>
+                      <td className="text-slate-600">{STAGE_LABEL[r.stage]}</td>
                       <td className="tabular font-semibold text-slate-900">{score(r)}</td>
-                      <td className="tabular">{r.of > 1 ? `v${r.version} of ${r.of}` : r.version}</td>
+                      <td className="tabular">{r.version}</td>
                       <td className="tabular">{when(r.at)}</td>
                       <td>
                         <Link href={next.href} scroll={false} className="font-medium text-pax2-light-blue hover:underline">

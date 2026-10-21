@@ -12,14 +12,31 @@
 // and how its last race went (/api/district), and that rides along with the question.
 
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { ArrowUp, Check, ChevronLeft, ChevronRight, MapPin, Mic, PlaySquare, Square, X } from 'lucide-react'
+import { ArrowUp, Check, ChevronLeft, ChevronRight, Loader2, MapPin, Mic, Paperclip, PlaySquare, Square, X } from 'lucide-react'
 
 import { MarkdownContent } from '@/components/chat/markdown'
 import { PlusMenu, type ScriptChip, type VideoChip } from '@/components/chat/plus-menu'
 import { Wordmark } from '@/components/wordmark'
 import { cn } from '@/ui/lib/utils'
+import { isShelfDrag, readShelfDrag } from '@/lib/shelf-drag'
+import { BLOCK_REF, ChatBlock } from '@/components/chat/chat-block'
+import { ModelPicker, useChatModel } from '@/components/chat/model-picker'
+import { ResponseFooter } from '@/components/chat/response-footer'
 
-type Message = { id: string; role: 'user' | 'assistant'; content: string }
+type Message = { id: string; role: 'user' | 'assistant'; content: string; model?: string }
+
+/** A reply split at its [[block:…]] references: prose to render as markdown, and the blocks between. */
+function pieces(content: string): ({ text: string } | { path: string; anchor: string })[] {
+  const out: ({ text: string } | { path: string; anchor: string })[] = []
+  let at = 0
+  for (const m of content.matchAll(BLOCK_REF)) {
+    if (m.index! > at) out.push({ text: content.slice(at, m.index) })
+    out.push({ path: m[1], anchor: m[2] })
+    at = m.index! + m[0].length
+  }
+  if (at < content.length) out.push({ text: content.slice(at) })
+  return out
+}
 type Suggestion = { place_id: string; description: string }
 type SelectedAddress = { description: string; lat: number; lng: number }
 type PlaceRace = { election: string; candidates: { name: string; party: string; votes: number; won: boolean }[]; contested: boolean }
@@ -52,6 +69,34 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
   const [streaming, setStreaming] = useState(false)
   const [selectedVideo, setSelectedVideo] = useState<VideoChip | null>(null)
   const [isFocused, setIsFocused] = useState(false)
+  const [model, setModel] = useChatModel()
+
+  // A Blocks-shelf tile dropped on the chat attaches as context, after livingston's drag-to-chat: a short
+  // carries its own facts; a block is read from its page at drop time (/api/block-context), so the chat
+  // gets what the block shows now. The ribbon over the input names it; the X lets it go.
+  const [attached, setAttached] = useState<{ kind: 'block' | 'video'; title: string; place: string; context: string | null; error?: string } | null>(null)
+  const [dragOver, setDragOver] = useState(false)
+  const attach = async (e: React.DragEvent) => {
+    const d = readShelfDrag(e.dataTransfer)
+    setDragOver(false)
+    if (!d) return
+    e.preventDefault()
+    if (!input.trim()) setInput(d.kind === 'block' ? `What does the ${d.title} block tell us?` : `What explains how "${d.title}" performed?`)
+    setTimeout(() => textareaRef.current?.focus(), 0)
+    // A short is read from its video page, every block on it; a block from its own page, that block alone.
+    const path = d.kind === 'video' ? `/v/yt-${d.id}` : d.path
+    const head = d.kind === 'video'
+      ? `ACTIVE CONTEXT — the user attached the short "${d.title}" by ${d.channel} (${d.duration}, ${d.ratio}× its channel's median views). Its video page, ${path}, shows right now, block by block (each block's [[block:…]] reference beside its title):`
+      : `ACTIVE CONTEXT — the user attached the "${d.title}" block from the page ${d.path}. What it shows right now:`
+    setAttached({ kind: d.kind, title: d.title, place: d.kind === 'video' ? d.channel : d.path, context: null })
+    try {
+      const r = await fetch('/api/block-context', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d.kind === 'video' ? { path } : { path, anchor: d.anchor }) })
+      const j = (await r.json()) as { text?: string; error?: string }
+      setAttached((a) => (a && a.title === d.title ? { ...a, context: j.text ? `${head}\n${j.text}` : null, error: j.error } : a))
+    } catch (x) {
+      setAttached((a) => (a && a.title === d.title ? { ...a, error: (x as Error).message } : a))
+    }
+  }
 
   // Address
   const [addressMode, setAddressMode] = useState(false)
@@ -130,11 +175,12 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
     autoResize()
   }
 
-  const submit = async (text: string) => {
+  /** Send `text`; `base` is the conversation before it (Retry passes the turns before the retried one). */
+  const submit = async (text: string, base: Message[] = messages) => {
     const trimmed = text.trim()
     if (!trimmed || loading || streaming) return
     const userMsg: Message = { id: crypto.randomUUID(), role: 'user', content: trimmed }
-    const allMessages = [...messages, userMsg]
+    const allMessages = [...base, userMsg]
     setMessages(allMessages)
     setInput('')
     setSelectedVideo(null)
@@ -146,7 +192,7 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: allMessages.map(m => ({ role: m.role, content: m.content })), ...(selectedAddress ? { address: selectedAddress.description, place: placeInsight } : {}), ...(context ? { systemContext: context() } : {}) }),
+        body: JSON.stringify({ messages: allMessages.map(m => ({ role: m.role, content: m.content })), ...(selectedAddress ? { address: selectedAddress.description, place: placeInsight } : {}), ...((context || attached?.context) ? { systemContext: [context?.(), attached?.context].filter(Boolean).join('\n\n') } : {}), model }),
         signal: controller.signal,
       })
       if (!res.ok || !res.body) {
@@ -155,7 +201,7 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
         setLoading(false); return
       }
       const assistantId = crypto.randomUUID()
-      setMessages(prev => [...prev, { id: assistantId, role: 'assistant', content: '' }])
+      setMessages(prev => [...prev, { id: assistantId, role: 'assistant', content: '', model }])
       setLoading(false); setStreaming(true)
       const reader = res.body.getReader()
       const decoder = new TextDecoder()
@@ -422,6 +468,17 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
         </div>
       )}
       {attachment}
+      {attached && (
+        <div className="-mb-2 flex min-w-0 items-center gap-1.5 rounded-t-2xl border border-b-0 border-[var(--border)] bg-slate-100 px-4 pb-4 pt-2 text-[11px] text-slate-600">
+          {attached.context == null && !attached.error ? <Loader2 className="h-3 w-3 shrink-0 animate-spin" /> : <Paperclip className="h-3 w-3 shrink-0" />}
+          <span className="shrink-0 uppercase tracking-wide">{attached.kind === 'block' ? 'block' : 'short'}</span>
+          <span className="truncate font-medium text-slate-900">{attached.title}</span>
+          <span className="shrink-0 text-slate-400">{attached.error ? `· couldn't read it: ${attached.error}` : attached.context == null ? '· reading…' : `· ${attached.place}`}</span>
+          <button type="button" onClick={() => setAttached(null)} className="ml-auto shrink-0 rounded hover:text-slate-900" aria-label="Let the attachment go">
+            <X className="h-3 w-3" />
+          </button>
+        </div>
+      )}
       <div className={`relative flex flex-col rounded-2xl border ${addressMode ? 'border-pax2-light-blue' : recordingState !== 'idle' ? 'border-blue-500' : 'border-[var(--border)]'} bg-[var(--inp-bg)] px-4 pt-3 pb-3 transition-all gap-1 shadow-[0_1px_3px_rgba(0,0,0,0.04)] ${isFocused ? 'shadow-[0_8px_24px_rgba(0,0,0,0.08)]' : ''}`}>
 
         {selectedAddress && (
@@ -519,6 +576,7 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
             </button>
           )}
           <div className="flex-1" />
+          <ModelPicker value={model} onChange={setModel} />
           {streaming ? (
             <button type="button"
               onClick={stopStream}
@@ -544,7 +602,26 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
   )
 
   return (
-    <div className="flex h-full flex-1 flex-col overflow-hidden" style={SKIN}>
+    <div
+      className="relative flex h-full flex-1 flex-col overflow-hidden"
+      style={SKIN}
+      onDragOver={(e) => {
+        if (!isShelfDrag(e.dataTransfer)) return
+        e.preventDefault()
+        e.dataTransfer.dropEffect = 'copy'
+        setDragOver(true)
+      }}
+      onDragLeave={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && setDragOver(false)}
+      onDrop={attach}
+    >
+      {/* The whole chat is the drop surface while a shelf tile is held over it, as in Claude's chat. */}
+      {dragOver && (
+        <div aria-hidden className="pointer-events-none absolute inset-3 z-30 flex items-center justify-center rounded-2xl border-2 border-dashed border-pax2-light-blue bg-pax2-lavender/50 backdrop-blur-[1px]">
+          <span className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-pax2-blue shadow-e2">
+            <Paperclip className="h-4 w-4" /> Drop to add to the chat
+          </span>
+        </div>
+      )}
       <div className="flex-1 overflow-y-auto">
         {isEmpty && !compact ? (
           // With `below` (the home), the layout is the reference's: the chat column rides at a fixed
@@ -618,12 +695,30 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
                     {msg.content}
                   </div>
                 ) : (
-                  <div className="flex-1 min-w-0 text-[17px] pt-0.5">
+                  <div className="group/reply flex-1 min-w-0 text-[17px] pt-0.5">
                     {msg.content ? (
                       <>
-                        <MarkdownContent content={msg.content} isStreaming={streaming && msg.id === messages[messages.length - 1]?.id} />
+                        {pieces(msg.content).map((p, i) =>
+                          'text' in p ? (
+                            <MarkdownContent key={i} content={p.text} isStreaming={streaming && msg.id === messages[messages.length - 1]?.id} />
+                          ) : (
+                            <ChatBlock key={`${p.path}#${p.anchor}-${i}`} path={p.path} anchor={p.anchor} />
+                          ),
+                        )}
                         {streaming && msg.id === messages[messages.length - 1]?.id && (
                           <span className="inline-block w-1.5 h-4 bg-[var(--txt)] animate-pulse ml-0.5 align-middle">|</span>
+                        )}
+                        {!(streaming && msg.id === messages[messages.length - 1]?.id) && (
+                          <ResponseFooter
+                            text={msg.content}
+                            model={msg.model}
+                            latest={msg.id === messages[messages.length - 1]?.id}
+                            onRetry={() => {
+                              const at = messages.findIndex((x) => x.id === msg.id)
+                              const ask = messages[at - 1]
+                              if (ask?.role === 'user') submit(ask.content, messages.slice(0, at - 1))
+                            }}
+                          />
                         )}
                       </>
                     ) : (

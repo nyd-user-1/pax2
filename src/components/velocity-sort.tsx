@@ -14,11 +14,11 @@ export const SORTS: { value: VelocitySort; label: string }[] = [
 ]
 
 /** Same menu anatomy as ShortsSort — one dropdown look everywhere. */
-export function VelocitySortMenu({ sort, focus, filter }: { sort: VelocitySort; focus?: string; filter?: string }) {
+export function VelocitySortMenu({ sort, focus, filter, tab }: { sort: VelocitySort; focus?: string; filter?: string; tab?: string }) {
   const router = useRouter()
   const current = SORTS.find((s) => s.value === sort) ?? SORTS[0]
   const href = (value: VelocitySort) => {
-    const q = new URLSearchParams({ tab: "curves" })
+    const q = new URLSearchParams(tab ? { tab } : {})
     if (focus) q.set("v", focus)
     if (value !== "oldest") q.set("s", value)
     if (filter && filter !== "all") q.set("f", filter)

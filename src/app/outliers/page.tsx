@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 
-// Merged into /tracking's Settled tab.
+// Moved to /evidence's Outliers tab.
 export default function Page() {
-  redirect("/tracking?tab=settled")
+  redirect("/evidence?tab=outliers")
 }

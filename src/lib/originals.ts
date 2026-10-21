@@ -110,7 +110,7 @@ export type Stage = "recorded" | "scored" | "with-owner" | "enhancing" | "publis
 
 export const STAGE_LABEL: Record<Stage, string> = {
   recorded: "Recorded",
-  scored: "Ready for review",
+  scored: "Review",
   "with-owner": "With the owner",
   enhancing: "Enhancing",
   published: "Published",
@@ -207,9 +207,13 @@ export async function originals(viewer: Viewer | null): Promise<OriginalRow[]> {
   if (!viewer) return []
   const index = await query<Item & { at: string; owner: string }>("ORIGINALS")
   const mine = index.filter((r) => inScope(viewer, r.owner))
+  // One query per original: its META record and its EVENT# items share the partition, so a single read
+  // brings both (it was two reads each, which queued hundreds of DynamoDB calls on an admin's list).
   const rows = await Promise.all(
     mine.map(async (r) => {
-      const [o, evs] = await Promise.all([original(r.sk), events(r.sk)])
+      const items = await query<Item>(pk(r.sk))
+      const o = items.find((i) => i.sk === "META") as Original | undefined
+      const evs = (items.filter((i) => i.sk.startsWith("EVENT#")) as unknown as OriginalEvent[]).sort((a, b) => a.at.localeCompare(b.at))
       return o ? rowOf(o, evs) : null
     }),
   )

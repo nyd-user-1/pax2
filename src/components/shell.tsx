@@ -3,9 +3,11 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Film, FlaskConical, GanttChart, Gauge, GitBranch, Hammer, House, LayoutDashboard, LifeBuoy, Library, LogIn, LogOut, MessagesSquare, ListChecks, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, Tag, Target, TrendingUp, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, GitBranch, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, Star, Tag, Target, TrendingUp, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
+import { KebabMenu, MenuFoot, MenuHeader, MenuRow, MenuSeparator } from "@/components/kebab-menu"
+import { useNavFavorites } from "@/lib/nav-favorites"
 import { RevealFx } from "@/components/reveal-fx"
 import { Wordmark } from "@/components/wordmark"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
@@ -186,6 +188,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
   }
   // Create stays lit through the whole recording flow, whichever prefix a step lives under.
   const active = (href: string) => (href === "/recording" ? path.startsWith("/recording") || path.startsWith("/record/") : path.startsWith(href))
+  const { favs, toggle: toggleFav } = useNavFavorites()
   const findable = React.useMemo(() => [...NAV, ...RESEARCH, ...(admin ? ADMIN : [])], [admin])
   // The front door (landing, record entry, sign-in) is full bleed; the recording flow, from /recording on, sits in the shell.
   // /signup and /signin are the landing's first screen with a form in place of the hero, sidebar and all.
@@ -198,15 +201,21 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
         </RevealFx>
       </div>
     )
+  // Each item carries Code/hq's row kebab on hover (components/kebab-menu.tsx): its path to copy, then
+  // Favorite (a star on the row, kept in this browser), Open in new tab and Copy link, with its group at
+  // the foot.
   const item = (href: string, label: string, Icon: typeof Gauge, small = false) => {
     const on = active(href)
+    const fav = favs.includes(href)
+    const group = RESEARCH.some((n) => n.href === href) ? "Research" : ADMIN.some((n) => n.href === href) ? "Admin" : "Main"
+    const url = () => `${window.location.origin}${href}`
     return (
+      <div key={href} className="group/item relative">
       <Link
-        key={href}
         href={href}
         aria-current={on ? "page" : undefined}
         className={cn(
-          "group relative flex items-center gap-3 rounded-xl px-3 outline-none transition-[color,background-color,box-shadow]",
+          "group relative flex items-center gap-3 rounded-xl px-3 pr-14 outline-none transition-[color,background-color,box-shadow]",
           small ? "py-1.5 text-[13px]" : "py-2 text-sm",
           on ? "bg-white font-semibold text-pax2-blue shadow-e1" : "text-slate-500 hover:bg-white/70 hover:text-pax2-blue hover:shadow-e1",
         )}
@@ -218,6 +227,25 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
         />
         {label}
       </Link>
+      <span className="absolute right-1.5 top-1/2 flex -translate-y-1/2 items-center">
+        {fav && <Star aria-label="Favorite" className="size-3 fill-amber-400 text-amber-400" />}
+        <KebabMenu
+          label={`${label} options`}
+          align="left"
+          width="w-56"
+          trigger={<EllipsisVertical className="size-4" />}
+          triggerClassName="flex size-7 items-center justify-center rounded-lg text-slate-400 opacity-0 transition-opacity hover:bg-white hover:text-pax2-blue focus-visible:opacity-100 group-hover/item:opacity-100 aria-expanded:bg-white aria-expanded:opacity-100"
+        >
+          <MenuHeader text={href} copy={href} />
+          <MenuSeparator />
+          <MenuRow icon={<Star className={fav ? "fill-amber-400 text-amber-400" : undefined} />} label={fav ? "Unfavorite" : "Favorite"} onClick={() => toggleFav(href)} />
+          <MenuRow icon={<ExternalLink />} label="Open in new tab" onClick={() => window.open(href, "_blank", "noopener")} />
+          <MenuRow icon={<Link2 />} label="Copy link" onClick={() => navigator.clipboard.writeText(url())} />
+          <MenuSeparator />
+          <MenuFoot title={label} sub={group} />
+        </KebabMenu>
+      </span>
+      </div>
     )
   }
   const sidebar = (

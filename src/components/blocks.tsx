@@ -3,11 +3,11 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, LayoutGrid } from "lucide-react"
 
 import { CardAnchor, CardTools, slug } from "@/components/dash/card-tools"
 import { useShelf } from "@/lib/home-blocks"
-import { DropdownMenuItem } from "@/ui/components/nova/dropdown-menu"
+import { MenuRow } from "@/components/kebab-menu"
 import { PAX2Search, PAX2Table2 } from "@/components/pax2-table2"
 import { Card, CardAction, CardContent, CardFooter, CardHeader } from "@/ui/components/nova/card"
 import { cn } from "@/ui/lib/utils"
@@ -61,9 +61,7 @@ function ShelfItem({ title, anchor }: { title: string; anchor: string }) {
   const key = `${path}#${anchor}`
   const on = has(key)
   return (
-    <DropdownMenuItem onClick={() => (on ? remove(key) : add({ key, title, path, anchor }))} className="whitespace-nowrap">
-      {on ? "Remove from Blocks" : "Add to Blocks"}
-    </DropdownMenuItem>
+    <MenuRow icon={<LayoutGrid />} label={on ? "Remove from Blocks" : "Add to Blocks"} checked={on} onClick={() => (on ? remove(key) : add({ key, title, path, anchor }))} />
   )
 }
 
@@ -79,7 +77,7 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
             {search && <PAX2Search placeholder={search} />}
           </div>
           <CardAction>
-            <CardTools rows={rows} name={name ?? title.toLowerCase()} views={views} view={view} onView={onView} collapsed={!open} onCollapse={() => setOpen(!open)} menuItems={<>{title && <ShelfItem title={title} anchor={id ?? slug(title)} />}{menuItems}</>}>
+            <CardTools rows={rows} name={name ?? title.toLowerCase()} views={views} view={view} onView={onView} collapsed={!open} onCollapse={() => setOpen(!open)} menuItems={<>{title && <ShelfItem title={title} anchor={id ?? slug(title)} />}{menuItems}</>} title={title || undefined} anchor={title || id ? (id ?? slug(title)) : undefined}>
               {actions}
               <button type="button" aria-label={open ? `Collapse ${title}` : `Expand ${title}`} onClick={() => setOpen(!open)} className="inline-flex size-8 items-center justify-center rounded-md text-slate-800 hover:bg-muted hover:text-foreground">
                 <ChevronDown className={cn("size-4 transition-transform", open && "rotate-180")} />
@@ -137,6 +135,11 @@ export function MapBlock(props: BlockProps) {
 
 /** MainBlock with a diagram in it. */
 export function DiagramBlock(props: BlockProps) {
+  return <MainBlock {...props} />
+}
+
+/** MainBlock with stat cards in it (Stat2 tiles in a grid). */
+export function StatBlock(props: BlockProps) {
   return <MainBlock {...props} />
 }
 
