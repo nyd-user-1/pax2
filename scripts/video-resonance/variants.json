@@ -1,0 +1,7 @@
+{
+ "note": "Every variant is declared here and in docs/VIDEO-RESONANCE.md, with its hypothesis, before it runs. Selection between variants reads only the validation-channel pairs.",
+ "variants": [
+  {"name": "v1", "hidden": "d", "lambda": 0.144, "epochs": 20, "lr": 0.001, "weightDecay": 0.01, "batch": 64, "seed": 20261020,
+   "hypothesis": "The text recipe's exact shape on video: a head that keeps stock's same-channel, same-tier geometry (semantic term) while pulling co-outliers together (behavioral term at 0.144) separates outliers from controls better than stock on unseen channels."}
+ ]
+}
