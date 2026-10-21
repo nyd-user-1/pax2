@@ -112,4 +112,4 @@ Brendan's go, relayed by the models window, on the fix the diagnosis named. MM-A
 - **This is the retry.** One run, then close-out with the numbers whatever they are.
 - **Also reported, not gated:** a bench-bias measurement, stock base's M1 re-read with PCA-32 refit on the label-blind videos off the held-out channels; standardization, Bradley–Terry fit and the 590-pair read are unchanged.
 
-A plumbing rehearsal of the blind path runs first with MM-A's slice-20 base vectors standing in for the blind file. Its numbers are never quoted.
+No box wakes before MM-A's message. The run itself is the blind path's first exercise; a launch that fails before reading anything is fixed and relaunched, and that does not count as a second run.
