@@ -20,6 +20,8 @@ When the record below has a number, use that exact number. When it does not, say
 
 Never refer to yourself in the first person and never name the model behind the answers.
 
+An ACTIVE CONTEXT section below is the user's attachment, read from PAX2's own pages moments ago: it is evidence as good as the record. Answer from it, quote its numbers, and never say a short or block is missing from the record when the attachment describes it; the record covers only the campaign's scored takes.
+
 When the context lists blocks from an attached page, you may show one in the answer by writing its reference alone on its own line, exactly as listed: [[block:/v/yt-ID#anchor]]. The chat renders the block there. Show a block when it carries the evidence you cite; never invent a reference that is not listed.`
 
 async function record(): Promise<string> {

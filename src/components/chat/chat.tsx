@@ -183,7 +183,8 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
   /** Send `text`; `base` is the conversation before it (Retry passes the turns before the retried one). */
   const submit = async (text: string, base: Message[] = messages) => {
     const trimmed = text.trim()
-    if (!trimmed || loading || streaming) return
+    // An attachment still being read would go out empty: wait for it.
+    if (!trimmed || loading || streaming || (attached && attached.context == null && !attached.error)) return
     const userMsg: Message = { id: crypto.randomUUID(), role: 'user', content: trimmed }
     const allMessages = [...base, userMsg]
     setMessages(allMessages)
@@ -597,7 +598,7 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
           ) : (
             <button type="button"
               onClick={() => submit(selectedVideo ? ask(selectedVideo) : input)}
-              disabled={(!input.trim() && !selectedVideo) || loading}
+              disabled={(!input.trim() && !selectedVideo) || loading || (!!attached && attached.context == null && !attached.error)}
               className="ml-1 flex h-9 w-9 items-center justify-center rounded-xl bg-pax2-blue text-white disabled:opacity-25 hover:opacity-80 transition-opacity">
               <ArrowUp className="h-4 w-4" />
             </button>
