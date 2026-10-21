@@ -1,0 +1,139 @@
+{
+ "rescoredAt": "2026-10-21T04:34:32.693Z",
+ "dir": "/private/tmp/claude-501/-Users-brendanstanton-Code-pax2/9053ede0-790b-41f7-950d-ec62caa88d9c/scratchpad/v1",
+ "allAgree": false,
+ "arms": {
+  "stock": {
+   "m1": {
+    "pairs": 590,
+    "accuracy": 0.5576,
+    "ci95": [
+     0.4981,
+     0.6255
+    ],
+    "pairSetIs590": true
+   },
+   "outperformed5x": {
+    "pairs": 379,
+    "accuracy": 0.5778,
+    "ci95": [
+     0.5232,
+     0.6628
+    ]
+   },
+   "outperformed10x": {
+    "pairs": 184,
+    "accuracy": 0.6033,
+    "ci95": [
+     0.5222,
+     0.6566
+    ]
+   },
+   "val": {
+    "pairs": 226,
+    "accuracy": 0.6327
+   },
+   "gateB": {
+    "pairs": 9039,
+    "pooled": 0.5441
+   },
+   "agrees": {
+    "m1": true,
+    "m1ci": true,
+    "x5": true,
+    "x10": true,
+    "val": true,
+    "gateB": true,
+    "pairSet": true
+   }
+  },
+  "rung0": {
+   "m1": {
+    "pairs": 590,
+    "accuracy": 0.5119,
+    "ci95": [
+     0.4618,
+     0.6183
+    ],
+    "pairSetIs590": true
+   },
+   "outperformed5x": {
+    "pairs": 379,
+    "accuracy": 0.5092,
+    "ci95": [
+     0.4559,
+     0.5989
+    ]
+   },
+   "outperformed10x": {
+    "pairs": 184,
+    "accuracy": 0.5543,
+    "ci95": [
+     0.4819,
+     0.6324
+    ]
+   },
+   "val": {
+    "pairs": 226,
+    "accuracy": 0.5752
+   },
+   "gateB": {
+    "pairs": 9039,
+    "pooled": 0.5109
+   },
+   "agrees": {
+    "m1": true,
+    "m1ci": true,
+    "x5": true,
+    "x10": true,
+    "val": true,
+    "gateB": true,
+    "pairSet": true
+   }
+  },
+  "v1": {
+   "m1": {
+    "pairs": 590,
+    "accuracy": 0.5508,
+    "ci95": [
+     0.4922,
+     0.6122
+    ],
+    "pairSetIs590": true
+   },
+   "outperformed5x": {
+    "pairs": 379,
+    "accuracy": 0.5673,
+    "ci95": [
+     0.5211,
+     0.6471
+    ]
+   },
+   "outperformed10x": {
+    "pairs": 184,
+    "accuracy": 0.5707,
+    "ci95": [
+     0.527,
+     0.6455
+    ]
+   },
+   "val": {
+    "pairs": 226,
+    "accuracy": 0.6018
+   },
+   "gateB": {
+    "pairs": 9039,
+    "pooled": 0.5488
+   },
+   "agrees": {
+    "m1": true,
+    "m1ci": false,
+    "x5": true,
+    "x10": true,
+    "val": true,
+    "gateB": true,
+    "pairSet": true
+   }
+  }
+ }
+}

@@ -1,7 +1,38 @@
 {
  "note": "Every variant is declared here and in docs/VIDEO-RESONANCE.md, with its hypothesis, before it runs. Selection between variants reads only the validation-channel pairs.",
  "variants": [
-  {"name": "v1", "hidden": "d", "lambda": 0.144, "epochs": 20, "lr": 0.001, "weightDecay": 0.01, "batch": 64, "seed": 20261020,
-   "hypothesis": "The text recipe's exact shape on video: a head that keeps stock's same-channel, same-tier geometry (semantic term) while pulling co-outliers together (behavioral term at 0.144) separates outliers from controls better than stock on unseen channels."}
+  {
+   "name": "v1",
+   "hidden": "d",
+   "lambda": 0.144,
+   "epochs": 20,
+   "lr": 0.001,
+   "weightDecay": 0.01,
+   "batch": 64,
+   "seed": 20261020,
+   "hypothesis": "The text recipe's exact shape on video: a head that keeps stock's same-channel, same-tier geometry (semantic term) while pulling co-outliers together (behavioral term at 0.144) separates outliers from controls better than stock on unseen channels."
+  },
+  {
+   "hidden": "d",
+   "lambda": 1.0,
+   "epochs": 20,
+   "lr": 0.001,
+   "weightDecay": 0.01,
+   "batch": 64,
+   "seed": 20261020,
+   "name": "v2",
+   "hypothesis": "At 0.144 the semantic term dominates and the head relearns stock geometry with loss while the co-outlier term barely moves; equal weight lets co-outlier structure shape the space."
+  },
+  {
+   "hidden": "d",
+   "lambda": 1.0,
+   "epochs": 5,
+   "lr": 0.001,
+   "weightDecay": 0.01,
+   "batch": 64,
+   "seed": 20261020,
+   "name": "v3",
+   "hypothesis": "v2 stopped at 5 epochs: the validation drop is drift on the 34 training channels; the behavioral loss flattens by epoch 5 while the semantic loss keeps falling."
+  }
  ]
 }
