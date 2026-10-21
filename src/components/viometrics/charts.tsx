@@ -48,6 +48,7 @@ export function CompositeChart({ d }: { d: Dense }) {
         barWidth: 1,
         large: true,
         itemStyle: { color: (p) => `hsl(${300 - ((p.value as number[])[0] / d.duration) * 80} 75% 52%)`, opacity: 0.8 },
+        emphasis: { disabled: true },
         z: 1,
       },
       {
@@ -111,8 +112,20 @@ export function HeatBar({ spectrum }: { spectrum: SpecPoint[] }) {
     animation: false,
     grid: { left: 44, right: 16, top: 6, bottom: 42 },
     tooltip: {
-      formatter: (p) => {
-        const s = spectrum[(p as { dataIndex: number }).dataIndex]
+      // Axis-triggered with a column shadow, so the readout holds steady across the gaps
+      // between cells instead of blinking out on every boundary.
+      trigger: "axis",
+      axisPointer: { type: "shadow", shadowStyle: { color: "rgba(100,116,139,0.08)" } },
+      transitionDuration: 0,
+      // Pinned just under the row, clamped to the chart's width: the card never sits under the
+      // cursor (the flicker loop) and never drifts up over the chart above.
+      position: (pt, _params, _dom, _rect, size) => [
+        Math.min(Math.max(pt[0] - size.contentSize[0] / 2, 4), size.viewSize[0] - size.contentSize[0] - 4),
+        size.viewSize[1] - 6,
+      ],
+      formatter: (ps) => {
+        const p = (Array.isArray(ps) ? ps[0] : ps) as { dataIndex: number }
+        const s = spectrum[p.dataIndex]
         return `<b>${s.key}</b><br/>${s.raw == null ? "not measured" : s.raw}${s.v != null ? ` · p${Math.round(s.v * 100)}` : ""}`
       },
     },
@@ -126,6 +139,7 @@ export function HeatBar({ spectrum }: { spectrum: SpecPoint[] }) {
           itemStyle: { color: s.v == null ? "#f1f5f9" : `hsl(${BAND_HUE[s.band] ?? 220} ${40 + s.v * 45}% ${90 - s.v * 48}%)`, borderRadius: 3 },
         })),
         barCategoryGap: "12%",
+        emphasis: { disabled: true },
       },
     ],
     graphic: (() => {
@@ -164,6 +178,7 @@ export function EmbeddingChart({ vector, invented }: { vector: number[] | null; 
           data: vector.map((v, i) => ({ value: v, itemStyle: { color: `hsl(${(i / n) * 300} 80% 48%)` } })),
           barCategoryGap: "8%",
           large: true,
+          emphasis: { disabled: true },
         },
       ],
     }
