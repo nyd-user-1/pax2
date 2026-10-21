@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation"
 import { ArrowUpRight, LayoutGrid, Loader2 } from "lucide-react"
 
 import { useShelf } from "@/lib/home-blocks"
-import { cn } from "@/ui/lib/utils"
 
 // A block the chat answers with: the reply names it as [[block:/path#anchor]], and it renders here as the
 // block stands on its page right now (read through /api/block-context), framed with its way back to the
@@ -31,29 +30,31 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
   const key = `${path}#${anchor}`
   const title = anchor.replace(/-/g, " ").replace(/^./, (c) => c.toUpperCase())
   const onShelf = has(key)
+  // The snapshot is the block itself; its own controls are only pictures of buttons, so they are hidden,
+  // and the two that work here sit where they stood: onto the shelf, and back to the page.
+  const action = "inline-flex size-8 items-center justify-center rounded-md text-slate-800 transition-colors hover:bg-muted hover:text-foreground disabled:text-pax2-light-blue [&_svg]:size-4"
   return (
-    <figure className="my-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 animate-in fade-in slide-in-from-bottom-1 duration-300">
-      <div className="flex items-center gap-2 border-b border-slate-200 px-3 py-2 text-[12px] text-slate-500">
-        <LayoutGrid className="size-3.5 text-pax2-blue" />
-        <span className="font-mono">{key}</span>
-        <span className="ml-auto flex items-center gap-1">
-          <button type="button" onClick={() => add({ key, title, path, anchor })} disabled={onShelf} className="rounded-md px-2 py-1 font-medium text-slate-600 transition-colors hover:bg-white hover:text-pax2-blue disabled:text-slate-400">
-            {onShelf ? "On the shelf" : "Add to Blocks"}
-          </button>
-          <button type="button" onClick={() => router.push(`${path}#${anchor}`)} className="flex items-center gap-1 rounded-md px-2 py-1 font-medium text-slate-600 transition-colors hover:bg-white hover:text-pax2-blue">
-            Open <ArrowUpRight className="size-3.5" />
-          </button>
-        </span>
-      </div>
-      <div className={cn("max-h-[480px] overflow-auto p-3 text-sm", !state.html && "flex items-center justify-center py-10")}>
-        {state.html ? (
-          <div className="pointer-events-none [&_[data-slot=card]]:!h-auto [&_[data-slot=card-footer]]:hidden" dangerouslySetInnerHTML={{ __html: state.html }} />
-        ) : state.error ? (
-          <span className="text-slate-500">{state.error}</span>
-        ) : (
-          <Loader2 className="size-5 animate-spin text-slate-400" />
-        )}
-      </div>
+    <figure className="relative my-4 animate-in fade-in slide-in-from-bottom-1 duration-300">
+      {state.html ? (
+        <>
+          <div
+            className="pointer-events-none [&_[data-slot=card-action]]:invisible [&_[data-slot=card-footer]]:hidden [&_[data-slot=card-header]_button]:hidden [&_[data-slot=card]]:!h-auto [&_[data-slot=card]]:max-h-[520px] [&_[data-slot=card-content]]:overflow-hidden"
+            dangerouslySetInnerHTML={{ __html: state.html }}
+          />
+          <span className="absolute right-3 top-3 flex items-center gap-0.5">
+            <button type="button" aria-label={onShelf ? "On the Blocks shelf" : "Add to Blocks"} title={onShelf ? "On the Blocks shelf" : "Add to Blocks"} onClick={() => add({ key, title, path, anchor })} disabled={onShelf} className={action}>
+              <LayoutGrid />
+            </button>
+            <button type="button" aria-label="Open on its page" title="Open on its page" onClick={() => router.push(`${path}#${anchor}`)} className={action}>
+              <ArrowUpRight />
+            </button>
+          </span>
+        </>
+      ) : (
+        <div className="flex items-center justify-center rounded-xl bg-card py-10 text-sm ring-1 ring-foreground/10">
+          {state.error ? <span className="text-slate-500">{state.error}</span> : <Loader2 className="size-5 animate-spin text-slate-400" />}
+        </div>
+      )}
     </figure>
   )
 }

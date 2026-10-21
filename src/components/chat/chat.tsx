@@ -19,6 +19,7 @@ import { PlusMenu, type ScriptChip, type VideoChip } from '@/components/chat/plu
 import { Wordmark } from '@/components/wordmark'
 import { cn } from '@/ui/lib/utils'
 import { isShelfDrag, readShelfDrag } from '@/lib/shelf-drag'
+import { useShelf } from '@/lib/home-blocks'
 import { BLOCK_REF, ChatBlock } from '@/components/chat/chat-block'
 import { ModelPicker, useChatModel } from '@/components/chat/model-picker'
 import { ResponseFooter } from '@/components/chat/response-footer'
@@ -74,25 +75,29 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
   // A Blocks-shelf tile dropped on the chat attaches as context, after livingston's drag-to-chat: a short
   // carries its own facts; a block is read from its page at drop time (/api/block-context), so the chat
   // gets what the block shows now. The ribbon over the input names it; the X lets it go.
-  const [attached, setAttached] = useState<{ kind: 'block' | 'video'; title: string; place: string; context: string | null; error?: string } | null>(null)
+  const [attached, setAttached] = useState<{ kind: 'block' | 'video'; title: string; place: string; context: string | null; error?: string; key?: string } | null>(null)
+  const blocksShelf = useShelf()
   const [dragOver, setDragOver] = useState(false)
   const attach = async (e: React.DragEvent) => {
     const d = readShelfDrag(e.dataTransfer)
     setDragOver(false)
     if (!d) return
     e.preventDefault()
-    if (!input.trim()) setInput(d.kind === 'block' ? `What does the ${d.title} block tell us?` : `What explains how "${d.title}" performed?`)
+    const seed = d.kind === 'block' ? `What does the ${d.title} block tell us?` : `What explains how "${d.title}" performed?`
+    if (!input.trim()) setInput(seed)
     setTimeout(() => textareaRef.current?.focus(), 0)
     // A short is read from its video page, every block on it; a block from its own page, that block alone.
     const path = d.kind === 'video' ? `/v/yt-${d.id}` : d.path
     const head = d.kind === 'video'
       ? `ACTIVE CONTEXT — the user attached the short "${d.title}" by ${d.channel} (${d.duration}, ${d.ratio}× its channel's median views). Its video page, ${path}, shows right now, block by block (each block's [[block:…]] reference beside its title):`
       : `ACTIVE CONTEXT — the user attached the "${d.title}" block from the page ${d.path}. What it shows right now:`
-    setAttached({ kind: d.kind, title: d.title, place: d.kind === 'video' ? d.channel : d.path, context: null })
+    setAttached({ kind: d.kind, title: d.title, place: d.kind === 'video' ? d.channel : d.path, context: null, key: d.kind === 'block' ? `${d.path}#${d.anchor}` : undefined })
     try {
       const r = await fetch('/api/block-context', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d.kind === 'video' ? { path } : { path, anchor: d.anchor }) })
       const j = (await r.json()) as { text?: string; error?: string }
       setAttached((a) => (a && a.title === d.title ? { ...a, context: j.text ? `${head}\n${j.text}` : null, error: j.error } : a))
+      // Nothing to read means nothing to ask about: the starter question goes back out.
+      if (!j.text) setInput((v) => (v === seed ? '' : v))
     } catch (x) {
       setAttached((a) => (a && a.title === d.title ? { ...a, error: (x as Error).message } : a))
     }
@@ -474,6 +479,11 @@ export function Chat({ scripts = [], videos = [], compact = false, context, atta
           <span className="shrink-0 uppercase tracking-wide">{attached.kind === 'block' ? 'block' : 'short'}</span>
           <span className="truncate font-medium text-slate-900">{attached.title}</span>
           <span className="shrink-0 text-slate-400">{attached.error ? `· couldn't read it: ${attached.error}` : attached.context == null ? '· reading…' : `· ${attached.place}`}</span>
+          {attached.error && attached.key && (
+            <button type="button" onClick={() => { blocksShelf.remove(attached.key!); setAttached(null) }} className="shrink-0 rounded px-1.5 font-medium text-pax2-blue hover:underline">
+              Take it off the shelf
+            </button>
+          )}
           <button type="button" onClick={() => setAttached(null)} className="ml-auto shrink-0 rounded hover:text-slate-900" aria-label="Let the attachment go">
             <X className="h-3 w-3" />
           </button>
