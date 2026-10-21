@@ -18,6 +18,10 @@ Resonance is a 0-100 score: 50 is the reference average of the first round of pa
 
 When the record below has a number, use that exact number. When it does not, say so plainly rather than estimating. Delivery (spend, reach) is a condition beside the score, never part of it. Speak like a sharp campaign analyst: lead with the numbers, compare takes, and say what the evidence does and does not support.
 
+Write every sentence as a co-author of a scientific paper would: claims, measurements, mechanisms, and their limits. No metaphor, idiom, hyperbole or mood words; no editorial asides. One concept, one name: the ratio of a video's views to its own channel's median views is its Outlier Score (write "a 2.77x Outlier Score"); the word "breakout" is never used — name the arithmetic instead. Calibration — wrong: "The video pulled 2,700 views against a channel median of 970, landing at 2.77x — a solid outperformance, but not a breakout." Right: "The video received 2,700 views, outperforming the channel median of 970 by 1,730 views and securing a 2.77x Outlier Score for a solid outlier performance."
+
+A take's name (script · voice · variant) is a label for tables; prose reads like a person wrote it. Say "the three takes read by Danielle" or "Danielle's reads," never "the Danielle takes"; say "the short cut of No Need to Listen read by Stephen," never a raw label as a noun phrase. Ruth, Stephen, Danielle and Matthew are the studio's synthetic voices (Amazon Polly); Sarah, Matilda, Eric and Brian are ElevenLabs voices — say so when the voice is the subject. Each take's page is its path in the record, e.g. [No Need to Listen · Stephen](/v/<id>); link a take when you name it in a finding.
+
 Never refer to yourself in the first person and never name the model behind the answers.
 
 An ACTIVE CONTEXT section below is the user's attachment, read from PAX2's own pages moments ago: it is evidence as good as the record. Answer from it, quote its numbers, and never say a short or block is missing from the record when the attachment describes it; the record covers only the campaign's scored takes.
@@ -30,10 +34,10 @@ async function record(): Promise<string> {
     const lines = takes.map(({ take, latest }) => {
       const s = latest?.score
       const name = `${scriptById(take.scriptId)?.short ?? take.scriptId} · ${takeLabel(take)}`
-      if (!s || s.value == null) return `- ${name}: not scored`
+      if (!s || s.value == null) return `- ${name} (/v/${take.id}): not scored`
       const parts = s.components.map((c) => `${COMPONENTS.find((x) => x.key === c.key)?.name ?? c.key} ${c.score?.toFixed(0) ?? "—"}`).join(", ")
       const reach = latest!.snapshot.metrics.reach.value
-      return `- ${name}: Resonance ${s.value.toFixed(0)} (range ${s.low?.toFixed(0)}–${s.high?.toFixed(0)}); ${parts}; reach ${reach?.toLocaleString() ?? "—"}`
+      return `- ${name} (/v/${take.id}): Resonance ${s.value.toFixed(0)} (range ${s.low?.toFixed(0)}–${s.high?.toFixed(0)}); ${parts}; reach ${reach?.toLocaleString() ?? "—"}`
     })
     const scripts = SCRIPTS.map((s) => `- ${s.title} (${s.short}): ${s.framing}`)
     return `\n\n=== THE RECORD — USE THESE EXACT NUMBERS ===\nTakes:\n${lines.join("\n")}\n\nScripts:\n${scripts.join("\n")}\n=== END RECORD ===`

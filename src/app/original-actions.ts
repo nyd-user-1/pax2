@@ -58,6 +58,16 @@ export async function againDraft(id: string) {
   return { title: row.title, text: row.text, name: row.name, role: row.role, town: row.town }
 }
 
+/** A volunteer's own analysis, for the chat's walkthrough: the evaluation in plain lines, owner-gated. */
+export async function myAnalysis(id: string) {
+  const user = await currentUser()
+  const row = await originalRow(id)
+  if (!row || !user || (user.email !== row.owner && !user.admin)) return null
+  const e = row.evaluation
+  if (!e) return null
+  return { title: row.title ?? null, seconds: row.seconds, summary: e.summary, forecast: forecastLine(e), findings: findings(e) }
+}
+
 /** A recording lands. It is scored straight away, the prediction made the moment the button is
  *  pressed (requirement 5); PAX2_AUTOSCORE=0 turns that off for a dev session that must not call
  *  Bedrock, and then it waits on /drafts for an admin to press Score. */

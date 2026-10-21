@@ -39,6 +39,8 @@ interface Props {
   videos: VideoChip[]
   shorts?: VideoChip[]
   onSelect: (text: string) => void
+  /** Once the input is pinned to the bottom of the page, the menu opens upward. */
+  dropUp?: boolean
 }
 
 /* Sidebar dress for every menu icon (shell.tsx's item): 18px, 1.75 stroke, lavender fill on row hover. */
@@ -50,7 +52,7 @@ const VOICE_LINE = 'Open primaries let every voter pick the person, not the part
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 
-export function PlusMenu({ videos, shorts = [], onSelect }: Props) {
+export function PlusMenu({ videos, shorts = [], onSelect, dropUp = false }: Props) {
   const scripts = OPEN_SCRIPTS
   const [menuOpen, setMenuOpen] = useState(false)
   const [step, setStep] = useState<DrillStep>('categories')
@@ -115,6 +117,8 @@ export function PlusMenu({ videos, shorts = [], onSelect }: Props) {
 
   const row = (i: number) => `group flex w-full items-center gap-3 px-4 py-3 hover:bg-[var(--inp-bg)] transition-colors ${i > 0 ? 'border-t border-[var(--border)]' : ''}`
 
+  const panelSide = dropUp ? 'bottom-full mb-2' : 'top-full mt-2'
+
   return (
     <div className="relative" ref={menuRef}>
       <button
@@ -129,7 +133,7 @@ export function PlusMenu({ videos, shorts = [], onSelect }: Props) {
 
       {/* Category screen */}
       {menuOpen && !isDrawer && (
-        <div className="absolute left-0 top-full mt-2 w-56 max-w-[calc(100vw-2rem)] rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-xl overflow-hidden z-20">
+        <div className={`absolute left-0 ${panelSide} w-56 max-w-[calc(100vw-2rem)] rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-xl overflow-hidden z-20`}>
           <div className="py-1">
             {CATEGORIES.map((cat, i) => (
               <button key={cat.key} onClick={() => handleCategoryClick(cat.key)} className={row(i) + ' text-sm font-medium'}>
@@ -144,7 +148,7 @@ export function PlusMenu({ videos, shorts = [], onSelect }: Props) {
 
       {/* Drill-down drawer */}
       {menuOpen && isDrawer && (
-        <div className="absolute left-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-xl overflow-hidden z-20">
+        <div className={`absolute left-0 ${panelSide} w-80 max-w-[calc(100vw-2rem)] rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-xl overflow-hidden z-20`}>
           <div className="flex items-center gap-2 px-3 py-2.5 border-b border-[var(--border)]">
             <button onClick={goBack} className="text-[var(--muted)] hover:text-[var(--txt)] shrink-0">
               <ArrowLeft className="h-4 w-4" />

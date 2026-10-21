@@ -12,9 +12,14 @@
 // and how its last race went (/api/district), and that rides along with the question.
 
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { ArrowUp, Check, ChevronLeft, ChevronRight, Loader2, MapPin, Mic, Paperclip, PlaySquare, Square, Video, X } from 'lucide-react'
+import { ArrowDown, ArrowUp, Check, ChevronLeft, ChevronRight, Loader2, MapPin, Mic, Paperclip, PlaySquare, Square, Video, X } from 'lucide-react'
 
+import { ChatFields } from '@/components/chat/chat-fields'
 import { MarkdownContent } from '@/components/chat/markdown'
+import { RecordFlow, type Analysis } from '@/components/chat/record-flow'
+import { ScriptCard } from '@/components/chat/script-card'
+import { useDraft } from '@/components/record/draft'
+import { answersText, parseFieldBlock, stripFieldBlock, stripOpenBlock } from '@/lib/chat-fields'
 import { PlusMenu, type ScriptChip, type VideoChip } from '@/components/chat/plus-menu'
 import { Wordmark } from '@/components/wordmark'
 import { cn } from '@/ui/lib/utils'
@@ -22,6 +27,7 @@ import { isShelfDrag, readShelfDrag } from '@/lib/shelf-drag'
 import { useShelf } from '@/lib/home-blocks'
 import { BLOCK_REF, ChatBlock } from '@/components/chat/chat-block'
 import { ModelPicker, useChatModel } from '@/components/chat/model-picker'
+import { useVideoModel, VideoModelPicker } from '@/components/chat/video-model-picker'
 import { ResponseFooter } from '@/components/chat/response-footer'
 
 type Message = { id: string; role: 'user' | 'assistant'; content: string; model?: string }
@@ -47,8 +53,36 @@ export type PlaceInsight = { district: string | null; state?: string; chamber?: 
 type Recognition = { lang: string; continuous: boolean; interimResults: boolean; start: () => void; stop: () => void; abort: () => void; onresult: ((e: { resultIndex: number; results: ArrayLike<ArrayLike<{ transcript: string }> & { isFinal: boolean }> }) => void) | null; onerror: ((e: { error: string }) => void) | null; onend: (() => void) | null }
 const speechRecognition = () => (typeof window === 'undefined' ? undefined : ((window as unknown as { SpeechRecognition?: new () => Recognition; webkitSpeechRecognition?: new () => Recognition }).SpeechRecognition ?? (window as unknown as { webkitSpeechRecognition?: new () => Recognition }).webkitSpeechRecognition))
 
-// Record mode (the camera button): the conversation becomes an onboarding that ends in a recording.
-const RECORD_GUIDE = `RECORD MODE — the user pressed the camera. From here the conversation is an onboarding that culminates in a recording. Run it one short question at a time: who they are in a few words, their town, then why open primaries matter to them personally. Then draft a script in their own words — hook under 12 words, first person, one concrete number, 50 to 60 words (about 25 seconds spoken), ending with what the viewer should do. Refine it with them until it sounds like them. When they are happy, put the final script alone in a code block and tell them: press Create in the sidebar, paste the script, and the teleprompter will scroll it while they record. Keep every turn to one question or one revision.`
+// Record mode (the camera button): the conversation becomes an onboarding that ends in a recording,
+// made on this page. Questions go out as real controls (a pax-fields block the transcript renders as
+// inputs, from-sam's pattern); the final script gets a Record button that opens the camera in place.
+const RECORD_GUIDE = `RECORD MODE — the user pressed the camera. From here the conversation is an onboarding that culminates in a recording, made right here on this page. Run it one short question at a time: who they are in a few words, their town, then why open primaries matter to them personally.
+Ask each question as real controls: one short line of prose, then a \`\`\`pax-fields\`\`\` code block holding a JSON array of one or two fields, e.g. [{"key":"town","label":"Your town","kind":"text","placeholder":"Worcester"}]. Kinds: "text", "textarea", and "choice" with "options": ["…"]. The user may fill the controls or type in the chat box — both are the answer. Never mention the block or the controls in prose.
+Then draft a script in their own words — hook under 12 words, first person, one concrete number, 50 to 60 words (about 25 seconds spoken), ending with what the viewer should do. Refine it with them until it sounds like them. Put every draft alone in a plain code block; the page shows it as a script card with a Record button, so never tell them to copy it anywhere. When they are happy, invite them to press Record on the card — the camera opens here and the teleprompter scrolls their words at their own pace, nothing to memorize.
+Terms of the craft (hook, concrete number, explicit ask) are underlined and defined on hover wherever they appear, so use them naturally; a one-line definition in prose is welcome here and there, never more than one per reply.
+Once a video is in, an Enhance card sits under it: captions, the hook on screen, an end card, a clean-up pass on the footage, a generated b-roll insert — each ends in a scored next version measured against the original. Mention it once, lightly, when the moment fits.
+After the script is delivered the Record button stays on its card. If they ask something else instead of recording, answer it, then add one supportive line pointing back to recording — one follow-up, never pushy. If they name a barrier (nerves, time, lighting), address or soothe that barrier and encourage them past it; a named barrier invites one more follow-up, and only one. If they still decline, close warmly: one encouragement, then offer a calendar invite to record another day, or to connect them with a communications specialist who will walk them through it. If they change the subject entirely, say in one line that their script is saved right here in the chat, then help with the new task. Keep every turn to one question or one revision.`
+
+/** The script: the last plain code block in a reply (pax-fields blocks are controls, not script). */
+function scriptText(content: string): string | null {
+  let out: string | null = null
+  for (const m of content.matchAll(/```([\w-]*)[^\S\n]*\n?([\s\S]*?)```/g)) {
+    if (m[1] === 'pax-fields') continue
+    const body = m[2].trim()
+    if (body) out = body
+  }
+  return out
+}
+
+/** Split a reply around its final code fence, whose body the script card renders in the fence's place. */
+function splitAtScript(text: string): { before: string; after: string } | null {
+  let last: { start: number; end: number } | null = null
+  for (const m of text.matchAll(/```([\w-]*)[^\S\n]*\n?[\s\S]*?```/g)) {
+    if (m[1] === 'pax-fields') continue
+    last = { start: m.index!, end: m.index! + m[0].length }
+  }
+  return last ? { before: text.slice(0, last.start).trimEnd(), after: text.slice(last.end).trimStart() } : null
+}
 
 const SKIN = {
   '--txt': '#0f172a',
@@ -74,7 +108,18 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   const [selectedVideo, setSelectedVideo] = useState<VideoChip | null>(null)
   const [isFocused, setIsFocused] = useState(false)
   const [model, setModel] = useChatModel()
+  const [videoModel, setVideoModel] = useVideoModel()
   const [recordMode, setRecordMode] = useState(false)
+  // The close of record mode: the recording happens in the transcript itself — Record on the
+  // script card opens the flow's cards right under the conversation, the script in the session draft.
+  const [flowScript, setFlowScript] = useState<string | null>(null)
+  // The camera button's dot: the video finished processing while they were elsewhere in the chat.
+  const [videoReady, setVideoReady] = useState(false)
+  // The scored video's analysis rides every later turn, so the walkthrough can continue naturally.
+  const analysisRef = useRef<string | null>(null)
+  // The reader is scrolled up in the conversation; the round arrow brings them back to the end.
+  const [away, setAway] = useState(false)
+  const { update: updateDraft } = useDraft()
 
   // A Blocks-shelf tile dropped on the chat attaches as context, after livingston's drag-to-chat: a short
   // carries its own facts; a block is read from its page at drop time (/api/block-context), so the chat
@@ -139,7 +184,10 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   const waveDataRef = useRef<number[]>([])
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages])
+  // Follow the stream only while the reader is already at the end; scrolled up to read, the page
+  // holds still and the round arrow is the way back down.
+  const stickRef = useRef(true)
+  useEffect(() => { if (stickRef.current) bottomRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages])
 
   // Geolocation for address bias
   useEffect(() => {
@@ -193,6 +241,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
     if (!trimmed || loading || streaming || reading) return
     const userMsg: Message = { id: crypto.randomUUID(), role: 'user', content: trimmed }
     const allMessages = [...base, userMsg]
+    stickRef.current = true
     setMessages(allMessages)
     setInput('')
     setSelectedVideo(null)
@@ -204,7 +253,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: allMessages.map(m => ({ role: m.role, content: m.content })), ...(selectedAddress ? { address: selectedAddress.description, place: placeInsight } : {}), ...((context || attached?.context || recordMode) ? { systemContext: [context?.(), attached?.context, recordMode ? RECORD_GUIDE : null].filter(Boolean).join('\n\n') } : {}), model }),
+        body: JSON.stringify({ messages: allMessages.map(m => ({ role: m.role, content: m.content })), ...(selectedAddress ? { address: selectedAddress.description, place: placeInsight } : {}), ...((context || attached?.context || recordMode || analysisRef.current) ? { systemContext: [context?.(), attached?.context, recordMode ? RECORD_GUIDE : null, analysisRef.current].filter(Boolean).join('\n\n') } : {}), model }),
         signal: controller.signal,
       })
       if (!res.ok || !res.body) {
@@ -464,6 +513,28 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
 
   const isEmpty = messages.length === 0
 
+  // The script card rides the newest reply that carries a script.
+  const scriptMsg = recordMode ? [...messages].reverse().find((m) => m.role === 'assistant' && scriptText(m.content)) : undefined
+  const latestScript = scriptMsg && !streaming ? scriptText(scriptMsg.content) : null
+
+  // Every settled draft is saved as it lands — the script survives a pivot, a detour, a reload of
+  // the record pages — so "your script is saved" is simply true.
+  useEffect(() => {
+    if (latestScript) updateDraft({ mode: 'own', scriptId: undefined, title: undefined, text: latestScript, again: undefined })
+  }, [latestScript, updateDraft])
+
+  const startRecording = (script: string) => {
+    updateDraft({ mode: 'own', scriptId: undefined, title: undefined, text: script, again: undefined })
+    setFlowScript(script)
+    setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 80)
+  }
+
+  const walkAnalysis = (a: Analysis) => {
+    setVideoReady(false)
+    analysisRef.current = `VIDEO ANALYSIS — the user recorded their video${a.title ? ` "${a.title}"` : ''} (${a.seconds} seconds) on this page and asked to be walked through the free analysis. PAX2's scoring, verbatim:\nSummary: ${a.summary}${a.forecast ? `\n${a.forecast}` : ''}\nFindings:\n${a.findings.map((f) => `- ${f}`).join('\n')}\nWalk them through it in plain words, one part at a time, numbers only from the lines above — supportive, concrete, never inflated.`
+    submit('Walk me through my video analysis.')
+  }
+
   /* ---- Chat input ---- */
   const inputBox = (
     <div className="relative">
@@ -561,20 +632,22 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
         )}
 
         <div className="flex items-center pt-1">
-          <PlusMenu videos={videos} shorts={shorts} onSelect={(text) => { setInput(text); textareaRef.current?.focus() }} />
+          <PlusMenu videos={videos} shorts={shorts} dropUp={!isEmpty || compact} onSelect={(text) => { setInput(text); textareaRef.current?.focus() }} />
 
           <button
             onClick={() => {
               const next = !recordMode
               setRecordMode(next)
+              setVideoReady(false)
               if (next && !input.trim() && messages.length === 0) setInput("I'm ready to make my first video — where do we start?")
               textareaRef.current?.focus()
             }}
-            className={`ml-2 shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
+            className={`relative ml-2 shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
               recordMode ? 'text-pax2-light-blue bg-pax2-light-blue/10' : 'text-[var(--muted)] hover:bg-[rgba(0,0,0,0.07)] hover:text-[var(--txt)]'
             }`}
             title={recordMode ? 'Leave record mode' : 'Record mode — build toward a recording'}>
             <Video className="h-4 w-4" />
+            {videoReady && <span aria-hidden className="absolute right-0 top-0 size-2.5 rounded-full bg-red-500 ring-2 ring-[var(--inp-bg)]" />}
           </button>
           <button
             onClick={toggleMic}
@@ -605,6 +678,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
             </button>
           )}
           <div className="flex-1" />
+          <VideoModelPicker value={videoModel} onChange={setVideoModel} />
           <ModelPicker value={model} onChange={setModel} />
           {streaming ? (
             <button type="button"
@@ -652,7 +726,15 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
           </span>
         </div>
       )}
-      <div className="flex-1 overflow-y-auto">
+      <div
+        className="flex-1 overflow-y-auto"
+        onScroll={(e) => {
+          const el = e.currentTarget
+          const gap = el.scrollHeight - el.scrollTop - el.clientHeight
+          setAway(gap > 400)
+          stickRef.current = gap < 120
+        }}
+      >
         {isEmpty && !compact ? (
           // With `below` (the home), the layout is the reference's: the chat column rides at a fixed
           // offset from the top — set so the input's bottom edge lands where the reference's does,
@@ -718,31 +800,57 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
           </>
         ) : (
           <div className="flex flex-col gap-4 px-4 py-6 max-w-[773px] mx-auto w-full">
-            {messages.map(msg => (
+            {messages.map(msg => {
+              const isLast = msg.id === messages[messages.length - 1]?.id
+              const msgStreaming = streaming && isLast
+              // The pax-fields block is scaffolding: stripped from the prose (even mid-stream,
+              // so it never shows as raw JSON) and rendered as real controls below.
+              const shown = msg.role === 'assistant' ? stripOpenBlock(stripFieldBlock(msg.content)) : msg.content
+              const fields = msg.role === 'assistant' && !msgStreaming ? parseFieldBlock(msg.content) : null
+              const script = recordMode && msg.id === scriptMsg?.id && !msgStreaming ? scriptText(msg.content) : null
+              const seg = script ? splitAtScript(shown) : null
+              const prose = (content: string) =>
+                pieces(content).map((p, i) =>
+                  'text' in p ? (
+                    <MarkdownContent key={i} content={p.text} isStreaming={msgStreaming} />
+                  ) : (
+                    <ChatBlock key={`${p.path}#${p.anchor}-${i}`} path={p.path} anchor={p.anchor} />
+                  ),
+                )
+              return (
               <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 {msg.role === 'user' ? (
-                  <div className="max-w-[80%] rounded-2xl rounded-br-sm px-4 py-3 text-[17px] leading-relaxed bg-[var(--inp-bg)] text-[var(--txt)]">
+                  <div className="max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-br-sm px-4 py-3 text-[17px] leading-relaxed bg-[var(--inp-bg)] text-[var(--txt)]">
                     {msg.content}
                   </div>
                 ) : (
                   <div className="group/reply flex-1 min-w-0 text-[17px] pt-0.5">
                     {msg.content ? (
                       <>
-                        {pieces(msg.content).map((p, i) =>
-                          'text' in p ? (
-                            <MarkdownContent key={i} content={p.text} isStreaming={streaming && msg.id === messages[messages.length - 1]?.id} />
-                          ) : (
-                            <ChatBlock key={`${p.path}#${p.anchor}-${i}`} path={p.path} anchor={p.anchor} />
-                          ),
+                        {script && seg ? (
+                          <>
+                            {prose(seg.before)}
+                            <ScriptCard text={script} onRecord={() => startRecording(script)} />
+                            {prose(seg.after)}
+                          </>
+                        ) : (
+                          prose(shown)
                         )}
-                        {streaming && msg.id === messages[messages.length - 1]?.id && (
+                        {msgStreaming && (
                           <span className="inline-block w-1.5 h-4 bg-[var(--txt)] animate-pulse ml-0.5 align-middle">|</span>
                         )}
-                        {!(streaming && msg.id === messages[messages.length - 1]?.id) && (
+                        {fields && (
+                          <ChatFields
+                            fields={fields}
+                            live={isLast && !streaming && !loading}
+                            onSubmit={(values) => submit(answersText(fields, values))}
+                          />
+                        )}
+                        {!msgStreaming && (
                           <ResponseFooter
-                            text={msg.content}
+                            text={shown}
                             model={msg.model}
-                            latest={msg.id === messages[messages.length - 1]?.id}
+                            latest={isLast}
                             onRetry={() => {
                               const at = messages.findIndex((x) => x.id === msg.id)
                               const ask = messages[at - 1]
@@ -757,16 +865,30 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
                   </div>
                 )}
               </div>
-            ))}
+              )
+            })}
             {loading && (
               <div className="pt-1.5">
                 <span className="inline-block w-1.5 h-4 bg-[var(--txt)] animate-pulse align-middle">|</span>
               </div>
             )}
+            {flowScript && <RecordFlow key={flowScript} script={flowScript} videoModel={videoModel} onDone={() => setVideoReady(true)} onAnalysis={walkAnalysis} />}
             <div ref={bottomRef} />
           </div>
         )}
       </div>
+
+      {/* Scrolled up into the conversation, the round arrow brings the reader back to the end. */}
+      {away && !isEmpty && (
+        <button
+          type="button"
+          onClick={() => bottomRef.current?.scrollIntoView({ behavior: 'smooth' })}
+          aria-label="Back to the latest"
+          className="absolute bottom-36 left-1/2 z-20 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border border-[var(--border)] bg-white text-[var(--muted)] shadow-lg transition-colors hover:text-[var(--txt)]"
+        >
+          <ArrowDown className="h-4 w-4" />
+        </button>
+      )}
 
       {/* In the side panel the input stays pinned to the bottom from the start. */}
       {(!isEmpty || compact) && (

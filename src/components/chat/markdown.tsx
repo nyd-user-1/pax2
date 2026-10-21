@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Link from 'next/link'
 import { childText } from '@/components/chat/child-text'
+import { decorateTerms } from '@/components/chat/term-tip'
 
 interface Props {
   content: string
@@ -13,9 +14,11 @@ interface Props {
 }
 
 export function MarkdownContent({ content, isStreaming }: Props) {
+  // One reply, one underline per term: the first mention gets the hover definition, the rest read plain.
+  const seen = new Set<string>()
   const mdComponents: Parameters<typeof ReactMarkdown>[0]['components'] = {
     p: ({ children }) => (
-      <p className="mb-3 last:mb-0 text-[17px] text-[var(--txt)] leading-relaxed">{children}</p>
+      <p className="mb-3 last:mb-0 text-[17px] text-[var(--txt)] leading-relaxed">{decorateTerms(children, seen)}</p>
     ),
     strong: ({ children }) => (
       <strong className="font-semibold text-[var(--txt)]">{children}</strong>
@@ -48,7 +51,7 @@ export function MarkdownContent({ content, isStreaming }: Props) {
       <ol className="list-decimal pl-6 mb-3 space-y-1 text-[var(--txt)]">{children}</ol>
     ),
     li: ({ children }) => (
-      <li className="text-[17px] text-[var(--txt)] leading-relaxed">{children}</li>
+      <li className="text-[17px] text-[var(--txt)] leading-relaxed">{decorateTerms(children, seen)}</li>
     ),
     blockquote: ({ children }) => (
       <blockquote className="border-l-2 border-pax2-light-blue pl-3 my-3 text-[var(--muted)] italic">{children}</blockquote>

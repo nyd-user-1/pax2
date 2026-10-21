@@ -9,7 +9,7 @@ import { currentUser } from "@/lib/auth"
 // A browser cookie carries the count; wiping it buys another taste, which is fine: the point
 // is a nudge toward signing up, not a wall.
 
-const LIMITS = { chat: 5, write: 2, voice: 6 } as const
+const LIMITS = { chat: 5, write: 2, voice: 6, generate: 2 } as const
 
 export async function anonSpend(kind: keyof typeof LIMITS): Promise<void> {
   if (await currentUser()) return
