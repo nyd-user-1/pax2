@@ -34,6 +34,14 @@ word times exist). The media subset is the breakout-and-control pair set, chosen
 (zero pull in a linear model). Variants become metadata, full, full+comp; the candidate is full+comp under
 the same gate, and the report adds every arm's AUC on the held-out rows that carry media features.
 
+Window MM-A, Gate M2 (VIDEO=1, docs/briefs/MM-A-videoprism-stock.md): v3's features plus 32 components of
+a stock video embedding (<RUN>video.jsonl, {id, vector}, the best Gate M1 arm), v3b's exact protocol: PCA
+fit on the videos of channels outside the encoder's held-out set, missing values at the feature's mean
+(no flag). The 1,212 media rows are v3b's (composition.json carries cutsPerSec), so the read sits on the
+same rows. Variants become metadata, full, fullvideo; writes var-model-v3v.json, predictions-v3v.jsonl.
+Bar, registered in the brief: fullvideo at least full + 0.02 on the held-out media rows. Predictions carry
+each row's settled ratio for the secondary 5x and 10x reads.
+
 Env: BUCKET, RUN (s3 prefix model/v3/<run>/), OUT (local output dir), LIMIT (every Nth row; rehearsal only),
      COMPOSITION=1 (task 7b; reads <RUN>composition.json, writes var-model-v3b.json),
      INDEX_RUN (the serving index's run id, stamped on the model so the app pairs it with that index's embeddings)
@@ -108,7 +116,37 @@ if COMP:
         for cx in comp_x:
             cx.setdefault(d["key"], m)
     log(f"train_v3: composition {len(comp_defs)} features, {int(has_media.sum())} rows with media features")
-XR = [{**r["x"], **t, **e, **cx} for r, t, e, cx in zip(rows, tx, emb, comp_x)]
+VIDEO = os.environ.get("VIDEO") == "1"
+vid_defs, vid_x = [], [{} for _ in rows]
+if VIDEO:
+    if not COMP:
+        cj = get_json(f"{RUN}composition.json")
+        for i, r in enumerate(rows):
+            has_media[i] = cj["shorts"].get(r["id"], {}).get("cutsPerSec") is not None
+    V = {}
+    for l in get_bytes(f"{RUN}video.jsonl").decode().splitlines():
+        if l.strip():
+            o = json.loads(l)
+            V[o["id"]] = np.asarray(o["vector"], dtype=np.float64)
+    chan_of = {r["id"]: r["channelId"] for r in rows}
+    fit_ids = sorted(i for i in V if i in chan_of and chan_of[i] not in held_channels)
+    VX = np.stack([V[i] for i in fit_ids])
+    vmu = VX.mean(0)
+    _, VS, VVt = np.linalg.svd(VX - vmu, full_matrices=False)
+    vbasis = VVt[:K]
+    vexplained = float((VS[:K] ** 2).sum() / (VS**2).sum())
+    vid_defs = [{"key": f"v:{j}", "label": f"Video component {j + 1}", "kind": "continuous"} for j in range(K)]
+    for i, r in enumerate(rows):
+        if r["id"] in V:
+            pv = (V[r["id"]] - vmu) @ vbasis.T
+            vid_x[i] = {f"v:{j}": float(pv[j]) for j in range(K)}
+    for d in vid_defs:
+        vals = [vx[d["key"]] for vx in vid_x if d["key"] in vx]
+        m = float(np.mean(vals)) if vals else 0.0
+        for vx in vid_x:
+            vx.setdefault(d["key"], m)
+    log(f"train_v3: video {len(V)} embedded, PCA on {len(fit_ids)} training-channel videos, {K} components explain {vexplained:.3f}, {sum(1 for r in rows if r['id'] in V)} rows carry a video, {int(has_media.sum())} rows with media features")
+XR = [{**r["x"], **t, **e, **cx, **vx} for r, t, e, cx, vx in zip(rows, tx, emb, comp_x, vid_x)]
 
 y = np.array([r["breakout"] for r in rows], dtype=float)
 ch = np.array([r["channelId"] for r in rows])
@@ -132,7 +170,9 @@ VARIANTS = [
 ]
 if COMP:
     VARIANTS = [VARIANTS[0], VARIANTS[3], ("fullcomp", "var-3b-fullcomp", TRANSCRIPT + EMB + comp_defs)]
-CANDIDATES = ["fullcomp"] if COMP else ["embed", "full"]
+if VIDEO:
+    VARIANTS = [VARIANTS[0], VARIANTS[3], ("fullvideo", "var-3v-fullvideo", TRANSCRIPT + EMB + vid_defs)]
+CANDIDATES = ["fullvideo"] if VIDEO else ["fullcomp"] if COMP else ["embed", "full"]
 HM = H & has_media
 
 
@@ -183,7 +223,7 @@ def train(model_defs, version):
                 "withinChannelAuc": r3(hwc),
                 "withinChannel": sorted(hwc_parts, key=lambda p: -p["n"]),
             },
-            "encoderHeldOutWithMedia": {"n": int(HM.sum()), "baseRate": r3(y[HM].mean()) if HM.sum() else None, "auc": r3(auc(y[HM], oof[HM])) if HM.sum() else None} if COMP else None,
+            "encoderHeldOutWithMedia": {"n": int(HM.sum()), "baseRate": r3(y[HM].mean()) if HM.sum() else None, "auc": r3(auc(y[HM], oof[HM])) if HM.sum() else None} if (COMP or VIDEO) else None,
             "timeSplit": {"cut": CUT, "train": int(tr.sum()), "test": int((~tr).sum()), "auc": r3(auc(y[~tr], p_time)) if len(p_time) else None},
         },
     }, oof
@@ -207,7 +247,7 @@ checks = {
 passed = all(checks.values())
 gate = {
     "passed": bool(passed),
-    "rule": f"pre-registered 2026-10-20 in train_v3.py: the candidate is {'full+comp (task 7b)' if COMP else 'whichever of embed and full scores higher'} on the encoder-held-out channels' rows; it passes when, on those rows, its AUC is above v1's {V1['auc']} and above the metadata model's, and its within-channel AUC is at least {GATE_WITHIN}. Pooled AUC includes channels the encoder trained on and never gates.",
+    "rule": f"pre-registered 2026-10-20 in train_v3.py: the candidate is {'full+video (window MM-A; Gate M2 is read by scripts/video/bench_m2.py, not here)' if VIDEO else 'full+comp (task 7b)' if COMP else 'whichever of embed and full scores higher'} on the encoder-held-out channels' rows; it passes when, on those rows, its AUC is above v1's {V1['auc']} and above the metadata model's, and its within-channel AUC is at least {GATE_WITHIN}. Pooled AUC includes channels the encoder trained on and never gates.",
     "candidate": best,
     "checks": checks,
     "heldOut": {k: {"auc": models[k]["metrics"]["encoderHeldOut"]["auc"], "withinChannelAuc": models[k]["metrics"]["encoderHeldOut"]["withinChannelAuc"]} for k in models},
@@ -221,7 +261,7 @@ cand["embedding"] = {"indexRun": os.environ.get("INDEX_RUN"), "components": K, "
 out = {
     "builtAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     "name": "PAX2 Classifier",
-    "version": "var-3b" if COMP else "var-3",
+    "version": "var-3v" if VIDEO else "var-3b" if COMP else "var-3",
     "run": RUN,
     "rows": {"trainingSet": len(rows), "withTranscript": int(has.sum()), "embedded": int(sum(1 - e["noEmbedding"] for e in emb))},
     "candidate": cand,
@@ -233,10 +273,10 @@ out = {
         "Encoder components are directions in the embedding, not named traits.",
     ],
 }
-SUFFIX = "v3b" if COMP else "v3"
+SUFFIX = "v3v" if VIDEO else "v3b" if COMP else "v3"
 with open(f"{OUT}/var-model-{SUFFIX}.json", "w") as f:
     json.dump(out, f, indent=1, allow_nan=False)
 with open(f"{OUT}/predictions-{SUFFIX}.jsonl", "w") as f:
     for i, r in enumerate(rows):
-        f.write(json.dumps({"id": r["id"], "channelId": r["channelId"], "y": int(y[i]), "heldOut": int(H[i]), **{k: round(float(oofs[k][i]), 6) for k in oofs}}) + "\n")
+        f.write(json.dumps({"id": r["id"], "channelId": r["channelId"], "y": int(y[i]), "heldOut": int(H[i]), "media": int(has_media[i]), "ratio": rows[i].get("ratio"), **{k: round(float(oofs[k][i]), 6) for k in oofs}}) + "\n")
 log(f"train_v3: wrote var-model-{SUFFIX}.json and predictions-{SUFFIX}.jsonl in {time.time() - t0:.0f}s")
