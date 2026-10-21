@@ -113,3 +113,28 @@ Brendan's go, relayed by the models window, on the fix the diagnosis named. MM-A
 - **Also reported, not gated:** a bench-bias measurement, stock base's M1 re-read with PCA-32 refit on the label-blind videos off the held-out channels; standardization, Bradley–Terry fit and the 590-pair read are unchanged.
 
 No box wakes before MM-A's message. The run itself is the blind path's first exercise; a launch that fails before reading anything is fixed and relaunched, and that does not count as a second run.
+
+## Run 3 — v3b, the retry (vres-v3b-20261021-080226, 08:02–08:04 UTC)
+
+Label-blind sample: MM-A's run 20261021-040633-full-blind, 2,492 videos (8 failed to fetch), all of them settled training-set shorts. 674 overlap the media set. By split: 1,586 train, 386 validation, 520 held out. The negative pool is the 1,586 on training channels, 15.57% outliers. Measured outlier share of v3b's behavioral negatives: 16.38%, against v3's 48.5%. 0 negatives off the train split. The behavioral loss fell from 5.98 to 2.18 over 5 epochs; v3 reached 2.67.
+
+| Arm | M1 held-out (590) | 95% interval | 5× (379) | 10× (184) | Validation (226) | Gate B analog |
+|---|---|---|---|---|---|---|
+| Stock VideoPrism base | 0.5576 | 0.4948–0.6180 | 0.5778 | 0.6033 | 0.6327 | 0.5441 |
+| Rung 0 | 0.5119 | 0.4629–0.6240 | 0.5092 | 0.5543 | 0.5752 | 0.5109 |
+| v3 (run 2, for reference) | 0.5695 | 0.5327–0.6408 | 0.5805 | 0.6087 | 0.6195 | 0.5470 |
+| v3b | 0.5508 | 0.4965–0.6094 | 0.5646 | 0.5761 | 0.6018 | 0.5595 |
+
+**Gate M3: FAIL.** v3b reads 0.5508 against 0.5776. It is above rung 0 and below stock (−0.0068). Validation is below stock too (0.6018 against 0.6327). Fixing the negative pool lowered the held-out read against v3 (−0.0187) and the validation read (−0.0177). The one place it moved up is the Gate B analog: +0.0154 over stock (interval −0.0190 to +0.0286), against v3's +0.0029. That is reported, not gated, and its interval spans zero.
+
+**Bench bias (reported, not gated):** stock base with PCA-32 refit on the 1,972 label-blind videos off the held-out channels reads 0.5661 (0.4919–0.6180) on the 590 held-out pairs, against 0.5576 with PCA fit on the label-picked training-pair videos: +0.0085, well inside the interval. Fitting the components on label-picked videos does not visibly bias the read.
+
+**Selection, on validation only:** v3 (0.6195) stays the selected head over v3b (0.6018). Both are published; both failed.
+
+Verification: gate_m1.py and the port agree on every arm. The Mac reproduces every accuracy, interval and the bench-bias read. The box terminated itself.
+
+## Final close-out (08:10 UTC)
+
+Four declared heads: v1, v2, v3 and the retry v3b. None passes Gate M3, and every one reads below stock VideoPrism on the validation channels. The diagnosis's leading candidate, label-heavy negatives, was tested by the retry and did not explain the failure: with 16% outlier negatives the head reads no better. What remains from the diagnosis: the behavioral groups are thin (1,669, co-outlier only, 34 channels), validation is too small to separate heads this close, and the head concentrates variance (PCA-32 explains 0.883 of v3b's).
+
+`NYSgpt/martian-video-encoder` (private) carries v3, the selected head, and v3b, the retry, each marked failed. The serving pointer did not move. Boxes: 9 c7i.xlarge launches, about $0.11 in total, all terminated.
