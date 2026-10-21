@@ -62,3 +62,41 @@ Both are new variants, not a retry of v1. They run on one box, are selected betw
 - **v3:** v2 stopped at 5 epochs. Hypothesis: the validation drop is drift on the 34 training channels. The behavioral loss had flattened by epoch 5 while the semantic loss kept falling, so the extra 15 epochs fit training-channel geometry, not co-outlier structure.
 
 Bar unchanged: Gate M3 at stock + 0.02 (0.5776) and above rung 0 (0.5119).
+
+## Run 2 — v2 and v3, full (vres-v23-20261021-043534, 04:35–04:38 UTC)
+
+Same inputs, groups and scorer as run 1. With λ = 1.0, the behavioral loss fell to about 1.8 (v2, 20 epochs) and 2.67 (v3, 5 epochs), against v1's flat 4.1.
+
+| Arm | M1 held-out (590) | 95% interval | 5× (379) | 10× (184) | Validation (226) | Gate B analog |
+|---|---|---|---|---|---|---|
+| Stock VideoPrism base | 0.5576 | 0.4948–0.6180 | 0.5778 | 0.6033 | 0.6327 | 0.5441 |
+| Rung 0 | 0.5119 | 0.4629–0.6240 | 0.5092 | 0.5543 | 0.5752 | 0.5109 |
+| v2 (λ 1.0, 20 epochs) | 0.5661 | 0.5196–0.6564 | 0.5726 | 0.5435 | 0.5796 | 0.5366 |
+| v3 (λ 1.0, 5 epochs) | 0.5695 | 0.5327–0.6408 | 0.5805 | 0.6087 | 0.6195 | 0.5470 |
+
+**Gate M3: FAIL for both.** v2 reads 0.5661 and v3 0.5695 against the bar of 0.5776. Both beat rung 0, and both sit above stock held-out, by +0.0085 and +0.0119, inside stock's own interval. Gate B analog against stock: v2 −0.0075 (−0.0627 to 0.0), v3 +0.0029 (−0.0105 to +0.0100).
+
+**Selection, on validation only:** v3 (0.6195) over v1 (0.6018) and v2 (0.5796). v3 is the selected head. It failed its gate and it is published as failed.
+
+Verification: gate_m1.py and the port agree on every arm. The Mac reproduces every accuracy, and every interval within tolerance, from both prediction files. The box terminated itself.
+
+## Halt (the models window's stopping rule, binding)
+
+Every head reads below stock on validation: v1 0.6018, v2 0.5796, v3 0.6195, against 0.6327. The rule set before run 2 was: if v2 and v3 both read below stock on validation, no further variants, and the diagnosis goes here. No more variants run tonight.
+
+## Diagnosis — candidates, each tied to something measured
+
+1. **The negatives carry the label they are meant to contrast against.** The media set was picked by the outcome label: 49.8% of training media shorts are outliers, and 48.5% of the behavioral groups' random negatives are outliers. A co-outlier group therefore pushes an outlier away from other outliers about half the time. On text, the random negatives came from the whole corpus, where outliers are a minority, so this did not arise there. This is the mechanism most directly named by the data. The fix would draw negatives from same-channel non-outliers, a new group definition that has to be declared before it runs.
+2. **Thin behavioral signal.** 1,669 groups, nearly all co-outlier (co-surge contributes 6 positives), on 34 channels. At λ = 1.0 the head fits them on training channels (behavioral loss 6.0 to 1.8) without transfer: validation falls as that loss falls (v3 to v2).
+3. **The validation read cannot separate variants of this size.** 226 pairs on 8 channels. Validation and held-out disagree in direction: every head is below stock on validation, while v2 and v3 are above stock held-out. Head-to-head differences of about 0.01 sit inside held-out intervals about 0.12 wide.
+4. **The head concentrates variance.** PCA-32 explains 0.885 to 0.911 of each head's variance against 0.543 of stock's. The M1 read sees 32 directions that the semantic term organized around channel and tier. Directions stock spreads its signal across may be compressed out.
+
+Not concluded: that video carries no outcome signal. Stock VideoPrism base itself reads 0.5576 here; MM-A's card holds the Gate M1 verdict on stock.
+
+## M2 re-read with the selected head (vres-m2-v3-20261021-043908, 04:39–04:43 UTC; reported, not gated)
+
+MM-A's staged train_v3.py, common.py and bench_m2.py (md5 40548025…, 4baa6392…, 656bdd15…) on MM-A's m2 inputs, with video.jsonl replaced by v3's head embedding, on one c7i.xlarge. On the 1,212 held-out rows with media: v3 alone 0.591, v3 plus head 0.590, delta −0.001 (interval −0.0291 to +0.0292). On all 3,870 held-out rows: 0.6477 against 0.6361. Secondary at 10×, media rows: 0.6024 against 0.5893. MM-A's Mac rescorer agrees on every number. The box terminated itself.
+
+## Close-out
+
+Selected head: v3, Gate M3 FAIL, published private to `NYSgpt/martian-video-encoder` with its card (`docs/cards/martian-video-encoder.md`), recipe, groups, benches and this ledger. The serving pointer did not move. Boxes: 8 c7i.xlarge launches (3 plumbing rehearsals, 1 real-vector rehearsal, run 1, run 2, the M2 re-read), each 2 to 6 minutes at $0.1785 an hour, about $0.10 in total, all terminated.

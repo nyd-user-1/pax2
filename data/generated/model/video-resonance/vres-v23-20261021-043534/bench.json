@@ -1,0 +1,395 @@
+{
+ "builtAt": "2026-10-21T04:36:46Z",
+ "slice": 0,
+ "standin": 0,
+ "stockDim": 768,
+ "m1PairVideosMissing": 0,
+ "groups": {
+  "semantic": {
+   "groups": 3374,
+   "anchors": 3385,
+   "skippedNoPositive": 11,
+   "fewerThan3Positives": 36
+  },
+  "behavioral": 1669,
+  "heldOutOrValIdsInGroups": 0
+ },
+ "protocol": "Scoring, every arm (stock, rung 0 when given, each trained head):   M1     MM-A's Gate M1 protocol: PCA-32 fit on the videos of the training pairs (every non-held pair),          components standardized by their mean and spread over those pairs' shorts, Bradley-Terry          logistic on winner-minus-loser differences, no intercept, L2 0.001, 600 steps of gradient          descent at 0.5 (scripts/pairwise/train.mjs, unchanged); accuracy on the 590 held-out pairs with a          channel-block bootstrap 95% interval (2,000 draws, seed 20261020); a tie counts half   5x/10x the same held-out read on the pairs whose winner reached 5x / 10x, subset sizes stated   val    the same protocol fit on train-split pairs only, read on the validation-channel pairs; the only          number variant selection may use   gateB  the Gate B analog on held-out media shorts (scripts/plum/gate_b.py's rule: outlier vs non-outlier          within 45 days, mean cosine to the 5 most similar prior outliers of the channel, at least 3)",
+ "arms": {
+  "stock": {
+   "m1": {
+    "heldOutPairs": 590,
+    "accuracy": 0.5576,
+    "ci95": [
+     0.4948,
+     0.618
+    ],
+    "fitPairs": 1891,
+    "trainAccuracy": 0.6615547329455315
+   },
+   "outperformed5x": {
+    "pairs": 379,
+    "accuracy": 0.5778,
+    "ci95": [
+     0.5164,
+     0.6579
+    ]
+   },
+   "outperformed10x": {
+    "pairs": 184,
+    "accuracy": 0.6033,
+    "ci95": [
+     0.5242,
+     0.6634
+    ]
+   },
+   "val": {
+    "pairs": 226,
+    "fitPairs": 1665,
+    "accuracy": 0.6327
+   },
+   "gateB": {
+    "pairs": 9039,
+    "channels": 7,
+    "pooled": 0.5441
+   }
+  },
+  "rung0": {
+   "m1": {
+    "heldOutPairs": 590,
+    "accuracy": 0.5119,
+    "ci95": [
+     0.4629,
+     0.624
+    ],
+    "fitPairs": 1891,
+    "trainAccuracy": 0.627181385510312
+   },
+   "outperformed5x": {
+    "pairs": 379,
+    "accuracy": 0.5092,
+    "ci95": [
+     0.4545,
+     0.605
+    ]
+   },
+   "outperformed10x": {
+    "pairs": 184,
+    "accuracy": 0.5543,
+    "ci95": [
+     0.4854,
+     0.6275
+    ]
+   },
+   "val": {
+    "pairs": 226,
+    "fitPairs": 1665,
+    "accuracy": 0.5752
+   },
+   "gateB": {
+    "pairs": 9039,
+    "channels": 7,
+    "pooled": 0.5109
+   }
+  },
+  "v2": {
+   "m1": {
+    "heldOutPairs": 590,
+    "accuracy": 0.5661,
+    "ci95": [
+     0.5196,
+     0.6564
+    ],
+    "fitPairs": 1891,
+    "trainAccuracy": 0.6705446853516658
+   },
+   "outperformed5x": {
+    "pairs": 379,
+    "accuracy": 0.5726,
+    "ci95": [
+     0.5391,
+     0.6723
+    ]
+   },
+   "outperformed10x": {
+    "pairs": 184,
+    "accuracy": 0.5435,
+    "ci95": [
+     0.4969,
+     0.6355
+    ]
+   },
+   "val": {
+    "pairs": 226,
+    "fitPairs": 1665,
+    "accuracy": 0.5796
+   },
+   "gateB": {
+    "pairs": 9039,
+    "channels": 7,
+    "pooled": 0.5366
+   },
+   "config": {
+    "hidden": "d",
+    "lambda": 1.0,
+    "epochs": 20,
+    "lr": 0.001,
+    "weightDecay": 0.01,
+    "batch": 64,
+    "seed": 20261020,
+    "name": "v2",
+    "hypothesis": "At 0.144 the semantic term dominates and the head relearns stock geometry with loss while the co-outlier term barely moves; equal weight lets co-outlier structure shape the space."
+   },
+   "training": {
+    "steps": 1040,
+    "stepsPerEpoch": 52,
+    "inputDim": 768,
+    "wallSec": 32.5,
+    "curve": [
+     {
+      "step": 0,
+      "epoch": 0,
+      "lsem": 5.7231,
+      "lcon": 5.9909
+     },
+     {
+      "step": 52,
+      "epoch": 1,
+      "lsem": 3.4825,
+      "lcon": 3.8007
+     },
+     {
+      "step": 104,
+      "epoch": 2,
+      "lsem": 3.2823,
+      "lcon": 3.545
+     },
+     {
+      "step": 156,
+      "epoch": 3,
+      "lsem": 3.1652,
+      "lcon": 3.403
+     },
+     {
+      "step": 208,
+      "epoch": 4,
+      "lsem": 2.6414,
+      "lcon": 2.7901
+     },
+     {
+      "step": 260,
+      "epoch": 5,
+      "lsem": 3.0178,
+      "lcon": 2.6723
+     },
+     {
+      "step": 312,
+      "epoch": 6,
+      "lsem": 2.7563,
+      "lcon": 2.5318
+     },
+     {
+      "step": 364,
+      "epoch": 7,
+      "lsem": 3.1727,
+      "lcon": 2.1295
+     },
+     {
+      "step": 416,
+      "epoch": 8,
+      "lsem": 2.6953,
+      "lcon": 2.5638
+     },
+     {
+      "step": 468,
+      "epoch": 9,
+      "lsem": 3.0383,
+      "lcon": 2.1901
+     },
+     {
+      "step": 520,
+      "epoch": 10,
+      "lsem": 2.745,
+      "lcon": 2.4299
+     },
+     {
+      "step": 572,
+      "epoch": 11,
+      "lsem": 2.8388,
+      "lcon": 1.8664
+     },
+     {
+      "step": 624,
+      "epoch": 12,
+      "lsem": 2.664,
+      "lcon": 2.2095
+     },
+     {
+      "step": 676,
+      "epoch": 13,
+      "lsem": 2.7355,
+      "lcon": 1.8424
+     },
+     {
+      "step": 728,
+      "epoch": 14,
+      "lsem": 2.6469,
+      "lcon": 2.132
+     },
+     {
+      "step": 780,
+      "epoch": 15,
+      "lsem": 3.001,
+      "lcon": 1.7911
+     },
+     {
+      "step": 832,
+      "epoch": 16,
+      "lsem": 2.3987,
+      "lcon": 1.7988
+     },
+     {
+      "step": 884,
+      "epoch": 17,
+      "lsem": 2.7774,
+      "lcon": 1.492
+     },
+     {
+      "step": 936,
+      "epoch": 18,
+      "lsem": 2.5103,
+      "lcon": 1.9364
+     },
+     {
+      "step": 988,
+      "epoch": 19,
+      "lsem": 2.5014,
+      "lcon": 1.964
+     },
+     {
+      "step": 1039,
+      "epoch": 19,
+      "lsem": 2.5055,
+      "lcon": 1.8358
+     }
+    ]
+   }
+  },
+  "v3": {
+   "m1": {
+    "heldOutPairs": 590,
+    "accuracy": 0.5695,
+    "ci95": [
+     0.5327,
+     0.6408
+    ],
+    "fitPairs": 1891,
+    "trainAccuracy": 0.6636700158646219
+   },
+   "outperformed5x": {
+    "pairs": 379,
+    "accuracy": 0.5805,
+    "ci95": [
+     0.5579,
+     0.6759
+    ]
+   },
+   "outperformed10x": {
+    "pairs": 184,
+    "accuracy": 0.6087,
+    "ci95": [
+     0.5288,
+     0.6743
+    ]
+   },
+   "val": {
+    "pairs": 226,
+    "fitPairs": 1665,
+    "accuracy": 0.6195
+   },
+   "gateB": {
+    "pairs": 9039,
+    "channels": 7,
+    "pooled": 0.547
+   },
+   "config": {
+    "hidden": "d",
+    "lambda": 1.0,
+    "epochs": 5,
+    "lr": 0.001,
+    "weightDecay": 0.01,
+    "batch": 64,
+    "seed": 20261020,
+    "name": "v3",
+    "hypothesis": "v2 stopped at 5 epochs: the validation drop is drift on the 34 training channels; the behavioral loss flattens by epoch 5 while the semantic loss keeps falling."
+   },
+   "training": {
+    "steps": 260,
+    "stepsPerEpoch": 52,
+    "inputDim": 768,
+    "wallSec": 8.9,
+    "curve": [
+     {
+      "step": 0,
+      "epoch": 0,
+      "lsem": 5.7231,
+      "lcon": 5.9909
+     },
+     {
+      "step": 52,
+      "epoch": 1,
+      "lsem": 3.4395,
+      "lcon": 3.4216
+     },
+     {
+      "step": 104,
+      "epoch": 2,
+      "lsem": 3.1872,
+      "lcon": 3.1939
+     },
+     {
+      "step": 156,
+      "epoch": 3,
+      "lsem": 3.0225,
+      "lcon": 3.1595
+     },
+     {
+      "step": 208,
+      "epoch": 4,
+      "lsem": 2.6596,
+      "lcon": 2.6738
+     },
+     {
+      "step": 259,
+      "epoch": 4,
+      "lsem": 3.0752,
+      "lcon": 3.0541
+     }
+    ]
+   }
+  }
+ },
+ "gateBDeltas": {
+  "rung0": {
+   "delta": -0.0332,
+   "ci95": [
+    -0.1274,
+    0.0776
+   ]
+  },
+  "v2": {
+   "delta": -0.0075,
+   "ci95": [
+    -0.0627,
+    0.0
+   ]
+  },
+  "v3": {
+   "delta": 0.0029,
+   "ci95": [
+    -0.0105,
+    0.01
+   ]
+  }
+ }
+}

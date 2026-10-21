@@ -1,0 +1,183 @@
+{
+ "rescoredAt": "2026-10-21T04:38:32.621Z",
+ "dir": "/private/tmp/claude-501/-Users-brendanstanton-Code-pax2/9053ede0-790b-41f7-950d-ec62caa88d9c/scratchpad/v23",
+ "allAgree": true,
+ "arms": {
+  "stock": {
+   "m1": {
+    "pairs": 590,
+    "accuracy": 0.5576,
+    "ci95": [
+     0.4981,
+     0.6255
+    ],
+    "pairSetIs590": true
+   },
+   "outperformed5x": {
+    "pairs": 379,
+    "accuracy": 0.5778,
+    "ci95": [
+     0.5232,
+     0.6628
+    ]
+   },
+   "outperformed10x": {
+    "pairs": 184,
+    "accuracy": 0.6033,
+    "ci95": [
+     0.5222,
+     0.6566
+    ]
+   },
+   "val": {
+    "pairs": 226,
+    "accuracy": 0.6327
+   },
+   "gateB": {
+    "pairs": 9039,
+    "pooled": 0.5441
+   },
+   "agrees": {
+    "m1": true,
+    "m1ci": true,
+    "x5": true,
+    "x10": true,
+    "val": true,
+    "gateB": true,
+    "pairSet": true
+   }
+  },
+  "rung0": {
+   "m1": {
+    "pairs": 590,
+    "accuracy": 0.5119,
+    "ci95": [
+     0.4618,
+     0.6183
+    ],
+    "pairSetIs590": true
+   },
+   "outperformed5x": {
+    "pairs": 379,
+    "accuracy": 0.5092,
+    "ci95": [
+     0.4559,
+     0.5989
+    ]
+   },
+   "outperformed10x": {
+    "pairs": 184,
+    "accuracy": 0.5543,
+    "ci95": [
+     0.4819,
+     0.6324
+    ]
+   },
+   "val": {
+    "pairs": 226,
+    "accuracy": 0.5752
+   },
+   "gateB": {
+    "pairs": 9039,
+    "pooled": 0.5109
+   },
+   "agrees": {
+    "m1": true,
+    "m1ci": true,
+    "x5": true,
+    "x10": true,
+    "val": true,
+    "gateB": true,
+    "pairSet": true
+   }
+  },
+  "v2": {
+   "m1": {
+    "pairs": 590,
+    "accuracy": 0.5661,
+    "ci95": [
+     0.5202,
+     0.6492
+    ],
+    "pairSetIs590": true
+   },
+   "outperformed5x": {
+    "pairs": 379,
+    "accuracy": 0.5726,
+    "ci95": [
+     0.539,
+     0.6615
+    ]
+   },
+   "outperformed10x": {
+    "pairs": 184,
+    "accuracy": 0.5435,
+    "ci95": [
+     0.5,
+     0.6179
+    ]
+   },
+   "val": {
+    "pairs": 226,
+    "accuracy": 0.5796
+   },
+   "gateB": {
+    "pairs": 9039,
+    "pooled": 0.5366
+   },
+   "agrees": {
+    "m1": true,
+    "m1ci": true,
+    "x5": true,
+    "x10": true,
+    "val": true,
+    "gateB": true,
+    "pairSet": true
+   }
+  },
+  "v3": {
+   "m1": {
+    "pairs": 590,
+    "accuracy": 0.5695,
+    "ci95": [
+     0.535,
+     0.6416
+    ],
+    "pairSetIs590": true
+   },
+   "outperformed5x": {
+    "pairs": 379,
+    "accuracy": 0.5805,
+    "ci95": [
+     0.5572,
+     0.7024
+    ]
+   },
+   "outperformed10x": {
+    "pairs": 184,
+    "accuracy": 0.6087,
+    "ci95": [
+     0.534,
+     0.6713
+    ]
+   },
+   "val": {
+    "pairs": 226,
+    "accuracy": 0.6195
+   },
+   "gateB": {
+    "pairs": 9039,
+    "pooled": 0.547
+   },
+   "agrees": {
+    "m1": true,
+    "m1ci": true,
+    "x5": true,
+    "x10": true,
+    "val": true,
+    "gateB": true,
+    "pairSet": true
+   }
+  }
+ }
+}
