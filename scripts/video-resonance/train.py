@@ -360,6 +360,9 @@ def main():
         ids = sorted(Y)
         np.save(f'{a.out}/embeddings-{n}.npy', np.stack([Y[i] for i in ids]).astype(np.float16))
         json.dump(ids, open(f'{a.out}/ids-{n}.json', 'w'))
+        with open(f'{a.out}/head-{n}.jsonl', 'w') as f:
+            for i in ids:
+                f.write(json.dumps({'id': i, 'vector': [round(float(v), 6) for v in Y[i]]}) + '\n')
     # Gate B analog deltas against stock, channel-block bootstrap
     chans = [g[0] for g in gpairs]
     bench['gateBDeltas'] = {k: {'delta': round(float((corr[k] - corr['stock']).mean()), 4), 'ci95': block_ci(corr[k] - corr['stock'], chans)}

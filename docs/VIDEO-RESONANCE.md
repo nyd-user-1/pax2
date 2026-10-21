@@ -31,3 +31,7 @@ Hypothesis: the text recipe's exact shape on video — a head that keeps stock's
 ### Run 0 result (03:41–03:43 UTC)
 
 Two launches failed and were fixed before the third: the M1 scorer's signature (03:37), and a slice that kept no held-out pairs (03:39; the slice now keeps both sides of every 20th pair). Run vres-rehearse-20261021-034125 ran clean end to end: install, groups, semantic mining (0 held-out or validation ids), 20 epochs, every read, uploads; the Mac rescorer agreed on every check; the box terminated itself. Three c7i.xlarge boxes, about 2 to 6 minutes each, under $0.05 together. Numbers not quoted.
+
+## Scorer (03:55 UTC, before any real run)
+
+Gate M3 is read by MM-A's own `scripts/video/gate_m1.py` and pair file `data/generated/model/video-pairs.json`, staged unchanged onto the box, with their md5 in the box log. Each head's embedding goes in as one more arm beside stock and rung 0. train.py's port of the same protocol supplies the validation read and the Gate B analog. Its held-out stock number must equal gate_m1.py's before any head is gated (the models window's condition). The Mac rescores both sets of predictions.

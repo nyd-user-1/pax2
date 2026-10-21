@@ -26,6 +26,9 @@ CODE=s3://$BUCKET/code/video-resonance/$RUN
 aws s3 cp --only-show-errors --region $REGION "$HERE/train.py" "$CODE/train.py"
 aws s3 cp --only-show-errors --region $REGION "$HERE/variants.json" "$CODE/variants.json"
 aws s3 cp --only-show-errors --region $REGION "$ROOTDIR/data/generated/model/video-resonance/groups.json" "$CODE/groups.json"
+# Gate M3 is read by MM-A's own Gate M1 scorer and pair file, staged unchanged (md5 in the box log)
+aws s3 cp --only-show-errors --region $REGION "$ROOTDIR/scripts/video/gate_m1.py" "$CODE/gate_m1.py"
+aws s3 cp --only-show-errors --region $REGION "$ROOTDIR/data/generated/model/video-pairs.json" "$CODE/video-pairs.json"
 OUT=s3://$BUCKET/model/video-resonance/$RUN
 LOG=$OUT/box.log
 
@@ -57,6 +60,12 @@ $FETCH
 up
 /opt/venv/bin/python train.py $ARGS
 echo "EXIT=\$?"
+md5sum gate_m1.py video-pairs.json
+M3ARMS="stock=stock.jsonl"
+[ -f rung0.jsonl ] && M3ARMS="\$M3ARMS,rung0=rung0.jsonl"
+for h in out/head-*.jsonl; do n=\$(basename \$h .jsonl); M3ARMS="\$M3ARMS,\${n#head-}=\$h"; done
+[ -f stock.jsonl ] && mkdir -p out/m3 && PAIRS=video-pairs.json ARMS="\$M3ARMS" OUT=out/m3 /opt/venv/bin/python gate_m1.py
+echo "M3 EXIT=\$?"
 aws s3 cp --only-show-errors --recursive out/ $OUT/
 up
 shutdown -h now
