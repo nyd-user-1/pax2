@@ -1,0 +1,69 @@
+{
+ "loop": "for-you-feed",
+ "status": "cold-start",
+ "builtAt": "2026-10-22T19:33:39Z",
+ "learner": "Bayesian logistic regression, diagonal Laplace posterior, prior N(0,1), per-row updates; act by Thompson sampling (scripts/policy/learn.py)",
+ "arms": {
+  "what": "the candidate videos for each feed slot",
+  "source": "the For you ranking's candidate set at render time"
+ },
+ "context": [
+  "reader's watched75 share so far",
+  "log reader impressions so far",
+  "reader's prior share on the video's tags",
+  "video duration decile",
+  "video upload type",
+  "video top-100 tags"
+ ],
+ "reward": {
+  "primary": "watched75 within the session the card was shown (a watch-through)",
+  "secondary": [
+   "boost",
+   "open"
+  ],
+  "kinds": [
+   "watched75",
+   "boost",
+   "open"
+  ]
+ },
+ "logging": {
+  "store": "pax2-ledger usage log (src/lib/usage.ts writeUsage, pk USAGE#<yyyy-mm-dd>)",
+  "existingKinds": [
+   "open",
+   "play",
+   "watched75",
+   "boost"
+  ],
+  "kindToAdd": {
+   "impression": "one per card rendered in For you: subject = video id, meta = {slot, propensity, rankerVersion, sessionId}"
+  },
+  "propensity": "the Thompson-sampled order's probability of placing the video in that slot, estimated from 50 posterior draws at render"
+ },
+ "warmStart": {
+  "model": "PAX2 Feed Ranker (feed-0)",
+  "file": "data/generated/model/feed-v0.json",
+  "how": "its weights become the prior means over the same 72 features; prior precision 1",
+  "readIt": {
+   "dataset": "KuaiRand-1K",
+   "label": "long_view",
+   "results": {
+    "video": {
+     "pooledAuc": 0.578,
+     "withinReaderAuc": 0.595,
+     "readersScored": 141
+    },
+    "video+reader": {
+     "pooledAuc": 0.697,
+     "withinReaderAuc": 0.553,
+     "readersScored": 141
+    }
+   }
+  }
+ },
+ "epochMarker": {
+  "replayRows": 0,
+  "rule": "No replay; every update is a live decision logged as above."
+ },
+ "evaluation": "Once 1,000 logged decisions exist: the standard protocol of docs/briefs/WINDOW-P2.md with the logged propensities in place of estimated ones (IPS is then unbiased), registered in the brief before the first fit."
+}

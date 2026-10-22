@@ -1,0 +1,75 @@
+{
+ "loop": "studio-style",
+ "status": "cold-start",
+ "builtAt": "2026-10-22T19:33:39Z",
+ "learner": "Bayesian logistic regression, diagonal Laplace posterior, prior N(0,1), per-row updates; act by Thompson sampling (scripts/policy/learn.py)",
+ "arms": {
+  "voice": [
+   "none",
+   "el:EXAVITQu4vr4xnSDxMaL",
+   "el:XrExE9yKIg1WjnnlVkGX",
+   "el:cjVigY5qzO86Huf0OWal",
+   "el:nPczCjzI2devNBz1zQrb",
+   "el:TX3LPaxmHKxFdv7VOQHJ",
+   "el:FGY2WhTYpPnrIDTdsKH5",
+   "el:cgSgspJ2msm6clMCkdW9",
+   "el:pqHfZKP75CvOlQylNhV4",
+   "el:onwK4e9ZLuTAKqWW03F9",
+   "el:Xb7hH8MSUJpSbSDYk0k2",
+   "el:JBFqnCBsd6RMkjVDRZzb",
+   "el:pNInz6obpgDQGcFmaJgB",
+   "Ruth",
+   "Danielle",
+   "Stephen",
+   "Matthew"
+  ],
+  "pace": [
+   "110-129 wpm",
+   "130-149 wpm",
+   "150-169 wpm",
+   "170-190 wpm",
+   "voice-led (narrated)"
+  ],
+  "typeface": [
+   "display",
+   "serif",
+   "mono"
+  ],
+  "hookCard": [
+   false,
+   true
+  ],
+  "soundBed": [
+   "none",
+   "calm",
+   "pulse",
+   "bright"
+  ]
+ },
+ "source": "src/lib/studio-style.ts StyleRecord (version 2), written onto every Studio take as its style",
+ "context": [
+  "channel family of the owner",
+  "log10 owner channel median",
+  "script length in lines",
+  "look (color) and motion, logged as context"
+ ],
+ "reward": {
+  "primary": "the published take outperformed 3x within 72 hours (the velocity poller's read)",
+  "kinds": [
+   "published",
+   "watching"
+  ],
+  "outcome": "views at 72 hours over the owner's channel median"
+ },
+ "logging": {
+  "store": "pax2-ledger originals (src/lib/originals.ts): ORIG#<id> META carries style and styleLabel; EVENT# published carries youtubeId",
+  "propensity": "the Studio's suggested style is sampled from the posterior; the sampled style and its probability are written onto META as styleSuggested and styleSuggestedP, beside the style the owner kept"
+ },
+ "replay": "none: a read-only scan of pax2-ledger on 2026-10-22 found 0 originals carrying a style record (102 originals indexed)",
+ "warmStart": null,
+ "epochMarker": {
+  "replayRows": 0,
+  "rule": "No replay; every update is a live decision logged as above."
+ },
+ "evaluation": "Once 1,000 logged decisions exist: the standard protocol of docs/briefs/WINDOW-P2.md with the logged propensities in place of estimated ones (IPS is then unbiased), registered in the brief before the first fit."
+}

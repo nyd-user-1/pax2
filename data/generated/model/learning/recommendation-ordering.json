@@ -1,0 +1,135 @@
+{
+ "loop": "recommendation-ordering",
+ "status": "cold-start",
+ "builtAt": "2026-10-22T19:33:39Z",
+ "learner": "Bayesian logistic regression, diagonal Laplace posterior, prior N(0,1), per-row updates; act by Thompson sampling (scripts/policy/learn.py)",
+ "arms": {
+  "what": "the recommendation registry's dimensions: which off-mode craft axis is listed first",
+  "values": [
+   {
+    "axis": "cutsPerSec",
+    "label": "cuts per second"
+   },
+   {
+    "axis": "firstCutSec",
+    "label": "seconds to first cut"
+   },
+   {
+    "axis": "cutsHook",
+    "label": "cuts in the first 2 s"
+   },
+   {
+    "axis": "visualActivity",
+    "label": "visual activity"
+   },
+   {
+    "axis": "loudnessLufs",
+    "label": "loudness"
+   },
+   {
+    "axis": "loudnessRange",
+    "label": "loudness range"
+   },
+   {
+    "axis": "hookLoudnessDelta",
+    "label": "hook loudness over the whole"
+   },
+   {
+    "axis": "textWordsPerFrame",
+    "label": "on-screen words per frame"
+   },
+   {
+    "axis": "textFrameShare",
+    "label": "share of frames with text"
+   },
+   {
+    "axis": "textHook",
+    "label": "on-screen words in the first 2 s"
+   },
+   {
+    "axis": "brightness",
+    "label": "brightness"
+   },
+   {
+    "axis": "saturation",
+    "label": "saturation"
+   },
+   {
+    "axis": "speechWps",
+    "label": "spoken words per second"
+   },
+   {
+    "axis": "firstWordSec",
+    "label": "seconds to first spoken word"
+   },
+   {
+    "axis": "wordsHook",
+    "label": "spoken words in the first 2 s"
+   },
+   {
+    "axis": "speechShare",
+    "label": "share of seconds with speech"
+   },
+   {
+    "axis": "durationSec",
+    "label": "length against the channel"
+   },
+   {
+    "axis": "titleWords",
+    "label": "title words"
+   },
+   {
+    "axis": "titleQuestion",
+    "label": "title asks a question"
+   },
+   {
+    "axis": "titleNumber",
+    "label": "title carries a number"
+   },
+   {
+    "axis": "titleCapsRun",
+    "label": "all-caps run in the title"
+   },
+   {
+    "axis": "titleEmoji",
+    "label": "title carries an emoji"
+   },
+   {
+    "axis": "likeRate",
+    "label": "likes per view"
+   },
+   {
+    "axis": "commentRate",
+    "label": "comments per view"
+   }
+  ],
+  "source": "data/generated/model/winning-modes.json axes; rendered by src/components/video-reads.tsx Recommendations"
+ },
+ "context": [
+  "the video's percentile on each off-mode axis",
+  "distance to the mode center",
+  "channel family",
+  "the creator's earlier acted-on axes"
+ ],
+ "reward": {
+  "primary": "the creator acts on the advice: their next original within 30 days moves that axis at least 10 percentile points toward the winning mode's center on its craft read",
+  "kinds": [
+   "rec-shown",
+   "rec-acted"
+  ]
+ },
+ "logging": {
+  "store": "pax2-ledger usage log (src/lib/usage.ts); the next original's craft read joins by owner",
+  "kindToAdd": {
+   "rec-shown": "subject = video id, meta = {order: [axis...], propensities, registryVersion}",
+   "rec-acted": "written by the scorer when a later original by the same owner moves a shown axis: subject = new video id, meta = {axis, from, to, shownOn}"
+  },
+  "propensity": "probability of each axis's position under the sampled ordering"
+ },
+ "warmStart": null,
+ "epochMarker": {
+  "replayRows": 0,
+  "rule": "No replay; every update is a live decision logged as above."
+ },
+ "evaluation": "Once 1,000 logged decisions exist: the standard protocol of docs/briefs/WINDOW-P2.md with the logged propensities in place of estimated ones (IPS is then unbiased), registered in the brief before the first fit."
+}

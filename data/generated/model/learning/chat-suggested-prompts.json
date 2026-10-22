@@ -1,0 +1,37 @@
+{
+ "loop": "chat-suggested-prompts",
+ "status": "cold-start",
+ "builtAt": "2026-10-22T19:33:39Z",
+ "learner": "Bayesian logistic regression, diagonal Laplace posterior, prior N(0,1), per-row updates; act by Thompson sampling (scripts/policy/learn.py)",
+ "arms": {
+  "what": "the suggested-prompt chips",
+  "source": "the chip list Window U ships with the per-video question button; arm id = chip id",
+  "now": "no chips exist in src yet; the arms list fills when they do"
+ },
+ "context": [
+  "where the chat opened (video page, home, metrics)",
+  "a video in view or not",
+  "reader tier",
+  "chips already tapped this session"
+ ],
+ "reward": {
+  "primary": "chip tapped while shown",
+  "kinds": [
+   "chip-tap"
+  ]
+ },
+ "logging": {
+  "store": "pax2-ledger usage log (src/lib/usage.ts)",
+  "kindToAdd": {
+   "chip-shown": "subject = chip id, meta = {position, propensity, surface, videoId?}",
+   "chip-tap": "subject = chip id, meta = {position, surface, videoId?}"
+  },
+  "propensity": "probability the sampled ordering showed that chip in that position"
+ },
+ "warmStart": null,
+ "epochMarker": {
+  "replayRows": 0,
+  "rule": "No replay; every update is a live decision logged as above."
+ },
+ "evaluation": "Once 1,000 logged decisions exist: the standard protocol of docs/briefs/WINDOW-P2.md with the logged propensities in place of estimated ones (IPS is then unbiased), registered in the brief before the first fit."
+}
