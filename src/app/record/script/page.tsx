@@ -1,9 +1,11 @@
 import { Suspense } from "react"
 
-import model from "../../../../data/generated/model/reference-model.json"
 import { FlowPage } from "@/components/record/chrome"
 import { Editor, type Research } from "@/components/record/editor"
 import { ScriptBack } from "@/components/record/script-back"
+import { referenceModelFile } from "@/lib/data-files"
+
+const model = referenceModelFile()
 
 export const metadata = { title: "Make it yours" }
 

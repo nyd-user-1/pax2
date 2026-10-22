@@ -1,4 +1,3 @@
-import model from "../../data/generated/model/reference-model.json"
 import upworthy from "../../data/generated/upworthy-top.json"
 import wesleyan from "../../data/generated/wesleyan-meta-2022.json"
 import { RangeBar } from "@/components/bits"
@@ -6,6 +5,9 @@ import { CardBlock, ListBlock, TableBlock } from "@/components/blocks"
 import { Term } from "@/components/term"
 import { titlePatterns } from "@/lib/headline-patterns"
 import { cn } from "@/ui/lib/utils"
+import { referenceModelFile } from "@/lib/data-files"
+
+const model = referenceModelFile()
 
 /** A video's coding on the two ad codebooks: Swayable's feature keys and Wesleyan's goal. */
 export type Codes = { swayable?: string[]; wesleyan?: "persuade" | "money" | "both" | "neither" }

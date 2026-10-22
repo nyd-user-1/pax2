@@ -8,8 +8,6 @@ import subscribers from "../../data/generated/channel-subscribers.json"
 import warBaseline from "../../data/generated/war-baseline.json"
 import sampleVideos from "../../data/sample/videos.json"
 import paidBatch from "../../data/generated/voter-freedom-paid.json"
-import homeFeed from "../../data/generated/home-feed.json"
-import shorts from "../../data/raw/yt-shorts.json"
 import { RangeBar } from "@/components/bits"
 import { boostCounts } from "@/lib/boost"
 import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, TableBlock } from "@/components/blocks"
@@ -35,6 +33,10 @@ import { paidResonance } from "@/lib/paid-resonance"
 import { tagsFor } from "@/lib/tags"
 import { cn } from "@/ui/lib/utils"
 import { UsageOpen } from "@/components/usage-beacon"
+import { homeFeedFile, ytShortsFile } from "@/lib/data-files"
+
+const homeFeed = homeFeedFile()
+const shorts = ytShortsFile()
 
 type Yt = { fetchedAt: string; videos: { id: string; channelId: string; channel: string; title: string; published: string; duration: string; views: number | null; likes: number | null; comments: number | null }[] }
 

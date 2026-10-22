@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { Video } from "lucide-react"
 
-import shorts from "../../../data/raw/yt-shorts.json"
 import { FlapHero } from "@/components/flap-hero"
 import GradualBlur from "@/components/gradual-blur"
 import { LandingGrid } from "@/components/landing-grid"
@@ -16,6 +15,9 @@ import { ScrollCue, ScrollTop } from "@/components/record/scroll-cue"
 import { currentUser } from "@/lib/auth"
 import { feedFacets, firstPage } from "@/lib/feed-data"
 import { whiteButton } from "@/components/white-button"
+import { ytShortsFile } from "@/lib/data-files"
+
+const shorts = ytShortsFile()
 
 export const metadata = { title: "Record a video" }
 

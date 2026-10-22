@@ -1,9 +1,11 @@
 import Link from "next/link"
 
-import model from "../../../data/generated/model/reference-model.json"
 import { ChartBlock, MainBlock, TwoHalfBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { cn } from "@/ui/lib/utils"
+import { referenceModelFile } from "@/lib/data-files"
+
+const model = referenceModelFile()
 
 export const metadata = { title: "Reference model" }
 

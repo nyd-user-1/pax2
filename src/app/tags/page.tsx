@@ -1,9 +1,11 @@
-import homeFeed from "../../../data/generated/home-feed.json"
-import shorts from "../../../data/raw/yt-shorts.json"
 import type { FeedVideo } from "@/components/record/feed"
 import { TagsExplorer } from "@/components/tags-explorer"
 import { labVideos } from "@/lib/lab"
 import { taggedVideos } from "@/lib/tags"
+import { homeFeedFile, ytShortsFile } from "@/lib/data-files"
+
+const homeFeed = homeFeedFile()
+const shorts = ytShortsFile()
 
 export const metadata = { title: "Tags" }
 

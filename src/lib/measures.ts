@@ -1,8 +1,10 @@
 import delivery from "../../data/generated/delivery.json"
-import features from "../../data/generated/features.json"
-import referenceModel from "../../data/generated/model/reference-model.json"
 import { COMPONENTS } from "@/lib/resonance"
 import { METRICS } from "@/lib/types"
+import { featuresFile, referenceModelFile } from "@/lib/data-files"
+
+const features = featuresFile()
+const referenceModel = referenceModelFile()
 
 // Forecast Metrics on /dashboard: every distinct variable measured, across the paid results (the
 // export's metrics), the pipeline's per-video features, the delivery and semantic coding, the

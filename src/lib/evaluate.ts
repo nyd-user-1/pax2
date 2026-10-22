@@ -1,6 +1,5 @@
 import "server-only"
 
-import feed from "../../data/generated/home-feed.json"
 import model from "../../data/generated/model/var-model.json"
 import patterns from "../../data/generated/swayable-patterns.json"
 import { forecast, recommendations, type VideoInput } from "@/lib/forecast"
@@ -8,6 +7,9 @@ import { titlePatterns } from "@/lib/headline-patterns"
 import { scoreHeadlinesV1 } from "@/lib/headline-v1"
 import type { Embedding, Evaluation, Original, Recommendation, Trait } from "@/lib/originals"
 import { pairwiseVersus } from "@/lib/pairwise"
+import { homeFeedFile } from "@/lib/data-files"
+
+const feed = homeFeedFile()
 
 // The PAX2 evaluation of an original video. One model pass reads the script the messenger recorded
 // and codes it on Swayable's traits, quoting the line that shows each one, and writes a concrete

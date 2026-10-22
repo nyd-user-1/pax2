@@ -1,9 +1,11 @@
 import library from "../../data/library.json"
 import takesJson from "../../data/generated/takes.json"
-import featuresJson from "../../data/generated/features.json"
 
 import type { Measure, MetricKey, Provenance, Script, ScriptWhy, Snapshot, Take } from "@/lib/types"
 import { METRICS } from "@/lib/types"
+import { featuresFile } from "@/lib/data-files"
+
+const featuresJson = featuresFile()
 
 // The catalog: what was recorded (scripts, takes) and what the box found in each take.
 // Until the partner's own videos arrive, every take is a synthetic reading of a library

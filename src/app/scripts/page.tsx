@@ -1,9 +1,11 @@
 import codes from "../../../data/generated/model/script-codes.json"
-import model from "../../../data/generated/model/reference-model.json"
 import vf from "../../../data/generated/vf-scripts.json"
 import { ScriptCatalog, type CatalogScript } from "@/components/scripts/script-catalog"
 import { SCRIPTS } from "@/lib/catalog"
 import { board, workspace } from "@/lib/review"
+import { referenceModelFile } from "@/lib/data-files"
+
+const model = referenceModelFile()
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Scripts" }

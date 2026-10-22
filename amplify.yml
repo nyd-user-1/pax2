@@ -14,6 +14,9 @@ frontend:
         - npx next build
         # Amplify caps the server bundle at 220 MB; the build log reports the sizes on every build.
         - 'echo "BUNDLE server=$(du -sh .next/server | cut -f1) standalone=$(du -sh .next/standalone 2>/dev/null | cut -f1) next=$(du -sh .next | cut -f1)"'
+        # The compiler cache stays out of the deploy artifact (Brendan, 2026-10-22): the artifact
+        # rides against a 220 MB cap, and the cost is a few minutes of recompile per build.
+        - rm -rf .next/cache
   artifacts:
     baseDirectory: .next
     files:
@@ -21,4 +24,3 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-      - .next/cache/**/*

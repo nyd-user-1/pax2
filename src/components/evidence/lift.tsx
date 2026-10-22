@@ -1,10 +1,12 @@
-import shorts from "../../../data/raw/yt-shorts.json"
 import upworthyTop from "../../../data/generated/upworthy-top.json"
 import { ListBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { Stat2 } from "@/components/dash/stats"
 import { featureLift } from "@/lib/lab"
 import { cn } from "@/ui/lib/utils"
+import { ytShortsFile } from "@/lib/data-files"
+
+const shorts = ytShortsFile()
 
 // The Feature lift tab of /evidence: what the pushed videos carry that the rest don't.
 

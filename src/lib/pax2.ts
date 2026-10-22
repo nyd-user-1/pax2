@@ -2,11 +2,13 @@ import "server-only"
 
 import { BedrockRuntimeClient, ConverseCommand } from "@aws-sdk/client-bedrock-runtime"
 
-import referenceModel from "../../data/generated/model/reference-model.json"
 import { featuresFor, METRIC_LABEL, scriptById, takeLabel, type TakeInfo } from "@/lib/catalog"
 import { COMPONENTS, type Reference, type Score } from "@/lib/resonance"
 import type { TakeState } from "@/lib/review"
 import type { Snapshot } from "@/lib/types"
+import { referenceModelFile } from "@/lib/data-files"
+
+const referenceModel = referenceModelFile()
 
 // PAX2: turns a score into a reading a partner can act on. The model sees only the records
 // below, must cite one for every claim, and anything it cites that does not exist is removed.

@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation"
 
-import homeFeed from "../../../../../data/generated/home-feed.json"
-import shorts from "../../../../../data/raw/yt-shorts.json"
 import { OriginalView } from "@/components/original-view"
 import { ShortView } from "@/components/short-view"
 import { TakePanel } from "@/components/take-panel"
@@ -10,6 +8,10 @@ import { scriptById, takeById } from "@/lib/catalog"
 import { channelById } from "@/lib/channels"
 import { currentUser } from "@/lib/auth"
 import { canSee, isOriginalId, originalRow } from "@/lib/originals"
+import { homeFeedFile, ytShortsFile } from "@/lib/data-files"
+
+const homeFeed = homeFeedFile()
+const shorts = ytShortsFile()
 
 export const dynamic = "force-dynamic"
 

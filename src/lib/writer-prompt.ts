@@ -2,10 +2,12 @@
 // build on, what Swayable's tested campaign ads found, what travels on the campaign's own channels
 // (organic-evidence.ts), and the volunteer's three answers. A plain function so the prompt can be
 // read and tested without the server action around it (src/app/actions.ts writeScript).
-import feed from "../../data/generated/home-feed.json"
-import model from "../../data/generated/model/reference-model.json"
 import channels from "../../data/velocity/channels.json"
 import { CAMPAIGN_FAMILY, organicEvidence, type OrganicFamily } from "./organic-evidence"
+import { homeFeedFile, referenceModelFile } from "@/lib/data-files"
+
+const feed = homeFeedFile()
+const model = referenceModelFile()
 
 export type WriterAnswers = { name: string; role: string; town: string; why: string; moment: string }
 export type WriterBase = { title: string; framing: string; text: string }

@@ -1,7 +1,9 @@
 import codes from "../../data/generated/model/organic-codes.json"
-import features from "../../data/generated/features.json"
-import feed from "../../data/generated/home-feed.json"
-import model from "../../data/generated/model/reference-model.json"
+import { featuresFile, homeFeedFile, referenceModelFile } from "@/lib/data-files"
+
+const features = featuresFile()
+const feed = homeFeedFile()
+const model = referenceModelFile()
 
 // The forty campaign shorts PAX2 Trait Labeler has coded on Swayable's traits from their
 // transcripts (data/generated/model/organic-codes.json), and the traits as /labeling puts them to

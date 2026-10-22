@@ -14,8 +14,10 @@ import { forecastMetrics } from "@/lib/measures"
 import { board, findings, forecasts, loads, picks, steps, submissions, votes, workspace } from "@/lib/review"
 import { toneOf } from "@/lib/tone"
 import { READER_KINDS, usageSince } from "@/lib/usage"
-import homeFeed from "../../../data/generated/home-feed.json"
 import { notFound, redirect } from "next/navigation"
+import { homeFeedFile } from "@/lib/data-files"
+
+const homeFeed = homeFeedFile()
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Dashboard" }

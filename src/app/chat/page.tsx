@@ -1,7 +1,9 @@
-import homeFeed from "../../../data/generated/home-feed.json"
 import { Chat } from "@/components/chat/chat"
 import { SCRIPTS, scriptById, takeLabel } from "@/lib/catalog"
 import { board, workspace } from "@/lib/review"
+import { homeFeedFile } from "@/lib/data-files"
+
+const homeFeed = homeFeedFile()
 
 export const dynamic = "force-dynamic"
 export const metadata = { title: "Chat" }

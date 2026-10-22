@@ -1,12 +1,14 @@
 import Link from "next/link"
 
-import shorts from "../../../data/raw/yt-shorts.json"
 import { CampaignMap } from "@/components/map/campaign-map"
 import { ShortsSort } from "@/components/shorts-sort"
 import { TabRail } from "@/components/tab-rail"
 import { CHANNELS, secs } from "@/lib/channels"
 import { currentUser } from "@/lib/auth"
 import { redirect } from "next/navigation"
+import { ytShortsFile } from "@/lib/data-files"
+
+const shorts = ytShortsFile()
 
 export const metadata = { title: "Campaign videos" }
 
