@@ -10,6 +10,12 @@ Per page:
 - **/evals** — the model ledger as the page: the 15 rows with their measured scores, Live/Staged, and each failed attempt with why — the accounting Models tab, promoted into the app with the house table primitives.
 - **/project-management** — the standing programs as they are: Q and P (in build, briefs linked), the fleet runs ledger, the uniform baseline count and what falls outside it.
 
+## Sixth job, after the five pages: the flask, the scan screen, and Boost settled
+
+- **The flask button** joins every video card beside the boost rocket: it is the Button door — it sends that video through the Lab. For a video already fully measured the run is instant.
+- **The scan screen** it opens, in the record flow's dress: left column, the video in the video page's portrait player with a shimmer sweeping over it while the run is live; right column, a vertical timeline — one line, a node per step, text beside each, the node becoming a checkmark only when that stage truly completes (media in hand, cuts and pacing, loudness, on-screen text, transcript, embedding, headline read, neighbors, the read). No fake timers: an already-measured video sweeps through in seconds; a fresh one takes what the boxes take. It ends on the video's measured record.
+- **Boost, settled:** the reader's public push — it counts, it moves the video up the For-You ranking for everyone, and every press is a logged reader action (the reader rows the feed ranker needs). Add the glossary definition, the visible count on the button, and a per-reader cap.
+
 ## Rules
 
 - Third person; approved vocabulary (`src/lib/glossary.ts`); real service names; no "→" character in UI; no explainer paragraph under any heading.
