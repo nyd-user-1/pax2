@@ -7,7 +7,7 @@ Extend the installed learning machinery (scripts/policy/fit.py, the Chapelle & L
 1. **Title style** — arms: the headline traits already measured (question mark, digit, caps run, emoji, length buckets). Reward: settled outperformed 3×. Diary: every catalog title and outcome.
 2. **Thumbnail traits** — arms: bucketed v1 thumbnail features (memorability, brightness, contrast, colorfulness). Same reward. Rows limited to shorts with a thumbnail read.
 3. **Posting cadence** — arms: days-since-the-channel's-last-publish, bucketed. Derive the gaps from the catalog's publish times.
-4. **Channel-family investment** — arms: the six families; context: the partner's own history. Counsel per partner, not per video.
+4. **Next video's channel category** — whether channel category predicts outperformance for a given partner, conditioned on the partner's history. Counsel per partner, not per video.
 5. **Remake candidates** — not a bandit: rank catalog videos by high topic lift crossed with weak craft (the winning-modes distance), write the ranked list with each row's grounds.
 6. **Paid-flight allocation** — arms: the paid videos; reward from the early-hours curves. The diary is ~341 polled curves — register it, run it, and let the intervals say how thin it is.
 7. **Active learning** — no outcomes needed: from the fitted models' uncertainty, write two ranked lists — which unmeasured videos to measure next, and which measured videos to hand-audit next (Window Q's audit should draw from this list).
