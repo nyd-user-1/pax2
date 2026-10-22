@@ -35,3 +35,37 @@ Every number on a slide is a fact from this repository and carries no more preci
 ## Report
 
 Append `## Report`: the slide list as built, each number's source, and anything deferred with why.
+
+## Report
+
+Built `docs/sketches/vc-deck.html`: ten slides, one per viewport, big type, the app's palette (`src/app/pax2.css`) and type stack (Plus Jakarta Sans, Geist Mono, system fallbacks, nothing fetched). Arrow / Page / Space / Home / End and scroll navigation, a dot rail, landscape print one slide per page. Two inline SVGs: the loop circle and the nine-check timeline. `docs/sketches/platform-deck.html` untouched.
+
+Revised on review (Brendan, 2026-10-22): the deck is narrative only, feature stories and value. No money figures and no spend anywhere; the only numbers kept are ones that show the product's reach and sophistication.
+
+### Slides as built
+
+1. What it is: a platform that learns what makes short political video work, and feeds every lesson into the next video.
+2. The problem: campaigns make vertical video blind; creative guessed, results late or never, lessons die with the campaign.
+3. Why now: voters are on Shorts, Reels and TikTok; 5,379 videos read in a single evening for format, setting, captions and calls to action; that work used to take a research department.
+4. The loop: Publish, Measure, Learn, Advise, drawn as a circle; every video makes the next one smarter.
+5. A creator records a take: scored before it publishes, the changes most likely to move viewers named, grounded in 617 political ads tested against control groups.
+6. Any video, one button: nine checks, then what the video has, what it is missing, and what unlocks it.
+7. The model shows its work: a ledger of every belief it updates, before and after, and which advice changed.
+8. What compounds: 19,057 measured political shorts with a poller reading new ones every 15 minutes; learning rules written before any fit; 617 ads of randomized persuasion evidence wired into the creative tools.
+9. For a campaign: supporters become creators with grounded guidance; the videos taking off are spotted within hours; lessons compound across campaigns.
+10. Close: every political video teaches the next one.
+
+### Each number's source
+
+- 5,379: the uniform baseline in `data/generated/accounting.json`, all answered by the visual census (`data/raw/vqa/raw/qwen3-vl-4b-p3/`, `data/generated/model/vqa-census.json`, one batch box 20:58 to 22:13 UTC in `data/raw/vqa/boxes.jsonl`).
+- 617: `data/library-meta.json` (swayable-archive: 617 real campaign ads, each tested against a control group).
+- 19,057: `data/generated/accounting.json`.
+- Nine checks: the flask's scan screen (`src/components/lab/scan-screen.tsx`, commit 96bbded).
+- Every 15 minutes: the velocity poller (`src/app/velocity-actions.ts`).
+
+### Deferred, with why
+
+- The record story says "the changes" rather than "the two changes": the evaluation writes a change for every trait worth adding or dropping, with no fixed count of two.
+- The ledger is not called public: /reinforcement-learning sits in the admin group.
+- No census Report exists yet in `docs/briefs/WINDOW-Q.md`; the 5,379 rests on the answered files themselves.
+- Not pushed.
