@@ -39,9 +39,8 @@ export function DemoAccess() {
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-slate-900">{a.role}</p>
                   <p className="truncate text-xs text-slate-500">{a.line}</p>
-                  <p className="tabular mt-1 truncate font-mono text-[11px] text-slate-600">
-                    {a.email} · {a.password}
-                  </p>
+                  <p className="tabular mt-1 font-mono text-[11px] text-slate-600">{a.email}</p>
+                  <p className="tabular font-mono text-[11px] text-slate-600">{a.password}</p>
                 </div>
                 <button
                   type="button"
