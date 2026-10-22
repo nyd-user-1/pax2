@@ -111,11 +111,11 @@ type Curve = "xc" | "xl"
 
 // The tour, a stage at a time: each stage sets the cursor's length and the curve it's about.
 const TOUR: TourStep<Curve>[] = [
-  { text: `The shorter the short, the likelier it outperforms. The blue curve falls off as one over length: about ${Math.round(xc(10))}% of 10-second shorts reach 3× their channel's median, ${Math.round(xc(60))}% at a minute.`, at: 10, focus: "xc" },
-  { text: `The longer it runs, the likelier it underperforms. The red line climbs about ${(XL.k * 10).toFixed(1)} points every 10 seconds, from ${Math.round(xl(10))}% at 10 seconds to ${Math.round(xl(60))}% at a minute.`, at: 60, focus: "xl" },
-  { text: `They meet at ${Math.round(FR)} seconds, the resonant length. Under it a short is likelier to outperform than to underperform; past it, the reverse.`, at: FR },
-  { text: `The small dots are what was measured; the curves are fitted through them, keeping the circuit's own shapes. The red fits with R² ${XL.r2.toFixed(2)}, the blue with ${XC.r2.toFixed(2)}.`, at: 45 },
-  { text: "The black bar is the gap between the curves at the cursor, in points. Move across the chart to read any length; the card shows a real short from there.", at: 40 },
+  { text: `How to read it: across the bottom is how long a short runs. The blue curve is the share of shorts at that length that did very well (3× their channel's usual views) — about ${Math.round(xc(10))}% at 10 seconds, ${Math.round(xc(60))}% at a minute. Shorter is better.`, at: 10, focus: "xc" },
+  { text: `The red line is the share that did badly (under half the usual). It climbs about ${(XL.k * 10).toFixed(1)} points every 10 seconds, from ${Math.round(xl(10))}% at 10 seconds to ${Math.round(xl(60))}% at a minute. Longer is worse.`, at: 60, focus: "xl" },
+  { text: `The lines meet at ${Math.round(FR)} seconds. Shorter than that, doing very well is the likelier outcome; longer, doing badly is.`, at: FR },
+  { text: `The small dots are the real measurements. The smooth curves are drawn through the dots to show the trend (fits: blue R² ${XC.r2.toFixed(2)}, red ${XL.r2.toFixed(2)}).`, at: 45 },
+  { text: "Now slide your cursor across the chart. The black bar is simply blue minus red at that length, and the card shows a real short from there.", at: 40 },
 ]
 
 const SILENT = { silent: true, animation: false } as const

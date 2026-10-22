@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { ChevronDown, LayoutGrid } from "lucide-react"
 
 import { CardAnchor, CardTools, slug } from "@/components/dash/card-tools"
+import { CarouselChevrons } from "@/components/record/chart-carousel"
 import { useShelf } from "@/lib/home-blocks"
 import { MenuRow } from "@/components/kebab-menu"
 import { PAX2Search, PAX2Table2 } from "@/components/pax2-table2"
@@ -73,6 +74,8 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
         <CardHeader className={cn((open || peek) && "border-b [.border-b]:pb-2")}>
           <div className="flex items-center gap-1">
             <CardAnchor id={id}>{title}</CardAnchor>
+            {/* Riding in a carousel, the stepping chevrons sit right after the title. */}
+            <CarouselChevrons />
             {tools}
             {search && <PAX2Search placeholder={search} />}
           </div>

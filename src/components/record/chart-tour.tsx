@@ -19,9 +19,16 @@ export function TourButton({ on, onClick }: { on: boolean; onClick: () => void }
       aria-label={on ? "End the tour" : "How to read this chart"}
       aria-pressed={on}
       onClick={onClick}
-      className={cn("inline-flex size-8 items-center justify-center rounded-md transition-colors hover:bg-muted", on ? "text-pax2-light-blue" : "text-slate-800 hover:text-foreground")}
+      className={cn("relative inline-flex size-8 items-center justify-center rounded-md transition-colors hover:bg-muted", on ? "text-pax2-light-blue" : "text-slate-800 hover:text-foreground")}
     >
       <Info className="size-4" />
+      {/* The green dot says a tour is waiting; it rests while the tour runs. */}
+      {!on && (
+        <span aria-hidden className="absolute right-0.5 top-0.5 flex size-2">
+          <span className="absolute inline-flex size-full animate-ping rounded-full bg-green-500 opacity-60" />
+          <span className="relative inline-flex size-2 rounded-full bg-green-500" />
+        </span>
+      )}
     </button>
   )
 }

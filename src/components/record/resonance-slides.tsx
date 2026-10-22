@@ -30,7 +30,7 @@ const HEADERS: SlideHeader[] = [
 
 export default function ResonanceSlides() {
   return (
-    <ChartCarousel headers={HEADERS}>
+    <ChartCarousel title="What is Resonance?" headers={HEADERS}>
       <ResonanceBlocks />
       <LengthBlock />
       <TopicBlock />

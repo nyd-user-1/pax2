@@ -37,11 +37,12 @@ const BOTTOM_TOPIC = TOPICS[TOPICS.length - 1]
 const REFORM = TOPICS.find((t) => t.name === "Electoral reform explainers")
 const UNSETTLED = TOPICS.filter((t) => t.low < 0 && t.high > 0).reduce<Topic | null>((a, t) => (!a || Math.abs(t.lift) > Math.abs(a.lift) ? t : a), null)
 const TOUR: TourStep[] = [
-  { text: `${TOP.name} lift shorts the most: they reach 3× their channel's median ${Math.abs(TOP.lift).toFixed(1)} points more often than those channels usually do, across ${TOP.channels} channels.`, at: TOP.id },
-  ...(REFORM ? [{ text: `${REFORM.name} land at ${pts(REFORM.lift)}: the topic neither lifts nor sinks a short, so the lift has to come from how it's made — its length, its opening, its delivery.`, at: REFORM.id }] : []),
-  { text: `${BOTTOM_TOPIC.name} sink the most: ${Math.abs(BOTTOM_TOPIC.lift).toFixed(1)} points under their channels' usual rate, across ${BOTTOM_TOPIC.channels} channels.`, at: BOTTOM_TOPIC.id },
-  ...(UNSETTLED ? [{ text: `The black line on each bar is its 90% range. Where it crosses zero, as with ${UNSETTLED.name.toLowerCase()}, the lift isn't settled either way.`, at: UNSETTLED.id }] : []),
-  { text: "Hover any row for a real short from that topic." },
+  { text: "How to read it: each bar is a topic. A bar pointing up means shorts on that topic do very well more often than their own channels usually do; pointing down means less often. Longer bar, bigger effect.", at: TOP.id },
+  { text: `${TOP.name} help the most: ${Math.abs(TOP.lift).toFixed(1)} points above the channels' usual rate, measured across ${TOP.channels} channels.`, at: TOP.id },
+  ...(REFORM ? [{ text: `${REFORM.name} sit near zero (${pts(REFORM.lift)}): the topic neither helps nor hurts, so how the video is made decides.`, at: REFORM.id }] : []),
+  { text: `${BOTTOM_TOPIC.name} hurt the most: ${Math.abs(BOTTOM_TOPIC.lift).toFixed(1)} points under the usual rate, across ${BOTTOM_TOPIC.channels} channels.`, at: BOTTOM_TOPIC.id },
+  ...(UNSETTLED ? [{ text: `The thin black line on each bar is the uncertainty range. When it crosses zero — as with ${UNSETTLED.name.toLowerCase()} — the data can't yet say whether the topic helps or hurts.`, at: UNSETTLED.id }] : []),
+  { text: "Hover any row to see a real short from that topic." },
 ]
 
 function Tip({ t, x, y }: { t: (typeof TOPICS)[number]; x: number; y: number }) {

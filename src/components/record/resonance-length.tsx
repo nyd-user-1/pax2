@@ -123,11 +123,11 @@ const WORST = BINS.reduce((a, b) => (b.within.underperform > a.within.underperfo
 const LONGEST = BINS[BINS.length - 1]
 const oneIn = (pct: number) => `1 in ${Math.round(100 / pct)}`
 const TOUR: TourStep<Line2>[] = [
-  { text: `Shorts under ${BEST.to} seconds have the best odds: about ${oneIn(BEST.within.outperform)} gets 3× its channel's usual views, more than at any other length.`, at: (BEST.from + BEST.to) / 2, focus: "outperform" },
-  { text: `The longer the short, the likelier it falls under half its channel's usual views: ${oneIn(BEST.within.underperform)} at ${BEST.from}–${BEST.to} seconds, nearly ${oneIn(WORST.within.underperform)} at ${WORST.from}–${WORST.to}.`, at: (WORST.from + WORST.to) / 2, focus: "underperform" },
-  { text: `${Math.round(CROSS.seconds)} seconds is the tipping point. Past it, a short is more likely to land under half its channel's usual views than to triple them.`, at: CROSS.seconds },
-  { text: `The worst stretch is ${WORST.from} to ${WORST.to} seconds. Past two minutes the odds even out again, but never back to the under-${BEST.to}-second rate: ${LONGEST.within.outperform.toFixed(0)}% against ${BEST.within.outperform.toFixed(0)}%.`, at: (WORST.from + WORST.to) / 2 },
-  { text: "The black bar is the gap between the two lines at the cursor, in points: plus where outperforming is likelier, minus where underperforming is. Move across the chart to read any length.", at: 45 },
+  { text: "How to read it: across the bottom is how long a short runs. The blue line is the share of shorts at that length that did very well (3× their channel's usual views). Blue high is good.", at: (BEST.from + BEST.to) / 2, focus: "outperform" },
+  { text: "The red line is the share that did badly (under half the channel's usual views). Red high is bad.", at: (WORST.from + WORST.to) / 2, focus: "underperform" },
+  { text: `Short wins: under ${BEST.to} seconds, about ${oneIn(BEST.within.outperform)} does very well — the best odds on the chart. Only ${oneIn(BEST.within.underperform)} does badly there.`, at: (BEST.from + BEST.to) / 2, focus: "outperform" },
+  { text: `Where the lines cross — ${Math.round(CROSS.seconds)} seconds — is the tipping point. Past it a short is more likely to do badly than very well, worst at ${WORST.from}–${WORST.to} seconds (${oneIn(WORST.within.underperform)} does badly). The longest shorts recover a little, ${LONGEST.within.outperform.toFixed(0)}% against the short ones' ${BEST.within.outperform.toFixed(0)}%.`, at: (WORST.from + WORST.to) / 2 },
+  { text: "Now slide your cursor across the chart. The black bar is simply blue minus red at that length, and the little card shows a real short from there.", at: 45 },
 ]
 
 function LengthChart({ tour }: { tour: TourStep<Line2> | null }) {

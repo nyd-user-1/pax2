@@ -71,12 +71,12 @@ const pct = (v: number) => `${Math.round(v * 100)}%`
 
 type Step = TourStep<Key> & { channel?: string }
 const TOUR: Step[] = [
-  { text: "The x-axis divides any input by the system's own natural frequency, so 1 is resonance whether the system is a bridge or a radio. On this log scale, half and double sit the same distance from 1, and the curve is symmetric about it.", at: 0.5, focus: "q1" },
-  { text: `Q is how sharply a system answers. At Q = 100 it responds only within about 1% of its natural frequency: at 1.01 it's already down to ${pct(response(1.01, 100))}.`, at: 1.01, focus: "q100" },
-  { text: `At Q = 1 it answers broadly: at double its natural frequency it still gives ${pct(response(2, 1))}.`, at: 2, focus: "q1" },
-  { text: `A short's views over its channel's median is the same division: 1× is the channel's usual, whatever its size. The black curve is how ${TIGHT.name}'s shorts spread on these axes: a broad resonator, Q ${TIGHT.q}.`, at: 1, channel: TIGHT.id },
-  { text: `Every channel tracked is a broad resonator: measured Q runs from ${QMIN.q} (${QMIN.name}) to ${QMAX.q} (${QMAX.name}). None comes near 10. Here is ${LOOSE.name}, at Q ${LOOSE.q}.`, at: 1, channel: LOOSE.id },
-  { text: `So the same 3× means different things: ${TIGHT.at3x}% of ${TIGHT.name}'s shorts reach it, ${LOOSE.at3x}% of ${LOOSE.name}'s. A fair score across channels takes out the spread too, by ranking a short within its own channel.`, at: 3, channel: LOOSE.id },
+  { text: "How to read it: the bottom axis is a video's views divided by its channel's usual (median) views. 1 means exactly usual, 2 means double, 3 means triple. The same scale fits a tiny channel and a huge one, which is the whole trick.", at: 0.5, focus: "q1" },
+  { text: `The grey curves come from physics: how sharply a system answers around its natural point, written Q. A sharp system (Q = 100) only answers very near 1 — at 1.01 it is already down to ${pct(response(1.01, 100))}.`, at: 1.01, focus: "q100" },
+  { text: `A broad system (Q = 1) answers almost everywhere — at double its natural point it still gives ${pct(response(2, 1))}.`, at: 2, focus: "q1" },
+  { text: `The black curve is a real channel, ${TIGHT.name}: how its shorts spread around their usual. It behaves like a broad system — Q ${TIGHT.q}.`, at: 1, channel: TIGHT.id },
+  { text: `Every channel measured is broad: Q runs only from ${QMIN.q} (${QMIN.name}) to ${QMAX.q} (${QMAX.name}). Here is ${LOOSE.name}, at Q ${LOOSE.q}.`, at: 1, channel: LOOSE.id },
+  { text: `Why it matters: reaching 3× is common on some channels (${LOOSE.at3x}% for ${LOOSE.name}) and rare on others (${TIGHT.at3x}% for ${TIGHT.name}). So PAX2 always judges a short against its own channel, never across channels.`, at: 3, channel: LOOSE.id },
 ]
 
 const fmtX = (x: number) => (x >= 10 ? x.toFixed(0) : x >= 1 ? x.toFixed(2) : x.toFixed(3))
