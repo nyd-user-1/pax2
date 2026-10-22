@@ -22,7 +22,8 @@ The census FLAG items in `docs/roadmap/roadmap-1.html` ("For the platform"): cap
 2. Merge columns into the census the way `scripts/composition/merge.mjs` merges — one definition per column.
 3. Measure each new column's association with outperformed-3× using the repo's feature-lift formula (grep for it; same arithmetic as the existing findings).
 4. Write the recommendation registry: variable, grounds, citation — only measured lifts mint recommendations; the rest stay descriptive.
-5. The on-demand path: `scripts/vqa/ask.mjs <id> "<question>"` — same model, one video, any question; document its cost per ask and its latency honestly (box spin-up included). This is the seed of ask-about-this-video; no product surface in this brief.
+5. Fit and validate the Resonance stack exactly as `docs/RESONANCE.md` registers it — the logistic over the three instrument components on the uniform baseline, held out by channel, the acceptance rule honored, the fitted weights and held-out AUC written to `data/generated/model/resonance-formula.json`. Each audited new column with measured lift is noted as a future stack input.
+6. The on-demand path: `scripts/vqa/ask.mjs <id> "<question>"` — same model, one video, any question; document its cost per ask and its latency honestly (box spin-up included). This is the seed of ask-about-this-video; no product surface in this brief.
 
 ## Rules
 
