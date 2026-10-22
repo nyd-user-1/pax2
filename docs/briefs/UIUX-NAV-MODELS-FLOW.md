@@ -43,3 +43,35 @@ Groups are rows with their own icon; children indent on the trunk-and-elbow tree
 ## Report
 
 Append a `## Report` section here: files changed, one line per job on what shipped, anything left and why.
+
+## Report
+
+**Files changed**: `src/components/shell.tsx`, `src/components/auth/auth-form.tsx`, `scripts/accounting.mjs`, `docs/ACCOUNTING.html` (regenerated).
+
+1. **Sidebar.** `NAV` is now `NAV_TREE`, in this order:
+   - Chat.
+   - Create (`Clapperboard`): Record, Scripts.
+   - Explore (`Compass`): Channels, Tags, Videos.
+   - Lab (`FlaskConical`): My Channels, My Videos.
+   - Learn.
+
+   Group rows are plain rows with an icon and no link; their children are always open. The children hang on the existing comment-thread trunk-and-elbow lines, now drawn from each group's icon. Home is off the sidebar; `/app/home` still resolves. A flat `NAV` is derived from the tree, so search and the phone strip list every page with no group rows. Research and Admin are unchanged.
+2. **/chat as home.** Every sign-in path resolves through `nextPath()` in auth-form, which covers the account chip, the gate's links, the landing header and every `?next=` redirect. Its sign-in default is now `/chat`, and a `next` of `/` counts as absent. An explicit `next` still wins. Sign-up with no `next` still goes to `/signup/welcome`.
+3. **Models tab.**
+   - Model holds the name alone; Kind follows it.
+   - Each Kind comes from the model's own training code: `scripts/rig/*.py`, `pairwise/train.mjs`, `composition/fit.mjs`, `video-resonance/train.py`, the `var-model*.json` methods.
+   - Gate and Trained are gone. Status is Live (the seven serving rows) or Staged (the three ready rows plus the two parked ones).
+   - Failed keeps "Why it failed" and gets the same Name and Kind columns.
+4. **Flow tab.**
+   - The two trigger boxes are pax2 blue (#1e3a8a) with white text.
+   - Headline picker, Outlier classifier v3, Behavior-corrected text embedding and Candidate re-scorer sit as chips under Scored.
+   - The other nine passed models sit as a chip row above the triggers.
+   - Chip names are read from the ledger, and the generator throws if a Scored name drifts.
+
+**Judgment calls and leftovers**
+- Several scores only made sense next to the Gate column (for example "E +0.027; B 0.582", "under it", a bare "0.672"). Each now names its metric and, where a failure depends on it, the bar it missed. The numbers are unchanged.
+- Create's Clapperboard is also Videos' icon, and Lab's FlaskConical is also Score method's. The brief fixed both, so the duplicates stand.
+- The header title for `/recording` still reads "Create" while the row reads Record. `TITLES` was not named in the brief, so it was left alone.
+- The onboarding exit to `/app/home` was left alone, per the rule on the onboarding flow's own redirects.
+- A "→" remains in `docs/ACCOUNTING.html`, inside one YouTube video's title in the data. It is not UI copy.
+- No typecheck was run (8 GB rule). Not pushed.

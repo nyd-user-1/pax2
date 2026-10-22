@@ -69,38 +69,46 @@ const counts = {
 }
 
 
-// The model ledger. Every number is from the model's own record: the NYSgpt/martian-* model cards
+// The model ledger: name, kind, what it does, inputs, score, then Live or Staged (passed) or why it
+// failed. Every number is from the model's own record: the NYSgpt/martian-* model cards
 // on Hugging Face (one repo per fitted model, published pass or fail) and the artifacts under
 // data/generated/model/.
 const PASSED = [
-  ["Outlier classifier v1 (PAX2 Classifier, metadata + thumbnail)", "chance a short outperforms 3\u00d7 its channel median, from publish-day fields", "title, description, tags, length, posting time, thumbnail", "thumbnail gate", "AUC 0.611 pooled, 0.566 within-channel", "2026-10-18", "serving (the fallback arm)"],
-  ["Outlier classifier v3 (PAX2 Classifier)", "the same, with transcript and embedding evidence", "v1's fields + transcript TF-IDF + 32 components of the PAX2 Encoder embedding", "Gate C: above v1's 0.604 and the metadata arm, within-channel \u2265 0.55", "0.648 held-out, 0.630 within", "2026-10-20", "serving (when transcript + embedding exist)"],
-  ["Early-hit predictor (PAX2 Velocity Classifier)", "whether a short hits 3\u00d7 by 72 hours, from its first hours of views", "the poller's view curve + v1's features", "benchmarked, refreshed fit serves", "6-hour AUC 0.729 pooled, 0.862 within", "2026-10-19", "serving (live tracking)"],
-  ["Behavior-corrected text embedding (PAX2 Encoder)", "places videos near videos that performed alike", "title, description, transcript (fine-tuned bge-m3)", "Gate E: pooled kNN-AUC \u2265 stock + 0.02, within not below", "+0.031 pooled, +0.022 within", "2026-10-19", "serving (the index)"],
-  ["Candidate re-scorer (PAX2 Reranker v0)", "re-scores the embedding's nearest candidates pairwise", "the two shorts' texts (gte-reranker-modernbert fine-tune)", "Gate R: pooled \u2265 the encoder's, within not below", "0.572 pooled over 0.571; 0.563 within", "2026-10-19", "serving"],
-  ["Headline picker (PAX2 Headline Ranker v1)", "picks the stronger of two headlines", "the headline text (bert-base-uncased, Upworthy-trained)", "Gate H: held-out pairwise \u2265 0.630", "0.672", "2026-10-18", "serving (Lambda)"],
-  ["Persuasion evidence reference (PAX2 Persuasion Reference)", "measured per-trait effects on favorability and vote choice from 146 randomized ad tests", "Swayable replication archive (APSR 2024)", "none \u2014 a reference by design; its own ridge fit is shown not to predict (R\u00b2 \u2248 0) and scores nothing", "e.g. explicit ask +0.59 points of vote choice (0.19\u20130.99)", "2026-10-03", "serving (cited beside findings)"],
-  ["Composition pair picker (PAX2 Composition Ranker, 2 variants)", "picks which of a same-channel pair outperformed, from the file's measurables", "composition features; combined variant adds neighbor evidence", "Gate X: held-out pair accuracy \u2265 0.55", "0.566; combined 0.595", "2026-10-20", "ready \u2014 the take read is being wired"],
-  ["Pairwise picker, Reform & Voting rights (PAX2 Classifier pairwise)", "same-channel pair winner within two families", "35 pre-publish features", "Gate P: 0.02 above v1 on the same pairs", "0.550 over v1's 0.512", "2026-10-19", "ready \u2014 no caller yet"],
-  ["Resonance text embedding, behavior arm (PAX2 Resonance Encoder)", "the encoder recipe plus a behavioral co-occurrence term", "same corpus + co-outlier and co-surge groups", "Gates E and B (pair ranking \u2265 encoder + 0.01)", "E +0.027; B 0.582 over 0.562", "2026-10-20", "ready \u2014 selected arm, index not swapped"],
-  ["Resonance text embedding, full arm", "the same with publish-week co-surge proxy groups", "as above, \u03bb = 0.25", "Gates E and B", "E +0.037; B 0.578", "2026-10-20", "parked \u2014 passed, behavior arm selected by the pre-fixed rule"],
-  ["Watch-through regressor v0 (PAX2 Retention Regressor)", "how much of a short a viewer watches, from length, type, tags", "KuaiRand-1K random exposures (pretrain)", "benchmarked", "Spearman 0.746 per held-out video", "2026-10-18", "serving as pretrain \u2014 awaits a connected channel's retention"],
-  ["Feed ranker v0 (PAX2 Feed Ranker)", "which short a given reader watches through", "KuaiRand-1K (pretrain): video + reader history features", "benchmarked", "AUC 0.697 pooled, 0.553 within-reader", "2026-10-18", "parked \u2014 cold-start sort serves until reader rows exist"],
+  ["Outlier classifier v1", "logistic regression", "chance a short outperforms 3\u00d7 its channel median, from publish-day fields", "title, description, tags, length, posting time, thumbnail", "AUC 0.611 pooled, 0.566 within-channel", "Live"],
+  ["Outlier classifier v3", "logistic regression", "the same, with transcript and embedding evidence", "v1's fields + transcript TF-IDF + 32 components of the PAX2 Encoder embedding", "0.648 held-out, 0.630 within", "Live"],
+  ["Early-hit predictor", "logistic regression", "whether a short hits 3\u00d7 by 72 hours, from its first hours of views", "the poller's view curve + v1's features", "6-hour AUC 0.729 pooled, 0.862 within", "Live"],
+  ["Behavior-corrected text embedding", "fine-tuned embedding", "places videos near videos that performed alike", "title, description, transcript (fine-tuned bge-m3)", "kNN-AUC over stock +0.031 pooled, +0.022 within", "Live"],
+  ["Candidate re-scorer", "fine-tuned transformer", "re-scores the embedding's nearest candidates pairwise", "the two shorts' texts (gte-reranker-modernbert fine-tune)", "0.572 pooled over 0.571; 0.563 within", "Live"],
+  ["Headline picker", "fine-tuned transformer", "picks the stronger of two headlines", "the headline text (bert-base-uncased, Upworthy-trained)", "held-out pairwise 0.672", "Live"],
+  ["Persuasion evidence reference", "reference", "measured per-trait effects on favorability and vote choice from 146 randomized ad tests", "Swayable replication archive (APSR 2024)", "e.g. explicit ask +0.59 points of vote choice (0.19\u20130.99)", "Live"],
+  ["Composition pair picker", "Bradley-Terry pairwise", "picks which of a same-channel pair outperformed, from the file's measurables", "composition features; combined variant adds neighbor evidence", "pair accuracy 0.566; combined 0.595", "Staged"],
+  ["Pairwise picker, Reform & Voting rights", "Bradley-Terry pairwise", "same-channel pair winner within two families", "35 pre-publish features", "pair accuracy 0.550 over v1's 0.512", "Staged"],
+  ["Resonance text embedding, behavior arm", "fine-tuned embedding", "the encoder recipe plus a behavioral co-occurrence term", "same corpus + co-outlier and co-surge groups", "kNN-AUC over stock +0.027; pair ranking 0.582 over the encoder's 0.562", "Staged"],
+  ["Resonance text embedding, full arm", "fine-tuned embedding", "the same with publish-week co-surge proxy groups", "as above, \u03bb = 0.25", "kNN-AUC over stock +0.037; pair ranking 0.578", "Staged"],
+  ["Watch-through regressor v0", "ridge regression", "how much of a short a viewer watches, from length, type, tags", "KuaiRand-1K random exposures (pretrain)", "Spearman 0.746 per held-out video", "Live"],
+  ["Feed ranker v0", "logistic regression", "which short a given reader watches through", "KuaiRand-1K (pretrain): video + reader history features", "AUC 0.697 pooled, 0.553 within-reader", "Staged"],
 ]
 const FAILED = [
-  ["Outlier classifier v2 (transcript TF-IDF)", "add the transcript's words to v1", "v1's fields + 400-term TF-IDF", "Gate C: pooled 0.624", "0.597", "2026-10-19", "the transcript's words, read this way, do not predict an outlier"],
-  ["Outlier classifier v3b (+ composition)", "add composition features to v3", "v3's features + composition", "Gate C", "0.589 vs v3's 0.648", "2026-10-20", "label-picked media coverage; composition added 0.005 where measured"],
-  ["Pairwise picker, all families (PAX2 Classifier pairwise-v0)", "same-channel pair winner, every family", "35 pre-publish features", "Gate P: 0.02 above v1", "0.546 vs v1's 0.563", "2026-10-19", "under v1 on the same pairs"],
-  ["Semantic-ID cell model (PLUM baseline)", "score a short by its ID cell's outlier share", "3-level residual k-means over the encoder index", "Gate S: pooled AUC above stock's 0.5775", "0.558; retry 0.571", "2026-10-20", "a cell table carries less than the 20 nearest neighbors (0.608)"],
-  ["Embedding retrain candidate (Gate R arm)", "a retrain of the text embedding", "transcript text", "pooled \u2265 the serving encoder's", "under it", "2026-10-19", "did not beat the model already serving"],
-  ["Video resonance heads v1, v2 (VideoPrism)", "a projection head over frozen VideoPrism embeddings", "16 frames per video, no audio", "validation read before Gate M3", "0.551, 0.566 \u2014 below stock's 0.558 band on validation", "2026-10-21", "halted before the gate; v3 selected instead"],
-  ["Video resonance head v3 (the published one)", "the selected head", "as above, \u03bb = 1.0, 5 epochs", "Gate M3: held-out pairs \u2265 stock + 0.02 (0.5776)", "0.5695", "2026-10-21", "+0.012 over stock, inside stock's own interval"],
-  ["Video resonance head v3b (label-blind retry)", "v3 with negatives from a label-blind sample", "as v3; negatives 16.4% outliers not 49.8%", "Gate M3, the one allowed retry", "0.5508", "2026-10-21", "label-heavy negatives did not explain the failure"],
-  ["Video arm of the classifier (fullvideo)", "add the video embedding to classifier v3", "VideoPrism embedding + v3's features", "Gate M2: beat text-only AUC by 0.02 on rows with media", "0.636 vs 0.648 (\u22120.011)", "2026-10-21", "the video embedding added nothing over text"],
+  ["Outlier classifier v2", "logistic regression", "add the transcript's words to v1", "v1's fields + 400-term TF-IDF", "AUC 0.597 against a 0.624 bar", "the transcript's words, read this way, do not predict an outlier"],
+  ["Outlier classifier v3b", "logistic regression", "add composition features to v3", "v3's features + composition", "0.589 vs v3's 0.648", "label-picked media coverage; composition added 0.005 where measured"],
+  ["Pairwise picker, all families", "Bradley-Terry pairwise", "same-channel pair winner, every family", "35 pre-publish features", "0.546 vs v1's 0.563", "under v1 on the same pairs"],
+  ["Semantic-ID cell model", "residual k-means", "score a short by its ID cell's outlier share", "3-level residual k-means over the encoder index", "0.558; retry 0.571", "a cell table carries less than the 20 nearest neighbors (0.608)"],
+  ["Embedding retrain candidate", "fine-tuned embedding", "a retrain of the text embedding", "transcript text", "under the serving encoder, pooled", "did not beat the model already serving"],
+  ["Video resonance heads v1, v2", "projection head", "a projection head over frozen VideoPrism embeddings", "16 frames per video, no audio", "0.551, 0.566 \u2014 below stock's 0.558 band on validation", "halted before the gate; v3 selected instead"],
+  ["Video resonance head v3", "projection head", "the selected head", "as above, \u03bb = 1.0, 5 epochs", "held-out pairs 0.5695 against a 0.5776 bar", "+0.012 over stock, inside stock's own interval"],
+  ["Video resonance head v3b", "projection head", "v3 with negatives from a label-blind sample", "as v3; negatives 16.4% outliers not 49.8%", "held-out pairs 0.5508 against a 0.5776 bar", "label-heavy negatives did not explain the failure"],
+  ["Video arm of the classifier", "logistic regression", "add the video embedding to classifier v3", "VideoPrism embedding + v3's features", "0.636 vs 0.648 (\u22120.011)", "the video embedding added nothing over text"],
 ]
+// The Flow tab places the models: the four the scoring step calls sit at Scored; every other passed
+// model was fitted before a take arrives, so it stands in a row above the triggers. Names are the ledger's.
+const AT_SCORED = ["Headline picker", "Outlier classifier v3", "Behavior-corrected text embedding", "Candidate re-scorer"]
+for (const n of AT_SCORED) if (!PASSED.some((r) => r[0] === n)) throw new Error(`Flow names a model the ledger lacks: ${n}`)
+const chips = (names) => `<div class="fchips">${names.map((n) => `<span class="fchip">${n}</span>`).join("")}</div>`
+const BEFORE = PASSED.map((r) => r[0]).filter((n) => !AT_SCORED.includes(n))
+
 const mrow = (r, n) => `<tr><td class="mnum">${n}</td>${r.map((c, i) => `<td class="${i === 0 ? "mname" : "mtxt"}">${c}</td>`).join("")}</tr>`
 const mtable = (title, rows, last, from) => `<div class="mcard"><h2>${title}</h2><table>
-<thead><tr><th></th><th>Model</th><th>What it does</th><th>Inputs</th><th>Gate</th><th>Score</th><th>Trained</th><th>${last}</th></tr></thead>
+<thead><tr><th></th><th>Model</th><th>Kind</th><th>What it does</th><th>Inputs</th><th>Score</th><th>${last}</th></tr></thead>
 <tbody>${rows.map((r, i) => mrow(r, from + i)).join("\n")}</tbody></table></div>`
 
 const html = `<!doctype html>
@@ -146,6 +154,11 @@ const html = `<!doctype html>
  .fline { width:1px; height:16px; background:#cbd5e1; margin:0 auto; }
  .fmerge { display:grid; grid-template-columns:1fr 1fr; gap:14px; max-width:560px; margin:0 auto; }
  #flow .stage { text-align:center; }
+ .fbox.ftrig { background:var(--blue); border-color:var(--blue); color:#fff; }
+ .fbox.ftrig .fnote { color:#dbeafe; }
+ .fchips { display:flex; flex-wrap:wrap; justify-content:center; gap:6px; max-width:720px; margin:0 auto; }
+ .fchip { border:1px solid #c7d2fe; background:#eef2ff; color:var(--blue); border-radius:999px; padding:3px 10px; font-size:12px; font-weight:600; }
+ .fat { display:flex; flex-direction:column; align-items:center; gap:8px; }
 </style></head><body>
 <div class="wrap">
 <nav class="tabs">
@@ -183,16 +196,21 @@ const html = `<!doctype html>
 <div class="card" id="flow">
  <h1>Flow</h1>
  <div class="stage">
+  ${chips(BEFORE)}
+  <div class="fline"></div>
   <div class="fmerge">
-   <div class="fbox">Record on camera<span class="fnote">teleprompter, /record/camera</span></div>
-   <div class="fbox">Upload a finished file<span class="fnote">/record/camera#upload</span></div>
+   <div class="fbox ftrig">Record on camera<span class="fnote">teleprompter, /record/camera</span></div>
+   <div class="fbox ftrig">Upload a finished file<span class="fnote">/record/camera#upload</span></div>
   </div>
   <div class="fline"></div>
   <div class="fbox">Watch it back<span class="fnote">name, email, send or try again</span></div>
   <div class="fline"></div>
   <div class="fbox">Send<span class="fnote">file to S3 uploads/, submission recorded</span></div>
   <div class="fline"></div>
-  <div class="fbox">Scored<span class="fnote">headline read, evaluation saved with the submission</span></div>
+  <div class="fat">
+   <div class="fbox">Scored<span class="fnote">headline read, evaluation saved with the submission</span></div>
+   ${chips(AT_SCORED)}
+  </div>
   <div class="fline"></div>
   <div class="fbox">PAX2 review<span class="fnote">admins notified, Score button on /drafts for drafts</span></div>
   <div class="fline"></div>

@@ -17,10 +17,10 @@ const post = async (action: string, body: object) => {
 }
 
 /** Where to land after signing in: the page the reader came from (?next=), else onboarding for a new
- *  account and the record flow for a returning one. */
+ *  account and chat, the signed-in home, for a returning one. A next of the landing itself counts as none. */
 const nextPath = (mode: Mode) => {
   const n = new URLSearchParams(window.location.search).get("next")
-  return n && n.startsWith("/") && !n.startsWith("//") ? n : mode === "signup" ? "/signup/welcome" : "/recording"
+  return n && n !== "/" && n.startsWith("/") && !n.startsWith("//") ? n : mode === "signup" ? "/signup/welcome" : "/chat"
 }
 
 const FIELD = "w-full rounded-xl border border-slate-400 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-[border-color,box-shadow] hover:border-pax2-blue focus:border-pax2-blue placeholder:text-slate-400 focus:ring-2 focus:ring-pax2-light-blue/40"

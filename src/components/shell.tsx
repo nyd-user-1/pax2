@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, GitBranch, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, Star, Tag, Target, TrendingUp, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, GitBranch, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, Star, Tag, Target, TrendingUp, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { KebabMenu, MenuFoot, MenuHeader, MenuRow, MenuSeparator } from "@/components/kebab-menu"
@@ -16,18 +16,40 @@ import { whiteButton } from "@/components/white-button"
 
 // The sidebar by audience (the UX audit's split, ruled 2026-10-19): the creator's product plain
 // at the top, the research behind it under its own label, and the admin surfaces for admins only.
-const NAV: { href: string; label: string; icon: typeof House; sub?: boolean }[] = [
-  { href: "/app/home", label: "Home", icon: House },
-  { href: "/my-videos", label: "My videos", icon: Film, sub: true },
-  { href: "/my-channels", label: "My channels", icon: TvMinimal, sub: true },
+// The product half in Brendan's grouping (2026-10-22): Chat, then Create, Explore and Lab as group
+// rows whose pages hang beneath them, always open, then Learn. /app/home stays as a route, off the sidebar.
+type NavLink = { href: string; label: string; icon: typeof House }
+const NAV_TREE: (NavLink | { label: string; icon: typeof House; children: NavLink[] })[] = [
   { href: "/chat", label: "Chat", icon: MessagesSquare },
-  { href: "/recording", label: "Create", icon: Video },
-  { href: "/scripts", label: "Scripts", icon: NotebookPen },
-  { href: "/tags", label: "Tags", icon: Tag },
-  { href: "/videos", label: "Videos", icon: Clapperboard },
-  { href: "/channels", label: "Channels", icon: Tv },
+  {
+    label: "Create",
+    icon: Clapperboard,
+    children: [
+      { href: "/recording", label: "Record", icon: Video },
+      { href: "/scripts", label: "Scripts", icon: NotebookPen },
+    ],
+  },
+  {
+    label: "Explore",
+    icon: Compass,
+    children: [
+      { href: "/channels", label: "Channels", icon: Tv },
+      { href: "/tags", label: "Tags", icon: Tag },
+      { href: "/videos", label: "Videos", icon: Clapperboard },
+    ],
+  },
+  {
+    label: "Lab",
+    icon: FlaskConical,
+    children: [
+      { href: "/my-channels", label: "My Channels", icon: TvMinimal },
+      { href: "/my-videos", label: "My Videos", icon: Film },
+    ],
+  },
   { href: "/learn", label: "Learn", icon: ListChecks },
 ]
+// Every page in the tree, in order: the search's list and the phone's strip.
+const NAV: NavLink[] = NAV_TREE.flatMap((n) => ("children" in n ? n.children : [n]))
 const RESEARCH = [
   { href: "/tracking", label: "Tracking", icon: Activity },
   { href: "/evidence", label: "Evidence", icon: TrendingUp },
@@ -253,16 +275,18 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
       <Link href="/" aria-label="Home" className="mb-4 flex px-3 pt-1">
         <Wordmark size={20} />
       </Link>
-      {/* Sub-pages hang off their parent on the comment thread's tree lines: the trunk down
-          from the parent's icon, a rounded elbow turning into each sub-page. */}
+      {/* A group's pages hang off it on the comment thread's tree lines: the trunk down
+          from the group's icon, a rounded elbow turning into each page. */}
       <nav className="flex flex-col gap-0.5">
-        {NAV.map((n, i) => {
-          if (n.sub) return null
-          const subs = []
-          for (let j = i + 1; j < NAV.length && NAV[j].sub; j++) subs.push(NAV[j])
+        {NAV_TREE.map((n) => {
+          if (!("children" in n)) return item(n.href, n.label, n.icon)
+          const subs = n.children
           return (
-            <React.Fragment key={n.href}>
-              {item(n.href, n.label, n.icon)}
+            <React.Fragment key={n.label}>
+              <div className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-slate-500">
+                <n.icon className="size-[18px] shrink-0" strokeWidth={1.75} />
+                {n.label}
+              </div>
               {subs.length > 0 && (
                 <div className="flex flex-col">
                   {subs.map((s, k) => (
