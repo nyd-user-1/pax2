@@ -55,6 +55,7 @@ const rows = universe.map((v) => [
 
 const n = (f) => rows.filter(f).length
 const fmt = (x) => x.toLocaleString("en-US")
+const k = (x) => (x >= 950 ? `${Math.round(x / 1000)}k` : `${x}`)
 const counts = {
   all: rows.length,
   transcript: n((r) => r[5]),
@@ -76,7 +77,7 @@ const html = `<!doctype html>
  .wrap { max-width:1280px; margin:0 auto; }
  .card { background:#fff; border-radius:20px; box-shadow:0 1px 3px rgb(2 6 23/.06); outline:1px solid rgb(15 23 42/.06); padding:36px 40px 28px; }
  h1 { margin:0 0 24px; font-size:26px; font-weight:650; color:var(--blue); }
- .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px; margin-bottom:24px; }
+ .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px; }
  .tile { border:1px solid var(--border); border-radius:14px; padding:12px 14px; text-align:center; }
  .tile b { font-size:20px; } .tile p { margin:2px 0 0; font-size:12px; color:var(--muted); }
  #q { width:100%; box-sizing:border-box; margin-bottom:18px; padding:12px 16px; font:inherit; border:1px solid var(--border); border-radius:12px; outline:none; }
@@ -95,13 +96,12 @@ const html = `<!doctype html>
 <div class="wrap"><div class="card">
  <h1>Accounting</h1>
  <div class="grid">
-  <div class="tile"><b>${fmt(counts.all)}</b><p>Catalog</p></div>
-  <div class="tile"><b>${fmt(counts.transcript)}</b><p>Transcript</p></div>
-  <div class="tile"><b>${fmt(counts.media)}</b><p>Media (${fmt(counts.picked)} picked · ${fmt(counts.blind)} blind)</p></div>
-  <div class="tile"><b>${fmt(counts.composition)}</b><p>Composition</p></div>
-  <div class="tile"><b>${fmt(counts.index)}</b><p>Index</p></div>
-  <div class="tile"><b>${fmt(counts.lab)}</b><p>Lab Tested</p></div>
-  <div class="tile"><b>${fmt(counts.e2)}</b><p>e&sup2;</p></div>
+  <div class="tile"><b>${k(counts.all)}</b><p>Catalog</p></div>
+  <div class="tile"><b>${k(counts.transcript)}</b><p>Transcript · ${k(counts.all - counts.transcript)} without</p></div>
+  <div class="tile"><b>${k(counts.media)}</b><p>Media · ${k(counts.all - counts.media)} without</p></div>
+  <div class="tile"><b>${k(counts.composition)}</b><p>Composition · ${k(counts.all - counts.composition)} without</p></div>
+  <div class="tile"><b>${k(counts.index)}</b><p>Index · ${k(counts.all - counts.index)} without</p></div>
+  <div class="tile"><b>${k(counts.lab)}</b><p>Lab Tested · ${k(counts.all - counts.lab)} without</p></div>
  </div>
  <input id="q" type="search" placeholder="Search title or channel" autofocus>
  <table>
