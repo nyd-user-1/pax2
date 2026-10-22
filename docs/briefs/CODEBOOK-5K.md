@@ -6,7 +6,7 @@ Budget **$5, hard cap** — flag before exceeding. Commit by explicit path; do n
 
 ## The rig
 
-One **spot** GPU box (g6.xlarge or g6.2xlarge), the house pattern — `scripts/vqa/box.sh` and `launch.sh` are the reference: self-terminating with a watchdog, code and log uploaded to `s3://pax-2-638175140432/codebook/runs/<stamp>/`, outputs one JSON per video under `codebook/raw/<tag>/<id>.json`, resume-safe by id (skip ids whose output object exists). Model: `Qwen/Qwen3-8B` through vLLM with prefix caching (text-only passes; if the box already proven by Window Q is preferred, `Qwen/Qwen3-VL-4B-Instruct` takes text prompts — pick one and state it). Inputs are transcripts, read from the same sources `scripts/accounting.mjs` counts.
+One GPU box (g6.xlarge or g6.2xlarge), the house pattern. Spot first — but the spot G quota is 8 vCPUs and Window Q's census box holds it until that batch ends, so if the spot request fails, launch **on-demand g6.xlarge** (about $0.80 an hour) rather than waiting; state which you ran and its cost — `scripts/vqa/box.sh` and `launch.sh` are the reference: self-terminating with a watchdog, code and log uploaded to `s3://pax-2-638175140432/codebook/runs/<stamp>/`, outputs one JSON per video under `codebook/raw/<tag>/<id>.json`, resume-safe by id (skip ids whose output object exists). Model: `Qwen/Qwen3-8B` through vLLM with prefix caching (text-only passes; if the box already proven by Window Q is preferred, `Qwen/Qwen3-VL-4B-Instruct` takes text prompts — pick one and state it). Inputs are transcripts, read from the same sources `scripts/accounting.mjs` counts.
 
 ## Pass A — Swayable, 28 traits
 
