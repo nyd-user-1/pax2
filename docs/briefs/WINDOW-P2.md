@@ -48,3 +48,31 @@ Shared machinery: `scripts/policy/learn.py` carries the Window P learner unchang
 - **Reward.** Settled outperformed 3× (ratio ≥ 3).
 - **Evaluation and pass rule.** The standard protocol.
 - **Limit specific to titles.** Trait choices travel with topic and channel style; a trait's estimated gain may be its topic's.
+
+**Ran.** 18,544 rows; train 14,835 (through 2026-07-29T22:00:25Z), test 3,709; base rate 0.1488, test logged rate 0.1375. Progressive validation, log loss (AUC): full 0.39138 (0.6418), context-only 0.39635 (0.6162).
+
+| Policy | Matched | ESS | SNIPS − logged (95%) | DR − logged (95%) | Rule |
+|---|---|---|---|---|---|
+| question | 1,729 | 352.6 | -0.008 (-0.049, +0.032) | +0.010 (-0.038, +0.053) | fail |
+| digit | 2,040 | 482.1 | +0.038 (-0.019, +0.089) | +0.035 (-0.016, +0.095) | fail |
+| caps | 1,053 | 366.2 | +0.014 (-0.015, +0.043) | -0.072 (-0.214, +0.026) | fail |
+| emoji | 2,350 | 290.0 | +0.049 (+0.010, +0.083) | +0.065 (+0.006, +0.157) | pass |
+| length | 1,446 | 526.4 | +0.029 (-0.009, +0.057) | +0.018 (-0.027, +0.056) | fail |
+| joint | 37 | 10.3 | -0.099 (-0.170, +0.061) | +0.069 (+0.001, +0.129) | reported only |
+
+Epoch marker: replayRows = 18,544, last replayed `oTytFVuVQzE` (2026-10-12T16:30:36Z).
+
+**Verdict by the registered rule: PASS.**
+
+Arm prevalence over all rows: question 12.8%, digit 8.3%, caps 23.6%, emoji 15.1%; length ≤6 / 7–14 / ≥15 words: 5,843 / 11,037 / 1,664. Emoji passes on both estimators, the only factor here whose SNIPS interval also clears zero. Question, digit, caps and length do not pass. The caps DR estimate (−0.072) disagrees in sign with its SNIPS estimate (+0.014): the model's direct term pulls against the weighted outcomes.
+
+### 2. Thumbnail traits
+
+**Registration — 2026-10-22T19:27:28Z, before any fit.**
+
+- **Rows.** Settled catalog shorts with a family and a v1 thumbnail read in `data/generated/model/thumb-features.json`.
+- **Arms (four factors, joint 4⁴ = 256).** Memorability (ResMem), brightness, contrast, colorfulness, each bucketed into quartiles. Cut points are the training segment's 25th, 50th and 75th percentiles.
+- **Context.** Channel family; log10 channel median.
+- **Reward.** Settled outperformed 3×.
+- **Evaluation and pass rule.** The standard protocol.
+- **Limit specific to thumbnails.** A short's thumbnail is usually a frame of the video, so these arms are partly the video's look, not a separate choice; for most channels the logged "choice" was never made on its own.
