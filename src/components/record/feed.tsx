@@ -5,7 +5,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, EllipsisVertical, Forward, ListPlus, MessageCircle, Play, Rocket, Search, SlidersHorizontal, TrendingUp, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
+import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, EllipsisVertical, FlaskConical, Forward, ListPlus, MessageCircle, Play, Rocket, Search, SlidersHorizontal, TrendingUp, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
 
 import { viewer } from "@/app/original-actions"
 import { boostState, boostToggle, myUsageSince, usageSince } from "@/app/usage-actions"
@@ -32,6 +32,8 @@ export type FeedVideo = {
   comments?: number | null
   paid?: boolean
   tags?: string[]
+  /** Lab Tested: the video file itself was measured in the lab (data/generated/lab-tested.json). */
+  lab?: boolean
 }
 
 const fmt = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 })
@@ -64,11 +66,16 @@ function HoverThumb({ v, aspect, playButton }: { v: FeedVideo; aspect: string; p
     setPlay(false)
   }
   return (
-    <span onMouseEnter={enter} onMouseLeave={leave} className={cn("block", aspect)}>
+    <span onMouseEnter={enter} onMouseLeave={leave} className={cn("relative block", aspect)}>
       {play ? (
         <video src={`/api/video/yt-${v.id}`} poster={thumb(v.id)} autoPlay muted loop playsInline className="size-full object-cover" />
       ) : (
         <img src={thumb(v.id)} alt="" loading="lazy" className={cn("size-full object-cover", aspect !== "aspect-video" && "transition-transform duration-300 group-hover:scale-[1.02]")} />
+      )}
+      {v.lab && (
+        <span title="Lab Tested" aria-label="Lab Tested" className="absolute right-1.5 top-1.5 z-10 flex size-6 items-center justify-center rounded-full bg-white/85 text-slate-900 ring-1 ring-white backdrop-blur-md">
+          <FlaskConical className="size-3.5" />
+        </span>
       )}
       {playButton && !play && (
         <span aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/25 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
@@ -408,6 +415,7 @@ const SORT_KEYS = [
   { key: "comments", label: "Comments", pick: (v: FeedVideo) => v.comments },
   { key: "title", label: "A–Z", order: (a: FeedVideo, b: FeedVideo) => a.title.localeCompare(b.title) },
   { key: "media", label: "Earned", onLabel: "Paid", order: paidFirst },
+  { key: "lab", label: "Lab Tested", order: ((a, b) => Number(!!b.lab) - Number(!!a.lab)) as Order },
 ] as const
 
 type SortKey = (typeof SORT_KEYS)[number]["key"]
@@ -743,7 +751,7 @@ export function SearchBar({
                   {SORT_KEYS.map((k) => {
                     const at = refine.sorts.findIndex((x) => x.key === k.key)
                     const on = at >= 0 ? refine.sorts[at] : null
-                    const Icon = k.key === "title" ? ArrowDownAZ : !on ? ArrowUpDown : on.dir === "up" ? ArrowUpNarrowWide : ArrowDownWideNarrow
+                    const Icon = k.key === "lab" ? FlaskConical : k.key === "title" ? ArrowDownAZ : !on ? ArrowUpDown : on.dir === "up" ? ArrowUpNarrowWide : ArrowDownWideNarrow
                     return (
                       <button
                         key={k.key}

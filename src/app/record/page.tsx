@@ -2,6 +2,7 @@ import Link from "next/link"
 import { FlaskConical, Video } from "lucide-react"
 
 import homeFeed from "../../../data/generated/home-feed.json"
+import labTested from "../../../data/generated/lab-tested.json"
 import shorts from "../../../data/raw/yt-shorts.json"
 import { FlapHero } from "@/components/flap-hero"
 import GradualBlur from "@/components/gradual-blur"
@@ -33,8 +34,9 @@ const timerOf = (iso: string) => {
 export default async function RecordLanding() {
   const all = (shorts as unknown as { videos: RawVideo[] }).videos
   const top = all.filter((v) => v.channelId === FAIRVOTE).sort((a, b) => (b.views ?? 0) - (a.views ?? 0))[0]
-  // Each video carries its delivery tags, for the feed's tag filter.
-  const feed = (homeFeed as FeedVideo[]).map((v) => ({ ...v, tags: tagsFor(`yt-${v.id}`) }))
+  // Each video carries its delivery tags, for the feed's tag filter, and its Lab Tested flag.
+  const lab = new Set(labTested as string[])
+  const feed = (homeFeed as FeedVideo[]).map((v) => ({ ...v, tags: tagsFor(`yt-${v.id}`), lab: lab.has(v.id) }))
   // Signed in, the hero has done its job: the feed is the page. Local dev is exempt —
   // its auto-admin shortcut would otherwise hide the hero forever.
   if (process.env.NODE_ENV !== "development" && (await currentUser()))
