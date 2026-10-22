@@ -95,6 +95,10 @@ const SCORE = {
   unsettled: "bg-white/85 text-slate-900 ring-1 ring-white backdrop-blur-md",
 } as const
 
+/** The chip's colour. An unsettled video colours by its current ratio — the chip states views over
+ *  median as they stand, the same thresholds the settled tiers use. */
+const scoreOf = (v: FeedVideo) => SCORE[v.tier !== "unsettled" ? v.tier : v.ratio >= 3 ? "breakout" : v.ratio <= 0.5 ? "killed" : "baseline"]
+
 /** The video's ratio — views over its channel's median — on hover: the frame dims and the
  *  chip pops in at its center, green for a Hit, red for a Miss, frosted white otherwise. The whole
  *  frame frosts over. */
@@ -103,7 +107,7 @@ function Score({ v }: { v: FeedVideo }) {
     <>
       <span aria-hidden className="pointer-events-none absolute inset-0 bg-black/35 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
       <span aria-hidden className="pointer-events-none absolute inset-0 bg-white/10 opacity-0 backdrop-blur-md transition-opacity duration-200 group-hover:opacity-100" />
-      <span className={cn("tabular pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-90 rounded-xl px-4 py-2 text-2xl font-bold leading-none opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.35)] transition-[opacity,scale] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-100 group-hover:opacity-100", SCORE[v.tier])}>
+      <span className={cn("tabular pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-90 rounded-xl px-4 py-2 text-2xl font-bold leading-none opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.35)] transition-[opacity,scale] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-100 group-hover:opacity-100", scoreOf(v))}>
         {v.ratio >= 10 ? v.ratio.toFixed(0) : v.ratio.toFixed(1)}×
       </span>
     </>
@@ -330,7 +334,7 @@ function Ribbon({ v, compact }: { v: FeedVideo; compact?: boolean }) {
         <Avatar id={v.channelId} className={compact ? "size-6" : undefined} />
         <span className={cn("truncate text-slate-800", compact ? "text-sm" : "text-[15px]")}>{v.channel}</span>
       </span>
-      <span aria-label="Views over the channel's median" className={cn("tabular shrink-0 rounded-md px-1.5 py-0.5 text-xs font-bold", SCORE[v.tier])}>
+      <span aria-label="Views over the channel's median" className={cn("tabular shrink-0 rounded-md px-1.5 py-0.5 text-xs font-bold", scoreOf(v))}>
         {v.ratio >= 10 ? v.ratio.toFixed(0) : v.ratio.toFixed(1)}×
       </span>
     </div>
