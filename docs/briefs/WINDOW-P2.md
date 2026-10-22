@@ -184,3 +184,32 @@ The decision: at hour 6 after publish, which of the day's new shorts gets the pa
 - **Reported per scored slate.** Policy hit (the pick's label), uniform allocation (the slate's mean label), the comparator "highest 6-hour views over channel median" (reported, gates nothing), and the oracle (any hit in the slate).
 - **Rule.** Pass if the mean of (policy − uniform) over scored slates has a 95% lower bound above 0 in a 1,000-resample bootstrap of slates, seed 20261022.
 - **Limits.** A few hundred curves and a few dozen hits: the intervals will be wide and are reported as they fall. The curves came from the poller's watch list, not a random draw of shorts. No short in the diary was paid; the reward is the organic curve a paid flight would ride, not the flight's own return.
+
+**Ran.** 349 curves qualify (335 labeled at 72 hours, 14 by settled tier; none dropped for a missing family), 57 hits. The PAX2 Velocity Classifier counts 341 curves and 33 hits on its own rule; the difference comes from the median: this loop uses the catalog's channel median, the classifier uses baselines.json. The diary spans 9 publish days. The first day (62 shorts) is warm-up, leaving **8 scored slates** holding 287 shorts, about 36 a slate.
+
+| Allocation | Hit rate of the pick, mean over 8 slates | − uniform (95%) |
+|---|---|---|
+| Policy (learner's top pick) | 0.875 | +0.668 (+0.420, +0.841) |
+| Comparator: top 6-hour views over median | 0.875 | +0.668 (+0.433, +0.828) |
+| Uniform | 0.207 | — |
+| Oracle | 1.000 | — |
+
+Every scored slate holds at least one hit. The learner's pick wins in 7 of 8 slates, the same count as picking the highest 6-hour views over median: the learner adds nothing measurable over that one feature. With 8 slates, the interval moves by an eighth with each one.
+
+Epoch marker: replayRows = 349 (per curve, publish order).
+
+**Verdict by the registered rule: PASS**, on 8 slates.
+
+### 7. Active learning
+
+**Registration — 2026-10-22T19:30:43Z, before the lists are built.**
+
+No outcomes are fitted here. The fitted loops' posteriors rank where the next measurement or audit is worth most.
+
+- **Models.** The five fitted posteriors over catalog shorts: the publish policy (`martian-publish-policy.json`), title style, thumbnail traits, posting cadence, family investment. Paid flight covers only polled curves and is left out. Each model scores a short only where every feature it needs exists for that short.
+- **Per short, per covering model.** The posterior-mean chance p at the short's own logged arms, and the posterior variance of the logit at those arms, xᵀ diag(1/precision) x.
+- **Measure next.** Catalog shorts, any tier, without a media-measured composition read (no mode-match score in `winning-modes.json`). Ranked by the mean logit variance across covering models, highest first; ties by the binary entropy of the mean p. Top 500 written.
+- **Hand-audit next.** Settled shorts that have a media-measured read. Ranked by surprise, −log of the mean p for the observed outcome (outperformed 3× or not), highest first. These are the records the models find hardest to believe, where a label or measurement error is likeliest. Top 500 written; Window Q's audit draws from this list.
+- **Rule.** No pass/fail on outcomes. The loop is **complete** if both lists are written with every eligible short scored by at least one model; any short no model covers is counted and reported.
+- **Limits.** Logit variance measures what the bandits are unsure about, not what a craft measurement would teach; a measured short adds a craft read, not new arm coverage. A surprising record can be a true outlier, not an error.
+- **Output.** `data/generated/model/learning/active-learning.json`.
