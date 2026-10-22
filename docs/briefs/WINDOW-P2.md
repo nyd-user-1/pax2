@@ -213,3 +213,9 @@ No outcomes are fitted here. The fitted loops' posteriors rank where the next me
 - **Rule.** No pass/fail on outcomes. The loop is **complete** if both lists are written with every eligible short scored by at least one model; any short no model covers is counted and reported.
 - **Limits.** Logit variance measures what the bandits are unsure about, not what a craft measurement would teach; a measured short adds a craft read, not new arm coverage. A surprising record can be a true outlier, not an error.
 - **Output.** `data/generated/model/learning/active-learning.json`.
+
+**Ran.** Measure next: 12,999 eligible unmeasured shorts scored (58 covered by no model: their channels have no family). The top 500 average 4.9 covering models; logit variance runs 0.221 to 2.418, against a median of 0.040 over all eligible. Tiers in the top 500: baseline 377, killed 113, breakout 3, unsettled 7. Channels most present: Democracy Forward 105, MeidasTouch 81, Lib Dems for Electoral Reform 53, The Daily Wire 52, When We All Vote 46. The very top is openDemocracy (UK family, the thinnest context).
+
+Hand-audit next: 5,960 eligible measured settled shorts scored (18 uncovered). Surprise in the top 500 runs 2.26 to 3.25, against a median of 0.278. **All 500 are outperformers** (median ratio 5.18): with a base rate near 15%, a hit is always the more surprising record, so the surprise rank never reaches a short that underperformed against a confident forecast. Channels most present: Turning Point USA 94, Pod Save America 85, Ben Shapiro 71, MeidasTouch 64, Brian Tyler Cohen 43. If Window Q's audit wants both kinds of disagreement, it should draw from the top of each outcome separately; the file keeps every row's outcome so that split needs no refit.
+
+**Verdict by the registered rule: complete.**
