@@ -57,7 +57,7 @@ export function modeMatch(ytId: string): { score: number; mode: Mode; axes: stri
 }
 
 export function resonanceScore(ytId: string): { pre: number; post?: number } | null {
-  return formula()?.scores[ytId] ?? null
+  return formula()?.scores?.[ytId] ?? null
 }
 
 type Stages = { order: string[]; ids: Record<string, string> }
