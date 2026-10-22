@@ -32,3 +32,9 @@ Append `## Report` per job: one line each on what shipped; the /library and /glo
    - The Research section shows Metrics in place of Tracking and Evidence.
    - The curve-sort and velocity menus, the revalidations and the flow step links point at /metrics.
    - The /pipeline-2 factory canvas (another window's file) still names /tracking; it reaches /metrics through the redirect.
+2. **Drops**:
+   - Polling, Flows, ML and Score method leave the sidebar. /polling, /flow, /flow/[id], /ml and /scoring/method redirect to /metrics; /scoring/method?tab=research lands on the new tab with its outcome.
+   - The Feature lift tab and page are dropped (`lift.tsx` deleted; /feature-lift redirects to /metrics).
+   - Carry block: now on the video page directly after the Resonance evaluation (`src/components/evidence/carry.tsx`), with the catalog's lift rows unchanged. A row the video in view carries wears a "This video" chip, from the same feature coding (`featureFlagsFor`).
+   - What each feature was worth: now /metrics' Feature worth tab (`FeatureWorth` in `research.tsx`), with the vote choice, favorability and yes/no switch in its tools.
+   - Two links pointed into the dropped pages. The script catalog's link now reads "What each feature was worth" and goes to the tab. The Resonance popover's "How the score works" link is removed, since that page is gone and the video page carries the Formula block.

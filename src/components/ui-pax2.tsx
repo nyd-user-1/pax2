@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 import { Info } from "lucide-react"
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/components/nova/popover"
@@ -42,9 +41,6 @@ export function ScoreInfo({ className }: { className?: string }) {
         <p className="font-semibold text-pax2-blue">Resonance, 0 to 100</p>
         <p className="text-slate-600">How well a paid video stopped the scroll, held viewers and got them to share, save or comment, per person reached. 50 is the average of the first round of results.</p>
         <p className="text-slate-600">The range shows how sure the score is: a few thousand impressions give a wide range, budget alone never raises it.</p>
-        <Link href="/scoring/method" className="font-medium text-pax2-light-blue hover:underline">
-          How the score works
-        </Link>
       </PopoverContent>
     </Popover>
   )

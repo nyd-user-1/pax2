@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChartColumn, ChevronsUpDown, Clapperboard, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, GitBranch, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, Star, Tag, Target, TrendingUp, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, ChevronsUpDown, Clapperboard, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, Star, Tag, Target, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { KebabMenu, MenuFoot, MenuHeader, MenuRow, MenuSeparator } from "@/components/kebab-menu"
@@ -52,11 +52,7 @@ const NAV_TREE: (NavLink | { label: string; icon: typeof House; children: NavLin
 const NAV: NavLink[] = NAV_TREE.flatMap((n) => ("children" in n ? n.children : [n]))
 const RESEARCH = [
   { href: "/metrics", label: "Metrics", icon: Activity },
-  { href: "/polling", label: "Polling", icon: ChartColumn },
   { href: "/graph", label: "Graph", icon: Workflow },
-  { href: "/flow", label: "Flows", icon: GitBranch },
-  { href: "/ml", label: "ML", icon: Brain },
-  { href: "/scoring/method", label: "Score method", icon: FlaskConical },
   { href: "/library", label: "Library", icon: Library },
   { href: "/glossary", label: "Glossary", icon: BookA },
 ]
@@ -86,12 +82,8 @@ const TITLES: [string, string][] = [
   ["/learn", "Learn"],
   ["/v/", "Video"],
   ["/metrics", "Metrics"],
-  ["/polling", "Polling"],
   ["/graph", "Graph"],
-  ["/flow", "Flows"],
   ["/tags", "Tags"],
-  ["/ml", "ML"],
-  ["/scoring/method", "Score method"],
   ["/library", "Library"],
   ["/glossary", "Glossary"],
   ["/dashboard", "Dashboard"],

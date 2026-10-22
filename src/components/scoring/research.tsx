@@ -170,3 +170,53 @@ export default async function ReferencePage({ searchParams }: { searchParams: Pr
     </div>
   )
 }
+
+/** The "What each feature was worth" block on its own, for /metrics: the outcome switch rides in the
+ *  block's tools and links back to `href` with `o=` set. */
+export function FeatureWorth({ o = "votechoice", href }: { o?: string; href: (o: string) => string }) {
+  const key = M.outcomes[o] ? o : "votechoice"
+  const out = M.outcomes[key]
+  const max = Math.max(2, ...out.features.map((f) => Math.max(Math.abs(f.low), Math.abs(f.high))))
+  const sorted = [...out.features].sort((a, b) => b.diff - a.diff)
+  const groups = [
+    { name: "Helps", rows: sorted.filter((f) => f.low > 0), tone: "text-above" },
+    { name: "Unclear", rows: sorted.filter((f) => f.low <= 0 && f.high >= 0), tone: "text-slate-500" },
+    { name: "Hurts", rows: sorted.filter((f) => f.high < 0), tone: "text-below" },
+  ].filter((g) => g.rows.length)
+  return (
+    <ChartBlock
+      title="What each feature was worth"
+      height="auto"
+      search="Search features…"
+      rows={sorted.map((f) => ({ feature: f.label, points: f.diff, low: f.low, high: f.high, volunteer: VOLUNTEER.has(f.key) }))}
+      name="feature-effects"
+      tools={
+        <div className="mx-2 flex flex-wrap items-center gap-1 rounded-full bg-white p-0.5 shadow-e1">
+          {Object.keys(M.outcomes).map((k) => (
+            <Link key={k} href={href(k)} scroll={false} className={cn("rounded-full px-3 py-1 text-xs transition-colors", k === key ? "bg-pax2-blue font-medium text-white" : "text-slate-600 hover:text-pax2-blue")}>
+              {LABEL[k] ?? k}
+            </Link>
+          ))}
+        </div>
+      }
+    >
+      <div className="flex flex-col gap-2">
+        {groups.map((g) => (
+          <div key={g.name} className="flex flex-col">
+            <span className={cn("pt-3 pb-1 text-xs font-semibold tracking-wide uppercase", g.tone)}>
+              {g.name} · {g.rows.length}
+            </span>
+            <ol className="flex flex-col divide-y divide-slate-100">
+              {g.rows.map((f, i) => (
+                <Row key={f.key} f={f} max={max} i={i} />
+              ))}
+            </ol>
+          </div>
+        ))}
+        <p className="mt-3 text-xs text-slate-400">
+          Points of {(LABEL[key] ?? key).toLowerCase()}, ads with the feature against ads without, with the 95% interval; <span className="rounded-full bg-pax2-lavender px-1.5 py-0.5 text-[10px] font-semibold text-pax2-light-blue">Volunteer</span> marks the features a volunteer testimonial varies. Random-effects meta-regression over {out.studies} randomized experiments, one feature at a time. {M.source}
+        </p>
+      </div>
+    </ChartBlock>
+  )
+}

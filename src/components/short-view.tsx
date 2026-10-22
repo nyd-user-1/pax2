@@ -8,6 +8,7 @@ import subscribers from "../../data/generated/channel-subscribers.json"
 import warBaseline from "../../data/generated/war-baseline.json"
 import sampleVideos from "../../data/sample/videos.json"
 import paidBatch from "../../data/generated/voter-freedom-paid.json"
+import { CarryBlock } from "@/components/evidence/carry"
 import { RangeBar } from "@/components/bits"
 import { boostCounts } from "@/lib/boost"
 import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, TableBlock } from "@/components/blocks"
@@ -362,6 +363,8 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         </div>
       </CardBlock>,
     ],
+    // Moved from /evidence#carry (2026-10-22): the catalog's lift, read against this video.
+    ["carry", "What the pushed videos carry", <CarryBlock key="carry" ytId={ytId} />],
     [
       "kpis",
       "KPIs",

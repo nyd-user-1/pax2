@@ -176,6 +176,12 @@ function codeOne(v: LabVideo): Coded | null {
   return { tier: v.tier, flags }
 }
 
+/** One video's feature flags, coded the way the lift is (null when the video has no features file). */
+export function featureFlagsFor(ytId: string): Record<string, boolean> | null {
+  const v = labVideos().find((x) => x.id === ytId)
+  return v ? (codeOne(v)?.flags ?? null) : null
+}
+
 export function featureLift(): { rows: LiftRow[]; analyzed: number; breakouts: number; killed: number } {
   const coded = labVideos().map(codeOne).filter((x): x is Coded => x !== null)
   const b = coded.filter((c) => c.tier === "breakout")

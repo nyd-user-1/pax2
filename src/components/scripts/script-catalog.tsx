@@ -265,8 +265,8 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
                   ))}
                 </ul>
               )}
-              <Link href="/scoring/method?tab=research" className="w-fit text-xs font-medium text-pax2-light-blue hover:underline">
-                What controlled tests found
+              <Link href="/metrics?tab=worth" className="w-fit text-xs font-medium text-pax2-light-blue hover:underline">
+                What each feature was worth
               </Link>
             </div>
 

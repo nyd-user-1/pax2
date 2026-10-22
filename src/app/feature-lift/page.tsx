@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 
-// Merged into /evidence's Feature lift tab.
+// Dropped 2026-10-22; its carry block lives on each video page.
 export default function Page() {
-  redirect("/metrics?tab=lift")
+  redirect("/metrics")
 }
