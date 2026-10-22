@@ -15,7 +15,7 @@ import { channel, uploadShort } from "@/lib/youtube"
 const link = (id: string, tab?: string) => `${SITE}/v/${id}${tab ? `?tab=${tab}` : ""}`
 const refresh = (id: string) => {
   revalidatePath(`/v/${id}`)
-  for (const p of ["/my-videos", "/tracking"]) revalidatePath(p)
+  for (const p of ["/my-videos", "/metrics"]) revalidatePath(p)
 }
 
 const signed = (x: number, digits: number) => `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(digits)}`

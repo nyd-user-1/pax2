@@ -22,7 +22,7 @@ export function VelocitySortMenu({ sort, focus, filter, tab }: { sort: VelocityS
     if (focus) q.set("v", focus)
     if (value !== "oldest") q.set("s", value)
     if (filter && filter !== "all") q.set("f", filter)
-    return `/tracking?${q.toString()}`
+    return `/metrics?${q.toString()}`
   }
   return (
     <DropdownMenu>

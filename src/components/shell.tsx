@@ -51,8 +51,7 @@ const NAV_TREE: (NavLink | { label: string; icon: typeof House; children: NavLin
 // Every page in the tree, in order: the search's list and the phone's strip.
 const NAV: NavLink[] = NAV_TREE.flatMap((n) => ("children" in n ? n.children : [n]))
 const RESEARCH = [
-  { href: "/tracking", label: "Tracking", icon: Activity },
-  { href: "/evidence", label: "Evidence", icon: TrendingUp },
+  { href: "/metrics", label: "Metrics", icon: Activity },
   { href: "/polling", label: "Polling", icon: ChartColumn },
   { href: "/graph", label: "Graph", icon: Workflow },
   { href: "/flow", label: "Flows", icon: GitBranch },
@@ -86,8 +85,7 @@ const TITLES: [string, string][] = [
   ["/learn/classifier", "The Classifier"],
   ["/learn", "Learn"],
   ["/v/", "Video"],
-  ["/tracking", "Tracking"],
-  ["/evidence", "Evidence"],
+  ["/metrics", "Metrics"],
   ["/polling", "Polling"],
   ["/graph", "Graph"],
   ["/flow", "Flows"],

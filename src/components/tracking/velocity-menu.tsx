@@ -25,7 +25,7 @@ export function VelocityMenuItems({ tab, id, sort, filter }: { tab?: string; id:
     if (s !== "oldest") q.set("s", s)
     if (f !== "all") q.set("f", f)
     const qs = q.toString()
-    router.replace(`/tracking${qs ? `?${qs}` : ""}#${id}`, { scroll: false })
+    router.replace(`/metrics${qs ? `?${qs}` : ""}#${id}`, { scroll: false })
   }
   return (
     <>

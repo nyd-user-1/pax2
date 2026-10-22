@@ -24,3 +24,11 @@ Third person; approved vocabulary; no "→" in UI; no explainer paragraphs under
 ## Report
 
 Append `## Report` per job: one line each on what shipped; the /library and /glossary proposals at the end.
+
+## Report
+
+1. **/metrics**: one tabbed page with Live, Complete, Patterns, Outliers and Feature lift, merging /tracking and /evidence.
+   - /evidence and /tracking redirect with their tab, sort and filter; the older redirects (/patterns, /outliers, /feature-lift, /velocity-tracker, /live-tracking) now land on /metrics directly.
+   - The Research section shows Metrics in place of Tracking and Evidence.
+   - The curve-sort and velocity menus, the revalidations and the flow step links point at /metrics.
+   - The /pipeline-2 factory canvas (another window's file) still names /tracking; it reaches /metrics through the redirect.
