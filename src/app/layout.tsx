@@ -19,6 +19,10 @@ export default async function RootLayout({ children, drawer }: LayoutProps<"/">)
   const user = await currentUser()
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+      <head>
+        {/* Every card's thumbnail comes from YouTube's image host; the handshake happens once, early. */}
+        <link rel="preconnect" href="https://i.ytimg.com" />
+      </head>
       <body className="min-h-dvh font-sans text-foreground antialiased">
         <LoadCurtain />
         <Shell drawer={drawer} signedIn={!!user} admin={!!user?.admin}>

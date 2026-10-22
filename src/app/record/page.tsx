@@ -93,6 +93,13 @@ export default async function RecordLanding() {
         {/* Section four: the ways into recording, as on /recording; every path opens here, in place. Positioned, so it paints above the fixed grid. Above the feed, which never ends. */}
         <section id="record" className="relative flex min-h-dvh scroll-mt-16 flex-col justify-center">
           <div className="mx-auto w-full max-w-6xl px-5 pb-60 pt-12">
+            <div className="mb-8 flex flex-col gap-3">
+              <h2 className="font-display text-3xl font-bold text-pax2-blue">Record</h2>
+              <p className="max-w-3xl text-lg leading-relaxed text-slate-900">
+                Five ways in: choose a script, write your own, answer three questions for one in your voice, build in the studio, or upload a finished video. Every original gets the catalog&rsquo;s
+                own read — a forecast before it publishes, measurements after.
+              </p>
+            </div>
             <RecordChooser>
               <HelpLine />
             </RecordChooser>
@@ -102,6 +109,15 @@ export default async function RecordLanding() {
       </LandingOnly>
       {/* Positioned, so the feed paints above the fixed grid layer. */}
       <div id="learn" className="relative">
+        <LandingOnly>
+          <div className="mx-auto w-full max-w-6xl px-6 pb-2 pt-10">
+            <h2 className="font-display text-3xl font-bold text-pax2-blue">The Catalog</h2>
+            <p className="mt-3 max-w-3xl text-lg leading-relaxed text-slate-900">
+              19,057 political Shorts from 66 channels, searchable end to end. Each card carries its measured record: views, views over the channel&rsquo;s median, and the flask where the full lab
+              pipeline has run.
+            </p>
+          </div>
+        </LandingOnly>
         <Feed initial={initial} total={total} cursor={cursor} facets={facets} />
       </div>
       <LandingOnly>
