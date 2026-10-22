@@ -63,3 +63,24 @@ Append `## Report` per job: one line each on what shipped; the /library and /glo
    - **Tags**: one header per tag (the ruled-off "aggrieved" skipped), over up to three other videos carrying it, as thumbnails with titles, and a See all link to the tag's section on /tags. A tag no other video carries says so.
    - **Visual Notes**: keeps the summary; the key-value half (setting, on-screen people, captions…) is its own block, Visual Characteristics.
    - **Recommendations**: always renders (built in job 5). The registry holds no measured lift yet, so today's lines are descriptive reads of each off-mode ingredient with one note saying so. A video on mode everywhere reads "No change recommended." With no craft read, it says so and lists the unlock actions.
+6. **/library and /glossary**: assessed and proposed only, nothing built (proposals below).
+
+### Proposal: /glossary (keep and upgrade)
+
+Keep it. It is load-bearing: `src/lib/glossary.ts` is the app's vocabulary, the blocks' Term chips link to its rows, and six surfaces link to the page. It has drifted from the rulings, though:
+- The **Resonance score** entry still defines the old paid formula (Engage, Interest and Act at 25/40/35, 50 = first-round average). That contradicts docs/RESONANCE.md and the gauge now on the video page.
+- Missing entries for terms the video page now uses: winning mode, mode match, craft template, the Resonance bands (Poor to Exceptional, with their cut-points), and Feature worth.
+- The upgrade: rewrite Resonance to the settled definition, add those five entries, and give the Resonance gauge and Mode match blocks the same Term chip the old block had.
+- One edit to `glossary.ts`, about an hour.
+
+### Proposal: /library (keep and upgrade, but re-scoped)
+
+Keep the page and reshape what it lists:
+- **What it lists today:** 13 external datasets and five sketches. Six of the datasets record no use (Coppock, emotional ads, Upworthy, Meta ad library, Wesleyan codebook, Hewitt). Some of that is stale bookkeeping: the Upworthy archive trains the Headline Ranker. Several `usedIn` links point at pages this brief retired (/scoring/method, /evidence), which now land on /metrics through redirects.
+- **What it lacks:** the datasets the product actually runs on — the 19k-short catalog, transcripts, composition, the serving index, the winning modes, the poller's readings.
+- **The upgrade:**
+  - Add those as PAX datasets, with counts read from `data/generated/accounting.json`.
+  - Repair the `usedIn` links to their current homes (the video page, /metrics, /evals).
+  - Mark each external set Used or Reference.
+  - Move the five sketches to their own tab.
+- Dropping the page outright would lose the only index of sources with licenses, so the recommendation is to keep it.
