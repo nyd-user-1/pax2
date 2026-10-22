@@ -79,3 +79,17 @@ Revised on review (Brendan, 2026-10-22): the deck is narrative only, feature sto
 - Slides 5–7 carry real product screens, captured from the local dev server and embedded in the file: the video page's mode match and recommendations (`/v/yt-NnhIQyha4mw`), the scan screen with nine of nine stages measured (`/lab/NnhIQyha4mw`), and one step of the learning ledger (`/reinforcement-learning`). The announcement band is cropped out.
 - What compounds: three numbers, 19,057 shorts, 12 learning loops (the publish policy plus Window P2's eleven), 617 ads.
 - Headings wrap balanced; page numbers kept.
+
+### Revision 3 — seven Alt slides (Brendan, 2026-10-22)
+
+Appended after the close as slides 11–17, each marked "Alt" bottom left, in line with the page number. Captured from the local dev server (started, shot, stopped):
+
+11. Every line has its reason: `/scripts`, the Uncontested script with its Citations rail.
+12. A supporter asks for a script; it arrives cited: `/chat` Record mode, a two-turn exchange, the script card with its line markers and the Citations panel (the draft cites 108 of 160 from the facts list). The input bar is cropped out.
+13. The take-off, seen while it happens: `/metrics?f=breakout`, a live card mid-hover, its curve past 3x.
+14. Every short, placed by what it says: `/graph` Clusters, Vector view by Resonance, 18,455 shorts.
+15. The political feed, scored: the home feed searched for James Talarico, green Outlier Score chips.
+16. The right length, for this video: the video page's Resonant Length block (`/v/yt-26jWvtIN5o8`).
+17. The whole system, on one page: `/pipeline-2`, cropped to leave out the per-upload price box and the vendor service labels.
+
+The chat capture saved one chat ("I'm Dana Reyes…") under the dev login in the chats ledger rows.
