@@ -60,7 +60,7 @@ function rowHtml(r) {
   return '<tr><td class="vid"><img loading="lazy" src="https://i.ytimg.com/vi/' + r[0] + '/default.jpg" alt=""><span><b>' +
     esc(r[1]) + '</b><i>' + esc(r[2]) + '</i></span></td><td>' + r[3].toLocaleString("en-US") + '</td><td>' +
     (r[4] == null ? "\u2014" : r[4].toFixed(r[4] >= 10 ? 0 : 1) + "\u00d7") + '</td>' +
-    mark(r[5]) + (r[6] ? '<td class="y kind">\u2713 ' + MEDIA[r[6]] + '</td>' : '<td class="dash">\u2014</td>') +
+    mark(r[5]) + mark(r[6]) +
     mark(r[7]) + mark(r[8]) + mark(r[9]) + mark(r[10]) + '</tr>';
 }
 function renderMore() {
