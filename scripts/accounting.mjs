@@ -83,10 +83,10 @@ const FAILED = [
   ["Embedding retrain candidate (Gate R)", "a retrain of the text embedding", "transcript text", "pooled kNN-AUC at least the serving encoder's, within-channel not below", "under the serving encoder", "2026-10-19", "did not beat the model already serving"],
   ["Pairwise classifier v0 (PAX2 Classifier, pairs)", "picks the outperformer of a same-channel pair from pre-publish features", "35 pre-publish features", "held-out pair accuracy at least 0.55", "0.546", "2026-10-19", "under the bar, and under v1 on the same pairs"],
 ]
-const mrow = (r) => `<tr>${r.map((c, i) => `<td class="${i === 0 ? "mname" : "mtxt"}">${c}</td>`).join("")}</tr>`
-const mtable = (title, rows, last) => `<div class="mcard"><h2>${title}</h2><table>
-<thead><tr><th>Model</th><th>What it does</th><th>Inputs</th><th>Gate</th><th>Score</th><th>Trained</th><th>${last}</th></tr></thead>
-<tbody>${rows.map(mrow).join("\n")}</tbody></table></div>`
+const mrow = (r, n) => `<tr><td class="mnum">${n}</td>${r.map((c, i) => `<td class="${i === 0 ? "mname" : "mtxt"}">${c}</td>`).join("")}</tr>`
+const mtable = (title, rows, last, from) => `<div class="mcard"><h2>${title}</h2><table>
+<thead><tr><th></th><th>Model</th><th>What it does</th><th>Inputs</th><th>Gate</th><th>Score</th><th>Trained</th><th>${last}</th></tr></thead>
+<tbody>${rows.map((r, i) => mrow(r, from + i)).join("\n")}</tbody></table></div>`
 
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -121,6 +121,7 @@ const html = `<!doctype html>
  .mcard { margin-bottom:28px; }
  .mcard h2 { font-size:19px; font-weight:650; color:var(--blue); margin:0 0 10px; }
  td.mname { font-weight:600; white-space:normal; min-width:170px; }
+ td.mnum { color:var(--muted); font-weight:600; }
  td.mtxt { font-weight:400; white-space:normal; font-size:13px; color:#334155; }
  #models { display:none; } body.m #models { display:block; } body.m #acct { display:none; }
 </style></head><body>
@@ -153,8 +154,8 @@ const html = `<!doctype html>
 </div>
 <div class="card" id="models">
  <h1>Models</h1>
- ${mtable("Passed", PASSED, "Status")}
- ${mtable("Failed", FAILED, "Why it failed")}
+ ${mtable("Passed", PASSED, "Status", 1)}
+ ${mtable("Failed", FAILED, "Why it failed", PASSED.length + 1)}
 </div></div>
 <script>
 const DATA = ${JSON.stringify(rows)};
