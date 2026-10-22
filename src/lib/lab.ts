@@ -1,5 +1,9 @@
 import deliveryJson from "../../data/generated/delivery.json"
 import { CHANNELS } from "@/lib/channels"
+import { featuresFile, ytShortsFile } from "@/lib/data-files"
+
+const featuresJson = featuresFile()
+const shortsJson = ytShortsFile()
 
 // The lab: what the seed round's public traces support. A channel's catalog is
 // a record of repeated explore-phase experiments on roughly the same audience;
@@ -43,10 +47,7 @@ const median = (xs: number[]) => {
 // ── breakout: the seed verdict read off the catalog ─────────────────────────
 
 import type { Tier } from "./velocity-meta"
-import { featuresFile, ytShortsFile } from "@/lib/data-files"
 
-const featuresJson = featuresFile()
-const shortsJson = ytShortsFile()
 export type { Tier } from "./velocity-meta"
 
 /** Passed the gate at 3x the channel's own median; killed below half of it.
