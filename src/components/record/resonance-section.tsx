@@ -1,12 +1,9 @@
-import { ChartCarousel } from "@/components/record/chart-carousel"
-import { ResonanceBlocks } from "@/components/record/resonance-charts"
-import { LengthBlock } from "@/components/record/resonance-length"
-import { TopicBlock } from "@/components/record/resonance-topic"
-import { UniversalBlock } from "@/components/record/resonance-universal"
+import { ResonanceLazy } from "@/components/record/resonance-lazy"
 import { ScrollCue } from "@/components/record/scroll-cue"
 
 // Section three: Resonant Amplification, the four measured blocks as horizontal slides
-// (chart-carousel.tsx), sized so each chart runs about 1130 wide.
+// (chart-carousel.tsx), sized so each chart runs about 1130 wide. The slides and their data load
+// as their own chunk at first idle (resonance-lazy.tsx), out of the landing's initial bundle.
 
 export function ResonanceSection() {
   return (
@@ -19,12 +16,7 @@ export function ResonanceSection() {
             topics where videos outrun their own channel&rsquo;s baseline, and the one curve every channel shares.
           </p>
         </div>
-        <ChartCarousel>
-          <ResonanceBlocks />
-          <LengthBlock />
-          <TopicBlock />
-          <UniversalBlock />
-        </ChartCarousel>
+        <ResonanceLazy />
       </div>
       <ScrollCue next="record" className="bottom-[171px]" />
     </section>
