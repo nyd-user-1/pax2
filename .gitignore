@@ -38,3 +38,6 @@ data/raw/whisper-transcripts
 data/plum/
 # Composition extraction raw outputs and the pulled serving index (scripts/composition/)
 data/raw/composition
+
+# The transcript corpus is 147 MB, past GitHub's limit; it lives in S3 and stays local here.
+data/generated/transcripts.json
