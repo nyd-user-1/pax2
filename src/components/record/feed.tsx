@@ -4,11 +4,12 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, EllipsisVertical, FlaskConical, Forward, ListPlus, MessageCircle, Pin, Play, Rocket, Search, SlidersHorizontal, TrendingUp, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
 
 import { viewer } from "@/app/original-actions"
 import { boostState, boostToggle, myUsageSince, usageSince } from "@/app/usage-actions"
+import { BOOST_CAP } from "@/lib/boost-cap"
 import { useShellPanel } from "@/components/shell"
 import { readerId, useUsage } from "@/components/usage-beacon"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
@@ -123,11 +124,13 @@ const CORNER_ITEM = "flex h-9 min-w-9 items-center justify-center gap-1.5 rounde
 
 /** The feed's Boost state: the reader's current boosts and every card's count, loaded once and
  *  shared, so a rocket stays filled across visits and a press updates one place. */
-const BoostCtx = React.createContext<{ mine: Set<string>; counts: Record<string, number>; toggle: (id: string) => void } | null>(null)
+const BoostCtx = React.createContext<{ mine: Set<string>; counts: Record<string, number>; toggle: (id: string) => void; capped: string | null } | null>(null)
 
 function useBoostState(videos: FeedVideo[]) {
   const [mine, setMine] = React.useState<Set<string>>(new Set())
   const [counts, setCounts] = React.useState<Record<string, number>>({})
+  // The video whose press hit the reader's cap, shown on that card until the next press.
+  const [capped, setCapped] = React.useState<string | null>(null)
   const asked = React.useRef(new Set<string>())
   React.useEffect(() => {
     // Only ids the server hasn't answered for yet — the pool grows a page at a time.
@@ -151,22 +154,36 @@ function useBoostState(videos: FeedVideo[]) {
       setCounts((c) => ({ ...c, [id]: Math.max(0, (c[id] ?? 0) + (on ? 1 : -1)) }))
       return next
     })
+    setCapped(null)
     boostToggle(id, readerId())
-      .then((r) => r && setCounts((c) => ({ ...c, [id]: r.n })))
+      .then((r) => {
+        if (!r) return
+        setCounts((c) => ({ ...c, [id]: r.n }))
+        if (r.capped) {
+          setMine((m) => {
+            const next = new Set(m)
+            next.delete(id)
+            return next
+          })
+          setCapped(id)
+        }
+      })
       .catch(() => {})
   }, [])
-  return React.useMemo(() => ({ mine, counts, toggle }), [mine, counts, toggle])
+  return React.useMemo(() => ({ mine, counts, toggle, capped }), [mine, counts, toggle, capped])
 }
 
-const BOOST_TIP = "Stronger than a like, short of a share: a boost says you value and support this video, and it weights your For you feed toward more like it."
+const BOOST_TIP = `Stronger than a like, short of a share: a boost publicly supports this video, moves it up the For you ranking for every reader, and weights your own feed toward more like it. Up to ${BOOST_CAP} at a time.`
 
 function CardFoot({ v, boost }: { v: FeedVideo; boost?: boolean }) {
   const b = React.useContext(BoostCtx)
+  const router = useRouter()
   const boosted = b?.mine.has(v.id) ?? false
   const count = b?.counts[v.id] ?? 0
   return (
     <div className="tabular mt-auto flex items-center justify-between gap-2 text-sm text-pax2-blue">
-      {boost ? (
+      <span className="flex items-center gap-1.5">
+      {boost && (
         // A press stays out of the card's link.
         <button
           type="button"
@@ -177,15 +194,29 @@ function CardFoot({ v, boost }: { v: FeedVideo; boost?: boolean }) {
           }}
           aria-label="Boost"
           aria-pressed={boosted}
-          title={BOOST_TIP}
+          title={b?.capped === v.id ? `${BOOST_CAP} boosts is the most one reader holds at once; release one to boost this` : BOOST_TIP}
           className={whiteButton("md", cn("gap-1.5 px-2.5 shadow-none hover:shadow-md", boosted && "border-pax2-blue bg-[#dbe7fa]"))}
         >
           <Rocket className="size-4" style={{ color: "#033882", fill: boosted ? "#033882" : "#dbe7fa" }} />
-          {count > 0 && <span className="text-xs font-semibold text-[#033882]">{fmt.format(count)}</span>}
+          <span className="text-xs font-semibold text-[#033882]">{fmt.format(count)}</span>
         </button>
-      ) : (
-        <span />
       )}
+      {b?.capped === v.id && <span className="text-xs text-slate-500">{BOOST_CAP} boosts at most</span>}
+      {/* The Button door: the flask sends this video through the Lab's scan screen. */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          router.push(`/lab/${v.id}`)
+        }}
+        aria-label="Run through the Lab"
+        title="Run through the Lab"
+        className={whiteButton("md", "gap-1.5 px-2.5 shadow-none hover:shadow-md")}
+      >
+        <FlaskConical className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
+      </button>
+      </span>
       <div className="flex items-center gap-0.5">
         <span className={CORNER_ITEM} aria-label={`${v.views} views`}>
           <TrendingUp className="size-5" /> {fmt.format(v.views)}
@@ -1025,7 +1056,7 @@ export function Feed({ initial, total, cursor, facets }: { initial: FeedVideo[];
     return () => clearTimeout(t)
   }, [queried, needle, channel, tag, sorts])
   const base = queried ? (results ?? []) : pool
-  const ordered = React.useMemo(() => (forYou ? rankFeed(base, events, Date.now(), mine, [...boost.mine]) : base), [forYou, base, events, mine, boost.mine])
+  const ordered = React.useMemo(() => (forYou ? rankFeed(base, events, Date.now(), mine, [...boost.mine], boost.counts) : base), [forYou, base, events, mine, boost.mine, boost.counts])
   // The pinned row leads the unnarrowed feed, in the order pinned; its videos leave the cycles below.
   const pinnedVideos = React.useMemo(() => pins.pinned.map((id) => pool.find((v) => v.id === id)).filter((v): v is FeedVideo => !!v), [pins.pinned, pool])
   const pinSet = React.useMemo(() => new Set(pins.pinned), [pins.pinned])

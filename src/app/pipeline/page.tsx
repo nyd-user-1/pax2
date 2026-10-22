@@ -77,12 +77,15 @@ export default async function PipelinePage() {
     {
       id: "button",
       title: "Button",
-      count: "Planned",
-      planned: true,
-      edge: "Lab run",
+      count: "Live",
+      edge: "Lab checks",
       body: (
         <Section>
-          <p className="text-sm text-slate-500">Planned: the flask on every video card sends that video through the Lab.</p>
+          <div className="flex flex-col gap-1.5">
+            <Row left="The flask on every card" pill="/lab/<id>" />
+            <Row left="Checks" pill="9 stages against their records" />
+            <p className="rounded border border-dashed border-slate-300 px-2 py-1 text-xs text-slate-500">Planned: running the boxes on a video the Lab has not measured.</p>
+          </div>
         </Section>
       ),
     },

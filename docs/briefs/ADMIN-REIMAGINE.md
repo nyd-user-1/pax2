@@ -55,3 +55,22 @@ Append `## Report` after each page's commit: one line on what the page now state
   - The uniform baseline: 5,379 of 19,057 shorts hold all four pieces as of this run, read from `accounting.json`. Four counts show what keeps the rest outside (no transcript, no media, no composition, not indexed).
   - Box runs: every measured run from `src/lib/production.ts`, with its cost and a link to the handoff that recorded it.
   - `accounting.mjs` now writes the baseline count and the outside breakdown.
+- **Sixth job: the flask, the scan screen, Boost.**
+  - **Flask.** Every video card's foot now carries a flask button beside the boost rocket; the list rows, which have no rocket, carry the flask alone. It opens `/lab/<youtube id>`, the scan screen. Signing in is required, because one of the checks calls a Lambda.
+  - **Scan screen.**
+    - Laid out in the record flow's dress (StepBar, FlowPage with the title as the display h1). On the left, the video page's 9:16 portrait frame, with a shimmer sweeping it while checks run (static under reduced motion). On the right, one vertical timeline with nine nodes.
+    - Each node is a real server check, asked in order (`src/app/lab-actions.ts`):
+      - Media in hand: live S3 HeadObject on `catalog-media/<id>.mp4`.
+      - Cuts and pacing, loudness, on-screen text, transcript, embedding: the per-short record `data/generated/lab-stages.json`, which `scripts/accounting.mjs` now writes from the composition, transcript and index sources.
+      - Headline read: a live pax2-headline Lambda call on the feed index's title, which returns the percentile.
+      - Neighbors: the serving index. They are read from the embedding, so this node completes exactly when the embedding does.
+      - The read: Lab Tested.
+    - There are no timers: a measured video sweeps through as fast as its lookups answer. It ends on a "measured" count and a link to the video's measured record.
+  - **Deferred: running the boxes on a video never measured.** No per-video path exists today. The analyze Lambda only fires for uploads, and the fleet and composition boxes are batch runs. Building one means a new Lambda, a proxy fetch and box launches that spend money, which needs your go. Until then the screen draws it as planned (dashed) and leaves the unmeasured stages open with the reason. /pipeline's Button door now reads Live, with the same planned note.
+  - **Boost.**
+    - The count is always visible on the rocket, including 0.
+    - Everyone's boosts now lift a video in the For you ranking for every reader: a new term, log of one plus the count, in `src/lib/feed-rank.ts`.
+    - Each reader is capped at 10 active boosts (`src/lib/boost-cap.ts`), enforced server-side. A press past the cap changes nothing, is logged with `capped: true`, reverts on the card, and says why there.
+    - The glossary definition is rewritten to state all of this, with the cap read from the same constant.
+    - The cap of 10 is a judgment call; it is one number to change.
+  - `scripts/usage-features.mjs` still counts every boost event, toggles-off and capped presses included. That predates this change, and capped presses carry `meta.capped` so they can be filtered out.

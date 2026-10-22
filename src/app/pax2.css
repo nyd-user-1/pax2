@@ -206,3 +206,26 @@ body {
   .curve-media img { opacity: 0 }
   .curve-media .curve-chart { opacity: 1 }
 }
+
+/* The scan screen's sweep: a soft band passing down the video while the Lab's checks run. */
+@keyframes pax2-scan {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+.scan-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgb(219 231 250 / 0.45) 50%, transparent 100%);
+  animation: pax2-scan 1.8s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scan-sweep {
+    animation: none;
+    background: rgb(219 231 250 / 0.2);
+  }
+}

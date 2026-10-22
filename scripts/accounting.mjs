@@ -8,7 +8,8 @@
 //        data/generated/model/composition.json (media-derived fields = measured),
 //        data/raw/composition/index/rows.json, data/generated/lab-tested.json,
 //        data/generated/model/video-blind-sample.json, and the live S3 catalog-media listing.
-// Writes docs/ACCOUNTING.html, and data/generated/accounting.json (the counts and the model ledger)
+// Writes docs/ACCOUNTING.html, data/generated/lab-stages.json (each short's measured stages, for the
+//        scan screen), and data/generated/accounting.json (the counts and the model ledger)
 //        for the app's admin pages to read at render.
 import fs from "node:fs"
 import path from "node:path"
@@ -336,6 +337,16 @@ for (const v of universe) {
   const t = transcriptRows[v.id]
   if (t) sources[t.source ?? "unknown"] = (sources[t.source ?? "unknown"] ?? 0) + 1
 }
+// The Lab's per-video record for the scan screen: one character per measured stage, in STAGE_BITS
+// order, "1" when the record exists. Only shorts with at least one measured stage appear.
+const STAGE_BITS = ["cuts", "loudness", "text", "transcript", "index"]
+const stages = {}
+for (const v of universe) {
+  const c = compRows[v.id]
+  const bits = [c?.cutsPerSec != null, c?.loudnessLufs != null, c?.textFrameShare != null, transcripts.has(v.id), index.has(v.id)].map((b) => (b ? "1" : "0")).join("")
+  if (bits.includes("1")) stages[v.id] = bits
+}
+fs.writeFileSync(path.join(root, "data/generated/lab-stages.json"), JSON.stringify({ builtAt: new Date().toISOString(), order: STAGE_BITS, ids: stages }) + "\n")
 // The same counts and ledger for the app: /dashboard's tiles, /evals' tables, /pipeline's sets.
 const ledger = (r) => ({ name: r[0], kind: r[1], does: r[2], inputs: r[3], score: r[4], last: r[5] })
 fs.writeFileSync(

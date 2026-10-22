@@ -1,5 +1,7 @@
 // Every metric and term on screen: the short label used in tables, its full name, and what it means.
 
+import { BOOST_CAP } from "@/lib/boost-cap"
+
 export type Term = { id: string; short: string; full: string; definition: string; group: "Score" | "Delivery" | "Engagement" | "Campaigns" | "Graph" | "Script" }
 
 export const GLOSSARY: Term[] = [
@@ -26,7 +28,7 @@ export const GLOSSARY: Term[] = [
   { id: "plays3s", short: "3s plays", full: "3-second video plays", group: "Engagement", definition: "Times the video played for at least 3 seconds." },
   { id: "avg-watch", short: "Avg. watch", full: "Average watch time", group: "Engagement", definition: "Seconds the average viewer watched." },
   { id: "thruplays", short: "ThruPlays", full: "ThruPlays", group: "Engagement", definition: "Plays to the end, or to 15 seconds for longer videos (Meta's definition)." },
-  { id: "boost", short: "Boost", full: "Boost", group: "Engagement", definition: "Stronger than a like, short of a share: a boost says the reader values and supports the video, not that it held their attention. A reader's boosts weight their For you feed toward more like them, and each video shows its running count." },
+  { id: "boost", short: "Boost", full: "Boost", group: "Engagement", definition: `The reader's public push: stronger than a like, short of a share. A boost counts on the video's button, moves the video up the For you ranking for every reader (log of one plus its count, added to the ranking score), and weights the reader's own feed toward more like it. Each reader holds at most ${BOOST_CAP} boosts at once, and every press is logged as a reader action, the rows the Feed Ranker trains on.` },
   { id: "paid", short: "Paid", full: "Paid run", group: "Campaigns", definition: "The numbers from a video's paid run, as the ad platform exports them: what was spent, how many saw it, how far they watched (3 seconds, 25%, 50%, 75%, to the end), and what they did after (shares, saves, comments, reactions, clicks), with the cost of each." },
   { id: "hits-and-misses", short: "Hits and Misses", full: "Hits and Misses", group: "Campaigns", definition: "Every short PAX2 tracks, as a dot: publish date across, and views over the channel's usual (its median) up, on a log scale. Green dots broke out well above their channel's usual, red ones fell well below it, grey landed near it. Each dot opens its video." },
   { id: "formula", short: "Formula", full: "Feature lift formula", group: "Campaigns", definition: "How PAX2 measures whether a trait helps videos break out. Within each channel, the share of videos with the trait that broke out is compared with the share of those without it; each channel counts in proportion to how many videos it has on both sides; the channels are pooled into one difference in points; and a 90% range comes from redrawing the channels a thousand times." },
