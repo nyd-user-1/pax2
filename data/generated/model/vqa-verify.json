@@ -1,0 +1,209 @@
+{
+ "builtAt": "2026-10-22T20:49:39.748Z",
+ "truth": "data/raw/vqa/verify.json (hand-checked from the frames the model saw and a frame every 2 s)",
+ "ids": 20,
+ "models": {
+  "qwen3-vl-4b-p2": {
+   "captionsBurnedIn": {
+    "n": 20,
+    "accuracy": 0.65,
+    "truePositives": 17,
+    "precision": 0.857,
+    "recall": 0.706
+   },
+   "callToAction": {
+    "n": 20,
+    "accuracy": 1,
+    "truePositives": 3,
+    "precision": 1,
+    "recall": 1
+   },
+   "productShown": {
+    "n": 20,
+    "accuracy": 1,
+    "truePositives": 0,
+    "precision": null,
+    "recall": null
+   },
+   "thirdPartyWatermark": {
+    "n": 19,
+    "accuracy": 0.632,
+    "truePositives": 2,
+    "precision": 0.143,
+    "recall": 0.5
+   },
+   "onScreenText": {
+    "n": 0,
+    "accuracy": null,
+    "truePositives": 0,
+    "precision": null,
+    "recall": null
+   },
+   "format": {
+    "n": 19,
+    "accuracy": 0.737,
+    "errors": {
+     "talking head -> interview": 3,
+     "talking head -> rally": 1,
+     "talking head -> news clip": 1
+    }
+   },
+   "setting": {
+    "n": 17,
+    "accuracy": 0.941,
+    "errors": {
+     "outdoor -> indoor": 1
+    }
+   },
+   "peopleMax": {
+    "n": 20,
+    "accuracy": 0.5,
+    "withinOne": 0.65
+   },
+   "peopleScreenShare": {
+    "n": 18,
+    "accuracy": 0.889,
+    "rule": "within 0.15"
+   },
+   "ctaSec": {
+    "n": 3,
+    "accuracy": 1,
+    "rule": "within 2 s, where both see a call to action"
+   }
+  },
+  "qwen3-vl-8b-p2": {
+   "captionsBurnedIn": {
+    "n": 20,
+    "accuracy": 0.6,
+    "truePositives": 17,
+    "precision": 1,
+    "recall": 0.529
+   },
+   "callToAction": {
+    "n": 20,
+    "accuracy": 0.95,
+    "truePositives": 3,
+    "precision": 0.75,
+    "recall": 1
+   },
+   "productShown": {
+    "n": 20,
+    "accuracy": 0.95,
+    "truePositives": 0,
+    "precision": 0,
+    "recall": null
+   },
+   "thirdPartyWatermark": {
+    "n": 19,
+    "accuracy": 0.684,
+    "truePositives": 2,
+    "precision": 0.25,
+    "recall": 1
+   },
+   "onScreenText": {
+    "n": 0,
+    "accuracy": null,
+    "truePositives": 0,
+    "precision": null,
+    "recall": null
+   },
+   "format": {
+    "n": 19,
+    "accuracy": 0.842,
+    "errors": {
+     "talking head -> rally": 1,
+     "news clip -> b-roll": 1,
+     "talking head -> news clip": 1
+    }
+   },
+   "setting": {
+    "n": 17,
+    "accuracy": 0.882,
+    "errors": {
+     "studio -> indoor": 2
+    }
+   },
+   "peopleMax": {
+    "n": 20,
+    "accuracy": 0.5,
+    "withinOne": 0.8
+   },
+   "peopleScreenShare": {
+    "n": 18,
+    "accuracy": 0.833,
+    "rule": "within 0.15"
+   },
+   "ctaSec": {
+    "n": 3,
+    "accuracy": 1,
+    "rule": "within 2 s, where both see a call to action"
+   }
+  },
+  "qwen3-vl-4b-p3": {
+   "captionsBurnedIn": {
+    "n": 20,
+    "accuracy": 0.95,
+    "truePositives": 17,
+    "precision": 1,
+    "recall": 0.941
+   },
+   "callToAction": {
+    "n": 20,
+    "accuracy": 1,
+    "truePositives": 3,
+    "precision": 1,
+    "recall": 1
+   },
+   "productShown": {
+    "n": 20,
+    "accuracy": 1,
+    "truePositives": 0,
+    "precision": null,
+    "recall": null
+   },
+   "thirdPartyWatermark": {
+    "n": 19,
+    "accuracy": 0.789,
+    "truePositives": 2,
+    "precision": 0.25,
+    "recall": 0.5
+   },
+   "onScreenText": {
+    "n": 0,
+    "accuracy": null,
+    "truePositives": 0,
+    "precision": null,
+    "recall": null
+   },
+   "format": {
+    "n": 19,
+    "accuracy": 0.842,
+    "errors": {
+     "talking head -> interview": 1,
+     "talking head -> rally": 1,
+     "talking head -> news clip": 1
+    }
+   },
+   "setting": {
+    "n": 17,
+    "accuracy": 1,
+    "errors": {}
+   },
+   "peopleMax": {
+    "n": 20,
+    "accuracy": 0.5,
+    "withinOne": 0.7
+   },
+   "peopleScreenShare": {
+    "n": 18,
+    "accuracy": 0.833,
+    "rule": "within 0.15"
+   },
+   "ctaSec": {
+    "n": 3,
+    "accuracy": 1,
+    "rule": "within 2 s, where both see a call to action"
+   }
+  }
+ }
+}

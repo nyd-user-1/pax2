@@ -1,0 +1,403 @@
+{
+ "builtAt": "2026-10-22T22:14:08.256Z",
+ "rule": "recommendation only where the Breakout lift's 90% range excludes zero, it is measured in 5+ channels, and the column's audited accuracy is at least 0.85; all else descriptive",
+ "recommendations": 1,
+ "rows": [
+  {
+   "variable": "captionsBurnedIn",
+   "label": "Captions burned in",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": -0.9,
+    "range90": [
+     -4.8,
+     2.4
+    ],
+    "channels": 33,
+    "shortsWithTrait": 3094,
+    "basePushedPercent": 40.9,
+    "prevalencePercent": 79.9,
+    "columnAccuracy": 0.889,
+    "auditN": 99
+   },
+   "reason": "the 90% range crosses zero",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "callToAction",
+   "label": "Call to action shown",
+   "status": "recommendation",
+   "direction": "avoid",
+   "grounds": {
+    "liftPoints": -7,
+    "range90": [
+     -11.4,
+     -3.3
+    ],
+    "channels": 32,
+    "shortsWithTrait": 1125,
+    "basePushedPercent": 40.4,
+    "prevalencePercent": 27.9,
+    "columnAccuracy": 0.949,
+    "auditN": 99
+   },
+   "reason": null,
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "ctaInHook",
+   "label": "Call to action shown in the first 3 s",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": -6.8,
+    "range90": [
+     -15.1,
+     1.9
+    ],
+    "channels": 13,
+    "shortsWithTrait": 68,
+    "basePushedPercent": 40.2,
+    "prevalencePercent": 1.7,
+    "columnAccuracy": 0.949,
+    "auditN": 99
+   },
+   "reason": "the 90% range crosses zero",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "format:talking head",
+   "label": "Format: talking head",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": -5.1,
+    "range90": [
+     -9,
+     -1
+    ],
+    "channels": 43,
+    "shortsWithTrait": 2592,
+    "basePushedPercent": 41.8,
+    "prevalencePercent": 60.5,
+    "columnAccuracy": 0.837,
+    "auditN": 86
+   },
+   "reason": "the column's audited accuracy 0.837 is under 0.85",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "format:graphic card",
+   "label": "Format: graphic card",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": 6.7,
+    "range90": [
+     -28.6,
+     71.4
+    ],
+    "channels": 2,
+    "shortsWithTrait": 11,
+    "basePushedPercent": 14.3,
+    "prevalencePercent": 0.6,
+    "columnAccuracy": 0.837,
+    "auditN": 86
+   },
+   "reason": "measured in 2 channels, under 5",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "format:b-roll",
+   "label": "Format: b-roll",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": 18.2,
+    "range90": [
+     11.1,
+     25.7
+    ],
+    "channels": 14,
+    "shortsWithTrait": 87,
+    "basePushedPercent": 38.6,
+    "prevalencePercent": 2.5,
+    "columnAccuracy": 0.837,
+    "auditN": 86
+   },
+   "reason": "the column's audited accuracy 0.837 is under 0.85",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "format:rally",
+   "label": "Format: rally",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": -10,
+    "range90": [
+     -13.5,
+     -6.2
+    ],
+    "channels": 15,
+    "shortsWithTrait": 185,
+    "basePushedPercent": 44,
+    "prevalencePercent": 4.6,
+    "columnAccuracy": 0.837,
+    "auditN": 86
+   },
+   "reason": "the column's audited accuracy 0.837 is under 0.85",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "format:news clip",
+   "label": "Format: news clip",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": 8.4,
+    "range90": [
+     3.8,
+     12.7
+    ],
+    "channels": 26,
+    "shortsWithTrait": 463,
+    "basePushedPercent": 38.8,
+    "prevalencePercent": 11,
+    "columnAccuracy": 0.837,
+    "auditN": 86
+   },
+   "reason": "the column's audited accuracy 0.837 is under 0.85",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "format:interview",
+   "label": "Format: interview",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": 3.7,
+    "range90": [
+     -2.7,
+     9.3
+    ],
+    "channels": 33,
+    "shortsWithTrait": 883,
+    "basePushedPercent": 40.5,
+    "prevalencePercent": 20.6,
+    "columnAccuracy": 0.837,
+    "auditN": 86
+   },
+   "reason": "the 90% range crosses zero",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "format:other",
+   "label": "Format: other",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": null,
+   "reason": "too few channels with 3+ shorts on each side to measure",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "setting:indoor",
+   "label": "Setting: indoor",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": -2.9,
+    "range90": [
+     -6.4,
+     1.2
+    ],
+    "channels": 42,
+    "shortsWithTrait": 2203,
+    "basePushedPercent": 40.1,
+    "prevalencePercent": 51.7,
+    "columnAccuracy": 0.922,
+    "auditN": 90
+   },
+   "reason": "the 90% range crosses zero",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "setting:outdoor",
+   "label": "Setting: outdoor",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": 0.4,
+    "range90": [
+     -4.8,
+     6
+    ],
+    "channels": 39,
+    "shortsWithTrait": 824,
+    "basePushedPercent": 38.8,
+    "prevalencePercent": 19,
+    "columnAccuracy": 0.922,
+    "auditN": 90
+   },
+   "reason": "the 90% range crosses zero",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "setting:studio",
+   "label": "Setting: studio",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": 4.3,
+    "range90": [
+     -0.8,
+     9.3
+    ],
+    "channels": 33,
+    "shortsWithTrait": 1239,
+    "basePushedPercent": 39.7,
+    "prevalencePercent": 28.7,
+    "columnAccuracy": 0.922,
+    "auditN": 90
+   },
+   "reason": "the 90% range crosses zero",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "setting:archival",
+   "label": "Setting: archival",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": null,
+   "reason": "too few channels with 3+ shorts on each side to measure",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "setting:graphics only",
+   "label": "Setting: graphics only",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": 13.4,
+    "range90": [
+     -28.3,
+     71.4
+    ],
+    "channels": 2,
+    "shortsWithTrait": 10,
+    "basePushedPercent": 14.2,
+    "prevalencePercent": 0.5,
+    "columnAccuracy": 0.922,
+    "auditN": 90
+   },
+   "reason": "measured in 2 channels, under 5",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "noPeople",
+   "label": "No person on screen in any sampled frame",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": -6.3,
+    "range90": [
+     -22.9,
+     12.3
+    ],
+    "channels": 7,
+    "shortsWithTrait": 30,
+    "basePushedPercent": 34,
+    "prevalencePercent": 1.2,
+    "columnAccuracy": 0.364,
+    "auditN": 99
+   },
+   "reason": "the 90% range crosses zero",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "twoPlusPeople",
+   "label": "Two or more people in one frame",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": 2.2,
+    "range90": [
+     -2.8,
+     6.7
+    ],
+    "channels": 41,
+    "shortsWithTrait": 1632,
+    "basePushedPercent": 38,
+    "prevalencePercent": 37.7,
+    "columnAccuracy": 0.364,
+    "auditN": 99
+   },
+   "reason": "the 90% range crosses zero",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "personMostFrames",
+   "label": "A person on screen in half the sampled frames or more",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": 9.2,
+    "range90": [
+     3.1,
+     15.2
+    ],
+    "channels": 20,
+    "shortsWithTrait": 2395,
+    "basePushedPercent": 31.4,
+    "prevalencePercent": 96.8,
+    "columnAccuracy": 0.808,
+    "auditN": 99
+   },
+   "reason": "the column's audited accuracy 0.808 is under 0.85",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "productShown",
+   "label": "Product shown",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": -1,
+    "range90": [
+     -7.2,
+     5.3
+    ],
+    "channels": 20,
+    "shortsWithTrait": 189,
+    "basePushedPercent": 42.2,
+    "prevalencePercent": 4.8,
+    "columnAccuracy": 0.96,
+    "auditN": 99
+   },
+   "reason": "the 90% range crosses zero",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  },
+  {
+   "variable": "thirdPartyWatermark",
+   "label": "Third-party watermark",
+   "status": "descriptive",
+   "direction": null,
+   "grounds": {
+    "liftPoints": 1.8,
+    "range90": [
+     -1.8,
+     5.3
+    ],
+    "channels": 35,
+    "shortsWithTrait": 1348,
+    "basePushedPercent": 38.1,
+    "prevalencePercent": 32.4,
+    "columnAccuracy": 0.856,
+    "auditN": 97
+   },
+   "reason": "the 90% range crosses zero",
+   "citation": "data/generated/model/vqa-lift.json (The Breakout lift (src/lib/formulas.ts): within-channel difference in the share of shorts outperforming 3x the channel median, percentage points; 4396 shorts, 57 channels, built 2026-10-22); accuracy from data/generated/model/vqa-audit.json (100 hand-audited shorts)"
+  }
+ ]
+}

@@ -1,0 +1,91 @@
+{
+ "builtAt": "2026-10-22T19:02:59.404Z",
+ "name": "Resonance, Gen 1 stack",
+ "definition": "docs/RESONANCE.md",
+ "formula": "P(outperform 3x) = sigma(b0 + b_c*logit(q_c) + b_x*logit(q_x) + b_h*logit(q_h) + m_c*[q_c missing] + m_x*[q_x missing] + m_h*[q_h missing]), q clamped to [0.01, 0.99], a missing q enters as 0",
+ "components": {
+  "q_c": "PAX2 Classifier v3, full arm, calibrated probability (predictions-v3.jsonl)",
+  "q_x": "craft rank: share of the channel's measured baseline shorts outscored under composition-ranker-combined.json (ties half)",
+  "q_h": "headline percentile: pax2-headline score against headline-v1-reference.json"
+ },
+ "rows": {
+  "baseline": 5379,
+  "heldOut": 1240,
+  "heldOutChannels": 10,
+  "heldOutPositives": 547,
+  "coverage": {
+   "q_c": {
+    "baseline": 5379,
+    "heldOut": 1240
+   },
+   "q_x": {
+    "baseline": 5378,
+    "heldOut": 1240
+   },
+   "q_h": {
+    "baseline": 5379,
+    "heldOut": 1240
+   }
+  }
+ },
+ "validation": {
+  "rule": "leave one held-out channel out over the encoder's 10 held-out channels (the only rows v3 and the pair picker never trained on); pooled AUC of out-of-channel predictions",
+  "stack": {
+   "pooledAuc": 0.5977,
+   "withinChannelAuc": 0.5963
+  },
+  "singles": {
+   "q_c": {
+    "rows": 1240,
+    "pooledAuc": 0.5835,
+    "withinChannelAuc": 0.5684
+   },
+   "q_x": {
+    "rows": 1240,
+    "pooledAuc": 0.5745,
+    "withinChannelAuc": 0.5764
+   },
+   "q_h": {
+    "rows": 1240,
+    "pooledAuc": 0.5815,
+    "withinChannelAuc": 0.5704
+   }
+  },
+  "acceptance": {
+   "rule": "stack held-out AUC >= the best single component's, else that component alone serves as Resonance",
+   "bestSingle": "q_c",
+   "bestSingleAuc": 0.5835,
+   "stackAuc": 0.5977,
+   "pass": true,
+   "serves": "stack"
+  }
+ },
+ "weights": {
+  "b0": 0.1926,
+  "b_c": 0.1573,
+  "b_x": 0.1048,
+  "b_h": 0.155,
+  "m_c": 0,
+  "m_x": 0,
+  "m_h": 0,
+  "fitOn": "all held-out-channel baseline rows, L2 0.001 on the slopes"
+ },
+ "notes": [
+  "The held-out rows' outperform share is high because baseline media were mostly label-picked; AUC is unaffected by the base rate, the intercept is not, so the served probability needs recalibration against the uniform catalog rate before display."
+ ],
+ "futureInputs": {
+  "note": "audited census columns whose trait passed the registry rule; they join the stack at the next refit (Gen 2)",
+  "registry": "data/generated/model/vqa-registry.json",
+  "columns": [
+   {
+    "variable": "callToAction",
+    "liftPoints": -7,
+    "range90": [
+     -11.4,
+     -3.3
+    ],
+    "columnAccuracy": 0.949
+   }
+  ]
+ }
+}

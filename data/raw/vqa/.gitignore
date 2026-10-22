@@ -1,0 +1,2 @@
+# The raw per-short answers live in s3://pax-2-638175140432/vqa/raw/; merge.mjs syncs them down.
+raw/

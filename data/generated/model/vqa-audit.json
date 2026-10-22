@@ -1,0 +1,81 @@
+{
+ "builtAt": "2026-10-22T22:14:07.988Z",
+ "census": "qwen3-vl-4b-p3",
+ "audited": 100,
+ "method": "Hand audit of a stratified sample (scripts/vqa/audit.mjs pick: the model's format x outperformed-3x), read from the frames the model saw and a frame every 2 s. The auditor's truth is data/raw/vqa/audit.json; a column the auditor could not settle is left out of its count.",
+ "columns": {
+  "captionsBurnedIn": {
+   "n": 99,
+   "accuracy": 0.889,
+   "truePositives": 76,
+   "precision": 1,
+   "recall": 0.855
+  },
+  "callToAction": {
+   "n": 99,
+   "accuracy": 0.949,
+   "truePositives": 31,
+   "precision": 0.933,
+   "recall": 0.903
+  },
+  "productShown": {
+   "n": 99,
+   "accuracy": 0.96,
+   "truePositives": 0,
+   "precision": 0,
+   "recall": null
+  },
+  "thirdPartyWatermark": {
+   "n": 97,
+   "accuracy": 0.856,
+   "truePositives": 23,
+   "precision": 0.636,
+   "recall": 0.913
+  },
+  "onScreenText": {
+   "n": 0,
+   "accuracy": null,
+   "truePositives": 0,
+   "precision": null,
+   "recall": null
+  },
+  "format": {
+   "n": 86,
+   "accuracy": 0.837,
+   "errors": {
+    "b-roll -> news clip": 2,
+    "news clip -> graphic card": 1,
+    "rally -> interview": 7,
+    "talking head -> b-roll": 1,
+    "talking head -> rally": 2,
+    "talking head -> news clip": 1
+   }
+  },
+  "setting": {
+   "n": 90,
+   "accuracy": 0.922,
+   "errors": {
+    "outdoor -> indoor": 1,
+    "indoor -> studio": 3,
+    "outdoor -> studio": 1,
+    "outdoor -> graphics only": 1,
+    "indoor -> outdoor": 1
+   }
+  },
+  "peopleMax": {
+   "n": 99,
+   "accuracy": 0.364,
+   "withinOne": 0.485
+  },
+  "peopleScreenShare": {
+   "n": 99,
+   "accuracy": 0.808,
+   "rule": "within 0.15"
+  },
+  "ctaSec": {
+   "n": 28,
+   "accuracy": 1,
+   "rule": "within 2 s, where both see a call to action"
+  }
+ }
+}
