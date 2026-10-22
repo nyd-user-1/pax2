@@ -16,7 +16,9 @@ The stack: one logistic fit over the uniform baseline, held out by channel,
 
 with a missing-component indicator per absent `qᵢ`. Pre-registered acceptance: the stack's held-out AUC must be at least the best single component's, else that component alone serves as Resonance until the stack earns its place.
 
-**The score:** Resonance = the percentile of P̂ among the uniform baseline, 0–100, 50 = typical — always displayed with P̂ and the stack's measured held-out AUC.
+**The score and its gauge (Brendan, 2026-10-22, settled):** Resonance is a probability wearing the credit-score dress — a banded half-gauge, 0 to 100, named bands from Poor to Exceptional, the number and band in the center. It lives pre-release. When the video publishes and completes the poller's 72-hour window, the gauge switches: the measured post-release score (the same 0–100 scale, the outcome's percentile among the baseline) takes the needle, the pre-release score becomes a reference line on the arc, and the gauge's center circle carries the difference, signed (+20, −10).
+
+**The mode-match (the deterministic companion):** beside the gauge, the polygon — craft axes only. A *winning mode* is a recurring craft configuration among videos that outperformed 3×: cluster the craft-axis templates of the outperformers, keep the modes whose lift re-measures above base on held-out channels, and the pre-release read is how closely this video matches its nearest winning mode. Each axis renders as an ingredient row (the Experian pattern): weight of the match, band chip. Post-release, the per-axis chips show the signed up-or-down against what the mode promised, while the gauge circle keeps the aggregate difference.
 
 **The guarantee:** every video that exits the Lab gets a prediction — the metadata arm needs only title, length and posting fields, which every video has. When components are missing, Resonance also lists the specific actions that unlock the fuller read: no transcript, add captions; no media measure, run the flask; and so on. A prediction, plus the path to a better one — never silence.
 
