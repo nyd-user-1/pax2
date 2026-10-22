@@ -9,6 +9,14 @@ Brendan's rulings, 2026-10-22. One commit per numbered job; show only what exist
 5. **Resonance appears** — the video page gains the settled pair as separate blocks of the house block family — the gauge its own block, the mode match (polygon + ingredient rows) its own, recommendations a third where they exist — per docs/RESONANCE.md: (a) the banded half-gauge (credit-score dress, Poor to Exceptional, number and band centered); pre-release score on the needle until the 72-hour window completes, then the post-release score takes the needle, the pre-release becomes a reference line on the arc, and the center circle shows the signed difference; (b) beside it the craft polygon with ingredient rows (axis, weight, band chip), per-axis signed diffs once post-release. Both render only from `data/generated/model/resonance-formula.json` and the winning-modes artifact — the surfaces build now and stay empty until the files exist. Missing components list the actions that unlock the fuller read.
 6. **/library and /glossary** — assess and propose only: one short appended plan each (keep-and-upgrade or drop), no build in this brief. /graph is explicitly out of scope.
 
+7. **Video-page tidy (Brendan, 2026-10-22):**
+   - Every comments block renders exactly seven rows: comment one with three branched replies, comment two with two — the house trunk-and-elbow tree, the approved stand-in words, never the current mountain.
+   - The comments block moves out from under the video to the bottom of the other column.
+   - The comps block (/v …#comps): each comped video gets its thumbnail with the title beneath it; the column that today shows a dash is surfaced under the title only when it has a value, and not at all when it doesn't.
+   - The tags block (/v …#tags): redesigned as tag-category headers over 2–3 thumbnails each, with a See all per category linking to that tag's section on /tags.
+   - The visual-notes block: its bottom key-value list (setting, on-screen people, captions…) splits out as its own block; the two halves are stylistically disjoint today.
+   - The recommendations block always renders: grounded advice where the registry holds a measured lift, descriptive reads elsewhere, and "No change recommended" for a video matching its winning mode everywhere.
+
 ## Rules
 
 Third person; approved vocabulary; no "→" in UI; no explainer paragraphs under headings; responsive; no browser tests; no local typechecks; commit per job by explicit path; **do not push**.
