@@ -103,3 +103,30 @@ Quartile cut points from the training segment: memorability 0.757 / 0.814 / 0.86
 - **Reward.** Settled outperformed 3×.
 - **Evaluation and pass rule.** The standard protocol, one factor, so no joint policy.
 - **Limit specific to cadence.** The gap is mostly a channel's habit, not a per-short choice; within a channel the gap also tracks news cycles that drive views on their own. The catalog's 18-month window truncates gaps at its start.
+
+**Ran.** 18,480 rows; train 14,784 (through 2026-07-29T22:25:34Z), test 3,696; base rate 0.1491, test logged rate 0.1374. Progressive validation, log loss (AUC): full 0.39707 (0.6206), context-only 0.39569 (0.6165).
+
+| Policy | Matched | ESS | SNIPS − logged (95%) | DR − logged (95%) | Rule |
+|---|---|---|---|---|---|
+| gap | 927 | 132.0 | -0.050 (-0.116, +0.010) | +0.034 (-0.043, +0.103) | fail |
+
+Epoch marker: replayRows = 18,480, last replayed `oTytFVuVQzE` (2026-10-12T16:30:36Z).
+
+**Verdict by the registered rule: FAIL.**
+
+Rows dropped as a channel's first short: 64. Gap buckets (<1, 1–2, 2–4, 4–8, ≥8 days): 14,279 / 1,923 / 1,155 / 675 / 448; 77% of shorts go up within a day of the channel's last one. The full model's progressive log loss (0.39707) is worse than the context-only model's (0.39569), and the gap policy's estimators disagree in sign (SNIPS −0.050, DR +0.034), neither clearing zero.
+
+### 4. Channel-family investment
+
+**Registration — 2026-10-22T19:28:25Z, before any fit.**
+
+The catalog holds no record of a partner placing money or content with a family, and a channel's family never changes, so the replay cannot learn from logged investments. The registered stand-in: each catalog short is one logged pairing of a subject (its topic cluster) with a messenger family, and the loop learns which family outperforms on which subject. A partner's own history is its subject mix.
+
+- **Rows.** Settled catalog shorts with a family and a topic cluster (encoder map run 20261019-094112-train, k = 40).
+- **Arm (one factor).** The six families: Candidates & officials, Nonpartisan media, Partisan media, Reform, UK, Voting rights.
+- **Context.** Topic cluster. No continuous context: the channel median belongs to the messenger, not the partner.
+- **Reward.** Settled outperformed 3×. It is measured against each channel's own median, so the loop compares how often each family's shorts outperform their own channel, not the reach a family delivers.
+- **Behavior policy.** Per topic, per family, from training-segment frequencies with +0.5 smoothing. The target policy picks the family with the highest posterior-mean chance on the row's topic, among families seen on that topic in training.
+- **Evaluation and pass rule.** Otherwise the standard protocol (SNIPS and DR, channel-clustered bootstrap, progressive validation against a topic-only model). Pass: DR lower 95% bound above 0 with at least 200 matched test rows, and the full model's log loss beats topic-only.
+- **Counsel per partner.** Partners are the five reform-core channels (Vote YES on 3, Courageous Colorado, Open Primaries, Unite America, FairVote). Each partner's history is the topic mix of its own settled shorts. Its counsel is the family with the highest share-weighted posterior-mean chance under the shipped model, with the share of 1,000 posterior draws (seed 20261022) in which each family ranks first. Counsel is written whatever the verdict, marked with it.
+- **Limit specific to families.** Family is confounded with everything about its channels (audience size, posting volume, production). A family's estimated gain says its channels outperform their own medians more often on a topic, not that a partner's message would do the same there.
