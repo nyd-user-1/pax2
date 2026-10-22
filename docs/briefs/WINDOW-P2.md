@@ -167,3 +167,20 @@ This loop is not a bandit; it is a ranked list.
 - **Rule.** The list is **supported** if, inside the eligible set, mode-match separates outcomes: the AUC of mode-match for outperformed 3× has a channel-clustered bootstrap (1,000 resamples, seed 20261022) 95% lower bound above 0.5. Otherwise the list ships marked **unsupported**: weak craft would not be shown to cost these topics anything.
 - **Limits.** The winning mode was fit on some of these same shorts (train channels), so its match is partly in-sample for them. The media set behind the scores was fetched mostly in outperformer/control pairs, so its base rate runs above the catalog's. Topic lift is measured across channels; a remake stays on the same channel.
 - **Output.** `data/generated/model/learning/remake-candidates.json`.
+
+**Ran.** 1,191 eligible shorts on 46 channels across four topics: Campaign pitches (lift +11.9 points, 90% range 7.5 to 14.9; 492 shorts), Interviews and hearings (+4.9, 2.5 to 8.7; 250), Debates and big ideas (+3.5, 1.2 to 8.3; 289), Rule of law and voting rights (+1.4, 0.3 to 4.7; 160). Surviving mode: low seconds to first cut, high on-screen words per frame, high share of frames with text. Within the eligible set, 45.2% outperformed 3× (the media set's paired fetch). Mode-match AUC for outperformed 3×: 0.598 (95% 0.568 to 0.624, all 1,000 resamples kept). Top 200 of the list: 39.5% outperformed, median ratio 2.17. The list ranks every eligible short as registered, so shorts that already outperformed (rank 2 sits at 19.9×) stay in it; their grounds say so.
+
+**Verdict by the registered rule: supported.**
+
+### 6. Paid-flight allocation
+
+**Registration — 2026-10-22T19:29:48Z, before any fit.**
+
+The decision: at hour 6 after publish, which of the day's new shorts gets the paid flight. The arms are the candidate shorts; every short's outcome is observed whether or not it would have been picked, so this loop is evaluated with full information: no propensities, no off-policy estimator.
+
+- **Diary.** Polled curves in `data/generated/model/velocity-features.json` with a 6-hour reading (first reading at or before hour 6, last at or after hour 6) and a catalog row, labeled by views at 72 hours ≥ 3 × the catalog channel median where a 72-hour value exists, otherwise by the settled ratio ≥ 3. Curves with neither are dropped. This mirrors the PAX2 Velocity Classifier's 341-curve rule from the stored features; the count is reported, not forced.
+- **Learner.** The Window P learner on: family one-hot; standardized log10 views at 1 and 6 hours; log10 of each over the channel median. Standardization uses the full diary's means (a stated leak of scale, not of outcome).
+- **Slates.** Shorts grouped by publish date in America/New_York; slates of two or more shorts are evaluated. The learner replays slates in date order and, for each slate, picks the short with the highest posterior-mean chance using only earlier slates' updates, then updates on the slate. Slates before the learner has seen 50 shorts are warm-up and not scored.
+- **Reported per scored slate.** Policy hit (the pick's label), uniform allocation (the slate's mean label), the comparator "highest 6-hour views over channel median" (reported, gates nothing), and the oracle (any hit in the slate).
+- **Rule.** Pass if the mean of (policy − uniform) over scored slates has a 95% lower bound above 0 in a 1,000-resample bootstrap of slates, seed 20261022.
+- **Limits.** A few hundred curves and a few dozen hits: the intervals will be wide and are reported as they fall. The curves came from the poller's watch list, not a random draw of shorts. No short in the diary was paid; the reward is the organic curve a paid flight would ride, not the flight's own return.
