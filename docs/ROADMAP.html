@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>The four-window program</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Roadmap</title>
 <style>
 body{font:15px/1.65 -apple-system,system-ui,sans-serif;color:#0f172a;background:#fff;margin:0;padding:48px 24px}
 main{max-width:760px;margin:0 auto}
@@ -7,7 +7,7 @@ h1{font-size:23px;margin:0 0 16px}
 h2{font-size:17px;margin:26px 0 8px;color:#033882}
 p{margin:0 0 12px}
 code{font:13px ui-monospace,monospace;background:#f1f5f9;padding:1px 4px;border-radius:4px}
-</style></head><body><main><h1>The four-window program — fetch, question machine, policy, surfaces</h1>
+</style></head><body><main><h1>Roadmap — fetch, question machine, policy, surfaces</h1>
 <p>Proposed by the models window 2026-10-22, approved in principle by Brendan; not yet launched. Any window can run it; the monitor role passes to whoever holds it. Decision owner: Brendan.</p>
 <h2>Window F — fetch and extract (the fuel)</h2>
 <p>The proxy fleet pulls the ~12,100 catalog videos without media (measured rate: 1,827 in ~25 minutes on 10 healthy Webshare lines; lines 5, 11, 12 walled, 8 degraded). Then extraction fleets run composition over the new media (`scripts/composition/launch.sh`), merge (`scripts/composition/merge.mjs`), and run the stock VideoPrism base embed pass (MM-A&#x27;s pipeline, run 20261021-040633-full) so every video has media, composition and a visual embedding — the embedding is for the format-label job only, not outcome prediction (it failed those gates; <code>docs/briefs/MULTIMODAL-SURVEY.md</code>). Owns `catalog-media/`, `composition.json`, embeddings. Budget $25.</p>

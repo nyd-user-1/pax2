@@ -1,4 +1,4 @@
-# The four-window program — fetch, question machine, policy, surfaces
+# Roadmap — fetch, question machine, policy, surfaces
 
 Proposed by the models window 2026-10-22, approved in principle by Brendan; not yet launched. Any
 window can run it; the monitor role passes to whoever holds it. Decision owner: Brendan.
