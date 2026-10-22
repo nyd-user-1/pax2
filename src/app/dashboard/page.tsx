@@ -138,7 +138,7 @@ export default async function DashboardPage() {
       <BlockOrder page="dashboard" initial={["catalog", "activity", "funnel", "scripts", "readers"]}>
         <OrderedBlock id="catalog" label="Catalog">
           <TwoThirdBlock>
-            <MainBlock title="Catalog" className="xl:col-span-2" height="auto" rows={[{ held: "Catalog", count: c.all }, ...tiles.flatMap((t) => [{ held: t.title, count: t.has }, { held: `${t.title}, without`, count: c.all - t.has }])]} footer={`As of ${asOf()}`}>
+            <MainBlock title="Catalog" className="xl:col-span-2" height="auto" rows={[{ held: "Catalog", count: c.all }, ...tiles.flatMap((t) => [{ held: t.title, count: t.has }, { held: `${t.title}, without`, count: c.all - t.has }])]} tools={<span className="ml-1 text-xs text-slate-400">as of {asOf()}</span>}>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="flex flex-col items-center justify-center rounded-xl border border-slate-200 px-2 py-3 text-center">
                   <span className="tabular text-xl font-semibold text-slate-900">{c.all.toLocaleString("en-US")}</span>

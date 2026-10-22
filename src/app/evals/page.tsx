@@ -4,6 +4,7 @@ import { StandInNote } from "@/components/bits"
 import { CardBlock, ChartBlock, ListBlock, TableBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { LoadData } from "@/components/load-data"
+import { FailedModels, PassedModels } from "@/components/evals/model-ledger"
 import { SlopeChart } from "@/components/charts/slope"
 import { faceFor, scriptById, takeLabel } from "@/lib/catalog"
 import { SAMPLE_CALLS, SAMPLE_DECISIONS, SAMPLE_SENT } from "@/lib/sample"
@@ -60,9 +61,14 @@ export default async function ReviewsPage() {
 
   return (
     <div className="flex flex-col gap-10">
-      <header className="flex flex-col gap-2">
-        <p className="max-w-3xl text-sm text-slate-800">Every test the partner approved, every call made before results came in, and what each new round of results changed.</p>
-      </header>
+      <BlockOrder page="evals-models" initial={["passed", "failed"]}>
+        <OrderedBlock id="passed" label="Passed">
+          <PassedModels />
+        </OrderedBlock>
+        <OrderedBlock id="failed" label="Failed">
+          <FailedModels />
+        </OrderedBlock>
+      </BlockOrder>
 
       <section className="flex flex-col gap-3">
         <h2 className="font-display text-xl text-slate-900">Results on file</h2>

@@ -46,3 +46,7 @@ Append `## Report` after each page's commit: one line on what the page now state
     - Feed index on S3: the S3 object, the catalog count read at render, 6.9 MB outside the bundle, and how it is served.
   - Deferred: the tracker below (`data/build.json`: the tiles, to-do columns and its $10 budget) is still dated 2026-10-17. Its done/waiting/next items record your decisions, and rewriting them needs your ruling, so it was left as is.
   - The 198 MB is the brief's figure. The build log prints the BUNDLE line on every build, but nothing writes it to a file the app can read yet.
+- **/evals**:
+  - The model ledger now leads the page: Passed (Live/Staged as a badge, Staged dashed) and Failed (with why each failed), numbered continuously across both tables. Built from the house TableBlock and nova Table, searchable and downloadable, read from `accounting.json` with its as-of date in the block header.
+  - The partner-review blocks (results on file, carried steps, calls) stay below, because the dashboard's funnel links here for that loop. The explainer paragraph under the page head is gone.
+  - Rides along: the dashboard Catalog block's as-of date moved into its header tools, because the house blocks ignore `footer`.
