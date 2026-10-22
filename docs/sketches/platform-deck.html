@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PAX2 — the platform as built</title>
+<style>
+:root{
+  --blue:#1e3a8a; --light:#2563eb; --lavender:#dbeafe; --mist:#f5f7fb;
+  --above:#16a34a; --above-soft:#f0fdf4; --below:#dc2626; --below-soft:#fef2f2;
+  --ink:#0f172a; --body:#334155; --muted:#64748b; --faint:#94a3b8; --rule:#e2e8f0;
+  --shadow:0 4px 14px -4px rgb(15 23 42/.1),0 2px 4px -2px rgb(15 23 42/.06);
+  --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{margin:0;background:var(--mist);color:var(--body);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+.slide{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:44px 6vw;position:relative}
+.card{background:#fff;border-radius:20px;box-shadow:var(--shadow);outline:1px solid rgb(15 23 42/.06);padding:36px 44px;max-width:1240px;width:100%;margin:0 auto}
+.mark{font:700 15px var(--mono);color:var(--blue);letter-spacing:.02em}
+.mark i{font-style:normal;color:var(--below)}
+.kicker{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.kicker span{font-size:12px;color:var(--faint)}
+h2{font-size:30px;line-height:1.15;color:var(--ink);margin:0 0 22px;font-weight:700;letter-spacing:-.01em}
+h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin:0 0 8px;font-weight:600}
+.cols{display:grid;gap:28px}
+.c2{grid-template-columns:1fr 1fr}
+.c32{grid-template-columns:3fr 2fr}
+.c23{grid-template-columns:2fr 3fr}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-weight:600;color:var(--ink);font-size:12px;padding:6px 10px 6px 0;border-bottom:1px solid var(--rule);white-space:nowrap}
+td{padding:6px 10px 6px 0;border-bottom:1px solid #f1f5f9;vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.num{font-variant-numeric:tabular-nums}
+.src{font:11px/1.4 var(--mono);color:var(--faint)}
+.pass,.fail,.prog,.spec{display:inline-block;border-radius:999px;padding:1px 9px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.pass{background:var(--above-soft);color:var(--above)}
+.fail{background:var(--below-soft);color:var(--below)}
+.prog{background:var(--lavender);color:var(--blue)}
+.spec{background:#f1f5f9;color:var(--muted)}
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:200px 1fr;gap:16px;padding:9px 0;border-bottom:1px solid #f1f5f9;font-size:14px}
+.row b{color:var(--ink);font-weight:600}
+.row:last-child{border-bottom:0}
+.fact{font-size:14px;color:var(--body)}
+.big{font-size:34px;font-weight:700;color:var(--blue);line-height:1;font-variant-numeric:tabular-nums}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tile{background:var(--mist);border-radius:14px;padding:14px 16px}
+.tile p{margin:6px 0 0;font-size:13px}
+.formula{font:13px/1.6 var(--mono);color:var(--ink);background:var(--mist);border-radius:12px;padding:12px 14px;overflow-x:auto}
+.limit{display:grid;grid-template-columns:200px 1fr;gap:16px;padding:9px 0;border-top:1px solid var(--rule);font-size:14px}
+.limit b{color:var(--ink)}
+.limit span.u{color:var(--muted)}
+.page{position:absolute;right:6vw;bottom:18px;font:11px var(--mono);color:var(--faint)}
+svg text{font-family:var(--sans)}
+.nav{position:fixed;right:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:7px;z-index:5}
+.nav a{width:8px;height:8px;border-radius:50%;background:#cbd5e1;display:block}
+.nav a.on{background:var(--blue)}
+@media (max-width:900px){.c2,.c32,.c23,.tiles{grid-template-columns:1fr}.row,.limit{grid-template-columns:1fr;gap:2px}.card{padding:24px 20px}h2{font-size:24px}.nav{display:none}}
+@page{size:landscape;margin:10mm}
+@media print{
+  html{scroll-snap-type:none}
+  body{background:#fff}
+  .slide{min-height:auto;padding:0;break-after:page;page-break-after:always}
+  .slide:last-child{break-after:auto;page-break-after:auto}
+  .card{box-shadow:none;outline:0;padding:0;max-width:none}
+  .nav{display:none}
+  .page{position:static;text-align:right;margin-top:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- 1 -->
+<section class="slide" id="s1"><div class="card">
+  <div class="kicker"><span class="mark">P<i>A</i>X2</span><span>The platform as built · 2026-10-22</span></div>
+  <h2>A closed-loop learning system that learns which messages, messengers and formats work</h2>
+  <div class="cols c23">
+    <div>
+      <svg viewBox="0 0 360 330" width="100%" role="img" aria-label="The loop: create, publish, measure, learn">
+        <circle cx="180" cy="165" r="118" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+        <path d="M 262 81 A 118 118 0 0 1 296 150" fill="none" stroke="#1e3a8a" stroke-width="2"/>
+        <polygon points="296,150 290,140 302,141" fill="#1e3a8a"/>
+        <path d="M 264 250 A 118 118 0 0 1 195 282" fill="none" stroke="#1e3a8a" stroke-width="2"/>
+        <polygon points="195,282 206,276 205,288" fill="#1e3a8a"/>
+        <path d="M 98 250 A 118 118 0 0 1 63 180" fill="none" stroke="#1e3a8a" stroke-width="2"/>
+        <polygon points="63,180 69,190 57,189" fill="#1e3a8a"/>
+        <path d="M 96 81 A 118 118 0 0 1 165 48" fill="none" stroke="#1e3a8a" stroke-width="2"/>
+        <polygon points="165,48 154,54 155,42" fill="#1e3a8a"/>
+        <g font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">
+          <rect x="128" y="30" width="104" height="36" rx="18" fill="#dbeafe"/><text x="180" y="53">Create</text>
+          <rect x="250" y="147" width="104" height="36" rx="18" fill="#dbeafe"/><text x="302" y="170">Publish</text>
+          <rect x="128" y="264" width="104" height="36" rx="18" fill="#dbeafe"/><text x="180" y="287">Measure</text>
+          <rect x="6" y="147" width="104" height="36" rx="18" fill="#dbeafe"/><text x="58" y="170">Learn</text>
+        </g>
+        <g font-size="11" fill="#64748b" text-anchor="middle">
+          <text x="180" y="132">19,057 shorts held</text>
+          <text x="180" y="150">polled every 15 minutes</text>
+          <text x="180" y="168">for 72 hours after publish</text>
+          <text x="180" y="196">12 learning loops</text>
+          <text x="180" y="214">registered before fitting</text>
+        </g>
+      </svg>
+      <p class="src">data/generated/accounting.json · docs/briefs/WINDOW-P.md · docs/briefs/WINDOW-P2.md</p>
+    </div>
+    <div>
+      <h3>The learning agenda, verdict by the registered rule</h3>
+      <table>
+        <tr><th>Loop</th><th>Arms</th><th class="n">Result</th><th class="n">Verdict</th></tr>
+        <tr><td>Publish next</td><td>topic, length, hour</td><td class="n">topic DR +0.145 (+0.024, +0.273)</td><td class="n"><span class="pass">pass</span></td></tr>
+        <tr><td>1 Title style</td><td>question, digit, caps, emoji, length</td><td class="n">emoji DR +0.065 (+0.006, +0.157)</td><td class="n"><span class="pass">pass</span></td></tr>
+        <tr><td>2 Thumbnail traits</td><td>memorability, brightness, contrast, colorfulness</td><td class="n">colorfulness DR +0.032 (+0.006, +0.058)</td><td class="n"><span class="pass">pass</span></td></tr>
+        <tr><td>3 Posting cadence</td><td>days since last publish</td><td class="n">DR +0.034 (−0.043, +0.103)</td><td class="n"><span class="fail">fail</span></td></tr>
+        <tr><td>4 Channel family</td><td>six messenger families</td><td class="n">DR +0.021 (−0.014, +0.062)</td><td class="n"><span class="fail">fail</span></td></tr>
+        <tr><td>5 Remake candidates</td><td>topic lift × weak craft</td><td class="n">mode-match AUC 0.598 (0.568, 0.624)</td><td class="n"><span class="pass">supported</span></td></tr>
+        <tr><td>6 Paid-flight allocation</td><td>the day's new shorts at hour 6</td><td class="n">+0.668 over uniform, 8 slates</td><td class="n"><span class="pass">pass</span></td></tr>
+        <tr><td>7 Active learning</td><td>posterior uncertainty</td><td class="n">500 to measure, 500 to audit</td><td class="n"><span class="pass">complete</span></td></tr>
+        <tr><td>8–11 Feed, chat prompts, recommendation order, Studio style</td><td>defined, logged against</td><td class="n">0 replayed rows</td><td class="n"><span class="spec">cold-start spec</span></td></tr>
+      </table>
+      <p class="src" style="margin-top:8px">DR: doubly-robust estimate of the policy's outperformed-3x rate minus the logged rate, 95% channel-clustered bootstrap. Private repos NYSgpt/martian-publish-policy and NYSgpt/martian-learning-loops; every registration and verdict on the card.</p>
+    </div>
+  </div>
+  <div class="page">1 / 9</div>
+</div></section>
+
+<!-- 2 -->
+<section class="slide" id="s2"><div class="card">
+  <h2>The scoring framework: how engagement and persuasion are quantified, weighted, and connected to real outcomes</h2>
+  <div class="cols c32">
+    <div class="rows">
+      <div class="row"><b>Engagement</b><span><b>Outlier Score</b>: a short's views over its own channel's median views. <b>Outperformed 3x</b>: an Outlier Score of 3 or more once settled. Channel size leaves the comparison.</span></div>
+      <div class="row"><b>Resonance, Gen 1</b><span>A pre-publication probability that a video outperforms 3x, stacked from three instruments: the outlier classifier's calibrated probability (q<sub>c</sub>), the craft rank within the channel (q<sub>x</sub>), the headline percentile (q<sub>h</sub>).</span></div>
+      <div class="row"><b>Weights</b><span class="num">b<sub>0</sub> 0.193 · b<sub>c</sub> 0.157 · b<sub>x</sub> 0.105 · b<sub>h</sub> 0.155, fit on 1,240 held-out-channel baseline rows</span></div>
+      <div class="row"><b>Persuasion</b><span>Per-trait effects from 146 randomized ad studies (433 favorability and 575 vote-choice estimates): plain-folks appeal +0.79 points of vote choice (0.32 to 1.25); an explicit ask to vote +0.59 (0.19 to 0.99).</span></div>
+      <div class="row"><b>Outcome link</b><span>Early-hit predictor, views in the first 6 hours to outperformed 3x at 72: AUC 0.729 pooled, 0.862 within channel. Live.</span></div>
+      <div class="formula">P(outperform 3x) = σ(b₀ + b_c·logit(q_c) + b_x·logit(q_x) + b_h·logit(q_h))</div>
+    </div>
+    <div>
+      <h3>Held-out AUC, 10 channels never trained on</h3>
+      <svg viewBox="0 0 400 230" width="100%" role="img" aria-label="Held-out AUC of each component and the stack">
+        <g font-size="11" fill="#94a3b8" text-anchor="middle">
+          <line x1="40" y1="190" x2="390" y2="190" stroke="#e2e8f0"/>
+          <line x1="40" y1="10" x2="40" y2="190" stroke="#e2e8f0"/>
+          <text x="22" y="194">0.50</text><text x="22" y="134">0.54</text><text x="22" y="74">0.58</text><text x="22" y="14">0.62</text>
+          <line x1="40" y1="130" x2="390" y2="130" stroke="#f1f5f9"/><line x1="40" y1="70" x2="390" y2="70" stroke="#f1f5f9"/>
+        </g>
+        <!-- scale: 0.50 at y=190, 0.62 at y=10 => 1500 px per unit -->
+        <g>
+          <rect x="62" y="65" width="56" height="125" fill="#cbd5e1"/>
+          <rect x="146" y="78" width="56" height="112" fill="#cbd5e1"/>
+          <rect x="230" y="68" width="56" height="122" fill="#cbd5e1"/>
+          <rect x="314" y="43" width="56" height="147" fill="#1e3a8a"/>
+        </g>
+        <g font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">
+          <text x="90" y="59">0.584</text><text x="174" y="72">0.575</text><text x="258" y="62">0.582</text><text x="342" y="37">0.598</text>
+        </g>
+        <g font-size="11.5" fill="#64748b" text-anchor="middle">
+          <text x="90" y="208">classifier</text><text x="174" y="208">craft rank</text><text x="258" y="208">headline</text><text x="342" y="208">stack</text>
+        </g>
+      </svg>
+      <p class="fact">Acceptance rule, registered before the fit: the stack serves only if its held-out AUC is at least the best single component's. 0.598 against 0.584: the stack serves. Within channel, 0.596.</p>
+      <p class="src">data/generated/model/resonance-formula.json · docs/RESONANCE.md · docs/cards/pax2-persuasion-reference.md · data/generated/accounting.json</p>
+    </div>
+  </div>
+  <div class="page">2 / 9</div>
+</div></section>
+
+<!-- 3 -->
+<section class="slide" id="s3"><div class="card">
+  <h2>Beyond transcript-analysis: visuals, presenters, format and production choices</h2>
+  <table>
+    <tr><th>Instrument</th><th>What it reads</th><th class="n">Measured</th><th class="n">Status</th></tr>
+    <tr><td>Composition</td><td>the file itself: cuts, on-screen text, speech timing, length, from frame and audio analysis</td><td class="n">5,979 shorts measured</td><td class="n"><span class="pass">live</span></td></tr>
+    <tr><td>Winning modes</td><td>24 within-channel craft percentiles, clustered over the shorts that outperformed 3x; surviving mode: an early first cut, many on-screen words per frame, a high share of frames with text</td><td class="n">mode-match AUC 0.598 (0.568, 0.624)</td><td class="n"><span class="pass">live</span></td></tr>
+    <tr><td>Composition pair picker</td><td>which of a same-channel pair outperformed, from the file's measurables</td><td class="n">0.566; with neighbors 0.595</td><td class="n"><span class="spec">staged</span></td></tr>
+    <tr><td>Thumbnail traits</td><td>memorability, brightness, contrast, colorfulness</td><td class="n">colorfulness DR +0.032 (+0.006, +0.058)</td><td class="n"><span class="pass">pass</span></td></tr>
+    <tr><td>Video embedding heads</td><td>16 frames per video, no audio, projected toward performance</td><td class="n">0.5695 against a 0.5776 bar</td><td class="n"><span class="fail">fail</span></td></tr>
+    <tr><td>Video arm of the classifier</td><td>the video embedding added to the text classifier</td><td class="n">0.636 against 0.648 without it</td><td class="n"><span class="fail">fail</span></td></tr>
+    <tr><td>Visual census</td><td>format, setting, captions burned in, call to action and its timestamp, people on screen (count and screen share), product shown, watermark</td><td class="n">5,108 of 5,379 answered; per-column audited accuracy and lift replace this row</td><td class="n"><span class="prog">in progress</span></td></tr>
+    <tr><td>Ad codebooks</td><td>Swayable's 28 traits, Wesleyan's goal, tone and party, Upworthy's headline patterns, per video</td><td class="n">per-trait agreement with the reference coder and counts coded replace this row</td><td class="n"><span class="prog">in progress</span></td></tr>
+  </table>
+  <div class="limit"><b>Presenters</b><span>Counts and screen share only. No identity and no demographic inference from faces or voices. <span class="u">Unlock for messenger attributes: partner-entered metadata.</span></span></div>
+  <p class="src">data/generated/accounting.json · docs/briefs/WINDOW-P2.md (loops 2, 5) · docs/briefs/WINDOW-Q.md (Progress, 2026-10-22T22:09Z) · docs/briefs/CODEBOOK-5K.md</p>
+  <div class="page">3 / 9</div>
+</div></section>
+
+<!-- 4 -->
+<section class="slide" id="s4"><div class="card">
+  <h2>The model decisions: commercial and open models, fine-tuning, and the tradeoffs in cost, speed and accuracy</h2>
+  <div class="cols c2">
+    <div>
+      <h3>Fine-tuning, decided by held-out result</h3>
+      <table>
+        <tr><th>Component</th><th class="n">Held-out</th><th class="n">Decision</th></tr>
+        <tr><td>Behavior-corrected text embedding</td><td class="n">kNN-AUC +0.031 over stock</td><td class="n"><span class="pass">live</span></td></tr>
+        <tr><td>Headline picker, trained on randomized headline tests</td><td class="n">pairwise 0.672</td><td class="n"><span class="pass">live</span></td></tr>
+        <tr><td>Candidate re-scorer</td><td class="n">0.572 over 0.571</td><td class="n"><span class="pass">live</span></td></tr>
+        <tr><td>Outlier classifier v3, text and embedding</td><td class="n">AUC 0.648</td><td class="n"><span class="pass">live</span></td></tr>
+        <tr><td>Classifier v2, transcript words added</td><td class="n">0.597 against a 0.624 bar</td><td class="n"><span class="fail">dropped</span></td></tr>
+        <tr><td>Video projection heads v1–v3b</td><td class="n">all under the bar</td><td class="n"><span class="fail">dropped</span></td></tr>
+        <tr><td>Embedding retrain candidate</td><td class="n">under the serving encoder</td><td class="n"><span class="fail">dropped</span></td></tr>
+      </table>
+      <p class="fact" style="margin-top:12px">15 entries on the passed ledger, 2 of them still in build; 9 failed and are kept with the reason.</p>
+    </div>
+    <div>
+      <h3>Routing and measured cost per run</h3>
+      <div class="rows">
+        <div class="row"><b>Transcripts</b><span class="num">13,105 from platform captions at no cost; 1,212 bought from a transcript service; 579 transcribed on an owned GPU box</span></div>
+        <div class="row"><b>Composition</b><span class="num">5,106 shorts in 4,135 s on one self-terminating CPU box: about $0.84</span></div>
+        <div class="row"><b>Media fetch</b><span class="num">5,098 video and audio pairs over 20 micro boxes: about $0.30</span></div>
+        <div class="row"><b>Embedding retrain</b><span class="num">about 85 minutes on one GPU box: about $1.43</span></div>
+        <div class="row"><b>Visual census</b><span>open-weights 4-billion-parameter vision-language model on one spot GPU box, all questions in one pass per video; $5 cap</span></div>
+        <div class="row"><b>Learning loops</b><span class="num">every fit and ranked list on a laptop CPU in seconds: $0</span></div>
+        <div class="row"><b>Language</b><span>chat answers and script drafts route to a hosted commercial model; the batch passes over every video run open weights on rented boxes</span></div>
+      </div>
+    </div>
+  </div>
+  <p class="src">data/generated/accounting.json (passed, failed, transcriptSources) · src/lib/production.ts · docs/briefs/WINDOW-Q.md · docs/briefs/WINDOW-P2.md</p>
+  <div class="page">4 / 9</div>
+</div></section>
+
+<!-- 5 -->
+<section class="slide" id="s5"><div class="card">
+  <h2>The data loop: performance data flows back into the platform cleanly</h2>
+  <div class="cols c2">
+    <div>
+      <h3>What each held short carries</h3>
+      <svg viewBox="0 0 440 250" width="100%" role="img" aria-label="Shorts held at each stage">
+        <g font-size="12" fill="#334155">
+          <text x="0" y="24">Catalog</text><text x="0" y="62">Serving index</text><text x="0" y="100">Media file</text><text x="0" y="138">Transcript</text><text x="0" y="176">Composition</text><text x="0" y="214">Uniform baseline</text>
+        </g>
+        <!-- scale: 19,057 = 250 px from x=120 -->
+        <g fill="#1e3a8a">
+          <rect x="120" y="11" width="250" height="18" rx="3"/>
+          <rect x="120" y="49" width="240.2" height="18" rx="3"/>
+          <rect x="120" y="87" width="206.8" height="18" rx="3"/>
+          <rect x="120" y="125" width="195.4" height="18" rx="3"/>
+          <rect x="120" y="163" width="78.4" height="18" rx="3"/>
+          <rect x="120" y="201" width="70.6" height="18" rx="3"/>
+        </g>
+        <g font-size="12" font-weight="600" fill="#0f172a" class="num">
+          <text x="376" y="24">19,057</text><text x="366" y="62">18,307</text><text x="333" y="100">15,762</text><text x="321" y="138">14,896</text><text x="204" y="176">5,979</text><text x="197" y="214">5,379</text>
+        </g>
+        <line x1="120" y1="4" x2="120" y2="226" stroke="#e2e8f0"/>
+        <text x="120" y="244" font-size="11" fill="#94a3b8">0</text>
+      </svg>
+      <p class="fact">The uniform baseline is every short holding a transcript, a media file, a composition read and an index embedding.</p>
+    </div>
+    <div class="rows">
+      <div class="row"><b>Platform performance</b><span>a poller reads each new short every 15 minutes for its first 72 hours; 349 polled curves carry a 6-hour reading and an outcome</span></div>
+      <div class="row"><b>Partner results</b><span class="num">one partner's paid-media export loaded: 20 creatives, $41,570.87 spend, 10,561,553 impressions, 2026-09-28 to 2026-10-05</span></div>
+      <div class="row"><b>The ledger</b><span>one append-only table; a decision that changes status is a new row, so the history is the table</span></div>
+      <div class="row"><b>Epoch markers</b><span>every learning loop records where replay ends (18,307 rows for the publish policy); a partner's own publishes land after the marker and update the posterior one row at a time</span></div>
+      <div class="limit"><b>Audience surveys and experiments</b><span>The inlets carry machinery and no data. <span class="u">Unlock: the first partner publishes and their survey or holdout exports.</span></span></div>
+    </div>
+  </div>
+  <p class="src">data/generated/accounting.json · data/generated/voter-freedom-paid.json · src/lib/ledger.ts · docs/briefs/WINDOW-P.md · docs/briefs/WINDOW-P2.md (loop 6)</p>
+  <div class="page">5 / 9</div>
+</div></section>
+
+<!-- 6 -->
+<section class="slide" id="s6"><div class="card">
+  <h2>Dashboards and reporting that explain what the platform is accomplishing</h2>
+  <table>
+    <tr><th>Surface</th><th>What it reports</th></tr>
+    <tr><td class="src" style="font-size:12.5px;color:#1e3a8a">/dashboard</td><td>the catalog's counts, each with what it holds and what it does not</td></tr>
+    <tr><td class="src" style="font-size:12.5px;color:#1e3a8a">/evals</td><td>the model ledger: every instrument passed, live or staged, and every instrument failed, with why</td></tr>
+    <tr><td class="src" style="font-size:12.5px;color:#1e3a8a">/pipeline</td><td>the production map: every box with each measured run's cost and date, the stores with counts read at render</td></tr>
+    <tr><td class="src" style="font-size:12.5px;color:#1e3a8a">/pipeline-2</td><td>the whole system on one canvas: doors, stages, stores, instruments, services and surfaces, with the return loops drawn</td></tr>
+    <tr><td class="src" style="font-size:12.5px;color:#1e3a8a">/reinforcement-learning</td><td>the publish policy's learning events: each update's arm, outcome, and the weights and advice before and after</td></tr>
+    <tr><td class="src" style="font-size:12.5px;color:#1e3a8a">/metrics</td><td>Live and Complete tracking (curves and table), Patterns, Outliers, and Feature worth from the randomized ad tests</td></tr>
+    <tr><td class="src" style="font-size:12.5px;color:#1e3a8a">/v/&lt;id&gt;</td><td>the video page's evidence blocks: the Resonance gauge, the mode match, recommendations, the craft octagon, Resonant Length, Resonant Topic, and the features the video carries</td></tr>
+  </table>
+  <div class="limit"><b>Partner portal</b><span>None. Every surface above is behind the platform's own sign-in. <span class="u">Unlock: a partner-scoped view of the same blocks.</span></span></div>
+  <div class="page">6 / 9</div>
+</div></section>
+
+<!-- 7 -->
+<section class="slide" id="s7"><div class="card">
+  <h2>Prove that it works, explain its limits</h2>
+  <div class="rows">
+    <div class="row"><b>Back-test against historical content</b><span>Every gate scores held-out data. Resonance is validated on 10 held-out channels that the classifier and the pair picker never trained on: AUC 0.598 against chance at 0.5.</span></div>
+    <div class="row"><b>Compare predictions with actual results</b><span>Early-hit predictor: 6-hour AUC 0.729 pooled, 0.862 within channel. Paid-flight loop: the pick outperformed 3x in 7 of 8 daily slates, against a 0.207 hit rate for a uniform pick; picking the highest 6-hour views over median scores the same.</span></div>
+    <div class="row"><b>Check against experimental (RCT) evidence</b><span>146 randomized ad studies. Single traits carry measured differences; an ad's full trait set does not predict its effect in a study it was not fit on (leave-one-study-out R² −0.001 on vote choice).</span></div>
+    <div class="row"><b>Registered before fit</b><span>Each learning loop's evaluation and pass rule is committed, timestamped, before its fit, and run without change. Of the eight loops evaluated, two did not pass; four cold-start loops wait for logged decisions.</span></div>
+    <div class="row"><b>Failures kept</b><span>Transcript words did not predict an outlier (0.597 against 0.624); the video embedding added nothing over text (0.636 against 0.648); posting cadence carried no signal beyond channel context.</span></div>
+  </div>
+  <div class="limit"><b>Observational</b><span>Logged publish choices were never randomized; the learning loops estimate which choices co-occur with outperforming, not what a channel gains by switching. <span class="u">Unlock: randomized arms on a partner's own publishes, logged with their propensities.</span></span></div>
+  <div class="limit"><b>Transfer</b><span>The persuasion effects come from 2018 and 2020 ads, mostly presidential; the transfer to 2026 shorts is untested. <span class="u">Unlock: a partner experiment with a control group.</span></span></div>
+  <p class="src">data/generated/model/resonance-formula.json · data/generated/accounting.json · docs/cards/pax2-persuasion-reference.md · docs/briefs/WINDOW-P.md · docs/briefs/WINDOW-P2.md</p>
+  <div class="page">7 / 9</div>
+</div></section>
+
+<!-- 8 -->
+<section class="slide" id="s8"><div class="card">
+  <h2>Turn intelligence into decisions: frame, format, messenger and audience</h2>
+  <div class="rows">
+    <div class="row"><b>Frame</b><span>Every library script carries, line by line, the measured finding behind it: Swayable's randomized ad tests, Upworthy's randomized headline tests, Wesleyan's ad codebook, and the lifts on the tracked reform channels.</span></div>
+    <div class="row"><b>Format</b><span>Length: on the reform channels, shorts of 20 seconds or less reach outperformed 3x 6.5 points more often (90% range 1 to 13; 6 channels, 56 shorts). Craft: the winning mode's distance, axis by axis, on every measured video.</span></div>
+    <div class="row"><b>Messenger</b><span>Counsel per partner from the family loop: nonpartisan media for all five reform partners, ranked first in 30% to 49% of posterior draws; the loop did not pass, and the counsel carries that verdict.</span></div>
+    <div class="row"><b>Next action</b><span>1,191 remake candidates ranked by topic lift crossed with weak craft, each with its grounds; 500 shorts ranked to measure next and 500 to audit next.</span></div>
+  </div>
+  <div class="limit"><b>The message-by-audience grid</b><span>Audiences today are six channel families, not voter segments. <span class="u">Unlock: survey responses or a voter-file match on a partner's audience.</span></span></div>
+  <p class="src">data/library.json · src/lib/writer-prompt.ts (data/velocity/metadata-lift.json) · docs/briefs/WINDOW-P2.md (loops 4, 5, 7)</p>
+  <div class="page">8 / 9</div>
+</div></section>
+
+<!-- 9 -->
+<section class="slide" id="s9"><div class="card">
+  <h2>Week-to-week experiments, and a working feedback loop</h2>
+  <div class="cols c2">
+    <div class="tile">
+      <h3>A scoring framework in place to enable strong week-to-week experiments</h3>
+      <p>Outperformed 3x and the Outlier Score defined on every held short; Resonance Gen 1 fitted and accepted on held-out channels (AUC 0.598); a 15-minute poller reading every new short for 72 hours; every evaluation registered before its fit.</p>
+      <p class="src">Exists today.</p>
+    </div>
+    <div class="tile">
+      <h3>A working feedback loop connecting content, audience and outcome data; initial scoring and predictive capabilities tested against results</h3>
+      <p>Content and outcome data connected for 19,057 shorts; twelve loops replayed or specified with epoch markers ready for a partner's publishes; scores tested against held-out results. Audience data is the piece not yet connected: channel families stand in for voter segments.</p>
+      <p class="src">Content and outcome: exists today. Audience: unlocked by the first partner's survey or voter-file data.</p>
+    </div>
+  </div>
+  <div class="limit" style="margin-top:22px"><b>Next refit</b><span>Resonance Gen 2 adds the audited census columns with a measured lift; Gen 3 folds in the early-hit read once a video is polled; Gen 4 adds the publish policy's topic, length and hour counsel; Gen 5 retrains on a partner's own outcomes.</span></div>
+  <p class="src">docs/RESONANCE.md · data/generated/model/resonance-formula.json · data/generated/accounting.json · docs/briefs/WINDOW-P2.md</p>
+  <div class="page">9 / 9</div>
+</div></section>
+
+<nav class="nav" aria-label="Slides"></nav>
+<script>
+(() => {
+  const slides = [...document.querySelectorAll(".slide")]
+  const nav = document.querySelector(".nav")
+  const dots = slides.map((s, i) => {
+    const a = document.createElement("a")
+    a.href = "#" + s.id
+    a.setAttribute("aria-label", "Slide " + (i + 1))
+    nav.appendChild(a)
+    return a
+  })
+  let at = 0
+  const io = new IntersectionObserver((es) => {
+    for (const e of es) if (e.isIntersecting) {
+      at = slides.indexOf(e.target)
+      dots.forEach((d, i) => d.classList.toggle("on", i === at))
+    }
+  }, { threshold: 0.6 })
+  slides.forEach((s) => io.observe(s))
+  const go = (i) => slides[Math.max(0, Math.min(slides.length - 1, i))].scrollIntoView({ behavior: "smooth" })
+  addEventListener("keydown", (e) => {
+    if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); go(at + 1) }
+    if (["ArrowUp", "ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); go(at - 1) }
+    if (e.key === "Home") { e.preventDefault(); go(0) }
+    if (e.key === "End") { e.preventDefault(); go(slides.length - 1) }
+  })
+})()
+</script>
+</body>
+</html>
