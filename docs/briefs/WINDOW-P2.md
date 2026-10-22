@@ -130,3 +130,40 @@ The catalog holds no record of a partner placing money or content with a family,
 - **Evaluation and pass rule.** Otherwise the standard protocol (SNIPS and DR, channel-clustered bootstrap, progressive validation against a topic-only model). Pass: DR lower 95% bound above 0 with at least 200 matched test rows, and the full model's log loss beats topic-only.
 - **Counsel per partner.** Partners are the five reform-core channels (Vote YES on 3, Courageous Colorado, Open Primaries, Unite America, FairVote). Each partner's history is the topic mix of its own settled shorts. Its counsel is the family with the highest share-weighted posterior-mean chance under the shipped model, with the share of 1,000 posterior draws (seed 20261022) in which each family ranks first. Counsel is written whatever the verdict, marked with it.
 - **Limit specific to families.** Family is confounded with everything about its channels (audience size, posting volume, production). A family's estimated gain says its channels outperform their own medians more often on a topic, not that a partner's message would do the same there.
+
+**Ran.** 18,307 rows; train 14,645 (through 2026-07-26T19:30:21Z), test 3,662; base rate 0.1484, test logged rate 0.1319. Progressive validation, log loss (AUC): full 0.36685 (0.6756), context-only 0.37856 (0.6382).
+
+| Policy | Matched | ESS | SNIPS − logged (95%) | DR − logged (95%) | Rule |
+|---|---|---|---|---|---|
+| family | 1,974 | 589.6 | +0.014 (-0.033, +0.067) | +0.021 (-0.014, +0.062) | fail |
+
+Epoch marker: replayRows = 18,307, last replayed `CMnptS4ujWU` (2026-10-08T15:00:16Z).
+
+**Verdict by the registered rule: FAIL.**
+
+The family arm improves prediction over topic alone (log loss 0.3669 against 0.3786), but the policy built on it does not clear zero on either estimator.
+
+Counsel per partner (marked FAIL; share-weighted chance under the shipped model, and the share of 1,000 posterior draws ranking each family first):
+
+| Partner | Shorts | Counsel | Chance | First in draws | Runner-up |
+|---|---|---|---|---|---|
+| Vote YES on 3 | 34 | Nonpartisan media | 0.153 | 49% | Candidates & officials, 0.127, 23% |
+| Courageous Colorado | 38 | Nonpartisan media | 0.172 | 31% | Candidates & officials, 0.146, 28% |
+| Open Primaries | 12 | Nonpartisan media | 0.182 | 43% | Candidates & officials, 0.164, 34% |
+| Unite America | 32 | Nonpartisan media | 0.175 | 32% | Candidates & officials, 0.144, 27% |
+| FairVote | 106 | Nonpartisan media | 0.171 | 30% | Partisan media, 0.114, 27% |
+
+No family ranks first in a majority of draws for any partner. The counsel is the same for all five because their topic mixes overlap.
+
+### 5. Remake candidates
+
+**Registration — 2026-10-22T19:29:18Z, before the list is built.**
+
+This loop is not a bandit; it is a ranked list.
+
+- **Eligible.** Settled catalog shorts that have a mode-match score in `data/generated/model/winning-modes.json` (`scores`, the full set) and sit in a topic from `data/generated/model/topic-lift.json` whose 90% lift range lies above 0 (high topic lift).
+- **Ranking.** Remake score = topic lift in points × (100 − mode-match) / 100: high topic lift crossed with weak craft. Ties go to the lower outperformance ratio first. Every eligible short is written, ranked.
+- **Grounds on every row.** Topic name, lift and 90% range; the short's mode-match and the surviving winning mode's name; the short's own ratio and whether it outperformed 3×; channel and family.
+- **Rule.** The list is **supported** if, inside the eligible set, mode-match separates outcomes: the AUC of mode-match for outperformed 3× has a channel-clustered bootstrap (1,000 resamples, seed 20261022) 95% lower bound above 0.5. Otherwise the list ships marked **unsupported**: weak craft would not be shown to cost these topics anything.
+- **Limits.** The winning mode was fit on some of these same shorts (train channels), so its match is partly in-sample for them. The media set behind the scores was fetched mostly in outperformer/control pairs, so its base rate runs above the catalog's. Topic lift is measured across channels; a remake stays on the same channel.
+- **Output.** `data/generated/model/learning/remake-candidates.json`.
