@@ -1,0 +1,990 @@
+{
+ "at": "2026-10-22T09:54:59.682Z",
+ "axisNames": [
+  "outlier",
+  "engagement",
+  "pace",
+  "likes",
+  "comments",
+  "lengthFit",
+  "forecast",
+  "hookFit"
+ ],
+ "base": 0.172,
+ "modes": [
+  [
+   92,
+   40,
+   86,
+   89,
+   87,
+   10,
+   64,
+   96
+  ],
+  [
+   92,
+   19,
+   86,
+   84,
+   80,
+   72,
+   30,
+   96
+  ],
+  [
+   91,
+   25,
+   85,
+   86,
+   84,
+   70,
+   92,
+   97
+  ],
+  [
+   90,
+   70,
+   84,
+   93,
+   89,
+   73,
+   36,
+   97
+  ]
+ ],
+ "modeLift": [
+  0.1939994174191669,
+  0.1226866624122527,
+  0.2695238095238095,
+  0.08453644112019482
+ ],
+ "modeCounts": [
+  3433,
+  6268,
+  3150,
+  5749
+ ],
+ "rows": [
+  {
+   "kind": "paid",
+   "id": "f5ZT7exidXs",
+   "title": "Taxation Without Representation?",
+   "channel": "Voter Freedom · $1,799 paid flight",
+   "poster": "https://i.ytimg.com/vi/f5ZT7exidXs/hqdefault.jpg",
+   "outlier": {
+    "v": "2.1x",
+    "approx": false
+   },
+   "views": {
+    "v": 1756,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 57,
+    "approx": true
+   },
+   "hR": {
+    "v": 56,
+    "approx": true
+   },
+   "xR": {
+    "v": 58,
+    "approx": true
+   },
+   "fR": {
+    "v": 68,
+    "approx": true
+   },
+   "mR": {
+    "v": 97,
+    "approx": false
+   },
+   "axes": [
+    100,
+    37,
+    51,
+    62,
+    100,
+    85,
+    67,
+    100
+   ]
+  },
+  {
+   "kind": "paid",
+   "id": "bmIEPFgxcCw",
+   "title": "When Political Parties See Independent Voters",
+   "channel": "Voter Freedom · $1,577 paid flight",
+   "poster": "https://i.ytimg.com/vi/bmIEPFgxcCw/hqdefault.jpg",
+   "outlier": {
+    "v": "1.8x",
+    "approx": false
+   },
+   "views": {
+    "v": 1505,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 65,
+    "approx": true
+   },
+   "hR": {
+    "v": 61,
+    "approx": true
+   },
+   "xR": {
+    "v": 64,
+    "approx": true
+   },
+   "fR": {
+    "v": 65,
+    "approx": true
+   },
+   "mR": {
+    "v": 95,
+    "approx": false
+   },
+   "axes": [
+    99,
+    56,
+    93,
+    92,
+    60,
+    42,
+    45,
+    100
+   ]
+  },
+  {
+   "kind": "paid",
+   "id": "ewdCt7Ym4g4",
+   "title": "Two Things Need to Happen",
+   "channel": "Voter Freedom · $2,636 paid flight",
+   "poster": "https://i.ytimg.com/vi/ewdCt7Ym4g4/hqdefault.jpg",
+   "outlier": {
+    "v": "1.4x",
+    "approx": false
+   },
+   "views": {
+    "v": 1163,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 75,
+    "approx": true
+   },
+   "hR": {
+    "v": 70,
+    "approx": true
+   },
+   "xR": {
+    "v": 73,
+    "approx": true
+   },
+   "fR": {
+    "v": 65,
+    "approx": true
+   },
+   "mR": {
+    "v": 96,
+    "approx": false
+   },
+   "axes": [
+    96,
+    93,
+    97,
+    100,
+    99,
+    92,
+    74,
+    100
+   ]
+  },
+  {
+   "kind": "paid",
+   "id": "FQurRZMYXs4",
+   "title": "Name Another Job...",
+   "channel": "Voter Freedom · $1,301 paid flight",
+   "poster": "https://i.ytimg.com/vi/FQurRZMYXs4/hqdefault.jpg",
+   "outlier": {
+    "v": "1.2x",
+    "approx": false
+   },
+   "views": {
+    "v": 1011,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 65,
+    "approx": true
+   },
+   "hR": {
+    "v": 62,
+    "approx": true
+   },
+   "xR": {
+    "v": 65,
+    "approx": true
+   },
+   "fR": {
+    "v": 57,
+    "approx": true
+   },
+   "mR": {
+    "v": 97,
+    "approx": false
+   },
+   "axes": [
+    82,
+    76,
+    94,
+    87,
+    97,
+    83,
+    67,
+    100
+   ]
+  },
+  {
+   "kind": "paid",
+   "id": "0S9zZ8e6ffU",
+   "title": "Independents Are Locked Out",
+   "channel": "Voter Freedom · $10,490 paid flight",
+   "poster": "https://i.ytimg.com/vi/0S9zZ8e6ffU/hqdefault.jpg",
+   "outlier": {
+    "v": "1.2x",
+    "approx": false
+   },
+   "views": {
+    "v": 1000,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 55,
+    "approx": true
+   },
+   "hR": {
+    "v": 55,
+    "approx": true
+   },
+   "xR": {
+    "v": 57,
+    "approx": true
+   },
+   "fR": {
+    "v": 54,
+    "approx": true
+   },
+   "mR": {
+    "v": 98,
+    "approx": false
+   },
+   "axes": [
+    81,
+    47,
+    82,
+    52,
+    98,
+    75,
+    70,
+    100
+   ]
+  },
+  {
+   "kind": "paid",
+   "id": "dpKqCrIbBiM",
+   "title": "No Football For You",
+   "channel": "Voter Freedom · $2,639 paid flight",
+   "poster": "https://i.ytimg.com/vi/dpKqCrIbBiM/hqdefault.jpg",
+   "outlier": {
+    "v": "1.2x",
+    "approx": false
+   },
+   "views": {
+    "v": 981,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 57,
+    "approx": true
+   },
+   "hR": {
+    "v": 61,
+    "approx": true
+   },
+   "xR": {
+    "v": 63,
+    "approx": true
+   },
+   "fR": {
+    "v": 55,
+    "approx": true
+   },
+   "mR": {
+    "v": 93,
+    "approx": false
+   },
+   "axes": [
+    78,
+    68,
+    68,
+    82,
+    92,
+    0,
+    100,
+    100
+   ]
+  },
+  {
+   "kind": "paid",
+   "id": "M8RZzdIooVk",
+   "title": "Independent Voters in Colorado",
+   "channel": "Voter Freedom · $2,637 paid flight",
+   "poster": "https://i.ytimg.com/vi/M8RZzdIooVk/hqdefault.jpg",
+   "outlier": {
+    "v": "1.2x",
+    "approx": false
+   },
+   "views": {
+    "v": 968,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 62,
+    "approx": true
+   },
+   "hR": {
+    "v": 53,
+    "approx": true
+   },
+   "xR": {
+    "v": 52,
+    "approx": true
+   },
+   "fR": {
+    "v": 58,
+    "approx": true
+   },
+   "mR": {
+    "v": 88,
+    "approx": false
+   },
+   "axes": [
+    73,
+    87,
+    57,
+    98,
+    81,
+    95,
+    12,
+    100
+   ]
+  },
+  {
+   "kind": "paid",
+   "id": "Ecwa3RKbO2Q",
+   "title": "The Case for Open Primaries",
+   "channel": "Voter Freedom · $1,301 paid flight",
+   "poster": "https://i.ytimg.com/vi/Ecwa3RKbO2Q/hqdefault.jpg",
+   "outlier": {
+    "v": "1.0x",
+    "approx": false
+   },
+   "views": {
+    "v": 871,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 55,
+    "approx": true
+   },
+   "hR": {
+    "v": 55,
+    "approx": true
+   },
+   "xR": {
+    "v": 56,
+    "approx": true
+   },
+   "fR": {
+    "v": 51,
+    "approx": true
+   },
+   "mR": {
+    "v": 96,
+    "approx": false
+   },
+   "axes": [
+    56,
+    62,
+    70,
+    80,
+    60,
+    93,
+    72,
+    100
+   ]
+  },
+  {
+   "kind": "paid",
+   "id": "3lfeAG7U1mw",
+   "title": "The Rise of Independent Voters",
+   "channel": "Voter Freedom · $2,635 paid flight",
+   "poster": "https://i.ytimg.com/vi/3lfeAG7U1mw/hqdefault.jpg",
+   "outlier": {
+    "v": "1.0x",
+    "approx": false
+   },
+   "views": {
+    "v": 867,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 54,
+    "approx": true
+   },
+   "hR": {
+    "v": 51,
+    "approx": true
+   },
+   "xR": {
+    "v": 51,
+    "approx": true
+   },
+   "fR": {
+    "v": 51,
+    "approx": true
+   },
+   "mR": {
+    "v": 92,
+    "approx": false
+   },
+   "axes": [
+    56,
+    63,
+    61,
+    76,
+    81,
+    95,
+    29,
+    100
+   ]
+  },
+  {
+   "kind": "paid",
+   "id": "E68tzfXFbJM",
+   "title": "Millions of Independent Voters Are Shut Out",
+   "channel": "Voter Freedom · $1,255 paid flight",
+   "poster": "https://i.ytimg.com/vi/E68tzfXFbJM/hqdefault.jpg",
+   "outlier": {
+    "v": "1.0x",
+    "approx": false
+   },
+   "views": {
+    "v": 850,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 53,
+    "approx": true
+   },
+   "hR": {
+    "v": 54,
+    "approx": true
+   },
+   "xR": {
+    "v": 55,
+    "approx": true
+   },
+   "fR": {
+    "v": 50,
+    "approx": true
+   },
+   "mR": {
+    "v": 97,
+    "approx": false
+   },
+   "axes": [
+    53,
+    51,
+    73,
+    69,
+    60,
+    83,
+    84,
+    100
+   ]
+  },
+  {
+   "kind": "catalog",
+   "id": "d7ewpHCMxqQ",
+   "title": "Erika Kirk: 'I Forgive Him'",
+   "channel": "Turning Point USA",
+   "poster": "https://i.ytimg.com/vi/d7ewpHCMxqQ/hqdefault.jpg",
+   "outlier": {
+    "v": "349x",
+    "approx": false
+   },
+   "views": {
+    "v": 45216757,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 99,
+    "approx": true
+   },
+   "hR": {
+    "v": 97,
+    "approx": true
+   },
+   "xR": {
+    "v": 99,
+    "approx": true
+   },
+   "fR": {
+    "v": 100,
+    "approx": true
+   },
+   "mR": {
+    "v": 99,
+    "approx": false
+   },
+   "axes": [
+    100,
+    2,
+    100,
+    100,
+    100,
+    93,
+    100,
+    100
+   ]
+  },
+  {
+   "kind": "catalog",
+   "id": "-oh6tEhuz8c",
+   "title": "Charlie Kirk Hits Oxford Students with a MAJOR Fact Check",
+   "channel": "Turning Point USA",
+   "poster": "https://i.ytimg.com/vi/-oh6tEhuz8c/hqdefault.jpg",
+   "outlier": {
+    "v": "257x",
+    "approx": false
+   },
+   "views": {
+    "v": 33285132,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 99,
+    "approx": true
+   },
+   "hR": {
+    "v": 98,
+    "approx": true
+   },
+   "xR": {
+    "v": 100,
+    "approx": true
+   },
+   "fR": {
+    "v": 100,
+    "approx": true
+   },
+   "mR": {
+    "v": 96,
+    "approx": false
+   },
+   "axes": [
+    100,
+    21,
+    100,
+    100,
+    100,
+    8,
+    100,
+    100
+   ]
+  },
+  {
+   "kind": "catalog",
+   "id": "Zshi1-VOs9U",
+   "title": "She NEEDED That Reality Check 😮‍💨",
+   "channel": "Turning Point USA",
+   "poster": "https://i.ytimg.com/vi/Zshi1-VOs9U/hqdefault.jpg",
+   "outlier": {
+    "v": "171x",
+    "approx": false
+   },
+   "views": {
+    "v": 22104624,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 99,
+    "approx": true
+   },
+   "hR": {
+    "v": 96,
+    "approx": true
+   },
+   "xR": {
+    "v": 99,
+    "approx": true
+   },
+   "fR": {
+    "v": 100,
+    "approx": true
+   },
+   "mR": {
+    "v": 100,
+    "approx": false
+   },
+   "axes": [
+    100,
+    20,
+    100,
+    100,
+    100,
+    88,
+    100,
+    100
+   ]
+  },
+  {
+   "kind": "catalog",
+   "id": "T6aiTbGHeLg",
+   "title": "Anti-Capitalist… But Loves the Perks 🙃",
+   "channel": "Turning Point USA",
+   "poster": "https://i.ytimg.com/vi/T6aiTbGHeLg/hqdefault.jpg",
+   "outlier": {
+    "v": "148x",
+    "approx": false
+   },
+   "views": {
+    "v": 19129756,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 99,
+    "approx": true
+   },
+   "hR": {
+    "v": 96,
+    "approx": true
+   },
+   "xR": {
+    "v": 99,
+    "approx": true
+   },
+   "fR": {
+    "v": 100,
+    "approx": true
+   },
+   "mR": {
+    "v": 100,
+    "approx": false
+   },
+   "axes": [
+    100,
+    9,
+    100,
+    100,
+    99,
+    85,
+    100,
+    100
+   ]
+  },
+  {
+   "kind": "catalog",
+   "id": "Spj_P6abyFY",
+   "title": "You’ll Never Guess Charlie Kirk’s Starbucks Order 👀",
+   "channel": "Turning Point USA",
+   "poster": "https://i.ytimg.com/vi/Spj_P6abyFY/hqdefault.jpg",
+   "outlier": {
+    "v": "135x",
+    "approx": false
+   },
+   "views": {
+    "v": 17444438,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 98,
+    "approx": true
+   },
+   "hR": {
+    "v": 95,
+    "approx": true
+   },
+   "xR": {
+    "v": 99,
+    "approx": true
+   },
+   "fR": {
+    "v": 100,
+    "approx": true
+   },
+   "mR": {
+    "v": 99,
+    "approx": false
+   },
+   "axes": [
+    100,
+    1,
+    100,
+    99,
+    91,
+    57,
+    100,
+    100
+   ]
+  },
+  {
+   "kind": "catalog",
+   "id": "-lpoA7YNCmw",
+   "title": "Black Student SHUTS DOWN White Privilege Argument 🔥",
+   "channel": "Turning Point USA",
+   "poster": "https://i.ytimg.com/vi/-lpoA7YNCmw/hqdefault.jpg",
+   "outlier": {
+    "v": "127x",
+    "approx": false
+   },
+   "views": {
+    "v": 16421317,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 99,
+    "approx": true
+   },
+   "hR": {
+    "v": 97,
+    "approx": true
+   },
+   "xR": {
+    "v": 99,
+    "approx": true
+   },
+   "fR": {
+    "v": 100,
+    "approx": true
+   },
+   "mR": {
+    "v": 100,
+    "approx": false
+   },
+   "axes": [
+    100,
+    21,
+    100,
+    100,
+    99,
+    63,
+    100,
+    100
+   ]
+  },
+  {
+   "kind": "catalog",
+   "id": "quq--fHibBE",
+   "title": "We’re Doing This AGAIN?! 👀🏀",
+   "channel": "Turning Point USA",
+   "poster": "https://i.ytimg.com/vi/quq--fHibBE/hqdefault.jpg",
+   "outlier": {
+    "v": "123x",
+    "approx": false
+   },
+   "views": {
+    "v": 15942212,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 98,
+    "approx": true
+   },
+   "hR": {
+    "v": 93,
+    "approx": true
+   },
+   "xR": {
+    "v": 98,
+    "approx": true
+   },
+   "fR": {
+    "v": 100,
+    "approx": true
+   },
+   "mR": {
+    "v": 99,
+    "approx": false
+   },
+   "axes": [
+    100,
+    5,
+    99,
+    99,
+    96,
+    60,
+    93,
+    100
+   ]
+  },
+  {
+   "kind": "catalog",
+   "id": "GH7Me2FrpH0",
+   "title": "Kids EMBARRASS Trump in hilarious roast",
+   "channel": "The Democrats",
+   "poster": "https://i.ytimg.com/vi/GH7Me2FrpH0/hqdefault.jpg",
+   "outlier": {
+    "v": "1408x",
+    "approx": false
+   },
+   "views": {
+    "v": 15838298,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 100,
+    "approx": true
+   },
+   "hR": {
+    "v": 99,
+    "approx": true
+   },
+   "xR": {
+    "v": 100,
+    "approx": true
+   },
+   "fR": {
+    "v": 100,
+    "approx": true
+   },
+   "mR": {
+    "v": 100,
+    "approx": false
+   },
+   "axes": [
+    100,
+    17,
+    100,
+    100,
+    100,
+    87,
+    100,
+    100
+   ]
+  },
+  {
+   "kind": "catalog",
+   "id": "ipEjENS8ybo",
+   "title": "DEVELOPMENT DOES NOT EQUAL DIGNITY ‼️",
+   "channel": "Turning Point USA",
+   "poster": "https://i.ytimg.com/vi/ipEjENS8ybo/hqdefault.jpg",
+   "outlier": {
+    "v": "116x",
+    "approx": false
+   },
+   "views": {
+    "v": 15028291,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 98,
+    "approx": true
+   },
+   "hR": {
+    "v": 95,
+    "approx": true
+   },
+   "xR": {
+    "v": 98,
+    "approx": true
+   },
+   "fR": {
+    "v": 100,
+    "approx": true
+   },
+   "mR": {
+    "v": 100,
+    "approx": false
+   },
+   "axes": [
+    100,
+    35,
+    99,
+    100,
+    100,
+    72,
+    100,
+    100
+   ]
+  },
+  {
+   "kind": "catalog",
+   "id": "k5ZH0CZQtmY",
+   "title": "THIS Is Who She Thinks Empowers Black Youth? 😳",
+   "channel": "Turning Point USA",
+   "poster": "https://i.ytimg.com/vi/k5ZH0CZQtmY/hqdefault.jpg",
+   "outlier": {
+    "v": "115x",
+    "approx": false
+   },
+   "views": {
+    "v": 14945078,
+    "approx": false
+   },
+   "eR": null,
+   "pR": {
+    "v": 98,
+    "approx": true
+   },
+   "hR": {
+    "v": 94,
+    "approx": true
+   },
+   "xR": {
+    "v": 98,
+    "approx": true
+   },
+   "fR": {
+    "v": 100,
+    "approx": true
+   },
+   "mR": {
+    "v": 100,
+    "approx": false
+   },
+   "axes": [
+    100,
+    11,
+    99,
+    99,
+    100,
+    83,
+    100,
+    100
+   ]
+  }
+ ]
+}

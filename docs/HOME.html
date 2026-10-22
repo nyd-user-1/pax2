@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PAX2 metrics</title>
+<style>
+ :root { --blue:#1e3a8a; --ink:#0f172a; --muted:#64748b; --border:#e2e8f0; --mist:#f1f5f9; }
+ body { margin:0; padding:48px 24px; background:var(--mist); font:16px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); }
+ .wrap { max-width:1280px; margin:0 auto; }
+ .tabs { display:flex; gap:6px; padding:0 28px; flex-wrap:wrap; }
+ .tab { display:inline-block; padding:10px 22px; border-radius:14px 14px 0 0; font-weight:600; font-size:15px; text-decoration:none; color:var(--muted); background:#e6ebf2; outline:1px solid rgb(15 23 42 / .06); }
+ .tab.on { background:#fff; color:var(--blue); position:relative; z-index:2; }
+ .card { background:#fff; border-radius:20px; box-shadow:0 1px 3px rgb(2 6 23/.06); outline:1px solid rgb(15 23 42/.06); padding:36px 40px; position:relative; z-index:1; }
+ h1 { margin:0 0 24px; font-size:26px; font-weight:650; color:var(--blue); }
+ .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px; }
+ .tile { display:block; border:1px solid var(--border); border-radius:16px; padding:20px 22px; text-decoration:none; color:var(--ink); transition:transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease; }
+ .tile:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgb(2 6 23/.10); }
+ .tile b { color:var(--blue); font-size:17px; }
+ .tile p { margin:6px 0 0; font-size:13.5px; color:var(--muted); line-height:1.5; }
+</style></head><body>
+<div class="wrap">
+  <nav class="tabs">
+    <a class="tab on" href="HOME.html">Home</a>
+    <a class="tab" href="RESONANCE-STD.html">Resonance</a>
+    <a class="tab" href="PROPOSALS.html">Proposals</a>
+    <a class="tab" href="HOUSE.html">House</a>
+    <a class="tab" href="DATA-API.html">Data API</a>
+    <a class="tab" href="ANALYTICS-API.html">Analytics API</a>
+    <a class="tab" href="STUDIO-ONLY.html">Studio Only</a>
+    <a class="tab" href="PARTNER-CSV.html">CSV</a>
+    <a class="tab" href="CORPUS.html">Corpus</a>
+  </nav>
+<div class="card">
+<h1>PAX2 metrics</h1>
+<div class="grid">
+  <a class="tile" href="RESONANCE-STD.html"><b>Resonance</b><p>The instrument: inputs, formula, and both registers of explanation</p></a>
+  <a class="tile" href="PROPOSALS.html"><b>Proposals</b><p>Five candidate definitions of Resonance, formulas and limits</p></a>
+  <a class="tile" href="HOUSE.html"><b>House</b><p>Every metric we produce: Poller, Transcripts, Catalog, Platform</p></a>
+  <a class="tile" href="DATA-API.html"><b>Data API</b><p>The public defaults and everything derivable from them</p></a>
+  <a class="tile" href="ANALYTICS-API.html"><b>Analytics API</b><p>The owner-side metrics, reachable by grant</p></a>
+  <a class="tile" href="STUDIO-ONLY.html"><b>Studio Only</b><p>The five numbers only the Studio shows</p></a>
+  <a class="tile" href="PARTNER-CSV.html"><b>CSV</b><p>The partner’s paid export: 20 metrics, 8 dimensions</p></a>
+  <a class="tile" href="CORPUS.html"><b>Corpus</b><p>All 19,036 videos, searchable, with the poller join and the five scores</p></a>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resonance</title>
+<style>
+  :root { --blue:#1e3a8a; --ink:#0f172a; --muted:#64748b; --border:#e2e8f0; --mist:#f1f5f9; }
+  body { margin:0; padding:48px 24px; background:var(--mist); font:16px/1.6 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:var(--ink); }
+  .wrap { max-width:1280px; margin:0 auto; }
+  .tabs { display:flex; gap:6px; padding:0 28px; }
+  .tab { display:inline-block; padding:10px 22px; border-radius:14px 14px 0 0; font-weight:600; font-size:15px; text-decoration:none; color:var(--muted); background:#e6ebf2; outline:1px solid rgb(15 23 42 / .06); }
+  .tab.on { background:#fff; color:var(--blue); position:relative; z-index:2; }
+  .card { background:#fff; border-radius:20px; box-shadow:0 1px 3px rgb(2 6 23 / .06); outline:1px solid rgb(15 23 42 / .06); padding:36px 40px 28px; position:relative; z-index:1; }
+  .card + .card { margin-top:24px; }
+  h1 { margin:0 0 24px; font-size:26px; font-weight:650; color:var(--blue); }
+  table { width:100%; border-collapse:collapse; }
+  th { text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:10px 14px; border-bottom:1px solid var(--border); white-space:nowrap; }
+  td { padding:10px 14px; border-bottom:1px solid var(--border); vertical-align:top; white-space:nowrap; }
+  tr:last-child td { border-bottom:none; }
+  td:first-child { font-weight:600; }
+  td:nth-child(2) { font-size:13.5px; color:var(--muted); font-weight:400; }
+  td:nth-child(3) { font-size:13.5px; color:var(--muted); }
+  td:nth-child(5) { font-size:13.5px !important; color:var(--muted) !important; font-weight:400 !important; }
+  .f { font:13.5px/1.6 ui-monospace, Menlo, monospace; color:var(--ink); }
+  .dash { color:#94a3b8; }
+  code { font:12.5px/1.5 ui-monospace, Menlo, monospace; background:var(--mist); padding:1px 6px; border-radius:6px; font-weight:400; }
+  .fblock { font:14px/1.9 ui-monospace, Menlo, monospace; background:var(--mist); border-radius:12px; padding:14px 18px; margin-top:26px; white-space:pre; overflow-x:auto; }
+  .plain { margin-top:18px; font-size:15px; line-height:1.7; max-width:880px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="tabs">
+    <a class="tab" href="HOME.html">Home</a>
+    <a class="tab on" href="RESONANCE-STD.html">Resonance</a>
+    <a class="tab" href="PROPOSALS.html">Proposals</a>
+    <a class="tab" href="HOUSE.html">House</a>
+    <a class="tab" href="DATA-API.html">Data API</a>
+    <a class="tab" href="ANALYTICS-API.html">Analytics API</a>
+    <a class="tab" href="STUDIO-ONLY.html">Studio Only</a>
+    <a class="tab" href="PARTNER-CSV.html">CSV</a>
+    <a class="tab" href="CORPUS.html">Corpus</a>
+  </nav>
+  <div class="card">
+  <h1>Resonance</h1>
+  <table>
+    <thead><tr><th>Name</th><th>Input</th><th>Kind</th><th>State</th><th>Description</th><th>Formula</th></tr></thead>
+    <tbody>
+      <tr><td><code>resonance</code></td><td>Analytics API, Data API</td><td>Derivative</td><td>❌</td><td>The 0–100 score; 50 is the reference average</td><td><span class="f">0.25·Engage + 0.40·Interest + 0.35·Act</span></td></tr>
+      <tr><td><code>engage</code></td><td>Analytics API</td><td>Derivative</td><td>❌</td><td>Share of those shown whose scroll stopped</td><td><span class="f">3-second plays ÷ impressions</span></td></tr>
+      <tr><td><code>interest</code></td><td>Analytics API, Data API</td><td>Derivative</td><td>❌</td><td>Share of the video the average viewer watched</td><td><span class="f">average view duration ÷ video length</span></td></tr>
+      <tr><td><code>act</code></td><td>Analytics API</td><td>Derivative</td><td>❌</td><td>Actions taken per play</td><td><span class="f">(shares + saves + comments) ÷ 3-second plays</span></td></tr>
+      <tr><td><code>evidenceWeightedRate</code></td><td>Analytics API</td><td>Derivative</td><td>❌</td><td>Thin evidence pulled toward the reference</td><td><span class="f">(count + k·ref) ÷ (base + k)</span></td></tr>
+      <tr><td><code>componentScore</code></td><td>Analytics API</td><td>Derivative</td><td>❌</td><td>A rate mapped to 0–100 on the log-odds scale</td><td><span class="f">percentile of distance from reference</span></td></tr>
+      <tr><td><code>threeSecondPlays</code></td><td>Analytics API</td><td>Derivative</td><td>❌</td><td>Plays reaching three seconds</td><td><span class="f">starts × retention at 0:03</span></td></tr>
+      <tr><td><code>impressions</code></td><td>Analytics API</td><td>Default</td><td>✅</td><td>Times the ad was served</td><td><span class="dash">—</span></td></tr>
+      <tr><td><code>averageViewDuration</code></td><td>Analytics API</td><td>Default</td><td>❌</td><td>Mean seconds watched per view</td><td><span class="dash">—</span></td></tr>
+      <tr><td><code>videoLength</code></td><td>Data API</td><td>Default</td><td>✅</td><td>Runtime of the video</td><td><span class="dash">—</span></td></tr>
+      <tr><td><code>shares</code></td><td>Analytics API</td><td>Default</td><td>❌</td><td>Act’s first action</td><td><span class="dash">—</span></td></tr>
+      <tr><td><code>saves</code></td><td>Analytics API</td><td>Default</td><td>❌</td><td>Act’s second action (YouTube: playlist adds)</td><td><span class="dash">—</span></td></tr>
+      <tr><td><code>comments</code></td><td>Analytics API</td><td>Default</td><td>✅</td><td>Act’s third action</td><td><span class="dash">—</span></td></tr>
+    </tbody>
+  </table>
+  <div class="fblock">Engage    = threeSecondPlays ÷ impressions
+Interest  = averageViewDuration ÷ videoLength
+Act       = (shares + saves + comments) ÷ threeSecondPlays
+
+each rate → evidence-weighted:  (count + k·ref) ÷ (base + k)     k = 2,000 impressions · 300 viewers · 800 plays
+each rate → component score:    percentile of its distance from the reference average, log-odds scale, 0–100
+
+Resonance = 0.25·Engage + 0.40·Interest + 0.35·Act                50 = the reference average
+on YouTube: threeSecondPlays = video starts × retention at 0:03</div>
+  <p class="plain"><b>For the paper:</b> Three rates are measured per paid run — the share of impressions that produced a 3-second play, the share of the video’s length the average viewer watched, and actions (shares, saves, comments) per play. Each rate is evidence-weighted toward the reference under thin delivery, expressed as a distance from the first round’s pooled average on the log-odds scale, mapped to a 0–100 percentile, and combined 25/40/35. The reference average is frozen, so later rounds are measured against the same yardstick.</p>
+  <p class="plain"><b>For a 5th grader:</b> A video has three jobs: make people stop, keep them watching, and make them care enough to do something. Each job gets a grade where 50 means “exactly average against the videos that came before.” If only a few people saw it, we don’t fully trust the grades yet, so they get pulled toward 50. Then the three grades combine into one — keeping people watching counts most — and that one number is Resonance.</p>
+  </div>
+</div>
+</body>
+</html>

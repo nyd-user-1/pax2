@@ -7,84 +7,77 @@
 <style>
   :root { --blue:#1e3a8a; --ink:#0f172a; --muted:#64748b; --border:#e2e8f0; --mist:#f1f5f9; }
   body { margin:0; padding:48px 24px; background:var(--mist); font:16px/1.6 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:var(--ink); }
-  .wrap { max-width:980px; margin:0 auto; }
+  .wrap { max-width:1280px; margin:0 auto; }
   .tabs { display:flex; gap:6px; padding:0 28px; }
   .tab { display:inline-block; padding:10px 22px; border-radius:14px 14px 0 0; font-weight:600; font-size:15px; text-decoration:none; color:var(--muted); background:#e6ebf2; outline:1px solid rgb(15 23 42 / .06); }
   .tab.on { background:#fff; color:var(--blue); position:relative; z-index:2; }
   .card { background:#fff; border-radius:20px; box-shadow:0 1px 3px rgb(2 6 23 / .06); outline:1px solid rgb(15 23 42 / .06); padding:36px 40px 28px; position:relative; z-index:1; }
+  .card + .card { margin-top:24px; }
   h1 { margin:0 0 24px; font-size:26px; font-weight:650; color:var(--blue); }
-  table { width:100%; border-collapse:collapse; table-layout:fixed; }
-  col.m { width:38%; } col.d { width:62%; }
-  th { text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:10px 14px; border-bottom:1px solid var(--border); }
-  td { padding:10px 14px; border-bottom:1px solid var(--border); vertical-align:top; overflow-wrap:break-word; }
+  table { width:100%; border-collapse:collapse; }
+  th { text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:10px 14px; border-bottom:1px solid var(--border); white-space:nowrap; }
+  td { padding:10px 14px; border-bottom:1px solid var(--border); vertical-align:top; white-space:nowrap; }
   tr:last-child td { border-bottom:none; }
   td:first-child { font-weight:600; }
-  .card + .card { margin-top:24px; }
-  col.m2 { width:26%; } col.f { width:47%; } col.w { width:27%; }
-  .w { font-size:13.5px; color:var(--blue); font-weight:600; }
-  .flag { color:#b45309; font-weight:600; font-size:13.5px; }
-  tfoot td { color:var(--muted); font-size:14px; border-bottom:none; padding-top:16px; font-weight:400; }
+  td:nth-child(2) { font-size:13.5px; color:var(--muted); font-weight:400; }
+  td:nth-child(3) { font-size:13.5px; color:var(--muted); }
+  td:nth-child(5) { font-size:13.5px !important; color:var(--muted) !important; font-weight:400 !important; }
+  .f { font:13.5px/1.6 ui-monospace, Menlo, monospace; color:var(--ink); }
+  .dash { color:#94a3b8; }
   code { font:12.5px/1.5 ui-monospace, Menlo, monospace; background:var(--mist); padding:1px 6px; border-radius:6px; font-weight:400; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <nav class="tabs">
-    <a class="tab" href="RESONANCE-VS-YT.html">Resonance</a>
+    <a class="tab" href="HOME.html">Home</a>
+    <a class="tab" href="RESONANCE-STD.html">Resonance</a>
+    <a class="tab" href="PROPOSALS.html">Proposals</a>
     <a class="tab" href="HOUSE.html">House</a>
     <a class="tab on" href="DATA-API.html">Data API</a>
     <a class="tab" href="ANALYTICS-API.html">Analytics API</a>
     <a class="tab" href="STUDIO-ONLY.html">Studio Only</a>
-    <a class="tab" href="PARTNER-CSV.html">Partner CSV</a>
+    <a class="tab" href="PARTNER-CSV.html">CSV</a>
+    <a class="tab" href="CORPUS.html">Corpus</a>
   </nav>
   <div class="card">
-  <h1>Data API metrics</h1>
+  <h1>Data API</h1>
   <table>
-    <colgroup><col class="m"><col class="d"></colgroup>
-    <thead><tr><th>Metric (Name)</th><th>Description</th></tr></thead>
+    <thead><tr><th>Name</th><th>Input</th><th>Kind</th><th>State</th><th>Description</th><th>Formula</th></tr></thead>
     <tbody>
-      <tr><td><code>commentCount</code></td><td>Public comments on the video.</td></tr>
-      <tr><td><code>duration</code></td><td>Video length, from the video's contentDetails.</td></tr>
-      <tr><td><code>favoriteCount</code></td><td>Legacy; always 0.</td></tr>
-      <tr><td><code>likeCount</code></td><td>Public likes on the video.</td></tr>
-      <tr><td><code>subscriberCount</code></td><td>The channel's public subscriber count (channel-level).</td></tr>
-      <tr><td><code>viewCount</code></td><td>Public views as YouTube counts them.</td></tr>
-    </tbody>
-  </table>
-  </div>
-  <div class="card">
-  <h1>Derivable metrics</h1>
-  <table>
-    <colgroup><col class="m2"><col class="f"><col class="w"></colgroup>
-    <thead><tr><th>Metric</th><th>Derivation</th><th>With</th></tr></thead>
-    <tbody>
-      <tr><td>Like rate</td><td>likes ÷ views</td><td><span class="w">Data API alone</span></td></tr>
-      <tr><td>Comment rate</td><td>comments ÷ views</td><td><span class="w">Data API alone</span></td></tr>
-      <tr><td>Engagement rate</td><td>(likes + comments) ÷ views</td><td><span class="w">Data API alone</span></td></tr>
-      <tr><td>Comments per like</td><td>comments ÷ likes</td><td><span class="w">Data API alone</span></td></tr>
-      <tr><td>Views per subscriber</td><td>views ÷ channel subscribers</td><td><span class="w">Data API alone</span></td></tr>
-      <tr><td>Views per day</td><td>views ÷ days since publish</td><td><span class="w">Data API alone</span></td></tr>
-      <tr><td>Upload cadence</td><td>channel uploads per week, from publish dates</td><td><span class="w">Data API alone</span></td></tr>
-      <tr><td>Channel views per video</td><td>channel views ÷ video count</td><td><span class="w">Data API alone</span></td></tr>
-      <tr><td>Title and tag features</td><td>length, question-led, carries a number, first person</td><td><span class="w">Data API alone</span></td></tr>
-      <tr><td>View velocity</td><td>Δviews ÷ Δtime between polls</td><td><span class="w">+ poller</span></td></tr>
-      <tr><td>View acceleration</td><td>change in velocity between polls</td><td><span class="w">+ poller</span></td></tr>
-      <tr><td>Like and comment velocity</td><td>Δlikes, Δcomments ÷ Δtime</td><td><span class="w">+ poller</span></td></tr>
-      <tr><td>Time to N views</td><td>hours from publish to a chosen crossing</td><td><span class="w">+ poller</span></td></tr>
-      <tr><td>Early-late like-rate drift</td><td>like rate on early polls vs late polls</td><td><span class="w">+ poller</span></td></tr>
-      <tr><td>Settling (tier)</td><td>velocity under the threshold marks a video settled</td><td><span class="w">+ poller</span></td></tr>
-      <tr><td>Co-surge</td><td>two videos crossing a surge window together</td><td><span class="w">+ poller</span></td></tr>
-      <tr><td>Outlier Score</td><td>views ÷ channel median of settled shorts</td><td><span class="w">+ catalog</span></td></tr>
-      <tr><td>WAR / iWAR</td><td>views ÷ global median / own channel median</td><td><span class="w">+ catalog</span></td></tr>
-      <tr><td>Share over 3x</td><td>share of a group's shorts at or over 3x their channel median</td><td><span class="w">+ catalog</span></td></tr>
-      <tr><td>Rate percentiles</td><td>any rate above, ranked within channel or catalog</td><td><span class="w">+ catalog</span></td></tr>
-      <tr><td>Expected views and residual</td><td>channel baseline vs the video's actual</td><td><span class="w">+ catalog</span></td></tr>
-      <tr><td>Transcript pace</td><td>transcript words ÷ duration</td><td><span class="w">+ transcripts</span></td></tr>
-      <tr><td>Ask and number presence</td><td>explicit ask, concrete number in the transcript</td><td><span class="w">+ transcripts</span></td></tr>
-      <tr><td>Composition joins</td><td>first-cut time, speech start, text on screen, against any outcome above</td><td><span class="w">+ composition.json</span></td></tr>
-      <tr><td>Hit probability</td><td>PAX2 Classifier v3 on title, transcript, embedding</td><td><span class="w">+ models</span></td></tr>
-      <tr><td>Title win probability</td><td>headline model over the Upworthy pairs</td><td><span class="w">+ models</span></td></tr>
-      <tr><td>Neighborhood lift</td><td>the embedding cluster's measured lift</td><td><span class="w">+ embeddings</span></td></tr>
+      <tr><td><code>commentCount</code></td><td>Data API</td><td>Default</td><td>✅</td><td>Public comments on the video</td><td><span class="dash">—</span></td></tr>
+      <tr><td><code>duration</code></td><td>Data API</td><td>Default</td><td>✅</td><td>Video length</td><td><span class="dash">—</span></td></tr>
+      <tr><td><code>favoriteCount</code></td><td>Data API</td><td>Default</td><td>✅</td><td>Legacy; always 0</td><td><span class="dash">—</span></td></tr>
+      <tr><td><code>likeCount</code></td><td>Data API</td><td>Default</td><td>✅</td><td>Public likes on the video</td><td><span class="dash">—</span></td></tr>
+      <tr><td><code>subscriberCount</code></td><td>Data API</td><td>Default</td><td>✅</td><td>Channel-level public subscriber count</td><td><span class="dash">—</span></td></tr>
+      <tr><td><code>viewCount</code></td><td>Data API</td><td>Default</td><td>✅</td><td>Public views as YouTube counts them</td><td><span class="dash">—</span></td></tr>
+      <tr><td><code>likeRate</code></td><td>Data API</td><td>Derivative</td><td>✅</td><td>Likes earned per view</td><td><span class="f">likes ÷ views</span></td></tr>
+      <tr><td><code>commentRate</code></td><td>Data API</td><td>Derivative</td><td>✅</td><td>Comments earned per view</td><td><span class="f">comments ÷ views</span></td></tr>
+      <tr><td><code>engagementRate</code></td><td>Data API</td><td>Derivative</td><td>✅</td><td>All public actions per view</td><td><span class="f">(likes + comments) ÷ views</span></td></tr>
+      <tr><td><code>commentsPerLike</code></td><td>Data API</td><td>Derivative</td><td>✅</td><td>Discussion relative to approval</td><td><span class="f">comments ÷ likes</span></td></tr>
+      <tr><td><code>viewsPerSubscriber</code></td><td>Data API</td><td>Derivative</td><td>✅</td><td>Reach beyond the subscriber base</td><td><span class="f">views ÷ subscribers</span></td></tr>
+      <tr><td><code>viewsPerDay</code></td><td>Data API</td><td>Derivative</td><td>✅</td><td>Pace of accumulation</td><td><span class="f">views ÷ days since publish</span></td></tr>
+      <tr><td><code>uploadCadence</code></td><td>Data API</td><td>Derivative</td><td>✅</td><td>The channel’s publishing rhythm</td><td><span class="f">uploads ÷ week</span></td></tr>
+      <tr><td><code>channelViewsPerVideo</code></td><td>Data API</td><td>Derivative</td><td>✅</td><td>The channel’s typical draw</td><td><span class="f">channel views ÷ video count</span></td></tr>
+      <tr><td><code>titleTagFeatures</code></td><td>Data API</td><td>Derivative</td><td>✅</td><td>Question-led, number, first person, length</td><td><span class="f">pattern tests on title, tags</span></td></tr>
+      <tr><td><code>viewVelocity</code></td><td>Data API, Poller</td><td>Derivative</td><td>✅</td><td>Growth rate between polls</td><td><span class="f">Δviews ÷ Δtime</span></td></tr>
+      <tr><td><code>viewAcceleration</code></td><td>Data API, Poller</td><td>Derivative</td><td>✅</td><td>Growth speeding up or slowing</td><td><span class="f">Δvelocity between polls</span></td></tr>
+      <tr><td><code>likeCommentVelocity</code></td><td>Data API, Poller</td><td>Derivative</td><td>✅</td><td>Engagement growth rate</td><td><span class="f">Δlikes, Δcomments ÷ Δtime</span></td></tr>
+      <tr><td><code>timeToNViews</code></td><td>Data API, Poller</td><td>Derivative</td><td>✅</td><td>Speed to a milestone</td><td><span class="f">hours to a chosen crossing</span></td></tr>
+      <tr><td><code>earlyLateLikeRateDrift</code></td><td>Data API, Poller</td><td>Derivative</td><td>✅</td><td>Audience shift as reach widens</td><td><span class="f">early like rate − late</span></td></tr>
+      <tr><td><code>settledTier</code></td><td>Data API, Poller</td><td>Derivative</td><td>✅</td><td>Whether the count has stopped moving</td><td><span class="f">velocity under threshold</span></td></tr>
+      <tr><td><code>coSurge</code></td><td>Data API, Poller</td><td>Derivative</td><td>✅</td><td>Two watched videos rising together</td><td><span class="f">paired surge crossings</span></td></tr>
+      <tr><td><code>outlierScore</code></td><td>Data API, Catalog</td><td>Derivative</td><td>✅</td><td>Performance against the channel’s usual</td><td><span class="f">views ÷ channel median</span></td></tr>
+      <tr><td><code>war</code></td><td>Data API, Catalog</td><td>Derivative</td><td>✅</td><td>The multiple against the whole field</td><td><span class="f">views ÷ global median</span></td></tr>
+      <tr><td><code>shareOver3x</code></td><td>Data API, Catalog</td><td>Derivative</td><td>✅</td><td>A group’s hit rate</td><td><span class="f">shorts ≥ 3x median ÷ group</span></td></tr>
+      <tr><td><code>ratePercentiles</code></td><td>Data API, Catalog</td><td>Derivative</td><td>✅</td><td>Standing within channel or catalog</td><td><span class="f">rank of any rate above</span></td></tr>
+      <tr><td><code>expectedViewsResidual</code></td><td>Data API, Catalog</td><td>Derivative</td><td>✅</td><td>Over- or under-performance in views</td><td><span class="f">actual − channel baseline</span></td></tr>
+      <tr><td><code>transcriptPace</code></td><td>Data API, Transcripts</td><td>Derivative</td><td>✅</td><td>Speaking speed</td><td><span class="f">words ÷ duration</span></td></tr>
+      <tr><td><code>askNumberPresence</code></td><td>Transcripts</td><td>Derivative</td><td>✅</td><td>Explicit ask; concrete number</td><td><span class="f">pattern tests on transcript</span></td></tr>
+      <tr><td><code>compositionJoins</code></td><td>Data API, Composition</td><td>Derivative</td><td>✅</td><td>First cut, speech start, text on screen vs results</td><td><span class="f">craft features × outcomes</span></td></tr>
+      <tr><td><code>hitProbability</code></td><td>Data API, Transcripts, Models</td><td>Derivative</td><td>✅</td><td>Chance of a Hit before results</td><td><span class="f">Classifier v3 forecast</span></td></tr>
+      <tr><td><code>titleWinProbability</code></td><td>Data API, Models</td><td>Derivative</td><td>✅</td><td>The title against tested pairs</td><td><span class="f">headline model score</span></td></tr>
+      <tr><td><code>neighborhoodLift</code></td><td>Catalog, Embeddings</td><td>Derivative</td><td>✅</td><td>The content neighborhood’s pull</td><td><span class="f">cluster’s measured lift</span></td></tr>
     </tbody>
   </table>
   </div>
