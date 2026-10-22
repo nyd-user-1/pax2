@@ -22,7 +22,6 @@ import { ReadingPanel } from "@/components/reading-panel"
 import { SplitColumns } from "@/components/split-columns"
 import { Term } from "@/components/term"
 import { SignupGate } from "@/components/signup-gate"
-import { TagChip } from "@/components/tag-chip"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
 import { currentUser } from "@/lib/auth"
 import { featuresFor, type Features } from "@/lib/catalog"
@@ -31,7 +30,7 @@ import { channelById, secs } from "@/lib/channels"
 import { labVideos, type Tier } from "@/lib/lab"
 import { COMPONENTS } from "@/lib/resonance"
 import { paidResonance } from "@/lib/paid-resonance"
-import { tagsFor } from "@/lib/tags"
+import { tagHref, taggedVideos, tagsFor } from "@/lib/tags"
 import { cn } from "@/ui/lib/utils"
 import { UsageOpen } from "@/components/usage-beacon"
 import { homeFeedFile, ytShortsFile } from "@/lib/data-files"
@@ -125,6 +124,22 @@ const PLACEHOLDER_THREADS: Thread[] = [
     { id: "ph-2c", author: "Tempor Incididunt", avatar: "", text: LOREM[0], likes: 0, published: "2026-10-15T16:00:00Z" },
   ] },
 ]
+
+/** Every comments block renders exactly seven rows (Brendan, 2026-10-22): comment one with three
+ *  replies, comment two with two. Real threads are used only when they fill that shape; otherwise the
+ *  approved stand-in, trimmed to it. Text is the stand-in words either way. */
+function sevenRows(threads: Thread[] | null): Thread[] {
+  const shape = (ts: Thread[]) => [
+    { ...ts[0], replies: ts[0].replies.slice(0, 3), replyCount: 3 },
+    { ...ts[1], replies: ts[1].replies.slice(0, 2), replyCount: 2 },
+  ]
+  if (threads) {
+    const first = threads.find((t) => t.replies.length >= 3)
+    const second = threads.find((t) => t !== first && t.replies.length >= 2)
+    if (first && second) return shape([first, second])
+  }
+  return shape(PLACEHOLDER_THREADS)
+}
 
 /** The video's top comment threads from YouTube (by relevance) with the replies YouTube sends along,
  *  cached an hour. Null when there's no key, comments are off, or YouTube won't answer. */
@@ -255,6 +270,16 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const statGrid = (rs: [string, string][]) => <div className="grid grid-cols-2 gap-4">{rs.map(([label, value]) => <React.Fragment key={label}>{stat(label, value)}</React.Fragment>)}</div>
 
   const comments = await topComments(ytId)
+  /** A video's outperformance multiple when the catalog knows it. */
+  const ratioOf = (vid: string) => (homeFeed as { id: string; ratio?: number }[]).find((x) => x.id === vid)?.ratio ?? null
+  const titleOf = (vid: string) => [...data.videos, ...(homeFeed as unknown as Yt["videos"])].find((x) => x.id === vid)?.title ?? null
+  /** Up to three other videos carrying `tag`, newest tagging first, each with a known title. */
+  const byTag = (tag: string) =>
+    taggedVideos()
+      .filter((x) => x.id !== id && x.tags.includes(tag))
+      .map((x) => ({ id: x.id.replace(/^yt-/, ""), title: titleOf(x.id.replace(/^yt-/, "")) }))
+      .filter((x): x is { id: string; title: string } => !!x.title)
+      .slice(0, 3)
   const template = craftTemplate(ytId)
   const topic = topicOf(ytId)
   const lengthSec = v ? secs(v.duration) : 0
@@ -262,16 +287,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const match = modeMatch(ytId)
   const recipe = match && template ? ingredients(template, match.mode, match.axes) : null
   const unlock = unlockActions(ytId)
-  const left: [string, string, ReactNode][] = [
-    [
-      "comments",
-      "Comments",
-      <ListBlock key="comments" title="Comments" height="auto">
-        {/* Real threads only when they carry a conversation; a bare comment or two falls back to the approved stand-in. */}
-        <CommentThread videoId={ytId} threads={comments?.length && (comments.length >= 2 || comments.some((t) => t.replies.length > 0)) ? comments : PLACEHOLDER_THREADS} />
-      </ListBlock>,
-    ],
-  ]
+  const left: [string, string, ReactNode][] = []
   if (f?.audio && !f.audio.error)
     left.push([
       "audio",
@@ -288,13 +304,18 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "Comps",
       <Locked key="comps" locked={locked}>
         <ListBlock title="Comps" height="auto" footer={sampled ? SAMPLE : undefined}>
-          <div className="flex flex-col gap-1">
-            {siblings.map((x) => (
-              <Link key={x.id} href={`/v/yt-${x.id}`} scroll={false} replace={inDrawer} className="flex items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-slate-50">
-                <span className="line-clamp-1">{x.title.replace(/\s*#\w+/g, "").trim() || x.title}</span>
-                <span className="tabular shrink-0 font-semibold text-slate-700">{DASH}</span>
-              </Link>
-            ))}
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {siblings.map((x) => {
+              const r = ratioOf(x.id)
+              return (
+                <Link key={x.id} href={`/v/yt-${x.id}`} scroll={false} replace={inDrawer} className="group flex min-w-0 flex-col gap-1.5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={`https://i.ytimg.com/vi/${x.id}/mqdefault.jpg`} alt="" className="aspect-video w-full rounded-lg bg-slate-100 object-cover" />
+                  <span className="line-clamp-2 text-sm text-slate-800 group-hover:text-pax2-blue">{x.title.replace(/\s*#\w+/g, "").trim() || x.title}</span>
+                  {r != null && <span className="tabular text-xs font-semibold text-slate-600">{times(r)}</span>}
+                </Link>
+              )
+            })}
           </div>
         </ListBlock>
       </Locked>,
@@ -305,10 +326,35 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "tags",
       "Tags",
       <CardBlock key="tags" title="Tags" height="auto" footer={!realTags.length && tags.length ? SAMPLE : undefined}>
-        <div className="flex flex-wrap items-center gap-1.5">
-          {tags.map((t) => (
-            <TagChip key={t} tag={t} />
-          ))}
+        <div className="flex flex-col gap-5">
+          {tags.filter((t) => t !== "aggrieved").map((t) => {
+            const others = byTag(t)
+            return (
+              <section key={t} className="flex flex-col gap-2">
+                <div className="flex items-baseline justify-between gap-2">
+                  <h3 className="text-sm font-semibold capitalize text-slate-900">{t}</h3>
+                  {others.length > 0 && (
+                    <Link href={tagHref(t)} className="shrink-0 text-xs font-medium text-pax2-light-blue hover:underline">
+                      See all
+                    </Link>
+                  )}
+                </div>
+                {others.length > 0 ? (
+                  <div className="grid grid-cols-3 gap-2">
+                    {others.map((o) => (
+                      <Link key={o.id} href={`/v/yt-${o.id}`} scroll={false} replace={inDrawer} className="group flex min-w-0 flex-col gap-1">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={`https://i.ytimg.com/vi/${o.id}/mqdefault.jpg`} alt="" className="aspect-video w-full rounded-md bg-slate-100 object-cover" />
+                        <span className="line-clamp-2 text-[11px] leading-snug text-slate-600 group-hover:text-pax2-blue">{o.title}</span>
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-slate-400">No other video carries this tag yet.</p>
+                )}
+              </section>
+            )
+          })}
         </div>
       </CardBlock>,
     ])
@@ -439,10 +485,15 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "notes",
       "Visual Notes",
       <CardBlock key="notes" title="Visual Notes" height="auto" footer={sampled ? SAMPLE : undefined}>
-        <div className="flex flex-col gap-6">
-          <Observations part="summary" f={f} />
-          {f.pegasus?.result?.characteristics && <Observations part="detail" f={f} />}
-        </div>
+        <Observations part="summary" f={f} />
+      </CardBlock>,
+    ])
+  if (f?.pegasus?.result?.characteristics)
+    right.push([
+      "characteristics",
+      "Visual Characteristics",
+      <CardBlock key="characteristics" title="Visual Characteristics" height="auto" footer={sampled ? SAMPLE : undefined}>
+        <Observations part="detail" f={f} />
       </CardBlock>,
     ])
   if (lines)
@@ -509,6 +560,15 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       </MainBlock>,
     ],
   )
+
+  // The comments sit at the foot of the right column, in the seven-row shape.
+  right.push([
+    "comments",
+    "Comments",
+    <ListBlock key="comments" title="Comments" height="auto">
+      <CommentThread videoId={ytId} threads={sevenRows(comments)} />
+    </ListBlock>,
+  ])
 
   const column = (page: string, blocks: [string, string, ReactNode][], lock: (key: string) => boolean) => (
     <BlockOrder page={page} initial={blocks.map(([key]) => key)}>
