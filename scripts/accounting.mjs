@@ -138,12 +138,20 @@ const html = `<!doctype html>
  td.mname { font-weight:600; white-space:normal; min-width:170px; }
  td.mnum { color:var(--muted); font-weight:600; }
  td.mtxt { font-weight:400; white-space:normal; font-size:13px; color:#334155; }
- #models { display:none; } body.m #models { display:block; } body.m #acct { display:none; }
+ #models, #flow { display:none; }
+ body.m #models { display:block; } body.m #acct { display:none; }
+ body.f #flow { display:block; } body.f #acct { display:none; }
+ .fbox { display:inline-block; border:1px solid #cbd5e1; border-radius:10px; padding:10px 20px; font-weight:600; background:#fff; }
+ .fnote { font-size:12px; color:var(--muted); font-weight:400; display:block; margin-top:2px; }
+ .fline { width:1px; height:16px; background:#cbd5e1; margin:0 auto; }
+ .fmerge { display:grid; grid-template-columns:1fr 1fr; gap:14px; max-width:560px; margin:0 auto; }
+ #flow .stage { text-align:center; }
 </style></head><body>
 <div class="wrap">
 <nav class="tabs">
- <button class="tabbtn on" id="ta" onclick="document.body.classList.remove('m');ta.classList.add('on');tm.classList.remove('on')">Accounting</button>
- <button class="tabbtn" id="tm" onclick="document.body.classList.add('m');tm.classList.add('on');ta.classList.remove('on')">Models</button>
+ <button class="tabbtn on" id="ta" onclick="document.body.className='';ta.classList.add('on');tm.classList.remove('on');tf.classList.remove('on')">Accounting</button>
+ <button class="tabbtn" id="tm" onclick="document.body.className='m';tm.classList.add('on');ta.classList.remove('on');tf.classList.remove('on')">Models</button>
+ <button class="tabbtn" id="tf" onclick="document.body.className='f';tf.classList.add('on');ta.classList.remove('on');tm.classList.remove('on')">Flow</button>
 </nav>
 <div class="card" id="acct">
  <h1>Accounting</h1>
@@ -171,6 +179,25 @@ const html = `<!doctype html>
  <h1>Models</h1>
  ${mtable("Passed", PASSED, "Status", 1)}
  ${mtable("Failed", FAILED, "Why it failed", PASSED.length + 1)}
+</div>
+<div class="card" id="flow">
+ <h1>Flow</h1>
+ <div class="stage">
+  <div class="fmerge">
+   <div class="fbox">Record on camera<span class="fnote">teleprompter, /record/camera</span></div>
+   <div class="fbox">Upload a finished file<span class="fnote">/record/camera#upload</span></div>
+  </div>
+  <div class="fline"></div>
+  <div class="fbox">Watch it back<span class="fnote">name, email, send or try again</span></div>
+  <div class="fline"></div>
+  <div class="fbox">Send<span class="fnote">file to S3 uploads/, submission recorded</span></div>
+  <div class="fline"></div>
+  <div class="fbox">Scored<span class="fnote">headline read, evaluation saved with the submission</span></div>
+  <div class="fline"></div>
+  <div class="fbox">PAX2 review<span class="fnote">admins notified, Score button on /drafts for drafts</span></div>
+  <div class="fline"></div>
+  <div class="fbox">Link emailed to the sender</div>
+ </div>
 </div></div>
 <script>
 const DATA = ${JSON.stringify(rows)};
