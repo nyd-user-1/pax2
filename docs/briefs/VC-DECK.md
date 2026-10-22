@@ -69,3 +69,13 @@ Revised on review (Brendan, 2026-10-22): the deck is narrative only, feature sto
 - The ledger is not called public: /reinforcement-learning sits in the admin group.
 - No census Report exists yet in `docs/briefs/WINDOW-Q.md`; the 5,379 rests on the answered files themselves.
 - Not pushed.
+
+### Revision 2 (Brendan's design review, 2026-10-22)
+
+- All text in ink; hierarchy by size and weight only. The punchline line on each slide is bold (the research department, the 617 ads, lessons dying, lessons compounding).
+- One blue accent per slide: "every lesson", "blind", 5,379, "smarter", 617, "One button", "shows its work", the three numbers, "compound".
+- Backgrounds: mist for the problem and why-now, white for the product stories, a full blue close with white type.
+- The loop slide gives the circle most of the slide, heavier arrows, and a short line under each step.
+- Slides 5–7 carry real product screens, captured from the local dev server and embedded in the file: the video page's mode match and recommendations (`/v/yt-NnhIQyha4mw`), the scan screen with nine of nine stages measured (`/lab/NnhIQyha4mw`), and one step of the learning ledger (`/reinforcement-learning`). The announcement band is cropped out.
+- What compounds: three numbers, 19,057 shorts, 12 learning loops (the publish policy plus Window P2's eleven), 617 ads.
+- Headings wrap balanced; page numbers kept.
