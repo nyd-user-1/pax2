@@ -1,13 +1,11 @@
 import Link from "next/link"
 import { FlaskConical, Video } from "lucide-react"
 
-import homeFeed from "../../../data/generated/home-feed.json"
-import labTested from "../../../data/generated/lab-tested.json"
 import shorts from "../../../data/raw/yt-shorts.json"
 import { FlapHero } from "@/components/flap-hero"
 import GradualBlur from "@/components/gradual-blur"
 import { LandingGrid } from "@/components/landing-grid"
-import { Feed, type FeedVideo } from "@/components/record/feed"
+import { Feed } from "@/components/record/feed"
 import { LandingHeader } from "@/components/record/landing-header"
 import { LandingOnly, LandingSurface } from "@/components/record/landing-only"
 import { HelpLine } from "@/components/record/chrome"
@@ -16,7 +14,7 @@ import { RecordChooser } from "@/components/record/record-options"
 import { ResonanceSection } from "@/components/record/resonance-section"
 import { ScrollCue, ScrollTop } from "@/components/record/scroll-cue"
 import { currentUser } from "@/lib/auth"
-import { tagsFor } from "@/lib/tags"
+import { feedFacets, firstPage } from "@/lib/feed-data"
 import { whiteButton } from "@/components/white-button"
 
 export const metadata = { title: "Record a video" }
@@ -34,9 +32,9 @@ const timerOf = (iso: string) => {
 export default async function RecordLanding() {
   const all = (shorts as unknown as { videos: RawVideo[] }).videos
   const top = all.filter((v) => v.channelId === FAIRVOTE).sort((a, b) => (b.views ?? 0) - (a.views ?? 0))[0]
-  // Each video carries its delivery tags, for the feed's tag filter, and its Lab Tested flag.
-  const lab = new Set(labTested as string[])
-  const feed = (homeFeed as FeedVideo[]).map((v) => ({ ...v, tags: tagsFor(`yt-${v.id}`), lab: lab.has(v.id) }))
+  // The feed's first page only; the rest pages in through /api/feed as the reader scrolls.
+  const { initial, total, cursor } = firstPage()
+  const facets = feedFacets()
   // Signed in, the hero has done its job: the feed is the page. Local dev is exempt —
   // its auto-admin shortcut would otherwise hide the hero forever.
   if (process.env.NODE_ENV !== "development" && (await currentUser()))
@@ -45,7 +43,7 @@ export default async function RecordLanding() {
         <LandingOnly>
           <LandingHeader signedIn />
         </LandingOnly>
-        <Feed videos={feed} />
+        <Feed initial={initial} total={total} cursor={cursor} facets={facets} />
         <LandingOnly>
           <ScrollTop />
         </LandingOnly>
@@ -104,7 +102,7 @@ export default async function RecordLanding() {
       </LandingOnly>
       {/* Positioned, so the feed paints above the fixed grid layer. */}
       <div id="learn" className="relative">
-        <Feed videos={feed} />
+        <Feed initial={initial} total={total} cursor={cursor} facets={facets} />
       </div>
       <LandingOnly>
         <ScrollTop />

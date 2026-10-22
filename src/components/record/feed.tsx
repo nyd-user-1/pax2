@@ -131,11 +131,16 @@ const BoostCtx = React.createContext<{ mine: Set<string>; counts: Record<string,
 function useBoostState(videos: FeedVideo[]) {
   const [mine, setMine] = React.useState<Set<string>>(new Set())
   const [counts, setCounts] = React.useState<Record<string, number>>({})
+  const asked = React.useRef(new Set<string>())
   React.useEffect(() => {
-    boostState(videos.map((v) => v.id), readerId())
+    // Only ids the server hasn't answered for yet — the pool grows a page at a time.
+    const fresh = videos.map((v) => v.id).filter((id) => !asked.current.has(id))
+    if (!fresh.length) return
+    for (const id of fresh) asked.current.add(id)
+    boostState(fresh, readerId())
       .then((s) => {
-        setMine(new Set(s.mine))
-        setCounts(s.counts)
+        setMine((m) => new Set([...m, ...s.mine]))
+        setCounts((c) => ({ ...c, ...s.counts }))
       })
       .catch(() => {})
   }, [videos])
@@ -449,7 +454,6 @@ const by = (pick: (v: FeedVideo) => number | null | undefined, dir: 1 | -1) => (
 const posted = (v: FeedVideo) => new Date(v.published).getTime()
 
 type Order = (a: FeedVideo, b: FeedVideo) => number
-const then = (first: Order, next: Order): Order => (a, b) => first(a, b) || next(a, b)
 const paidFirst: Order = (a, b) => Number(!!b.paid) - Number(!!a.paid)
 
 const perDay = (v: FeedVideo) => v.views / Math.max(1, (Date.now() - posted(v)) / 86_400_000)
@@ -470,16 +474,6 @@ const SORT_KEYS = [
 
 type SortKey = (typeof SORT_KEYS)[number]["key"]
 type FeedSort = { key: SortKey; dir: "down" | "up" }[]
-
-const NEWEST = by(posted, -1)
-/** The chips' combined order; with none on, newest first. */
-const orderOf = (sorts: FeedSort): Order =>
-  [...sorts, null].reduceRight<Order>((next, s) => {
-    if (!s) return NEWEST
-    const k = SORT_KEYS.find((x) => x.key === s.key)!
-    const first = "pick" in k ? by(k.pick, s.dir === "down" ? -1 : 1) : k.order
-    return then(first, next)
-  }, NEWEST)
 
 /** One chip's next step. */
 const step = (sorts: FeedSort, key: SortKey): FeedSort => {
@@ -504,9 +498,19 @@ export type Refine = {
   forYou?: { on: boolean; toggle: () => void }
 }
 
-const rotate = <T,>(xs: T[], n: number) => {
-  const k = xs.length ? n % xs.length : 0
-  return xs.slice(k).concat(xs.slice(0, k))
+/** The skeleton grid while a server search is in flight: pulsing stand-ins in the result grid's shape. */
+function SkeletonGrid({ cols }: { cols: string | null }) {
+  return (
+    <div aria-label="Loading results" className={cn("grid gap-8", cols ?? "md:grid-cols-2")}>
+      {Array.from({ length: 6 }, (_, i) => (
+        <div key={i} className="animate-pulse">
+          <div className="aspect-video rounded-xl bg-slate-200" />
+          <div className="mt-3 h-4 w-3/4 rounded bg-slate-200" />
+          <div className="mt-2 h-4 w-1/2 rounded bg-slate-200" />
+        </div>
+      ))}
+    </div>
+  )
 }
 
 /** One pass through the catalog as a mixed layout: a trio and a Shorts shelf first, then pairs,
@@ -879,10 +883,19 @@ export function SearchBar({
   )
 }
 
-export function Feed({ videos }: { videos: FeedVideo[] }) {
-  const boost = useBoostState(videos)
+export function Feed({ initial, total, cursor, facets }: { initial: FeedVideo[]; total: number; cursor: number; facets: { channels: string[]; tags: string[] } }) {
+  // The browse pool: the server's first page, then a page per scroll through /api/feed. A search or
+  // filter never touches the pool — it queries the full index server-side and lands in `results`.
+  const [pages, setPages] = React.useState<FeedVideo[][]>([initial])
+  const pool = React.useMemo(() => pages.flat(), [pages])
+  const reach = React.useRef(cursor)
+  const [exhausted, setExhausted] = React.useState(cursor >= total)
+  const loading = React.useRef(false)
+  const [results, setResults] = React.useState<FeedVideo[] | null>(null)
+  const visible = React.useMemo(() => (results ? [...pool, ...results] : pool), [pool, results])
+  const boost = useBoostState(visible)
   // The feed opens clean; the pinned row (Lab Tested by default) leads it instead of a seeded search.
-  const pins = usePins(videos)
+  const pins = usePins(pool)
   const [q, setQ] = React.useState("")
   const [sorts, setSortsState] = React.useState<FeedSort>([])
   const [channel, setChannelState] = React.useState("")
@@ -917,9 +930,8 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
       myUsageSince(90, readerId()).then(setMine).catch(() => {})
     }
   }
-  const channels = React.useMemo(() => [...new Set(videos.map((v) => v.channel))].sort((a, b) => a.localeCompare(b)), [videos])
-  const tags = React.useMemo(() => [...new Set(videos.flatMap((v) => v.tags ?? []))].sort((a, b) => a.localeCompare(b)), [videos])
-  const trending = React.useMemo(() => videos.toSorted(by(perDay, -1)).slice(0, 6), [videos])
+  const { channels, tags } = facets
+  const trending = React.useMemo(() => pool.toSorted(by(perDay, -1)).slice(0, 6), [pool])
   // A drawer's channel name searches this feed (take-panel.tsx); a ?q= in the address does the same on arrival.
   React.useEffect(() => {
     document.documentElement.dataset.feed = "1"
@@ -932,7 +944,26 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
       window.removeEventListener("pax2:search", on)
     }
   }, [])
-  const [cycles, setCycles] = React.useState(1)
+  /** The next browse page from the server, appended once, deduplicated against the pool. */
+  const loadMore = React.useCallback(() => {
+    if (loading.current || reach.current >= total) return
+    loading.current = true
+    fetch(`/api/feed?cursor=${reach.current}&limit=48`)
+      .then((r) => r.json())
+      .then((d: { videos: FeedVideo[]; nextCursor: number | null }) => {
+        setPages((p) => {
+          const have = new Set(p.flat().map((v) => v.id))
+          return [...p, d.videos.filter((v) => !have.has(v.id))]
+        })
+        reach.current = d.nextCursor ?? total
+        if (reach.current >= total) setExhausted(true)
+      })
+      .catch(() => {})
+      .finally(() => {
+        loading.current = false
+      })
+  }, [total])
+
   const sentinel = React.useRef<HTMLDivElement>(null)
   const section = React.useRef<HTMLElement>(null)
   const path = usePathname()
@@ -941,51 +972,80 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
   // Opening a video from the landing remembers where the reader was; coming back puts them there
   // again — never above the point where the search bar sticks.
   const remember = (e: React.MouseEvent) => {
-    if (landing && (e.target as HTMLElement).closest('a[href^="/v/"]')) sessionStorage.setItem(RETURN, JSON.stringify({ y: window.scrollY, cycles }))
+    if (landing && (e.target as HTMLElement).closest('a[href^="/v/"]')) sessionStorage.setItem(RETURN, JSON.stringify({ y: window.scrollY, reach: reach.current }))
   }
   React.useEffect(() => {
     if (!landing) return
     const saved = sessionStorage.getItem(RETURN)
     if (!saved) return
     sessionStorage.removeItem(RETURN)
-    const { y, cycles: c } = JSON.parse(saved) as { y: number; cycles: number }
-    setCycles(c)
-    requestAnimationFrame(() => {
-      const top = (section.current?.getBoundingClientRect().top ?? 0) + window.scrollY
-      window.scrollTo({ top: Math.max(y, top), behavior: "instant" })
-    })
-  }, [landing])
+    const { y, reach: r } = JSON.parse(saved) as { y: number; reach?: number }
+    const scroll = () =>
+      requestAnimationFrame(() => {
+        const top = (section.current?.getBoundingClientRect().top ?? 0) + window.scrollY
+        window.scrollTo({ top: Math.max(y, top), behavior: "instant" })
+      })
+    // The pool reloads to where the reader had scrolled before the jump, then the scroll lands.
+    if (r && r > reach.current) {
+      fetch(`/api/feed?cursor=${reach.current}&limit=${Math.min(200, r - reach.current)}`)
+        .then((res) => res.json())
+        .then((d: { videos: FeedVideo[]; nextCursor: number | null }) => {
+          setPages((p) => {
+            const have = new Set(p.flat().map((v) => v.id))
+            return [...p, d.videos.filter((v) => !have.has(v.id))]
+          })
+          reach.current = d.nextCursor ?? total
+          scroll()
+        })
+        .catch(scroll)
+    } else scroll()
+  }, [landing, total])
 
   const needle = q.trim().toLowerCase()
-  // Narrowed by words, channel or tag, the feed is a finite list of results, not an endless one.
+  // Narrowed by words, channel or tag, or re-ordered by chips, the feed queries the full index
+  // server-side and shows a finite result list; browsing pages the index newest-first.
   const narrowed = !!needle || channel !== "" || tag !== ""
-  const shown = React.useMemo(
-    () =>
-      videos
-        .filter((v) => (!needle || matches(v, needle)) && (!channel || v.channel === channel) && (!tag || (v.tags ?? []).includes(tag)))
-        .toSorted(orderOf(sorts)),
-    [videos, needle, channel, tag, sorts],
-  )
-  const ordered = React.useMemo(() => (forYou ? rankFeed(shown, events, Date.now(), mine, [...boost.mine]) : shown), [forYou, shown, events, mine, boost.mine])
+  const queried = narrowed || sorts.length > 0
+  React.useEffect(() => {
+    if (!queried) {
+      setResults(null)
+      return
+    }
+    const t = setTimeout(() => {
+      const p = new URLSearchParams()
+      if (needle) p.set("q", needle)
+      if (channel) p.set("channel", channel)
+      if (tag) p.set("tag", tag)
+      if (sorts.length) p.set("sort", sorts.map((s) => `${s.key}:${s.dir}`).join(","))
+      p.set("limit", "120")
+      fetch(`/api/feed?${p}`)
+        .then((r) => r.json())
+        .then((d: { videos: FeedVideo[] }) => setResults(d.videos))
+        .catch(() => setResults([]))
+    }, 200)
+    return () => clearTimeout(t)
+  }, [queried, needle, channel, tag, sorts])
+  const base = queried ? (results ?? []) : pool
+  const ordered = React.useMemo(() => (forYou ? rankFeed(base, events, Date.now(), mine, [...boost.mine]) : base), [forYou, base, events, mine, boost.mine])
   // The pinned row leads the unnarrowed feed, in the order pinned; its videos leave the cycles below.
-  const pinnedVideos = React.useMemo(() => pins.pinned.map((id) => videos.find((v) => v.id === id)).filter((v): v is FeedVideo => !!v), [pins.pinned, videos])
-  const unpinned = React.useMemo(() => (pinnedVideos.length ? ordered.filter((v) => !pins.pinned.includes(v.id)) : ordered), [ordered, pins.pinned, pinnedVideos.length])
+  const pinnedVideos = React.useMemo(() => pins.pinned.map((id) => pool.find((v) => v.id === id)).filter((v): v is FeedVideo => !!v), [pins.pinned, pool])
+  const pinSet = React.useMemo(() => new Set(pins.pinned), [pins.pinned])
   // With a video's drawer open beside the feed, search results lay out as a grid sized to the feed's
   // own width — three, two or one across — so a dragged split works the same as a preset one.
   const { panelOpen } = useShellPanel()
   const resultCols = panelOpen ? "@xl:grid-cols-2 @4xl:grid-cols-3" : null
 
-  // The catalog is finite; the page isn't. Each time the spinner comes into
-  // view another rotated pass appends, so the feed reads as endless.
+  // Infinite scroll: the spinner coming into view pages the index in from the server, until the
+  // whole catalog has arrived.
   React.useEffect(() => {
     const el = sentinel.current
-    if (!el || narrowed) return
+    if (!el || queried || exhausted) return
     const io = new IntersectionObserver((es) => {
-      if (es.some((e) => e.isIntersecting)) setCycles((c) => c + 1)
-    }, { rootMargin: "600px" })
+      if (es.some((e) => e.isIntersecting)) loadMore()
+    }, { rootMargin: "900px" })
     io.observe(el)
     return () => io.disconnect()
-  }, [narrowed])
+  }, [queried, exhausted, loadMore])
 
   return (
     <BoostCtx.Provider value={boost}>
@@ -1005,9 +1065,11 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
       </div>
 
       <div className="flex flex-col gap-10 pt-10">
-        {ordered.length === 0 ? (
+        {queried && results === null ? (
+          <SkeletonGrid cols={resultCols} />
+        ) : ordered.length === 0 ? (
           <p className="py-16 text-center text-slate-500">{needle ? <>Nothing matches &ldquo;{q}&rdquo;.</> : "Nothing matches these filters."}</p>
-        ) : narrowed ? (
+        ) : queried ? (
           resultCols ? (
             <div className={cn("grid gap-8", resultCols)}>
               {ordered.map((v) => (
@@ -1020,14 +1082,15 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
         ) : (
           <>
             {pinnedVideos.length > 0 && <PinnedRow items={pinnedVideos} />}
-            {Array.from({ length: cycles }, (_, c) => (
-              <Cycle key={c} items={rotate(unpinned, c * 7)} ruled={!landing} />
-            ))}
+            {pages.map((p, c) => {
+              const items = p.filter((v) => !pinSet.has(v.id))
+              return items.length ? <Cycle key={c} items={items} ruled={!landing} /> : null
+            })}
           </>
         )}
       </div>
 
-      {!narrowed && ordered.length > 0 && (
+      {!queried && !exhausted && (
         <div ref={sentinel} className="flex justify-center py-12">
           <span aria-label="Loading more" className="size-8 animate-spin rounded-full border-[3px] border-slate-300 border-t-pax2-blue" />
         </div>
