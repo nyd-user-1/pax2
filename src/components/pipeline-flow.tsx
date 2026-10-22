@@ -23,11 +23,11 @@ export type FlowData = {
 // where the results land (right). Connectors are measured from the cards, so they follow any card
 // that opens or closes.
 
-function Count({ n, on }: { n: number | string; on: boolean }) {
+export function Count({ n, on }: { n: number | string; on: boolean }) {
   return <span className={cn("ml-1 flex h-[18px] min-w-[18px] items-center justify-center rounded px-1 text-xs", on ? "bg-pax2-lavender text-pax2-light-blue" : "bg-slate-100 text-slate-500")}>{n}</span>
 }
 
-function Section({ title, children, href }: { title?: string; children: React.ReactNode; href?: string }) {
+export function Section({ title, children, href }: { title?: string; children: React.ReactNode; href?: string }) {
   const body = (
     <section className="px-3 py-2.5">
       {title && (
@@ -48,12 +48,13 @@ function Section({ title, children, href }: { title?: string; children: React.Re
   )
 }
 
-function Group({ title, count, open: start = false, headRef, width = "w-[280px]", children }: { title: string; count: number | string; open?: boolean; headRef: (el: HTMLButtonElement | null) => void; width?: string; children?: React.ReactNode }) {
+/** A titled card that opens to its sections. `planned` draws it dashed: it is not built yet. */
+export function Group({ title, count, open: start = false, headRef, width = "w-[280px]", planned = false, children }: { title: string; count: number | string; open?: boolean; headRef: (el: HTMLButtonElement | null) => void; width?: string; planned?: boolean; children?: React.ReactNode }) {
   const [open, setOpen] = React.useState(start)
-  const on = typeof count === "string" || count > 0
+  const on = !planned && (typeof count === "string" || count > 0)
   return (
-    <div className={cn("rounded-xl border border-black/15 bg-slate-50 p-1", open && children ? "pb-0" : "", width)}>
-      <button ref={headRef} type="button" onClick={() => setOpen(!open)} className="flex h-10 w-full items-center rounded-lg bg-white px-3 font-medium text-slate-900 shadow-md shadow-black/[0.07] ring-1 ring-black/15 hover:bg-slate-50">
+    <div className={cn("rounded-xl border bg-slate-50 p-1", planned ? "border-dashed border-slate-400" : "border-black/15", open && children ? "pb-0" : "", width)}>
+      <button ref={headRef} type="button" onClick={() => setOpen(!open)} className={cn("flex h-10 w-full items-center rounded-lg px-3 font-medium", planned ? "border border-dashed border-slate-300 bg-white/60 text-slate-500 hover:bg-white" : "bg-white text-slate-900 shadow-md shadow-black/[0.07] ring-1 ring-black/15 hover:bg-slate-50")}>
         {title}
         <Count n={count} on={on} />
         <ChevronDown className={cn("ml-auto size-4 text-slate-600 transition-transform", open && "rotate-180")} />
@@ -63,7 +64,7 @@ function Group({ title, count, open: start = false, headRef, width = "w-[280px]"
   )
 }
 
-function Row({ left, pill }: { left: React.ReactNode; pill: React.ReactNode }) {
+export function Row({ left, pill }: { left: React.ReactNode; pill: React.ReactNode }) {
   return (
     <div className="flex items-center justify-between gap-2">
       <p className="text-sm text-slate-800">{left}</p>

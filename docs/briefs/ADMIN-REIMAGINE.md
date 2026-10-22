@@ -25,3 +25,12 @@ Per page:
 ## Report
 
 Append `## Report` after each page's commit: one line on what the page now states, and anything deferred with why.
+
+## Report
+
+- **/pipeline**: the page is now the production map.
+  - Left, what writes: the doors (Record and Upload, the Button as planned, Connect YouTube) and the admin console. Then pax2-worker, the proxy fleet, the composition box, the captions path (fleet captions, TranscriptAPI, Whisper), the encoder retrain box, and Q's GPU box as planned. Each box shows its service, size, measured rate and every measured run with its cost, run id and date, and links its script.
+  - Middle: S3 and the pax2-ledger table in DynamoDB, with the counts read at render: catalog, media (picked and label-blind), transcripts by source, composition, index, uploads.
+  - Right, what reads: Scored with its four models' Live/Staged status, Lab Tested and e², the home feed, neighbors and Chat, and model training (Live, Staged and Failed counts). The Q census columns and P's policy are drawn as planned.
+  - Every connector is labeled with the prefix or table it writes or reads; planned cards and their connectors are dashed. The worker's video table stays below as "pax2-worker videos".
+  - Data: `scripts/accounting.mjs` now also writes `data/generated/accounting.json` (counts, transcript sources, the ledger), which the app reads through `src/lib/accounting.ts`. The per-run costs sit in `src/lib/production.ts`, each one dated and sourced to the handoff or log that measured it. The Whisper run is marked as an estimate because nobody re-measured it.

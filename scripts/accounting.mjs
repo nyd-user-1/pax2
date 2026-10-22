@@ -8,7 +8,8 @@
 //        data/generated/model/composition.json (media-derived fields = measured),
 //        data/raw/composition/index/rows.json, data/generated/lab-tested.json,
 //        data/generated/model/video-blind-sample.json, and the live S3 catalog-media listing.
-// Writes docs/ACCOUNTING.html
+// Writes docs/ACCOUNTING.html, and data/generated/accounting.json (the counts and the model ledger)
+//        for the app's admin pages to read at render.
 import fs from "node:fs"
 import path from "node:path"
 import { execSync } from "node:child_process"
@@ -18,7 +19,8 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..")
 const read = (p) => JSON.parse(fs.readFileSync(path.join(root, p), "utf8"))
 
 const universe = read("data/generated/feed-index.json")
-const transcripts = new Set(Object.keys(read("data/generated/transcripts.json")))
+const transcriptRows = read("data/generated/transcripts.json")
+const transcripts = new Set(Object.keys(transcriptRows))
 const compAll = read("data/generated/model/composition.json")
 const compRows = compAll.shorts ?? compAll.videos
 const composition = new Set(Object.keys(compRows).filter((k) => compRows[k].cutsPerSec != null))
@@ -319,3 +321,15 @@ setSort(3, -1);
 fs.writeFileSync(path.join(root, "docs/ACCOUNTING.html.tmp"), html)
 fs.renameSync(path.join(root, "docs/ACCOUNTING.html.tmp"), path.join(root, "docs/ACCOUNTING.html"))
 console.log(`ACCOUNTING.html: ${rows.length} rows, ${(html.length / 1e6).toFixed(1)} MB`, counts)
+// Where the catalog's transcripts came from: YouTube captions (fleet and Mac), TranscriptAPI, Whisper.
+const sources = {}
+for (const v of universe) {
+  const t = transcriptRows[v.id]
+  if (t) sources[t.source ?? "unknown"] = (sources[t.source ?? "unknown"] ?? 0) + 1
+}
+// The same counts and ledger for the app: /dashboard's tiles, /evals' tables, /pipeline's sets.
+const ledger = (r) => ({ name: r[0], kind: r[1], does: r[2], inputs: r[3], score: r[4], last: r[5] })
+fs.writeFileSync(
+  path.join(root, "data/generated/accounting.json"),
+  JSON.stringify({ builtAt: new Date().toISOString(), counts, transcriptSources: sources, passed: PASSED.map(ledger), failed: FAILED.map(ledger) }, null, 1) + "\n",
+)
