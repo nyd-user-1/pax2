@@ -57,3 +57,30 @@ Nothing has been fitted when this text is written. The evaluation below runs exa
 **Limits.** The logged choices were never randomized. Channels chose topic, length and hour for their own reasons, and those reasons may themselves drive outperformance; π_b is estimated, not known. Every number here is observational: it says which choices co-occur with outperforming in this catalog, not what a channel would gain by switching. The support guard keeps every recommendation inside what the channel has done, which limits both the variance and the reach of the policy.
 
 **Outputs.** Model file `data/generated/model/martian-publish-policy.json` with the epoch marker (everything at or before it is replay; a client's own publishes land after it). Script `scripts/policy/fit.py`. Card `docs/cards/martian-publish-policy.md`, this registration verbatim. Hugging Face: `NYSgpt/martian-publish-policy`, private, pass or fail.
+
+### Run — 2026-10-22, on the Mac, $0
+
+Ran against the registration above with no deviation: `python3 scripts/policy/fit.py`, 7.7 s.
+
+**Arms and context as built.** Topic: 40 clusters from encoder-map run 20261019-094112-train. Length: ≤30 s, 31–60 s, 61–90 s, ≥91 s. Hour: six four-hour blocks, America/New_York. Context: six families (Partisan media, Candidates & officials, Nonpartisan media, Reform, Voting rights, UK) and standardized log10 channel median. 358 features.
+
+**Replay size.** 18,307 rows (19,036 in the catalog; 416 unsettled and 313 without a cluster dropped). Training segment 14,645 rows (through the 80% point); test segment 3,662 rows, logged outperform rate 0.1319; whole-replay rate 0.1484.
+
+**Model check (progressive validation, test segment).** Full model log loss 0.3616, AUC 0.696. Context-only 0.3862, AUC 0.613. The arms add signal beyond context.
+
+**Off-policy numbers (V_π − V_b, 95% channel-clustered bootstrap).**
+
+| Policy | Matched | ESS | SNIPS | DR | Rule |
+|---|---|---|---|---|---|
+| Topic | 664 | 65.6 | +0.065 (−0.047, +0.173) | +0.145 (+0.024, +0.273) | pass |
+| Length | 916 | 269.2 | −0.033 (−0.072, +0.018) | −0.274 (−0.704, +0.047) | fail |
+| Hour | 262 | 45.2 | +0.128 (−0.051, +0.337) | +0.104 (+0.026, +0.214) | pass |
+| Joint | 25 | 17.4 | +0.005 (−0.150, +0.137) | +0.291 (+0.216, +0.356) | fail, 25 < 200 matches |
+
+**Verdict by the registered rule: PASS** (topic and hour pass; full model beats context-only). The pass is weak. SNIPS, which does not use the reward model, has no interval above zero for any factor. DR relies on the same model the policy maximizes, so its direct-method term is optimistic. The length DR value of −0.14 as a rate falls outside [0, 1] because the weights are uncapped, as registered; they were not capped after the fact. Effective sample sizes run from 17 to 269.
+
+**HF repo.** `NYSgpt/martian-publish-policy`, private: README (card with this registration verbatim), model JSON, eval JSON, fit.py.
+
+**Epoch marker.** `replayRows = 18307`; last replayed short `CMnptS4ujWU`, published 2026-10-08T15:00:16Z. Updates after 18,307 are a client's own publishes, rewarded by outperformed 3× within 72 hours.
+
+**Files.** `scripts/policy/fit.py`, `data/generated/model/martian-publish-policy.json`, `data/generated/model/martian-publish-policy-eval.json`, `docs/cards/martian-publish-policy.md`. Not pushed.

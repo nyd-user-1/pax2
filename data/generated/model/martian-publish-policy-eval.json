@@ -1,0 +1,104 @@
+{
+ "registration": "docs/briefs/WINDOW-P.md 2026-10-22T18:51:28Z",
+ "rows": 18307,
+ "dropped": {
+  "unsettled": 416,
+  "noCluster": 313
+ },
+ "train": 14645,
+ "test": 3662,
+ "baseRate": 0.1484,
+ "testBaseRate": 0.1319,
+ "trainEndsAt": "2026-07-26T19:30:21Z",
+ "modelCheck": {
+  "full": {
+   "logLoss": 0.3615855661351896,
+   "auc": 0.6957309778131201
+  },
+  "contextOnly": {
+   "logLoss": 0.38620373329524377,
+   "auc": 0.6132942830701218
+  }
+ },
+ "ope": {
+  "topic": {
+   "matched": 664,
+   "ess": 65.6,
+   "Vlogged": 0.1319,
+   "SNIPS": 0.1969,
+   "SNIPSminusLogged": 0.065,
+   "SNIPSdiffCI95": [
+    -0.0466,
+    0.1732
+   ],
+   "DR": 0.2764,
+   "DRminusLogged": 0.1445,
+   "DRdiffCI95": [
+    0.0235,
+    0.273
+   ],
+   "pass": true
+  },
+  "length": {
+   "matched": 916,
+   "ess": 269.2,
+   "Vlogged": 0.1319,
+   "SNIPS": 0.0992,
+   "SNIPSminusLogged": -0.0327,
+   "SNIPSdiffCI95": [
+    -0.0724,
+    0.0181
+   ],
+   "DR": -0.1425,
+   "DRminusLogged": -0.2744,
+   "DRdiffCI95": [
+    -0.704,
+    0.0471
+   ],
+   "pass": false
+  },
+  "hour": {
+   "matched": 262,
+   "ess": 45.2,
+   "Vlogged": 0.1319,
+   "SNIPS": 0.2596,
+   "SNIPSminusLogged": 0.1277,
+   "SNIPSdiffCI95": [
+    -0.0514,
+    0.3369
+   ],
+   "DR": 0.2355,
+   "DRminusLogged": 0.1037,
+   "DRdiffCI95": [
+    0.0264,
+    0.2139
+   ],
+   "pass": true
+  },
+  "joint": {
+   "matched": 25,
+   "ess": 17.4,
+   "Vlogged": 0.1319,
+   "SNIPS": 0.1371,
+   "SNIPSminusLogged": 0.0052,
+   "SNIPSdiffCI95": [
+    -0.15,
+    0.1374
+   ],
+   "DR": 0.4229,
+   "DRminusLogged": 0.291,
+   "DRdiffCI95": [
+    0.2155,
+    0.3563
+   ],
+   "pass": false
+  }
+ },
+ "pass": true,
+ "epochMarker": {
+  "replayRows": 18307,
+  "lastReplayedPublished": "2026-10-08T15:00:16Z",
+  "lastReplayedId": "CMnptS4ujWU",
+  "rule": "Updates 1..replayRows are replay of the settled catalog (reward: settled ratio >= 3). Every update after replayRows is a client's own publish (reward: outperformed 3x within 72 hours)."
+ }
+}
