@@ -68,6 +68,15 @@ const counts = {
   index: n((r) => r[8]),
   lab: n((r) => r[9]),
   e2: n((r) => r[10]),
+  // The uniform baseline (WINDOW-Q's set): transcript, media in S3, composition and an index embedding.
+  baseline: n((r) => r[5] && r[6] > 0 && r[7] && r[8]),
+}
+// What keeps the rest outside the baseline, one count per missing piece (a short can miss several).
+const outside = {
+  transcript: n((r) => !(r[5] && r[6] > 0 && r[7] && r[8]) && !r[5]),
+  media: n((r) => !(r[5] && r[6] > 0 && r[7] && r[8]) && !(r[6] > 0)),
+  composition: n((r) => !(r[5] && r[6] > 0 && r[7] && r[8]) && !r[7]),
+  index: n((r) => !(r[5] && r[6] > 0 && r[7] && r[8]) && !r[8]),
 }
 
 
@@ -331,5 +340,5 @@ for (const v of universe) {
 const ledger = (r) => ({ name: r[0], kind: r[1], does: r[2], inputs: r[3], score: r[4], last: r[5] })
 fs.writeFileSync(
   path.join(root, "data/generated/accounting.json"),
-  JSON.stringify({ builtAt: new Date().toISOString(), counts, transcriptSources: sources, passed: PASSED.map(ledger), failed: FAILED.map(ledger) }, null, 1) + "\n",
+  JSON.stringify({ builtAt: new Date().toISOString(), counts, outside, transcriptSources: sources, passed: PASSED.map(ledger), failed: FAILED.map(ledger) }, null, 1) + "\n",
 )

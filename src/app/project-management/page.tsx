@@ -5,6 +5,7 @@ import type * as React from "react"
 import { ListBlock, ProgressBlock, TableBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { PunchlistRows } from "@/components/punchlist"
+import { Programs } from "@/components/pm/programs"
 import { TabRail } from "@/components/tab-rail"
 import { MODEL_TERMS } from "@/lib/model-terms"
 import { MODELS, REQUIREMENTS, blockedBy, type Item } from "@/lib/project-management"
@@ -187,7 +188,7 @@ const PUNCHLIST: { item: string; done: boolean }[] = [
   { item: "The client secret file still sits in Downloads", done: false },
 ]
 
-const VIEWS = ["requirements", "models", "specs"] as const
+const VIEWS = ["programs", "requirements", "models", "specs"] as const
 type View = (typeof VIEWS)[number]
 
 export default async function ProjectManagementPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
@@ -195,11 +196,12 @@ export default async function ProjectManagementPage({ searchParams }: { searchPa
   if (!gatekeeper) redirect("/signin?next=/project-management")
   if (!gatekeeper.admin) notFound()
   const { view } = await searchParams
-  const active: View = VIEWS.includes(view as View) ? (view as View) : "requirements"
+  const active: View = VIEWS.includes(view as View) ? (view as View) : "programs"
   const today = new Date().toISOString().slice(0, 10)
   const rows = (list: Item[]) => list.map((b, i) => ({ no: i + 1, item: plainName(b.name), progress: b.progress, start: b.start, end: b.end, next: b.next, importance: b.importance, utility: b.utility, ease: b.ease }))
   const tabs = [
-    { key: "requirements", label: "Requirements", href: "/project-management", count: REQUIREMENTS.length },
+    { key: "programs", label: "Programs", href: "/project-management", count: 2 },
+    { key: "requirements", label: "Requirements", href: "/project-management?view=requirements", count: REQUIREMENTS.length },
     { key: "models", label: "Models", href: "/project-management?view=models", count: MODELS.length },
     { key: "specs", label: "Specs", href: "/project-management?view=specs", count: specsInModelOrder().length },
   ]
@@ -208,6 +210,13 @@ export default async function ProjectManagementPage({ searchParams }: { searchPa
     <div className="flex flex-col">
       <TabRail tabs={tabs} active={active} />
       <BlockOrder page="project-management" initial={["board", "punchlist"]}>
+        {active === "programs" && (
+          <OrderedBlock id="board" label="Programs">
+            <div className="flex flex-col gap-5">
+              <Programs />
+            </div>
+          </OrderedBlock>
+        )}
         {active === "requirements" && (
           <OrderedBlock id="board" label="Requirements">
           <ProgressBlock title="Requirements" search="Search requirements…" rows={rows(REQUIREMENTS)} name="requirements" height="h-[calc(100dvh-226px)]" footer={summary(REQUIREMENTS)}>

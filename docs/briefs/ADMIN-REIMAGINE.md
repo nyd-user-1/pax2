@@ -50,3 +50,8 @@ Append `## Report` after each page's commit: one line on what the page now state
   - The model ledger now leads the page: Passed (Live/Staged as a badge, Staged dashed) and Failed (with why each failed), numbered continuously across both tables. Built from the house TableBlock and nova Table, searchable and downloadable, read from `accounting.json` with its as-of date in the block header.
   - The partner-review blocks (results on file, carried steps, calls) stay below, because the dashboard's funnel links here for that loop. The explainer paragraph under the page head is gone.
   - Rides along: the dashboard Catalog block's as-of date moved into its header tools, because the house blocks ignore `footer`.
+- **/project-management**: a new Programs tab is now the default view; Requirements, Models, Specs and the Punchlist are unchanged.
+  - In build: Q and P as dashed cards, each with its ledger row's purpose, kind and status, its budget and what it runs on, and its brief linked on GitHub.
+  - The uniform baseline: 5,379 of 19,057 shorts hold all four pieces as of this run, read from `accounting.json`. Four counts show what keeps the rest outside (no transcript, no media, no composition, not indexed).
+  - Box runs: every measured run from `src/lib/production.ts`, with its cost and a link to the handoff that recorded it.
+  - `accounting.mjs` now writes the baseline count and the outside breakdown.
