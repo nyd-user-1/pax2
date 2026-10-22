@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { FlaskConical, Video } from "lucide-react"
+import { Video } from "lucide-react"
 
 import shorts from "../../../data/raw/yt-shorts.json"
 import { FlapHero } from "@/components/flap-hero"
