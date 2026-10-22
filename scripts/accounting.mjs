@@ -149,11 +149,20 @@ const html = `<!doctype html>
  #models, #flow { display:none; }
  body.m #models { display:block; } body.m #acct { display:none; }
  body.f #flow { display:block; } body.f #acct { display:none; }
- .fbox { display:inline-block; border:1px solid #cbd5e1; border-radius:10px; padding:10px 20px; font-weight:600; background:#fff; }
+ .fbox { display:inline-block; border:1px solid #cbd5e1; border-radius:10px; padding:10px 18px; font-weight:600; background:#fff; }
+ .fbox.trigger { background:var(--blue); color:#fff; border-color:var(--blue); }
  .fnote { font-size:12px; color:var(--muted); font-weight:400; display:block; margin-top:2px; }
- .fline { width:1px; height:16px; background:#cbd5e1; margin:0 auto; }
- .fmerge { display:grid; grid-template-columns:1fr 1fr; gap:14px; max-width:560px; margin:0 auto; }
- #flow .stage { text-align:center; }
+ .fbox.trigger .fnote { color:#c7d2fe; }
+ .fline { width:1px; height:18px; background:#cbd5e1; margin:0 auto; }
+ .lab { display:grid; grid-template-columns:190px 40px minmax(300px,480px) 40px 190px; justify-content:center; align-items:center; }
+ .lab .stage { grid-column:3; text-align:center; }
+ .lab .fline { grid-column:3; }
+ .trio { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+ .rail { border:0 solid #cbd5e1; }
+ .railcard { border:1px dashed #94a3b8; border-radius:12px; background:#fff; padding:10px 12px; font-size:12px; color:#334155; }
+ .railcard b { display:block; font-size:13px; color:var(--ink); margin-bottom:2px; }
+ .chips { margin-top:8px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
+ .chip { font-size:11px; font-weight:600; color:var(--blue); background:#eef2ff; border-radius:999px; padding:3px 9px; }
  .fbox.ftrig { background:var(--blue); border-color:var(--blue); color:#fff; }
  .fbox.ftrig .fnote { color:#dbeafe; }
  .fchips { display:flex; flex-wrap:wrap; justify-content:center; gap:6px; max-width:720px; margin:0 auto; }
@@ -195,26 +204,36 @@ const html = `<!doctype html>
 </div>
 <div class="card" id="flow">
  <h1>Flow</h1>
- <div class="stage">
-  ${chips(BEFORE)}
-  <div class="fline"></div>
-  <div class="fmerge">
-   <div class="fbox ftrig">Record on camera<span class="fnote">teleprompter, /record/camera</span></div>
-   <div class="fbox ftrig">Upload a finished file<span class="fnote">/record/camera#upload</span></div>
+ <div class="lab">
+  <div class="stage trio" style="grid-row:1">
+   <div class="fbox trigger">Record on camera<span class="fnote">teleprompter, /record/camera</span></div>
+   <div class="fbox trigger">Upload a finished file<span class="fnote">/record/camera#upload</span></div>
+   <div class="fbox trigger">Flask a catalog video<span class="fnote">the flask button on any card</span></div>
   </div>
-  <div class="fline"></div>
-  <div class="fbox">Watch it back<span class="fnote">name, email, send or try again</span></div>
-  <div class="fline"></div>
-  <div class="fbox">Send<span class="fnote">file to S3 uploads/, submission recorded</span></div>
-  <div class="fline"></div>
-  <div class="fat">
-   <div class="fbox">Scored<span class="fnote">headline read, evaluation saved with the submission</span></div>
-   ${chips(AT_SCORED)}
+  <div class="fline" style="grid-row:2"></div>
+  <div class="stage" style="grid-row:3">
+   <div class="fbox">Measure<span class="fnote">cuts, loudness, on-screen text · transcript · embedding into the index</span></div>
   </div>
-  <div class="fline"></div>
-  <div class="fbox">PAX2 review<span class="fnote">admins notified, Score button on /drafts for drafts</span></div>
-  <div class="fline"></div>
-  <div class="fbox">Link emailed to the sender</div>
+  <div class="fline" style="grid-row:4"></div>
+  <div class="stage" style="grid-row:5">
+   <div class="fbox">Score<span class="fnote">the read, saved with the video</span></div>
+   <div class="chips">
+    <span class="chip">Outlier classifier</span><span class="chip">Headline picker</span><span class="chip">Pair-picker read</span>
+    <span class="chip">Neighbor re-scorer</span><span class="chip">Persuasion citations</span><span class="chip">Ask it anything (Q)</span>
+   </div>
+  </div>
+  <div class="fline" style="grid-row:6"></div>
+  <div class="stage" style="grid-row:7">
+   <div class="fbox">Review and deliver<span class="fnote">PAX2 review · the flask granted · link sent</span></div>
+  </div>
+  <div class="fline" style="grid-row:8"></div>
+  <div class="stage" style="grid-row:9">
+   <div class="fbox">Publish and watch<span class="fnote">the poller · the early-hit read at 72 hours</span></div>
+  </div>
+  <div class="rail" style="grid-column:2; grid-row:3/6; align-self:stretch; border-left-width:1px; border-top-width:1px; border-bottom-width:1px; border-radius:12px 0 0 12px; margin:24px 0"></div>
+  <div class="railcard" style="grid-column:1; grid-row:3/6; align-self:center"><b>Models fitted from the catalog</b>Every run&rsquo;s measurements join the catalog; the instruments are refit from it and score the next run.</div>
+  <div class="rail" style="grid-column:4; grid-row:1/10; align-self:stretch; border-right-width:1px; border-top-width:1px; border-bottom-width:1px; border-radius:0 12px 12px 0; margin:24px 0"></div>
+  <div class="railcard" style="grid-column:5; grid-row:1/10; align-self:center"><b>What to publish next (P)</b>The policy learns from every outcome and advises the next recording&rsquo;s topic, length and hour.</div>
  </div>
 </div></div>
 <script>
