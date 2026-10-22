@@ -87,6 +87,8 @@ const PASSED = [
   ["Resonance text embedding, full arm", "fine-tuned embedding", "the same with publish-week co-surge proxy groups", "as above, \u03bb = 0.25", "kNN-AUC over stock +0.037; pair ranking 0.578", "Staged"],
   ["Watch-through regressor v0", "ridge regression", "how much of a short a viewer watches, from length, type, tags", "KuaiRand-1K random exposures (pretrain)", "Spearman 0.746 per held-out video", "Live"],
   ["Feed ranker v0", "logistic regression", "which short a given reader watches through", "KuaiRand-1K (pretrain): video + reader history features", "AUC 0.697 pooled, 0.553 within-reader", "Staged"],
+  ["Ask-a-video (Q)", "vision-language model (Qwen3-VL)", "answers any question about any held video; the fixed census batch is its first run", "the video file and the question", "in build \u2014 20-video verification first", "Staged"],
+  ["Publish-next policy (P)", "contextual bandit (reinforcement learning)", "advises the next video's topic, length and hour, learning from every outcome", "the catalog's settled choice-and-outcome rows", "in build \u2014 off-policy evaluation registered before any fit", "Staged"],
 ]
 const FAILED = [
   ["Outlier classifier v2", "logistic regression", "add the transcript's words to v1", "v1's fields + 400-term TF-IDF", "AUC 0.597 against a 0.624 bar", "the transcript's words, read this way, do not predict an outlier"],
@@ -163,6 +165,16 @@ const html = `<!doctype html>
  .railcard b { display:block; font-size:13px; color:var(--ink); margin-bottom:2px; }
  .chips { margin-top:8px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
  .chip { font-size:11px; font-weight:600; color:var(--blue); background:#eef2ff; border-radius:999px; padding:3px 9px; }
+ .quad { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+ .quad .fbox { padding:12px 8px; }
+ .mref { font-style:normal; font-weight:700; color:var(--blue); background:#eef2ff; border-radius:6px; padding:0 5px; }
+ .chip .mref { background:#fff; }
+ .loops { display:grid; grid-template-columns:1fr 36px 1fr 36px 1fr; max-width:960px; margin:0 auto; align-items:center; }
+ .lcol { display:flex; flex-direction:column; gap:12px; }
+ .lcol .fbox { display:block; text-align:center; font-size:14px; }
+ .fbox.core { border-color:var(--blue); box-shadow:inset 0 0 0 1px var(--blue); }
+ .lrail { height:1px; background:#cbd5e1; }
+ .lloop { max-width:960px; margin:6px auto 0; height:22px; border:1px solid #cbd5e1; border-top:none; border-radius:0 0 14px 14px; }
  .fbox.ftrig { background:var(--blue); border-color:var(--blue); color:#fff; }
  .fbox.ftrig .fnote { color:#dbeafe; }
  .fchips { display:flex; flex-wrap:wrap; justify-content:center; gap:6px; max-width:720px; margin:0 auto; }
@@ -203,38 +215,55 @@ const html = `<!doctype html>
  ${mtable("Failed", FAILED, "Why it failed", PASSED.length + 1)}
 </div>
 <div class="card" id="flow">
- <h1>Flow</h1>
+ <h1>The Lab \u2014 a video&rsquo;s journey</h1>
  <div class="lab">
-  <div class="stage trio" style="grid-row:1">
-   <div class="fbox trigger">Record on camera<span class="fnote">teleprompter, /record/camera</span></div>
-   <div class="fbox trigger">Upload a finished file<span class="fnote">/record/camera#upload</span></div>
-   <div class="fbox trigger">Flask a catalog video<span class="fnote">the flask button on any card</span></div>
+  <div class="stage quad" style="grid-row:1">
+   <div class="fbox trigger">Record</div>
+   <div class="fbox trigger">Upload</div>
+   <div class="fbox trigger">Button</div>
+   <div class="fbox trigger">OAuth</div>
   </div>
   <div class="fline" style="grid-row:2"></div>
   <div class="stage" style="grid-row:3">
-   <div class="fbox">Measure<span class="fnote">cuts, loudness, on-screen text · transcript · embedding into the index</span></div>
+   <div class="fbox">Measure<span class="fnote">cuts, loudness, on-screen text \u00b7 transcript \u00b7 embedding <i class="mref">4</i></span></div>
   </div>
   <div class="fline" style="grid-row:4"></div>
   <div class="stage" style="grid-row:5">
    <div class="fbox">Score<span class="fnote">the read, saved with the video</span></div>
    <div class="chips">
-    <span class="chip">Outlier classifier</span><span class="chip">Headline picker</span><span class="chip">Pair-picker read</span>
-    <span class="chip">Neighbor re-scorer</span><span class="chip">Persuasion citations</span><span class="chip">Ask it anything (Q)</span>
+    <span class="chip"><i class="mref">2</i> Outlier classifier</span><span class="chip"><i class="mref">6</i> Headline picker</span><span class="chip"><i class="mref">8</i> Pair-picker read</span>
+    <span class="chip"><i class="mref">5</i> Neighbor re-scorer</span><span class="chip"><i class="mref">7</i> Persuasion citations</span><span class="chip"><i class="mref">14</i> Ask it anything</span>
    </div>
   </div>
   <div class="fline" style="grid-row:6"></div>
   <div class="stage" style="grid-row:7">
-   <div class="fbox">Review and deliver<span class="fnote">PAX2 review · the flask granted · link sent</span></div>
+   <div class="fbox">Review and deliver<span class="fnote">PAX review \u00b7 the flask granted \u00b7 link sent</span></div>
   </div>
   <div class="fline" style="grid-row:8"></div>
   <div class="stage" style="grid-row:9">
-   <div class="fbox">Publish and watch<span class="fnote">the poller · the early-hit read at 72 hours</span></div>
+   <div class="fbox">Publish and watch<span class="fnote">the poller \u00b7 the early-hit read at 72 hours <i class="mref">3</i></span></div>
   </div>
-  <div class="rail" style="grid-column:2; grid-row:3/6; align-self:stretch; border-left-width:1px; border-top-width:1px; border-bottom-width:1px; border-radius:12px 0 0 12px; margin:24px 0"></div>
-  <div class="railcard" style="grid-column:1; grid-row:3/6; align-self:center"><b>Models fitted from the catalog</b>Every run&rsquo;s measurements join the catalog; the instruments are refit from it and score the next run.</div>
-  <div class="rail" style="grid-column:4; grid-row:1/10; align-self:stretch; border-right-width:1px; border-top-width:1px; border-bottom-width:1px; border-radius:0 12px 12px 0; margin:24px 0"></div>
-  <div class="railcard" style="grid-column:5; grid-row:1/10; align-self:center"><b>What to publish next (P)</b>The policy learns from every outcome and advises the next recording&rsquo;s topic, length and hour.</div>
  </div>
+ <h1 style="margin-top:44px">The loops \u2014 how PAX gets smarter</h1>
+ <div class="loops">
+  <div class="lcol">
+   <div class="fbox">Every video measured<span class="fnote">each Lab run joins the catalog</span></div>
+   <div class="fbox">Every question asked<span class="fnote">from Chat <i class="mref">14</i></span></div>
+   <div class="fbox">Every outcome observed<span class="fnote">views against the channel&rsquo;s median</span></div>
+  </div>
+  <div class="lrail"></div>
+  <div class="lcol">
+   <div class="fbox core">Machine learning<span class="fnote">the instruments <i class="mref">1\u201313</i>, refit from the catalog</span></div>
+   <div class="fbox core">Reinforcement learning<span class="fnote">what to make next <i class="mref">15</i></span></div>
+  </div>
+  <div class="lrail"></div>
+  <div class="lcol">
+   <div class="fbox">Sharper scores<span class="fnote">the Lab&rsquo;s next read</span></div>
+   <div class="fbox">A smarter feed<span class="fnote">the home ranking <i class="mref">13</i></span></div>
+   <div class="fbox">Better answers<span class="fnote">Chat <i class="mref">14</i> \u00b7 the next video to make</span></div>
+  </div>
+ </div>
+ <div class="lloop"></div>
 </div></div>
 <script>
 const DATA = ${JSON.stringify(rows)};
