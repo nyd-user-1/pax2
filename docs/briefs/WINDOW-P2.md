@@ -33,3 +33,18 @@ Approved vocabulary; no local typechecks; commit by explicit path; **do not push
 ## Report
 
 Append `## Report`, one section per loop in run order: registration first (timestamped, pre-fit), then the numbers, then the verdict by the registered rule.
+
+## Report
+
+Shared machinery: `scripts/policy/learn.py` carries the Window P learner unchanged (Bayesian logistic regression, diagonal Laplace posterior, prior N(0, 1), one update per row, Thompson sampling in the online epoch), the Window P factor evaluation, and the event writer. Unless a loop's registration says otherwise, the **standard protocol** below applies, copied from the Window P registration: rows in ascending publish order; first 80% train, last 20% test; behavior policy per channel per factor from training-segment frequencies with +0.5 smoothing (fallback to the main context's frequencies); deterministic per-factor target policies restricted to values the channel used in training, other factors held as logged; plus the joint policy; SNIPS and doubly-robust against the test segment's logged rate, weights uncapped; 1,000-resample channel-clustered bootstrap, seed 20261022; progressive validation of the full model against a context-only model by the same learner. **Pass rule:** a factor passes if the DR lower 95% bound of V_π − V_b is above 0 with at least 200 matched test rows; the loop passes if any factor passes and the full model's progressive log loss beats the context-only model's. The joint policy is reported and gates nothing. Limits for every replay loop: the logged choices were never randomized, π_b is estimated, and every number is observational.
+
+### 1. Title style
+
+**Registration — 2026-10-22T19:26:46Z, before any fit.**
+
+- **Rows.** Settled catalog shorts (tier ≠ unsettled) whose channel has a family in the encoder map. All titles, no cluster needed.
+- **Arms (five factors, joint 2 × 2 × 2 × 2 × 3 = 48).** The headline traits as `scripts/metadata-lift.mjs` measures them: question (title contains "?"); digit (any 0–9); caps (a word of four or more capitals, trailing punctuation allowed, hashtags removed); emoji (any character in U+1F000–U+1FAFF or U+2600–U+27BF, the Python stand-in for \p{Extended_Pictographic}); length in words with hashtags removed: ≤6, 7–14, ≥15.
+- **Context.** Channel family; log10 channel median.
+- **Reward.** Settled outperformed 3× (ratio ≥ 3).
+- **Evaluation and pass rule.** The standard protocol.
+- **Limit specific to titles.** Trait choices travel with topic and channel style; a trait's estimated gain may be its topic's.
