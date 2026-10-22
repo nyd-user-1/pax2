@@ -5,7 +5,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, EllipsisVertical, FlaskConical, Forward, ListPlus, MessageCircle, Play, Rocket, Search, SlidersHorizontal, TrendingUp, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
+import { ArrowDownAZ, ArrowDownWideNarrow, ArrowUpDown, ArrowUpNarrowWide, Bookmark, ChevronDown, ChevronUp, Clock, EllipsisVertical, FlaskConical, Forward, ListPlus, MessageCircle, Pin, Play, Rocket, Search, SlidersHorizontal, TrendingUp, Tag, ThumbsUp, UserRound, X, type LucideIcon } from "lucide-react"
 
 import { viewer } from "@/app/original-actions"
 import { boostState, boostToggle, myUsageSince, usageSince } from "@/app/usage-actions"
@@ -201,14 +201,60 @@ function CardFoot({ v, boost }: { v: FeedVideo; boost?: boolean }) {
 
 /** A card's three-dot menu: queue, save and share, each logged. Clicks stay out of the card's
  *  link — the menu portals out of it, but React events still bubble through. */
+/** Pin to top: the reader's pinned videos lead the feed as their own row. Stored in the browser
+ *  (pax2-pins); first load seeds from the feed's Lab Tested videos. */
+const PinCtx = React.createContext<{ pinned: string[]; toggle: (id: string) => void } | null>(null)
+const PINS_KEY = "pax2-pins"
+
+function usePins(videos: FeedVideo[]) {
+  const [pinned, setPinned] = React.useState<string[]>([])
+  const log = useUsage()
+  React.useEffect(() => {
+    try {
+      const stored = localStorage.getItem(PINS_KEY)
+      setPinned(stored ? (JSON.parse(stored) as string[]) : videos.filter((v) => v.lab).map((v) => v.id))
+    } catch {
+      setPinned(videos.filter((v) => v.lab).map((v) => v.id))
+    }
+  }, [videos])
+  const toggle = React.useCallback(
+    (id: string) => {
+      setPinned((p) => {
+        const next = p.includes(id) ? p.filter((x) => x !== id) : [...p, id]
+        try {
+          localStorage.setItem(PINS_KEY, JSON.stringify(next))
+        } catch {}
+        return next
+      })
+      log("pin", id)
+    },
+    [log],
+  )
+  return React.useMemo(() => ({ pinned, toggle }), [pinned, toggle])
+}
+
+/** The pinned row: two pinned videos sit two across, three or more three across. */
+function PinnedRow({ items }: { items: FeedVideo[] }) {
+  const cols = items.length === 1 ? "" : items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"
+  return (
+    <div className={cn("grid gap-8", cols)}>
+      {items.map((v) => (
+        <LandscapeCard key={v.id} v={v} />
+      ))}
+    </div>
+  )
+}
+
 function RowMenu({ v, className }: { v: FeedVideo; className?: string }) {
   const log = useUsage()
   const [saved, setSaved] = React.useState(false)
+  const pins = React.useContext(PinCtx)
   const hold = (e: React.SyntheticEvent) => {
     e.preventDefault()
     e.stopPropagation()
   }
   const actions: { label: string; icon: LucideIcon; on?: boolean; run: () => void }[] = [
+    ...(pins ? [{ label: pins.pinned.includes(v.id) ? "Unpin" : "Pin to top", icon: Pin, on: pins.pinned.includes(v.id), run: () => pins.toggle(v.id) }] : []),
     { label: "Add to queue", icon: ListPlus, run: () => log("queue", v.id) },
     {
       label: saved ? "Saved to playlist" : "Save to playlist",
@@ -831,10 +877,10 @@ export function SearchBar({
 
 export function Feed({ videos }: { videos: FeedVideo[] }) {
   const boost = useBoostState(videos)
-  // In local development the feed opens on the paid media: Voter Freedom, paid first, then most viewed.
-  const dev = process.env.NODE_ENV === "development"
-  const [q, setQ] = React.useState(dev ? "Voter Freedom" : "")
-  const [sorts, setSortsState] = React.useState<FeedSort>(dev ? [{ key: "media", dir: "down" }, { key: "views", dir: "down" }] : [])
+  // The feed opens clean; the pinned row (Lab Tested by default) leads it instead of a seeded search.
+  const pins = usePins(videos)
+  const [q, setQ] = React.useState("")
+  const [sorts, setSortsState] = React.useState<FeedSort>([])
   const [channel, setChannelState] = React.useState("")
   const [tag, setTagState] = React.useState("")
   const log = useUsage()
@@ -917,6 +963,9 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
     [videos, needle, channel, tag, sorts],
   )
   const ordered = React.useMemo(() => (forYou ? rankFeed(shown, events, Date.now(), mine, [...boost.mine]) : shown), [forYou, shown, events, mine, boost.mine])
+  // The pinned row leads the unnarrowed feed, in the order pinned; its videos leave the cycles below.
+  const pinnedVideos = React.useMemo(() => pins.pinned.map((id) => videos.find((v) => v.id === id)).filter((v): v is FeedVideo => !!v), [pins.pinned, videos])
+  const unpinned = React.useMemo(() => (pinnedVideos.length ? ordered.filter((v) => !pins.pinned.includes(v.id)) : ordered), [ordered, pins.pinned, pinnedVideos.length])
   // With a video's drawer open beside the feed, search results lay out as a grid sized to the feed's
   // own width — three, two or one across — so a dragged split works the same as a preset one.
   const { panelOpen } = useShellPanel()
@@ -936,6 +985,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
 
   return (
     <BoostCtx.Provider value={boost}>
+    <PinCtx.Provider value={pins}>
     <section ref={section} onClickCapture={remember} className="@container mx-auto w-full max-w-6xl px-6 pb-16">
       {/* On the landing it sticks just beneath the 4rem header, never inside it; inside the
           shell's scroll pane (a video's page) there is no such header, so it sticks at the top. */}
@@ -964,7 +1014,12 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
             <Cycle items={ordered} ruled={!landing} />
           )
         ) : (
-          Array.from({ length: cycles }, (_, c) => <Cycle key={c} items={rotate(ordered, c * 7)} ruled={!landing} />)
+          <>
+            {pinnedVideos.length > 0 && <PinnedRow items={pinnedVideos} />}
+            {Array.from({ length: cycles }, (_, c) => (
+              <Cycle key={c} items={rotate(unpinned, c * 7)} ruled={!landing} />
+            ))}
+          </>
         )}
       </div>
 
@@ -974,6 +1029,7 @@ export function Feed({ videos }: { videos: FeedVideo[] }) {
         </div>
       )}
     </section>
+    </PinCtx.Provider>
     </BoostCtx.Provider>
   )
 }

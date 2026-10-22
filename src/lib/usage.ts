@@ -11,7 +11,7 @@ import { now, putOnce, query, type Item } from "@/lib/ledger"
 // Written by src/app/usage-actions.ts; read back here by day partition, server-side only, since a
 // row names its reader.
 
-export const READER_KINDS = ["open", "play", "watched75", "search", "filter", "sort", "boost", "bookmark", "share", "queue"] as const
+export const READER_KINDS = ["open", "play", "watched75", "search", "filter", "sort", "boost", "bookmark", "share", "queue", "pin"] as const
 // Teach a Model's course progress, meta { course, chapter }.
 export const COURSE_KINDS = ["course-start", "chapter-start", "chapter-finish", "course-finish"] as const
 export const USAGE_KINDS = [...READER_KINDS, ...COURSE_KINDS] as const
