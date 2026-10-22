@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Roadmap 1</title>
+<style>
+body{font:15px/1.6 -apple-system,system-ui,sans-serif;color:#0f172a;background:#fff;margin:0;padding:48px 24px}
+main{max-width:780px;margin:0 auto}
+h1{font-size:24px;margin:0 0 24px}
+section{border:1px solid #e2e8f0;border-radius:10px;padding:20px 24px;margin:0 0 16px}
+h2{font-size:17px;margin:0 0 6px;color:#033882}
+p{margin:0 0 10px;color:#475569;font-size:14px}
+ol{margin:0;padding-left:22px} li{margin-bottom:7px}
+
+.tabs{display:flex;gap:6px;max-width:780px;margin:0 auto}
+.tab{padding:10px 22px;border-radius:14px 14px 0 0;font-weight:600;font-size:15px;color:#64748b;background:#e6ebf2;outline:1px solid rgb(15 23 42/.06);cursor:pointer;border:none;font-family:inherit}
+.tab.on{background:#fff;color:#033882;position:relative;z-index:2}
+main{background:#fff;outline:1px solid rgb(15 23 42/.06);border-radius:0 14px 14px 14px;padding:28px 32px}
+body{background:#f1f5f9}
+code{font:13px ui-monospace,monospace;background:#f1f5f9;padding:1px 4px;border-radius:4px}
+</style></head><body>
+<nav class="tabs">
+ <a class="tab on" href="roadmap-1.html">Roadmap 1</a>
+ <a class="tab" href="roadmap-2.html">Roadmap 2</a>
+</nav>
+<main><h1>Video question bank — what the answer-from-measurement feature can ask</h1>
+<section><h2>For the creator, about their own video</h2><p>These run against the draft or the published file, answered with timestamps where the measurement allows.</p><ol><li>What is on screen in my first two seconds, and when does my first word land?</li><li>Does my hook open on a face, on text, or on b-roll?</li><li>Is there a call to action, when does it appear, and is it spoken, shown, or both?</li><li>Are my captions burned in, and are they readable at phone size?</li><li>What changes at the moment my loudness peaks?</li><li>Does anything on screen contradict what is being said?</li><li>Which of my two takes reads clearer with the sound off?</li><li>How many distinct shots do I use, and where is the longest one?</li><li>Is my thumbnail frame actually in the video?</li><li>What would a viewer know by second three if they never unmuted?</li></ol></section><section><h2>For the partner, across their channel</h2><p>Batch questions over a channel's set, answered as counts and lists with video links.</p><ol><li>Which of our shorts show the candidate speaking to camera, and which are b-roll only?</li><li>Where does our logo or campaign branding appear, and for how many seconds per video?</li><li>Which videos carry the paid-for-by disclaimer on screen, and which are missing it?</li><li>Do our videos that outperformed 3x share a visual format?</li><li>Which videos show an opponent, a news clip, or third-party footage?</li><li>How many of our shorts open with on-screen text versus a person?</li><li>Which videos show polling places, ballots, or voting footage we could reuse as b-roll?</li><li>In which videos does the speaker appear within the first second?</li></ol></section><section><h2>For the platform (backfilling the census)</h2><p>The FLAG-extract variables the census carries empty today; one batch pass fills them as measured columns.</p><ol><li>Captions burned in: yes or no (variable: captions)</li><li>Call to action shown on screen: yes or no, with the timestamp (variable: callToAction)</li><li>Format: talking head, graphic card, b-roll, rally footage, news clip, interview (new variable)</li><li>Setting: indoor, outdoor, studio, archival (new variable)</li><li>Number of people on screen and their screen share, counts only, per the no-identity rule</li><li>Product, book, or merchandise shown: yes or no</li><li>News chyron or third-party watermark present: yes or no</li><li>Text density: share of frames carrying words, cross-checked against the OCR measurement</li><li>Does the transcript match the on-screen captions where both exist (a QA pass)</li></ol></section><section><h2>As suggested prompts in the product</h2><p>Rendered as tappable chips on a video page or in the chat's side panel, phrased in the reader's voice.</p><ol><li>What happens in the first two seconds?</li><li>When should I ask viewers to act?</li><li>What does this video look like on mute?</li><li>Why might this one have outperformed?</li><li>What is different about my best video?</li><li>Show me every moment with on-screen text.</li></ol></section><section><h2>Where it lives</h2><p>Three surfaces, one machinery; each one calls the same question-answering route with the video's measured record attached.</p><ol><li>A button on every video page that opens the chat in the side panel, preloaded with that video.</li><li>Suggested-prompt chips in /chat when a video is attached from the plus menu.</li><li>A page of its own later, when the question log shows which questions earn it.</li></ol></section>
+<section>
+<h2>From answer to recommended action</h2>
+<p>Every question resolves to a measured answer; the answer then takes exactly one of three paths.</p>
+<div style="margin:16px 0 8px;text-align:center">
+  <div style="display:inline-block;border:1px solid #cbd5e1;border-radius:8px;padding:10px 22px;font-weight:600">Question</div>
+  <div style="width:1px;height:14px;background:#cbd5e1;margin:0 auto"></div>
+  <div style="display:inline-block;border:1px solid #cbd5e1;border-radius:8px;padding:10px 22px;font-weight:600">Measured answer</div>
+  <div style="width:1px;height:14px;background:#cbd5e1;margin:0 auto"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:left">
+    <div style="border:1px solid #16a34a;border-radius:8px;padding:12px 14px">
+      <div style="font-weight:700;color:#166534;margin-bottom:4px">Grounded now</div>
+      <div style="font-size:13px">The variable already carries measured evidence. The recommendation renders with its citation: &ldquo;Add an explicit ask: +0.59 points of vote choice (0.19&ndash;0.99).&rdquo;</div>
+    </div>
+    <div style="border:1px solid #d97706;border-radius:8px;padding:12px 14px">
+      <div style="font-weight:700;color:#92400e;margin-bottom:4px">Earned by the backfill</div>
+      <div style="font-size:13px">A new column with no evidence yet. The batch pass fills it across 5,100 videos, the feature-lift formula measures its association with outperforming 3x, and only a measured lift mints the recommendation.</div>
+    </div>
+    <div style="border:1px solid #94a3b8;border-radius:8px;padding:12px 14px">
+      <div style="font-weight:700;color:#475569;margin-bottom:4px">Stays descriptive</div>
+      <div style="font-size:13px">No association and no path to one. The answer renders alone: measured, no verdict yet. Nothing invented.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>What makes it real</h2>
+<p>The tasks, in build order. Costs are EC2 boxes and one audit of human time.</p>
+<ol>
+<li><strong>Stand up the answering model.</strong> One open video-language model on a GPU box; verified against 20 hand-checked videos before any answer is trusted. About one box-hour.</li>
+<li><strong>Fix the question schema.</strong> Each census FLAG variable becomes a fixed question with a typed answer: 0/1, an enum, or a timestamp. One file, the single definition.</li>
+<li><strong>Run the batch pass.</strong> The schema over all ~6,900 media files, answers landing in one generated JSON with coverage counts. A few box-hours.</li>
+<li><strong>Audit a sample.</strong> 100 videos hand-checked against the model's answers; the measured accuracy rides with every column it produced.</li>
+<li><strong>Merge the columns</strong> into the census and composition table, filling the FLAG&middot;extract blanks.</li>
+<li><strong>Measure each new column's lift</strong> with the existing feature-lift formula; record which columns clear a measured association.</li>
+<li><strong>Write the recommendation registry:</strong> variable, grounds, citation text &mdash; the video page's existing recommendation pattern, generalized to one file.</li>
+<li><strong>Serve the on-demand route:</strong> video record plus free question in, answer out, with per-tier limits.</li>
+<li><strong>Ship the surfaces:</strong> the button on every video page opening the chat side panel preloaded, and the suggested-prompt chips.</li>
+<li><strong>Join answers to the registry</strong> at render time: grounded recommendation with citation, or the honest &ldquo;measured, no verdict yet.&rdquo;</li>
+</ol>
+</section>
+</main></body></html>
