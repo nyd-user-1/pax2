@@ -5,7 +5,7 @@ import { feedFacets, firstPage } from "@/lib/feed-data"
 
 export const metadata = { title: "Videos" }
 
-export default function VideosPage() {
-  const { initial, total, cursor } = firstPage()
-  return <Feed initial={initial} total={total} cursor={cursor} facets={feedFacets()} />
+export default async function VideosPage() {
+  const { initial, total, cursor } = await firstPage()
+  return <Feed initial={initial} total={total} cursor={cursor} facets={await feedFacets()} />
 }

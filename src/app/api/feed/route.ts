@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic"
 
 export async function GET(request: NextRequest) {
   const p = request.nextUrl.searchParams
-  const out = queryFeed(feedIndex(), {
+  const out = queryFeed(await feedIndex(), {
     q: p.get("q") ?? undefined,
     channel: p.get("channel") ?? undefined,
     tag: p.get("tag") ?? undefined,
