@@ -7,6 +7,9 @@ exactly as registered in docs/briefs/WINDOW-P.md (2026-10-22T18:51:28Z).
 Reads  data/velocity/catalog.json, data/generated/model/encoder-map.json
 Writes data/generated/model/martian-publish-policy.json  (shipped model, epoch marker)
        data/generated/model/martian-publish-policy-eval.json  (the off-policy numbers)
+       data/generated/model/martian-publish-policy-events.json  (the last EVENT_LOG replayed rows, each
+         with the weights it touched before and after its update, its own predicted chance before and
+         after, and the family's posterior-mean advice before and after: /reinforcement-learning)
 """
 import json, math, time
 from collections import Counter, defaultdict
@@ -20,6 +23,7 @@ ET = ZoneInfo("America/New_York")
 LEN_EDGES = [(0, 30, "<=30s"), (31, 60, "31-60s"), (61, 90, "61-90s"), (91, 10**9, ">=91s")]
 HOUR_BLOCKS = ["0-3", "4-7", "8-11", "12-15", "16-19", "20-23"]
 K = 40
+EVENT_LOG = 240  # the last replayed rows logged for /reinforcement-learning: twenty batches of twelve
 log = lambda *a: print(time.strftime("%H:%M:%S"), *a, flush=True)
 
 # ---------- rows ----------
@@ -264,9 +268,46 @@ model_pass = any(ope[f]["pass"] for f in FACTORS) and model_check["full"]["logLo
 log("MODEL PASS" if model_pass else "MODEL FAIL")
 
 # ---------- shipped model: replay every row; epoch marker after the last ----------
+def advice(m, f, zz):
+    """The family's greedy choice per factor under posterior means, the other factors held at their best:
+    a read-only view of what the policy would counsel; Thompson sampling acts around it."""
+    best = [0, 0, 0]
+    for _ in range(2):  # coordinate ascent converges in two passes on this additive-plus-pairwise model
+        for k in range(3):
+            vals = []
+            for v in range(NV[k]):
+                a = list(best)
+                a[k] = v
+                vals.append(pred_m(m, f, zz, a))
+            best[k] = int(np.argmax(vals))
+    return best
+
+
 shipped = Learner()
+events = []
 for i in range(N):
-    shipped.update(*feats(fam[i], z[i], A[i]), y[i])
+    fi = feats(fam[i], z[i], A[i])
+    logged = i >= N - EVENT_LOG
+    if logged:
+        idx = fi[0]
+        before_w = shipped.m[idx].copy()
+        before_p = shipped.mean(*fi)
+        before_adv = advice(shipped.m, fam[i], z[i])
+    shipped.update(*fi, y[i])
+    if logged:
+        after_adv = advice(shipped.m, fam[i], z[i])
+        r = rows[i]
+        events.append({
+            "n": i + 1, "id": r["id"], "title": r.get("title", ""), "channel": r.get("channel", ""), "channelId": r["channelId"],
+            "family": FAMILIES[fam[i]], "published": r["published"], "ratio": round(float(r["ratio"]), 3),
+            "outcome": int(y[i]),
+            "arm": {"topic": int(A[i, 0]), "length": LEN_EDGES[A[i, 1]][2], "hour": HOUR_BLOCKS[A[i, 2]]},
+            "predicted": [round(before_p, 4), round(shipped.mean(*fi), 4)],
+            "weights": [[int(j), round(float(b), 6), round(float(shipped.m[j]), 6)] for j, b in zip(idx, before_w)],
+            "advice": {name: [before_adv[k] if k == 0 else (LEN_EDGES[before_adv[k]][2] if k == 1 else HOUR_BLOCKS[before_adv[k]]),
+                              after_adv[k] if k == 0 else (LEN_EDGES[after_adv[k]][2] if k == 1 else HOUR_BLOCKS[after_adv[k]])]
+                       for k, name in enumerate(FACTORS)},
+        })
 names = (["bias"] + [f"family={f}" for f in FAMILIES] + ["log10ChannelMedian(z)"] + [f"topic={c}" for c in range(K)]
          + [f"length={l[2]}" for l in LEN_EDGES] + [f"hour={h}" for h in HOUR_BLOCKS]
          + [f"family={f}|topic={c}" for f in FAMILIES for c in range(K)]
@@ -292,4 +333,7 @@ json.dump({"registration": "docs/briefs/WINDOW-P.md 2026-10-22T18:51:28Z", "rows
            "testBaseRate": round(float(yt.mean()), 4), "trainEndsAt": rows[SPLIT - 1]["published"],
            "modelCheck": model_check, "ope": ope, "pass": model_pass, "epochMarker": epoch},
           open("data/generated/model/martian-publish-policy-eval.json", "w"), indent=1)
-log("wrote model and eval; EXIT=0")
+json.dump({"builtAt": model["builtAt"], "replayRows": N, "logged": len(events),
+           "features": names, "events": events[::-1]},
+          open("data/generated/model/martian-publish-policy-events.json", "w"))
+log(f"wrote model, eval and {len(events)} events; EXIT=0")

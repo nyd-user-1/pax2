@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, ChevronsUpDown, Clapperboard, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, Star, Tag, Target, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronsUpDown, Clapperboard, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, Star, Tag, Target, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
 import { KebabMenu, MenuFoot, MenuHeader, MenuRow, MenuSeparator } from "@/components/kebab-menu"
@@ -62,6 +62,7 @@ const ADMIN = [
   { href: "/pipeline", label: "Pipeline", icon: Workflow },
   { href: "/build", label: "Build", icon: Hammer },
   { href: "/project-management", label: "Project Management", icon: GanttChart },
+  { href: "/reinforcement-learning", label: "Reinforcement learning", icon: Brain },
 ]
 // Off the sidebar and the search: early pages kept for reference, under the account menu's Lab.
 const LAB = [{ href: "/campaigns", label: "Campaigns", icon: Clapperboard }]
@@ -91,6 +92,7 @@ const TITLES: [string, string][] = [
   ["/pipeline", "Pipeline"],
   ["/build", "Build"],
   ["/project-management", "Project Management"],
+  ["/reinforcement-learning", "Reinforcement learning"],
   ["/campaigns", "Campaigns"],
 ]
 
