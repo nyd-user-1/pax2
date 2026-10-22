@@ -18,6 +18,10 @@ with a missing-component indicator per absent `qᵢ`. Pre-registered acceptance:
 
 **The score:** Resonance = the percentile of P̂ among the uniform baseline, 0–100, 50 = typical — always displayed with P̂ and the stack's measured held-out AUC.
 
+**The guarantee:** every video that exits the Lab gets a prediction — the metadata arm needs only title, length and posting fields, which every video has. When components are missing, Resonance also lists the specific actions that unlock the fuller read: no transcript, add captions; no media measure, run the flask; and so on. A prediction, plus the path to a better one — never silence.
+
+**The generations (the client roadmap):** Gen 1 — the three-instrument stack above. Gen 2 — the audited census columns (Window Q) join the inputs. Gen 3 — the early-hit read folds in once the video is published and polled. Gen 4 — the publish-next policy (Window P) adds topic, length and hour counsel. Gen 5 — the instruments retrain on the client's own accumulated outcomes.
+
 **The recommendations:** the top standardized contributions against the channel's outperformer norms, rendered only where the recommendation registry holds a measured lift; everything else stays descriptive.
 
 **Growth:** every audited question column (Window Q) with a measured lift joins the stack's inputs at the next refit — Resonance widens as the census widens.
