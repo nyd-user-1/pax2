@@ -38,3 +38,9 @@ Append `## Report` per job: one line each on what shipped; the /library and /glo
    - Carry block: now on the video page directly after the Resonance evaluation (`src/components/evidence/carry.tsx`), with the catalog's lift rows unchanged. A row the video in view carries wears a "This video" chip, from the same feature coding (`featureFlagsFor`).
    - What each feature was worth: now /metrics' Feature worth tab (`FeatureWorth` in `research.tsx`), with the vote choice, favorability and yes/no switch in its tools.
    - Two links pointed into the dropped pages. The script catalog's link now reads "What each feature was worth" and goes to the tab. The Resonance popover's "How the score works" link is removed, since that page is gone and the video page carries the Formula block.
+3. **Channel page**: `/channels/[id]` is now a tracked channel's page.
+   - The header carries the logo, subscribers, tracked count, above-3x and below-0.5x counts, the median and a YouTube link.
+   - Two blocks, both scoped to the channel: the patterns field (velocity lines over every tracked short of the channel, never one video alone) and the Outliers view.
+   - Each block shows an empty state when the channel has no data.
+   - The channel cards on /channels and /home now open this page instead of YouTube.
+   - An id that is not a tracked channel still goes to /my-channels/<id>, the route's old behavior, so connected-channel links keep working.

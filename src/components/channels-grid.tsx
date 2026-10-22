@@ -2,9 +2,11 @@
 import { existsSync } from "node:fs"
 import { join } from "node:path"
 
+import Link from "next/link"
+
 import { patternsData } from "@/lib/velocity-analytics"
 
-// The tracked catalog's channels as cards, largest first. /channels shows them in its block; /home's
+// The tracked catalog's channels as cards, largest first, each opening its /channels/<id> page. /channels shows them in its block; /home's
 // third block shows them in its own.
 
 const compact = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${Math.round(n / 1e3)}K` : String(n))
@@ -21,7 +23,7 @@ export function ChannelCards({ channels }: { channels: Awaited<ReturnType<typeof
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
       {channels.map((c) => (
-        <a key={c.id} data-find={c.name} href={`https://youtube.com/channel/${c.id}`} target="_blank" rel="noreferrer" className="lift flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition-shadow hover:shadow-e2">
+        <Link key={c.id} data-find={c.name} href={`/channels/${c.id}`} className="lift flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition-shadow hover:shadow-e2">
           {c.logo ? (
             <img src={`/logos/channels/${c.id}.jpg`} alt="" className="size-10 shrink-0 rounded-full object-cover" />
           ) : (
@@ -34,7 +36,7 @@ export function ChannelCards({ channels }: { channels: Awaited<ReturnType<typeof
               {c.n} tracked · {c.pushed} above 3x
             </span>
           </span>
-        </a>
+        </Link>
       ))}
     </div>
   )
