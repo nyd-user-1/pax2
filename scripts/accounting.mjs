@@ -68,6 +68,26 @@ const counts = {
   e2: n((r) => r[10]),
 }
 
+
+// The model ledger, from each model's own artifact (data/generated/model/*):
+// composition-ranker{,-combined}.json, headline-v1.json (gateH), encoder.json (gates E and R),
+// video/var-model-v3v.json + video/bench-m2.json (Gate M2), pairwise-v0.json.
+const PASSED = [
+  ["Outperformed-3\u00d7 classifier (PAX2 Classifier v3)", "predicts whether a short beats 3\u00d7 its channel median before publish", "metadata, transcript, text embedding", "AUC above v1's 0.604 and within-channel at least 0.55, held-out channels", "0.648 (within-channel 0.63)", "2026-10-21", "serving"],
+  ["Headline picker (PAX2 Headline Ranker v1)", "picks the stronger of two headlines", "the headline text (bert-base-uncased, Upworthy-trained)", "held-out pairwise accuracy at least 0.630 (v0 + 0.02)", "0.672", "2026-10-18", "serving (Lambda)"],
+  ["Behavior-corrected text embedding (PAX2 Encoder)", "places videos near videos that performed alike", "transcript text", "pooled kNN-AUC at least stock bge-m3 + 0.02, within-channel not below stock", "+0.031 pooled, +0.022 within", "2026-10-19", "serving (the index)"],
+  ["Pairwise outperformer picker from composition (PAX2 Composition Ranker)", "picks which of a same-channel pair outperformed, from the video file's measurables", "composition features; the combined variant adds neighbor evidence", "held-out pair accuracy at least 0.55", "0.566; combined 0.595", "2026-10-20", "ready \u2014 no caller yet"],
+]
+const FAILED = [
+  ["Video arm of the classifier (fullvideo)", "add the video file's embedding to the classifier", "VideoPrism video embedding plus the full features", "Gate M2: beat the text-only AUC by 0.02 on held-out rows with media", "0.636 vs 0.648 (\u22120.011)", "2026-10-21", "the video embedding added nothing over text"],
+  ["Embedding retrain candidate (Gate R)", "a retrain of the text embedding", "transcript text", "pooled kNN-AUC at least the serving encoder's, within-channel not below", "under the serving encoder", "2026-10-19", "did not beat the model already serving"],
+  ["Pairwise classifier v0 (PAX2 Classifier, pairs)", "picks the outperformer of a same-channel pair from pre-publish features", "35 pre-publish features", "held-out pair accuracy at least 0.55", "0.546", "2026-10-19", "under the bar, and under v1 on the same pairs"],
+]
+const mrow = (r) => `<tr>${r.map((c, i) => `<td class="${i === 0 ? "mname" : "mtxt"}">${c}</td>`).join("")}</tr>`
+const mtable = (title, rows, last) => `<div class="mcard"><h2>${title}</h2><table>
+<thead><tr><th>Model</th><th>What it does</th><th>Inputs</th><th>Gate</th><th>Score</th><th>Trained</th><th>${last}</th></tr></thead>
+<tbody>${rows.map(mrow).join("\n")}</tbody></table></div>`
+
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Accounting</title>
@@ -95,8 +115,21 @@ const html = `<!doctype html>
  td.y { color:#15803d; } td.dash { color:#cbd5e1; font-weight:500; }
  td.kind { font-weight:500; font-size:13px; }
  #tally { margin:14px 0 0; font-size:13px; color:var(--muted); }
+ .tabs { display:flex; gap:6px; padding:0 28px; }
+ .tabbtn { padding:10px 22px; border-radius:14px 14px 0 0; font-weight:600; font-size:15px; color:var(--muted); background:#e6ebf2; outline:1px solid rgb(15 23 42/.06); cursor:pointer; border:none; font:inherit; font-weight:600; }
+ .tabbtn.on { background:#fff; color:var(--blue); position:relative; z-index:2; }
+ .mcard { margin-bottom:28px; }
+ .mcard h2 { font-size:19px; font-weight:650; color:var(--blue); margin:0 0 10px; }
+ td.mname { font-weight:600; white-space:normal; min-width:170px; }
+ td.mtxt { font-weight:400; white-space:normal; font-size:13px; color:#334155; }
+ #models { display:none; } body.m #models { display:block; } body.m #acct { display:none; }
 </style></head><body>
-<div class="wrap"><div class="card">
+<div class="wrap">
+<nav class="tabs">
+ <button class="tabbtn on" id="ta" onclick="document.body.classList.remove('m');ta.classList.add('on');tm.classList.remove('on')">Accounting</button>
+ <button class="tabbtn" id="tm" onclick="document.body.classList.add('m');tm.classList.add('on');ta.classList.remove('on')">Models</button>
+</nav>
+<div class="card" id="acct">
  <h1>Accounting</h1>
  <div class="grid">
   <div class="tile"><button class="half" data-k="3" data-dir="-1"><b>${k(counts.all)}</b><p>Catalog</p></button></div>
@@ -117,6 +150,11 @@ const html = `<!doctype html>
  </table>
  <p id="tally"></p>
  <div id="more"></div>
+</div>
+<div class="card" id="models">
+ <h1>Models</h1>
+ ${mtable("Passed", PASSED, "Status")}
+ ${mtable("Failed", FAILED, "Why it failed")}
 </div></div>
 <script>
 const DATA = ${JSON.stringify(rows)};
