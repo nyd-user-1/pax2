@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Check, Minus, PenLine, X } from "lucide-react"
+import { ArrowLeft, Check, Minus, PenLine, X } from "lucide-react"
 
 import { AccordionBlock, CardBlock, ListBlock, MainBlock, TwoThirdBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
@@ -84,6 +84,7 @@ function SourceLink({ source }: { source: { label: string; href: string } }) {
 export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: CatalogScript[]; opposition?: { items: string[]; note: string; href: string }; solo?: boolean }) {
   const [id, setId] = React.useState(scripts[0]?.id)
   const [hot, setHot] = React.useState<number | null>(null)
+  const [reading, setReading] = React.useState(false)
   const s = scripts.find((x) => x.id === id) ?? scripts[0]
   React.useEffect(() => setHot(null), [id])
   if (!s) return null
@@ -91,12 +92,67 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
   const scored = s.voices.filter((v) => v.score != null)
   const marksOf = (line: number) => s.why.map((w, k) => ({ w, n: k + 1 })).filter(({ w }) => w.line === line)
 
+  // The chosen script's reading, shared by the full page and the solo drill-down.
+  const scriptBody = (
+    <>
+      <span className="tabular mb-5 block text-sm text-slate-500">
+        {s.words} words · {s.seconds}s
+      </span>
+      <ol className="flex flex-col gap-5">
+        {s.lines.map((l, i) => {
+          const marks = marksOf(i)
+          const lit = marks.some((m) => m.n === hot)
+          return (
+            <li key={i} className={cn("grid gap-4", hasTimes && "grid-cols-[3rem_minmax(0,1fr)]")}>
+              {hasTimes && <span className="tabular pt-1 text-xs font-medium text-pax2-light-blue">{l.t != null ? ts(l.t) : ""}</span>}
+              <p className={cn("-mx-2 rounded-xl px-2 leading-relaxed text-slate-800 transition-colors", i === 0 ? "text-xl font-medium text-slate-900 md:text-[22px]" : "text-[17px]", lit && "bg-pax2-lavender/50")}>
+                {l.text}
+                {marks.map((m) => (
+                  <Marker key={m.n} n={m.n} hot={hot === m.n} onHot={setHot} />
+                ))}
+              </p>
+            </li>
+          )
+        })}
+      </ol>
+      <p className="mt-8 text-xs leading-relaxed text-slate-400">{s.provenance}</p>
+    </>
+  )
+  const whyLadder = (
+    <ol className="flex flex-col gap-4">
+      {s.why.map((w, k) => (
+        <li
+          key={k}
+          onMouseEnter={() => setHot(k + 1)}
+          onMouseLeave={() => setHot(null)}
+          className={cn("-m-2 flex gap-2.5 rounded-xl p-2 transition-colors", hot === k + 1 && "bg-pax2-lavender/50")}
+        >
+          <span className={cn("mt-0.5 flex size-[18px] shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition-colors", hot === k + 1 ? "bg-pax2-light-blue text-white" : "bg-pax2-lavender text-pax2-blue")}>{k + 1}</span>
+          <div className="flex min-w-0 flex-col gap-1.5">
+            {w.note && <p className="text-sm leading-relaxed text-slate-700">{w.note}</p>}
+            {w.research && (
+              <p className="tabular text-xs leading-relaxed text-slate-500">
+                In {w.research.ads} Swayable-tested ads, “{w.research.label}” moved {OUTCOME[w.research.outcome]} {pts(w.research.diff)} points ({w.research.low.toFixed(1)} to {w.research.high.toFixed(1)}).
+              </p>
+            )}
+            {w.channel && (
+              <p className="tabular text-sm leading-relaxed text-slate-700">
+                On {w.channel.channels} {w.channel.scope}, the share of shorts reaching 3x their channel&apos;s median ran {pts(w.channel.points)} points with “{w.channel.label}” ({pts(w.channel.low)} to {pts(w.channel.high)}).
+              </p>
+            )}
+            {w.source && <SourceLink source={w.source} />}
+          </div>
+        </li>
+      ))}
+    </ol>
+  )
+
   const grid = (
-    <div role="tablist" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div role="tablist" className="grid gap-6 p-1 sm:grid-cols-2 lg:grid-cols-3">
             <Link
               href="/record/personal"
               data-find
-              className="lift flex flex-col justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-300 px-4 py-3 text-left hover:border-pax2-light-blue/50"
+              className="lift flex flex-col justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-300 p-5 text-left hover:border-pax2-light-blue/50"
             >
               <span className="flex size-9 items-center justify-center rounded-full bg-pax2-lavender text-pax2-blue">
                 <PenLine className="size-4" />
@@ -114,8 +170,11 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
                   aria-selected={on}
                   type="button"
                   data-find
-                  onClick={() => setId(x.id)}
-                  className={cn("flex flex-col gap-2 rounded-2xl px-4 py-3 text-left transition-all", on ? "bg-white shadow-e2 ring-2 ring-pax2-light-blue/50" : "bg-white/60 shadow-e1 hover:bg-white hover:shadow-e2")}
+                  onClick={() => {
+                    setId(x.id)
+                    if (solo) setReading(true)
+                  }}
+                  className={cn("lift surface flex flex-col gap-2 p-5 text-left", on && "ring-2 ring-pax2-light-blue/50")}
                 >
                   <span className="flex w-full items-center justify-between gap-2">
                     <span className="rounded-full bg-pax2-lavender px-2.5 py-0.5 text-[11px] font-semibold text-pax2-blue">{x.approach}</span>
@@ -135,9 +194,37 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
     </div>
   )
 
+  // Solo: one full-viewport block that drills from the card grid into the chosen script and back.
   if (solo)
-    return (
-      <CardBlock title="Scripts" search="Search scripts…" height={HOME_BLOCK}>
+    return reading ? (
+      <CardBlock
+        key={s.id}
+        title={s.title}
+        height={HOME_BLOCK}
+        className="mt-5"
+        actions={
+          <>
+            <button
+              type="button"
+              onClick={() => setReading(false)}
+              className="inline-flex h-8 items-center gap-1.5 rounded-md px-2 text-sm text-slate-800 hover:bg-muted hover:text-foreground"
+            >
+              <ArrowLeft className="size-4" /> All scripts
+            </button>
+            <RecordScript id={s.id} title={s.title} text={s.text} label="Record" />
+          </>
+        }
+      >
+        <div className="grid gap-10 xl:grid-cols-3">
+          <div className="xl:col-span-2">{scriptBody}</div>
+          <div className="flex flex-col gap-4">
+            <p className="text-sm font-semibold text-slate-900">Why it’s written this way</p>
+            {whyLadder}
+          </div>
+        </div>
+      </CardBlock>
+    ) : (
+      <CardBlock title="Scripts" search="Search scripts…" height={HOME_BLOCK} className="mt-5">
         {grid}
       </CardBlock>
     )
@@ -151,56 +238,11 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
       <OrderedBlock id="reading" label="Script">
         <TwoThirdBlock key={s.id} className="rise">
           <MainBlock title={s.title} id="script" className="xl:col-span-2" actions={<RecordScript id={s.id} title={s.title} text={s.text} label="Record" />}>
-            <span className="tabular mb-5 block text-sm text-slate-500">
-              {s.words} words · {s.seconds}s
-            </span>
-            <ol className="flex flex-col gap-5">
-              {s.lines.map((l, i) => {
-                const marks = marksOf(i)
-                const lit = marks.some((m) => m.n === hot)
-                return (
-                  <li key={i} className={cn("grid gap-4", hasTimes && "grid-cols-[3rem_minmax(0,1fr)]")}>
-                    {hasTimes && <span className="tabular pt-1 text-xs font-medium text-pax2-light-blue">{l.t != null ? ts(l.t) : ""}</span>}
-                    <p className={cn("-mx-2 rounded-xl px-2 leading-relaxed text-slate-800 transition-colors", i === 0 ? "text-xl font-medium text-slate-900 md:text-[22px]" : "text-[17px]", lit && "bg-pax2-lavender/50")}>
-                      {l.text}
-                      {marks.map((m) => (
-                        <Marker key={m.n} n={m.n} hot={hot === m.n} onHot={setHot} />
-                      ))}
-                    </p>
-                  </li>
-                )
-              })}
-            </ol>
-            <p className="mt-8 text-xs leading-relaxed text-slate-400">{s.provenance}</p>
+            {scriptBody}
           </MainBlock>
 
           <AccordionBlock title="Why it’s written this way">
-            <ol className="flex flex-col gap-4">
-              {s.why.map((w, k) => (
-                <li
-                  key={k}
-                  onMouseEnter={() => setHot(k + 1)}
-                  onMouseLeave={() => setHot(null)}
-                  className={cn("-m-2 flex gap-2.5 rounded-xl p-2 transition-colors", hot === k + 1 && "bg-pax2-lavender/50")}
-                >
-                  <span className={cn("mt-0.5 flex size-[18px] shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition-colors", hot === k + 1 ? "bg-pax2-light-blue text-white" : "bg-pax2-lavender text-pax2-blue")}>{k + 1}</span>
-                  <div className="flex min-w-0 flex-col gap-1.5">
-                    {w.note && <p className="text-sm leading-relaxed text-slate-700">{w.note}</p>}
-                    {w.research && (
-                      <p className="tabular text-xs leading-relaxed text-slate-500">
-                        In {w.research.ads} Swayable-tested ads, “{w.research.label}” moved {OUTCOME[w.research.outcome]} {pts(w.research.diff)} points ({w.research.low.toFixed(1)} to {w.research.high.toFixed(1)}).
-                      </p>
-                    )}
-                    {w.channel && (
-                      <p className="tabular text-sm leading-relaxed text-slate-700">
-                        On {w.channel.channels} {w.channel.scope}, the share of shorts reaching 3x their channel&apos;s median ran {pts(w.channel.points)} points with “{w.channel.label}” ({pts(w.channel.low)} to {pts(w.channel.high)}).
-                      </p>
-                    )}
-                    {w.source && <SourceLink source={w.source} />}
-                  </div>
-                </li>
-              ))}
-            </ol>
+            {whyLadder}
             <div className="mt-5 flex flex-col gap-3 border-t pt-4">
               <span className="text-sm font-semibold text-slate-900">In tested ads</span>
               {s.prior ? (

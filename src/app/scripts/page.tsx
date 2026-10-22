@@ -1,5 +1,6 @@
 import codes from "../../../data/generated/model/script-codes.json"
 import model from "../../../data/generated/model/reference-model.json"
+import vf from "../../../data/generated/vf-scripts.json"
 import { ScriptCatalog, type CatalogScript } from "@/components/scripts/script-catalog"
 import { SCRIPTS } from "@/lib/catalog"
 import { board, workspace } from "@/lib/review"
@@ -69,5 +70,38 @@ export default async function ScriptsPage() {
     }
   })
 
-  return <ScriptCatalog scripts={scripts} solo />
+  // The Voter Freedom adaptations (data/generated/vf-scripts.json): each card's why carries the
+  // source video and what was kept; takes and coded features arrive if one is ever recorded.
+  const vfScripts: CatalogScript[] = (vf.scripts as { id: string; title: string; hook: string; text: string; number: string | null; note: string }[]).map((v) => {
+    const words = v.text.split(/\s+/).filter(Boolean).length
+    return {
+      id: `vf-${v.id}`,
+      title: v.title,
+      approach: "Adapted",
+      framing: v.hook,
+      provenance: `Adapted from the Voter Freedom video “${v.title}”; every figure in the script is the source's own.`,
+      text: v.text,
+      lines: v.text.replace(/\s+/g, " ").trim().split(/(?<=[.!?…])\s+/).filter(Boolean).map((text) => ({ text, t: null })),
+      words,
+      seconds: Math.round((words / 130) * 60),
+      average: null,
+      averageLow: null,
+      averageHigh: null,
+      voices: [],
+      prior: null,
+      features: [],
+      why: [
+        {
+          line: 0,
+          note: `${v.note}${v.number ? ` Figure kept from the source: ${v.number}.` : ""}`,
+          research: null,
+          source: { label: "Voter Freedom · YouTube", href: `https://www.youtube.com/watch?v=${v.id}` },
+          channel: null,
+        },
+      ],
+      channels: null,
+    }
+  })
+
+  return <ScriptCatalog scripts={[...scripts, ...vfScripts]} solo />
 }
