@@ -16,6 +16,8 @@ import { toneOf } from "@/lib/tone"
 import { READER_KINDS, usageSince } from "@/lib/usage"
 import { notFound, redirect } from "next/navigation"
 import { homeFeedFile } from "@/lib/data-files"
+import { accounting, asOf } from "@/lib/accounting"
+import e2Ids from "../../../data/generated/e2.json"
 
 const homeFeed = homeFeedFile()
 
@@ -111,6 +113,17 @@ export default async function DashboardPage() {
     .slice(0, 10)
     .map(([subject, n]) => ({ subject, title: titleOf(subject), n }))
 
+  // The catalog as the accounting page counts it: each tile the share held and the share without.
+  const c = accounting.counts
+  const tiles: { title: string; has: number }[] = [
+    { title: "Transcript", has: c.transcript },
+    { title: "Media", has: c.media },
+    { title: "Composition", has: c.composition },
+    { title: "Index", has: c.index },
+    { title: "Lab Tested", has: c.lab },
+  ]
+  const e2 = (e2Ids as string[]).map((id) => ({ id, title: titleOf(id) }))
+
   return (
     <div className="flex flex-col gap-10">
       <AdminControls admin={!!user?.admin} poller={poller} queue={queue} />
@@ -122,7 +135,45 @@ export default async function DashboardPage() {
         <Stat2 title="Forecast Metrics" value={forecastMetrics().total} footer="Unique variables & data points" />
       </section>
 
-      <BlockOrder page="dashboard" initial={["activity", "funnel", "scripts", "readers"]}>
+      <BlockOrder page="dashboard" initial={["catalog", "activity", "funnel", "scripts", "readers"]}>
+        <OrderedBlock id="catalog" label="Catalog">
+          <TwoThirdBlock>
+            <MainBlock title="Catalog" className="xl:col-span-2" height="auto" rows={[{ held: "Catalog", count: c.all }, ...tiles.flatMap((t) => [{ held: t.title, count: t.has }, { held: `${t.title}, without`, count: c.all - t.has }])]} footer={`As of ${asOf()}`}>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="flex flex-col items-center justify-center rounded-xl border border-slate-200 px-2 py-3 text-center">
+                  <span className="tabular text-xl font-semibold text-slate-900">{c.all.toLocaleString("en-US")}</span>
+                  <span className="text-xs text-slate-500">Catalog</span>
+                </div>
+                {tiles.map((t) => (
+                  <div key={t.title} className="flex overflow-hidden rounded-xl border border-slate-200">
+                    <div className="flex flex-1 flex-col items-center px-2 py-3 text-center">
+                      <span className="tabular text-xl font-semibold text-slate-900">{t.has.toLocaleString("en-US")}</span>
+                      <span className="text-xs text-slate-500">{t.title}</span>
+                    </div>
+                    <div className="flex flex-1 flex-col items-center border-l border-slate-200 px-2 py-3 text-center">
+                      <span className="tabular text-xl font-semibold text-slate-900">{(c.all - t.has).toLocaleString("en-US")}</span>
+                      <span className="text-xs text-slate-500">without</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MainBlock>
+            <ListBlock title="e² (end to end)" height="auto" rows={e2.map(({ id, title }) => ({ id, video: title }))}>
+              <ol className="flex flex-col">
+                {e2.map((v) => (
+                  <li key={v.id} className="border-b border-slate-100 py-2 last:border-0">
+                    <Link href={`/v/yt-${v.id}`} scroll={false} className="flex items-center gap-3 text-sm text-slate-800 hover:text-pax2-blue">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={`https://i.ytimg.com/vi/${v.id}/default.jpg`} alt="" className="size-10 shrink-0 rounded-lg bg-slate-100 object-cover" />
+                      <span className="min-w-0 flex-1 truncate">{v.title}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </ListBlock>
+          </TwoThirdBlock>
+        </OrderedBlock>
+
         <OrderedBlock id="activity" label="Activity by day">
           <TwoThirdBlock>
             <ChartBlock title="Activity by day" className="xl:col-span-2" tools={<RefreshButton />} rows={activityRows.map((r) => ({ date: r.date, "Readings and decisions": r.item1, "Volunteer input": r.item2 }))} name="pax2-activity">

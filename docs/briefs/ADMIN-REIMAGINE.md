@@ -34,3 +34,7 @@ Append `## Report` after each page's commit: one line on what the page now state
   - Right, what reads: Scored with its four models' Live/Staged status, Lab Tested and e², the home feed, neighbors and Chat, and model training (Live, Staged and Failed counts). The Q census columns and P's policy are drawn as planned.
   - Every connector is labeled with the prefix or table it writes or reads; planned cards and their connectors are dashed. The worker's video table stays below as "pax2-worker videos".
   - Data: `scripts/accounting.mjs` now also writes `data/generated/accounting.json` (counts, transcript sources, the ledger), which the app reads through `src/lib/accounting.ts`. The per-run costs sit in `src/lib/production.ts`, each one dated and sourced to the handoff or log that measured it. The Whisper run is marked as an estimate because nobody re-measured it.
+- **/dashboard**:
+  - A Catalog block now leads the page, read from `accounting.json` with its as-of date. It shows the catalog total plus five tiles (Transcript, Media, Composition, Index, Lab Tested), each split into held and without, the same arithmetic as the accounting page.
+  - Beside it, the e² four, each with its thumbnail, title and video-page link, read from `data/generated/e2.json`.
+  - The campaign operation blocks below are unchanged.
