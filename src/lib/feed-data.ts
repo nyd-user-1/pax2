@@ -2,6 +2,7 @@ import "server-only"
 
 import fs from "node:fs"
 
+import e2Ids from "../../data/generated/e2.json"
 import labTested from "../../data/generated/lab-tested.json"
 import type { FeedVideo } from "@/components/record/feed"
 import { tagsFor } from "@/lib/tags"
@@ -27,9 +28,10 @@ async function load(): Promise<FeedVideo[]> {
     raw = (await r.Body!.transformToString()) as string
   }
   const lab = new Set(labTested as string[])
+  const e2 = new Set(e2Ids as string[])
   return (JSON.parse(raw) as FeedVideo[]).map((v) => {
     const tags = [...new Set([...(v.tags ?? []), ...tagsFor(`yt-${v.id}`)])]
-    return { ...v, ...(tags.length && { tags }), ...(lab.has(v.id) && { lab: true }) }
+    return { ...v, ...(tags.length && { tags }), ...(lab.has(v.id) && { lab: true }), ...(e2.has(v.id) && { e2: true }) }
   })
 }
 
@@ -47,17 +49,17 @@ export async function feedFacets(): Promise<{ channels: string[]; tags: string[]
   }
 }
 
-/** The page the server renders: the Lab Tested videos (the pinned row's seed), then the newest.
+/** The page the server renders: the e2 videos (the pinned row's seed), then the newest.
  *  `cursor` is how far into the newest-first index the page reaches; the client pages on from it. */
 export async function firstPage(size = 48): Promise<{ initial: FeedVideo[]; total: number; cursor: number }> {
   const all = await feedIndex()
-  const lab = all.filter((v) => v.lab)
-  const seen = new Set(lab.map((v) => v.id))
+  const e2 = all.filter((v) => v.e2)
+  const seen = new Set(e2.map((v) => v.id))
   const rest: FeedVideo[] = []
   let cursor = 0
-  while (rest.length < Math.max(0, size - lab.length) && cursor < all.length) {
+  while (rest.length < Math.max(0, size - e2.length) && cursor < all.length) {
     const v = all[cursor++]
     if (!seen.has(v.id)) rest.push(v)
   }
-  return { initial: [...lab, ...rest], total: all.length, cursor }
+  return { initial: [...e2, ...rest], total: all.length, cursor }
 }

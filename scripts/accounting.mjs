@@ -24,6 +24,7 @@ const compRows = compAll.shorts ?? compAll.videos
 const composition = new Set(Object.keys(compRows).filter((k) => compRows[k].cutsPerSec != null))
 const index = new Set(read("data/raw/composition/index/rows.json").map((r) => r.id))
 const lab = new Set(read("data/generated/lab-tested.json"))
+const e2 = new Set(read("data/generated/e2.json"))
 const blind = new Set(read("data/generated/model/video-blind-sample.json").ids)
 
 // Media on hand is whatever sits in S3 — the one authoritative inventory.
@@ -37,7 +38,7 @@ const media = new Set(
 )
 
 // Per row: [id, title, channel, views, ratio, transcript, media(0 none / 1 picked / 2 blind),
-// composition, index, lab] — compact arrays keep the embedded data near 2 MB.
+// composition, index, lab, e2] — compact arrays keep the embedded data near 2 MB.
 const rows = universe.map((v) => [
   v.id,
   v.title,
@@ -49,6 +50,7 @@ const rows = universe.map((v) => [
   composition.has(v.id) ? 1 : 0,
   index.has(v.id) ? 1 : 0,
   lab.has(v.id) ? 1 : 0,
+  e2.has(v.id) ? 1 : 0,
 ])
 
 const n = (f) => rows.filter(f).length
@@ -62,6 +64,7 @@ const counts = {
   composition: n((r) => r[7]),
   index: n((r) => r[8]),
   lab: n((r) => r[9]),
+  e2: n((r) => r[10]),
 }
 
 const html = `<!doctype html>
@@ -98,13 +101,14 @@ const html = `<!doctype html>
   <div class="tile"><b>${fmt(counts.composition)}</b><p>Composition</p></div>
   <div class="tile"><b>${fmt(counts.index)}</b><p>Index</p></div>
   <div class="tile"><b>${fmt(counts.lab)}</b><p>Lab Tested</p></div>
+  <div class="tile"><b>${fmt(counts.e2)}</b><p>e&sup2;</p></div>
  </div>
  <input id="q" type="search" placeholder="Search title or channel" autofocus>
  <table>
   <thead><tr>
    <th data-k="1">Video</th><th data-k="3" class="on">Views ↓</th><th data-k="4">Outlier</th>
    <th data-k="5">Transcript</th><th data-k="6">Media</th><th data-k="7">Composition</th>
-   <th data-k="8">Index</th><th data-k="9">Lab</th>
+   <th data-k="8">Index</th><th data-k="9">Lab</th><th data-k="10">e&sup2;</th>
   </tr></thead>
   <tbody id="tb"></tbody>
  </table>
@@ -124,7 +128,7 @@ function rowHtml(r) {
     esc(r[1]) + '</b><i>' + esc(r[2]) + '</i></span></td><td>' + r[3].toLocaleString("en-US") + '</td><td>' +
     (r[4] == null ? "\\u2014" : r[4].toFixed(r[4] >= 10 ? 0 : 1) + "\\u00d7") + '</td>' +
     mark(r[5]) + (r[6] ? '<td class="y kind">\\u2713 ' + MEDIA[r[6]] + '</td>' : '<td class="dash">\\u2014</td>') +
-    mark(r[7]) + mark(r[8]) + mark(r[9]) + '</tr>';
+    mark(r[7]) + mark(r[8]) + mark(r[9]) + mark(r[10]) + '</tr>';
 }
 function renderMore() {
   const next = view.slice(shown, shown + PAGE);

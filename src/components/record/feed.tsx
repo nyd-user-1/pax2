@@ -34,6 +34,8 @@ export type FeedVideo = {
   tags?: string[]
   /** Lab Tested: the video file itself was measured in the lab (data/generated/lab-tested.json). */
   lab?: boolean
+  /** e2: run through the platform end to end (data/generated/e2.json). */
+  e2?: boolean
 }
 
 const fmt = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 })
@@ -73,8 +75,8 @@ function HoverThumb({ v, aspect, playButton }: { v: FeedVideo; aspect: string; p
         <img src={thumb(v.id)} alt="" loading="lazy" className={cn("size-full object-cover", aspect !== "aspect-video" && "transition-transform duration-300 group-hover:scale-[1.02]")} />
       )}
       {v.lab && (
-        <span title="Lab Tested" aria-label="Lab Tested" className="absolute right-1.5 top-1.5 z-10 flex size-6 items-center justify-center rounded-full bg-white/85 text-slate-900 ring-1 ring-white backdrop-blur-md">
-          <FlaskConical className="size-3.5" />
+        <span title={v.e2 ? "e\u00b2" : "Lab Tested"} aria-label={v.e2 ? "e\u00b2" : "Lab Tested"} className="absolute right-1.5 top-1.5 z-10 flex size-6 items-center justify-center rounded-full bg-white/85 text-slate-900 ring-1 ring-white backdrop-blur-md">
+          {v.e2 ? <span className="text-[11px] font-bold leading-none">e&sup2;</span> : <FlaskConical className="size-3.5" />}
         </span>
       )}
       {playButton && !play && (
@@ -206,7 +208,7 @@ function CardFoot({ v, boost }: { v: FeedVideo; boost?: boolean }) {
 /** A card's three-dot menu: queue, save and share, each logged. Clicks stay out of the card's
  *  link — the menu portals out of it, but React events still bubble through. */
 /** Pin to top: the reader's pinned videos lead the feed as their own row. Stored in the browser
- *  (pax2-pins); first load seeds from the feed's Lab Tested videos. */
+ *  (pax2-pins); first load seeds from the feed's e2 videos. */
 const PinCtx = React.createContext<{ pinned: string[]; toggle: (id: string) => void } | null>(null)
 const PINS_KEY = "pax2-pins"
 
@@ -216,9 +218,9 @@ function usePins(videos: FeedVideo[]) {
   React.useEffect(() => {
     try {
       const stored = localStorage.getItem(PINS_KEY)
-      setPinned(stored ? (JSON.parse(stored) as string[]) : videos.filter((v) => v.lab).map((v) => v.id))
+      setPinned(stored ? (JSON.parse(stored) as string[]) : videos.filter((v) => v.e2).map((v) => v.id))
     } catch {
-      setPinned(videos.filter((v) => v.lab).map((v) => v.id))
+      setPinned(videos.filter((v) => v.e2).map((v) => v.id))
     }
   }, [videos])
   const toggle = React.useCallback(
