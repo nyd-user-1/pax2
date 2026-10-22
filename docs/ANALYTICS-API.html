@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analytics API metrics</title>
+<style>
+  :root { --blue:#1e3a8a; --ink:#0f172a; --muted:#64748b; --border:#e2e8f0; --mist:#f1f5f9; }
+  body { margin:0; padding:48px 24px; background:var(--mist); font:16px/1.6 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:var(--ink); }
+  .wrap { max-width:980px; margin:0 auto; }
+  .tabs { display:flex; gap:6px; padding:0 28px; }
+  .tab { display:inline-block; padding:10px 22px; border-radius:14px 14px 0 0; font-weight:600; font-size:15px; text-decoration:none; color:var(--muted); background:#e6ebf2; outline:1px solid rgb(15 23 42 / .06); }
+  .tab.on { background:#fff; color:var(--blue); position:relative; z-index:2; }
+  .card { background:#fff; border-radius:20px; box-shadow:0 1px 3px rgb(2 6 23 / .06); outline:1px solid rgb(15 23 42 / .06); padding:36px 40px 28px; position:relative; z-index:1; }
+  h1 { margin:0 0 24px; font-size:26px; font-weight:650; color:var(--blue); }
+  table { width:100%; border-collapse:collapse; table-layout:fixed; }
+  col.m { width:38%; } col.d { width:62%; }
+  th { text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:10px 14px; border-bottom:1px solid var(--border); }
+  td { padding:10px 14px; border-bottom:1px solid var(--border); vertical-align:top; overflow-wrap:break-word; }
+  tr:last-child td { border-bottom:none; }
+  td:first-child { font-weight:600; }
+  code { font:12.5px/1.5 ui-monospace, Menlo, monospace; background:var(--mist); padding:1px 6px; border-radius:6px; font-weight:400; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="tabs">
+    <a class="tab" href="RESONANCE-VS-YT.html">Resonance</a>
+    <a class="tab" href="HOUSE.html">House</a>
+    <a class="tab" href="DATA-API.html">Data API</a>
+    <a class="tab on" href="ANALYTICS-API.html">Analytics API</a>
+    <a class="tab" href="STUDIO-ONLY.html">Studio Only</a>
+    <a class="tab" href="PARTNER-CSV.html">Partner CSV</a>
+  </nav>
+  <div class="card">
+  <h1>Analytics API metrics</h1>
+  <table>
+    <colgroup><col class="m"><col class="d"></colgroup>
+    <thead><tr><th>Metric (Name)</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>adImpressions</code></td><td>Times ads were served against the video; monetized channels only.</td></tr>
+      <tr><td><code>audienceWatchRatio</code></td><td>Share of starters still watching at each point of the video; returned in 100 steps of elapsed length.</td></tr>
+      <tr><td><code>averageViewDuration</code></td><td>Mean seconds watched per view.</td></tr>
+      <tr><td><code>averageViewPercentage</code></td><td>Mean share of the video's length watched per view.</td></tr>
+      <tr><td><code>cardClickRate</code></td><td>Card clicks per card impression.</td></tr>
+      <tr><td><code>cardClicks</code></td><td>Clicks on info cards.</td></tr>
+      <tr><td><code>cardImpressions</code></td><td>Times info cards were shown.</td></tr>
+      <tr><td><code>comments</code></td><td>Comments left on the video.</td></tr>
+      <tr><td><code>dislikes</code></td><td>Dislikes recorded; owner-visible only since December 2021.</td></tr>
+      <tr><td><code>engagedViews</code></td><td>Views past the engagement threshold; the stricter count for Shorts.</td></tr>
+      <tr><td><code>estimatedMinutesWatched</code></td><td>Total minutes watched (watch time).</td></tr>
+      <tr><td><code>estimatedRevenue</code></td><td>Net revenue from ads and YouTube Premium; monetized channels only.</td></tr>
+      <tr><td><code>likes</code></td><td>Likes on the video.</td></tr>
+      <tr><td><code>playbackBasedCpm</code></td><td>Revenue per 1,000 monetized playbacks.</td></tr>
+      <tr><td><code>shares</code></td><td>Times shared through YouTube's share button.</td></tr>
+      <tr><td><code>subscribersGained</code></td><td>Subscribers added from this video's pages (+Subscribers).</td></tr>
+      <tr><td><code>subscribersLost</code></td><td>Subscribers removed on this video's pages.</td></tr>
+      <tr><td><code>videosAddedToPlaylists</code></td><td>Times viewers saved the video to a playlist, including Watch Later.</td></tr>
+      <tr><td><code>videosRemovedFromPlaylists</code></td><td>Times the video was taken out of playlists.</td></tr>
+      <tr><td><code>viewerPercentage</code></td><td>Share of watch time by viewer group (age, gender), owner-reported.</td></tr>
+      <tr><td><code>views</code></td><td>Views as YouTube counts them.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</body>
+</html>

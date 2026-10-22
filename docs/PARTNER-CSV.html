@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partner CSV</title>
+<style>
+  :root { --blue:#1e3a8a; --ink:#0f172a; --muted:#64748b; --border:#e2e8f0; --mist:#f1f5f9; }
+  body { margin:0; padding:48px 24px; background:var(--mist); font:16px/1.6 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:var(--ink); }
+  .wrap { max-width:980px; margin:0 auto; }
+  .tabs { display:flex; gap:6px; padding:0 28px; }
+  .tab { display:inline-block; padding:10px 22px; border-radius:14px 14px 0 0; font-weight:600; font-size:15px; text-decoration:none; color:var(--muted); background:#e6ebf2; outline:1px solid rgb(15 23 42 / .06); }
+  .tab.on { background:#fff; color:var(--blue); position:relative; z-index:2; }
+  .card { background:#fff; border-radius:20px; box-shadow:0 1px 3px rgb(2 6 23 / .06); outline:1px solid rgb(15 23 42 / .06); padding:36px 40px 28px; position:relative; z-index:1; }
+  .card + .card { margin-top:24px; }
+  h1 { margin:0 0 24px; font-size:26px; font-weight:650; color:var(--blue); }
+  table { width:100%; border-collapse:collapse; table-layout:fixed; }
+  col.m { width:36%; } col.d { width:64%; }
+  th { text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:10px 14px; border-bottom:1px solid var(--border); }
+  td { padding:10px 14px; border-bottom:1px solid var(--border); vertical-align:top; overflow-wrap:break-word; }
+  tr:last-child td { border-bottom:none; }
+  td:first-child { font-weight:600; }
+  code { font:12.5px/1.5 ui-monospace, Menlo, monospace; background:var(--mist); padding:1px 6px; border-radius:6px; font-weight:400; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="tabs">
+    <a class="tab" href="RESONANCE-VS-YT.html">Resonance</a>
+    <a class="tab" href="HOUSE.html">House</a>
+    <a class="tab" href="DATA-API.html">Data API</a>
+    <a class="tab" href="ANALYTICS-API.html">Analytics API</a>
+    <a class="tab" href="STUDIO-ONLY.html">Studio Only</a>
+    <a class="tab on" href="PARTNER-CSV.html">Partner CSV</a>
+  </nav>
+  <div class="card">
+  <h1>Metrics</h1>
+  <table>
+    <colgroup><col class="m"><col class="d"></colgroup>
+    <thead><tr><th>Metric (Name)</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>spend_usd</code></td><td>Dollars spent on the row’s segment.</td></tr>
+      <tr><td><code>impressions</code></td><td>Times the ad was served.</td></tr>
+      <tr><td><code>clicks</code></td><td>Clicks on the ad.</td></tr>
+      <tr><td><code>video_starts</code></td><td>Times playback began.</td></tr>
+      <tr><td><code>video_completions_reported</code></td><td>Plays to the end.</td></tr>
+      <tr><td><code>views_15s_thruplays_reported</code></td><td>Plays reaching 15 seconds.</td></tr>
+      <tr><td><code>views_30s_reported</code></td><td>Plays reaching 30 seconds.</td></tr>
+      <tr><td><code>initiation_rate_reported_pct</code></td><td>Starts ÷ impressions.</td></tr>
+      <tr><td><code>views_25pct_reported_pct</code></td><td>Share of starts reaching 25% of the video.</td></tr>
+      <tr><td><code>views_50pct_reported_pct</code></td><td>Share of starts reaching 50%.</td></tr>
+      <tr><td><code>views_75pct_reported_pct</code></td><td>Share of starts reaching 75%.</td></tr>
+      <tr><td><code>completion_rate_reported_pct</code></td><td>Share of starts reaching the end.</td></tr>
+      <tr><td><code>view_15s_rate_reported_pct</code></td><td>Share of starts reaching 15 seconds.</td></tr>
+      <tr><td><code>view_30s_rate_reported_pct</code></td><td>Share of starts reaching 30 seconds.</td></tr>
+      <tr><td><code>click_through_rate_reported_pct</code></td><td>Clicks ÷ impressions.</td></tr>
+      <tr><td><code>cpm_reported_usd</code></td><td>Cost per 1,000 impressions.</td></tr>
+      <tr><td><code>cpc_reported_usd</code></td><td>Cost per click.</td></tr>
+      <tr><td><code>cost_per_completion_reported_usd</code></td><td>Cost per completed play.</td></tr>
+      <tr><td><code>cost_per_15s_view_reported_usd</code></td><td>Cost per 15-second play.</td></tr>
+      <tr><td><code>cost_per_30s_view_reported_usd</code></td><td>Cost per 30-second play.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="card">
+  <h1>Dimensions</h1>
+  <table>
+    <colgroup><col class="m"><col class="d"></colgroup>
+    <thead><tr><th>Field (Name)</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>record_id</code></td><td>Row identifier.</td></tr>
+      <tr><td><code>report_date</code></td><td>Reporting day of the row.</td></tr>
+      <tr><td><code>creative_set_id</code></td><td>The flight the creative ran in.</td></tr>
+      <tr><td><code>creative_id</code></td><td>The ad creative.</td></tr>
+      <tr><td><code>creative_name</code></td><td>The creative’s name; the join key to its public upload.</td></tr>
+      <tr><td><code>duration_seconds</code></td><td>The creative’s runtime.</td></tr>
+      <tr><td><code>audience_group</code></td><td>The targeted audience segment, as the partner labeled it.</td></tr>
+      <tr><td><code>age_group</code></td><td>The targeted age band, as the partner labeled it.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>House metrics</title>
+<style>
+  :root { --blue:#1e3a8a; --ink:#0f172a; --muted:#64748b; --border:#e2e8f0; --mist:#f1f5f9; }
+  body { margin:0; padding:48px 24px; background:var(--mist); font:16px/1.6 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:var(--ink); }
+  .wrap { max-width:980px; margin:0 auto; }
+  .tabs { display:flex; gap:6px; padding:0 28px; }
+  .tab { display:inline-block; padding:10px 22px; border-radius:14px 14px 0 0; font-weight:600; font-size:15px; text-decoration:none; color:var(--muted); background:#e6ebf2; outline:1px solid rgb(15 23 42 / .06); }
+  .tab.on { background:#fff; color:var(--blue); position:relative; z-index:2; }
+  .card { background:#fff; border-radius:20px; box-shadow:0 1px 3px rgb(2 6 23 / .06); outline:1px solid rgb(15 23 42 / .06); padding:36px 40px 28px; position:relative; z-index:1; }
+  .card + .card { margin-top:24px; }
+  h1 { margin:0 0 24px; font-size:26px; font-weight:650; color:var(--blue); }
+  table { width:100%; border-collapse:collapse; table-layout:fixed; }
+  col.m { width:36%; } col.d { width:64%; }
+  th { text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:10px 14px; border-bottom:1px solid var(--border); }
+  td { padding:10px 14px; border-bottom:1px solid var(--border); vertical-align:top; overflow-wrap:break-word; }
+  tr:last-child td { border-bottom:none; }
+  td:first-child { font-weight:600; }
+  code { font:12.5px/1.5 ui-monospace, Menlo, monospace; background:var(--mist); padding:1px 6px; border-radius:6px; font-weight:400; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="tabs">
+    <a class="tab" href="RESONANCE-VS-YT.html">Resonance</a>
+    <a class="tab on" href="HOUSE.html">House</a>
+    <a class="tab" href="DATA-API.html">Data API</a>
+    <a class="tab" href="ANALYTICS-API.html">Analytics API</a>
+    <a class="tab" href="STUDIO-ONLY.html">Studio Only</a>
+    <a class="tab" href="PARTNER-CSV.html">Partner CSV</a>
+  </nav>
+  <div class="card">
+  <h1>Poller</h1>
+  <table>
+    <colgroup><col class="m"><col class="d"></colgroup>
+    <thead><tr><th>Metric</th><th>Derivation</th></tr></thead>
+    <tbody>
+      <tr><td>View velocity</td><td>change in views between polls ÷ time between polls</td></tr>
+      <tr><td>View acceleration</td><td>change in view velocity between polls</td></tr>
+      <tr><td>Like velocity</td><td>change in likes between polls ÷ time</td></tr>
+      <tr><td>Comment velocity</td><td>change in comments between polls ÷ time</td></tr>
+      <tr><td>Time to N views</td><td>hours from first poll to a chosen views crossing</td></tr>
+      <tr><td>Days to settle</td><td>time until view velocity holds under the settling threshold</td></tr>
+      <tr><td>Settled tier</td><td>settled or unsettled, from the velocity profile</td></tr>
+      <tr><td>Early share of views</td><td>share of views accumulated in the first N days of polling</td></tr>
+      <tr><td>Early-late like-rate drift</td><td>like rate over early polls against late polls</td></tr>
+      <tr><td>Co-surge crossing</td><td>two watched videos crossing a surge window together</td></tr>
+      <tr><td>Poll coverage</td><td>polls per video per day; gaps in the series</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="card">
+  <h1>Transcripts</h1>
+  <table>
+    <colgroup><col class="m"><col class="d"></colgroup>
+    <thead><tr><th>Metric</th><th>Derivation</th></tr></thead>
+    <tbody>
+      <tr><td>Word count</td><td>words in the transcript</td></tr>
+      <tr><td>Sentence count</td><td>sentences in the transcript</td></tr>
+      <tr><td>Mean sentence length</td><td>words ÷ sentences</td></tr>
+      <tr><td>Hook word count</td><td>words in the first sentence</td></tr>
+      <tr><td>Question-led</td><td>the first sentence is a question</td></tr>
+      <tr><td>First person</td><td>carries I, my, we in the opening lines</td></tr>
+      <tr><td>Concrete number</td><td>carries at least one specific figure</td></tr>
+      <tr><td>Explicit ask</td><td>closes on an instruction to the viewer</td></tr>
+      <tr><td>Repetition</td><td>a phrase said more than once</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="card">
+  <h1>Catalog</h1>
+  <table>
+    <colgroup><col class="m"><col class="d"></colgroup>
+    <thead><tr><th>Metric</th><th>Derivation</th></tr></thead>
+    <tbody>
+      <tr><td>Outlier Score</td><td>views ÷ the channel's median of settled shorts</td></tr>
+      <tr><td>Channel median</td><td>median views across a channel’s settled shorts</td></tr>
+      <tr><td>WAR</td><td>views ÷ the median of every settled short across all channels</td></tr>
+      <tr><td>Share over 3x</td><td>share of a group’s shorts at or over 3x their channel median</td></tr>
+      <tr><td>Like rate</td><td>likes ÷ views, from the stored counts</td></tr>
+      <tr><td>Comment rate</td><td>comments ÷ views, from the stored counts</td></tr>
+      <tr><td>Views per day</td><td>views ÷ days since publish</td></tr>
+      <tr><td>Duration profile</td><td>length and length buckets across a channel or group</td></tr>
+      <tr><td>Upload cadence</td><td>a channel’s uploads per week, from publish dates</td></tr>
+      <tr><td>Title features</td><td>title length, question-led, carries a number, first person</td></tr>
+      <tr><td>Settled share</td><td>share of a channel’s shorts that have settled</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="card">
+  <h1>Platform</h1>
+  <table>
+    <colgroup><col class="m"><col class="d"></colgroup>
+    <thead><tr><th>Metric</th><th>Definition</th></tr></thead>
+    <tbody>
+      <tr><td>Signups</td><td>accounts created</td></tr>
+      <tr><td>Active volunteers</td><td>accounts active in a day and in a week</td></tr>
+      <tr><td>Record-mode starts</td><td>camera pressed in chat</td></tr>
+      <tr><td>Scripts delivered</td><td>onboardings that reached a script card</td></tr>
+      <tr><td>Takes recorded</td><td>teleprompter recordings completed</td></tr>
+      <tr><td>Takes submitted</td><td>recordings sent for scoring</td></tr>
+      <tr><td>Studio renders</td><td>no-camera videos rendered and saved</td></tr>
+      <tr><td>Enhanced versions</td><td>enhance runs submitted as a next version</td></tr>
+      <tr><td>Teleprompter completion rate</td><td>recordings completed ÷ teleprompter sessions opened</td></tr>
+      <tr><td>Scripts picked</td><td>catalog scripts chosen to record</td></tr>
+      <tr><td>Boosts</td><td>boost presses, per video and per reader</td></tr>
+      <tr><td>Consensus votes</td><td>statements judged, per session</td></tr>
+      <tr><td>Voice narrations</td><td>narrate calls played</td></tr>
+      <tr><td>On-platform plays</td><td>video plays inside the app</td></tr>
+      <tr><td>Walkthroughs taken</td><td>analysis walkthroughs opened after scoring</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</body>
+</html>
