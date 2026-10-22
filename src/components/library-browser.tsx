@@ -7,7 +7,7 @@ import { Search } from "lucide-react"
 import { kindStyle, tagStyle } from "@/lib/swatches"
 import { cn } from "@/ui/lib/utils"
 
-export type Card = { slug: string; title: string; publisher: string; summary: string; kind: string; tags: string[]; license: string; size: string; rows: string | null; used: number }
+export type Card = { slug: string; title: string; publisher: string; summary: string; kind: string; tags: string[]; license: string; size: string; rows: string | null; used: number; href?: string }
 
 /** The library, searchable and filterable in place. */
 export function LibraryBrowser({ cards }: { cards: Card[] }) {
@@ -33,7 +33,7 @@ export function LibraryBrowser({ cards }: { cards: Card[] }) {
       </div>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {shown.map((c, i) => (
-          <Link key={c.slug} href={`/library/${c.slug}`} className="surface lift rise flex flex-col gap-3 p-5" style={{ ["--i" as string]: i }}>
+          <Link key={c.slug} href={c.href ?? `/library/${c.slug}`} className="surface lift rise flex flex-col gap-3 p-5" style={{ ["--i" as string]: i }}>
             <div className="flex items-center justify-between gap-2">
               <span className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold" style={kindStyle(c.kind)}>{c.kind}</span>
             </div>

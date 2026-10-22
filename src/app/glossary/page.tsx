@@ -1,3 +1,4 @@
+import { HOME_BLOCK } from "@/app/home/height"
 import { TableBlock } from "@/components/blocks"
 import { GLOSSARY } from "@/lib/glossary"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/components/nova/table"
@@ -6,7 +7,7 @@ export const metadata = { title: "Glossary" }
 
 export default function GlossaryPage() {
   return (
-    <TableBlock title="Glossary" search="Search terms…" rows={GLOSSARY.map((t) => ({ term: t.full, definition: t.definition, section: t.group }))} name="glossary">
+    <TableBlock title="Glossary" search="Search terms…" rows={GLOSSARY.map((t) => ({ term: t.full, definition: t.definition, section: t.group }))} name="glossary" height={HOME_BLOCK}>
       <Table className="table-fixed">
         <TableHeader>
           <TableRow className="bg-muted/60">

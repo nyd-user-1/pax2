@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resonance proposals</title>
+<style>
+  :root { --blue:#1e3a8a; --ink:#0f172a; --muted:#64748b; --border:#e2e8f0; --mist:#f1f5f9; }
+  body { margin:0; padding:48px 24px; background:var(--mist); font:16px/1.65 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:var(--ink); }
+  .wrap { max-width:1280px; margin:0 auto; }
+  .tabs { display:flex; gap:6px; padding:0 28px; }
+  .tab { display:inline-block; padding:10px 22px; border-radius:14px 14px 0 0; font-weight:600; font-size:15px; text-decoration:none; color:var(--muted); background:#e6ebf2; outline:1px solid rgb(15 23 42 / .06); }
+  .tab.on { background:#fff; color:var(--blue); position:relative; z-index:2; }
+  .card { background:#fff; border-radius:20px; box-shadow:0 1px 3px rgb(2 6 23 / .06); outline:1px solid rgb(15 23 42 / .06); padding:36px 40px 32px; position:relative; z-index:1; }
+  .card + .card { margin-top:24px; }
+  h1 { margin:0 0 6px; font-size:24px; font-weight:650; color:var(--blue); }
+  .thesis { margin:0 0 18px; font-size:16px; color:var(--ink); font-weight:550; }
+  .formula { font:14px/1.9 ui-monospace, Menlo, monospace; background:var(--mist); border-radius:12px; padding:14px 18px; margin:0 0 18px; white-space:pre; overflow-x:auto; }
+  dl { display:grid; grid-template-columns:190px 1fr; gap:6px 18px; margin:0; }
+  dt { font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding-top:2px; }
+  dd { margin:0; font-size:15px; }
+  code { font:12.5px ui-monospace, Menlo, monospace; background:var(--mist); padding:1px 6px; border-radius:6px; }
+  .print-pdf { position:absolute; top:30px; right:32px; padding:8px 16px; border:1px solid rgb(15 23 42 / .12); border-radius:10px; background:#fff; color:var(--blue); font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer; }
+  .print-pdf:hover { box-shadow:0 1px 3px rgb(2 6 23 / .1); }
+  @media print { .print-pdf, .tabs { display:none; } }
+@font-face {
+  font-family: "PAX Curtain";
+  src: url(data:font/woff2;base64,d09GMgABAAAAAAKsAA8AAAAABXAAAAJSAAGzdQAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbIBwqBmA/U1RBVDYARBEICoEogSABNgIkAwwLCgAEIAWDUAcgG1cEEdWbiQC+SOAN0T/1hnpVMoxW1xO2TthLEPmnOR7+367v97lVT9UDOzKcIohmTQhlwgeRAu5ja05SuThTqwz8zXPQBjj+A2DimvpJkCCSZZFY/OfRhg/09kvayCIJBzIgm26TSeTjUQZTxS5AoBYgCSETAoVW2oix46fOVS2HMiBQ6KKbxJlXZ+uqvds1Y54HeVqY/qwgnU4LMcX/n7HcgBhNCjUAAgDmzx4z1ZNGWZh99/9H5CPjNAJS8/Q82qkUQrWERgKdpAMbNu4NbNq7amt0FpJMSNEFBEjI0Egm0EiuH6pVSxhlpoVl+gTlJ2+UrwsAIcrqIuSgGhXoiRGAHJAkUZXXrilKK0rLiuVL5y8ozStVlM68956T775bFDKN34hTr2PDksWlTcXiJaWNRf3Hnntw2edOVq2k/tlOPsWyqc9/MXnnoMmG9djhzL/uw+VvI1peri7vTH245g66Yj535e6ae+iC89xFsFIgbu47/Mdvr6g79LfqLPsSPlt47Quf//HjO+qTJqTnUSmBYPZWWsgA6tOR5SNP8esAWZuqrUCuSYYaOVY4LhN5DS7xpkITl6ikjkdUZqCXhzmPqtAiElmpUbQqBLWiH8DO6NDP6qIIfre07MSVXPjQqDVa8BIUtlR6PtxcS1HswzzwheV6kBO+b3uDapVLOz34V7BlVEPqYqoLX8UuMymYfiX6l/O3+Q+WgesjaT4oD3Tk1ivdWm34eSxPw+6xs2VOlc37UCiSY0AutV65agNfYVrKvptv1CV+WAYys1A+3/hzAAAA) format("woff2");
+  font-weight: 100 900;
+  font-display: block;
+}
+  .brand-print { display:none; }
+  @page { size:landscape; margin:12mm; }
+  @media print {
+    body { padding:0; background:#fff; }
+    .wrap { max-width:none; }
+    .card { box-shadow:none; }
+    td:nth-child(5) { white-space:normal; }
+    .brand-print { display:flex; align-items:baseline; justify-content:space-between; margin:0 0 20px; padding-bottom:12px; border-bottom:2px solid var(--blue); }
+    .brand-print .mark { font-family:"PAX Curtain", ui-monospace, Menlo, monospace; font-weight:700; font-size:24px; color:var(--blue); }
+    .brand-print .mark .a { color:#dc2626; }
+    .brand-print .date { font-size:12px; color:var(--muted); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="tabs">
+    <a class="tab" href="HOME.html">Home</a>
+    <a class="tab" href="RESONANCE-STD.html">Resonance</a>
+    <a class="tab on" href="PROPOSALS.html">Proposals</a>
+    <a class="tab" href="HOUSE.html">House</a>
+    <a class="tab" href="DATA-API.html">Data API</a>
+    <a class="tab" href="ANALYTICS-API.html">Analytics API</a>
+    <a class="tab" href="STUDIO-ONLY.html">Studio Only</a>
+    <a class="tab" href="PARTNER-CSV.html">CSV</a>
+    <a class="tab" href="CORPUS.html">Corpus</a>
+    </nav>
+  <div class="brand-print"><span class="mark">P<span class="a">A</span>X</span><span class="date"></span></div>
+  <div class="card"><button class="print-pdf" onclick="window.print()">Print to PDF</button>
+  <h1>eR</h1>
+  <p class="thesis">The standing definition, which the five below redefine: three rates per paid run — stop, watch, act — each against a frozen reference average.</p>
+  <div class="formula">R = 0.25·Engage + 0.40·Interest + 0.35·Act                 50 = the reference average
+
+Engage    = threeSecondPlays ÷ impressions
+Interest  = averageViewDuration ÷ videoLength
+Act       = (shares + saves + comments) ÷ threeSecondPlays
+
+each rate → evidence-weighted:  (count + k·ref) ÷ (base + k)
+each rate → component score:    percentile of distance from reference, log-odds scale, 0–100</div>
+  <dl>
+    <dt>Inputs</dt><dd>Analytics API, Data API</dd>
+    <dt>Rewards</dt><dd>Stopping the scroll, holding the watch, prompting an action — against the first round’s pooled average</dd>
+    <dt>State</dt><dd>Defined, unscored: no real video carries an eR; impressions, shares, and saves exist only for paid delivery</dd>
+    <dt>Limit</dt><dd>Within-run only — nothing is normalized to the channel, so eR cannot compare across channels the way the proposals can</dd>
+    <dt>Reads as</dt><dd>50 = the reference average; the full definition lives on the Resonance tab</dd>
+  </dl>
+  </div>
+  <div class="card">
+  <h1>pR</h1>
+  <p class="thesis">Built from public data alone: the audience’s disproportionate response, read from what YouTube shows everyone.</p>
+  <div class="formula">R = 100 · Φ( 0.50·z(outlierScore) + 0.30·z(engagementRate) + 0.20·z(durability) )
+
+outlierScore    = views ÷ channel median                        (within-channel, log scale)
+engagementRate  = (likes + comments) ÷ views                    (vs the channel’s own typical rate)
+durability      = days the poller saw velocity above threshold  (vs the channel’s typical life)</div>
+  <dl>
+    <dt>Inputs</dt><dd>Data API, Poller, Catalog</dd>
+    <dt>Rewards</dt><dd>Beating your own channel’s usual on reach, depth, and staying power</dd>
+    <dt>z(·)</dt><dd>Within-channel standard score, evidence-weighted toward 0 under ~2,000 views</dd>
+    <dt>Limit</dt><dd>No watch behavior exists publicly; outlierScore carries that load as a proxy</dd>
+    <dt>Reads as</dt><dd>50 = the channel’s usual; one spread above ≈ 84</dd>
+  </dl>
+  </div>
+  <div class="card">
+  <h1>hR</h1>
+  <p class="thesis">Everything in hand, nothing invented: what happened, weighted 70, against what it resembles, weighted 30.</p>
+  <div class="formula">R = 100 · Φ( 0.70·OUTCOME + 0.30·CONTEXT )
+
+OUTCOME = 0.5·z(outlierScore) + 0.3·z(engagementRate) + 0.2·z(earlyShareOfViews)
+CONTEXT = 0.6·z(neighborhoodLift) + 0.4·z(hitProbability)
+paid rows add:  OUTCOME += z(completion_rate_reported_pct), weights renormalized</div>
+  <dl>
+    <dt>Inputs</dt><dd>Data API, Poller, Catalog, Embeddings, Models, CSV where present</dd>
+    <dt>Rewards</dt><dd>Measured performance first; content that sits in historically lifting neighborhoods second</dd>
+    <dt>Rule</dt><dd>Every component already exists on a tab; this proposal only combines</dd>
+    <dt>Limit</dt><dd>hitProbability is a forecast inside a score of outcomes — held to 12% of the total for that reason</dd>
+    <dt>Reads as</dt><dd>50 = expected for this channel and this content neighborhood</dd>
+  </dl>
+  </div>
+  <div class="card">
+  <h1>xR</h1>
+  <p class="thesis">Derivations of derivations: each video becomes a fitted curve and a feature vector, scored by its projection onto the axis that historically separates winners.</p>
+  <div class="formula">1. Fit the poller series:   V(t) = V∞ · (1 − e^(−t/τ))         → V∞ (ceiling), τ (time constant)
+2. Engagement elasticity:    ε = d(log likes) ÷ d(log views)    across the series
+3. Standardize the vector:   x = [log(V∞/median), τ, ε, fit residual, transcriptPace, hookWordCount,
+                                  firstCutTime, textOnScreen, neighborhoodLift, …] → z within channel
+4. Performance axis:         w = the discriminant axis separating ≥3x from <3x on the settled corpus
+5. R = 100 · Φ( x · w )      the video’s projection on that axis, as a percentile</div>
+  <dl>
+    <dt>Inputs</dt><dd>Poller (the curve), Catalog, Transcripts, Composition, Embeddings</dd>
+    <dt>New derivations</dt><dd>τ and V∞ from the curve fit; ε, an elasticity; w, the fitted axis</dd>
+    <dt>Rewards</dt><dd>The shape of success — fast time constants, compounding approval, a winning craft profile — not just its size</dd>
+    <dt>Limit</dt><dd>The axis is refit on each corpus rebuild; scores compare only within one fit, so w is versioned like a model</dd>
+    <dt>Reads as</dt><dd>50 = on the fence between the two populations</dd>
+  </dl>
+  </div>
+  <div class="card">
+  <h1>fR</h1>
+  <p class="thesis">Forget the metric list. Resonance is disproportionate response: how much more an audience gives a video than that audience gives everything else, per unit of exposure.</p>
+  <div class="formula">R = 100 · Φ( log [ ∫ response(t) dt  ÷  ∫ expected_response(t) dt ] )
+
+response          = attention-seconds + weighted actions, as observed
+expected_response = the same audience’s baseline curve for this channel, length and placement
+exposure          = whatever pushed it — impressions, paid starts, algorithmic serves — the denominator, never the credit</div>
+  <dl>
+    <dt>Thesis</dt><dd>50 means the audience responded exactly as it responds to everything; resonance is the measured surplus</dd>
+    <dt>Property</dt><dd>Platform-agnostic: defined on curves and ratios, not on any vendor’s named counts</dd>
+    <dt>Property</dt><dd>Separates push from pull — exposure bought can never masquerade as response earned</dd>
+    <dt>Limit</dt><dd>Needs a response curve per audience, the hardest data to hold; every practical version above approximates this one</dd>
+    <dt>Reads as</dt><dd>The definition the other four converge toward</dd>
+  </dl>
+  </div>
+  <div class="card">
+  <h1>mR</h1>
+  <p class="thesis">From physics: a driven system responds enormously at its natural modes, and different modes produce different — but each perfectly regular — patterns. Outperformers are videos that hit a mode.</p>
+  <div class="formula">1. Template:  normalize every video onto the same fixed axes (craft, trajectory, neighborhood,
+              engagement profile), each axis a within-channel percentile → one regular polygon per video
+2. Modes:     cluster the templates of settled ≥3x videos → K recurring winning configurations
+              (sometimes abcdef, sometimes ghijkl — each mode is one bundle of threads)
+3. Score:     R = 100 · max_k [ similarity(template, mode_k) · lift_k ÷ max lift ]
+
+similarity = cosine on the normalized axes;   lift_k = the mode’s measured share-over-3x</div>
+  <dl>
+    <dt>The physics</dt><dd>MRI is the proof of concept: chaotic, unique bodies, excited along one shared property, collapse into a single symmetric diagnostic image. The template is that image; the modes are the resonant patterns</dd>
+    <dt>Inputs</dt><dd>Catalog, Poller, Transcripts, Composition, Embeddings — all in hand; the house already draws one deterministic signature per video (viometric frequency)</dd>
+    <dt>Rewards</dt><dd>Proximity to any known winning configuration, not to one averaged archetype — videos with different trait-bundles can score equally high</dd>
+    <dt>Common denominators</dt><dd>Axes high across every mode are the minimums; axes high in only some modes are the interchangeable threads</dd>
+    <dt>Limit</dt><dd>Modes are discovered, so K and the clustering are pre-registered and versioned; a mode can exist that the corpus has not seen yet</dd>
+    <dt>Reads as</dt><dd>100 = squarely on a known mode; 50 = between modes; low = off every pattern that has worked here</dd>
+  </dl>
+  </div>
+</div>
+<script>for (const e of document.querySelectorAll(".brand-print .date")) e.textContent = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })</script>
+</body>
+</html>
