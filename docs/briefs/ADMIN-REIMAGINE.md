@@ -38,3 +38,11 @@ Append `## Report` after each page's commit: one line on what the page now state
   - A Catalog block now leads the page, read from `accounting.json` with its as-of date. It shows the catalog total plus five tiles (Transcript, Media, Composition, Index, Lab Tested), each split into held and without, the same arithmetic as the accounting page.
   - Beside it, the e² four, each with its thumbnail, title and video-page link, read from `data/generated/e2.json`.
   - The campaign operation blocks below are unchanged.
+- **/build**:
+  - A Deploy block now leads the page, with four cards:
+    - Amplify app: pax-2 / d19l6hnxwmfb25, builds on every push to main, Node 22, runs on the compute role.
+    - Bundle headroom: 198 of 220 MB with a bar, 22 MB left, the as-of date 2026-10-22, and what is kept out of the bundle.
+    - Typecheck box: drawn dashed as planned (a stopped c7i.large, about $2 a month, about 1¢ a check), with why it is needed and its source brief.
+    - Feed index on S3: the S3 object, the catalog count read at render, 6.9 MB outside the bundle, and how it is served.
+  - Deferred: the tracker below (`data/build.json`: the tiles, to-do columns and its $10 budget) is still dated 2026-10-17. Its done/waiting/next items record your decisions, and rewriting them needs your ruling, so it was left as is.
+  - The 198 MB is the brief's figure. The build log prints the BUNDLE line on every build, but nothing writes it to a file the app can read yet.

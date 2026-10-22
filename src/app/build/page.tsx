@@ -9,6 +9,8 @@ import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { RefreshButton } from "@/components/dash/card-tools"
 import { Stat2 } from "@/components/dash/stats"
 import { TodoCard, type Todo } from "@/components/build/todo-card"
+import { DeployLedger } from "@/components/build/deploy-ledger"
+import { accounting } from "@/lib/accounting"
 import { LESSONS, NOT_CONNECTED, PAGES, type SourceRow } from "@/lib/build-board"
 import { FEATURES, TAKES } from "@/lib/catalog"
 import { rows } from "@/lib/pipeline"
@@ -88,7 +90,11 @@ export default async function BuildPage() {
         ))}
       </div>
 
-      <BlockOrder page="build" initial={["volume", "library", "runs", "pages", "budget", "todo", "insights"]}>
+      <BlockOrder page="build" initial={["deploy", "volume", "library", "runs", "pages", "budget", "todo", "insights"]}>
+        <OrderedBlock id="deploy" label="Deploy">
+          <DeployLedger shorts={accounting.counts.all} />
+        </OrderedBlock>
+
         <OrderedBlock id="volume" label="Volume">
           <Volume spend={b.budget.spent.map((s) => ({ item: s.item, short: short(s.item), usd: s.usd }))} videos={videos} />
         </OrderedBlock>
