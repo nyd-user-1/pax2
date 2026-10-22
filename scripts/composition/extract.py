@@ -9,6 +9,10 @@
 # One JSON per id to s3://<bucket>/composition/raw/<id>.json; done ids skip, so a rerun resumes.
 #
 #   python3 extract.py <bucket> <limit or 0> <log s3 uri>
+#   python3 extract.py <bucket> 0 <log s3 uri> --upload <uploads/... key> <id>
+#     one submitted take: the single file carries video and audio; the measurements land at
+#     s3://<bucket>/composition/uploads/<id>.json. A copy of this file serves the app's worker box
+#     from s3://<bucket>/code/composition/current/extract.py; re-upload it when this changes.
 import json, os, re, subprocess, sys, time, tempfile, shutil, datetime
 from multiprocessing import Pool
 
@@ -116,8 +120,47 @@ def one(vid):
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
+def one_upload(key, vid):
+    tmp = tempfile.mkdtemp(dir="/opt/work/tmp")
+    try:
+        src = os.path.join(tmp, "take." + key.rsplit(".", 1)[-1])
+        if run(["aws", "s3", "cp", "--only-show-errors", f"s3://{BUCKET}/{key}", src]).returncode != 0:
+            return vid, "no upload at " + key
+        out = {"id": vid, "key": key, "version": VERSION, "cutThreshold": CUT, "fps": FPS, "at": datetime.datetime.now(datetime.timezone.utc).isoformat()}
+        d = run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", src]).stdout.strip()
+        out["durationSec"] = round(float(d), 2) if d and d != "N/A" else None
+        sc = scene_scores(src)
+        out["scenes"] = sc
+        out["cuts"] = [t for t, s in sc if s >= CUT and t > 0.05]
+        fr, size = frames(src, tmp)
+        out["frames"] = fr
+        out["size"] = size
+        mom, integ, lra = loudness(src)
+        per = {}
+        for t, v in mom:
+            per.setdefault(int(t - 1e-9), []).append(v)
+        import math
+        curve = []
+        for s in sorted(per):
+            e = sum(10 ** (v / 10) for v in per[s]) / len(per[s])
+            curve.append(round(10 * math.log10(e), 1) if e > 0 else -120.0)
+        out["loudness"] = {"integrated": integ, "range": lra, "perSecond": curve}
+        with open(os.path.join(tmp, "out.json"), "w") as fh:
+            json.dump(out, fh)
+        r = run(["aws", "s3", "cp", "--only-show-errors", os.path.join(tmp, "out.json"), f"s3://{BUCKET}/composition/uploads/{vid}.json"])
+        return vid, None if r.returncode == 0 else ("upload: " + r.stderr[-200:])
+    except Exception as e:
+        return vid, repr(e)[-300:]
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
 if __name__ == "__main__":
     os.makedirs("/opt/work/tmp", exist_ok=True)
+    if "--upload" in sys.argv:
+        i = sys.argv.index("--upload")
+        vid, err = one_upload(sys.argv[i + 1], sys.argv[i + 2])
+        print(f"{vid}: {err or 'ok'}", flush=True)
+        sys.exit(1 if err else 0)
     have = set(l.strip()[:-4] for l in open("media.txt") if l.strip())
     done = set(l.strip()[:-5] for l in open("done.txt") if l.strip())
     ids = sorted(i for i in have if i not in done)
