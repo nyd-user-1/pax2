@@ -11,7 +11,7 @@ import { Plus, ChevronRight, ArrowLeft, X, ChartColumn, NotebookPen, PlaySquare,
 
 import { narrate } from '@/app/studio-actions'
 import { OPEN_SCRIPTS } from '@/lib/open-scripts'
-import { VOICES } from '@/lib/studio-style'
+import { VOICES, type VoiceId } from '@/lib/studio-style'
 
 /* ------------------------------------------------------------------ */
 /*  Video Analytics prompts                                            */
@@ -74,7 +74,7 @@ export function PlusMenu({ videos, shorts = [], onSelect, dropUp = false }: Prop
   const handleCategoryClick = (cat: Exclude<DrillStep, 'categories'>) => { setSearch(''); setStep(cat) }
 
   /** Road test: the voice reads one line, made by the studio's own narrate. */
-  const hear = async (voiceId: string) => {
+  const hear = async (voiceId: VoiceId) => {
     if (hearing) return
     setHearing(voiceId)
     try {
