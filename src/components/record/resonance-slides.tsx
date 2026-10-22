@@ -12,7 +12,7 @@ import { UniversalBlock } from "@/components/record/resonance-universal"
 const HEADERS: SlideHeader[] = [
   {
     title: "Resonant Frequency",
-    lines: ["Every audience has frequencies it responds to; a video either meets one or misses.", "The textbook resonance curve, beside its measured twins from the catalog's own shorts."],
+    lines: ["Every audience has frequencies it responds to; a video either meets one or misses."],
   },
   {
     title: "Resonant Length",

@@ -11,7 +11,7 @@ import { cn } from "@/ui/lib/utils"
 // above the track change with the slide (Brendan, 2026-10-22; the duplication with the block's own
 // title is his call).
 
-export type SlideHeader = { title: string; lines: [string, string] }
+export type SlideHeader = { title: string; lines: string[] }
 
 export function ChartCarousel({ headers, children }: { headers?: SlideHeader[]; children: React.ReactNode }) {
   const slides = React.Children.toArray(children)
@@ -30,11 +30,14 @@ export function ChartCarousel({ headers, children }: { headers?: SlideHeader[]; 
   return (
     <div>
       {head && (
-        <div className="mb-8 flex flex-col items-center gap-3 text-center">
+        <div className="mb-8 flex flex-col gap-3">
           <h2 className="font-display text-3xl font-bold text-pax2-blue">{head.title}</h2>
-          <p className="mx-auto max-w-3xl text-lg leading-relaxed text-slate-900">
-            <span className="block">{head.lines[0]}</span>
-            <span className="block">{head.lines[1]}</span>
+          <p className="max-w-3xl text-lg leading-relaxed text-slate-900">
+            {head.lines.map((l) => (
+              <span key={l} className="block">
+                {l}
+              </span>
+            ))}
           </p>
         </div>
       )}
