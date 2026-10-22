@@ -38,3 +38,4 @@ Append `## Report`: the measured 20-video verification, batch cost and duration,
 ## Progress
 
 - 2026-10-22T21:53Z census batch: 3860 of 5,379 answered on S3 (vqa/raw/qwen3-vl-4b-p3/), one spot g6.2xlarge at 78.0/min.
+- 2026-10-22T22:09Z census batch: 5108 of 5,379 answered on S3 (vqa/raw/qwen3-vl-4b-p3/), one spot g6.2xlarge at 78.0/min.
