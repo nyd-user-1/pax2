@@ -79,16 +79,21 @@ function rebuild() {
   });
   tb.innerHTML = ""; shown = 0; renderMore();
 }
+function paint() {
+  document.querySelectorAll("th").forEach((x) => {
+    x.textContent = x.textContent.replace(/ [\u2191\u2193]$/, "");
+    x.classList.toggle("on", +x.dataset.k === key);
+    if (+x.dataset.k === key) x.textContent += dir === 1 ? " \u2191" : " \u2193";
+  });
+  document.querySelectorAll(".half").forEach((x) => x.classList.toggle("on", +x.dataset.k === key && +x.dataset.dir === dir));
+}
+function setSort(k, d) { key = k; dir = d; rebuild(); paint() }
 q.addEventListener("input", () => { needle = q.value; rebuild() });
-document.querySelectorAll("th").forEach((th) => th.addEventListener("click", () => {
-  const k = +th.dataset.k;
-  dir = k === key ? -dir : (k === 1 ? 1 : -1);
-  key = k;
-  document.querySelectorAll("th").forEach((x) => { x.classList.toggle("on", x === th); x.textContent = x.textContent.replace(/ [\u2191\u2193]$/, "") });
-  th.textContent += dir === 1 ? " \u2191" : " \u2193";
-  rebuild();
-}));
+document.querySelectorAll("th").forEach((th) => th.addEventListener("click", () =>
+  setSort(+th.dataset.k, +th.dataset.k === key ? -dir : (+th.dataset.k === 1 ? 1 : -1))
+));
+document.querySelectorAll(".half").forEach((h) => h.addEventListener("click", () => setSort(+h.dataset.k, +h.dataset.dir)));
 new IntersectionObserver((es) => { if (es[0].isIntersecting && shown < view.length) renderMore() }).observe(document.getElementById("more"));
-rebuild();
+setSort(3, -1);
 </script>
 </body></html>
