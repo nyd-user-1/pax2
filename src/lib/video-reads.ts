@@ -59,3 +59,25 @@ export function modeMatch(ytId: string): { score: number; mode: Mode; axes: stri
 export function resonanceScore(ytId: string): { pre: number; post?: number } | null {
   return formula()?.scores[ytId] ?? null
 }
+
+type Stages = { order: string[]; ids: Record<string, string> }
+let _stages: Stages | null | undefined
+const stages = () => (_stages === undefined ? (_stages = load<Stages>("data/generated/lab-stages.json")) : _stages)
+
+/** Which of the Lab's file-measured stages exist for the short (lab-stages.json, scripts/accounting.mjs). */
+export function measured(ytId: string): Record<"cuts" | "loudness" | "text" | "transcript" | "index", boolean> {
+  const s = stages()
+  const bits = s?.ids[ytId] ?? ""
+  const has = (k: string) => bits[s?.order.indexOf(k) ?? -1] === "1"
+  return { cuts: has("cuts"), loudness: has("loudness"), text: has("text"), transcript: has("transcript"), index: has("index") }
+}
+
+/** The actions that unlock a fuller Resonance read, one per missing component (docs/RESONANCE.md). */
+export function unlockActions(ytId: string): { what: string; href?: string }[] {
+  const m = measured(ytId)
+  const out: { what: string; href?: string }[] = []
+  if (!m.cuts) out.push({ what: "Run the flask: the craft rank needs the file measured", href: `/lab/${ytId}` })
+  if (!m.transcript) out.push({ what: "Add captions: the outlier classifier's fuller arm reads the transcript" })
+  if (!m.index) out.push({ what: "Embed the transcript: the fuller arm also needs the serving-index embedding" })
+  return out
+}

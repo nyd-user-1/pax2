@@ -9,9 +9,8 @@ import warBaseline from "../../data/generated/war-baseline.json"
 import sampleVideos from "../../data/sample/videos.json"
 import paidBatch from "../../data/generated/voter-freedom-paid.json"
 import { CarryBlock } from "@/components/evidence/carry"
-import { CraftOctagon, LengthOnCurve, TopicRows } from "@/components/video-reads"
-import { craftTemplate, topicOf } from "@/lib/video-reads"
-import { RangeBar } from "@/components/bits"
+import { CraftOctagon, LengthOnCurve, ModeMatch, Recommendations, ResonanceGauge, TopicRows, UnlockList, ingredients } from "@/components/video-reads"
+import { craftTemplate, modeMatch, resonanceScore, topicOf, unlockActions } from "@/lib/video-reads"
 import { boostCounts } from "@/lib/boost"
 import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, TableBlock } from "@/components/blocks"
 import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/components/codebook-blocks"
@@ -24,7 +23,6 @@ import { SplitColumns } from "@/components/split-columns"
 import { Term } from "@/components/term"
 import { SignupGate } from "@/components/signup-gate"
 import { TagChip } from "@/components/tag-chip"
-import { ScoreInfo } from "@/components/ui-pax2"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
 import { currentUser } from "@/lib/auth"
 import { featuresFor, type Features } from "@/lib/catalog"
@@ -211,10 +209,8 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         ["Cost/Thru", per(ads.spend, ads.thruplays)],
       ]
     : []
-  const res = sample?.resonance
   // A paid video's Resonance and KPIs come from its ad figures, scored against the paid batch.
   const pr = paidResonance(ytId)
-  const span = (low?: number | null, high?: number | null) => (low == null || high == null ? DASH : `${low}–${high}`)
   const realTags = tagsFor(id)
   const tags = realTags.length ? realTags : (sample?.tags ?? [])
   /** YouTube returned no like count; a sample video fills it, and the Stats block says so. */
@@ -262,6 +258,10 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const template = craftTemplate(ytId)
   const topic = topicOf(ytId)
   const lengthSec = v ? secs(v.duration) : 0
+  const score = resonanceScore(ytId)
+  const match = modeMatch(ytId)
+  const recipe = match && template ? ingredients(template, match.mode, match.axes) : null
+  const unlock = unlockActions(ytId)
   const left: [string, string, ReactNode][] = [
     [
       "comments",
@@ -327,47 +327,27 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         </div>
       </CardBlock>,
     ],
+    // Resonance as settled (docs/RESONANCE.md): the gauge, the mode match and the recommendations, three
+    // blocks. The gauge reads only resonance-formula.json and the match only the winning-modes artifact;
+    // each stays empty, naming what unlocks it, until its file holds this video.
     [
       "resonance",
       "Resonance",
-      <CardBlock key="resonance" title="Resonance" tools={<ScoreInfo />} height="auto" footer={!pr && sample ? SAMPLE : undefined}>
-        <div className="@container flex flex-col gap-3 pb-4">
-          <div className="surface flex flex-wrap items-end justify-between gap-4 p-4">
-            <div className="tabular flex items-baseline gap-2">
-              <span className="font-display text-4xl text-pax2-blue">{(pr ? pr.score : res?.score) ?? DASH}</span>
-              <span className="text-xs text-slate-800">{pr ? pr.range : span(res?.low, res?.high)}</span>
-            </div>
-            <div className="min-w-0 flex-1 basis-56">
-              <RangeBar value={(pr ? pr.score : res?.score) ?? null} low={(pr ? pr.low : res?.low) ?? null} high={(pr ? pr.high : res?.high) ?? null} />
-              <div className="mt-1 flex justify-between text-[10px] text-slate-800">
-                <span>0</span>
-                <span>50 = reference average</span>
-                <span>100</span>
-              </div>
-            </div>
-          </div>
-          <div className="grid gap-3 @lg:grid-cols-3">
-            {COMPONENTS.map((meta) => (
-              <div key={meta.key} className="surface flex flex-col gap-2 p-3">
-                <div className="flex items-baseline justify-between">
-                  <span className="font-medium text-pax2-blue">{meta.name}</span>
-                  <Term id={meta.key} label={false} />
-                </div>
-                <div className="tabular flex items-baseline gap-1.5">
-                  <span className="font-display text-3xl text-pax2-blue">{(pr ? pr.components[meta.key].score : res?.components[meta.key]?.score) ?? DASH}</span>
-                  <span className="text-xs text-slate-800">{pr ? pr.components[meta.key].range : span(res?.components[meta.key]?.low, res?.components[meta.key]?.high)}</span>
-                </div>
-                <RangeBar
-                  value={(pr ? pr.components[meta.key].score : res?.components[meta.key]?.score) ?? null}
-                  low={(pr ? pr.components[meta.key].low : res?.components[meta.key]?.low) ?? null}
-                  high={(pr ? pr.components[meta.key].high : res?.components[meta.key]?.high) ?? null}
-                />
-              </div>
-            ))}
-          </div>
+      <ChartBlock key="resonance" title="Resonance" height="auto">
+        <div className="flex flex-col gap-4">
+          <ResonanceGauge pre={score?.pre ?? null} post={score?.post ?? null} />
+          {!score && <UnlockList actions={[{ what: "The gauge fills once the Resonance stack is fitted" }, ...unlock]} />}
         </div>
-      </CardBlock>,
+      </ChartBlock>,
     ],
+    [
+      "mode",
+      "Mode match",
+      <ChartBlock key="mode" title="Mode match" height="auto">
+        {match && template ? <ModeMatch score={match.score} mode={match.mode} template={template} rows={recipe!} /> : <UnlockList actions={unlock.length ? unlock : [{ what: "No mode-match read for this video yet" }]} />}
+      </ChartBlock>,
+    ],
+    ["recs", "Recommendations", <ListBlock key="recs" title="Recommendations" height="auto"><Recommendations rows={recipe} unlock={recipe ? [] : unlock} /></ListBlock>],
     // Moved from /evidence#carry (2026-10-22): the catalog's lift, read against this video.
     ["carry", "What the pushed videos carry", <CarryBlock key="carry" ytId={ytId} />],
     // The per-video chart homes (docs/RESONANCE-EVAL.md): the craft octagon, then the root's length
