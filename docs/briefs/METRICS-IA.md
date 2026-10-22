@@ -44,3 +44,9 @@ Append `## Report` per job: one line each on what shipped; the /library and /glo
    - Each block shows an empty state when the channel has no data.
    - The channel cards on /channels and /home now open this page instead of YouTube.
    - An id that is not a tracked channel still goes to /my-channels/<id>, the route's old behavior, so connected-channel links keep working.
+4. **Chart homes**: the video page gains three blocks after the carry block, each shown only when its measure exists for the video.
+   - **Craft template**: the octagon over eight craft axes only (cuts, visual activity, loudness, text share, speech rate, first word, length against the channel, title words), as within-channel percentiles with the channel's middle as a dashed ring. The outcome never sits inside the shape.
+   - **Resonant Length**: the length-crossing curves (outperform and underperform, within channel) with this video's length marked and its two shares read off.
+   - **Resonant Topic**: the topic lift rows with 90% ranges and this video's topic row highlighted. If the topic is too small to size, a line says so.
+   - The root slides are unchanged, and the universal curve stays on the root until the normalized poller trajectories are drawn.
+   - Data: new `scripts/video-reads.mjs` writes `data/generated/video-reads.json` (827 KB). It holds each short's craft template, using the winning-modes script's own template code, copied, plus its topic cluster from the index map. Its templates reproduce the artifact's mode-match ordering (0.998 concordance on 400 shorts).

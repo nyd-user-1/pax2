@@ -9,6 +9,8 @@ import warBaseline from "../../data/generated/war-baseline.json"
 import sampleVideos from "../../data/sample/videos.json"
 import paidBatch from "../../data/generated/voter-freedom-paid.json"
 import { CarryBlock } from "@/components/evidence/carry"
+import { CraftOctagon, LengthOnCurve, TopicRows } from "@/components/video-reads"
+import { craftTemplate, topicOf } from "@/lib/video-reads"
 import { RangeBar } from "@/components/bits"
 import { boostCounts } from "@/lib/boost"
 import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, TableBlock } from "@/components/blocks"
@@ -257,6 +259,9 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const statGrid = (rs: [string, string][]) => <div className="grid grid-cols-2 gap-4">{rs.map(([label, value]) => <React.Fragment key={label}>{stat(label, value)}</React.Fragment>)}</div>
 
   const comments = await topComments(ytId)
+  const template = craftTemplate(ytId)
+  const topic = topicOf(ytId)
+  const lengthSec = v ? secs(v.duration) : 0
   const left: [string, string, ReactNode][] = [
     [
       "comments",
@@ -365,6 +370,11 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     ],
     // Moved from /evidence#carry (2026-10-22): the catalog's lift, read against this video.
     ["carry", "What the pushed videos carry", <CarryBlock key="carry" ytId={ytId} />],
+    // The per-video chart homes (docs/RESONANCE-EVAL.md): the craft octagon, then the root's length
+    // and topic charts in per-video form. Each appears only when its measure exists for this video.
+    ...(template ? ([["craft", "Craft template", <ChartBlock key="craft" title="Craft template" height="auto"><CraftOctagon template={template} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
+    ...(lengthSec > 0 ? ([["length", "Resonant Length", <ChartBlock key="length" title="Resonant Length" height="auto"><LengthOnCurve seconds={lengthSec} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
+    ...(topic != null ? ([["topic", "Resonant Topic", <ChartBlock key="topic" title="Resonant Topic" height="auto"><TopicRows cluster={topic} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
     [
       "kpis",
       "KPIs",
