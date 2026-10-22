@@ -2,19 +2,22 @@
 
 import * as React from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { BarChart3, Check, ChevronLeft, Clapperboard, Gauge, LineChart, PenLine, Send, Sparkles, Upload, Video } from "lucide-react"
+import { ArrowRight, BarChart3, Check, ChevronLeft, Clapperboard, Gauge, LineChart, PenLine, Send, Sparkles, TriangleAlert, Upload, Video } from "lucide-react"
 
 import { linkUpload, myVideos, saveProfile, videoUploadUrl, type Profile } from "@/app/onboarding-actions"
 import { whiteButton } from "@/components/white-button"
 import { ChannelCard, ChannelChip } from "@/components/onboarding/ingest"
+import TextType from "@/components/text-type"
 import type { Progress } from "@/lib/channel-ingest"
 import { cn } from "@/ui/lib/utils"
 
-// The onboarding stepper, after account creation at /signup, copied from ElevenLabs' app onboarding
-// (elevenlabs.io/app/onboarding) as the baseline: a white page with no header, one step at a time in a
-// 451px column, plain left-aligned headings, small black buttons, a Skip that turns into Continue once
-// something is picked, the back chevron beside it, and a dot rail at the foot. The step rides in ?step=
-// so Google's consent screen returns to the connect step.
+// The onboarding stepper, after account creation at /signup. Its skeleton is ElevenLabs' app onboarding
+// (elevenlabs.io/app/onboarding): one step at a time in a 451px column, a Skip that turns into Continue
+// once something is picked, the back chevron beside it, and a dot rail at the foot. Its dress is
+// /signup's (src/app/signup, src/components/auth/auth-form.tsx): the gridded mist ground the page lays
+// down, the centered display heading typed in pax2 blue, grey labels over rounded white inputs, and the
+// pax2-blue primary with its arrow. The step rides in ?step= so Google's consent screen returns to the
+// connect step.
 
 const STEPS = ["about", "makes", "wants", "connect", "upload", "done"] as const
 type Step = (typeof STEPS)[number]
@@ -36,9 +39,10 @@ const WANTS = [
 
 export type ConnectedForStepper = { channelId: string; title: string; thumbnail: string | null; progress: Progress | null }
 
-const FIELD = "h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-[15px] text-slate-950 outline-none transition-colors placeholder:text-slate-400 focus:border-slate-950 focus:ring-1 focus:ring-slate-950"
-const BLACK = "inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-slate-950 px-4 text-[15px] font-medium text-white transition-opacity hover:opacity-85 disabled:opacity-40"
-const OUTLINE = "inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-[15px] font-medium text-slate-950 transition-colors hover:bg-slate-50 disabled:opacity-40"
+// FIELD and PRIMARY are auth-form's FIELD and BUTTON; PRIMARY sizes to its label in the action row.
+const FIELD = "w-full rounded-xl border border-slate-400 bg-white px-4 py-3 text-[15px] text-slate-900 outline-none transition-[border-color,box-shadow] hover:border-pax2-blue focus:border-pax2-blue placeholder:text-slate-400 focus:ring-2 focus:ring-pax2-light-blue/40"
+const PRIMARY = "inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-pax2-blue px-6 text-[15px] font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+const OUTLINE = "inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-slate-400 bg-white px-6 text-[15px] font-medium text-pax2-blue transition-colors hover:border-pax2-blue hover:bg-slate-50 disabled:opacity-60"
 const EMPTY: Profile = { name: "", lastName: "", role: "", town: "", heard: "", makes: [], wants: [] }
 
 export function Stepper({ initial, channels }: { initial: Profile | null; channels: ConnectedForStepper[] }) {
@@ -77,8 +81,9 @@ export function Stepper({ initial, channels }: { initial: Profile | null; channe
   const toggle = (field: "makes" | "wants", key: string) => setProfile((p) => ({ ...p, [field]: p[field].includes(key) ? p[field].filter((k) => k !== key) : [...p[field], key] }))
 
   return (
-    <main className="flex min-h-dvh w-full justify-center bg-white px-5">
-      <section className="flex w-full max-w-[451px] flex-col justify-center pb-24 pt-16">
+    // Not positioned, so the gradient paints beneath the page's fixed grid; the column, positioned, paints above it.
+    <main className="flex min-h-dvh w-full justify-center bg-gradient-to-b from-pax2-lavender to-pax2-mist px-6">
+      <section className="relative flex w-full max-w-[451px] flex-col justify-center pb-24 pt-16">
         {step === "about" && (
           <div className="flex flex-col gap-6">
             <Heading>Help us personalize your experience</Heading>
@@ -116,7 +121,7 @@ export function Stepper({ initial, channels }: { initial: Profile | null; channe
 
         {step === "wants" && (
           <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 text-center">
               <Heading>What would you like to do with PAX?</Heading>
               <Sub>Select all that apply</Sub>
             </div>
@@ -132,11 +137,11 @@ export function Stepper({ initial, channels }: { initial: Profile | null; channe
         {step === "connect" && (
           <div className="flex flex-col gap-5">
             <Heading>Connect YouTube</Heading>
-            {ytError && <p className="rounded-xl bg-pax2-red-deep/10 px-4 py-3 text-sm text-pax2-red-deep">{ytError === "access_denied" ? "Google's consent was cancelled; nothing was connected." : ytError}</p>}
+            {ytError && <p className="flex items-start gap-2.5 rounded-xl bg-pax2-red-deep/10 px-4 py-3 text-sm leading-relaxed text-pax2-red-deep"><TriangleAlert className="mt-0.5 size-4 shrink-0" />{ytError === "access_denied" ? "Google's consent was cancelled; nothing was connected." : ytError}</p>}
             {channels.map((c) => (
               <ChannelCard key={c.channelId} channelId={c.channelId} title={c.title} thumbnail={c.thumbnail} initial={c.progress} />
             ))}
-            <a href={connectHref} className={cn(OUTLINE, "h-12 w-full")}>
+            <a href={connectHref} className={cn(OUTLINE, "w-full")}>
               <YouTubeMark /> {channels.length ? "Connect another channel" : "Connect YouTube"}
             </a>
             <Actions back={back} ready={channels.length > 0} onContinue={skip} onSkip={skip} />
@@ -169,24 +174,29 @@ export function Stepper({ initial, channels }: { initial: Profile | null; channe
 
       <nav aria-label="Onboarding progress" className="fixed inset-x-0 bottom-0 flex justify-center gap-1.5 pb-8">
         {STEPS.map((s, i) => (
-          <button key={s} type="button" aria-label={`Step ${i + 1}`} aria-current={i === at ? "step" : undefined} disabled={i > at} onClick={() => go(s)} className={cn("h-1.5 rounded-full transition-all", i === at ? "w-6 bg-slate-950" : "w-1.5 bg-slate-300 enabled:hover:bg-slate-400")} />
+          <button key={s} type="button" aria-label={`Step ${i + 1}`} aria-current={i === at ? "step" : undefined} disabled={i > at} onClick={() => go(s)} className={cn("h-1.5 rounded-full transition-all", i === at ? "w-6 bg-pax2-blue" : "w-1.5 bg-slate-300 enabled:hover:bg-slate-400")} />
         ))}
       </nav>
     </main>
   )
 }
 
-function Heading({ children }: { children: React.ReactNode }) {
-  return <h1 className="m-0 text-[30px] font-normal leading-tight tracking-[-0.01em] text-slate-950">{children}</h1>
+/** The sign-up heading: centered display type in pax2 blue, typed out; keyed on its text, so each step's heading types from the start. */
+function Heading({ children }: { children: string }) {
+  return (
+    <div className="mb-2 text-center">
+      <TextType key={children} as="h1" text={children} loop={false} typingSpeed={70} className="font-display m-0 text-4xl font-normal text-pax2-blue" />
+    </div>
+  )
 }
 
 function Sub({ children }: { children: React.ReactNode }) {
-  return <p className="text-[15px] text-slate-500">{children}</p>
+  return <p className="text-sm text-slate-500">{children}</p>
 }
 
 function Field({ label, optional, children }: { label: string; optional?: boolean; children: React.ReactNode }) {
   return (
-    <label className="flex flex-col gap-2 text-[15px] font-medium text-slate-950">
+    <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700">
       <span>{label}{optional && <span className="font-normal text-slate-400"> (optional)</span>}</span>
       {children}
     </label>
@@ -195,8 +205,8 @@ function Field({ label, optional, children }: { label: string; optional?: boolea
 
 function Option({ label, on, onClick }: { label: string; on: boolean; onClick: () => void }) {
   return (
-    <button type="button" role="checkbox" aria-checked={on} onClick={onClick} className="flex items-center gap-3 text-left text-[17px] text-slate-950">
-      <span className={cn("inline-flex size-5 shrink-0 items-center justify-center rounded-full border transition-colors", on ? "border-blue-500 bg-blue-500 text-white" : "border-slate-300 bg-white")}>
+    <button type="button" role="checkbox" aria-checked={on} onClick={onClick} className={cn("flex items-center gap-3 rounded-xl border bg-white px-4 py-3 text-left text-[15px] text-slate-900 transition-[border-color,box-shadow]", on ? "border-pax2-blue ring-2 ring-pax2-light-blue/40" : "border-slate-400 hover:border-pax2-blue")}>
+      <span className={cn("inline-flex size-5 shrink-0 items-center justify-center rounded-full border transition-colors", on ? "border-pax2-blue bg-pax2-blue text-white" : "border-slate-400 bg-white")}>
         {on && <Check className="size-3" strokeWidth={3} />}
       </span>
       {label}
@@ -210,12 +220,12 @@ function Tile({ icon: Icon, label, on, onClick }: { icon: React.ComponentType<{ 
       type="button"
       aria-pressed={on}
       onClick={onClick}
-      className={cn("flex aspect-square flex-col items-center justify-center gap-3 rounded-2xl border bg-white px-2 text-center transition-colors", on ? "border-slate-950 ring-1 ring-slate-950" : "border-slate-200 hover:border-slate-300")}
+      className={cn("flex aspect-square flex-col items-center justify-center gap-3 rounded-2xl border bg-white px-2 text-center transition-colors", on ? "border-pax2-blue ring-2 ring-pax2-light-blue/40" : "border-slate-400 hover:border-pax2-blue")}
     >
       <span className="inline-flex size-11 items-center justify-center rounded-xl bg-pax2-lavender/70 text-pax2-blue">
         <Icon className="size-5" />
       </span>
-      <span className="text-[14px] leading-snug text-slate-950">{label}</span>
+      <span className="text-[14px] leading-snug text-slate-900">{label}</span>
     </button>
   )
 }
@@ -237,7 +247,7 @@ function Actions({ back, busy, ready, onContinue, onSkip, label = "Continue", ex
       <span className="flex items-center gap-4">
         {extra}
         {ready || !onSkip ? (
-          <button type="button" disabled={busy} onClick={onContinue} className={BLACK}>{label}</button>
+          <button type="button" disabled={busy} onClick={onContinue} className={PRIMARY}>{label} <ArrowRight className="size-4" /></button>
         ) : (
           <button type="button" onClick={onSkip} className={OUTLINE}>Skip</button>
         )}
@@ -323,10 +333,10 @@ function Uploader({ hasChannels }: { hasChannels: boolean }) {
         onDragOver={(e) => (e.preventDefault(), setOver(true))}
         onDragLeave={() => setOver(false)}
         onDrop={(e) => (e.preventDefault(), setOver(false), add(e.dataTransfer.files))}
-        className={cn("flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed bg-white px-6 py-10 text-center transition-colors", over ? "border-slate-950 bg-slate-50" : "border-slate-200 hover:border-slate-300")}
+        className={cn("flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed bg-white px-6 py-10 text-center transition-colors", over ? "border-pax2-blue bg-slate-50" : "border-slate-400 hover:border-pax2-blue")}
       >
-        <span className="inline-flex size-11 items-center justify-center rounded-full bg-slate-100 text-slate-950"><Upload className="size-5" /></span>
-        <span className="text-[15px] font-medium text-slate-950">Drop mp4 files or choose them</span>
+        <span className="inline-flex size-11 items-center justify-center rounded-full bg-pax2-lavender/70 text-pax2-blue"><Upload className="size-5" /></span>
+        <span className="text-[15px] font-medium text-slate-900">Drop mp4 files or choose them</span>
         <span className="text-xs text-slate-500">Transcript, audio, frames and memorability, about four minutes a video.</span>
       </button>
       <input ref={input} type="file" accept="video/mp4,video/webm" multiple hidden onChange={(e) => (add(e.target.files), (e.target.value = ""))} />
@@ -334,20 +344,20 @@ function Uploader({ hasChannels }: { hasChannels: boolean }) {
       {items.length > 0 && (
         <ul className="flex flex-col gap-2">
           {items.map((it) => (
-            <li key={it.uploadId} className="flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3">
+            <li key={it.uploadId} className="flex flex-col gap-2 rounded-xl border border-slate-400 bg-white px-4 py-3">
               <div className="flex min-w-0 items-center gap-3">
                 <Video className="size-4 shrink-0 text-slate-400" />
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-slate-950">{it.name}</p>
+                  <p className="truncate text-sm font-medium text-slate-900">{it.name}</p>
                   {it.state === "sending" ? (
-                    <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-slate-100"><div className="h-full bg-slate-950 transition-all" style={{ width: `${Math.round((it.sent / Math.max(1, it.size)) * 100)}%` }} /></div>
+                    <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-slate-100"><div className="h-full bg-pax2-blue transition-all" style={{ width: `${Math.round((it.sent / Math.max(1, it.size)) * 100)}%` }} /></div>
                   ) : (
                     <p className={cn("text-xs", it.state === "failed" ? "text-pax2-red-deep" : "text-slate-500")}>{it.state === "failed" ? it.error : "Uploaded; content analysis is running"}</p>
                   )}
                 </div>
               </div>
               {videos.length > 0 && it.state !== "failed" && (
-                <select value={it.youtubeId ?? ""} onChange={(e) => relink(it, e.target.value)} aria-label={`Which YouTube video ${it.name} is`} className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-950">
+                <select value={it.youtubeId ?? ""} onChange={(e) => relink(it, e.target.value)} aria-label={`Which YouTube video ${it.name} is`} className="w-full rounded-xl border border-slate-400 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition-colors hover:border-pax2-blue focus:border-pax2-blue">
                   <option value="">Not on YouTube</option>
                   {videos.map((v) => (
                     <option key={v.youtubeId} value={v.youtubeId}>{v.title}</option>
@@ -359,8 +369,8 @@ function Uploader({ hasChannels }: { hasChannels: boolean }) {
         </ul>
       )}
 
-      <details className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600">
-        <summary className="flex cursor-pointer list-none items-center gap-2 font-medium text-slate-950"><BarChart3 className="size-4 text-slate-500" /> Getting your files from YouTube</summary>
+      <details className="rounded-xl bg-pax2-lavender/60 px-4 py-3 text-sm text-pax2-blue">
+        <summary className="flex cursor-pointer list-none items-center gap-2 font-medium"><BarChart3 className="size-4" /> Getting your files from YouTube</summary>
         <ol className="mt-3 flex list-decimal flex-col gap-2 pl-5 leading-relaxed">
           <li>One video: in YouTube Studio, open Content, then the video&apos;s three-dot menu, then Download. The file is an mp4.</li>
           <li>Every video at once: at takeout.google.com, deselect all, select YouTube and YouTube Music, keep only videos, and export. Google emails a link when the archive is ready; each file is named for its video&apos;s title, so PAX links it to the video by itself.</li>
