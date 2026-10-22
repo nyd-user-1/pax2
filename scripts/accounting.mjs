@@ -111,7 +111,7 @@ const html = `<!doctype html>
   <thead><tr>
    <th data-k="1">Video</th><th data-k="3">Views</th><th data-k="4">Outlier</th>
    <th data-k="5">Transcript</th><th data-k="6">Media</th><th data-k="7">Composition</th>
-   <th data-k="8">Index</th><th data-k="9">Lab</th><th data-k="10">e&sup2;</th>
+   <th data-k="8">Index</th><th data-k="9">Lab</th>
   </tr></thead>
   <tbody id="tb"></tbody>
  </table>
@@ -131,7 +131,7 @@ function rowHtml(r) {
     esc(r[1]) + '</b><i>' + esc(r[2]) + '</i></span></td><td>' + r[3].toLocaleString("en-US") + '</td><td>' +
     (r[4] == null ? "\\u2014" : r[4].toFixed(r[4] >= 10 ? 0 : 1) + "\\u00d7") + '</td>' +
     mark(r[5]) + mark(r[6]) +
-    mark(r[7]) + mark(r[8]) + mark(r[9]) + mark(r[10]) + '</tr>';
+    mark(r[7]) + mark(r[8]) + mark(r[9]) + '</tr>';
 }
 function renderMore() {
   const next = view.slice(shown, shown + PAGE);
