@@ -206,5 +206,7 @@ setSort(3, -1);
 </script>
 </body></html>
 `
-fs.writeFileSync(path.join(root, "docs/ACCOUNTING.html"), html)
+// Written atomically: a reload mid-write once served a truncated script and an empty table.
+fs.writeFileSync(path.join(root, "docs/ACCOUNTING.html.tmp"), html)
+fs.renameSync(path.join(root, "docs/ACCOUNTING.html.tmp"), path.join(root, "docs/ACCOUNTING.html"))
 console.log(`ACCOUNTING.html: ${rows.length} rows, ${(html.length / 1e6).toFixed(1)} MB`, counts)
