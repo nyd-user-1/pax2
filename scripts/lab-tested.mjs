@@ -17,6 +17,9 @@ const MEDIA_MEASURED = Object.entries(S)
   .filter(([, r]) => r && typeof r.cutsPerSec === "number" && isFinite(r.cutsPerSec))
   .map(([id]) => id)
   .sort()
-const ids = ["Eg8mPYYr9OU", "jLD6UwGvldg"]
+// Brendan's four, 2026-10-22: Fix American Politics (UA), Taxation Without Representation? (VF),
+// When Political Parties See Independent Voters (VF), Closed Primaries Cause Gridlock (UA).
+// jLD6UwGvldg (Stop Drinking The Kool-Aid) remains fully measured; add it back here to re-flask it.
+const ids = ["Eg8mPYYr9OU", "f5ZT7exidXs", "bmIEPFgxcCw", "-50yfo3yqNg"]
 fs.writeFileSync(path.join(ROOT, "data/generated/lab-tested.json"), JSON.stringify(ids))
 console.log("lab-tested.json:", ids.length, "ids")

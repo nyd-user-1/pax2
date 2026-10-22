@@ -137,6 +137,9 @@ const STANDIN_RAW = {
 const VIDEOS = [
   { id: "Eg8mPYYr9OU", label: "Unite America", invented: false },
   { id: "jLD6UwGvldg", label: "Voter Freedom", invented: false },
+  { id: "f5ZT7exidXs", label: "Voter Freedom", invented: false },
+  { id: "bmIEPFgxcCw", label: "Voter Freedom", invented: false },
+  { id: "-50yfo3yqNg", label: "Unite America", invented: false },
   { id: "zz-standin01", label: "Stand-in", invented: true },
 ]
 
