@@ -76,3 +76,30 @@ Arm prevalence over all rows: question 12.8%, digit 8.3%, caps 23.6%, emoji 15.1
 - **Reward.** Settled outperformed 3×.
 - **Evaluation and pass rule.** The standard protocol.
 - **Limit specific to thumbnails.** A short's thumbnail is usually a frame of the video, so these arms are partly the video's look, not a separate choice; for most channels the logged "choice" was never made on its own.
+
+**Ran.** 18,544 rows; train 14,835 (through 2026-07-29T22:00:25Z), test 3,709; base rate 0.1488, test logged rate 0.1375. Progressive validation, log loss (AUC): full 0.39139 (0.6328), context-only 0.39635 (0.6162).
+
+| Policy | Matched | ESS | SNIPS − logged (95%) | DR − logged (95%) | Rule |
+|---|---|---|---|---|---|
+| memorability | 878 | 399.4 | +0.004 (-0.036, +0.043) | +0.017 (-0.031, +0.055) | fail |
+| brightness | 955 | 684.0 | -0.017 (-0.036, +0.002) | -0.014 (-0.036, +0.007) | fail |
+| contrast | 1,094 | 653.9 | -0.023 (-0.049, +0.003) | -0.020 (-0.054, +0.012) | fail |
+| colorfulness | 868 | 735.3 | +0.027 (+0.004, +0.048) | +0.032 (+0.006, +0.058) | pass |
+| joint | 18 | 6.5 | -0.078 (-0.163, +0.089) | -0.164 (-0.512, +0.113) | reported only |
+
+Epoch marker: replayRows = 18,544, last replayed `oTytFVuVQzE` (2026-10-12T16:30:36Z).
+
+**Verdict by the registered rule: PASS.**
+
+Quartile cut points from the training segment: memorability 0.757 / 0.814 / 0.863; brightness 38.79 / 53.09 / 68.17; contrast 44.80 / 53.30 / 61.43; colorfulness 21.44 / 27.59 / 36.25. Colorfulness passes on both estimators, and brightness and contrast lean negative without clearing zero. The full model's log loss edges the context-only model's by 0.005, so the thumbnail arms add little beyond channel context.
+
+### 3. Posting cadence
+
+**Registration — 2026-10-22T19:27:59Z, before any fit.**
+
+- **Rows.** Settled catalog shorts with a family whose channel has an earlier publish in the catalog. Gaps are derived from every catalog row's publish time, unsettled rows included, so a short's gap counts the channel's latest earlier publish whatever its tier. A channel's first short in the window has no gap and is dropped.
+- **Arm (one factor).** Days since the channel's previous publish: under 1, 1 to under 2, 2 to under 4, 4 to under 8, 8 or more.
+- **Context.** Channel family; log10 channel median.
+- **Reward.** Settled outperformed 3×.
+- **Evaluation and pass rule.** The standard protocol, one factor, so no joint policy.
+- **Limit specific to cadence.** The gap is mostly a channel's habit, not a per-short choice; within a channel the gap also tracks news cycles that drive views on their own. The catalog's 18-month window truncates gaps at its start.
