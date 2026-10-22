@@ -88,16 +88,11 @@ function HoverThumb({ v, aspect, playButton }: { v: FeedVideo; aspect: string; p
   )
 }
 
-const SCORE = {
-  breakout: "bg-green-600 text-white",
-  killed: "bg-red-600 text-white",
-  baseline: "bg-white/85 text-slate-900 ring-1 ring-white backdrop-blur-md",
-  unsettled: "bg-white/85 text-slate-900 ring-1 ring-white backdrop-blur-md",
-} as const
-
-/** The chip's colour. An unsettled video colours by its current ratio — the chip states views over
- *  median as they stand, the same thresholds the settled tiers use. */
-const scoreOf = (v: FeedVideo) => SCORE[v.tier !== "unsettled" ? v.tier : v.ratio >= 3 ? "breakout" : v.ratio <= 0.5 ? "killed" : "baseline"]
+/** The chip's colour, from the ratio alone (Brendan, 2026-10-22): under 3x white, 3x to 5x light
+ *  green, 5x and over full green. No red on reader-facing chips — it may return on partner or
+ *  admin pages for evaluative reads. */
+const scoreOf = (v: FeedVideo) =>
+  v.ratio >= 5 ? "bg-green-600 text-white" : v.ratio >= 3 ? "bg-green-200 text-green-950 ring-1 ring-white" : "bg-white/85 text-slate-900 ring-1 ring-white backdrop-blur-md"
 
 /** The video's ratio — views over its channel's median — on hover: the frame dims and the
  *  chip pops in at its center, green for a Hit, red for a Miss, frosted white otherwise. The whole
@@ -894,10 +889,12 @@ export function Feed({ initial, total, cursor, facets }: { initial: FeedVideo[];
   const [results, setResults] = React.useState<FeedVideo[] | null>(null)
   const visible = React.useMemo(() => (results ? [...pool, ...results] : pool), [pool, results])
   const boost = useBoostState(visible)
-  // The feed opens clean; the pinned row (Lab Tested by default) leads it instead of a seeded search.
+  // The pinned row (Lab Tested by default) leads the feed. In local development it opens on the
+  // paid media — Voter Freedom, paid first, then most viewed — Brendan's working view.
   const pins = usePins(pool)
-  const [q, setQ] = React.useState("")
-  const [sorts, setSortsState] = React.useState<FeedSort>([])
+  const dev = process.env.NODE_ENV === "development"
+  const [q, setQ] = React.useState(dev ? "Voter Freedom" : "")
+  const [sorts, setSortsState] = React.useState<FeedSort>(dev ? [{ key: "media", dir: "down" }, { key: "views", dir: "down" }] : [])
   const [channel, setChannelState] = React.useState("")
   const [tag, setTagState] = React.useState("")
   const log = useUsage()

@@ -77,9 +77,6 @@ export default async function RecordLanding() {
                 <Link href="/#record" className={whiteButton("lg", "w-44")}>
                   <Video className="size-5" style={{ color: "#033882", fill: "#dbe7fa" }} /> Create
                 </Link>
-                <Link href="#resonance" className="press flex w-44 items-center justify-center gap-2 rounded-full bg-pax2-blue px-7 py-4 text-base font-medium text-white shadow-md transition-shadow hover:shadow-e3">
-                  <FlaskConical className="size-5" /> Analyze
-                </Link>
               </div>
               <p className="text-sm text-slate-800">Powered by Resonant Amplification &copy;</p>
             </div>
