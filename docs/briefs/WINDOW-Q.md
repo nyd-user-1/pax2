@@ -34,3 +34,7 @@ The census FLAG items in `docs/roadmap/roadmap-1.html` ("For the platform"): cap
 ## Report
 
 Append `## Report`: the measured 20-video verification, batch cost and duration, per-column accuracy from the audit, lifts found, and what the on-demand ask costs.
+
+## Progress
+
+- 2026-10-22T21:53Z census batch: 3860 of 5,379 answered on S3 (vqa/raw/qwen3-vl-4b-p3/), one spot g6.2xlarge at 78.0/min.
