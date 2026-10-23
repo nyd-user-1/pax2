@@ -403,7 +403,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
                 {sidebarOpen ? <PanelLeftClose className="size-4" strokeWidth={2} /> : <PanelLeftOpen className="size-4" strokeWidth={2} />}
               </button>
               {/* /home's title is the context switcher again (restored 2026-10-20); everywhere else it stays plain. */}
-              {path === "/home" ? <PageSwitcher title={title} items={findable} /> : <h1 className="font-display max-w-[220px] truncate pl-1 text-[17px] text-slate-900">{title}</h1>}
+              <PageSwitcher title={title} items={findable} />
               <div className="flex-1" />
               {/* A page's own header controls (the dashboard's poller switch and pipeline run) portal in here. */}
               <div id="page-actions" className="flex items-center gap-3" />
@@ -534,8 +534,9 @@ function Announcement() {
 
 // The header's search: every page behind one field, ⌘K from anywhere, Enter takes the first match.
 // The page name is also the jump menu: a pill that opens a filterable list of every page (the leuk
-// context switcher, in pax2 clothes). Retired in the UX audit (c19e82f), restored on /home; it lists
-// the same pages the search does.
+// context switcher, in pax2 clothes). It is the header title on every page by Brendan's standing ruling
+// (2026-10-23), after the UX audit retired it once (c19e82f): do not replace it with a plain title. It
+// lists the same pages the search does.
 function PageSwitcher({ title, items }: { title: string; items: { href: string; label: string; icon: typeof Gauge }[] }) {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
