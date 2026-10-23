@@ -74,7 +74,6 @@ export function TopicRows({ cluster }: { cluster: number | null }) {
           </li>
         ))}
       </ol>
-      <p className="text-xs text-slate-400">Lift in percentage points of shorts over 3x their channel median; the tick is zero. The shaded row is this video&apos;s topic.</p>
     </div>
   )
 }

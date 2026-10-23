@@ -5,8 +5,8 @@
 // take over down the fallback list when one fails) and banked for everyone who picks the same script.
 // Graphics: drawn by Remotion from the script's own words at no cost, dressed in a brand kit picked from
 // the palette in the card's corner (a preset, a typeface, two colors, a logo); its footer downloads every
-// graphic as one MP4 and saves the kit to the script. Each card goes on the Blocks shelf from the button
-// that shows over its top-right corner on hover. The plan behind both is written once per script and kept.
+// graphic as one MP4 and saves the kit to the script. Each card sits in the chat's block frame, Add to Blocks
+// in its bar. The plan behind both is written once per script and kept.
 
 import * as React from 'react'
 import { usePathname } from 'next/navigation'
@@ -52,8 +52,8 @@ async function renderToFile(component: React.ComponentType<any>, props: Record<s
   setTimeout(() => URL.revokeObjectURL(a.href), 60_000)
 }
 
-/** A card on the chat page, with its Add to Blocks button over the top-right corner on hover (the page
- *  blocks' corner pill). */
+/** A card on the chat page in the chat's block frame (chat-block.tsx): a bar with the grid mark, the card's
+ *  address in mono and Add to Blocks, then the card. */
 function ShelvedCard({ id, title, children, className }: { id: string; title: string; children: React.ReactNode; className?: string }) {
   const path = usePathname()
   const { add, remove, has } = useShelf()
@@ -62,23 +62,22 @@ function ShelvedCard({ id, title, children, className }: { id: string; title: st
   const key = `${where}#${id}`
   const on = has(key)
   return (
-    <div className="group/shelf relative my-4">
-      <div className="absolute -top-3 right-6 z-10 flex items-center rounded-lg border bg-white p-0.5 opacity-0 shadow-xs transition-opacity focus-within:opacity-100 group-hover/shelf:opacity-100">
-        <button
-          type="button"
-          onClick={() => (on ? remove(key) : add({ key, title, path: where, anchor: id }))}
-          aria-label={on ? `Take ${title} off the Blocks shelf` : `Add ${title} to Blocks`}
-          title={on ? 'On the Blocks shelf' : 'Add to Blocks'}
-          className={cn('inline-flex h-6 items-center gap-1 rounded-md px-1.5 text-[11px] font-medium transition-colors hover:bg-muted', on ? 'text-pax2-blue' : 'text-slate-800')}
-        >
-          {on ? <Check className="size-3.5" /> : <LayoutGrid className="size-3.5" />}
-          {on ? 'On Blocks' : 'Add to Blocks'}
-        </button>
+    <figure className="my-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 animate-in fade-in slide-in-from-bottom-1 duration-300">
+      <div className="flex items-center gap-2 border-b border-slate-200 px-3 py-2 text-[12px] text-slate-500">
+        <LayoutGrid className="size-3.5 text-pax2-blue" />
+        <span className="truncate font-mono">{`${path}#${title.toLowerCase()}`}</span>
+        <span className="ml-auto flex items-center gap-1">
+          <button type="button" onClick={() => (on ? remove(key) : add({ key, title, path: where, anchor: id }))} className="rounded-md px-2 py-1 font-medium text-slate-600 transition-colors hover:bg-white hover:text-pax2-blue">
+            {on ? 'On the shelf' : 'Add to Blocks'}
+          </button>
+        </span>
       </div>
-      <Card id={id} className={cn('scroll-mt-20 animate-in fade-in slide-in-from-bottom-1 duration-300', className)}>
-        {children}
-      </Card>
-    </div>
+      <div className="p-3">
+        <Card id={id} className={cn('scroll-mt-20', className)}>
+          {children}
+        </Card>
+      </div>
+    </figure>
   )
 }
 
