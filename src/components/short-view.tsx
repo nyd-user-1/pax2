@@ -8,7 +8,6 @@ import subscribers from "../../data/generated/channel-subscribers.json"
 import warBaseline from "../../data/generated/war-baseline.json"
 import sampleVideos from "../../data/sample/videos.json"
 import paidBatch from "../../data/generated/voter-freedom-paid.json"
-import codebook from "../../data/generated/codebook.json"
 import { CarryBlock } from "@/components/evidence/carry"
 import { CraftOctagon, LengthOnCurve, ModeMatch, Recommendations, ResonanceGauge, TopicRows, UnlockList, ingredients } from "@/components/video-reads"
 import { craftTemplate, modeMatch, resonanceScore, topicOf, unlockActions } from "@/lib/video-reads"
@@ -26,6 +25,7 @@ import { Term } from "@/components/term"
 import { SignupGate } from "@/components/signup-gate"
 import { Loudness, Observations, Player, ScriptTimeline, SeekProvider } from "@/components/workbench"
 import { currentUser } from "@/lib/auth"
+import { generatedJson } from "@/lib/generated-store"
 import { featuresFor, type Features } from "@/lib/catalog"
 import { EXPLAIN, FORMULAS } from "@/lib/formulas"
 import { channelById, secs } from "@/lib/channels"
@@ -507,7 +507,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       </ListBlock>,
     ])
   // The two ad codebooks: the video's real codes (data/generated/codebook.json) first, the sample's only where none exist.
-  const coded = (codebook as unknown as Record<string, Codes>)[ytId]
+  const coded = (await generatedJson<Record<string, Codes>>("codebook"))?.[ytId]
   const swayable = coded?.swayable ?? sample?.codes?.swayable
   const wesleyanGoal = coded?.wesleyan ?? sample?.codes?.wesleyan
   // Every video page carries all three; a block with no code for this video says so and offers a notification.

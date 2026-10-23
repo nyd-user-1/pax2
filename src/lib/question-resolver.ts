@@ -3,6 +3,7 @@ import "server-only"
 import fs from "node:fs"
 import path from "node:path"
 
+import { generatedJson } from "@/lib/generated-store"
 import { CHIP_QUESTIONS, auditLine, questionById, type Register } from "@/lib/question-bank"
 
 // The answering layer for the question bank (src/lib/question-bank.ts): one resolver per chip question,
@@ -56,8 +57,23 @@ function load<T>(key: string, read: () => string): T | null {
   cache.set(key, v)
   return v
 }
-const bank = () => load<Bank>("data/generated/question-bank.json", () => fs.readFileSync(path.join(process.cwd(), "data/generated/question-bank.json"), "utf8"))
-const census = () => load<{ shorts: Record<string, Census> }>("data/generated/model/vqa-census.json", () => fs.readFileSync(path.join(process.cwd(), "data/generated/model/vqa-census.json"), "utf8"))?.shorts ?? {}
+// The bank, the census and the codebook are read through generated-store (S3 in production, never
+// bundled); ready() loads them before any resolver runs, so the resolvers stay synchronous.
+let _bank: Bank | null = null
+let _census: Record<string, Census> = {}
+let _codebook: Record<string, Codes> = {}
+async function ready() {
+  const [b, c, k] = await Promise.all([
+    generatedJson<Bank>("question-bank"),
+    generatedJson<{ shorts: Record<string, Census> }>("vqa-census"),
+    generatedJson<Record<string, Codes>>("codebook"),
+  ])
+  _bank = b
+  _census = c?.shorts ?? {}
+  _codebook = k ?? {}
+}
+const bank = () => _bank
+const census = () => _census
 const comp = () => load<{ shorts: Record<string, Comp> }>("data/generated/model/composition.json", () => fs.readFileSync(path.join(process.cwd(), "data/generated/model/composition.json"), "utf8"))?.shorts ?? {}
 const reads = () => load<Reads>("data/generated/video-reads.json", () => fs.readFileSync(path.join(process.cwd(), "data/generated/video-reads.json"), "utf8"))
 const modes = () => load<Modes>("data/generated/model/winning-modes.json", () => fs.readFileSync(path.join(process.cwd(), "data/generated/model/winning-modes.json"), "utf8"))
@@ -67,7 +83,7 @@ const lengths = () => load<Lengths>("data/generated/model/length-crossing.json",
 const lift = () => load<{ rows: LiftRow[]; videos: number; channels: number }>("data/generated/model/vqa-lift.json", () => fs.readFileSync(path.join(process.cwd(), "data/generated/model/vqa-lift.json"), "utf8"))
 const policy = () => load<Policy>("data/generated/model/martian-publish-policy.json", () => fs.readFileSync(path.join(process.cwd(), "data/generated/model/martian-publish-policy.json"), "utf8"))
 const sway = () => load<{ traits: SwayTrait[] }>("data/generated/swayable-patterns.json", () => fs.readFileSync(path.join(process.cwd(), "data/generated/swayable-patterns.json"), "utf8"))?.traits ?? []
-const codebook = () => load<Record<string, Codes>>("data/generated/codebook.json", () => fs.readFileSync(path.join(process.cwd(), "data/generated/codebook.json"), "utf8")) ?? {}
+const codebook = () => _codebook
 const upworthy = () => load<{ patterns: UpPattern[] }>("data/generated/upworthy-top.json", () => fs.readFileSync(path.join(process.cwd(), "data/generated/upworthy-top.json"), "utf8"))?.patterns ?? []
 const velocity = () => load<Velocity>("data/generated/model/velocity-features.json", () => fs.readFileSync(path.join(process.cwd(), "data/generated/model/velocity-features.json"), "utf8"))?.byId ?? {}
 const channelNames = () => {
@@ -519,7 +535,8 @@ function publishAdvice(id: string, vary: "hour" | "length"): Out | null {
 }
 
 // ── public ──────────────────────────────────────────────────────────────────────────────────────
-export function resolveQuestion(questionId: string, ytId: string): Answer | null {
+export async function resolveQuestion(questionId: string, ytId: string): Promise<Answer | null> {
+  await ready()
   const q = questionById(questionId)
   const r = R[questionId]
   if (!q || !r) return null
@@ -533,7 +550,7 @@ export function resolveQuestion(questionId: string, ytId: string): Answer | null
 }
 
 /** The video is in the bank: chips can show for it. */
-export const inBank = (ytId: string) => !!bank()?.shorts[ytId]
+const inBank = (ytId: string) => !!bank()?.shorts[ytId]
 
 export type Surface = "video-panel" | "chat"
 export type ChipOffer = { id: string; ask: string; register: Register; position: number; propensity: number }
@@ -549,7 +566,8 @@ const SLOTS: Record<Surface, Register[]> = {
  *  uniformly from the eligible chips of its register not yet shown or tapped, so a chip's propensity at
  *  its position is exactly 1 / (eligible in that register at that draw). Eligible = rated 4-5; a chip
  *  whose measurement this video lacks still shows, and its answer is the unlocking action. */
-export function chipsFor(ytId: string, surface: Surface, exclude: string[] = []): ChipOffer[] {
+export async function chipsFor(ytId: string, surface: Surface, exclude: string[] = []): Promise<ChipOffer[]> {
+  await ready()
   if (!inBank(ytId)) return []
   const pool = CHIP_QUESTIONS.filter((q) => !exclude.includes(q.id))
   const out: ChipOffer[] = []
