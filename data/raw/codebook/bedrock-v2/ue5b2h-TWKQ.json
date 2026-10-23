@@ -1,0 +1,15 @@
+{
+ "id": "ue5b2h-TWKQ",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": null,
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "attack",
+  "party": "neither"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 922,
+ "tokensOut": 22,
+ "at": "2026-10-22T22:18:11.973Z"
+}

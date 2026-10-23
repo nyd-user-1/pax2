@@ -1,0 +1,188 @@
+{
+ "id": "ddxGD1IcYQ4",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "The video explains how a Trump executive order tried to take control of election rules in ways the president has no legal authority to do, and notes that courts have blocked part of it. It delivers this through a spoken back-and-forth conversation that lays out the facts and names the Brennan Center's lawsuit as a win.",
+  "title": "How Trump's Executive Order Tried to Take Over Elections",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'As a veteran who swore an oath to the Constitution, I know why free elections matter.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "And we now have an order from a court permanently blocking that from going into effect.",
+    "change": "To drop it, remove the court-victory lines and keep only the description of the executive order's threats, so there is no before-and-after shift."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "Add a note in the script direction calling for on-screen graphics, professional lighting, and edited B-roll to lift the visual quality beyond a plain recorded conversation."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": true,
+    "quote": "Half of Americans do not have a passport.",
+    "change": "To drop it, remove the passport-ownership statistic and replace it with a legal or technical description that does not connect to ordinary people's everyday lives."
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": "",
+    "change": "Add a line identifying the speaker, such as 'I'm [name], a member of Congress, and I'm here to tell you what this order does.'"
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'I tried to register a neighbor last fall and this rule would have turned her away at the door.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as 'Vote for candidates who will protect your right to vote without a passport.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'And the good news is people are fighting back and winning—that is something to be excited about!'"
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "It purported to try to decertify all the voting machines in the country.",
+    "change": "To drop it, remove the list of specific things the executive order tried to do and replace it with a general emotional appeal without the factual breakdown."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line from a named election official such as 'County clerk Jane Doe said this order made her feel threatened for just doing her job.'"
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": true,
+    "quote": "there's been some real progress in preventing this from going forward.",
+    "change": "To drop it, remove the mention of progress and the court victory so the script ends on the list of threats with no positive resolution."
+   },
+   {
+    "key": "fact_new_yes",
+    "present": true,
+    "quote": "It purported to allow DOJ and also DHS to access all the voter files.",
+    "change": "To drop it, replace the specific DOJ and DHS voter-file detail with only the passport requirement, which has already received wide news coverage."
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "Add a dry line such as 'Apparently the plan to protect elections is to make sure half the country can't register for them.'"
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Add a line identifying the speaker as a well-known public figure, such as 'I'm [celebrity name], and I want to talk to you about what this order means for your vote.'"
+   },
+   {
+    "key": "emotion_anger",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'This is an outrage—no president should be able to lock millions of Americans out of voting.'"
+   },
+   {
+    "key": "how_scripted",
+    "present": true,
+    "quote": "It purported to threaten election officials with unrelated law enforcement action if they don't participate in efforts to try to look for phantom voter fraud.",
+    "change": "To sound less scripted, break that sentence into shorter, conversational fragments and add a natural pause or self-correction, the way the throat-clear moment already does."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": true,
+    "quote": "The Brennan Center with other allies actually brought a lawsuit challenging the portion of this executive order.",
+    "change": "To drop it, remove the Brennan Center reference and replace it with a general statement that lawsuits were filed, naming no specific organization."
+   },
+   {
+    "key": "policy_facts",
+    "present": true,
+    "quote": "trying to require that all Americans show a passport or a similar document when they register to vote.",
+    "change": "To drop policy facts, remove the specific list of what the executive order required and replace it with a broad statement that the order threatened election integrity."
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "we now have an order from a court permanently blocking that from going into effect.",
+    "change": "To drop the positive tone, cut the court-victory sentence and end the script after the list of threats the executive order made."
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "It purported to threaten election officials with unrelated law enforcement action.",
+    "change": "To drop the negative tone, remove the list of threats and open instead with the court victory, framing the whole video around the win rather than the danger."
+   },
+   {
+    "key": "style_amateur",
+    "present": true,
+    "quote": "of [clears throat] all Americans don't have a passport.",
+    "change": "To drop the amateur feel, cut the throat-clear and any stumbles and add a script direction calling for a clean studio recording with edited audio."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'According to the U.S. State Department, fewer than half of Americans hold a valid passport.'"
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add a script direction to display each executive-order item as on-screen text as the speaker names it."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": false,
+    "quote": "",
+    "change": "Add a line from an unnamed ordinary voter such as 'A first-time voter in Ohio told us she doesn't own a passport and never thought she'd need one just to register.'"
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "this is not the president's role. He has no authority to do that.",
+    "change": "To drop the opinion, remove that sentence and present only the factual description of what the order said and what the court ruled, without the speaker's judgment."
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'This is a serious moment for American democracy, and we should all take it that way.'"
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'If this order had gone into effect, millions of Americans could have shown up to register and been turned away with no warning.'"
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Add a script direction to animate the list of executive-order provisions as simple moving text or icons rather than delivering them only through speech."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "attack",
+  "party": "Democratic"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1325,
+ "tokensOut": 2194,
+ "at": "2026-10-22T21:38:46.743Z"
+}

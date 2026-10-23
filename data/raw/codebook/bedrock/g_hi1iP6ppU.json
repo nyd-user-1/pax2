@@ -1,0 +1,188 @@
+{
+ "id": "g_hi1iP6ppU",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "A politician argues that Governor Tim Walz is dangerous and reckless for allegedly ordering the Minnesota National Guard to resist federal agents, and calls for his resignation. The video is a single speaker delivering rapid, heated accusations directly to camera or in an interview setting.",
+  "title": "Rep. Mace Calls Walz Dangerous, Demands His Resignation",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Add an opening line such as: 'As a veteran who served this country, I know what it means to follow the chain of command — and Walz is breaking it.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "Trump is the commander in chief.",
+    "change": "Drop the contrast by removing the line 'Trump is the commander in chief' and focusing only on Walz's actions without referencing Trump's authority."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "Add a note in the production brief to shoot in a formal studio or official setting with professional lighting and a clean backdrop instead of what sounds like an off-the-cuff interview."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'Hardworking Minnesotans and Americans everywhere are scared of what their own governor is doing to them.'"
+   },
+   {
+    "key": "messenger_politician",
+    "present": true,
+    "quote": "I agree with Vice President Bance that he should too resign.",
+    "change": "To remove this trait, replace the speaker with a non-politician such as a local resident or law enforcement officer delivering the same message."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'I heard directly from a Minnesota National Guard family member who was horrified by the order Walz issued.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as: 'Support leaders who will keep America safe — not governors like Walz who put us all at risk.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'We have the power right now to demand he step down and protect this country — and I know we will!'"
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "the warning order he issued to the Minnesota National Guard uh to come in potentially and take up arms against the federal government and ICE agents",
+    "change": "To remove this, cut the sentence about the warning order and replace it with a purely emotional appeal about danger without describing the specific action."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": true,
+    "quote": "I agree with Vice President Bance that he should too resign.",
+    "change": "To remove this, cut the line 'I agree with Vice President Bance that he should too resign' and keep only the speaker's own direct opinion."
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as: 'America is stronger than this, and I am proud of every official standing up to protect our federal agents and our laws.'"
+   },
+   {
+    "key": "fact_new_yes",
+    "present": true,
+    "quote": "the warning order he issued to the Minnesota National Guard uh to come in potentially and take up arms against the federal government and ICE agents",
+    "change": "To remove this, cut the specific claim about the warning order and replace it with general language about Walz being dangerous without introducing a specific new allegation."
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "Add a dry line such as: 'Apparently in Tim Walz's Minnesota, the National Guard works for him — not the United States of America.'"
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Replace or supplement the politician speaker with a well-known public figure who is not a politician to deliver the core message."
+   },
+   {
+    "key": "emotion_anger",
+    "present": true,
+    "quote": "This is a dangerous guy.",
+    "change": "To remove anger, replace 'This is a dangerous guy' and similar charged phrases with calm, measured language such as 'These actions raise serious legal and constitutional questions.'"
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "including uh the warning order he issued to the Minnesota National Guard uh to come in potentially",
+    "change": "To make it sound more scripted, remove the filler words 'uh' and tighten the sentences so they flow cleanly without hesitation."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'Law enforcement officers across Minnesota have told me they are grateful the federal government is stepping in to restore order.'"
+   },
+   {
+    "key": "policy_facts",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'Under Walz, Minnesota spent X million in taxpayer dollars on programs later flagged for fraud, and violent incidents against officers rose by X percent.'"
+   },
+   {
+    "key": "tone_positive",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as: 'With the right leadership, Minnesota and America can be safe, lawful, and strong again.'"
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "He needs to step down for the safety of America and the safety of motans.",
+    "change": "To remove the negative tone, cut the resignation demand and replace it with a forward-looking line about what good governance would look like instead."
+   },
+   {
+    "key": "style_amateur",
+    "present": true,
+    "quote": "including uh the warning order he issued to the Minnesota National Guard uh to come in potentially",
+    "change": "To remove the amateur feel, re-record the segment in a controlled setting with a prepared script so there are no filler words or stumbles."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'According to reporting from [news outlet], Walz issued a warning order to the Minnesota National Guard on [date].'"
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add on-screen text displaying key claims such as 'Walz issued warning order to MN National Guard' as the speaker says them."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": false,
+    "quote": "",
+    "change": "Add a brief clip of an everyday Minnesotan saying: 'I'm a regular citizen here and I don't feel safe with what my governor is doing.'"
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "This guy is very dangerous and needs to be needs to not be governor.",
+    "change": "To remove the opinion advocacy, cut 'This guy is very dangerous and needs to not be governor' and replace it with a neutral statement of the facts only."
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'It is a sad day when an American governor turns the National Guard against the very federal government they swore to serve.'"
+   },
+   {
+    "key": "emotion_fear",
+    "present": true,
+    "quote": "I'm deeply concerned about his recklessness in other ways that might be criminal",
+    "change": "To remove fear, cut 'I'm deeply concerned about his recklessness in other ways that might be criminal' and replace it with a confident, action-oriented statement instead."
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Add an animated graphic showing a map of Minnesota with visual callouts highlighting the key events described, such as the National Guard warning order."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "attack",
+  "party": "Republican"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1193,
+ "tokensOut": 2228,
+ "at": "2026-10-22T21:38:47.035Z"
+}

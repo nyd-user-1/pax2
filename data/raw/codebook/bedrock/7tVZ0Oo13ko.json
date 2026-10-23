@@ -1,0 +1,188 @@
+{
+ "id": "7tVZ0Oo13ko",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "A person reacts to a TikTok video of a dad doing something impressive, calling it the best TikTok ever and suggesting they redo it. The tone is casual, enthusiastic, and brief with no policy content.",
+  "title": "Dad of the Year: The TikTok That Got It Right",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'As a veteran, I know what real commitment looks like' to establish the messenger as a veteran."
+   },
+   {
+    "key": "tone_contrast",
+    "present": false,
+    "quote": "",
+    "change": "Add a line contrasting bad parenting with this dad's example, such as 'Most parents scroll past — this dad showed up.'"
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "The script reads as a casual phone recording; refilm with professional lighting, sound, and editing to raise production value."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": true,
+    "quote": "That's the realest Tik Tok in history.",
+    "change": "Drop 'That's the realest Tik Tok in history' if you want to remove the plain, everyday-person feel and replace it with a more formal statement."
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'I'm [Name], running for office, and this is why I fight for families' to identify the messenger as a politician."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'This reminded me of when my own dad did something just like this for me' to bring in a personal story."
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line like 'Vote for PAX2 on election day' to make an explicit ask."
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": true,
+    "quote": "Dad W.",
+    "change": "Drop 'Dad W.' and replace with a neutral observation like 'That is one example' if you want to remove the enthusiasm."
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": false,
+    "quote": "",
+    "change": "Add a line explaining something factual, such as 'Studies show involved dads raise more confident kids' to bring in fact-based narration."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'Unlike the leaders who ignore families, this dad actually showed up' to introduce a negative testimonial contrast."
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": true,
+    "quote": "Dad W.",
+    "change": "Drop 'Dad W.' and use a flat descriptive phrase like 'That dad did something' if you want to remove the pride expressed."
+   },
+   {
+    "key": "fact_new_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a surprising fact the viewer likely hasn't heard, such as 'Only 1 in 5 dads takes parental leave when it's offered.'"
+   },
+   {
+    "key": "emotion_humor",
+    "present": true,
+    "quote": "Let's redo this.",
+    "change": "Drop 'Let's redo this' if you want to remove the lighthearted, humorous energy and replace it with a serious closing statement."
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Have a recognizable celebrity deliver the lines and introduce themselves by name to add a celebrity messenger."
+   },
+   {
+    "key": "emotion_anger",
+    "present": false,
+    "quote": "",
+    "change": "Add a line expressing frustration, such as 'It's a shame more parents don't step up like this' to introduce anger."
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "",
+    "change": "The delivery sounds spontaneous and unscripted; to make it sound scripted, rewrite it as a formal prepared statement and deliver it with a teleprompter cadence."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": true,
+    "quote": "That's the realest Tik Tok in history.",
+    "change": "Drop 'That's the realest Tik Tok in history' if you want to remove the positive endorsement of the dad's action."
+   },
+   {
+    "key": "policy_facts",
+    "present": false,
+    "quote": "",
+    "change": "Add a line tying the moment to policy, such as 'PAX2 supports paid family leave so every dad gets this chance.'"
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "Dad W.",
+    "change": "Drop 'Dad W.' and replace with a neutral or critical line if you want to remove the positive tone."
+   },
+   {
+    "key": "tone_negative",
+    "present": false,
+    "quote": "",
+    "change": "Add a line criticizing something, such as 'Too many politicians ignore what real family support looks like' to introduce a negative tone."
+   },
+   {
+    "key": "style_amateur",
+    "present": true,
+    "quote": "Let's redo this.",
+    "change": "Drop 'Let's redo this' and refilm with professional equipment and editing to remove the amateur feel."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a cited fact with a source shown on screen, such as 'According to the CDC, father involvement improves child outcomes' to cite a source."
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add on-screen text overlaying key phrases like 'Dad W.' or 'PAX2' to introduce text on screen."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": true,
+    "quote": "That's the realest Tik Tok in history.",
+    "change": "Drop the casual reaction framing and replace the messenger with a politician or expert if you want to remove the everyday-person feel."
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "That's the realest Tik Tok in history.",
+    "change": "Drop 'That's the realest Tik Tok in history' and replace with a neutral description if you want to remove the opinion being advocated."
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a reflective line like 'Not every kid gets a dad who shows up — that's why this matters' to introduce a somber tone."
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'We're losing the kind of parenting that holds communities together' to introduce fear."
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Replace or supplement the live footage with animated visuals illustrating the dad's story to add animation."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "neither",
+  "tone": "promote",
+  "party": "neither"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 817,
+ "tokensOut": 2001,
+ "at": "2026-10-22T21:38:43.735Z"
+}

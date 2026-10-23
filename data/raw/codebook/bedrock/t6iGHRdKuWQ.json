@@ -1,0 +1,188 @@
+{
+ "id": "t6iGHRdKuWQ",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "Congressman Maxwell Frost calls out House Republicans for holding a healthcare affordability hearing with a buy-now-pay-later CEO as their expert witness, arguing this proves Republicans have no real plan to lower healthcare costs. He speaks directly to camera in what appears to be a hearing room, mixing personal anecdotes and policy facts to warn that 25 million Americans will face massive premium hikes when ACA subsidies expire.",
+  "title": "Frost to GOP: Your Healthcare Witness Profits From High Costs",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "No veteran appears. Add a line like: 'As a veteran who has fought for this country, I know what it means to be denied the care you earned.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "Republicans in Congress are pretending to care about making health care more affordable for working class people.",
+    "change": "This contrast is already strong. To drop it, remove the opening line about Republicans pretending to care and start instead with the ACA subsidy countdown fact."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "The script reads like a live hearing exchange with no mention of graphics or polished visuals. To add this, open with a produced title card and overlay the ACA statistics as animated text on screen."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": true,
+    "quote": "My dad was always strict with money. He always told me if you couldn't afford it when you got it, you can't afford it at all.",
+    "change": "This plain-folks moment is already present. To drop it, cut the two sentences about the dad's money advice and replace with a straightforward policy statement about debt."
+   },
+   {
+    "key": "messenger_politician",
+    "present": true,
+    "quote": "And that's why I'm I'm confused on why my Republican colleagues have you as a witness here on this uh uh panel about affordable health care.",
+    "change": "Frost is clearly a congressman speaking at a hearing. To drop this trait, reframe the video as a constituent or advocate speaking to camera outside the Capitol instead."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": true,
+    "quote": "I can't tell you how many of my own friends and family have called me saying, 'What the hell? What are you guys going to do about this?'",
+    "change": "The personal story is already present. To drop it, cut the friends-and-family phone call anecdote and replace with a broader statistic about constituent calls received by Congress."
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "There is no ask to vote for anyone. Add a closing line like: 'In November, vote for candidates who will actually bring down the cost of health care.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": false,
+    "quote": "",
+    "change": "The tone is angry and urgent but not enthusiastic. Add a line like: 'I am fired up because we can fix this, and I know we will.' to bring in genuine enthusiasm."
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "if that happens, for 25 million Americans, health care goes up 50 to 300%.",
+    "change": "Facts are already explained clearly. To drop this, remove the percentage range and the 25 million figure and speak only in general terms about costs rising."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": true,
+    "quote": "Yes. And if health care becomes more affordable... people wouldn't need to enter payment plans for health care, there probably wouldn't be as much of a demand for the services, right?",
+    "change": "The CEO's admission that demand for his service rises when healthcare is unaffordable serves as a negative testimonial against Republican policy. To drop it, cut the entire back-and-forth exchange with the CEO witness."
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": "",
+    "change": "There is no pride or hope expressed. Add a line like: 'I am proud to fight for the 189,000 people in my district who deserve better, and I believe we can win this.' near the end."
+   },
+   {
+    "key": "fact_new_yes",
+    "present": true,
+    "quote": "they called a hearing yesterday to talk about making health care more affordable, and their expert witness on this was a tech CEO who literally owns a buy now, pay later company.",
+    "change": "The specific detail about the buy-now-pay-later CEO as the Republicans' chosen expert witness is likely new to most viewers. To drop it, remove the CEO's identity and role and speak only generally about bad Republican witnesses."
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "There is no humor in the script. Add a wry line like: 'I guess the best person to talk about lowering costs is someone who makes money when costs stay high — only in Congress.' to bring in light sarcasm."
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "No celebrity appears. Add a line introducing a well-known figure, such as: 'I was talking to [celebrity name] about this, and even they couldn't believe what Republicans are doing.' or feature a celebrity in the video."
+   },
+   {
+    "key": "emotion_anger",
+    "present": true,
+    "quote": "Health care is too damn expensive. The cost of health care is too high.",
+    "change": "Anger is clearly present. To drop it, replace 'too damn expensive' with neutral language like 'unaffordably high' and remove the repeated emphasis on failure."
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "I'm I'm confused on why my Republican colleagues have you as a witness here on this uh uh panel",
+    "change": "The false starts and filler words make this sound unscripted and live. To make it sound scripted, remove all 'uh,' 'um,' and repeated words and deliver the lines in clean, rehearsed sentences."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "No one speaks positively on behalf of a person or policy. Add a line like: 'A nurse in my district told me the ACA saved her family — that is what we are fighting to protect.' to bring in a positive testimonial."
+   },
+   {
+    "key": "policy_facts",
+    "present": true,
+    "quote": "We have just 5 weeks until the ACA open enrollment ends. And in 5 weeks, 189,000 people in my district alone are going to see their health care skyrocket.",
+    "change": "Specific policy facts are already present. To drop them, remove the 5-week deadline, the 189,000 district figure, and the 25 million national figure and speak only in general terms."
+   },
+   {
+    "key": "tone_positive",
+    "present": false,
+    "quote": "",
+    "change": "The entire video is critical and warning-focused with no positive vision offered. Add a closing line like: 'We can lower costs, protect the ACA, and make sure every American can afford to see a doctor.' to introduce a positive tone."
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "President Trump and congressional Republicans are making it worse.",
+    "change": "Negative tone dominates the video. To drop it, remove the direct attack on Trump and Republicans by name and reframe around the problem itself rather than who is to blame."
+   },
+   {
+    "key": "style_amateur",
+    "present": true,
+    "quote": "I'm I'm confused on why my Republican colleagues have you as a witness here on this uh uh panel",
+    "change": "The unpolished, live-hearing feel reads as amateur. To drop this style, re-record Frost speaking directly to camera in a clean setting with no filler words or hearing-room crosstalk."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "No sources are cited for any of the statistics. Add an on-screen note like: 'Source: Congressional Budget Office, 2024' when the 25 million and 50-to-300 percent figures are stated."
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "No text on screen is described in the script. Add on-screen text displaying '25 million Americans' and '50–300% increase' when those figures are spoken to reinforce the key facts visually."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": false,
+    "quote": "",
+    "change": "Only a congressman and a CEO appear. Add a brief clip of a constituent saying: 'I used to pay this much, and now I'm going to be paying this much — I can't afford it.' to bring in an everyday person as messenger."
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "My North Star single-payer health care, something like that.",
+    "change": "Frost clearly advocates for single-payer healthcare as his preferred policy. To drop this opinion, remove the single-payer reference and stick only to defending the ACA subsidies without naming a broader policy goal."
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "The tone is angry and urgent but not somber or mournful. Add a quieter moment like: 'People are going without care. Some of them are not going to make it. That is the reality we are living in.' to bring in a somber note."
+   },
+   {
+    "key": "emotion_fear",
+    "present": true,
+    "quote": "189,000 people in my district alone are going to see their health care skyrocket.",
+    "change": "Fear is already present through the warning about skyrocketing costs. To drop it, replace the alarming cost figures with a neutral statement about policy timelines without emphasizing the personal financial threat."
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "There is no animation in the script. Add a short animated graphic showing the ACA subsidy countdown clock ticking down to zero to visually reinforce the 5-week deadline."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "contrast",
+  "party": "Democratic"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 2363,
+ "tokensOut": 2731,
+ "at": "2026-10-22T21:38:51.871Z"
+}

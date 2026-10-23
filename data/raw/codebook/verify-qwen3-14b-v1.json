@@ -1,0 +1,1999 @@
+{
+ "builtAt": "2026-10-22T22:20:10.904Z",
+ "tag": "qwen3-14b-v1",
+ "bedrock": "us.anthropic.claude-sonnet-4-6",
+ "videos": 20,
+ "swayableCompared": 20,
+ "swayable": {
+  "pooledAgree": 0.84,
+  "pooledKappa": 0.64,
+  "rows": [
+   {
+    "key": "messenger_veteran",
+    "label": "Veteran as messenger",
+    "n": 20,
+    "agree": 1,
+    "kappa": null,
+    "openPresent": 0,
+    "bedrockPresent": 0,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "tone_contrast",
+    "label": "Contrast",
+    "n": 20,
+    "agree": 0.7,
+    "kappa": 0.35,
+    "openPresent": 11,
+    "bedrockPresent": 17,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 0
+    }
+   },
+   {
+    "key": "production_value_high",
+    "label": "High production value",
+    "n": 20,
+    "agree": 1,
+    "kappa": null,
+    "openPresent": 0,
+    "bedrockPresent": 0,
+    "hand": {
+     "n": 1,
+     "open": 0,
+     "bedrock": 0
+    }
+   },
+   {
+    "key": "technique_plain_folks",
+    "label": "Plain-folks appeal",
+    "n": 20,
+    "agree": 0.7,
+    "kappa": 0.37,
+    "openPresent": 12,
+    "bedrockPresent": 12,
+    "hand": {
+     "n": 1,
+     "open": 0,
+     "bedrock": 0
+    }
+   },
+   {
+    "key": "messenger_politician",
+    "label": "Politician as messenger",
+    "n": 20,
+    "agree": 0.95,
+    "kappa": 0.87,
+    "openPresent": 5,
+    "bedrockPresent": 6,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "narration_personal_story",
+    "label": "Personal story",
+    "n": 20,
+    "agree": 1,
+    "kappa": 1,
+    "openPresent": 3,
+    "bedrockPresent": 3,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "explicit_vote_for",
+    "label": "Explicit ask to vote for",
+    "n": 20,
+    "agree": 0.9,
+    "kappa": 0,
+    "openPresent": 2,
+    "bedrockPresent": 0,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "label": "Enthusiasm",
+    "n": 20,
+    "agree": 0.65,
+    "kappa": 0.34,
+    "openPresent": 4,
+    "bedrockPresent": 11,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "narration_explain_facts",
+    "label": "Explains facts",
+    "n": 20,
+    "agree": 0.95,
+    "kappa": 0.86,
+    "openPresent": 15,
+    "bedrockPresent": 16,
+    "hand": null
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "label": "Negative testimonial",
+    "n": 20,
+    "agree": 0.75,
+    "kappa": 0.51,
+    "openPresent": 11,
+    "bedrockPresent": 8,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "emotion_hope_pride",
+    "label": "Pride",
+    "n": 20,
+    "agree": 0.65,
+    "kappa": 0.13,
+    "openPresent": 5,
+    "bedrockPresent": 6,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "fact_new_yes",
+    "label": "Offers a fact the viewer likely hasn't heard",
+    "n": 20,
+    "agree": 0.75,
+    "kappa": 0.44,
+    "openPresent": 15,
+    "bedrockPresent": 12,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 0
+    }
+   },
+   {
+    "key": "emotion_humor",
+    "label": "Humor",
+    "n": 20,
+    "agree": 1,
+    "kappa": 1,
+    "openPresent": 5,
+    "bedrockPresent": 5,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "messenger_celebrity",
+    "label": "Celebrity as messenger",
+    "n": 20,
+    "agree": 1,
+    "kappa": null,
+    "openPresent": 0,
+    "bedrockPresent": 0,
+    "hand": null
+   },
+   {
+    "key": "emotion_anger",
+    "label": "Anger",
+    "n": 20,
+    "agree": 0.75,
+    "kappa": 0.51,
+    "openPresent": 8,
+    "bedrockPresent": 11,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "how_scripted",
+    "label": "Sounds scripted",
+    "n": 20,
+    "agree": 0.3,
+    "kappa": 0,
+    "openPresent": 20,
+    "bedrockPresent": 6,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "label": "Positive testimonial",
+    "n": 20,
+    "agree": 0.8,
+    "kappa": 0.23,
+    "openPresent": 2,
+    "bedrockPresent": 4,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "policy_facts",
+    "label": "Policy facts",
+    "n": 20,
+    "agree": 0.9,
+    "kappa": 0.79,
+    "openPresent": 13,
+    "bedrockPresent": 11,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "tone_positive",
+    "label": "Positive tone",
+    "n": 20,
+    "agree": 0.65,
+    "kappa": 0.36,
+    "openPresent": 8,
+    "bedrockPresent": 15,
+    "hand": {
+     "n": 1,
+     "open": 0,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "tone_negative",
+    "label": "Negative tone",
+    "n": 20,
+    "agree": 0.95,
+    "kappa": 0.83,
+    "openPresent": 16,
+    "bedrockPresent": 17,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "style_amateur",
+    "label": "Amateur, phone-shot style",
+    "n": 20,
+    "agree": 0.6,
+    "kappa": 0.2,
+    "openPresent": 4,
+    "bedrockPresent": 10,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "fact_cite_yes",
+    "label": "Cites a source for its facts",
+    "n": 20,
+    "agree": 0.9,
+    "kappa": 0.61,
+    "openPresent": 3,
+    "bedrockPresent": 3,
+    "hand": {
+     "n": 1,
+     "open": 0,
+     "bedrock": 0
+    }
+   },
+   {
+    "key": "style_text_on_screen",
+    "label": "Text on screen",
+    "n": 20,
+    "agree": 0.95,
+    "kappa": 0,
+    "openPresent": 0,
+    "bedrockPresent": 1,
+    "hand": {
+     "n": 1,
+     "open": 0,
+     "bedrock": 0
+    }
+   },
+   {
+    "key": "messenger_every_people",
+    "label": "Everyday people as messengers",
+    "n": 20,
+    "agree": 0.8,
+    "kappa": 0.55,
+    "openPresent": 4,
+    "bedrockPresent": 8,
+    "hand": {
+     "n": 1,
+     "open": 0,
+     "bedrock": 0
+    }
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "label": "Advocates an opinion",
+    "n": 20,
+    "agree": 0.95,
+    "kappa": 0.64,
+    "openPresent": 19,
+    "bedrockPresent": 18,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "emotion_somber",
+    "label": "Somber",
+    "n": 20,
+    "agree": 1,
+    "kappa": 1,
+    "openPresent": 2,
+    "bedrockPresent": 2,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "emotion_fear",
+    "label": "Fear",
+    "n": 20,
+    "agree": 0.85,
+    "kappa": 0.57,
+    "openPresent": 4,
+    "bedrockPresent": 5,
+    "hand": {
+     "n": 1,
+     "open": 1,
+     "bedrock": 1
+    }
+   },
+   {
+    "key": "style_animation",
+    "label": "Animation",
+    "n": 20,
+    "agree": 1,
+    "kappa": null,
+    "openPresent": 0,
+    "bedrockPresent": 0,
+    "hand": {
+     "n": 1,
+     "open": 0,
+     "bedrock": 0
+    }
+   }
+  ]
+ },
+ "hand": {
+  "videos": [
+   "mV0zO4WIWWc"
+  ],
+  "labels": 26,
+  "open": 0.73,
+  "bedrock": 0.69
+ },
+ "wesleyan": [
+  {
+   "column": "goal",
+   "n": 20,
+   "agree": 0.75,
+   "pairs": {
+    "neither|neither": 6,
+    "persuade|persuade": 9,
+    "neither|persuade": 5
+   }
+  },
+  {
+   "column": "tone",
+   "n": 20,
+   "agree": 0.35,
+   "pairs": {
+    "neither|promote": 3,
+    "neither|attack": 5,
+    "contrast|promote": 1,
+    "promote|attack": 1,
+    "attack|contrast": 3,
+    "contrast|contrast": 3,
+    "promote|promote": 1,
+    "attack|attack": 3
+   }
+  },
+  {
+   "column": "party",
+   "n": 20,
+   "agree": 0.65,
+   "pairs": {
+    "neither|neither": 7,
+    "neither|Democratic": 4,
+    "Democratic|Democratic": 3,
+    "Republican|Democratic": 2,
+    "Republican|Republican": 3,
+    "neither|Republican": 1
+   }
+  }
+ ],
+ "perVideo": {
+  "mV0zO4WIWWc": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": false,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": false,
+     "tone_negative": false,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": false,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "neither",
+     "party": "neither"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": false,
+     "fact_new_yes": false,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": false,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": false,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "promote",
+     "party": "neither"
+    }
+   },
+   "hand": {
+    "technique_plain_folks": true,
+    "technique_pos_testimonial": false,
+    "technique_neg_testimonial": false,
+    "messenger_every_people": true,
+    "messenger_politician": false,
+    "messenger_veteran": false,
+    "narration_personal_story": false,
+    "narration_advocate_opinions": false,
+    "policy_facts": true,
+    "fact_cite_yes": true,
+    "fact_new_yes": true,
+    "emotion_anger": false,
+    "emotion_enthusiasm": false,
+    "emotion_fear": false,
+    "emotion_hope_pride": false,
+    "emotion_humor": false,
+    "emotion_somber": false,
+    "tone_positive": true,
+    "tone_negative": false,
+    "tone_contrast": false,
+    "explicit_vote_for": false,
+    "production_value_high": true,
+    "style_amateur": false,
+    "style_text_on_screen": true,
+    "style_animation": true,
+    "how_scripted": true
+   }
+  },
+  "_GfrCYbmlfc": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": false,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": false,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": true,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "neither",
+     "party": "neither"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": true,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "attack",
+     "party": "Democratic"
+    }
+   },
+   "hand": null
+  },
+  "zK36MIvyGKA": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": true,
+     "narration_personal_story": true,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": false,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": true,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "contrast",
+     "party": "neither"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": true,
+     "narration_personal_story": true,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": true,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": true,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "promote",
+     "party": "neither"
+    }
+   },
+   "hand": null
+  },
+  "5RzVRu95RtE": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": true,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "promote",
+     "party": "Democratic"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": false,
+     "fact_new_yes": false,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": false,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Democratic"
+    }
+   },
+   "hand": null
+  },
+  "t6iGHRdKuWQ": {
+   "open": {
+    "sw": {
+     "messenger_politician": true,
+     "tone_negative": true,
+     "narration_explain_facts": true,
+     "policy_facts": true,
+     "narration_personal_story": true,
+     "emotion_anger": true,
+     "technique_neg_testimonial": true,
+     "fact_new_yes": true,
+     "narration_advocate_opinions": true,
+     "how_scripted": true,
+     "style_animation": false,
+     "style_text_on_screen": false,
+     "style_amateur": false,
+     "messenger_celebrity": false,
+     "messenger_veteran": false,
+     "messenger_every_people": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "emotion_hope_pride": false,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "emotion_humor": false,
+     "tone_positive": false,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "technique_pos_testimonial": false,
+     "fact_cite_yes": false,
+     "tone_contrast": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Democratic"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": true,
+     "narration_personal_story": true,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": false,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": false,
+     "tone_negative": true,
+     "style_amateur": true,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": true,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "contrast",
+     "party": "Democratic"
+    }
+   },
+   "hand": null
+  },
+  "iEXPBZ997-4": {
+   "open": {
+    "sw": {
+     "messenger_politician": true,
+     "tone_negative": true,
+     "narration_advocate_opinions": true,
+     "how_scripted": true,
+     "style_amateur": true,
+     "tone_contrast": true,
+     "technique_plain_folks": true,
+     "policy_facts": false,
+     "fact_new_yes": false,
+     "emotion_humor": false,
+     "style_text_on_screen": false,
+     "messenger_veteran": false,
+     "messenger_celebrity": false,
+     "messenger_every_people": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "emotion_hope_pride": false,
+     "emotion_somber": false,
+     "emotion_anger": false,
+     "emotion_fear": false,
+     "narration_explain_facts": false,
+     "fact_cite_yes": false,
+     "style_animation": false,
+     "technique_neg_testimonial": false,
+     "technique_pos_testimonial": false,
+     "narration_personal_story": false,
+     "tone_positive": false,
+     "production_value_high": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "neither",
+     "party": "Republican"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": true,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": false,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": false,
+     "fact_new_yes": false,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": false,
+     "technique_pos_testimonial": false,
+     "policy_facts": false,
+     "tone_positive": false,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": true,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Democratic"
+    }
+   },
+   "hand": null
+  },
+  "iUpzFanczeo": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": true,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": true,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "contrast",
+     "party": "neither"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": true,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "contrast",
+     "party": "Democratic"
+    }
+   },
+   "hand": null
+  },
+  "oDuFxb3IBoo": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": true,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": false,
+     "tone_positive": false,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": true,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "neither",
+     "party": "neither"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": false,
+     "fact_new_yes": false,
+     "emotion_humor": true,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": false,
+     "technique_pos_testimonial": false,
+     "policy_facts": false,
+     "tone_positive": false,
+     "tone_negative": true,
+     "style_amateur": true,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": true,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Democratic"
+    }
+   },
+   "hand": null
+  },
+  "7tVZ0Oo13ko": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": false,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": false,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": false,
+     "fact_new_yes": false,
+     "emotion_humor": true,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": false,
+     "tone_positive": true,
+     "tone_negative": false,
+     "style_amateur": true,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": true,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "neither",
+     "party": "neither"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": false,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": false,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": true,
+     "fact_new_yes": false,
+     "emotion_humor": true,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": false,
+     "technique_pos_testimonial": true,
+     "policy_facts": false,
+     "tone_positive": true,
+     "tone_negative": false,
+     "style_amateur": true,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": true,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "promote",
+     "party": "neither"
+    }
+   },
+   "hand": null
+  },
+  "eIHu9sBAX5g": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": true,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": true,
+     "policy_facts": true,
+     "tone_positive": false,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": true,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Republican"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": true,
+     "fact_new_yes": true,
+     "emotion_humor": true,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": false,
+     "technique_pos_testimonial": true,
+     "policy_facts": false,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": true,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": true,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "contrast",
+     "party": "Republican"
+    }
+   },
+   "hand": null
+  },
+  "3wnshp7TFP0": {
+   "open": {
+    "sw": {
+     "messenger_politician": true,
+     "tone_positive": true,
+     "policy_facts": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "technique_plain_folks": true,
+     "emotion_enthusiasm": false,
+     "how_scripted": true,
+     "narration_advocate_opinions": true,
+     "tone_negative": true,
+     "fact_new_yes": true,
+     "messenger_veteran": false,
+     "production_value_high": false,
+     "messenger_celebrity": false,
+     "messenger_every_people": false,
+     "style_animation": false,
+     "style_text_on_screen": false,
+     "style_amateur": false,
+     "explicit_vote_for": false,
+     "emotion_hope_pride": false,
+     "emotion_fear": false,
+     "emotion_somber": false,
+     "emotion_humor": false,
+     "fact_cite_yes": false,
+     "narration_personal_story": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "promote",
+     "party": "neither"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": true,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": true,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": false,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": true,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": true,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "promote",
+     "party": "neither"
+    }
+   },
+   "hand": null
+  },
+  "ddxGD1IcYQ4": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": true,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": true,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Democratic"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": true,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": true,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": true,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Democratic"
+    }
+   },
+   "hand": null
+  },
+  "pKNfgHJgmlE": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": true,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": false,
+     "tone_positive": false,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "contrast",
+     "party": "neither"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": true,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": false,
+     "technique_pos_testimonial": false,
+     "policy_facts": false,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": true,
+     "fact_cite_yes": true,
+     "style_text_on_screen": false,
+     "messenger_every_people": true,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "contrast",
+     "party": "neither"
+    }
+   },
+   "hand": null
+  },
+  "IOtrEnTUwpU": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": false,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": false,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": true,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "neither",
+     "party": "neither"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": true,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "promote",
+     "party": "neither"
+    }
+   },
+   "hand": null
+  },
+  "560qNV2qyw0": {
+   "open": {
+    "sw": {
+     "narration_personal_story": true,
+     "tone_negative": true,
+     "emotion_anger": true,
+     "narration_explain_facts": true,
+     "fact_cite_yes": true,
+     "emotion_fear": true,
+     "technique_neg_testimonial": true,
+     "policy_facts": true,
+     "tone_contrast": true,
+     "messenger_every_people": true,
+     "emotion_somber": true,
+     "narration_advocate_opinions": true,
+     "how_scripted": true,
+     "fact_new_yes": true,
+     "style_amateur": false,
+     "style_text_on_screen": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Republican"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": true,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": false,
+     "technique_pos_testimonial": false,
+     "policy_facts": false,
+     "tone_positive": false,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": true,
+     "style_text_on_screen": false,
+     "messenger_every_people": true,
+     "narration_advocate_opinions": true,
+     "emotion_somber": true,
+     "emotion_fear": true,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Democratic"
+    }
+   },
+   "hand": null
+  },
+  "JP8SHaVl674": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": true,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": true,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": true,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "contrast",
+     "party": "neither"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": false,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": true,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "contrast",
+     "party": "neither"
+    }
+   },
+   "hand": null
+  },
+  "vO27rxdfVQE": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": false,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": false,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": true,
+     "fact_new_yes": false,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": false,
+     "tone_positive": true,
+     "tone_negative": false,
+     "style_amateur": true,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "neither",
+     "party": "neither"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": false,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": false,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": false,
+     "fact_new_yes": false,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": false,
+     "technique_pos_testimonial": true,
+     "policy_facts": false,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": true,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": true,
+     "narration_advocate_opinions": false,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Democratic"
+    }
+   },
+   "hand": null
+  },
+  "vAlLaGHp7UA": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": false,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": false,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": false,
+     "fact_new_yes": false,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": true,
+     "technique_pos_testimonial": false,
+     "policy_facts": false,
+     "tone_positive": false,
+     "tone_negative": false,
+     "style_amateur": true,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "neither",
+     "tone": "neither",
+     "party": "neither"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": false,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": false,
+     "technique_neg_testimonial": false,
+     "emotion_hope_pride": false,
+     "fact_new_yes": false,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": false,
+     "how_scripted": false,
+     "technique_pos_testimonial": false,
+     "policy_facts": false,
+     "tone_positive": true,
+     "tone_negative": false,
+     "style_amateur": true,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": true,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Republican"
+    }
+   },
+   "hand": null
+  },
+  "-lM361ikR4c": {
+   "open": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": true,
+     "messenger_politician": false,
+     "narration_personal_story": false,
+     "explicit_vote_for": true,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": true,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": true,
+     "technique_pos_testimonial": true,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Republican"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": true,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": true,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": false,
+     "fact_new_yes": false,
+     "emotion_humor": true,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": false,
+     "technique_pos_testimonial": false,
+     "policy_facts": true,
+     "tone_positive": true,
+     "tone_negative": true,
+     "style_amateur": false,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "contrast",
+     "party": "Republican"
+    }
+   },
+   "hand": null
+  },
+  "g_hi1iP6ppU": {
+   "open": {
+    "sw": {
+     "messenger_politician": true,
+     "tone_negative": true,
+     "narration_advocate_opinions": true,
+     "how_scripted": true,
+     "technique_neg_testimonial": true,
+     "policy_facts": false,
+     "fact_new_yes": false,
+     "fact_cite_yes": false,
+     "emotion_anger": true,
+     "style_animation": false,
+     "style_text_on_screen": false,
+     "style_amateur": false,
+     "narration_explain_facts": false,
+     "tone_positive": false,
+     "emotion_hope_pride": false,
+     "emotion_somber": false,
+     "emotion_fear": false,
+     "emotion_enthusiasm": false,
+     "explicit_vote_for": false,
+     "messenger_veteran": false,
+     "messenger_celebrity": false,
+     "messenger_every_people": false,
+     "tone_contrast": false,
+     "technique_plain_folks": false,
+     "technique_pos_testimonial": false,
+     "narration_personal_story": false,
+     "production_value_high": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Republican"
+    }
+   },
+   "bedrock": {
+    "sw": {
+     "messenger_veteran": false,
+     "tone_contrast": true,
+     "production_value_high": false,
+     "technique_plain_folks": false,
+     "messenger_politician": true,
+     "narration_personal_story": false,
+     "explicit_vote_for": false,
+     "emotion_enthusiasm": false,
+     "narration_explain_facts": true,
+     "technique_neg_testimonial": true,
+     "emotion_hope_pride": false,
+     "fact_new_yes": true,
+     "emotion_humor": false,
+     "messenger_celebrity": false,
+     "emotion_anger": true,
+     "how_scripted": false,
+     "technique_pos_testimonial": false,
+     "policy_facts": false,
+     "tone_positive": false,
+     "tone_negative": true,
+     "style_amateur": true,
+     "fact_cite_yes": false,
+     "style_text_on_screen": false,
+     "messenger_every_people": false,
+     "narration_advocate_opinions": true,
+     "emotion_somber": false,
+     "emotion_fear": true,
+     "style_animation": false
+    },
+    "we": {
+     "goal": "persuade",
+     "tone": "attack",
+     "party": "Republican"
+    }
+   },
+   "hand": null
+  }
+ }
+}

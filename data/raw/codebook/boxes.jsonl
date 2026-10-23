@@ -1,0 +1,4 @@
+{"id":"i-0066423bfb4882940","type":"g6.xlarge","market":"on-demand","run":"codebook/runs/20261022-21394020/","launched":"2026-10-22T21:40:16+00:00","end":"2026-10-22T21:53:34.000Z","perHour":0.8048}
+{"id":"i-0954229ed8a69e80a","type":"g6.xlarge","market":"on-demand","run":"codebook/runs/20261022-21532720/","launched":"2026-10-22T21:53:45+00:00","end":"2026-10-22T22:17:26.000Z","perHour":0.8048}
+{"id":"i-005334dac61ab88bb","type":"g6.xlarge","market":"on-demand","run":"codebook/runs/20261022-221823/","launched":"2026-10-22T22:18:47+00:00","end":"2026-10-23T00:08:57.000Z","perHour":0.8048}
+{"id":"i-041e40a78d682d3db","type":"g6.xlarge","market":"on-demand","run":"codebook/runs/20261022-224107/","launched":"2026-10-22T22:42:01+00:00","end":"2026-10-23T00:20:17.000Z","perHour":0.8048}

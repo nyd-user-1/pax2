@@ -1,0 +1,188 @@
+{
+ "id": "_GfrCYbmlfc",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "The video runs through several news stories from February 17, 2026, covering topics like Jesse Jackson's death, CBS censorship, ICE detention, and the Epstein files. It is delivered as a fast-paced narrated news roundup with a clear left-leaning editorial slant.",
+  "title": "Top News Stories You Need to Know — Feb 17, 2026",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'As a veteran who served this country, I know what it means when our rights are stripped away.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "But the move has already backfired.",
+    "change": "Drop this line and the setup about CBS refusing Colbert if you want to remove the contrast between censorship and the viral outcome."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "Add professional graphics, a branded lower-third, and background music to lift the production quality beyond a plain voice recording."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'These are real families, people just like yours and mine, being locked up and separated.'"
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": "",
+    "change": "Add a line delivered by James Tallarico or another politician speaking directly to the viewer."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'One mother told us she hasn't seen her two-month-old son since he was taken to the hospital in Dilley.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'Support James Tallarico for U.S. Senate in Texas and vote him in this cycle.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": true,
+    "quote": "Colbert aired the interview on his YouTube channel and on social media instead, and it has since gone viral, racking up millions of views.",
+    "change": "Cut this line and the phrase 'the move has already backfired' if you want to remove the upbeat energy around Colbert's viral success."
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "A federal judge has ruled that ICE cannot re-detain Kilmar Abrego-Garcia, noting that the government does not have a viable plan to deport him.",
+    "change": "Cut this line if you want to remove factual explanation and keep the video purely opinion-driven."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": true,
+    "quote": "Hillary Clinton is slamming the Trump regime for engaging in a cover-up with its release of the Epstein files.",
+    "change": "Cut this line and the follow-up about the Clintons calling for public testimony if you want to remove the negative testimonial from Clinton."
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'Jesse Jackson spent his life proving that ordinary people can change the world, and that legacy lives on today.'"
+   },
+   {
+    "key": "fact_new_yes",
+    "present": true,
+    "quote": "A two-month-old baby jailed at the ICE detention center in Dilley, Texas, was rushed to the hospital after falling ill.",
+    "change": "Cut this line if you want to remove the detail most viewers are unlikely to have already heard."
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'CBS was so afraid of the FCC that they handed Colbert a bigger audience than he ever would have had on TV — nice work, CBS.'"
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Add a clip or quote delivered directly by Stephen Colbert or another celebrity speaking to the viewer."
+   },
+   {
+    "key": "emotion_anger",
+    "present": true,
+    "quote": "This is where we are right now in the United States of America.",
+    "change": "Cut this closing line if you want to remove the expression of outrage at the state of the country."
+   },
+   {
+    "key": "how_scripted",
+    "present": true,
+    "quote": "It's February 17th, 2026. Here's the latest news.",
+    "change": "Replace the formal opening with a more conversational line like: 'Okay, a lot happened today — let me just run through it with you.'"
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'Independent journalists like those at Midas Touch are doing the work that corporate media refuses to do.'"
+   },
+   {
+    "key": "policy_facts",
+    "present": true,
+    "quote": "McLaughlin was one of the Trump regime's most staunch defenders of its cruel immigration policies.",
+    "change": "Cut this line if you want to remove the reference to specific immigration policy positions."
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "Make sure you follow the Midas Touch podcast right now wherever you get your audio podcasts.",
+    "change": "Cut this promotional plug if you want to remove the one clearly upbeat, forward-looking moment in the script."
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "This is where we are right now in the United States of America.",
+    "change": "Cut this line if you want to reduce the overall negative and grim tone of the closing."
+   },
+   {
+    "key": "style_amateur",
+    "present": false,
+    "quote": "",
+    "change": "Add a note in the production brief to record on a phone in a casual setting with no editing to give it an amateur feel."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'According to CBS News...' or 'The New York Times reports...' before at least one of the stories."
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add on-screen text showing each headline as it is read, such as 'Jesse Jackson, 1941–2026' or 'CBS blocks Colbert interview.'"
+   },
+   {
+    "key": "messenger_every_people",
+    "present": false,
+    "quote": "",
+    "change": "Add a line spoken by an everyday person, such as: 'A parent in Dilley told us: we just want our baby home.'"
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "This censorship is yet another reason why independent media is so important.",
+    "change": "Cut this line if you want to remove the narrator's direct editorial opinion from the script."
+   },
+   {
+    "key": "emotion_somber",
+    "present": true,
+    "quote": "Civil rights icon Reverend Jesse Jackson has passed away at the age of 84.",
+    "change": "Cut this story or reframe it as a celebration of his legacy if you want to remove the somber note from the video."
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'If CBS can be silenced this easily, no outlet is safe from this administration's reach.'"
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Add animated lower-thirds or motion graphics for each headline to introduce an animation element to the video."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "neither",
+  "tone": "attack",
+  "party": "Democratic"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1781,
+ "tokensOut": 2131,
+ "at": "2026-10-22T21:38:44.408Z"
+}

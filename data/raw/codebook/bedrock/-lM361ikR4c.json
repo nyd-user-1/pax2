@@ -1,0 +1,188 @@
+{
+ "id": "-lM361ikR4c",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "The video argues that the SAVE Act requiring voter ID is popular and that Democrats oppose it only because they want to cheat elections. It mixes Trump rally clips with a narrator who mocks Chuck Schumer and frames Democratic objections as dishonest and absurd.",
+  "title": "Trump Pushes Voter ID While Democrats Stall the SAVE Act",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Open with a new line such as: 'I served this country for 20 years, and I believe every legal vote must count — that's why I support the SAVE Act.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "With Republicans you're at 98%. Democrats are at 86, except for the people that run the Democrat Party.",
+    "change": "To drop it, remove the side-by-side 98% vs 86% comparison and replace it with a single statement about overall support without splitting by party."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "Add a line in the production notes calling for professional graphics, clean studio audio, and edited rally footage with lower-thirds titles to lift the overall quality."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'Ordinary Americans — teachers, truck drivers, retirees — just want to know their vote counts the same as everyone else's.'"
+   },
+   {
+    "key": "messenger_politician",
+    "present": true,
+    "quote": "President Trump correctly points out that the SAVE Act is quite popular with Americans.",
+    "change": "To drop it, remove all references to President Trump and Chuck Schumer and replace them with a non-politician narrator delivering the same points."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'I showed up to vote last November and was told someone had already voted under my name — that's exactly what the SAVE Act is meant to stop.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as: 'Call your senator today and vote for candidates who will pass the SAVE Act.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": true,
+    "quote": "[applause]",
+    "change": "To drop it, cut the two [applause] markers and rewrite the surrounding lines in a calm, factual tone without crowd energy."
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "Chuck Schumer keeps arguing that if we clean the voter rolls of people who have moved or are dead and require people to use voter ID, somehow this is going to result in mass voter disenfranchisement.",
+    "change": "To drop it, cut that explanatory sentence and replace it with a simple opinion statement that does not walk through Schumer's argument at all."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": true,
+    "quote": "It allows ICE to kick tens of billions of people off the rolls, and they don't tell them until election day.",
+    "change": "To drop it, cut the entire block of Schumer's quoted objections from 'It makes it it it allows ICE' through 'It's an outrage' so no opposing voice is given any platform."
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'America has always stood for free and fair elections — passing the SAVE Act keeps that proud tradition alive.'"
+   },
+   {
+    "key": "fact_new_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'A 2024 Rasmussen poll found that 84% of all voters, including 77% of Black voters, support showing photo ID to vote — a number most people have never seen.'"
+   },
+   {
+    "key": "emotion_humor",
+    "present": true,
+    "quote": "If you just say DOJ Musk three times in a row, then Beetlejuice appears, according to Chuck Schumer.",
+    "change": "To drop it, cut the Beetlejuice joke entirely and replace it with a straight rebuttal such as: 'Schumer's claim has no evidence behind it.'"
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Add a line delivered by a named celebrity supporter such as: '[Name] here — I've always believed your vote is sacred, and the SAVE Act protects it.'"
+   },
+   {
+    "key": "emotion_anger",
+    "present": true,
+    "quote": "The only reason you vote against voter ID is because you want to cheat. There's no other reason.",
+    "change": "To drop it, replace that line with: 'Opposing voter ID is a position that is hard to defend on the merits,' which makes the same point without the accusatory heat."
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "",
+    "change": "The narrator's asides and Trump's repeated false starts ('the the', 'it it it') already sound unscripted; to make it sound more scripted, rewrite those sections with clean, complete sentences and remove all false starts."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'Senator [Name] told voters last week: the SAVE Act is the single most important election-integrity bill of our lifetime.'"
+   },
+   {
+    "key": "policy_facts",
+    "present": true,
+    "quote": "That is the act that would force voter ID nationally.",
+    "change": "To drop it, cut the description of what the SAVE Act does and replace it with purely emotional language about election integrity without naming the policy mechanism."
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "Look, you have them in a corner and they can't win it politically.",
+    "change": "To drop the positive tone, cut that triumphant line and replace it with a warning such as: 'If we don't act now, this fight is far from over.'"
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "Democrats trying to turn basic adult function into some sort of Mensa test are lying.",
+    "change": "To drop it, cut that closing attack line and end instead with: 'The SAVE Act is a straightforward step toward elections every American can trust.'"
+   },
+   {
+    "key": "style_amateur",
+    "present": false,
+    "quote": "",
+    "change": "To add an amateur feel, note in production that the video should be shot on a phone in a living room with natural light and no editing graphics."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a source tag after the polling numbers, such as: 'According to a recent Rasmussen survey,' before the line 'Democrats voted 86% that this stuff should be passed.'"
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add a production note to display the key numbers — '86% of Democrats, 98% of Republicans' — as on-screen text when Trump says them."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": false,
+    "quote": "",
+    "change": "Add a line from a named regular voter such as: 'My name is Maria, I'm a nurse from Ohio, and I had to show ID to get my job — why not to vote?'"
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "Democrats trying to turn basic adult function into some sort of Mensa test are lying.",
+    "change": "To drop it, cut that opinion line and replace it with a neutral factual statement such as: 'Voter ID laws are currently in place in 35 states.'"
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'Every fraudulent vote cancels out the voice of a real American citizen — and that is a quiet tragedy we cannot ignore.'"
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'If the SAVE Act fails, nothing stops the next election from being decided by people who were never supposed to vote at all.'"
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Add a production note to include a short animated graphic showing voter rolls being cleaned up, timed to the line about removing dead and moved voters."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "contrast",
+  "party": "Republican"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 2181,
+ "tokensOut": 2376,
+ "at": "2026-10-22T21:38:48.524Z"
+}

@@ -1,0 +1,188 @@
+{
+ "id": "zK36MIvyGKA",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "A mayor of Panama City who survived a Colombian prison warns that the Panama Canal is under threat from Chinese control and that losing U.S. leadership would doom the world. He speaks directly to camera in a personal, urgent tone mixing his own story with geopolitical argument.",
+  "title": "Panama's Jailed Mayor Warns: The Canal Is Not Just a Canal",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'As a veteran who served this region, I know what it costs to lose ground' to establish military service."
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "I'm worried about what's going to happen in 2028 when your president leaves office.",
+    "change": "Cut this line if you want to remove the contrast between his president leaving in 2029 and the viewer's president leaving in 2028."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "Add professional lighting, a clean backdrop, and edited b-roll of the canal to raise production quality."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'I grew up in a regular neighborhood in Panama City, just like most people here' to connect him to ordinary citizens."
+   },
+   {
+    "key": "messenger_politician",
+    "present": true,
+    "quote": "You're the mayor of Panama City and your name is mayor.",
+    "change": "Cut the reference to his mayoral title if you want to remove the politician framing."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": true,
+    "quote": "I ended up in the maximum security prison of Colombia.",
+    "change": "Cut the prison lines if you want to remove the personal story element."
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as 'Vote for leaders who will protect the canal and stand with the United States' to make a direct ask."
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": true,
+    "quote": "We must win.",
+    "change": "Cut 'We must win' if you want to lower the enthusiasm and make the tone more measured."
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "Every Chinese company belongs to the state to a certain degree. To the CCP. They got the concession for the ports.",
+    "change": "Cut the CCP concession lines if you want to remove the fact-explaining element."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'A port worker told me he was pressured by Chinese managers to report on canal traffic' to introduce a negative firsthand account."
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": true,
+    "quote": "your name is mayor, which means that you were born for this job.",
+    "change": "Cut the 'born for this job' line if you want to remove the pride element."
+   },
+   {
+    "key": "fact_new_yes",
+    "present": true,
+    "quote": "Every Chinese company belongs to the state to a certain degree. To the CCP. They got the concession for the ports.",
+    "change": "Cut the CCP concession detail if you want to remove the likely-unfamiliar fact."
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "Add a light line such as 'My name literally means mayor — my parents had no doubts about my future' to introduce a moment of humor."
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Add a well-known public figure to introduce or endorse the mayor on camera to bring in a celebrity messenger."
+   },
+   {
+    "key": "emotion_anger",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'It is outrageous that a foreign power now controls the gates of our canal' to introduce clear anger."
+   },
+   {
+    "key": "how_scripted",
+    "present": true,
+    "quote": "The Panama Canal matters more than ever because we have a problem in the Strait of Hormuz.",
+    "change": "Replace the opening with a more conversational, off-the-cuff line such as 'Look, I want to tell you something most people don't know about the canal' to sound less scripted."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'President Trump was right to make this the first thing he addressed' as a direct positive endorsement of a named figure's action."
+   },
+   {
+    "key": "policy_facts",
+    "present": true,
+    "quote": "They got the concession for the ports.",
+    "change": "Cut the concession line if you want to remove the specific policy fact about port control."
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "We must win.",
+    "change": "Cut 'We must win' if you want to remove the positive, rallying tone."
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "If we lose the United States, the whole world goes down.",
+    "change": "Cut 'If we lose the United States, the whole world goes down' if you want to remove the negative warning tone."
+   },
+   {
+    "key": "style_amateur",
+    "present": false,
+    "quote": "",
+    "change": "Reshoot on a handheld phone in natural light with no editing to give the video an amateur, authentic feel."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'According to the Panama Canal Authority's own records, the concession was granted in 1997' to cite a source."
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add on-screen text such as 'Chinese firms hold port concessions at both ends of the canal' to reinforce key facts visually."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": false,
+    "quote": "",
+    "change": "Add a brief clip of a Panamanian dock worker or citizen saying 'We see the Chinese ships every day — this is real' to bring in an everyday person."
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "So the canal is not just a canal.",
+    "change": "Cut 'So the canal is not just a canal' if you want to remove the direct opinion statement and keep the video purely factual."
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a quiet, slow line such as 'I sat alone in that cell and thought about what we stand to lose' to introduce a somber moment."
+   },
+   {
+    "key": "emotion_fear",
+    "present": true,
+    "quote": "If we lose the United States, the whole world goes down.",
+    "change": "Cut 'If we lose the United States, the whole world goes down' if you want to remove the fear appeal."
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Add an animated map showing the canal, the Strait of Hormuz, and Chinese port locations to introduce animation."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "neither",
+  "tone": "promote",
+  "party": "neither"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1161,
+ "tokensOut": 2062,
+ "at": "2026-10-22T21:38:43.585Z"
+}

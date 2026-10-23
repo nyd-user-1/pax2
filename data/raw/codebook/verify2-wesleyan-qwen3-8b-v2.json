@@ -1,0 +1,34 @@
+{
+ "ids": "data/raw/codebook/verify2-ids.txt",
+ "prompt": "b v2",
+ "n": 20,
+ "agree": {
+  "goal": 0.95,
+  "tone": 0.55,
+  "party": 0.85
+ },
+ "pairs": {
+  "goal": {
+   "persuade|persuade": 18,
+   "neither|neither": 1,
+   "neither|persuade": 1
+  },
+  "tone": {
+   "attack|attack": 9,
+   "promote|attack": 2,
+   "attack|contrast": 3,
+   "contrast|contrast": 1,
+   "promote|contrast": 2,
+   "neither|promote": 1,
+   "contrast|attack": 1,
+   "promote|promote": 1
+  },
+  "party": {
+   "Republican|Republican": 4,
+   "Democratic|Democratic": 11,
+   "Democratic|Republican": 2,
+   "neither|neither": 2,
+   "Democratic|neither": 1
+  }
+ }
+}

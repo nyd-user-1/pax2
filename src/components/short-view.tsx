@@ -8,6 +8,7 @@ import subscribers from "../../data/generated/channel-subscribers.json"
 import warBaseline from "../../data/generated/war-baseline.json"
 import sampleVideos from "../../data/sample/videos.json"
 import paidBatch from "../../data/generated/voter-freedom-paid.json"
+import codebook from "../../data/generated/codebook.json"
 import { CarryBlock } from "@/components/evidence/carry"
 import { CraftOctagon, LengthOnCurve, ModeMatch, Recommendations, ResonanceGauge, TopicRows, UnlockList, ingredients } from "@/components/video-reads"
 import { craftTemplate, modeMatch, resonanceScore, topicOf, unlockActions } from "@/lib/video-reads"
@@ -504,10 +505,12 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         <ScriptTimeline lines={lines} duration={duration} />
       </ListBlock>,
     ])
-  // The two ad codebooks need the video coded on them; today only the sample video is.
-  const codes = sample?.codes
-  if (codes?.swayable?.length) right.push(["swayable", "Swayable", <SwayableBlock key="swayable" codes={codes.swayable} footer={SAMPLE} />])
-  if (codes?.wesleyan) right.push(["wesleyan", "Wesleyan", <WesleyanBlock key="wesleyan" goal={codes.wesleyan} footer={SAMPLE} />])
+  // The two ad codebooks: the video's real codes (data/generated/codebook.json) first, the sample's only where none exist.
+  const coded = (codebook as unknown as Record<string, Codes>)[ytId]
+  const swayable = coded?.swayable ?? sample?.codes?.swayable
+  const wesleyanGoal = coded?.wesleyan ?? sample?.codes?.wesleyan
+  if (swayable?.length) right.push(["swayable", "Swayable", <SwayableBlock key="swayable" codes={swayable} footer={coded?.swayable ? undefined : SAMPLE} />])
+  if (wesleyanGoal) right.push(["wesleyan", "Wesleyan", <WesleyanBlock key="wesleyan" goal={wesleyanGoal} footer={coded?.wesleyan ? undefined : SAMPLE} />])
   if (v?.title) right.push(["upworthy", "Upworthy", <UpworthyBlock key="upworthy" title={v.title} />])
   right.push(
     [

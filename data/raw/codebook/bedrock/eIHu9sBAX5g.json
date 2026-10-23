@@ -1,0 +1,188 @@
+{
+ "id": "eIHu9sBAX5g",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "The video shows a conservative host challenging a guest who picks rapper Kendrick Lamar over Supreme Court Justice Clarence Thomas as a role model for Black youth, then correcting the guest's false claim that Thomas wants to ban interracial marriage. The host argues Thomas is a far better role model than a rapper, presenting it as a clash of worldviews.",
+  "title": "Kendrick vs. Clarence Thomas: Who's the Better Role Model?",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "No veteran appears. Add an opening line like: 'As a veteran who served this country, I know what real role models look like.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "We have clarity but not agreement.",
+    "change": "Contrast is already strong. If you want to drop it, cut the line 'Kendrick Lamar who sleeps around with everything that moves versus Clarence Thomas who grew up in the antebellum South' so the two figures are no longer directly compared."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "The script reads like a raw, unedited back-and-forth with crosstalk and false starts. To add high production value, cut the overlapping lines like 'He literally like / he's married to a white woman' and rewrite them as clean, single-speaker exchanges."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": true,
+    "quote": "Let's say there's a black kid right now.",
+    "change": "The everyday-kid framing is already present. To drop it, replace 'Let's say there's a black kid right now' with a more formal framing like 'Consider the question of role models in Black American communities.'"
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": "",
+    "change": "No politician is the messenger. To add this, open with a line like: 'I'm a state legislator and I want to talk about who we hold up as heroes for Black youth.'"
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "No personal story is told. Add a line like: 'I grew up without a father and I had to find my own role models, and I wish someone had pointed me to Clarence Thomas.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "No vote ask exists. Add a closing line like: 'Vote for candidates who lift up role models like Clarence Thomas for Black youth.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": true,
+    "quote": "Kendrick, obviously.",
+    "change": "The guest's enthusiasm for Kendrick is present. To drop it, cut 'obviously' and the laughter so the guest's answer reads as flat: 'Kendrick.'"
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "he's married to a white woman.",
+    "change": "The host corrects a false claim with a fact. To drop this, cut the exchange about interracial marriage entirely and move straight to the role-model comparison."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": true,
+    "quote": "No, he's he's trying to ban interracial marriage.",
+    "change": "The guest's false negative claim about Thomas is a negative testimonial. To drop it, cut all lines from 'No, he's he's trying to ban interracial marriage' through 'Yeah, I know. The Roie Wade thing like goes against.'"
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": true,
+    "quote": "Clarence Thomas who grew up in the antebellum South who's a US Supreme Court justice, one of the smartest people ever to serve on the Supreme Court as a black American.",
+    "change": "Pride in Thomas is present. To drop it, replace that line with a neutral description: 'Clarence Thomas is a sitting Supreme Court justice.'"
+   },
+   {
+    "key": "fact_new_yes",
+    "present": true,
+    "quote": "he's married to a white woman.",
+    "change": "The correction about Thomas's interracial marriage may be new to some viewers. To drop it as a novel fact, cut the entire interracial-marriage exchange and keep only the role-model debate."
+   },
+   {
+    "key": "emotion_humor",
+    "present": true,
+    "quote": "[laughter]",
+    "change": "There is laughter in the exchange. To drop humor, cut '[laughter]' and the line 'he's trying to ban his own marriage. Yes' which is the joke."
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "No celebrity is the messenger. To add one, open with a line like: 'I'm a well-known conservative commentator and I want to ask you something about Black role models.'"
+   },
+   {
+    "key": "emotion_anger",
+    "present": true,
+    "quote": "Wow.",
+    "change": "The host's 'Wow' signals frustration or anger at the guest's false claim. To drop it, cut 'Wow' and replace with a calm transition: 'Actually, let me stop you there.'"
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "",
+    "change": "The video sounds unscripted due to crosstalk and false starts like 'he's he's' and 'not the not the.' To make it sound scripted, rewrite all lines as clean, complete sentences with no interruptions or repeated words."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": true,
+    "quote": "who is a poet who won a Nobel Prize who",
+    "change": "The guest gives a positive testimonial for Kendrick. To drop it, cut 'who is a poet who won a Nobel Prize who' so Kendrick is only described as 'some rapper.'"
+   },
+   {
+    "key": "policy_facts",
+    "present": false,
+    "quote": "",
+    "change": "No specific policy is discussed in detail. To add policy facts, insert a line like: 'Clarence Thomas wrote the opinion in X case that expanded school choice for Black families in low-income neighborhoods.'"
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "one of the smartest people ever to serve on the Supreme Court as a black American.",
+    "change": "Positive tone about Thomas is present. To drop it, replace that praise with a neutral statement: 'Clarence Thomas has served on the Supreme Court for decades.'"
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "just some some rapper.",
+    "change": "The dismissive phrase about Kendrick sets a negative tone. To drop it, replace 'just some some rapper' with 'a popular musician.'"
+   },
+   {
+    "key": "style_amateur",
+    "present": true,
+    "quote": "he's he's trying to ban interracial marriage.",
+    "change": "The crosstalk and repeated words signal an amateur, unedited recording. To drop this feel, edit out all false starts and overlapping lines so every speaker finishes a clean sentence before the next speaks."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "No source is cited for any claim. To add one, after 'he's married to a white woman' add: 'That's a matter of public record, confirmed by every major news outlet.'"
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "No on-screen text is described. To add it, display the text 'Clarence Thomas: First Black American to clerk for a Supreme Court justice' on screen when the host praises Thomas."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": true,
+    "quote": "Let's say there's a black kid right now.",
+    "change": "The conversational back-and-forth between two ordinary-sounding people gives an everyday-person feel. To drop it, replace the dialogue format with a single polished speaker delivering a prepared statement."
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "we as conservatives think that Clarence Thomas is a far better role model for black America than just some some rapper.",
+    "change": "The host openly states a conservative opinion. To drop it, cut 'we as conservatives think that Clarence Thomas is a far better role model for black America than just some some rapper' and end on the factual correction about the marriage."
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "The tone is combative and lively, not somber. To add somber emotion, insert a line like: 'It's a tragedy that so many Black kids today have never even heard of Clarence Thomas.'"
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "No fear is expressed. To add it, insert a line like: 'If we keep pointing Black youth toward rappers instead of justices, we risk losing a whole generation.'"
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "No animation is described. To add it, note in the production script that an animated graphic of a Supreme Court gavel appears on screen when Clarence Thomas is first mentioned."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "contrast",
+  "party": "Republican"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1355,
+ "tokensOut": 2528,
+ "at": "2026-10-22T21:38:49.194Z"
+}

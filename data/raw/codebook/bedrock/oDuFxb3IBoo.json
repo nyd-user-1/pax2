@@ -1,0 +1,188 @@
+{
+ "id": "oDuFxb3IBoo",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "The video argues that ordinary people are responsible for higher energy prices because their use of digital products drives demand for data centers. It uses a conversational, self-critical tone to shift blame from Jon Husted onto consumers.",
+  "title": "Husted Built the Data Centers. Now He's Blaming You.",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Open with a new line like: 'As a veteran who served this country, I know when someone is passing the buck — and Jon Husted is passing it to you.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "Jon Husted spent years bringing data centers to Ohio. Now, he's blaming us for higher energy prices.",
+    "change": "The title sets up the contrast but the script body drops it; add a line like: 'Husted recruited these data centers — now he says look in the mirror.'"
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "The script reads like an unpolished, off-the-cuff recording; re-record with a clean single take, removing all the false starts like 'And And' and 'to to uh the the the.'"
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": true,
+    "quote": "you can go back to the bunny ear antenna on your TV",
+    "change": "This is already strong; if you want to drop it, replace the bunny-ear line with a more formal policy statement like: 'Consumers did not set Ohio's energy infrastructure policy — Jon Husted did.'"
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": "",
+    "change": "The messenger is not identified; if you want this trait, add an intro line like: 'I'm [name], and I served in the Ohio legislature — I watched Husted court these data centers himself.'"
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'I remember when Husted came to my county promising jobs from these data centers — he never mentioned our electric bills would go up.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line like: 'Vote for [candidate] — someone who won't blame you for the mess they made.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": false,
+    "quote": "",
+    "change": "The tone is flat and self-critical; to add enthusiasm, replace 'we are the problem' with: 'We have the power to hold Husted accountable — and that starts at the ballot box.'"
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "if you're connected to a wire, you're using a data center",
+    "change": "This is a broad claim stated as fact; to drop it, cut this line and replace with: 'Husted made the policy choices that brought these data centers here — that is the fact.'"
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line from a named Ohio resident like: 'My electric bill went up forty dollars a month — Jon Husted should answer for that, not me.'"
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line like: 'Ohioans are proud people — we deserve leaders who take responsibility instead of pointing fingers at us.'"
+   },
+   {
+    "key": "fact_new_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'Husted personally recruited over a dozen data center companies to Ohio while he was Secretary of State — most voters don't know that.'"
+   },
+   {
+    "key": "emotion_humor",
+    "present": true,
+    "quote": "you can go back to the bunny ear antenna on your TV",
+    "change": "To drop the humor, cut the bunny-ear line and replace with: 'Every Ohio household that uses the internet is now being told they caused this problem — that is not leadership.'"
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "To add this trait, have a well-known Ohio public figure open with: 'I'm [name], and I've watched Jon Husted take credit for Ohio's tech growth while sending the bill to you.'"
+   },
+   {
+    "key": "emotion_anger",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'It is outrageous that the man who spent years recruiting these companies is now telling Ohio families they are the problem.'"
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "And And if we don't want them, then don't use them. I mean, you can You can go back to to uh the the the",
+    "change": "The repeated words and filler sounds make it feel unscripted; to make it sound scripted, re-record a clean single take with no false starts or filler words."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line from a named Ohio voter like: 'I supported bringing tech jobs here, but I never agreed to pay higher energy bills so Jon Husted could look good.'"
+   },
+   {
+    "key": "policy_facts",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'As Ohio's Secretary of State and Lieutenant Governor, Jon Husted backed policies that gave data centers tax breaks while passing energy costs to Ohio ratepayers.'"
+   },
+   {
+    "key": "tone_positive",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line like: 'Ohio can have a tech economy and fair energy prices — but only with leaders who are honest about the trade-offs.'"
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "we are the problem",
+    "change": "To drop the negative tone, cut 'we are the problem' and replace with: 'The problem is a politician who made these deals and now refuses to own the consequences.'"
+   },
+   {
+    "key": "style_amateur",
+    "present": true,
+    "quote": "And And if we don't want them, then don't use them. I mean, you can You can go back to to uh",
+    "change": "To drop the amateur feel, re-record the script in a single clean take with no repeated words, filler sounds, or stumbles."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add an on-screen text line like: 'Source: Ohio Development Services Agency, 2019–2023 data center recruitment records.'"
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add on-screen text showing: 'Jon Husted recruited data centers to Ohio for years — now he says you are the problem.'"
+   },
+   {
+    "key": "messenger_every_people",
+    "present": true,
+    "quote": "We, the people, have created the demand for these data centers",
+    "change": "To drop this trait, cut 'We, the people' framing and replace with a named individual opening: 'I'm [name] from Columbus, and I'm tired of being blamed for Jon Husted's decisions.'"
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "when we look in the mirror, we are the problem",
+    "change": "To drop this opinion, cut 'we are the problem' and replace with a factual close: 'Jon Husted made the policy — voters should know that before November.'"
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'Ohio families are quietly paying more on their electric bills every month, and most of them have no idea why.'"
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'If Husted keeps making deals like this, your energy bill will keep climbing — and he will keep pointing at you.'"
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "To add animation, open with a short animated graphic showing Ohio's map with data centers popping up one by one while the words 'Husted recruited these' appear on screen."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "attack",
+  "party": "Democratic"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1002,
+ "tokensOut": 2565,
+ "at": "2026-10-22T21:38:48.676Z"
+}

@@ -1,0 +1,188 @@
+{
+ "id": "vAlLaGHp7UA",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "The video claims Islam aligns with feminist moral values, then shifts into a folk song about leaving on a train. It mixes a spoken political claim with background music and singing in a disjointed, unclear way.",
+  "title": "Islam and Feminism: A Claim With a Folk Song Backdrop",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Have the messenger open with a line like 'As a veteran, I've seen many cultures up close' before the Islam claim."
+   },
+   {
+    "key": "tone_contrast",
+    "present": false,
+    "quote": "",
+    "change": "Add a line after the Islam claim such as 'But the Right tells you otherwise' to set up a contrast."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "The music bleeds into the speech and the singing overlaps the message; re-record with the folk song cleanly separated from the spoken claim."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": false,
+    "quote": "",
+    "change": "Have the messenger say something like 'I'm just an ordinary person who looked into this' before the Islam claim."
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": "",
+    "change": "Have the messenger identify themselves as an elected official, for example 'I'm a city council member and I believe Islam is probably the most feminist religion there is.'"
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line before the Islam claim such as 'When I lived in a Muslim community, I saw women leading every meeting.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as 'Vote for PAX2 on election day' after the folk song fades out."
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": true,
+    "quote": "Islam is probably the most like feminist morals religion there is like",
+    "change": "To drop enthusiasm, replace 'the most like feminist morals religion there is like' with a calmer, measured phrase such as 'a religion with values that overlap with feminist principles.'"
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": false,
+    "quote": "",
+    "change": "After the Islam claim, add a line such as 'Islamic law gives women the right to own property and initiate divorce, which many Western laws denied for centuries.'"
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'My neighbor used to say Islam oppresses women, until she actually read about it' before the Islam claim."
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as 'We can be proud to stand for truth about all faiths' after the folk song ends."
+   },
+   {
+    "key": "fact_new_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a specific surprising line such as 'The Quran gave women inheritance rights in 610 AD, over a thousand years before most of Europe did' after the Islam claim."
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "Add a light line such as 'I know, I know, that surprised me too' right after the Islam claim."
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Have a known public figure deliver the Islam claim instead of the unnamed messenger."
+   },
+   {
+    "key": "emotion_anger",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'And I am tired of people spreading lies about this' after the Islam claim."
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "",
+    "change": "The delivery of 'Islam is probably the most like feminist morals religion there is like' sounds unscripted and halting; to make it sound scripted, rewrite it as 'Islam is, in many ways, the most feminist major religion in the world.'"
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'A Muslim woman I know told me her faith gave her more freedom than anything else in her life' before the Islam claim."
+   },
+   {
+    "key": "policy_facts",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'PAX2 supports religious freedom policies that protect Muslim women's right to practice their faith without discrimination' after the Islam claim."
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "Islam is probably the most like feminist morals religion there is",
+    "change": "To drop the positive tone, replace this line with a critical framing such as 'The Left ignores how Islam is misused to oppress women in some countries.'"
+   },
+   {
+    "key": "tone_negative",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'The Right has spent years lying to you about Islam and feminism' after the Islam claim."
+   },
+   {
+    "key": "style_amateur",
+    "present": true,
+    "quote": "Islam is probably the most like [music] feminist morals religion there is like",
+    "change": "To drop the amateur feel, re-record the spoken claim in a quiet studio without the music bleeding in and cut the filler word 'like' at the end."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'According to a 2013 Pew Research study on Muslim women's rights' before the Islam claim."
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add on-screen text displaying 'Islam and Feminist Values' when the messenger says the Islam claim."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": true,
+    "quote": "Islam is probably the most like feminist morals religion there is like",
+    "change": "To drop the everyday-person feel, replace the unnamed casual speaker with a named expert or official delivering the same claim."
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "Islam is probably the most like feminist morals religion there is",
+    "change": "To drop the opinion advocacy, replace this line with a neutral statement such as 'Some scholars argue Islam has strong protections for women built into its founding texts.'"
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Replace the upbeat folk song with a slow, quiet instrumental and add a line such as 'Too many people have suffered because of misunderstandings about this faith.'"
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'If we keep letting the Right define Islam, women's rights will be the first thing we lose' after the Islam claim."
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Replace the live recording with an animated sequence showing the messenger's words as illustrated scenes while the folk song plays."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "attack",
+  "party": "Republican"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 874,
+ "tokensOut": 2044,
+ "at": "2026-10-22T21:38:45.021Z"
+}

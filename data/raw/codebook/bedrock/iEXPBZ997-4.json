@@ -1,0 +1,188 @@
+{
+ "id": "iEXPBZ997-4",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "Republican Congressman Glenn Grothman says on camera that Congress should do more for rich people. The video uses his own words against him to make him look out of touch.",
+  "title": "GOP Rep. Grothman: Congress Should Do More for the Rich",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'As a veteran who served this country, I know Congress should be fighting for us, not the wealthy.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "Don't let anybody tell you that people running Congress right now are looking out for the rich. Actually, I think we should do a little more for them",
+    "change": "Cut 'Don't let anybody tell you that people running Congress right now are looking out for the rich' to remove the built-in contrast and let only his pro-rich line stand."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "Add professional graphics, clean audio mixing, and a polished lower-third title card identifying Grothman by name and party."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": false,
+    "quote": "",
+    "change": "Add an opening line like 'Working families in this district are struggling to pay rent while Grothman fights for the wealthy.'"
+   },
+   {
+    "key": "messenger_politician",
+    "present": true,
+    "quote": "Republican Congressman Glenn Grothman",
+    "change": "Remove the title card or label identifying Grothman as a congressman if you want to drop this trait."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'I grew up in this district working two jobs, and this is who my congressman is fighting for.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line like 'Vote for [opponent's name] on November 5th.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'We can change this — and we will — on Election Day.'"
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'Grothman voted to cut taxes for the top 1% while opposing raises to the minimum wage.'"
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": true,
+    "quote": "I think we should do a little more for them",
+    "change": "Cut Grothman's clip entirely and replace it with a narrator summary if you want to remove the negative testimonial."
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line like 'Together we can elect leaders who are actually proud to fight for working people.'"
+   },
+   {
+    "key": "fact_new_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'Grothman voted against the Child Tax Credit expansion that would have helped 65 million kids.'"
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'Yes, you heard that right — he actually said that out loud, on purpose.'"
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Add a line attributed to a known public figure, such as 'As [celebrity name] said, no one in Congress should be working for the wealthy few.'"
+   },
+   {
+    "key": "emotion_anger",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'This should make every working person in this district furious.'"
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "but but we don't you know, right now uh",
+    "change": "Cut the unscripted filler 'but but we don't you know, right now uh' and replace it with a clean narrator line to make the video sound scripted."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a clip of a constituent saying 'My representative should be fighting for me, not for millionaires.'"
+   },
+   {
+    "key": "policy_facts",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'Grothman voted for the 2017 tax bill that gave 83% of its benefits to the top 1%.'"
+   },
+   {
+    "key": "tone_positive",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line like 'We deserve a congressman who puts working families first.'"
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "He thinks Congress should do MORE to help rich people",
+    "change": "Cut the title card 'He thinks Congress should do MORE to help rich people' and replace it with a neutral description to remove the negative tone."
+   },
+   {
+    "key": "style_amateur",
+    "present": false,
+    "quote": "",
+    "change": "Remove any professional graphics or studio audio and replace with a shaky phone-shot clip to add an amateur feel."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add an on-screen source citation like 'Source: C-SPAN, [date of recording]' tied to Grothman's clip."
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": true,
+    "quote": "This is Republican Congressman Glenn Grothman. He thinks Congress should do MORE to help rich people",
+    "change": "Remove the on-screen title card text to drop this trait."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": false,
+    "quote": "",
+    "change": "Add a clip of a regular constituent saying 'I work two jobs and Grothman wants to do more for the rich?'"
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "He thinks Congress should do MORE to help rich people",
+    "change": "Cut the title card 'He thinks Congress should do MORE to help rich people' and let Grothman's own words speak without editorial framing to remove the opinion advocacy."
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'While families go without, their congressman is asking for more for the wealthy.' delivered in a slow, quiet tone."
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'If he wins again, nothing will change for working families in this district.'"
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Replace the live footage with an animated sequence showing a congressman handing a bag of money to a wealthy figure to add animation."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "attack",
+  "party": "Democratic"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 875,
+ "tokensOut": 1978,
+ "at": "2026-10-22T21:38:43.758Z"
+}

@@ -1,0 +1,188 @@
+{
+ "id": "vO27rxdfVQE",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "A person answers brief questions about whether Congress is handling its work, giving a cautious, mixed answer. The video is a short, conversational clip that feels like a candid street or hallway interview.",
+  "title": "Lawmaker Says 'A Lot of Work to Do' After Temporary Deal",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Have the messenger open with 'As a veteran, I've seen what happens when Congress fails to act' to establish a veteran identity."
+   },
+   {
+    "key": "tone_contrast",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'We made some temporary headway, but Republicans are still blocking the real work' to set up a clear before-and-after or us-versus-them contrast."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "The script reads like a raw, unpolished grab — add a clean opening title card line and a closing call-to-action line to signal a more produced format."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": true,
+    "quote": "We made some temporary headway, but we got a lot of work to do still.",
+    "change": "Cut 'we got a lot of work to do still' and replace with more formal language if you want to remove the plain, everyday-person feel."
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": "",
+    "change": "Add a name and title line at the start, such as 'Senator Jane Smith, D-Ohio' to identify the speaker as a politician."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'I was in that room when the vote happened and I knew we weren't done' to give the speaker a personal stake in the story."
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as 'Vote for candidates who will finish the job on November 5th' to make a direct ask."
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": false,
+    "quote": "",
+    "change": "Replace 'Well, we'll see' with 'I'm fired up — we're going to get this done' to inject genuine enthusiasm."
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'The House still needs to pass three more funding bills before the deadline' to ground the video in a concrete fact."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'Republicans walked out before the real work was done' to introduce a negative statement about the opposing side."
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'I'm proud of what we've accomplished so far and I know we can finish this' to bring in a sense of pride."
+   },
+   {
+    "key": "fact_new_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a specific, surprising detail the viewer likely hasn't heard, such as 'The TSA hasn't had a confirmed budget in over 90 days.'"
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "Add a light line such as 'Resolved — well, as resolved as Congress ever gets' to bring in a small moment of humor."
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Replace the current unnamed speaker with a recognizable public figure and identify them by name at the start of the clip."
+   },
+   {
+    "key": "emotion_anger",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'Frankly, I'm angry that we're still here having this conversation' to introduce a clear expression of anger."
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "",
+    "change": "The speech is halting and natural — to make it sound scripted, rewrite 'We We made some temporary headway' as a clean, polished sentence with no stumbles."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": true,
+    "quote": "We made some temporary headway.",
+    "change": "Cut 'We made some temporary headway' to remove the only positive claim about progress and replace it with a neutral factual statement."
+   },
+   {
+    "key": "policy_facts",
+    "present": false,
+    "quote": "",
+    "change": "Add a line naming the specific policy at stake, such as 'This is about keeping TSA funding intact so airports stay safe.'"
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "We made some temporary headway.",
+    "change": "Cut 'We made some temporary headway' to remove the only upbeat note and leave only the cautious, unresolved tone."
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "we got a lot of work to do still.",
+    "change": "Cut 'we got a lot of work to do still' to remove the downbeat, unfinished-business tone and end on the headway line instead."
+   },
+   {
+    "key": "style_amateur",
+    "present": true,
+    "quote": "We We made some temporary headway",
+    "change": "Cut the repeated 'We We' stutter and reshoot or re-edit the clip with clean audio and framing to remove the amateur feel."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'According to the Congressional Budget Office...' before any factual claim to introduce a cited source."
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add an on-screen text line such as 'Still no permanent TSA funding' to introduce text overlaid on the video."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": true,
+    "quote": "How you feeling? Resolved.",
+    "change": "Add a name, title, or credential to the speaker so they are identified as an official rather than an unnamed everyday person."
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'The House needs to stop stalling and pass this bill now' to push a clear opinion rather than just describing the situation."
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'People are counting on us and we can't let them down' to bring a serious, weighty emotional tone to the clip."
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'If the House doesn't act, airports could be left without security funding' to introduce a fear-based appeal."
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Add an animated graphic or motion title card at the opening, such as an animated text reveal of the video's subject, to introduce animation."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "attack",
+  "party": "Democratic"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 875,
+ "tokensOut": 2224,
+ "at": "2026-10-22T21:38:45.454Z"
+}

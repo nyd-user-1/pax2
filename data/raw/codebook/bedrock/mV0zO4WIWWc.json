@@ -1,0 +1,188 @@
+{
+ "id": "mV0zO4WIWWc",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "The video explains the difference between closed and open primaries, describing who can vote in each type and how party affiliation affects ballot access. It delivers this information as a straightforward narrated explanation with no personal stories, emotional appeals, or calls to action.",
+  "title": "Closed vs. Open Primaries: What Every Voter Should Know",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Have the messenger introduce themselves as a veteran, for example: 'As a veteran who has voted in both closed and open primaries, I want to explain how these systems work.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "In closed primaries, you can only vote for candidates from your own political party... In open primaries, all voters can choose which ballot to participate in.",
+    "change": "To drop the contrast, remove the closed-primary section and only describe open primaries without comparing them to closed ones."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "The script alone cannot show production value; to signal it, add a line like 'Watch our full animated breakdown at PAX2.org' to imply polished supporting visuals."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'Whether you are a factory worker, a teacher, or a retiree, open primaries make sure your voice counts just like everyone else's.'"
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": "",
+    "change": "Have the messenger introduce themselves as an elected official, for example: 'I am a state representative, and I want to explain how primaries work.'"
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'I once showed up to vote in a primary and was turned away because I was not registered with the right party — that is what a closed primary does.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line like 'Vote yes on Measure 12 to bring open primaries to our state.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": false,
+    "quote": "",
+    "change": "Replace the closing line 'This gives voters the greatest choice and gives everyone a chance to participate in the vote' with 'Open primaries are an exciting step forward — every voter finally gets a real say!'"
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "In closed primaries, you can only vote for candidates from your own political party.",
+    "change": "To drop the fact-explaining, remove the definitions of closed and open primaries and replace them with a personal opinion or story instead."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'A voter in our state said: I felt shut out under the closed primary system — my party did not represent me and I had no other option.'"
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": "",
+    "change": "Replace 'This gives voters the greatest choice and gives everyone a chance to participate in the vote' with 'Open primaries are something we can all be proud of — a system that trusts every citizen to make their own choice.'"
+   },
+   {
+    "key": "fact_new_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'Most voters do not know that in some states, independents make up the largest voting bloc yet are completely locked out of closed primaries.'"
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "Add a light line like 'Yes, a registered Republican really can vote on the Green Party ballot — no, the sky will not fall.'"
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Have the messenger introduce themselves as a well-known public figure, for example: 'Hi, I am [Name], and as someone you may recognize from film, I want to talk about open primaries.'"
+   },
+   {
+    "key": "emotion_anger",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'It is simply wrong that millions of voters are blocked from participating just because they refuse to join a political party.'"
+   },
+   {
+    "key": "how_scripted",
+    "present": true,
+    "quote": "The Constitution says almost nothing about primaries, so the rules for conducting this first stage of voting vary significantly depending on the state and type of election.",
+    "change": "To sound less scripted, replace that opening with a conversational line like 'So, primaries — you have probably heard the word, but did you know the rules are totally different depending on where you live?'"
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'A voter in our state said: For the first time I felt like my vote actually mattered, because open primaries let me choose the best candidate, not just the one from my party.'"
+   },
+   {
+    "key": "policy_facts",
+    "present": true,
+    "quote": "In open primaries, all voters can choose which ballot to participate in, regardless of party affiliation.",
+    "change": "To remove the policy facts, cut the descriptions of how closed and open primaries work and replace them with a general opinion about voter participation instead."
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "This gives voters the greatest choice and gives everyone a chance to participate in the vote.",
+    "change": "To drop the positive tone, cut that closing line and end instead with a neutral statement like 'These are the two systems currently used across the country.'"
+   },
+   {
+    "key": "tone_negative",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'Closed primaries shut out millions of independent voters and hand control of elections to party insiders.'"
+   },
+   {
+    "key": "style_amateur",
+    "present": false,
+    "quote": "",
+    "change": "The script cannot show visual style, but to signal an amateur feel, add a line like 'I am just recording this on my phone because I think this information matters and everyone should hear it.'"
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'According to the National Conference of State Legislatures, more than a dozen states currently use open primary systems.'"
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "The script cannot show on-screen text, but to signal it, add a direction like 'See the definition on screen now: an open primary lets any registered voter choose any party ballot.'"
+   },
+   {
+    "key": "messenger_every_people",
+    "present": false,
+    "quote": "",
+    "change": "Have the messenger introduce themselves as an ordinary citizen, for example: 'Hi, I am just a regular voter from this state, and I want to explain what open primaries actually mean for people like us.'"
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": false,
+    "quote": "",
+    "change": "Replace the neutral closing line with 'Open primaries are the fairer system, and every state should adopt them so that no voter is ever left out.'"
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'Too many people have gone to the polls only to find out they have no real voice in choosing their candidates — that is a quiet failure of our democracy.'"
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like 'If we do not open up our primaries, we risk handing all the power to a small group of party insiders who decide elections before most voters ever get a say.'"
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "The script cannot show visual style, but to signal animation, add a line like 'Watch the animated chart now to see exactly how your ballot changes under each system.'"
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "neither",
+  "tone": "promote",
+  "party": "neither"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1087,
+ "tokensOut": 2263,
+ "at": "2026-10-22T21:38:46.616Z"
+}

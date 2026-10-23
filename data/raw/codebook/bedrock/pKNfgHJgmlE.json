@@ -1,0 +1,188 @@
+{
+ "id": "pKNfgHJgmlE",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "A pro-Palestine activist challenges whether Jews are truly indigenous to Israel by pointing to architecture, Eurovision, and the destruction of orange and olive trees. Rudy Rochman responds with a warm greeting, and the exchange is conversational and debate-style.",
+  "title": "Are Jews Indigenous to Israel? A Direct Debate",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Have the messenger open with 'As a veteran who served in the region, I want to share what I saw on the ground.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "there's a difference between coming and living and coexisting versus coming and drawing borders and maintaining it through guns",
+    "change": "Drop this line if you want to remove the contrast, replacing it with a single unified claim about coexistence without the versus framing."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "Add a note in the script header indicating professional lighting, a clean studio backdrop, and edited cutaways to referenced footage such as the olive trees and Jaffa orange groves."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": true,
+    "quote": "It's nice to meet you. I'm glad to be able to speak. You're funny.",
+    "change": "Cut 'It's nice to meet you. I'm glad to be able to speak. You're funny.' if you want to remove the casual, everyday-person feel and replace it with a more formal introduction."
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": "",
+    "change": "Introduce the messenger as 'Member of Parliament' or 'City Council Member' at the start of the script to add a politician as messenger."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Have one speaker say 'My own family was displaced from their village in 1948, and I grew up hearing those stories' to add a personal story."
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as 'Vote for Candidate X on November 5th to support a just policy on this issue.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": true,
+    "quote": "I'm glad to be able to speak.",
+    "change": "Cut 'I'm glad to be able to speak' if you want to remove the enthusiastic energy from Rochman's opening."
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "why did they bomb the orange trees in Jaffa just as you see the olive trees being burned in the West Bank",
+    "change": "Cut the orange tree and olive tree references if you want to remove the fact-explaining element, replacing them with a purely opinion-based statement."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": true,
+    "quote": "maintaining it through guns, through iron walls which Jabotinsky mentioned",
+    "change": "Cut 'through iron walls which Jabotinsky mentioned' if you want to remove the negative testimonial citing Jabotinsky as a negative witness."
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'I am proud of the generations who kept this history alive and I hope we can build something better together' to bring in pride."
+   },
+   {
+    "key": "fact_new_yes",
+    "present": true,
+    "quote": "why did they bomb the orange trees in Jaffa just as you see the olive trees being burned in the West Bank",
+    "change": "Cut the orange tree bombing reference if you want to remove the less commonly known fact, replacing it with a more widely known claim."
+   },
+   {
+    "key": "emotion_humor",
+    "present": true,
+    "quote": "You're funny. [laughter]",
+    "change": "Cut 'You're funny' and the laughter note if you want to remove the humor and keep the tone strictly serious."
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Identify one of the speakers at the start as a well-known public figure, for example 'award-winning journalist' or 'famous musician,' to add a celebrity messenger."
+   },
+   {
+    "key": "emotion_anger",
+    "present": true,
+    "quote": "That doesn't sound indigenous to me.",
+    "change": "Soften 'That doesn't sound indigenous to me' to 'I find that worth questioning' if you want to reduce the angry edge in the activist's tone."
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "",
+    "change": "Add a formal written opening statement read directly by each speaker, such as 'Today I will argue the following three points,' to make it sound more scripted."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line where one speaker says 'As historian X has shown, the archaeological record confirms a continuous Jewish presence' to bring in a positive testimonial."
+   },
+   {
+    "key": "policy_facts",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'Under current Israeli law, the Absentee Property Law of 1950 allows the state to take over land left by displaced Palestinians' to introduce a concrete policy fact."
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "No one is saying that Jews can't or shouldn't live there",
+    "change": "Cut 'No one is saying that Jews can't or shouldn't live there' if you want to remove the conciliatory positive note and keep the tone entirely critical."
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "maintaining it through guns, through iron walls which Jabotinsky mentioned",
+    "change": "Cut 'maintaining it through guns, through iron walls which Jabotinsky mentioned' if you want to remove the negative tone from this section."
+   },
+   {
+    "key": "style_amateur",
+    "present": true,
+    "quote": "[laughter]",
+    "change": "Remove the unscripted laughter and add a production note calling for edited, studio-quality footage to drop the amateur feel."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": true,
+    "quote": "iron walls which Jabotinsky mentioned",
+    "change": "Cut 'which Jabotinsky mentioned' if you want to remove the only named source citation in the script."
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add a production note such as 'Display on screen: Jabotinsky, The Iron Wall, 1923' when that reference is spoken to add text on screen."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": true,
+    "quote": "As-salamu alaykum wa rahmatullahi wa barakatuh, Muhammad. It's nice to meet you.",
+    "change": "Cut the informal greeting exchange and replace it with a formal title introduction if you want to remove the everyday-person feel."
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "That doesn't sound indigenous to me.",
+    "change": "Cut 'That doesn't sound indigenous to me' and replace it with a neutral question if you want to remove the direct opinion advocacy."
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'Families on both sides have lost people they loved, and that weight never leaves you' to bring in a somber emotional note."
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as 'People on both sides live in fear that tomorrow their home or their child could be taken' to introduce fear as an emotion."
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Add a production note calling for an animated map sequence showing the historical borders being drawn to introduce animation into the video."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "neither",
+  "tone": "contrast",
+  "party": "neither"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1283,
+ "tokensOut": 2224,
+ "at": "2026-10-22T21:38:46.278Z"
+}

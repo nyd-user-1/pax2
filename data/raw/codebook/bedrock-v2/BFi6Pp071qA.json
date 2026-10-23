@@ -1,0 +1,15 @@
+{
+ "id": "BFi6Pp071qA",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": null,
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "contrast",
+  "party": "Republican"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 467,
+ "tokensOut": 309,
+ "at": "2026-10-22T22:18:16.151Z"
+}

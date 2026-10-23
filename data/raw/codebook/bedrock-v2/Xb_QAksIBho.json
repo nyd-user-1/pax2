@@ -1,0 +1,15 @@
+{
+ "id": "Xb_QAksIBho",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": null,
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "contrast",
+  "party": "Democratic"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 982,
+ "tokensOut": 313,
+ "at": "2026-10-22T22:18:16.154Z"
+}

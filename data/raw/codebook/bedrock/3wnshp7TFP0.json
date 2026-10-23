@@ -1,0 +1,188 @@
+{
+ "id": "3wnshp7TFP0",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "A candidate explains his detailed plan to regulate data centers by requiring them to lower electric bills, reduce property taxes, protect farmland, and meet environmental standards. He speaks directly to a voter's question in a Q&A setting, listing his conditions firmly and without hedging.",
+  "title": "My Data Center Plan: Lower Bills, Clean Water, Farmland Off Limits",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'As a veteran who served this state, I know what it means to protect what we've built here.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "not paid for by the taxpayer, but by the excess reserve that the data center has to bring in behind the meter",
+    "change": "This contrast is already clear; if you want to drop it, remove 'not paid for by the taxpayer, but by the excess reserve' and just say 'paid for by the data center.'"
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "The script reads like a live Q&A with a throat-clear and applause, suggesting raw footage; reshoot with a clean backdrop, professional audio, and edited cuts to raise production quality."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": true,
+    "quote": "That's common sense. We have a lot of those.",
+    "change": "This plain-spoken moment is already present; to drop it, replace 'That's common sense. We have a lot of those.' with a more formal policy statement like 'This is consistent with sound land-use policy.'"
+   },
+   {
+    "key": "messenger_politician",
+    "present": true,
+    "quote": "my job as a governor is to set this straight with statewide legislation",
+    "change": "This clearly marks the speaker as a politician running for governor; to drop it, remove 'my job as a governor' and say 'the right move is statewide legislation' instead."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'I grew up near a factory that drained our town's water, and I'm not letting that happen again on my watch.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line like: 'If you want these protections in place, vote for me on Election Day.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": true,
+    "quote": "Thank you very much and I appreciate that question. Thank you.",
+    "change": "Enthusiasm shows in the warm close and the applause moment; to drop it, end with a flat statement like 'That concludes my answer on data centers.' and cut the applause."
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "I don't think you should cause a community to pay higher electric bills. I think you should cause the community to pay lower electric bills by putting more energy into the grid than you're taking out.",
+    "change": "This explanation of how the grid works is already present; to drop it, cut the sentence starting 'I think you should cause the community' and just say 'data centers must contribute to the grid.'"
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'I've heard from families in this state who saw their electric bills double after a data center moved in nearby.'"
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": true,
+    "quote": "we're blessed with in this state",
+    "change": "This expression of pride in the state's farmland is already present; to drop it, replace 'which we're blessed with in this state' with 'which exists across this state.'"
+   },
+   {
+    "key": "fact_new_yes",
+    "present": true,
+    "quote": "you're going to get free residential electricity, not paid for by the taxpayer, but by the excess reserve that the data center has to bring in behind the meter",
+    "change": "The idea of free residential electricity funded by data center reserves is likely new to most viewers; to drop it, replace this with a general statement like 'residents will see lower electric costs.'"
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "Add a light line like: 'I guess the data centers figured nobody was paying attention — well, we were paying attention, right on our electric bills.'"
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Add a celebrity endorser intro like: '[Name], a well-known figure from this state, introduces the candidate before the Q&A begins.'"
+   },
+   {
+    "key": "emotion_anger",
+    "present": true,
+    "quote": "They've done a horrible job of earning public trust",
+    "change": "This is the clearest moment of anger toward data centers; to drop it, replace 'They've done a horrible job of earning public trust' with 'public trust in data centers has not been well established.'"
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "",
+    "change": "The speech sounds natural and unscripted, with a throat-clear and conversational phrasing; to make it sound more scripted, remove the throat-clear and rewrite the answer as a clean numbered list delivered to camera."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'I've heard from farmers and families across this state who told me this is exactly the kind of protection they've been waiting for.'"
+   },
+   {
+    "key": "policy_facts",
+    "present": true,
+    "quote": "Lower to no electric bills, lower property taxes, clean air, clean water, industrial sites only, not fertile farmland, and process transparency.",
+    "change": "This clear policy summary is already present; to drop it, remove this list and end with a general statement like 'my plan will protect residents and the environment.'"
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "Lower property taxes, lower electric bills",
+    "change": "The positive vision of lower bills and taxes is already present; to drop it, remove the benefits framing and focus only on what data centers must not do."
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "They've done a horrible job of earning public trust",
+    "change": "This negative tone toward data centers is already present; to drop it, replace 'They've done a horrible job of earning public trust' with 'public trust still needs to be built.'"
+   },
+   {
+    "key": "style_amateur",
+    "present": true,
+    "quote": "[clears throat]",
+    "change": "The throat-clear and live Q&A format suggest unpolished footage; to drop the amateur feel, edit out the throat-clear and reshoot the answer in a controlled setting with steady framing."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'According to the state utility commission's latest report, residential rates have risen 18 percent in counties with new data centers.'"
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add on-screen text displaying the five policy points as the candidate lists them: 'Lower/No Electric Bills,' 'Lower Property Taxes,' 'Clean Air & Water,' 'Industrial Sites Only,' 'Process Transparency.'"
+   },
+   {
+    "key": "messenger_every_people",
+    "present": true,
+    "quote": "Are you going to try to work something out with the data centers",
+    "change": "The everyday voter asking the opening question is already present; to drop this, remove the voter's question and start directly with the candidate's answer to camera."
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "I don't think that you should get a property tax abatement.",
+    "change": "Opinion advocacy is central to this script; to drop it, replace 'I don't think' statements with neutral descriptions like 'the policy would require data centers to pay full property taxes.'"
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'There are communities in this state that have already lost clean water and cheap power, and that loss is real and it is serious.'"
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line like: 'If we don't act now, every family in this state could be looking at electric bills they simply cannot afford.'"
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Add a short animated graphic showing a data center connected to a grid with arrows flowing back into homes to illustrate the 'excess reserve behind the meter' concept."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "promote",
+  "party": "neither"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1846,
+ "tokensOut": 2427,
+ "at": "2026-10-22T21:38:48.629Z"
+}

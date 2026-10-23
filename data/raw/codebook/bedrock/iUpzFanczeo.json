@@ -1,0 +1,188 @@
+{
+ "id": "iUpzFanczeo",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "The video argues that existing laws already protect elections from federal interference, including military and ICE intimidation, and that Trump has never actually succeeded in breaking the electoral system. It delivers this as a direct, spoken address meant to reassure and mobilize people who are worried about election threats.",
+  "title": "The Laws Already Protecting Your Vote Right Now",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Open with a new line such as: 'I served in the military, and I know what it looks like when someone tries to use force to override the people's will.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "We have been able to block ICE in many cases, in others—we haven't",
+    "change": "Cut this line if you want to remove the contrast between wins and losses and replace it with a straight list of victories only."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "No visual or audio details are given in the script, so add a direction note: record in a clean, well-lit studio with professional sound and add lower-third graphics naming the laws cited."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'I'm just someone who votes in every election and wants to make sure my neighbors can too.'"
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": "",
+    "change": "Add an opening line such as: 'As a state legislator, I've worked on election law for ten years,' to establish the messenger as a politician."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'I was at a polling station in 2020 when federal vehicles showed up outside — and we held the line.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as: 'Vote in November and bring three people with you.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": true,
+    "quote": "This is a moment when everyone's efforts are needed.",
+    "change": "Cut this line if you want to lower the energy and keep the tone strictly informational."
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "There is a criminal law that makes voter intimidation by any federal official a crime.",
+    "change": "Cut this line if you want to remove factual explanation and rely on opinion alone."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'A poll worker in Georgia told me she was followed to her car by men in federal uniforms — that is the intimidation this law is meant to stop.'"
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": true,
+    "quote": "an electoral system that works by the people, for the people, and through the people",
+    "change": "Cut this phrase if you want to remove the pride appeal and keep the message purely legal and factual."
+   },
+   {
+    "key": "fact_new_yes",
+    "present": true,
+    "quote": "The statute of limitations will expire after Donald Trump leaves the White House.",
+    "change": "Cut this line if you want to remove the detail that most viewers likely have not heard before."
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "Add a light line such as: 'He keeps trying to break a machine he clearly never read the manual for.'"
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Have a well-known public figure deliver the script and add an opening line such as: 'You may know me from my work, but today I'm here as a voter.'"
+   },
+   {
+    "key": "emotion_anger",
+    "present": true,
+    "quote": "This is abnormal, and we must be prepared for it.",
+    "change": "Cut this line if you want to remove the undercurrent of anger and keep the tone calm and reassuring throughout."
+   },
+   {
+    "key": "how_scripted",
+    "present": true,
+    "quote": "Let's take it a step further. Let's assume the National Guard is still part of the state.",
+    "change": "Replace this opening with a more conversational line such as: 'Okay, so people keep asking me — what actually happens if the military shows up at a polling place?'"
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'Election workers in Arizona told us the law gave them the confidence to keep the doors open no matter what.'"
+   },
+   {
+    "key": "policy_facts",
+    "present": true,
+    "quote": "There is a law that clearly states that during elections, the military cannot interfere with the work of polling stations or the electoral process.",
+    "change": "Cut this line if you want to remove specific policy content and keep the message motivational rather than legal."
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "this president has never been able to prove that he is capable of destroying an electoral system that works by the people, for the people, and through the people",
+    "change": "Cut this line if you want to remove the positive framing and keep the tone focused only on threats."
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "I'm not saying he won't try to create chaos",
+    "change": "Cut this line if you want to remove the negative framing and keep the tone fully reassuring."
+   },
+   {
+    "key": "style_amateur",
+    "present": false,
+    "quote": "",
+    "change": "Add a direction note: shoot on a phone in a kitchen or living room with natural light to give the video a personal, unpolished feel."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "After the line 'There is a criminal law that makes voter intimidation by any federal official a crime,' add: 'That's 52 U.S.C. Section 20511,' or show the citation as text on screen."
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add a direction note: display the name of each law on screen as it is mentioned, for example show '52 U.S.C. § 20511' when voter intimidation law is cited."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": false,
+    "quote": "",
+    "change": "Add an opening line such as: 'I'm a teacher and a parent, and I've been a poll worker for twelve years,' to establish the messenger as an ordinary person."
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "I think it's a much more difficult situation for the president.",
+    "change": "Cut this line if you want to remove the messenger's personal opinion and keep the narration strictly factual."
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'We should sit with how serious this moment is — this is not normal, and it is not small.'"
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'I know many of you are scared to show up at the polls this year — and that fear is exactly what they are counting on.'"
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Add a direction note: use simple animated graphics to illustrate the chain of command between the president, the National Guard, and polling stations as those sections are spoken."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "contrast",
+  "party": "Democratic"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1286,
+ "tokensOut": 2164,
+ "at": "2026-10-22T21:38:45.442Z"
+}

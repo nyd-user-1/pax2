@@ -1,0 +1,188 @@
+{
+ "id": "5RzVRu95RtE",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "A speaker argues the Senate filibuster blocks needed legislation and calls for broad democracy reform including voting rights and redistricting. The message is delivered as a direct, passionate speech with audience applause.",
+  "title": "The Senate Is Where Good Laws Go to Die",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Add an opening line such as: 'As a veteran who served this country, I know what it means when the system fails the people it's supposed to protect.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "whether it's the Supreme Court or it's the filibuster or it's the way we cut our districts apart",
+    "change": "To drop it, remove the list of opposing forces and replace with: 'The filibuster is the single biggest obstacle we face right now.'"
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "The script alone cannot show this; shoot the video in a formal setting with professional lighting and clear audio rather than a casual room."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": true,
+    "quote": "if you ever left tea in a cooling saucer for way too long, it dries up",
+    "change": "To drop it, remove the tea-saucer metaphor and replace with: 'The Senate has become a place where legislation stalls indefinitely.'"
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": "",
+    "change": "Add an introduction line such as: 'I'm [Name], and I serve in the United States Senate,' so the viewer knows the speaker holds elected office."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'I watched a bill I fought for years die in the Senate because one senator hid behind the filibuster and never had to explain why.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as: 'Vote for candidates who will abolish the filibuster and restore democracy for all of us.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": true,
+    "quote": "I believe we have to abolish the filibuster",
+    "change": "To drop it, soften to: 'There are strong arguments for reconsidering the filibuster as part of broader reform.'"
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "it allows senators who don't want to take hard votes to hide behind the filibuster of just one senator, usually in a safe seat",
+    "change": "To drop it, remove the explanation of how the filibuster works and go straight to: 'The filibuster has to go.'"
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'Voters in my district have told me they feel completely unheard because their senator never has to answer for a filibuster vote.'"
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'I'm proud that more Americans than ever are demanding a democracy that actually works for them, and that gives me real hope.'"
+   },
+   {
+    "key": "fact_new_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'Since 2000, the filibuster has been used more than in the entire previous century combined,' which most viewers are unlikely to know."
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "Add a light line such as: 'One senator can hold the whole country hostage from a safe seat — if that's not a punchline, I don't know what is.' To keep the tone serious, leave this out."
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "Add an introduction from a well-known public figure such as: 'I'm [Celebrity Name], and I'm asking you to listen to this message about our democracy.'"
+   },
+   {
+    "key": "emotion_anger",
+    "present": true,
+    "quote": "we've just seen the biggest assault from the Supreme Court on the Voting Rights Act in our history",
+    "change": "To drop it, replace with: 'The Supreme Court has made significant changes to the Voting Rights Act that we need to address through legislation.'"
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "",
+    "change": "The speech sounds natural and conversational; to make it sound more scripted, rewrite it with formal sentence structures and remove the tea metaphor and the mid-sentence asides."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'I've heard from voters across this country who say they finally feel seen when their senator has to stand up and cast a real vote.'"
+   },
+   {
+    "key": "policy_facts",
+    "present": true,
+    "quote": "it allows senators who don't want to take hard votes to hide behind the filibuster of just one senator, usually in a safe seat",
+    "change": "To drop it, remove the explanation of how the filibuster operates mechanically and keep only the call to abolish it."
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "we need to be thinking about broad picture democracy reform",
+    "change": "To drop the positive tone, remove the forward-looking reform framing and end on: 'Right now our democracy is broken and the damage is severe.'"
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "the Senate has become the place where all legislation goes to die",
+    "change": "To drop the negative tone, replace with: 'The Senate has the potential to be a place where we pass the legislation Americans need.'"
+   },
+   {
+    "key": "style_amateur",
+    "present": false,
+    "quote": "",
+    "change": "The script does not indicate this; to add it, film the speaker on a phone in a casual setting with natural background noise and no editing."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'According to the Brennan Center, filibuster use has increased tenfold since the 1970s,' and show the source on screen."
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add on-screen text displaying key phrases such as 'ABOLISH THE FILIBUSTER' and 'BIGGEST ASSAULT ON VOTING RIGHTS' as the speaker says them."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": false,
+    "quote": "",
+    "change": "Add a line from an ordinary voter such as: 'My neighbor lost her healthcare because one senator used the filibuster and never had to explain it to anyone.'"
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "I believe we have to abolish the filibuster",
+    "change": "To drop it, replace with a neutral framing: 'Some argue the filibuster should be abolished; others disagree — here are the facts.'"
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'It is a deeply serious moment when the tools of democracy are used to silence the will of the people.'"
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'If we don't act now, we risk losing the right to vote in free and fair elections altogether.'"
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Add an animated sequence showing a bill moving through the Senate and getting blocked by a single senator to illustrate how the filibuster works."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "attack",
+  "party": "Democratic"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1310,
+ "tokensOut": 2224,
+ "at": "2026-10-22T21:38:46.442Z"
+}

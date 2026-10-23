@@ -1,0 +1,188 @@
+{
+ "id": "JP8SHaVl674",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "The messenger argues that both parties, not just Republicans, are blocking independent voters by closing primaries, and that the real political competition happens in round one, not the general election. He speaks directly to camera, cites a Washington Post piece, and asks viewers to follow Open Primaries.",
+  "title": "Both Parties Are Locking Out Independent Voters",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": "",
+    "change": "Open with a new line such as: 'As a veteran who fought for every American's right to vote, I can tell you this system is broken.'"
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "the Republicans are the bad guys and the Democrats are the good guys, when in fact both parties are looking to lock the system down",
+    "change": "This contrast is already central to the script; keep it as is."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": "",
+    "change": "No visual or audio production details appear in the script; add a direction note such as: 'Shoot in a clean studio with graphics showing state names as they are mentioned.'"
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": true,
+    "quote": "the ability of ordinary Americans to shape the direction of this country",
+    "change": "This appeal is already present; keep it as is."
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": "",
+    "change": "The messenger is not identified as a politician; add an intro line such as: 'I'm [Name], a former state legislator, and I've seen this from the inside.'"
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'I remember the first time I tried to vote in a primary and was turned away because I was registered independent — that moment changed everything for me.'"
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": "",
+    "change": "Add a closing line such as: 'Go vote in your primary — that is where your voice actually counts.'"
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": true,
+    "quote": "follow Open Primaries to learn all the different ways that we're engaged in this fight",
+    "change": "Enthusiasm is present but mild; keep it or raise it by adding: 'This is the fight of our time and we are winning it!'"
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "Massachusetts, for example, it's 65% of the population",
+    "change": "Facts are already explained; keep them as is."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'Voters in New York have told us: I showed up to vote and they said my primary was already decided — I had no say.'"
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'I am proud of every independent voter who refuses to be shut out, and I believe we can open this system up.'"
+   },
+   {
+    "key": "fact_new_yes",
+    "present": true,
+    "quote": "Massachusetts, for example, it's 65% of the population",
+    "change": "This statistic is likely new to many viewers; keep it as is."
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": "",
+    "change": "Add a light line such as: 'Both parties agree on almost nothing — except keeping you out of the room.'"
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": "",
+    "change": "The messenger is not a celebrity; to add this trait, open with a celebrity endorsement clip before the main speaker begins."
+   },
+   {
+    "key": "emotion_anger",
+    "present": true,
+    "quote": "the Democrats are systematically attacking the right of independent voters to participate",
+    "change": "Anger is present; keep it as is."
+   },
+   {
+    "key": "how_scripted",
+    "present": false,
+    "quote": "It's a good piece uh for a couple reasons",
+    "change": "The filler words and conversational flow make it sound unscripted; to make it sound more scripted, remove the 'uh' fillers and tighten each sentence to a single clean thought."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'Voters in California told us: once I voted in an open primary, I finally felt like my vote meant something.'"
+   },
+   {
+    "key": "policy_facts",
+    "present": true,
+    "quote": "both parties, in different states and in different ways, are looking to lock the system down through gerrymandering and closed primaries",
+    "change": "Policy facts are present; keep them as is."
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "we need to re-educate the American people around getting out and voting in those primaries",
+    "change": "A positive, action-oriented tone is present; keep it as is."
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "They want fewer voters. They definitely don't want independent voices participating.",
+    "change": "Negative tone is present; keep it as is."
+   },
+   {
+    "key": "style_amateur",
+    "present": false,
+    "quote": "",
+    "change": "No visual style is described in the script; if the shoot is polished, keep it that way; if you want an amateur feel, add a direction note: 'Record on a phone in a casual setting with no editing.'"
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": true,
+    "quote": "the Washington Post wrote a very interesting editorial",
+    "change": "A source is cited; keep it and add the article's full title or date for more credibility."
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": "",
+    "change": "Add a production note to display state names — Massachusetts, New York, Maryland, California, Nevada — as text on screen when each is spoken."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": false,
+    "quote": "",
+    "change": "The messenger speaks as an advocate, not as an everyday person; add a line such as: 'I'm just a regular voter who got fed up and decided to do something about it.'"
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "we need to stop the closing of primaries, and we need to re-educate the American people",
+    "change": "Opinion advocacy is central to the script; keep it as is."
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'It is a quiet tragedy that millions of Americans go to the polls in November not knowing the real decision was made months earlier without them.'"
+   },
+   {
+    "key": "emotion_fear",
+    "present": false,
+    "quote": "",
+    "change": "Add a line such as: 'If we do not stop this now, the next generation of Americans may never have a real vote at all.'"
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": "",
+    "change": "Add a production note to animate the sports playoff bracket comparison — showing rounds collapsing — to illustrate the point that the real competition ends after round one."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "persuade",
+  "tone": "contrast",
+  "party": "neither"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1831,
+ "tokensOut": 2092,
+ "at": "2026-10-22T21:38:45.276Z"
+}

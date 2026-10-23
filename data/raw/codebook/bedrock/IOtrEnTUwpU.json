@@ -1,0 +1,188 @@
+{
+ "id": "IOtrEnTUwpU",
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "swayable": {
+  "summary": "The video explains that a new postal service rule means envelopes are now postmarked at regional facilities instead of local post offices, which can delay the postmark date and cause mail-in ballots or legal documents to miss deadlines. It delivers this as a factual warning with practical tips, ending with a call to join a Patreon.",
+  "title": "Your Mail-In Ballot Postmark May Now Be One Day Late",
+  "traits": [
+   {
+    "key": "messenger_veteran",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'As a veteran who votes by mail from a rural county, I felt this change personally' to establish the messenger as a veteran."
+   },
+   {
+    "key": "tone_contrast",
+    "present": true,
+    "quote": "a postmark on your envelope no longer means what you think it does",
+    "change": "Cut this contrast between the old rule and the new rule if you want to remove the contrast, or keep it as the anchor of the video."
+   },
+   {
+    "key": "production_value_high",
+    "present": false,
+    "quote": null,
+    "change": "The script gives no indication of graphics, music, or visual polish; add a direction such as 'Show an animated map of processing center locations as this section plays' to signal high production value."
+   },
+   {
+    "key": "technique_plain_folks",
+    "present": true,
+    "quote": "if you live in a rural area, your mail may now sit overnight before it's ever postmarked",
+    "change": "Cut the rural-area reference and replace it with a more universal framing like 'no matter where you live' if you want to remove the plain-folks appeal."
+   },
+   {
+    "key": "messenger_politician",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'I'm a state legislator and I've seen constituents lose their ballot over this exact issue' to establish the messenger as a politician."
+   },
+   {
+    "key": "narration_personal_story",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'Last November a neighbor of mine mailed her ballot two days early and it was still rejected because the postmark came back late' to give the video a personal story."
+   },
+   {
+    "key": "explicit_vote_for",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'Vote for candidates who will protect your right to mail your ballot without these traps' to include an explicit ask to vote for someone or something."
+   },
+   {
+    "key": "emotion_enthusiasm",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'The good news is this is totally fixable and you have the power to make sure your vote counts' to bring in enthusiasm."
+   },
+   {
+    "key": "narration_explain_facts",
+    "present": true,
+    "quote": "Under a new postal service rule, postmarks are now applied at regional processing facilities, not at your local post office.",
+    "change": "Cut this explanatory section and replace it with opinion-only language if you want to remove the fact-explaining quality."
+   },
+   {
+    "key": "technique_neg_testimonial",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'One voter told us she mailed her ballot three days before the deadline and it was still rejected because of a late postmark' to add a negative testimonial."
+   },
+   {
+    "key": "emotion_hope_pride",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'Voters who plan ahead and use certified mail are protecting something worth being proud of' to bring in pride."
+   },
+   {
+    "key": "fact_new_yes",
+    "present": true,
+    "quote": "the postal service eliminated evening pickups at post offices more than 50 miles from a processing center",
+    "change": "Cut this specific operational detail if you want to remove the unfamiliar fact, replacing it with a general statement that postmark rules have changed."
+   },
+   {
+    "key": "emotion_humor",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'Turns out the blue box is not your friend, and it never sent you a birthday card either' to introduce a moment of humor."
+   },
+   {
+    "key": "messenger_celebrity",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'I'm [name], and you may know me from [context], and I want to make sure your vote counts' to establish the messenger as a celebrity."
+   },
+   {
+    "key": "emotion_anger",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'It is unacceptable that a quiet rule change by the postal service is costing people their votes' to introduce anger."
+   },
+   {
+    "key": "how_scripted",
+    "present": true,
+    "quote": "So, here's our advice.",
+    "change": "Replace structured list transitions like 'So, here's our advice' with more conversational phrasing such as 'Look, here's what I'd tell a friend' to make it sound less scripted."
+   },
+   {
+    "key": "technique_pos_testimonial",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'A voter in Ohio told us that after going inside the post office and asking for a manual postmark, her ballot was accepted without any problem' to add a positive testimonial."
+   },
+   {
+    "key": "policy_facts",
+    "present": true,
+    "quote": "postmarks determine legal deadlines, including mail-in ballots, tax payments, and court filings",
+    "change": "Cut this line about legal deadlines if you want to remove the policy-facts element, and replace it with a simpler statement about ballots only."
+   },
+   {
+    "key": "tone_positive",
+    "present": true,
+    "quote": "be proactive, plan ahead, and make sure it gets there on time",
+    "change": "Cut this forward-looking advice section if you want to remove the positive tone and leave only the warning."
+   },
+   {
+    "key": "tone_negative",
+    "present": true,
+    "quote": "In 2024, nearly 104,000 mail and ballots were rejected for arriving too late.",
+    "change": "Cut this rejection statistic if you want to remove the negative tone, and replace it with a neutral statement about the importance of timing."
+   },
+   {
+    "key": "style_amateur",
+    "present": false,
+    "quote": null,
+    "change": "Add a direction such as 'Film this on a phone in one take with natural lighting and no editing cuts' to give the video an amateur, phone-shot feel."
+   },
+   {
+    "key": "fact_cite_yes",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'According to the USPS Federal Register notice from March 2025' before the rule explanation to cite a source for the facts."
+   },
+   {
+    "key": "style_text_on_screen",
+    "present": false,
+    "quote": null,
+    "change": "Add a direction such as 'Show the five tips as bullet text on screen as each one is read aloud' to include text on screen."
+   },
+   {
+    "key": "messenger_every_people",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'I'm just someone who votes every cycle and wants to make sure you don't get tripped up by something this avoidable' to establish the messenger as an everyday person."
+   },
+   {
+    "key": "narration_advocate_opinions",
+    "present": true,
+    "quote": "don't rely on those blue mailboxes when an important deadline is coming up",
+    "change": "Cut this direct advice line and replace it with a neutral statement such as 'Some voters choose to avoid blue mailboxes near deadlines' if you want to remove the opinion-advocacy."
+   },
+   {
+    "key": "emotion_somber",
+    "present": false,
+    "quote": null,
+    "change": "Add a line such as 'For the 104,000 voters whose ballots were rejected last cycle, that silence on election night was real' to bring in a somber tone."
+   },
+   {
+    "key": "emotion_fear",
+    "present": true,
+    "quote": "you don't want that to happen to yours",
+    "change": "Cut the line 'you don't want that to happen to yours' and replace it with a neutral statement like 'knowing this rule can help you avoid a rejection' if you want to remove the fear appeal."
+   },
+   {
+    "key": "style_animation",
+    "present": false,
+    "quote": null,
+    "change": "Add a direction such as 'Animate a letter traveling from a rural blue box to a city processing center with a one-day delay shown on a calendar' to introduce animation."
+   }
+  ]
+ },
+ "wesleyan": {
+  "goal": "neither",
+  "tone": "promote",
+  "party": "neither"
+ },
+ "rawA": null,
+ "rawB": null,
+ "tokensIn": 1617,
+ "tokensOut": 2334,
+ "at": "2026-10-22T21:38:46.851Z"
+}

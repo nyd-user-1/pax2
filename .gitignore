@@ -41,3 +41,7 @@ data/raw/composition
 
 # The transcript corpus is 147 MB, past GitHub's limit; it lives in S3 and stays local here.
 data/generated/transcripts.json
+
+# Codebook 5K prompt files (scripts/codebook/prompts.mjs), rebuilt from transcripts.json
+data/raw/codebook/prompts*.jsonl
+data/raw/codebook/box

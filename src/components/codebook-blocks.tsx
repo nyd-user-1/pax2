@@ -9,8 +9,16 @@ import { referenceModelFile } from "@/lib/data-files"
 
 const model = referenceModelFile()
 
-/** A video's coding on the two ad codebooks: Swayable's feature keys and Wesleyan's goal. */
-export type Codes = { swayable?: string[]; wesleyan?: "persuade" | "money" | "both" | "neither" }
+/** A video's coding on the codebooks: Swayable's feature keys, Wesleyan's goal (its tone and party beside it)
+ *  and the Upworthy patterns its title carries with the headline score. Real codes are data/generated/codebook.json
+ *  (scripts/codebook/); the sample video carries invented ones. */
+export type Codes = {
+  swayable?: string[]
+  wesleyan?: "persuade" | "money" | "both" | "neither"
+  wesleyanTone?: "attack" | "contrast" | "promote"
+  wesleyanParty?: "Democratic" | "Republican" | "neither"
+  upworthy?: { patterns: string[]; score?: number }
+}
 
 type Feature = { key: string; label: string; diff: number; low: number; high: number }
 
