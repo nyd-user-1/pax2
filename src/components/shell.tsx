@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, ArrowLeft, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronDown, ChevronUp, ChevronsUpDown, Clapperboard, Columns2, Columns3, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, Microscope, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, ShieldCheck, Star, Tag, Target, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, ArrowLeft, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronDown, ChevronUp, ChevronsUpDown, Clapperboard, Columns2, Columns3, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, Microscope, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, ShieldCheck, Star, Tag, Target, Tv, TvMinimal, User2, Video, Vote, Workflow, X } from "lucide-react"
 
 import dynamic from "next/dynamic"
 import { SidebarChats } from "@/components/sidebar-chats"
@@ -29,6 +29,8 @@ type NavLink = { href: string; label: string; icon: typeof House }
 type NavGroup = { label: string; icon: typeof House; children: NavLink[]; admin?: boolean }
 const RESEARCH = [
   { href: "/metrics", label: "Metrics", icon: Activity },
+  { href: "/experiments", label: "Experiments", icon: Beaker },
+  { href: "/polling", label: "Polling", icon: Vote },
   { href: "/graph", label: "Graph", icon: Workflow },
   { href: "/library", label: "Library", icon: Library },
   { href: "/glossary", label: "Glossary", icon: BookA },
@@ -94,6 +96,8 @@ const TITLES: [string, string][] = [
   ["/learn", "Learn"],
   ["/v/", "Video"],
   ["/metrics", "Metrics"],
+  ["/experiments", "Experiments"],
+  ["/polling", "Polling"],
   ["/graph", "Graph"],
   ["/tags", "Tags"],
   ["/library", "Library"],

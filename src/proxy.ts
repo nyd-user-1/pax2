@@ -22,7 +22,7 @@ function alias(path: string, q: URLSearchParams): string | null {
   if (path === "/pipeline-2") return "/erd"
   if (path === "/patterns") return "/metrics?tab=patterns"
   if (path === "/outliers") return "/metrics?tab=outliers"
-  if (["/polling", "/feature-lift", "/ml", "/velocity-tracker", "/live-tracking", "/flow"].includes(path) || path.startsWith("/flow/")) return "/metrics"
+  if (["/feature-lift", "/ml", "/velocity-tracker", "/live-tracking", "/flow"].includes(path) || path.startsWith("/flow/")) return "/metrics"
   if (path === "/evidence") {
     const tab = q.get("tab")
     return tab === "patterns" || tab === "outliers" ? `/metrics?tab=${tab}` : "/metrics"
@@ -48,7 +48,7 @@ function alias(path: string, q: URLSearchParams): string | null {
 
 // Pages that send a signed-out reader to /signin. With no session and no refresh cookie the answer is
 // known before render, so the redirect happens here (each page still checks for itself).
-const GATED = ["/metrics", "/dashboard", "/pipeline", "/erd", "/evals", "/app/home", "/signup/welcome", "/lab", "/project-management", "/my-channels", "/graph", "/campaigns", "/build", "/reinforcement-learning"]
+const GATED = ["/metrics", "/experiments", "/polling", "/dashboard", "/pipeline", "/erd", "/evals", "/app/home", "/signup/welcome", "/lab", "/project-management", "/my-channels", "/graph", "/campaigns", "/build", "/reinforcement-learning"]
 const gated = (path: string) => GATED.some((g) => path === g || path.startsWith(`${g}/`))
 
 export async function proxy(req: NextRequest) {
