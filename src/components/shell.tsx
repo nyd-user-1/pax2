@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, ArrowLeft, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronDown, ChevronUp, ChevronsUpDown, Clapperboard, Columns2, Columns3, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, Microscope, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, ShieldCheck, Star, Tag, Target, Tv, TvMinimal, User2, Video, Vote, Workflow, X } from "lucide-react"
+import { Activity, ArrowLeft, Sigma, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronDown, ChevronUp, ChevronsUpDown, Clapperboard, Columns2, Columns3, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, Microscope, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, ShieldCheck, Star, Tag, Target, Tv, TvMinimal, User2, Video, Vote, Workflow, X } from "lucide-react"
 
 import dynamic from "next/dynamic"
 import { SidebarChats } from "@/components/sidebar-chats"
@@ -34,6 +34,7 @@ const RESEARCH = [
   { href: "/graph", label: "Graph", icon: Workflow },
   { href: "/library", label: "Library", icon: Library },
   { href: "/metrics", label: "Metrics", icon: Activity },
+  { href: "/methodology", label: "Methodology", icon: Sigma },
   { href: "/polling", label: "Polling", icon: Vote },
 ]
 const ADMIN = [

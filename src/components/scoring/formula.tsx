@@ -9,7 +9,7 @@ import { board, workspace } from "@/lib/review"
 import { cn } from "@/ui/lib/utils"
 
 export const dynamic = "force-dynamic"
-export const metadata = { title: "Method" }
+export const metadata = { title: "Methodology" }
 
 const CHOICES: { what: string; kind: "design" | "data"; detail: string }[] = [
   { what: "Three components: Engage, Interest, Act", kind: "design", detail: "Attention earned at the open, attention kept given the length, and something done with it. Each is a rate a partner can check against Ads Manager." },
