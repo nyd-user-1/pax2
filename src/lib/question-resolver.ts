@@ -587,10 +587,11 @@ export async function chipsFor(ytId: string, surface: Surface, exclude: string[]
   if (!inBank(ytId)) return []
   const pool = CHIP_QUESTIONS.filter((q) => !exclude.includes(q.id))
   const out: ChipOffer[] = []
-  // A tab's chips: three drawn uniformly from its own questions, so each propensity is 1 / (left at the draw).
+  // A tab's chips: up to eight drawn uniformly from its own questions in order, so each propensity is
+  // 1 / (left at the draw); the row shows the first three in that order that fit its width whole.
   if (tab) {
     const left = pool.filter((q) => TAB_CHIPS[tab].includes(q.id))
-    while (out.length < 3 && left.length) {
+    while (out.length < 8 && left.length) {
       const [q] = left.splice(Math.floor(Math.random() * left.length), 1)
       out.push({ id: q.id, ask: q.ask, register: q.register, position: out.length, propensity: Math.round((1 / (left.length + 1)) * 10000) / 10000 })
     }
