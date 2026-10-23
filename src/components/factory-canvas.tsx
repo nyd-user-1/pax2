@@ -9,7 +9,7 @@ import {
 import {
   AudioLines, Binary, ChartLine, Clock, Columns3, Cpu, Database, Eye, FileBraces, FileText, Film, FlaskConical, GraduationCap, HardDrive, Layers,
   Lightbulb, ListVideo, Magnet, Mail, MessageCircleQuestionMark, Monitor, PenLine, RefreshCw, RotateCcw, Rss, Ruler, Save, Scissors, ScrollText,
-  Search, Server, Settings2, Table, Timer, TrendingUp, X, Zap, type LucideIcon,
+  ScanEye, Search, Server, Settings2, Table, Timer, TrendingUp, X, Zap, type LucideIcon,
 } from "lucide-react"
 
 import { whiteButton } from "@/components/white-button"
@@ -248,21 +248,25 @@ function LoopBadge({ n }: { n: number }) {
   return <span className="tabular flex size-[18px] shrink-0 items-center justify-center rounded-full bg-violet-600 text-[10px] font-semibold text-white">{n}</span>
 }
 
-/** An edge's chip: its icon (or a word), blue on white for flow, purple with the loop's number, dashed when planned. */
-function EdgeChip({ d, className, style }: { d: FxData; className?: string; style?: React.CSSProperties }) {
+/** An edge's chip: a circle holding its icon (a pill for a word), blue on white for flow, purple with the
+ *  loop's number on its shoulder, dashed when planned. `big` is the sidebar's size. */
+function EdgeChip({ d, big = false, className, style }: { d: FxData; big?: boolean; className?: string; style?: React.CSSProperties }) {
   const Icon = d.icon
   return (
     <span
       title={d.label}
       style={style}
       className={cn(
-        "flex w-max items-center gap-1 rounded-full border bg-white px-1.5 py-1 text-xs font-medium leading-none",
+        "relative flex shrink-0 items-center justify-center rounded-full border bg-white font-medium leading-none",
+        Icon ? (big ? "size-10" : "size-7") : cn("w-max whitespace-nowrap", big ? "h-10 px-3 text-[13px]" : "h-7 px-2.5 text-xs"),
         d.kind === "loop" ? "border-violet-300 text-violet-700" : d.kind === "planned" ? "border-dashed border-slate-300 italic text-slate-400" : "border-slate-200 text-pax2-blue",
         className,
       )}
     >
-      {d.loop && <LoopBadge n={d.loop} />}
-      {Icon ? <Icon className="size-3.5" strokeWidth={2} /> : <span className="px-0.5">{d.text}</span>}
+      {Icon ? <Icon className={big ? "size-[18px]" : "size-3.5"} strokeWidth={2} /> : d.text}
+      {d.loop && (
+        <span className={cn("tabular absolute flex items-center justify-center rounded-full bg-violet-600 font-semibold not-italic text-white ring-2 ring-white", big ? "-right-1 -top-1 size-[18px] text-[10px]" : "-right-1.5 -top-1.5 size-4 text-[9px]")}>{d.loop}</span>
+      )}
     </span>
   )
 }
@@ -324,9 +328,9 @@ const same = (a: Focus, b: Focus) => JSON.stringify(a) === JSON.stringify(b)
 function Entry({ focus, current, onFocus, sample, children }: { focus: Focus; current: Focus; onFocus: (f: Focus) => void; sample: React.ReactNode; children: React.ReactNode }) {
   const on = same(focus, current)
   return (
-    <button type="button" onClick={() => onFocus(on ? null : focus)} aria-pressed={on} className={cn("-mx-2 flex w-[calc(100%+16px)] items-start gap-3 rounded-xl p-2 text-left transition-colors hover:bg-white", on && "bg-white ring-1 ring-pax2-light-blue")}>
-      <span className="flex h-7 w-14 shrink-0 items-center justify-center">{sample}</span>
-      <span className="min-w-0 pt-0.5">{children}</span>
+    <button type="button" onClick={() => onFocus(on ? null : focus)} aria-pressed={on} className={cn("-mx-2 flex w-[calc(100%+16px)] items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-white", on && "bg-white ring-1 ring-pax2-light-blue")}>
+      <span className="flex min-h-10 w-16 shrink-0 items-center justify-center">{sample}</span>
+      <span className="min-w-0">{children}</span>
     </button>
   )
 }
@@ -347,18 +351,26 @@ function Legend({ edges, focus, onFocus, onClose }: { edges: Edge[]; focus: Focu
       <Def>{def}</Def>
     </Entry>
   )
-  const group = (k: Kindof) =>
+  const chips = (pick: (d: FxData) => boolean) =>
     edges
-      .filter((e) => (e.data as FxData).kind === k)
-      .sort((a, b) => ((a.data as FxData).loop ?? 0) - ((b.data as FxData).loop ?? 0))
+      .filter((e) => pick(e.data as FxData))
       .map((e) => {
         const d = e.data as FxData
         return (
-          <Entry key={e.id} focus={{ on: "edge", id: e.id }} current={focus} onFocus={onFocus} sample={<EdgeChip d={d} />}>
+          <Entry key={e.id} focus={{ on: "edge", id: e.id }} current={focus} onFocus={onFocus} sample={<EdgeChip d={d} big />}>
             <Def>{d.label}</Def>
           </Entry>
         )
       })
+  const heading = (label: React.ReactNode, f: Focus, loopN?: number) => {
+    const on = same(f, focus)
+    return (
+      <button type="button" onClick={() => onFocus(on ? null : f)} aria-pressed={on} className={cn("mb-1 flex items-center gap-2 rounded-md text-[13px] font-semibold hover:underline", loopN ? "text-violet-700" : "text-slate-900")}>
+        {loopN && <LoopBadge n={loopN} />}
+        {label}
+      </button>
+    )
+  }
   return (
     <section className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-500 bg-pax2-mist shadow-e2">
       <Tabs defaultValue="factory" className="flex min-h-0 flex-1 flex-col gap-0">
@@ -394,10 +406,21 @@ function Legend({ edges, focus, onFocus, onClose }: { edges: Edge[]; focus: Focu
             ))}
           </div>
         </TabsContent>
-        <TabsContent value="widgets" className="min-h-0 overflow-y-auto border-t border-slate-200/70 px-5 py-4">
-          <div className="space-y-0.5">{group("flow")}</div>
-          <div className="mt-3 space-y-0.5 border-t border-slate-200/70 pt-3">{group("loop")}</div>
-          <div className="mt-3 space-y-0.5 border-t border-slate-200/70 pt-3">{group("planned")}</div>
+        <TabsContent value="widgets" className="min-h-0 space-y-4 divide-y divide-slate-200/70 overflow-y-auto border-t border-slate-200/70 px-5 py-4 [&>*:not(:first-child)]:pt-4">
+          {LOOPS.map(([n, name]) => (
+            <div key={n}>
+              {heading(name, { on: "loop", n }, n)}
+              {chips((d) => d.loop === n)}
+            </div>
+          ))}
+          <div>
+            {heading("Flow", { on: "edges", kind: "flow" })}
+            {chips((d) => d.kind === "flow")}
+          </div>
+          <div>
+            {heading("Planned", { on: "edges", kind: "planned" })}
+            {chips((d) => d.kind === "planned")}
+          </div>
         </TabsContent>
       </Tabs>
     </section>
@@ -586,7 +609,7 @@ export function build(c: FactoryCounts): { nodes: Node[]; edges: Edge[] } {
     e("measure-score", "measure", "r-score", "score", "l", flow(Ruler, "the measured record")),
 
     // Score, Review, Publish
-    e("rack-score", "rack", "b", "score", "t-rack", flow("2, 5, 6, 7, 8", "2, 5, 6, 7 and 8 read each take")),
+    e("rack-score", "rack", "b", "score", "t-rack", flow(ScanEye, "2, 5, 6, 7 and 8 read each take")),
     e("q14-score", "q14", "l", "score", "t-q", flow(MessageCircleQuestionMark, "asks it anything", { at: [X_PUBLISH + W.step / 2, Y_Q14] })),
     e("score-review", "score", "r", "review", "l", flow(Search, "the read")),
     e("review-publish", "review", "r", "publish", "l", flow(Mail, "link sent")),
