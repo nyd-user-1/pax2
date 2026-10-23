@@ -68,7 +68,7 @@ export function AskVideo({ ytId, title }: { ytId: string; title: string }) {
   }, [])
 
   return (
-    <div ref={row} className="relative flex flex-nowrap items-center gap-2 overflow-hidden">
+    <div ref={row} className="relative -m-1 flex flex-nowrap items-center gap-2 overflow-hidden p-1">
       <button
         type="button"
         onClick={() => askAbout({ context, chipVideo: ytId })}
