@@ -27,13 +27,14 @@ const DiscussionPanel = dynamic(() => import("@/components/discussion-panel").th
 // as a route, off the sidebar.
 type NavLink = { href: string; label: string; icon: typeof House }
 type NavGroup = { label: string; icon: typeof House; children: NavLink[]; admin?: boolean }
+// A to Z (Brendan, 2026-10-23).
 const RESEARCH = [
-  { href: "/metrics", label: "Metrics", icon: Activity },
   { href: "/experiments", label: "Experiments", icon: Beaker },
-  { href: "/polling", label: "Polling", icon: Vote },
+  { href: "/glossary", label: "Glossary", icon: BookA },
   { href: "/graph", label: "Graph", icon: Workflow },
   { href: "/library", label: "Library", icon: Library },
-  { href: "/glossary", label: "Glossary", icon: BookA },
+  { href: "/metrics", label: "Metrics", icon: Activity },
+  { href: "/polling", label: "Polling", icon: Vote },
 ]
 const ADMIN = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },

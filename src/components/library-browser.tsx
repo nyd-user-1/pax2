@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Search } from "lucide-react"
 
+import { SearchBar } from "@/components/record/feed"
 import { kindStyle, tagStyle } from "@/lib/swatches"
 import { cn } from "@/ui/lib/utils"
 
@@ -29,12 +29,10 @@ export function LibraryBrowser({ cards }: { cards: Card[] }) {
   const shown = cards.filter((c) => (!kind || c.kind === kind) && (!needle || [c.title, c.summary, c.publisher, ...c.tags].join(" ").toLowerCase().includes(needle) || !!hit(c, needle)))
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-3 md:flex-row md:items-center">
-        <label className="surface flex flex-1 items-center gap-2 px-4 py-3 focus-within:ring-2 focus-within:ring-pax2-light-blue/40">
-          <Search className="size-4 text-slate-400" />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search datasets and reports: persuasion, hooks, Massachusetts, shorts…" className="flex-1 bg-transparent text-sm outline-none" />
-        </label>
-        <div className="flex flex-wrap gap-2">
+      {/* The feed's search bar (src/components/record/feed.tsx), centered as on /tags, the kinds beneath it. */}
+      <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-3">
+        <SearchBar q={q} setQ={setQ} placeholder="Search datasets and reports: persuasion, hooks, Massachusetts, shorts…" />
+        <div className="flex flex-wrap justify-center gap-2">
           {[null, ...kinds].map((k) => (
             <button key={k ?? "all"} type="button" onClick={() => setKind(k)} style={k && kind === k ? kindStyle(k) : undefined} className={cn("rounded-full px-3.5 py-1.5 text-sm transition-colors", kind === k ? (k ? "font-medium shadow-e1" : "bg-pax2-blue font-medium text-white") : "bg-white text-slate-600 shadow-e1 hover:text-pax2-blue")}>
               {k ?? "All"}
