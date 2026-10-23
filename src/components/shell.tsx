@@ -81,6 +81,7 @@ const TITLES: [string, string][] = [
   ["/app/home", "Home"],
   ["/home", "Home"],
   ["/chat", "Chat"],
+  ["/account", "Account"],
   ["/recording", "Create"],
   ["/record/", "Create"],
   ["/my-videos", "My videos"],
@@ -767,16 +768,16 @@ function AccountMenu() {
           </span>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem disabled className={item}>
+        <DropdownMenuItem onClick={() => router.push("/account#profile")} className={item}>
           <User2 /> Profile
         </DropdownMenuItem>
-        <DropdownMenuItem disabled className={item}>
+        <DropdownMenuItem onClick={() => router.push("/account#account")} className={item}>
           <BadgeCheck /> Account
         </DropdownMenuItem>
         <DropdownMenuItem disabled className={item}>
           <Bell /> Notifications
         </DropdownMenuItem>
-        <DropdownMenuItem disabled className={item}>
+        <DropdownMenuItem onClick={() => router.push("/account#settings")} className={item}>
           <Settings /> Settings
         </DropdownMenuItem>
         <DropdownMenuSeparator />

@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 
 import { connections } from "@/app/connect-actions"
 import { Chat } from "@/components/chat/chat"
-import { ConnectView } from "@/components/connect-view"
+import { ConnectView, type Nav } from "@/components/connect-view"
 import { useShellPanel } from "@/components/shell"
 import { useShelf, type ShelfBlock, type ShelfItem } from "@/lib/home-blocks"
 import { setShelfDrag } from "@/lib/shelf-drag"
@@ -187,6 +187,8 @@ export function DiscussionPanel({ onClose: close, admin = false }: { onClose: ()
     if (admin) connections().then(setLinked).catch(() => setLinked({ slack: null, discord: null }))
   }, [admin])
   const status = (name: string | null | undefined) => (linked ? (name ?? "Not connected") : undefined)
+  // Inside Slack or Discord, the header names the channel or post and its arrow steps back one level.
+  const [sub, setSub] = React.useState<Nav>(null)
   const setView = (v: View) => setViewState((keptView = v))
   // Closing starts the next opening fresh, on the list.
   const onClose = () => {
@@ -199,11 +201,11 @@ export function DiscussionPanel({ onClose: close, admin = false }: { onClose: ()
       <div className="relative z-10 flex min-h-[73px] shrink-0 items-center justify-between gap-3 bg-pax2-mist px-6 py-4">
         <div className="flex min-w-0 items-center gap-2">
           {view !== "welcome" && (
-            <button type="button" onClick={() => setView("welcome")} aria-label="Back" className="-ml-2 flex size-9 shrink-0 items-center justify-center rounded-full text-slate-600 hover:bg-white hover:text-pax2-blue">
+            <button type="button" onClick={() => (sub ? sub.back() : setView("welcome"))} aria-label="Back" className="-ml-2 flex size-9 shrink-0 items-center justify-center rounded-full text-slate-600 hover:bg-white hover:text-pax2-blue">
               <ArrowLeft className="size-4" />
             </button>
           )}
-          <p className="truncate font-display text-xl text-slate-900">{TITLE[view]}</p>
+          <p className="truncate font-display text-xl text-slate-900">{sub?.title ?? TITLE[view]}</p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <button type="button" onClick={() => setWide(!wide)} className={whiteButton("circle", "hidden md:inline-flex")} aria-label={wide ? "Narrow the panel" : "Widen the panel"}>
@@ -232,7 +234,7 @@ export function DiscussionPanel({ onClose: close, admin = false }: { onClose: ()
         )}
         {view === "blocks" && <BlocksShelf />}
         {view === "chat" && <Chat compact />}
-        {(view === "slack" || view === "discord") && (linked ? <ConnectView key={view} service={view} mock={!linked[view]} /> : <Loader2 className="mx-6 my-6 size-5 animate-spin text-pax2-blue" />)}
+        {(view === "slack" || view === "discord") && (linked ? <ConnectView key={view} service={view} mock={!linked[view]} onNav={setSub} /> : <Loader2 className="mx-6 my-6 size-5 animate-spin text-pax2-blue" />)}
       </div>
     </section>
   )

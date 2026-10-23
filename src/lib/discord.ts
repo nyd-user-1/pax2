@@ -1,5 +1,6 @@
 import "server-only"
 
+import type { Attachment, ChannelMessage, Writer } from "@/lib/connect-types"
 import { param } from "@/lib/ssm-param"
 
 // Discord, after govblock (apps/web/lib/agents/connections/discord.ts and discord-community.ts): the PAX
@@ -90,29 +91,32 @@ export async function discordThreads(forum: string): Promise<DiscordThread[]> {
     .map((t) => ({ id: t.id, name: t.name, count: t.message_count ?? 0 }))
 }
 
-export type ChannelMessage = { id: string; text: string; author: string; avatar: string | null; at: string }
-
-/** A channel's or thread's last 50 messages, oldest first. */
+/** A channel's or thread's last 50 messages, oldest first, mentions by name. */
 export async function discordHistory(channel: string): Promise<ChannelMessage[]> {
+  type User = { id: string; username: string; global_name?: string | null; avatar?: string | null }
   type Raw = {
     id: string
     content: string
     timestamp: string
     webhook_id?: string
-    author: { id: string; username: string; global_name?: string | null; avatar?: string | null }
+    author: User
     member?: { nick?: string | null }
+    mentions?: User[]
     embeds?: { title?: string; description?: string }[]
-    attachments?: { filename: string }[]
+    attachments?: { filename: string; url: string; size?: number; content_type?: string }[]
   }
   const raw = await api<Raw[]>(`/channels/${channel}/messages?limit=50`)
   return raw
     .reverse()
     .map((m) => {
-      const text = [m.content, ...(m.embeds ?? []).map((e) => [e.title, e.description].filter(Boolean).join("\n")), ...(m.attachments ?? []).map((a) => a.filename)].filter(Boolean).join("\n").trim()
+      const named = new Map((m.mentions ?? []).map((u) => [u.id, u.global_name || u.username]))
+      const content = m.content.replace(/<@!?(\d+)>/g, (_, id: string) => `@${named.get(id) ?? "member"}`)
+      const text = [content, ...(m.embeds ?? []).map((e) => [e.title, e.description].filter(Boolean).join("\n"))].filter(Boolean).join("\n").trim()
+      const files: Attachment[] = (m.attachments ?? []).map((a) => ({ name: a.filename, url: a.url, preview: a.content_type?.startsWith("image/") ? a.url : null, size: a.size ?? null }))
       const avatar = m.author.avatar ? `https://cdn.discordapp.com/avatars/${m.author.id}/${m.author.avatar}.png?size=64` : null
-      return { id: m.id, text, author: m.member?.nick || m.author.global_name || m.author.username, avatar, at: m.timestamp }
+      return { id: m.id, text, author: m.member?.nick || m.author.global_name || m.author.username, authorId: m.webhook_id ? null : m.author.id, avatar, at: m.timestamp, files }
     })
-    .filter((m) => m.text)
+    .filter((m) => m.text || m.files.length)
 }
 
 // The PAX webhook per channel: found among the channel's webhooks (only the app that made one sees its
@@ -132,9 +136,22 @@ async function webhook(channel: string) {
   return hook
 }
 
-/** Posts under the writer's name. A thread posts through its forum's webhook, into the thread. */
-export async function discordPost(channel: string, text: string, as: string, parent?: string): Promise<void> {
+/** Posts under the writer's name and picture, files attached. A thread posts through its forum's webhook,
+ *  into the thread. `mentions` turns @Name into a real mention, which notifies no one (allowed_mentions). */
+export async function discordPost(channel: string, text: string, as: Writer, parent?: string, mentions: Record<string, string> = {}, files: File[] = []): Promise<void> {
   const hook = await webhook(parent ?? channel)
   const q = parent ? `?wait=true&thread_id=${channel}` : "?wait=true"
-  await api(`/webhooks/${hook.id}/${hook.token}${q}`, { method: "POST", auth: false, body: { content: text.slice(0, CONTENT_MAX), username: as, allowed_mentions: { parse: [] } } })
+  let content = text
+  for (const [name, id] of Object.entries(mentions)) content = content.split(`@${name}`).join(`<@${id}>`)
+  const payload = { content: content.slice(0, CONTENT_MAX), username: as.name, avatar_url: as.icon, allowed_mentions: { parse: [] } }
+  const url = `${API}/webhooks/${hook.id}/${hook.token}${q}`
+  if (!files.length) {
+    await api(`/webhooks/${hook.id}/${hook.token}${q}`, { method: "POST", auth: false, body: payload })
+    return
+  }
+  const form = new FormData()
+  form.set("payload_json", JSON.stringify({ ...payload, attachments: files.map((f, i) => ({ id: i, filename: f.name })) }))
+  files.forEach((f, i) => form.set(`files[${i}]`, f, f.name))
+  const res = await fetch(url, { method: "POST", headers: { "user-agent": UA }, body: form, cache: "no-store", signal: AbortSignal.timeout(60_000) })
+  if (!res.ok) throw new DiscordApiError(res.status, await res.text())
 }

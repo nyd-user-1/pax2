@@ -4,7 +4,8 @@
 #
 # What each scope is for, in src/lib/slack.ts: list channels (channels:read, groups:read), read them
 # (channels:history, groups:history), join a public channel on first read (channels:join), post
-# (chat:write) under the writer's name (chat:write.customize), and name the people in a channel (users:read).
+# (chat:write) under the writer's name and picture (chat:write.customize), name the people in a channel
+# (users:read), and show and send attachments (files:read, files:write).
 display_information:
   name: PAX
   description: Read and post to Slack from the PAX side panel.
@@ -24,6 +25,8 @@ oauth_config:
       - chat:write
       - chat:write.customize
       - users:read
+      - files:read
+      - files:write
 settings:
   org_deploy_enabled: false
   socket_mode_enabled: false
