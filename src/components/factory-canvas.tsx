@@ -7,21 +7,23 @@ import {
   type Edge, type EdgeProps, type Node, type NodeChange, type NodeProps,
 } from "@xyflow/react"
 import {
-  AudioLines, Binary, ChartLine, Clock, Columns3, Cpu, Database, Eye, FileBraces, FileText, Film, FlaskConical, GraduationCap, HardDrive, Layers,
+  AudioLines, Binary, ChartLine, ChevronRight, Clock, Columns3, Cpu, Database, Eye, Factory, FileBraces, FileText, Film, FlaskConical, GraduationCap, HardDrive, Layers,
   Lightbulb, ListVideo, Magnet, Mail, MessageCircleQuestionMark, Monitor, PenLine, RefreshCw, RotateCcw, Rss, Ruler, Save, Scissors, ScrollText,
-  ScanEye, Search, Server, Settings2, Table, Timer, TrendingUp, X, Zap, type LucideIcon,
+  ScanEye, Search, Server, Settings2, Shapes, Table, Timer, TrendingUp, Zap, type LucideIcon,
 } from "lucide-react"
 
+import { createPortal } from "react-dom"
+
+import { useShellPanel } from "@/components/shell"
 import { whiteButton } from "@/components/white-button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/ui/components/nova/tabs"
 import { cn } from "@/ui/lib/utils"
 
 // /erd (once /pipeline-2): the whole PAX2 factory as one fixed diagram on the xyflow canvas. Six node kinds
 // (door, stage, store, instrument, service, surface) and three edge kinds (flow, loop, planned). Boxes carry
 // their names and live counts; what each one is shows on hover. Each edge carries an icon chip, blue for flow,
-// purple for a loop with its number, dashed for planned; its words show on hover. The sidebar the config
-// button slides in from the left, inside the page, holds the key: Factory (the kinds and the loops) and
-// Widgets (every chip and its words). Clicking an entry lights its boxes or lines and dims the rest.
+// purple for a loop with its number, dashed for planned; its words show on hover. The gear in the header
+// opens the Architecture panel in the shell's right slot: Factory (the kinds and the loops) and Widgets
+// (every chip and its words). Clicking an entry lights its boxes or lines and dims the rest.
 // Instrument numbers are the rows of the Models table on docs/ACCOUNTING.html (scripts/accounting.mjs).
 // Every position derives from the column and row constants above build(). The boxes drag; where they were
 // dragged is kept in this browser until Reset layout puts them back.
@@ -300,8 +302,9 @@ function FxEdge({ id, source, target, sourceX, sourceY, targetX, targetY, source
 const edgeTypes = { fx: FxEdge }
 
 // ---------------------------------------------------------------------------------------------
-// The sidebar: Factory (the kinds and the loops) and Widgets (every chip and its words). An entry lights
-// what it names on the canvas; a second click, Escape, or a click on the canvas puts the lights out.
+// The Architecture panel, in the shell's right slot: two rows, Factory (the kinds and the loops) and Widgets
+// (every chip and its words), each drilling down to its list. An entry lights what it names on the canvas;
+// a second click, Escape, a click on the canvas, or closing the panel puts the lights out.
 
 const LOOPS: [number, string, string][] = [
   [1, "Re-entry", "Publish puts the video on the poller; its readings bring it back through the admin console as measured outcome."],
@@ -341,7 +344,23 @@ function Entry({ focus, current, onFocus, sample, children }: { focus: Focus; cu
 const Name = ({ children }: { children: React.ReactNode }) => <span className="block text-[13px] font-semibold text-slate-900">{children}</span>
 const Def = ({ children }: { children: React.ReactNode }) => <span className="block text-xs leading-snug text-slate-500">{children}</span>
 
-function Legend({ edges, focus, onFocus, onClose }: { edges: Edge[]; focus: Focus; onFocus: (f: Focus) => void; onClose: () => void }) {
+type View = "rows" | "factory" | "widgets"
+
+/** The Discussion panel's row (components/discussion-panel.tsx), for the Architecture panel's two doors. */
+function ArchRow({ icon, label, sub, onClick }: { icon: React.ReactNode; label: string; sub: string; onClick: () => void }) {
+  return (
+    <button type="button" onClick={onClick} className="group flex w-full items-center gap-3 border-b border-slate-200/70 px-6 py-4 text-left transition-colors hover:bg-white/70">
+      <span className="flex size-4 shrink-0 items-center justify-center text-slate-400 group-hover:text-pax2-blue">{icon}</span>
+      <span className="flex-1">
+        <span className="block text-[15px] font-medium text-slate-900 group-hover:text-pax2-blue">{label}</span>
+        <span className="block text-xs text-slate-500">{sub}</span>
+      </span>
+      <ChevronRight className="size-4 text-slate-400 group-hover:text-pax2-blue" />
+    </button>
+  )
+}
+
+function Architecture({ view, edges, focus, onFocus, onOpen }: { view: View; edges: Edge[]; focus: Focus; onFocus: (f: Focus) => void; onOpen: (v: View) => void }) {
   const kind = (k: NodeKind, sample: React.ReactNode, name: string, def: string) => (
     <Entry key={k} focus={{ on: "kind", kind: k }} current={focus} onFocus={onFocus} sample={sample}>
       <Name>{name}</Name>
@@ -374,59 +393,56 @@ function Legend({ edges, focus, onFocus, onClose }: { edges: Edge[]; focus: Focu
       </button>
     )
   }
-  return (
-    <section className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-500 bg-pax2-mist shadow-e2">
-      <Tabs defaultValue="factory" className="flex min-h-0 flex-1 flex-col gap-0">
-        <div className="flex shrink-0 items-center justify-between gap-3 px-5 pb-2 pt-4">
-          <TabsList variant="line" className="h-9">
-            <TabsTrigger value="factory" className="px-2 font-display text-base">Factory</TabsTrigger>
-            <TabsTrigger value="widgets" className="px-2 font-display text-base">Widgets</TabsTrigger>
-          </TabsList>
-          <button type="button" onClick={onClose} className={whiteButton("circle")} aria-label="Close">
-            <X className="size-4" />
-          </button>
+  if (view === "rows")
+    return (
+      <div>
+        <ArchRow icon={<Factory className="size-4" />} label="Factory" sub="The boxes, the lines and the four loops" onClick={() => onOpen("factory")} />
+        <ArchRow icon={<Shapes className="size-4" />} label="Widgets" sub="Every chip on the lines, and its words" onClick={() => onOpen("widgets")} />
+      </div>
+    )
+  if (view === "factory")
+    return (
+      <>
+        <div className="space-y-1">
+          {kind("door", <span className="h-6 w-14 rounded-lg bg-pax2-blue" />, "Door", "How a video enters.")}
+          {kind("stage", <span className="h-6 w-14 rounded-xl border-2 border-pax2-light-blue bg-white" />, "Stage", "What the Lab does to the video, with the tools that do it.")}
+          {kind("store", <span className="flex h-6 w-14 items-center justify-center rounded-[10px_10px_6px_6px] border border-slate-300 bg-slate-50"><HardDrive className="size-3.5 text-slate-500" /></span>, "Store", "Where it is kept: S3 prefixes, the DynamoDB ledger, the catalog. The count is what it holds; a dated count is from the last accounting run.")}
+          {kind("instrument", <span className="flex h-6 w-14 items-center gap-1 rounded-full border border-indigo-200 bg-indigo-50 pl-0.5"><span className="flex size-5 items-center justify-center rounded-full bg-pax2-blue text-[10px] font-semibold text-white">n</span></span>, "Instrument", "A fitted model, numbered to the Models table. A dashed one is staged: fitted or in build, not yet serving.")}
+          {kind("service", <span className="flex h-6 w-14 items-center justify-center rounded-lg border border-amber-300 bg-amber-50"><Server className="size-3.5 text-amber-700" /></span>, "Service", "A paid external the factory calls, with its unit cost where one is recorded.")}
+          {kind("surface", <span className="h-6 w-14 overflow-hidden rounded-lg border border-slate-300 bg-white"><span className="block h-1.5 bg-slate-100" /></span>, "Surface", "A page the factory feeds.")}
         </div>
-        <TabsContent value="factory" className="min-h-0 overflow-y-auto border-t border-slate-200/70 px-5 py-4">
-          <div className="space-y-1">
-            {kind("door", <span className="h-6 w-14 rounded-lg bg-pax2-blue" />, "Door", "How a video enters.")}
-            {kind("stage", <span className="h-6 w-14 rounded-xl border-2 border-pax2-light-blue bg-white" />, "Stage", "What the Lab does to the video, with the tools that do it.")}
-            {kind("store", <span className="flex h-6 w-14 items-center justify-center rounded-[10px_10px_6px_6px] border border-slate-300 bg-slate-50"><HardDrive className="size-3.5 text-slate-500" /></span>, "Store", "Where it is kept: S3 prefixes, the DynamoDB ledger, the catalog. The count is what it holds; a dated count is from the last accounting run.")}
-            {kind("instrument", <span className="flex h-6 w-14 items-center gap-1 rounded-full border border-indigo-200 bg-indigo-50 pl-0.5"><span className="flex size-5 items-center justify-center rounded-full bg-pax2-blue text-[10px] font-semibold text-white">n</span></span>, "Instrument", "A fitted model, numbered to the Models table. A dashed one is staged: fitted or in build, not yet serving.")}
-            {kind("service", <span className="flex h-6 w-14 items-center justify-center rounded-lg border border-amber-300 bg-amber-50"><Server className="size-3.5 text-amber-700" /></span>, "Service", "A paid external the factory calls, with its unit cost where one is recorded.")}
-            {kind("surface", <span className="h-6 w-14 overflow-hidden rounded-lg border border-slate-300 bg-white"><span className="block h-1.5 bg-slate-100" /></span>, "Surface", "A page the factory feeds.")}
-          </div>
-          <div className="mt-3 space-y-1 border-t border-slate-200/70 pt-3">
-            {line("flow", "Flow", "The video, or what was measured from it, moves on.")}
-            {line("loop", "Loop", "A result returns to re-enter the factory or train what runs in it.")}
-            {line("planned", "Planned", "Dashed: drawn where it will run; not yet wired.")}
-          </div>
-          <div className="mt-3 space-y-1 border-t border-slate-200/70 pt-3">
-            {LOOPS.map(([n, name, def]) => (
-              <Entry key={n} focus={{ on: "loop", n }} current={focus} onFocus={onFocus} sample={<LoopBadge n={n} />}>
-                <span className="block text-[13px] font-semibold text-violet-700">{name}</span>
-                <Def>{def}</Def>
-              </Entry>
-            ))}
-          </div>
-        </TabsContent>
-        <TabsContent value="widgets" className="min-h-0 space-y-3 divide-y divide-slate-200/70 overflow-y-auto border-t border-slate-200/70 px-5 py-4 [&>*:not(:first-child)]:pt-3">
-          {LOOPS.map(([n, name]) => (
-            <div key={n}>
-              {heading(name, { on: "loop", n }, n)}
-              {chips((d) => d.loop === n)}
-            </div>
+        <div className="mt-3 space-y-1 border-t border-slate-200/70 pt-3">
+          {line("flow", "Flow", "The video, or what was measured from it, moves on.")}
+          {line("loop", "Loop", "A result returns to re-enter the factory or train what runs in it.")}
+          {line("planned", "Planned", "Dashed: drawn where it will run; not yet wired.")}
+        </div>
+        <div className="mt-3 space-y-1 border-t border-slate-200/70 pt-3">
+          {LOOPS.map(([n, name, def]) => (
+            <Entry key={n} focus={{ on: "loop", n }} current={focus} onFocus={onFocus} sample={<LoopBadge n={n} />}>
+              <span className="block text-[13px] font-semibold text-violet-700">{name}</span>
+              <Def>{def}</Def>
+            </Entry>
           ))}
-          <div>
-            {heading("Flow", { on: "edges", kind: "flow" })}
-            {chips((d) => d.kind === "flow")}
-          </div>
-          <div>
-            {heading("Planned", { on: "edges", kind: "planned" })}
-            {chips((d) => d.kind === "planned")}
-          </div>
-        </TabsContent>
-      </Tabs>
-    </section>
+        </div>
+      </>
+    )
+  return (
+    <div className="space-y-3 divide-y divide-slate-200/70 [&>*:not(:first-child)]:pt-3">
+      {LOOPS.map(([n, name]) => (
+        <div key={n}>
+          {heading(name, { on: "loop", n }, n)}
+          {chips((d) => d.loop === n)}
+        </div>
+      ))}
+      <div>
+        {heading("Flow", { on: "edges", kind: "flow" })}
+        {chips((d) => d.kind === "flow")}
+      </div>
+      <div>
+        {heading("Planned", { on: "edges", kind: "planned" })}
+        {chips((d) => d.kind === "planned")}
+      </div>
+    </div>
   )
 }
 
@@ -671,8 +687,9 @@ function Canvas({ nodes, edges, onNodesChange, onPane }: { nodes: Node[]; edges:
   )
 }
 
-/** The canvas, with its key in a sidebar the config button slides in from the left, inside the page. */
+/** The canvas. Its key is the Architecture panel, which the gear in the shell header opens in the right slot. */
 const LAYOUT_KEY = "erd-layout"
+const ARCH_KEY = "erd-architecture"
 
 export function FactoryCanvas({ counts }: { counts: FactoryCounts }) {
   const base = React.useMemo(() => build(counts), [counts])
@@ -711,8 +728,30 @@ export function FactoryCanvas({ counts }: { counts: FactoryCounts }) {
     }
   }, [nodes, moved, sig])
   const reset = () => setNodes(base.nodes)
-  const [open, setOpen] = React.useState(false)
   const [focus, setFocus] = React.useState<Focus>(null)
+  // The Architecture panel: handed to the shell's right slot, handed again whenever what it shows changes.
+  const { openAside, asideKey } = useShellPanel()
+  const showing = asideKey === ARCH_KEY
+  const [view, setView] = React.useState<View>("rows")
+  const panel = React.useCallback(
+    (v: View) =>
+      openAside(
+        v === "rows"
+          ? { key: ARCH_KEY, title: "Architecture", flush: true, body: <Architecture view="rows" edges={edges} focus={focus} onFocus={setFocus} onOpen={setView} /> }
+          : { key: ARCH_KEY, title: v === "factory" ? "Factory" : "Widgets", back: () => setView("rows"), body: <Architecture view={v} edges={edges} focus={focus} onFocus={setFocus} onOpen={setView} /> },
+      ),
+    [openAside, edges, focus],
+  )
+  React.useEffect(() => {
+    if (showing) panel(view)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view, focus])
+  // Closing the panel puts the lights out.
+  React.useEffect(() => {
+    if (!showing) setFocus(null)
+  }, [showing])
+  const [slot, setSlot] = React.useState<HTMLElement | null>(null)
+  React.useEffect(() => setSlot(document.getElementById("page-actions")), [])
   const lit = React.useMemo(() => lights(focus, nodes, edges), [focus, nodes, edges])
   React.useEffect(() => {
     const key = (e: KeyboardEvent) => e.key === "Escape" && setFocus(null)
@@ -728,27 +767,25 @@ export function FactoryCanvas({ counts }: { counts: FactoryCounts }) {
           </ReactFlowProvider>
         </MovedCtx.Provider>
       </LitCtx.Provider>
-      <div className={cn("absolute left-4 top-4 z-10 flex items-center gap-2 transition-opacity", open && "pointer-events-none opacity-0")}>
-        <button type="button" onClick={() => setOpen(true)} aria-label="Key" title="Key" aria-expanded={open} className={whiteButton("circle")}>
-          <Settings2 className="size-4" />
+      {moved.size > 0 && (
+        <button type="button" onClick={reset} className={whiteButton("md", "absolute left-4 top-4 z-10 h-10 py-0")}>
+          <RotateCcw className="size-4" /> Reset layout
         </button>
-        {moved.size > 0 && (
-          <button type="button" onClick={reset} className={whiteButton("md", "h-10 py-0")}>
-            <RotateCcw className="size-4" /> Reset layout
-          </button>
+      )}
+      {slot &&
+        createPortal(
+          <button
+            type="button"
+            onClick={() => (showing ? openAside(null) : (setView("rows"), panel("rows")))}
+            aria-pressed={showing}
+            aria-label="Architecture"
+            title="Architecture"
+            className={whiteButton("circle")}
+          >
+            <Settings2 className="size-4" />
+          </button>,
+          slot,
         )}
-      </div>
-      <div className={cn("absolute inset-y-4 left-4 z-20 w-[min(360px,calc(100%-32px))] transition-transform duration-300 ease-in-out", open ? "translate-x-0" : "-translate-x-[calc(100%+24px)]")} aria-hidden={!open}>
-        <Legend
-          edges={edges}
-          focus={focus}
-          onFocus={setFocus}
-          onClose={() => {
-            setOpen(false)
-            setFocus(null)
-          }}
-        />
-      </div>
     </div>
   )
 }

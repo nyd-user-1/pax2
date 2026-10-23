@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronDown, ChevronUp, ChevronsUpDown, Clapperboard, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, Microscope, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, ShieldCheck, Star, Tag, Target, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, ArrowLeft, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronDown, ChevronUp, ChevronsUpDown, Clapperboard, Columns2, Columns3, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, Microscope, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, ShieldCheck, Star, Tag, Target, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
 
 import dynamic from "next/dynamic"
 import { SidebarChats } from "@/components/sidebar-chats"
@@ -143,8 +143,9 @@ type PanelState = {
 }
 /** `nonce` makes asking the same thing twice a second ask. */
 export type DiscussSeed = { context: () => string; chipVideo?: string; ask?: ChipOffer | null; nonce: number }
-/** `key` names the content's owner, so it can tell whether the panel still shows it. */
-export type Aside = { key: string; title: string; body: React.ReactNode }
+/** `key` names the content's owner, so it can tell whether the panel still shows it. `back` puts the
+ *  Discussion panel's back arrow before the title; `flush` lets rows run to the panel's edges. */
+export type Aside = { key: string; title: string; body: React.ReactNode; back?: () => void; flush?: boolean }
 export type PanelSize = "third" | "half" | "full" | "custom"
 const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {}, size: "third", nextSize: "half", cycleSize: () => {}, panelOpen: false, sidebarOpen: false, toggleSidebar: () => {}, discuss: false, toggleDiscuss: () => {}, openAside: () => {}, asideKey: null, askAbout: () => {}, discussSeed: null })
 export const useShellPanel = () => React.useContext(PanelCtx)
@@ -472,7 +473,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
           <div className={cn("relative h-full", takeover ? "w-full" : panelW)}>
             {drawer}
             {discuss && !panelOpen && <DiscussionPanel admin={admin} onClose={() => setDiscuss(false)} />}
-            {aside && !discuss && !panelOpen && <AsidePanel aside={aside} onClose={() => setAside(null)} />}
+            {aside && !discuss && !panelOpen && <AsidePanel aside={aside} wide={wide} onWide={(w) => setSize(w ? "half" : "third")} onClose={() => setAside(null)} />}
             {paired && <CornerClose label="Close" onClose={closePanel} />}
           </div>
         </div>
@@ -819,17 +820,30 @@ function AccountMenu() {
   )
 }
 
-/** The right panel holding content a page hands it (openAside): the discussion panel's frame, its title, and close. */
-function AsidePanel({ aside, onClose }: { aside: Aside; onClose: () => void }) {
+/** The right panel holding content a page hands it (openAside): the discussion panel's frame, its back arrow,
+ *  title, width toggle and close. */
+function AsidePanel({ aside, wide, onWide, onClose }: { aside: Aside; wide: boolean; onWide: (wide: boolean) => void; onClose: () => void }) {
   return (
     <section className="fixed inset-0 z-50 flex flex-col bg-pax2-mist md:static md:z-auto md:h-full md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:shadow-e2">
       <div className="flex min-h-[73px] shrink-0 items-center justify-between gap-3 px-6 py-4">
-        <p className="truncate font-display text-xl text-slate-900">{aside.title}</p>
-        <button type="button" onClick={onClose} className={whiteButton("circle")} aria-label="Close">
-          <X className="size-4" />
-        </button>
+        <div className="flex min-w-0 items-center gap-2">
+          {aside.back && (
+            <button type="button" onClick={aside.back} aria-label="Back" className="-ml-2 flex size-9 shrink-0 items-center justify-center rounded-full text-slate-600 hover:bg-white hover:text-pax2-blue">
+              <ArrowLeft className="size-4" />
+            </button>
+          )}
+          <p className="truncate font-display text-xl text-slate-900">{aside.title}</p>
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          <button type="button" onClick={() => onWide(!wide)} className={whiteButton("circle", "hidden md:inline-flex")} aria-label={wide ? "Narrow the panel" : "Widen the panel"}>
+            {wide ? <Columns3 className="size-4" /> : <Columns2 className="size-4" />}
+          </button>
+          <button type="button" onClick={onClose} className={whiteButton("circle")} aria-label="Close">
+            <X className="size-4" />
+          </button>
+        </div>
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-200/70 px-6 py-5">{aside.body}</div>
+      <div className={cn("min-h-0 flex-1 overflow-y-auto border-t border-slate-200/70", !aside.flush && "px-6 py-5")}>{aside.body}</div>
     </section>
   )
 }
