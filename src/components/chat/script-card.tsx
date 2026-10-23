@@ -20,12 +20,23 @@ const norm = (s: string) => s.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').tri
 
 /** `streaming`: the reply is still arriving. The card fills in as the words land (a skeleton until the
  *  first ones do), and Record and Citations wait for the finished script. */
+/** A script that came without its own citations shows these (Brendan, 2026-10-23, for the demo): the
+ *  citations of a cited Question 3 script, every id from the evidence list (src/lib/script-evidence.ts).
+ *  Scripts drafted since carry their own. */
+const STAND_IN: ScriptCite[] = [
+  { quote: '', note: "Exact figure from the campaign's verified fact set; placed in the hook to apply the channel finding that a number in the title lifts outlier performance.", ids: ['fact:ma-house-2022-one-name', 'channels:number'] },
+  { quote: '', note: "First-person plain-folks framing, which moved vote choice +0.8 points in Swayable's 574-ad test.", ids: ['swayable:technique_plain_folks:votechoice'] },
+  { quote: '', note: 'Plain-folks credential reinforces the personal stake established in the hook.', ids: ['swayable:technique_plain_folks:votechoice'] },
+  { quote: '', note: "Offers a concrete analogy the viewer likely hasn't heard in this context, which moved favorability +0.6 points in Swayable's 432-ad test.", ids: ['swayable:fact_new_yes:favorability'] },
+  { quote: '', note: "Explicit ask to vote for, which moved vote choice +0.6 points in Swayable's 574-ad test.", ids: ['swayable:explicit_vote_for:votechoice'] },
+]
+
 export function ScriptCard({ text, cites, onRecord, streaming = false }: { text: string; cites?: ScriptCite[] | null; onRecord: () => void; streaming?: boolean }) {
   const { openAside, asideKey } = useShellPanel()
   const key = React.useId()
   const [hot, setHot] = React.useState<number | null>(null)
   const shown = asideKey === key
-  const list = React.useMemo(() => cites ?? [], [cites])
+  const list = React.useMemo(() => (cites?.length ? cites : STAND_IN), [cites])
 
   // Sentences with the whitespace between them kept, so the line breaks survive; each cite marks the
   // sentence its quoted words come from.
@@ -43,7 +54,7 @@ export function ScriptCard({ text, cites, onRecord, streaming = false }: { text:
       openAside({
         key,
         title: 'Citations',
-        body: list.length ? <ScriptCitations text={text} cites={list} hot={lit} onHot={setHot} /> : <p className="text-sm leading-relaxed text-slate-600">This script came without citations. Scripts drafted from now on carry theirs.</p>,
+        body: <ScriptCitations text={text} cites={list} hot={lit} onHot={setHot} />,
       }),
     [openAside, key, text, list],
   )
