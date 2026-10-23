@@ -1,0 +1,30 @@
+# The PAX Slack app. Create it at https://api.slack.com/apps -> Create New App -> From a manifest ->
+# pick the NYSgpt workspace -> paste this file. Then Install to Workspace, copy the Bot User OAuth Token
+# (xoxb-...) and run: scripts/connect-slack.sh <token>
+#
+# What each scope is for, in src/lib/slack.ts: list channels (channels:read, groups:read), read them
+# (channels:history, groups:history), join a public channel on first read (channels:join), post
+# (chat:write) under the writer's name (chat:write.customize), and name the people in a channel (users:read).
+display_information:
+  name: PAX
+  description: Read and post to Slack from the PAX side panel.
+  background_color: "#1e3a8a"
+features:
+  bot_user:
+    display_name: PAX
+    always_online: true
+oauth_config:
+  scopes:
+    bot:
+      - channels:read
+      - groups:read
+      - channels:history
+      - groups:history
+      - channels:join
+      - chat:write
+      - chat:write.customize
+      - users:read
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false

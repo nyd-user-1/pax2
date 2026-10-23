@@ -1,19 +1,22 @@
 "use client"
 
 import * as React from "react"
-import { ArrowLeft, ChevronRight, Loader2, Columns2, Columns3, Hash, LayoutGrid, MessagesSquare, X } from "lucide-react"
+import { ArrowLeft, ChevronRight, Loader2, Columns2, Columns3, LayoutGrid, MessagesSquare, Video, X } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 
+import { connections } from "@/app/connect-actions"
 import { Chat } from "@/components/chat/chat"
+import { ConnectView } from "@/components/connect-view"
 import { useShellPanel } from "@/components/shell"
 import { useShelf, type ShelfBlock, type ShelfItem } from "@/lib/home-blocks"
 import { setShelfDrag } from "@/lib/shelf-drag"
 import { cn } from "@/ui/lib/utils"
 import { whiteButton } from "@/components/white-button"
 
-// 44b's DiscussionPanel (components/DiscussionPanel.tsx), cut to four doors: Blocks, Chat, Slack and
+// 44b's DiscussionPanel (components/DiscussionPanel.tsx), cut to five doors: Blocks, Chat, Record, Slack and
 // Discord. Blocks is the shelf after Cloudflare's chat canvas: a handful of shorts, and any block added
-// from a page's block menu. A welcome list of rows; each opens its view in the same panel, with Back to the list.
+// from a page's block menu. A welcome list of rows; each opens its view in the same panel, with Back to the
+// list, except Record, which opens /recording. Slack and Discord are admins' alone (components/connect-view.tsx).
 // It sits in the shell's right slot in the take panel's frame, so the two read as one panel.
 
 type View = "welcome" | "blocks" | "chat" | "slack" | "discord"
@@ -24,13 +27,13 @@ let keptView: View = "welcome"
 let keptSelected: string | null = null
 const TITLE: Record<View, string> = { welcome: "Discussion", blocks: "Blocks", chat: "Chat", slack: "Slack", discord: "Discord" }
 
-function Row({ icon, label, sub, onClick }: { icon: React.ReactNode; label: string; sub: string; onClick: () => void }) {
+function Row({ icon, label, sub, onClick }: { icon: React.ReactNode; label: string; sub?: string; onClick: () => void }) {
   return (
     <button type="button" onClick={onClick} className="group flex w-full items-center gap-3 border-b border-slate-200/70 px-6 py-4 text-left transition-colors hover:bg-white/70">
       <span className="flex size-4 shrink-0 items-center justify-center text-slate-400 group-hover:text-pax2-blue">{icon}</span>
       <span className="flex-1">
         <span className="block text-[15px] font-medium text-slate-900 group-hover:text-pax2-blue">{label}</span>
-        <span className="block text-xs text-slate-500">{sub}</span>
+        {sub && <span className="block text-xs text-slate-500">{sub}</span>}
       </span>
       <ChevronRight className="size-4 text-slate-400 group-hover:text-pax2-blue" />
     </button>
@@ -174,9 +177,16 @@ function BlocksShelf() {
   )
 }
 
-export function DiscussionPanel({ onClose: close }: { onClose: () => void }) {
+/** `admin` shows the Slack and Discord rows, each with the workspace or server it reaches. */
+export function DiscussionPanel({ onClose: close, admin = false }: { onClose: () => void; admin?: boolean }) {
   const { wide, setWide } = useShellPanel()
+  const router = useRouter()
   const [view, setViewState] = React.useState<View>(keptView)
+  const [linked, setLinked] = React.useState<{ slack: string | null; discord: string | null } | null>(null)
+  React.useEffect(() => {
+    if (admin) connections().then(setLinked).catch(() => {})
+  }, [admin])
+  const status = (name: string | null | undefined) => (linked ? (name ?? "Not connected") : undefined)
   const setView = (v: View) => setViewState((keptView = v))
   // Closing starts the next opening fresh, on the list.
   const onClose = () => {
@@ -209,14 +219,20 @@ export function DiscussionPanel({ onClose: close }: { onClose: () => void }) {
           <div className="border-t border-slate-200/70">
             <Row icon={<LayoutGrid className="size-4" />} label="Blocks" sub="Shorts and blocks you've saved" onClick={() => setView("blocks")} />
             <Row icon={<MessagesSquare className="size-4" />} label="Chat" sub="Ask about the scores, scripts and results" onClick={() => setView("chat")} />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <Row icon={<img src="/logos/slack.png" alt="" className="size-4 object-contain" />} label="Slack" sub="Not connected" onClick={() => setView("slack")} />
-            <Row icon={<Hash className="size-4" />} label="Discord" sub="Not connected" onClick={() => setView("discord")} />
+            <Row icon={<Video className="size-4" />} label="Record" sub="Write a script, record it or upload a video" onClick={() => router.push("/recording")} />
+            {admin && (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <Row icon={<img src="/logos/slack.png" alt="" className="size-4 object-contain" />} label="Slack" sub={status(linked?.slack)} onClick={() => setView("slack")} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <Row icon={<img src="/logos/discord-icon.svg" alt="" className="size-4 object-contain" />} label="Discord" sub={status(linked?.discord)} onClick={() => setView("discord")} />
+              </>
+            )}
           </div>
         )}
         {view === "blocks" && <BlocksShelf />}
         {view === "chat" && <Chat compact />}
-        {(view === "slack" || view === "discord") && <p className="px-6 py-6 text-sm text-slate-500">{TITLE[view]} is not connected to this workspace yet.</p>}
+        {(view === "slack" || view === "discord") && <ConnectView key={view} service={view} />}
       </div>
     </section>
   )

@@ -725,7 +725,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
               textareaRef.current?.focus()
             }}
             className={`relative ml-2 shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
-              recordMode ? 'text-pax2-light-blue bg-pax2-light-blue/10' : 'text-[var(--muted)] hover:bg-[rgba(0,0,0,0.07)] hover:text-[var(--txt)]'
+              recordMode ? 'bg-pax2-light-blue text-white' : 'text-[var(--muted)] hover:bg-[rgba(0,0,0,0.07)] hover:text-[var(--txt)]'
             }`}
             title={recordMode ? 'Leave record mode' : 'Record mode — build toward a recording'}>
             <Video className="h-4 w-4" />

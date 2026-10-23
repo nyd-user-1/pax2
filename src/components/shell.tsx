@@ -361,7 +361,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
         <div className={cn("fixed inset-y-[18px] left-[18px] z-[45] transition-transform duration-300 ease-in-out", sidebarOpen ? "translate-x-0" : "-translate-x-[calc(100%+18px)]")}>{sidebar}</div>
         {signedIn && (
           <div className={cn("fixed inset-y-[18px] right-[18px] z-[45] w-[min(420px,calc(100vw-36px))] transition-transform duration-300 ease-in-out", discuss ? "translate-x-0" : "translate-x-[calc(100%+18px)]")}>
-            {discuss && <DiscussionPanel onClose={() => setDiscuss(false)} />}
+            {discuss && <DiscussionPanel admin={admin} onClose={() => setDiscuss(false)} />}
           </div>
         )}
       </PanelCtx.Provider>
@@ -395,9 +395,6 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
                   </Link>
                 ))}
               </nav>
-              <Link href="/recording" className="flex shrink-0 items-center gap-1.5 rounded-full bg-pax2-blue px-3 py-1.5 text-xs font-semibold text-white">
-                <Video className="size-3.5" /> Record
-              </Link>
             </header>
             <div className={cn("relative z-10 hidden shrink-0 items-center gap-3 px-5 py-4 shadow-[0_4px_12px_-8px_rgb(15_23_42/0.25)] md:flex")}>
               <button type="button" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle sidebar" className={whiteButton("circle")}>
@@ -408,9 +405,6 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
               <div className="flex-1" />
               {/* A page's own header controls (the dashboard's poller switch and pipeline run) portal in here. */}
               <div id="page-actions" className="flex items-center gap-3" />
-              <Link href="/recording" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-pax2-blue text-white shadow-md transition-shadow hover:shadow-e3">
-                <Video className="size-4" />
-              </Link>
               {/* 44b's DiscussionHeaderButton: the discussion panel opens from every page. */}
               <button type="button" onClick={() => (setAside(null), setDiscuss((v) => !v))} aria-pressed={discuss} aria-label="Open the discussion" className={whiteButton("circle")}>
                 <MessagesSquare className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
@@ -464,7 +458,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
         >
           <div className={cn("relative h-full", takeover ? "w-full" : panelW)}>
             {drawer}
-            {discuss && !panelOpen && <DiscussionPanel onClose={() => setDiscuss(false)} />}
+            {discuss && !panelOpen && <DiscussionPanel admin={admin} onClose={() => setDiscuss(false)} />}
             {aside && !discuss && !panelOpen && <AsidePanel aside={aside} onClose={() => setAside(null)} />}
             {paired && <CornerClose label="Close" onClose={closePanel} />}
           </div>
