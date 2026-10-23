@@ -1,0 +1,35 @@
+# Build the app the way Amplify does and report the deploy size, before anything reaches main.
+# Push to the build-check branch; Amplify builds only main, so this costs no Amplify build.
+name: build-check
+
+on:
+  push:
+    branches: [build-check]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # Build 32 deployed at next=223M by this same du measure; build 31 failed above it.
+      LIMIT_MB: 223
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: printf 'PAX2_REGION=us-east-1\nPAX2_BUCKET=pax-2-638175140432\nPAX2_LEDGER_TABLE=pax2-ledger\n' > .env.production
+      - run: npx next build 2>&1 | tee build.log
+        shell: bash
+      - name: Size against Amplify's cap
+        shell: bash
+        run: |
+          rm -rf .next/cache
+          echo "BUNDLE server=$(du -sh .next/server | cut -f1) standalone=$(du -sh .next/standalone 2>/dev/null | cut -f1) next=$(du -sh .next | cut -f1)"
+          if grep -q "whole project was traced" build.log; then echo "::warning::The build traced the whole project into the bundle"; fi
+          mb=$(du -sm .next | cut -f1)
+          echo "next=${mb} MB, limit ${LIMIT_MB} MB" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$mb" -gt "$LIMIT_MB" ]; then echo "::error::.next is ${mb} MB, over ${LIMIT_MB} MB"; exit 1; fi
