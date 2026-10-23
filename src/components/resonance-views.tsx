@@ -44,10 +44,13 @@ function useRise(target: number | null, ms = 1100) {
   return target == null ? null : v
 }
 
+/** Hundredths: server and browser can differ in a coordinate's last digit, a hydration mismatch. */
+const r2 = (v: number) => Math.round(v * 100) / 100
+
 function arc(from: number, to: number, r: number) {
   const p = (v: number) => {
     const a = Math.PI * (1 - v / 100)
-    return [100 + r * Math.cos(a), 100 - r * Math.sin(a)]
+    return [r2(100 + r * Math.cos(a)), r2(100 - r * Math.sin(a))]
   }
   const [x1, y1] = p(from)
   const [x2, y2] = p(to)
@@ -59,11 +62,11 @@ export function ResonanceGauge({ pre, post }: { pre: number | null; post?: numbe
   const live = useRise(final)
   const needle = (v: number) => {
     const a = Math.PI * (1 - v / 100)
-    return [100 + 62 * Math.cos(a), 100 - 62 * Math.sin(a)]
+    return [r2(100 + 62 * Math.cos(a)), r2(100 - 62 * Math.sin(a))]
   }
   const tick = (v: number) => {
     const a = Math.PI * (1 - v / 100)
-    return [100 + 70 * Math.cos(a), 100 - 70 * Math.sin(a), 100 + 92 * Math.cos(a), 100 - 92 * Math.sin(a)]
+    return [r2(100 + 70 * Math.cos(a)), r2(100 - 70 * Math.sin(a)), r2(100 + 92 * Math.cos(a)), r2(100 - 92 * Math.sin(a))]
   }
   const settled = live != null && final != null && Math.abs(live - final) < 0.5
   const diff = post != null && pre != null ? Math.round(post - pre) : null

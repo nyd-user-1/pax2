@@ -154,13 +154,10 @@ function BlocksShelf() {
             onClick={() => reveal(b)}
             onKeyDown={(e) => e.key === "Enter" && reveal(b)}
             aria-label={off ? `Put ${b.label} back on the page` : `Go to ${b.label}`}
-            className={cn(tile(`p:${b.id}`), "group flex flex-col justify-between p-2.5 hover:shadow-e2", off && "border-dashed bg-slate-50 opacity-70")}
+            className={cn(tile(`p:${b.id}`), "group flex flex-col justify-between p-2.5 hover:shadow-e2", !off && "border-dashed bg-slate-50 opacity-70")}
           >
-            <LayoutGrid className={cn("size-4", off ? "text-slate-400" : "text-pax2-blue")} />
-            <span className="min-w-0">
-              <span className="line-clamp-3 text-[12px] font-semibold leading-snug text-slate-900">{b.label}</span>
-              <span className="mt-0.5 block truncate text-[10px] text-slate-500">{off ? "Off the page" : "On the page"}</span>
-            </span>
+            <LayoutGrid className={cn("size-4", off ? "text-pax2-blue" : "text-slate-400")} />
+            <span className="line-clamp-3 min-w-0 text-[12px] font-semibold leading-snug text-slate-900">{b.label}</span>
           </div>
         )
       })}

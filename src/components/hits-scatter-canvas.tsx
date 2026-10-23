@@ -17,7 +17,9 @@ const W = 1100
 const H = 460
 const L = 44
 const B = 28
-const y = (ratio: number) => 10 + (1 - (Math.log10(Math.max(0.04, Math.min(120, ratio))) - R_MIN) / (R_MAX - R_MIN)) * (H - B - 10)
+/** Hundredths: server and browser can differ in a coordinate's last digit, a hydration mismatch. */
+const r2 = (v: number) => Math.round(v * 100) / 100
+const y = (ratio: number) => r2(10 + (1 - (Math.log10(Math.max(0.04, Math.min(120, ratio))) - R_MIN) / (R_MAX - R_MIN)) * (H - B - 10))
 const fmt = (r: number) => (r >= 10 ? r.toFixed(0) : r.toFixed(1))
 
 /** `mark`: the video in view (its own page), drawn larger, ringed and on top, with its name beside it. */
@@ -27,7 +29,7 @@ export function ScatterCanvas({ points, query = "", mark }: { points: ScatterPoi
   const times = points.map((v) => Date.parse(v.published))
   const t0 = Math.min(...times)
   const t1 = Math.max(...times)
-  const x = (iso: string) => L + ((Date.parse(iso) - t0) / Math.max(1, t1 - t0)) * (W - L - 12)
+  const x = (iso: string) => r2(L + ((Date.parse(iso) - t0) / Math.max(1, t1 - t0)) * (W - L - 12))
   const start = new Date(t0)
   const ticks: string[] = []
   for (let d = new Date(Date.UTC(start.getUTCFullYear(), Math.floor(start.getUTCMonth() / 6) * 6 + 6, 1)); d.getTime() <= t1; d = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 6, 1))) ticks.push(d.toISOString())
