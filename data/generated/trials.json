@@ -1,0 +1,3096 @@
+{
+ "report": "ma-message-testing-2026-10",
+ "title": "Massachusetts Question 3 message tests",
+ "measure": "Massachusetts Ballot Question 3 (all-party primary, top two advance)",
+ "fieldedBy": "Grow Progress",
+ "preparedBy": "Parallax",
+ "population": "Massachusetts general adults, not a verified likely-voter sample",
+ "threshold": "90% (the source's criterion for a marked difference against placebo)",
+ "outcomes": {
+  "yes": {
+   "label": "Ballot support",
+   "question": "If the election were held today, how would you vote on Ballot Question 3? (Yes · No · Would not vote)",
+   "definition": "Share choosing Yes after the video, against the share after the placebo video"
+  },
+  "comprehension": {
+   "label": "Comprehension",
+   "question": "Which of the following best describes the main change Question 3 would make to Massachusetts state primary elections?",
+   "answer": "Create one primary with all candidates on the same ballot, with the top two vote-getters overall advancing to the general election",
+   "definition": "Share choosing the correct description, asked after every arm read the same written explanation of Question 3"
+  }
+ },
+ "tests": [
+  {
+   "id": "ma-q3-1",
+   "label": "Test 1",
+   "fielded": {
+    "from": "2026-10-02",
+    "to": "2026-10-07"
+   },
+   "respondents": 3600,
+   "weighted": 3564,
+   "cards": false,
+   "pages": {
+    "summary": 7,
+    "videos": 8,
+    "pairings": 9,
+    "subgroups": [
+     10,
+     15
+    ],
+    "limits": 16
+   },
+   "liftsNote": "Lifts as published, computed before rounding.",
+   "mediaTrust": {
+    "tv": 54,
+    "camera": 24,
+    "podcast": 22,
+    "counts": {
+     "tv": 1919,
+     "camera": 855,
+     "podcast": 790
+    },
+    "page": 4
+   },
+   "arms": [
+    {
+     "id": "placebo",
+     "name": "Placebo",
+     "role": "placebo",
+     "n": 494
+    },
+    {
+     "id": "danielle-allen",
+     "name": "Danielle Allen",
+     "producer": "Parallax",
+     "n": 512,
+     "seconds": 35,
+     "format": "Street interview",
+     "yes": {
+      "lift": 18,
+      "sig": true
+     },
+     "comprehension": {
+      "lift": 3,
+      "sig": false
+     },
+     "review": "https://next.frame.io/share/ed42d6ec-f4eb-4e9d-b4af-83173df40de8/view/a00551fa-04cd-4718-b210-f6b16f8bca78"
+    },
+    {
+     "id": "littlewood",
+     "name": "Littlewood",
+     "producer": "Parallax",
+     "n": 484,
+     "yes": {
+      "lift": 15,
+      "sig": true
+     },
+     "comprehension": {
+      "lift": -3,
+      "sig": false
+     },
+     "review": "https://next.frame.io/share/ed42d6ec-f4eb-4e9d-b4af-83173df40de8/view/fd9f7400-be31-4ab8-ac90-05186b576a90"
+    },
+    {
+     "id": "donut",
+     "name": "Donut",
+     "producer": "Parallax",
+     "n": 518,
+     "yes": {
+      "lift": 12,
+      "sig": true
+     },
+     "comprehension": {
+      "lift": 0,
+      "sig": false
+     },
+     "review": "https://next.frame.io/share/ed42d6ec-f4eb-4e9d-b4af-83173df40de8/view/5a5daad0-422f-4a67-8897-686dc781f85e",
+     "youtube": "pn1g00H9YKA"
+    },
+    {
+     "id": "official-ad",
+     "name": "Official campaign ad",
+     "producer": "Campaign",
+     "n": 491,
+     "seconds": 30,
+     "yes": {
+      "lift": 11,
+      "sig": true
+     },
+     "comprehension": {
+      "lift": 3,
+      "sig": false
+     },
+     "review": "https://www.dropbox.com/scl/fi/jateupa882uhqcqlhro6u/CFHD_HTA30_1026.mp4?rlkey=v58jz7ynw5derpf80b89803su&st=lm527e95&e=1&dl=0"
+    },
+    {
+     "id": "dustin",
+     "name": "Dustin",
+     "producer": "Parallax",
+     "n": 520,
+     "yes": {
+      "lift": 11,
+      "sig": true
+     },
+     "comprehension": {
+      "lift": 0,
+      "sig": false
+     },
+     "review": "https://next.frame.io/share/ed42d6ec-f4eb-4e9d-b4af-83173df40de8/view/cee18145-b226-43e2-bc9d-ea869c6c702c",
+     "youtube": "bLQQHGa-Css"
+    },
+    {
+     "id": "rodriguez",
+     "name": "Rodriguez",
+     "producer": "Parallax",
+     "n": 546,
+     "yes": {
+      "lift": 2,
+      "sig": false
+     },
+     "comprehension": {
+      "lift": 0,
+      "sig": false
+     },
+     "review": "https://next.frame.io/share/ed42d6ec-f4eb-4e9d-b4af-83173df40de8/view/21e136f4-f9ed-4fe1-af41-18677b03b988"
+    }
+   ],
+   "subgroups": [
+    {
+     "page": 10,
+     "dimension": "Gender",
+     "groups": [
+      {
+       "group": "Men",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 48,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 67,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 59,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 48,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Women",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 47,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 64,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 61,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 59,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 50,
+         "sig": false,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 10,
+     "dimension": "Age",
+     "groups": [
+      {
+       "group": "18–34",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 46,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 75,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 59,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 66,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "35–54",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 51,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 69,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "55+",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 46,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 52,
+         "sig": false,
+         "small": false
+        },
+        "official-ad": {
+         "v": 47,
+         "sig": false,
+         "small": false
+        },
+        "dustin": {
+         "v": 51,
+         "sig": false,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 41,
+         "sig": false,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 11,
+     "dimension": "Race/ethnicity",
+     "groups": [
+      {
+       "group": "Black",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 45,
+         "sig": false,
+         "small": true
+        },
+        "danielle-allen": {
+         "v": 61,
+         "sig": false,
+         "small": true
+        },
+        "littlewood": {
+         "v": 53,
+         "sig": false,
+         "small": true
+        },
+        "donut": {
+         "v": 64,
+         "sig": false,
+         "small": true
+        },
+        "official-ad": {
+         "v": 45,
+         "sig": false,
+         "small": true
+        },
+        "dustin": {
+         "v": 61,
+         "sig": false,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 55,
+         "sig": false,
+         "small": true
+        }
+       }
+      },
+      {
+       "group": "Latino",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 68,
+         "sig": false,
+         "small": false
+        },
+        "littlewood": {
+         "v": 66,
+         "sig": false,
+         "small": false
+        },
+        "donut": {
+         "v": 72,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 72,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 59,
+         "sig": false,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "White",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 48,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 66,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 48,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Other",
+       "small": true,
+       "cells": {
+        "placebo": {
+         "v": 38,
+         "sig": false,
+         "small": true
+        },
+        "danielle-allen": {
+         "v": 67,
+         "sig": true,
+         "small": true
+        },
+        "littlewood": {
+         "v": 66,
+         "sig": true,
+         "small": true
+        },
+        "donut": {
+         "v": 52,
+         "sig": false,
+         "small": true
+        },
+        "official-ad": {
+         "v": 60,
+         "sig": false,
+         "small": true
+        },
+        "dustin": {
+         "v": 60,
+         "sig": false,
+         "small": true
+        },
+        "rodriguez": {
+         "v": 51,
+         "sig": false,
+         "small": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 11,
+     "dimension": "Education",
+     "groups": [
+      {
+       "group": "High school or less",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 51,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 72,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        },
+        "donut": {
+         "v": 59,
+         "sig": false,
+         "small": false
+        },
+        "official-ad": {
+         "v": 60,
+         "sig": false,
+         "small": false
+        },
+        "dustin": {
+         "v": 46,
+         "sig": false,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 44,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Some college",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 42,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 68,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 61,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 59,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 46,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Bachelor's degree+",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 51,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 64,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "official-ad": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "dustin": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 55,
+         "sig": false,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 12,
+     "dimension": "Household income",
+     "groups": [
+      {
+       "group": "$0–$49K",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 42,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 70,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 59,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 38,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "$50K–$99K",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 50,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 69,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 58,
+         "sig": false,
+         "small": false
+        },
+        "donut": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "official-ad": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 55,
+         "sig": false,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 52,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "$100K+",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 50,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 59,
+         "sig": false,
+         "small": false
+        },
+        "littlewood": {
+         "v": 70,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 55,
+         "sig": false,
+         "small": false
+        },
+        "dustin": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 12,
+     "dimension": "Parental status",
+     "groups": [
+      {
+       "group": "Parent",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 50,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 67,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 64,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 68,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 72,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 66,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Non-parent",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 46,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 66,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 55,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 43,
+         "sig": false,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 13,
+     "dimension": "Political ideology",
+     "groups": [
+      {
+       "group": "Liberal",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 36,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 68,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 66,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 50,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Moderate",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 68,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 68,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 68,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Conservative",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 50,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 61,
+         "sig": false,
+         "small": false
+        },
+        "littlewood": {
+         "v": 48,
+         "sig": false,
+         "small": false
+        },
+        "donut": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "official-ad": {
+         "v": 51,
+         "sig": false,
+         "small": false
+        },
+        "dustin": {
+         "v": 58,
+         "sig": false,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 50,
+         "sig": false,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 13,
+     "dimension": "Party ID",
+     "groups": [
+      {
+       "group": "Democrat",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 48,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 69,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 58,
+         "sig": false,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Independent/Other",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 45,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 67,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 40,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Republican",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 51,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 60,
+         "sig": false,
+         "small": false
+        },
+        "littlewood": {
+         "v": 50,
+         "sig": false,
+         "small": false
+        },
+        "donut": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        },
+        "official-ad": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        },
+        "dustin": {
+         "v": 63,
+         "sig": false,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 48,
+         "sig": false,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 14,
+     "dimension": "Urbanicity",
+     "groups": [
+      {
+       "group": "Urban",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 44,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 67,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        },
+        "dustin": {
+         "v": 56,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 48,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Suburban",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 51,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 64,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "official-ad": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 51,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Rural",
+       "small": true,
+       "cells": {
+        "placebo": {
+         "v": 36,
+         "sig": false,
+         "small": true
+        },
+        "danielle-allen": {
+         "v": 88,
+         "sig": true,
+         "small": true
+        },
+        "littlewood": {
+         "v": 58,
+         "sig": false,
+         "small": true
+        },
+        "donut": {
+         "v": 50,
+         "sig": false,
+         "small": true
+        },
+        "official-ad": {
+         "v": 64,
+         "sig": false,
+         "small": true
+        },
+        "dustin": {
+         "v": 50,
+         "sig": false,
+         "small": true
+        },
+        "rodriguez": {
+         "v": 41,
+         "sig": false,
+         "small": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 14,
+     "dimension": "2024 presidential vote choice",
+     "groups": [
+      {
+       "group": "Voted Dem",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 50,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 66,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 60,
+         "sig": false,
+         "small": false
+        },
+        "official-ad": {
+         "v": 58,
+         "sig": false,
+         "small": false
+        },
+        "dustin": {
+         "v": 61,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 55,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Voted Rep",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 67,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 64,
+         "sig": false,
+         "small": false
+        },
+        "donut": {
+         "v": 60,
+         "sig": false,
+         "small": false
+        },
+        "official-ad": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "dustin": {
+         "v": 69,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 55,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Voted Other",
+       "small": true,
+       "cells": {
+        "placebo": {
+         "v": 42,
+         "sig": false,
+         "small": true
+        },
+        "danielle-allen": {
+         "v": 65,
+         "sig": false,
+         "small": true
+        },
+        "littlewood": {
+         "v": 67,
+         "sig": false,
+         "small": true
+        },
+        "donut": {
+         "v": 64,
+         "sig": false,
+         "small": true
+        },
+        "official-ad": {
+         "v": 64,
+         "sig": false,
+         "small": true
+        },
+        "dustin": {
+         "v": 67,
+         "sig": false,
+         "small": true
+        },
+        "rodriguez": {
+         "v": 32,
+         "sig": false,
+         "small": true
+        }
+       }
+      },
+      {
+       "group": "Did not vote",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 41,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 67,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 56,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 43,
+         "sig": false,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 42,
+         "sig": false,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 15,
+     "dimension": "2022 midterm turnout",
+     "groups": [
+      {
+       "group": "Yes",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 66,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 60,
+         "sig": false,
+         "small": false
+        },
+        "official-ad": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "dustin": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "No",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 41,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 73,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 54,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 51,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Unsure",
+       "small": true,
+       "cells": {
+        "placebo": {
+         "v": 41,
+         "sig": false,
+         "small": true
+        },
+        "danielle-allen": {
+         "v": 53,
+         "sig": false,
+         "small": true
+        },
+        "littlewood": {
+         "v": 46,
+         "sig": false,
+         "small": true
+        },
+        "donut": {
+         "v": 62,
+         "sig": false,
+         "small": true
+        },
+        "official-ad": {
+         "v": 50,
+         "sig": false,
+         "small": true
+        },
+        "dustin": {
+         "v": 31,
+         "sig": false,
+         "small": true
+        },
+        "rodriguez": {
+         "v": 24,
+         "sig": false,
+         "small": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 15,
+     "dimension": "Media trust",
+     "groups": [
+      {
+       "group": "TV or broadcast ad",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 45,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 67,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 67,
+         "sig": true,
+         "small": false
+        },
+        "donut": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 59,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 49,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Person speaking to camera",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 52,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 60,
+         "sig": false,
+         "small": false
+        },
+        "donut": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "official-ad": {
+         "v": 64,
+         "sig": true,
+         "small": false
+        },
+        "dustin": {
+         "v": 63,
+         "sig": false,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 52,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Podcast or interview clip",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 47,
+         "sig": false,
+         "small": false
+        },
+        "danielle-allen": {
+         "v": 64,
+         "sig": true,
+         "small": false
+        },
+        "littlewood": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        },
+        "donut": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        },
+        "official-ad": {
+         "v": 52,
+         "sig": false,
+         "small": false
+        },
+        "dustin": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "rodriguez": {
+         "v": 47,
+         "sig": false,
+         "small": false
+        }
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ma-q3-2",
+   "label": "Test 2",
+   "fielded": {
+    "from": "2026-10-12",
+    "to": "2026-10-15"
+   },
+   "respondents": 2400,
+   "weighted": 2371,
+   "cards": true,
+   "pages": {
+    "summary": 17,
+    "videos": 18,
+    "method": 19,
+    "yes": 20,
+    "comprehension": 21,
+    "mediaTrust": 22,
+    "pairings": 23,
+    "subgroups": [
+     24,
+     26
+    ]
+   },
+   "liftsNote": "Lifts are differences between rounded displayed percentages.",
+   "placebo": {
+    "yes": 47,
+    "comprehension": 45
+   },
+   "mediaTrust": {
+    "tv": 54.4,
+    "camera": 24.5,
+    "podcast": 21.1,
+    "counts": {
+     "tv": 1290,
+     "camera": 581,
+     "podcast": 501
+    },
+    "page": 22
+   },
+   "arms": [
+    {
+     "id": "placebo",
+     "name": "Placebo",
+     "role": "placebo",
+     "n": 443,
+     "yes": {
+      "level": 47
+     },
+     "comprehension": {
+      "level": 45
+     }
+    },
+    {
+     "id": "pahlow",
+     "name": "Pahlow",
+     "n": 482,
+     "seconds": 32.6,
+     "yes": {
+      "level": 57,
+      "lift": 10,
+      "sig": true
+     },
+     "comprehension": {
+      "level": 56,
+      "lift": 11,
+      "sig": true
+     },
+     "tested": "https://s3.amazonaws.com/condoropenskies.net/videos/435f181a420581798fd5d3f0fb00fc15.mp4",
+     "review": "https://next.frame.io/share/80e0f5ad-075b-44f7-8622-ca68ce99085b/view/3571fae1-0ae1-425b-8c1d-8916032e199a",
+     "youtube": "oTytFVuVQzE"
+    },
+    {
+     "id": "dizoglio",
+     "name": "DiZoglio",
+     "n": 484,
+     "seconds": 30,
+     "yes": {
+      "level": 58,
+      "lift": 11,
+      "sig": true
+     },
+     "comprehension": {
+      "level": 54,
+      "lift": 9,
+      "sig": true
+     },
+     "tested": "https://s3.amazonaws.com/condoropenskies.net/videos/526c5d31f5ba126c1776c3cd098c5e9c.mp4",
+     "review": "https://next.frame.io/share/80e0f5ad-075b-44f7-8622-ca68ce99085b/view/2aad8b8f-2577-4d80-b519-923aee0c5b90"
+    },
+    {
+     "id": "matt-wilson",
+     "name": "Matt Wilson",
+     "n": 506,
+     "seconds": 36.4,
+     "yes": {
+      "level": 58,
+      "lift": 11,
+      "sig": true
+     },
+     "comprehension": {
+      "level": 51,
+      "lift": 6,
+      "sig": true
+     },
+     "tested": "https://s3.amazonaws.com/condoropenskies.net/videos/6417d791d9411c2c168787b7e8d2008e.mp4",
+     "review": "https://next.frame.io/share/80e0f5ad-075b-44f7-8622-ca68ce99085b/view/a25c42dd-5b13-40bc-b7dd-e6423ff7530a"
+    },
+    {
+     "id": "green",
+     "name": "Green",
+     "n": 457,
+     "seconds": 34.6,
+     "yes": {
+      "level": 61,
+      "lift": 14,
+      "sig": true
+     },
+     "comprehension": {
+      "level": 50,
+      "lift": 5,
+      "sig": false
+     },
+     "tested": "https://s3.amazonaws.com/condoropenskies.net/videos/6ca5b15be2ca5c2ce9ea963e6b66fd35.mp4",
+     "review": "https://next.frame.io/share/80e0f5ad-075b-44f7-8622-ca68ce99085b/view/3cdb9f3d-9eff-48a5-b965-e589e18e17d8",
+     "youtube": "7ux0S0cNvd8"
+    }
+   ],
+   "subgroups": [
+    {
+     "page": 24,
+     "dimension": "Gender",
+     "groups": [
+      {
+       "group": "Men",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 43,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 59,
+         "sig": true,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 55,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 59,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Women",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 50,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 61,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 24,
+     "dimension": "Age",
+     "groups": [
+      {
+       "group": "18–34",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 48,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 66,
+         "sig": true,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 67,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "35–54",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 51,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 60,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "55+",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 41,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 44,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 49,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 47,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 54,
+         "sig": true,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 24,
+     "dimension": "Race/ethnicity",
+     "groups": [
+      {
+       "group": "Black",
+       "small": true,
+       "cells": {
+        "placebo": {
+         "v": 52,
+         "sig": false,
+         "small": true
+        },
+        "pahlow": {
+         "v": 60,
+         "sig": false,
+         "small": true
+        },
+        "dizoglio": {
+         "v": 64,
+         "sig": false,
+         "small": true
+        },
+        "matt-wilson": {
+         "v": 44,
+         "sig": false,
+         "small": true
+        },
+        "green": {
+         "v": 66,
+         "sig": false,
+         "small": true
+        }
+       }
+      },
+      {
+       "group": "Latino",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 59,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 61,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 75,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 71,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "White",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 46,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 56,
+         "sig": true,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 55,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Other",
+       "small": true,
+       "cells": {
+        "placebo": {
+         "v": 41,
+         "sig": false,
+         "small": true
+        },
+        "pahlow": {
+         "v": 55,
+         "sig": false,
+         "small": true
+        },
+        "dizoglio": {
+         "v": 64,
+         "sig": false,
+         "small": true
+        },
+        "matt-wilson": {
+         "v": 71,
+         "sig": true,
+         "small": true
+        },
+        "green": {
+         "v": 51,
+         "sig": false,
+         "small": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 24,
+     "dimension": "Education",
+     "groups": [
+      {
+       "group": "High school or less",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 45,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 55,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 61,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Some college",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 49,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 51,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 64,
+         "sig": true,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Bachelor's degree+",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 46,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 59,
+         "sig": true,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 25,
+     "dimension": "Household income",
+     "groups": [
+      {
+       "group": "$0–$49K",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 49,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 52,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 59,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "$50K–$99K",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 45,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 61,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 59,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 61,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "$100K+",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 48,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 25,
+     "dimension": "Parental status",
+     "groups": [
+      {
+       "group": "Parent",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 58,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 62,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 62,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 60,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 62,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Non-parent",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 43,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 55,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 56,
+         "sig": true,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 25,
+     "dimension": "Political ideology",
+     "groups": [
+      {
+       "group": "Liberal",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 58,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 62,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Moderate",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 48,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 64,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 64,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Conservative",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 41,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 46,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 48,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 55,
+         "sig": true,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 25,
+     "dimension": "Party ID",
+     "groups": [
+      {
+       "group": "Democrat",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 61,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 55,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 63,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Independent/Other",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 38,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 55,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 61,
+         "sig": true,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 59,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Republican",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 51,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 55,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 43,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 63,
+         "sig": false,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 26,
+     "dimension": "Urbanicity",
+     "groups": [
+      {
+       "group": "Urban",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 45,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 55,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Suburban",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 47,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 59,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 64,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Rural",
+       "small": true,
+       "cells": {
+        "placebo": {
+         "v": 53,
+         "sig": false,
+         "small": true
+        },
+        "pahlow": {
+         "v": 52,
+         "sig": false,
+         "small": true
+        },
+        "dizoglio": {
+         "v": 56,
+         "sig": false,
+         "small": true
+        },
+        "matt-wilson": {
+         "v": 58,
+         "sig": false,
+         "small": true
+        },
+        "green": {
+         "v": 63,
+         "sig": false,
+         "small": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 26,
+     "dimension": "2024 presidential vote choice",
+     "groups": [
+      {
+       "group": "Voted Dem",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 55,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 58,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 58,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 58,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Voted Rep",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 59,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 60,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 63,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Voted Other",
+       "small": true,
+       "cells": {
+        "placebo": {
+         "v": 41,
+         "sig": false,
+         "small": true
+        },
+        "pahlow": {
+         "v": 65,
+         "sig": false,
+         "small": true
+        },
+        "dizoglio": {
+         "v": 82,
+         "sig": true,
+         "small": true
+        },
+        "matt-wilson": {
+         "v": 75,
+         "sig": false,
+         "small": true
+        },
+        "green": {
+         "v": 57,
+         "sig": false,
+         "small": true
+        }
+       }
+      },
+      {
+       "group": "Did not vote",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 31,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 56,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 49,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 55,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 65,
+         "sig": true,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 26,
+     "dimension": "2022 midterm turnout",
+     "groups": [
+      {
+       "group": "Yes",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 60,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 60,
+         "sig": false,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "No",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 40,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 64,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 61,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Unsure",
+       "small": true,
+       "cells": {
+        "placebo": {
+         "v": 30,
+         "sig": false,
+         "small": true
+        },
+        "pahlow": {
+         "v": 37,
+         "sig": false,
+         "small": true
+        },
+        "dizoglio": {
+         "v": 60,
+         "sig": true,
+         "small": true
+        },
+        "matt-wilson": {
+         "v": 52,
+         "sig": false,
+         "small": true
+        },
+        "green": {
+         "v": 66,
+         "sig": true,
+         "small": true
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 26,
+     "dimension": "Media market",
+     "groups": [
+      {
+       "group": "Boston MA (Manchester NH)",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 47,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 60,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 58,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 62,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Other",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 45,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 47,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 57,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        }
+       }
+      }
+     ]
+    },
+    {
+     "page": 22,
+     "dimension": "Media trust",
+     "groups": [
+      {
+       "group": "TV or broadcast ad",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 44,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 56,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 57,
+         "sig": true,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 55,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Person speaking to camera",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 46,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 69,
+         "sig": true,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 56,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 71,
+         "sig": true,
+         "small": false
+        },
+        "green": {
+         "v": 63,
+         "sig": true,
+         "small": false
+        }
+       }
+      },
+      {
+       "group": "Podcast or interview clip",
+       "small": false,
+       "cells": {
+        "placebo": {
+         "v": 54,
+         "sig": false,
+         "small": false
+        },
+        "pahlow": {
+         "v": 45,
+         "sig": false,
+         "small": false
+        },
+        "dizoglio": {
+         "v": 60,
+         "sig": false,
+         "small": false
+        },
+        "matt-wilson": {
+         "v": 50,
+         "sig": false,
+         "small": false
+        },
+        "green": {
+         "v": 53,
+         "sig": false,
+         "small": false
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

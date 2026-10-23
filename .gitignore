@@ -108,3 +108,6 @@ data/generated/visuals/demo.json
 # HTML documents live in ~/Code/sketches; the site serves them from s3://pax-2-638175140432/library/sketches/ (2026-10-23)
 docs/**/*.html
 public/sketches/
+
+# Client reports: originals live in private S3 (library/reports/), never in public/
+data/raw/reports
