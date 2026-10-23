@@ -2,15 +2,15 @@
 
 // Ported from solar (src/components/SolarPlusMenu.tsx): the + button, its category list, and the
 // drill-down drawer with its search field. The categories: Video Analytics (prompts over the record),
-// Scripts (the open-primaries sample batch), Videos (the scored takes), Shorts (the catalog's real
-// shorts), and Voices (the studio's readers — hear one, or write for it). Icons wear the sidebar's
-// clothes: 18px, 1.75 stroke, lavender fill on hover.
+// Scripts (every script /scripts lists), Videos (on /chat the e2 videos and more Voter Freedom shorts;
+// the scored takes elsewhere), Shorts (the catalog's real shorts), and Voices (the studio's readers —
+// hear one, or write for it). Icons wear the sidebar's clothes: 18px, 1.75 stroke, lavender fill on hover.
 
 import { useState, useRef, useEffect } from 'react'
 import { Plus, ChevronRight, ArrowLeft, X, ChartColumn, NotebookPen, PlaySquare, Clapperboard, AudioLines, Volume2, Loader2 } from 'lucide-react'
 
 import { narrate } from '@/app/studio-actions'
-import { OPEN_SCRIPTS } from '@/lib/open-scripts'
+import type { ListedScript } from '@/lib/script-list'
 import { VOICES, type VoiceId } from '@/lib/studio-style'
 
 /* ------------------------------------------------------------------ */
@@ -33,7 +33,8 @@ const ANALYTICS_PROMPTS = [
 type DrillStep = 'categories' | 'prompts' | 'pick-script' | 'pick-video' | 'pick-short' | 'pick-voice'
 
 export type ScriptChip = { id: string; title: string; short: string }
-export type VideoChip = { id: string; label: string; poster?: string; score: number | null }
+/** `youtube`: a YouTube video, whose score is its Outlier Score (views over its channel's median). */
+export type VideoChip = { id: string; label: string; poster?: string; score: number | null; youtube?: boolean }
 
 interface Props {
   videos: VideoChip[]
@@ -50,12 +51,14 @@ const ICON = 'icon-pop size-[18px] shrink-0 transition-colors text-slate-500 gro
 
 const VOICE_LINE = 'Open primaries let every voter pick the person, not the party.'
 
+const outlier = (x: number) => `${x >= 10 ? x.toFixed(0) : x.toFixed(1)}×`
+
 /* ------------------------------------------------------------------ */
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 
 export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = false }: Props) {
-  const scripts = OPEN_SCRIPTS
+  const [scripts, setScripts] = useState<ListedScript[] | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [step, setStep] = useState<DrillStep>('categories')
   const [search, setSearch] = useState('')
@@ -71,7 +74,13 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
     return () => document.removeEventListener('mousedown', h)
   }, [menuOpen])
 
+  // The script list loads the first time the menu opens.
+  useEffect(() => {
+    if (menuOpen && !scripts) import('@/lib/script-list').then((m) => setScripts(m.SCRIPT_LIST))
+  }, [menuOpen, scripts])
+
   const closeMenu = () => { setMenuOpen(false); setStep('categories'); setSearch('') }
+  const askYouTube = (v: VideoChip) => { onSelect(`What explains how “${v.label.split(' · ')[0]}” performed?`); onShort?.(v) }
   const goBack = () => { setStep('categories'); setSearch('') }
   const handleCategoryClick = (cat: Exclude<DrillStep, 'categories'>) => { setSearch(''); setStep(cat) }
 
@@ -93,7 +102,7 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
 
   const q = search.toLowerCase()
   const filteredPrompts = ANALYTICS_PROMPTS.filter(p => !search || p.toLowerCase().includes(q))
-  const filteredScripts = scripts.filter(s => !search || s.title.toLowerCase().includes(q) || s.text.toLowerCase().includes(q))
+  const filteredScripts = (scripts ?? []).filter(s => !search || s.title.toLowerCase().includes(q) || s.framing.toLowerCase().includes(q) || s.text.toLowerCase().includes(q))
   const filteredVideos = videos.filter(v => !search || v.label.toLowerCase().includes(q))
   const filteredShorts = shorts.filter(v => !search || v.label.toLowerCase().includes(q))
   const voices = VOICES.filter(v => v.provider !== 'none').filter(v => !search || v.label.toLowerCase().includes(q))
@@ -111,7 +120,7 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
 
   const CATEGORIES: { key: Exclude<DrillStep, 'categories'>; label: string; icon: React.ReactNode }[] = [
     { key: 'prompts', label: 'Video Analytics', icon: <ChartColumn className={ICON} strokeWidth={1.75} /> },
-    ...(scripts.length ? [{ key: 'pick-script' as const, label: 'Scripts', icon: <NotebookPen className={ICON} strokeWidth={1.75} /> }] : []),
+    { key: 'pick-script', label: 'Scripts', icon: <NotebookPen className={ICON} strokeWidth={1.75} /> },
     ...(videos.length ? [{ key: 'pick-video' as const, label: 'Videos', icon: <PlaySquare className={ICON} strokeWidth={1.75} /> }] : []),
     ...(shorts.length ? [{ key: 'pick-short' as const, label: 'Shorts', icon: <Clapperboard className={ICON} strokeWidth={1.75} /> }] : []),
     { key: 'pick-voice', label: 'Voices', icon: <AudioLines className={ICON} strokeWidth={1.75} /> },
@@ -181,7 +190,7 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
               </>
             )}
 
-            {/* Scripts — the open-primaries batch; picking one brings its text in to make yours */}
+            {/* Scripts — the /scripts catalog; picking one brings its text in to make yours */}
             {step === 'pick-script' && (
               <>
                 {filteredScripts.map((s, i) => (
@@ -193,42 +202,42 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
                     <NotebookPen className={ICON} strokeWidth={1.75} />
                     <span className="min-w-0 flex-1 text-left">
                       <span className="block text-sm font-semibold text-[var(--txt)]">{s.title}</span>
-                      <span className="block truncate text-xs text-[var(--muted)]">{s.hook}</span>
+                      <span className="block truncate text-xs text-[var(--muted)]">{s.framing}</span>
                     </span>
                   </button>
                 ))}
-                {filteredScripts.length === 0 && <p className="px-4 py-3 text-xs text-[var(--muted)]">No matches</p>}
+                {scripts && filteredScripts.length === 0 && <p className="px-4 py-3 text-xs text-[var(--muted)]">No matches</p>}
               </>
             )}
 
-            {/* Videos — the scored takes */}
+            {/* Videos — YouTube videos ask like a short; a take asks about its score */}
             {step === 'pick-video' && (
               filteredVideos.length === 0
                 ? <p className="px-4 py-3 text-xs text-[var(--muted)]">No matches</p>
                 : filteredVideos.map((v, i) => (
-                  <button key={v.id} onClick={() => { onSelect(`What explains the score on ${v.label}?`); closeMenu() }} className={row(i)}>
+                  <button key={v.id} onClick={() => { if (v.youtube) askYouTube(v); else onSelect(`What explains the score on ${v.label}?`); closeMenu() }} className={row(i)}>
                     {v.poster
                       // eslint-disable-next-line @next/next/no-img-element
                       ? <img src={v.poster} alt="" className="h-8 w-5 object-cover rounded-sm shrink-0 border border-[var(--border)]" />
                       : <PlaySquare className={ICON} strokeWidth={1.75} />}
                     <span className="flex-1 text-left text-sm font-semibold text-[var(--txt)]">{v.label}</span>
-                    {v.score != null && <span className="text-xs text-[var(--muted)] tabular">{v.score.toFixed(0)}</span>}
+                    {v.score != null && <span className="text-xs text-[var(--muted)] tabular">{v.youtube ? outlier(v.score) : v.score.toFixed(0)}</span>}
                   </button>
                 ))
             )}
 
-            {/* Shorts — the catalog's real shorts, strongest against their channel median first */}
+            {/* Shorts — real shorts, highest Outlier Score first */}
             {step === 'pick-short' && (
               filteredShorts.length === 0
                 ? <p className="px-4 py-3 text-xs text-[var(--muted)]">No matches</p>
                 : filteredShorts.map((v, i) => (
-                  <button key={v.id} onClick={() => { onSelect(`What explains how “${v.label.split(' · ')[0]}” performed?`); onShort?.(v); closeMenu() }} className={row(i)}>
+                  <button key={v.id} onClick={() => { askYouTube(v); closeMenu() }} className={row(i)}>
                     {v.poster
                       // eslint-disable-next-line @next/next/no-img-element
                       ? <img src={v.poster} alt="" className="h-8 w-12 object-cover rounded-sm shrink-0 border border-[var(--border)]" />
                       : <Clapperboard className={ICON} strokeWidth={1.75} />}
                     <span className="flex-1 min-w-0 text-left text-sm font-semibold text-[var(--txt)] truncate">{v.label}</span>
-                    {v.score != null && <span className="text-xs text-[var(--muted)] tabular">{v.score >= 10 ? v.score.toFixed(0) : v.score.toFixed(1)}×</span>}
+                    {v.score != null && <span className="text-xs text-[var(--muted)] tabular">{outlier(v.score)}</span>}
                   </button>
                 ))
             )}
