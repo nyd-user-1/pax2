@@ -25,12 +25,12 @@ export async function saveChat(id: string, messages: ChatMessage[]): Promise<Cha
   return writeChat(who, id, clean)
 }
 
-export async function updateChat(id: string, patch: { title?: string; favorite?: boolean; hidden?: boolean; archived?: boolean }): Promise<ChatMeta | null> {
+export async function updateChat(id: string, patch: { title?: string; favorite?: boolean; pinned?: boolean; hidden?: boolean; archived?: boolean }): Promise<ChatMeta | null> {
   const who = await reader()
   if (!who || !ID.test(id)) return null
   const p: typeof patch = {}
   if (typeof patch.title === "string") p.title = patch.title.slice(0, 120)
-  for (const k of ["favorite", "hidden", "archived"] as const) if (typeof patch[k] === "boolean") p[k] = patch[k]
+  for (const k of ["favorite", "pinned", "hidden", "archived"] as const) if (typeof patch[k] === "boolean") p[k] = patch[k]
   return patchChat(who, id, p)
 }
 

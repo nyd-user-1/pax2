@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { createPortal } from "react-dom"
-import { Archive, ArchiveRestore, ChevronDown, ChevronRight, EllipsisVertical, Eye, EyeOff, Link2, Pencil, SlidersHorizontal, Star } from "lucide-react"
+import { Archive, ArchiveRestore, ChevronDown, ChevronRight, EllipsisVertical, Eye, EyeOff, Link2, Pencil, Pin, PinOff, SlidersHorizontal, Star } from "lucide-react"
 
 import { myChats, updateChat } from "@/app/chat-actions"
 import { KebabMenu, MenuFoot, MenuHeader, MenuRow, MenuSeparator } from "@/components/kebab-menu"
@@ -32,12 +32,14 @@ function dateBucket(ts: number, now: number): string {
   return new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric" })
 }
 
-/** Buckets the newest-first list. Ungrouped, favorites lead; grouped, each bucket keeps its order and
- *  the star marks the favorites. */
+/** Buckets the newest-first list. Pinned chats lead either way: ungrouped they come first, then the
+ *  favorites; grouped they sit in their own Pinned bucket above the dates, and the star marks the favorites. */
 function groupChats(chats: ChatMeta[], mode: GroupBy): { label: string; chats: ChatMeta[] }[] {
-  if (mode === "none") return [{ label: "", chats: [...chats].sort((a, b) => Number(b.favorite) - Number(a.favorite)) }]
+  if (mode === "none") return [{ label: "", chats: [...chats].sort((a, b) => Number(b.pinned) - Number(a.pinned) || Number(b.favorite) - Number(a.favorite)) }]
   const map = new Map<string, ChatMeta[]>()
-  for (const c of chats) {
+  const pinned = chats.filter((c) => c.pinned)
+  if (pinned.length) map.set("Pinned", pinned)
+  for (const c of chats.filter((x) => !x.pinned)) {
     const k = dateBucket(Date.parse(c.updatedAt), Date.now())
     map.set(k, [...(map.get(k) ?? []), c])
   }
@@ -101,7 +103,7 @@ export function SidebarChats() {
   }
 
   // Optimistic local patch, then the write; the next load reconciles with what was stored.
-  const patch = (id: string, p: Partial<Pick<ChatMeta, "title" | "favorite" | "hidden" | "archived">>) => {
+  const patch = (id: string, p: Partial<Pick<ChatMeta, "title" | "favorite" | "pinned" | "hidden" | "archived">>) => {
     setChats((xs) => xs.map((c) => (c.id === id ? { ...c, ...p } : c)))
     updateChat(id, p).catch(() => {})
   }
@@ -162,6 +164,7 @@ export function SidebarChats() {
         >
           <MenuHeader text={href} copy={href} />
           <MenuSeparator />
+          <MenuRow icon={c.pinned ? <PinOff /> : <Pin />} label={c.pinned ? "Unpin" : "Pin to top"} onClick={() => patch(c.id, { pinned: !c.pinned })} />
           <MenuRow icon={<Star className={c.favorite ? "fill-amber-400 text-amber-400" : undefined} />} label={c.favorite ? "Unfavorite" : "Favorite"} onClick={() => patch(c.id, { favorite: !c.favorite })} />
           <MenuRow
             icon={<Pencil />}
