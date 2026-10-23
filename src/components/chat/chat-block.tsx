@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { ArrowUpRight, ChevronsDownUp, ChevronsUpDown, EllipsisVertical, LayoutGrid, Link2, Loader2, MessagesSquare, Pin, RefreshCw, Star } from "lucide-react"
+import { ArrowUpRight, ChevronsDownUp, EllipsisVertical, LayoutGrid, Link2, Loader2, MessagesSquare, Pin, RectangleHorizontal, RectangleVertical, RefreshCw, Star } from "lucide-react"
 
 import { KebabMenu, MenuFoot, MenuRow, MenuSeparator } from "@/components/kebab-menu"
 import { useShellPanel } from "@/components/shell"
@@ -26,7 +26,8 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
   const { askAbout } = useShellPanel()
   const { favs, toggle: toggleFav } = useNavFavorites()
   const [state, setState] = React.useState<{ html?: string; error?: string }>({})
-  const [collapsed, setCollapsed] = React.useState(false)
+  const [size, setSize] = React.useState<"collapsed" | "half" | "full">("half")
+  const collapsed = size === "collapsed"
   const [nonce, setNonce] = React.useState(0)
   const snap = React.useRef<HTMLDivElement>(null)
   const frame = React.useRef<HTMLDivElement>(null)
@@ -55,7 +56,7 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
     const b = (e.target as HTMLElement).closest("button")
     if (!b) return
     const label = b.getAttribute("aria-label") ?? ""
-    if (/^(Collapse|Expand) /.test(label)) setCollapsed((c) => !c)
+    if (/^(Half|Full) view /.test(label)) setSize((s) => (s === "half" ? "full" : "half"))
     else if (/How to read|End the tour/.test(label)) router.push(`${path}#${anchor}`)
     else if (b.closest('[data-slot="card-title"]')) navigator.clipboard.writeText(link())
   }
@@ -76,7 +77,7 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
           </button>
         </span>
       </div>
-      <div className={cn("max-h-[480px] overflow-auto p-3 text-sm", !state.html && "flex items-center justify-center py-10")}>
+      <div className={cn(size === "full" ? "max-h-[840px]" : "max-h-[420px]", "overflow-auto p-3 text-sm", !state.html && "flex items-center justify-center py-10")}>
         {state.html ? (
           <div ref={frame} className="relative">
             <div
@@ -84,6 +85,7 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
               onClick={onSnapClick}
               className={cn(
                 "[&_[data-slot=card]]:!h-auto [&_[data-slot=card-footer]]:hidden [&_button[aria-label='Block_options']]:invisible",
+                size === "full" && "[&_[data-slot=card-header]_.lucide-chevron-down]:rotate-180",
                 collapsed && "[&_[data-slot=card-content]]:hidden [&_[data-slot=card-header]_.lucide-chevron-down]:!rotate-0 [&_[data-slot=card-header]]:!border-b-0",
               )}
               dangerouslySetInnerHTML={{ __html: state.html }}
@@ -96,7 +98,10 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
                   <MenuRow icon={<LayoutGrid />} label={onShelf ? "Remove from Blocks" : "Add to Blocks"} checked={onShelf} onClick={() => (onShelf ? remove(key) : add({ key, title, path, anchor }))} />
                   <MenuRow icon={<MessagesSquare />} label="Ask PAX" onClick={() => { const text = (snap.current?.innerText ?? "").replace(/\n{3,}/g, "\n\n").slice(0, 8000); askAbout({ context: () => `ACTIVE CONTEXT — the user is asking about the block "${title}" on ${path}. What the block shows on screen:\n${text}` }) }} />
                   <MenuRow icon={<RefreshCw />} label="Refresh" onClick={() => setNonce((n) => n + 1)} />
-                  <MenuRow icon={collapsed ? <ChevronsUpDown /> : <ChevronsDownUp />} label={collapsed ? "Expand" : "Collapse"} onClick={() => setCollapsed((c) => !c)} />
+                  <MenuSeparator />
+                  <MenuRow icon={<ChevronsDownUp />} label="Collapse" checked={size === "collapsed"} onClick={() => setSize("collapsed")} />
+                  <MenuRow icon={<RectangleHorizontal />} label="Half View" checked={size === "half"} onClick={() => setSize("half")} />
+                  <MenuRow icon={<RectangleVertical />} label="Full View" checked={size === "full"} onClick={() => setSize("full")} />
                   <MenuSeparator />
                   <MenuRow icon={<ArrowUpRight />} label="Open on its page" onClick={() => router.push(`${path}#${anchor}`)} />
                   <MenuRow icon={<Link2 />} label="Copy link" onClick={() => navigator.clipboard.writeText(link())} />

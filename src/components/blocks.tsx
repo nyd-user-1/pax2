@@ -11,15 +11,19 @@ import { Card, CardAction, CardContent, CardFooter, CardHeader } from "@/ui/comp
 import { cn } from "@/ui/lib/utils"
 
 // The one block (Brendan, 2026-10-06): every dashboard block is the same card —
-// the title, the searchbar beside it, the three-dot menu, the collapse chevron,
-// and a body that scrolls inside BLOCK_HEIGHT. TableBlock, CardBlock and
+// the title, the searchbar beside it, the three-dot menu, the size chevron,
+// and a body that scrolls inside its height. Three sizes (Brendan, 2026-10-23):
+// Half View, 420px, the default; Full View, 840px, where the body scrolls past
+// it; Collapse, the header alone. The chevron steps Half and Full; the menu
+// holds all three. TableBlock, CardBlock and
 // AccordionBlock are MainBlock under the variant's name, so the inspector says
 // what the screen shows; only the content inside differs.
 
-/** Every block's open height. */
-export const BLOCK_HEIGHT = "h-[419px]"
-/** The cap for a block that sizes to its content (height "max"): past it the body scrolls. */
-export const BLOCK_MAX = "max-h-[419px]"
+/** Half View: every block's default height. */
+export const BLOCK_HEIGHT = "h-[420px]"
+/** Full View: double the default; past it the body scrolls. */
+export const BLOCK_FULL = "h-[840px]"
+export type BlockSize = "collapsed" | "half" | "full"
 
 export type BlockProps = {
   title: string
@@ -41,8 +45,8 @@ export type BlockProps = {
   view?: string
   onView?: (value: string) => void
   defaultOpen?: boolean
-  /** Open height when the block shouldn't be BLOCK_HEIGHT: "auto" sizes it to its content, "max" sizes it
-   *  to its content up to BLOCK_MAX. */
+  /** Half View's height when a page fills the viewport with one block (a height class). "auto" and "max"
+   *  are retired: they read as the standard 420px. */
   height?: string
   /** Ignored (Brendan, 2026-10-20): every block's footer is the Glossary link alone. */
   footer?: React.ReactNode
@@ -56,10 +60,12 @@ export type BlockProps = {
 }
 
 export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, height, peek, id, menuItems, className }: BlockProps) {
-  const [open, setOpen] = React.useState(defaultOpen)
+  const [size, setSize] = React.useState<BlockSize>(defaultOpen ? "half" : "collapsed")
+  const open = size !== "collapsed"
+  const half = height && height !== "auto" && height !== "max" ? height : BLOCK_HEIGHT
   return (
     <PAX2Table2 value={searchValue} onChange={onSearch}>
-      <Card className={cn("gap-4", open && height !== "auto" && (height === "max" ? BLOCK_MAX : (height ?? BLOCK_HEIGHT)), className)}>
+      <Card className={cn("gap-4", open && (size === "full" ? BLOCK_FULL : half), className)}>
         <CardHeader className={cn((open || peek) && "border-b [.border-b]:pb-2")}>
           <div className="flex items-center gap-1">
             <CardAnchor id={id}>{title}</CardAnchor>
@@ -69,10 +75,10 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
             {search && <PAX2Search placeholder={search} />}
           </div>
           <CardAction>
-            <CardTools rows={rows} name={name ?? title.toLowerCase()} views={views} view={view} onView={onView} collapsed={!open} onCollapse={() => setOpen(!open)} menuItems={menuItems} title={title || undefined} anchor={title || id ? (id ?? slug(title)) : undefined}>
+            <CardTools rows={rows} name={name ?? title.toLowerCase()} views={views} view={view} onView={onView} size={size} onSize={setSize} menuItems={menuItems} title={title || undefined} anchor={title || id ? (id ?? slug(title)) : undefined}>
               {actions}
-              <button type="button" aria-label={open ? `Collapse ${title}` : `Expand ${title}`} onClick={() => setOpen(!open)} className="inline-flex size-8 items-center justify-center rounded-md text-slate-800 hover:bg-muted hover:text-foreground">
-                <ChevronDown className={cn("size-4 transition-transform", open && "rotate-180")} />
+              <button type="button" aria-label={size === "half" ? `Full view ${title}` : `Half view ${title}`} onClick={() => setSize(size === "half" ? "full" : "half")} className="inline-flex size-8 items-center justify-center rounded-md text-slate-800 hover:bg-muted hover:text-foreground">
+                <ChevronDown className={cn("size-4 transition-transform", size === "full" && "rotate-180")} />
               </button>
             </CardTools>
           </CardAction>

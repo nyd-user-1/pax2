@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { CheckIcon, ChevronsDownUpIcon, ChevronsUpDownIcon, CopyIcon, DownloadIcon, EllipsisVerticalIcon, LayoutGridIcon, LayoutListIcon, MessagesSquareIcon, PinIcon, RefreshCwIcon, StarIcon } from "lucide-react"
+import { CheckIcon, ChevronsDownUpIcon, CopyIcon, DownloadIcon, EllipsisVerticalIcon, LayoutGridIcon, LayoutListIcon, MessagesSquareIcon, PinIcon, RectangleHorizontalIcon, RectangleVerticalIcon, RefreshCwIcon, StarIcon } from "lucide-react"
 
 import { CardTitle } from "@/ui/components/nova/card"
 import { usePinTop } from "@/components/dash/block-order"
@@ -76,7 +76,8 @@ function download(rows: readonly Record<string, unknown>[], name: string, kind: 
 }
 
 /** The card's controls: whatever it had, then the standard three-dot menu (Brendan, 2026-10-23), the same
- *  six rows on every block in this order: Pin to top, Favorite, Add to Blocks, Ask PAX, Refresh, Collapse.
+ *  rows on every block in this order: Pin to top, Favorite, Add to Blocks, Ask PAX, Refresh, then the
+ *  three sizes: Collapse, Half View, Full View.
  *  A block's own entries (View, Download, extras) follow below a separator. Pin to top works where the
  *  block sits in an ordered column and is greyed where it is already first or the page has no order. */
 export function CardTools({
@@ -87,8 +88,8 @@ export function CardTools({
   onView,
   rows,
   name = "card",
-  collapsed,
-  onCollapse,
+  size,
+  onSize,
   menuItems,
   title,
   anchor,
@@ -104,8 +105,9 @@ export function CardTools({
   /** What Download writes. */
   rows?: readonly Record<string, unknown>[]
   name?: string
-  collapsed?: boolean
-  onCollapse?: () => void
+  /** The block's size: collapsed (header only), half (420px) or full (840px). */
+  size?: "collapsed" | "half" | "full"
+  onSize?: (size: "collapsed" | "half" | "full") => void
   /** The block's title and anchor: Favorite and Add to Blocks key on them, the foot shows the title. */
   title?: string
   anchor?: string
@@ -138,7 +140,10 @@ export function CardTools({
         <MenuRow icon={<LayoutGridIcon />} label={onShelf ? "Remove from Blocks" : "Add to Blocks"} checked={onShelf} disabled={!key || !title} onClick={() => key && title && anchor && (onShelf ? shelf.remove(key) : shelf.add({ key, title, path, anchor }))} />
         <MenuRow icon={<MessagesSquareIcon />} label="Ask PAX" onClick={ask} />
         <MenuRow icon={<RefreshCwIcon />} label="Refresh" onClick={() => router.refresh()} />
-        <MenuRow icon={collapsed ? <ChevronsUpDownIcon /> : <ChevronsDownUpIcon />} label={collapsed ? "Expand" : "Collapse"} disabled={!onCollapse} onClick={() => onCollapse?.()} />
+        <MenuSeparator />
+        <MenuRow icon={<ChevronsDownUpIcon />} label="Collapse" checked={size === "collapsed"} disabled={!onSize} onClick={() => onSize?.("collapsed")} />
+        <MenuRow icon={<RectangleHorizontalIcon />} label="Half View" checked={size === "half"} disabled={!onSize} onClick={() => onSize?.("half")} />
+        <MenuRow icon={<RectangleVerticalIcon />} label="Full View" checked={size === "full"} disabled={!onSize} onClick={() => onSize?.("full")} />
         {extras && <MenuSeparator />}
         {views && views.length > 1 && (
           <MenuFlyout id="view" icon={<LayoutListIcon />} label="View" hint={views.find((v) => v.value === view)?.label}>
