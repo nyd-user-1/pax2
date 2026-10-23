@@ -33,7 +33,11 @@ async function getJson<T>(Key: string): Promise<T | null> {
     const r = await c.send(new m.GetObjectCommand({ Bucket: BUCKET, Key }))
     return JSON.parse(await r.Body!.transformToString()) as T
   } catch (e) {
-    if ((e as { name?: string }).name === "NoSuchKey") return null
+    // A file not written yet. S3 answers NoSuchKey only to a caller allowed to list the folder; to one
+    // that may read but not list it, a missing file is AccessDenied. The live server's role reads all of
+    // studio/, so here AccessDenied means missing too (the role's list grant on studio/ arrived 2026-10-23).
+    const name = (e as { name?: string }).name
+    if (name === "NoSuchKey" || name === "AccessDenied") return null
     throw e
   }
 }
