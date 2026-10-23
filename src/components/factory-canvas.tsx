@@ -3,8 +3,8 @@
 import * as React from "react"
 import {
   Background, BackgroundVariant, BaseEdge, ConnectionMode, Controls, EdgeLabelRenderer, getSmoothStepPath, Handle,
-  MarkerType, Position, ReactFlow, ReactFlowProvider,
-  type Edge, type EdgeProps, type Node, type NodeProps,
+  MarkerType, Position, ReactFlow, ReactFlowProvider, applyNodeChanges,
+  type Edge, type EdgeProps, type Node, type NodeChange, type NodeProps,
 } from "@xyflow/react"
 import {
   AudioLines, Binary, ChartLine, Clock, Columns3, Cpu, Database, Eye, FileBraces, FileText, Film, FlaskConical, GraduationCap, HardDrive, Layers,
@@ -23,7 +23,8 @@ import { cn } from "@/ui/lib/utils"
 // button slides in from the left, inside the page, holds the key: Factory (the kinds and the loops) and
 // Widgets (every chip and its words). Clicking an entry lights its boxes or lines and dims the rest.
 // Instrument numbers are the rows of the Models table on docs/ACCOUNTING.html (scripts/accounting.mjs).
-// Every position derives from the column and row constants above build().
+// Every position derives from the column and row constants above build(). The boxes drag; where they were
+// dragged is kept in this browser until Reset layout puts them back.
 
 export type FactoryCounts = {
   catalog: number | null
@@ -77,6 +78,8 @@ export type Focus = { on: "kind"; kind: NodeKind } | { on: "edges"; kind: Kindof
 type Lit = { nodes: Set<string>; edges: Set<string> } | null
 
 const LitCtx = React.createContext<Lit>(null)
+/** The boxes dragged from where build() put them. An edge touching one drops its pinned chip back onto its own line. */
+const MovedCtx = React.createContext<Set<string>>(new Set())
 const useLit = (set: "nodes" | "edges", id: string): "lit" | "dim" | null => {
   const lit = React.useContext(LitCtx)
   return lit ? (lit[set].has(id) ? "lit" : "dim") : null
@@ -270,11 +273,12 @@ function EdgeChip({ d, big = false, className, style }: { d: FxData; big?: boole
   )
 }
 
-function FxEdge({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data, markerEnd }: EdgeProps<Edge<FxData>>) {
+function FxEdge({ id, source, target, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data, markerEnd }: EdgeProps<Edge<FxData>>) {
   const d = data!
   const lit = useLit("edges", id)
+  const moved = React.useContext(MovedCtx)
   const [path, lx, ly] = getSmoothStepPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition, borderRadius: 14, offset: d.offset ?? 22 })
-  const [x, y] = d.at ?? [lx, ly]
+  const [x, y] = d.at && !moved.has(source) && !moved.has(target) ? d.at : [lx, ly]
   const color = d.kind === "loop" ? LOOP : d.kind === "planned" ? PLANNED : FLOW
   const width = (d.kind === "loop" ? 2.25 : 1.75) + (lit === "lit" ? 1 : 0)
   return (
@@ -491,7 +495,7 @@ const ML = (id: string, y: number): Extra => ({ id, side: "l", at: y - MEASURE_Y
 
 export function build(c: FactoryCounts): { nodes: Node[]; edges: Edge[] } {
   const asOf = (n: number | null, what: string) => (n == null ? null : `${fmt(n)} ${what}${c.asOf ? ` · ${c.asOf}` : ""}`)
-  const n = (id: string, type: string, x: number, y: number, data: Record<string, unknown>): Node => ({ id, type, position: { x, y }, data, draggable: false, selectable: false })
+  const n = (id: string, type: string, x: number, y: number, data: Record<string, unknown>): Node => ({ id, type, position: { x, y }, data, selectable: false })
   const centered = (cy: number, h: number) => cy - h / 2
   const cx = (x: number, w: number) => x + w / 2
 
@@ -642,15 +646,16 @@ export function build(c: FactoryCounts): { nodes: Node[]; edges: Edge[] } {
   return { nodes, edges }
 }
 
-function Canvas({ nodes, edges, onPane }: { nodes: Node[]; edges: Edge[]; onPane: () => void }) {
+function Canvas({ nodes, edges, onNodesChange, onPane }: { nodes: Node[]; edges: Edge[]; onNodesChange: (changes: NodeChange[]) => void; onPane: () => void }) {
   return (
     <ReactFlow
       nodes={nodes}
       edges={edges}
+      onNodesChange={onNodesChange}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
       connectionMode={ConnectionMode.Loose}
-      nodesDraggable={false}
+      nodesDraggable
       nodesConnectable={false}
       elementsSelectable={false}
       onPaneClick={onPane}
@@ -667,8 +672,45 @@ function Canvas({ nodes, edges, onPane }: { nodes: Node[]; edges: Edge[]; onPane
 }
 
 /** The canvas, with its key in a sidebar the config button slides in from the left, inside the page. */
+const LAYOUT_KEY = "erd-layout"
+
 export function FactoryCanvas({ counts }: { counts: FactoryCounts }) {
-  const { nodes, edges } = React.useMemo(() => build(counts), [counts])
+  const base = React.useMemo(() => build(counts), [counts])
+  const { edges } = base
+  // Where the drawing puts each box; a kept layout applies only to the drawing it was made on.
+  const home = React.useMemo(() => new Map(base.nodes.map((n) => [n.id, n.position])), [base])
+  const sig = React.useMemo(() => base.nodes.map((n) => `${n.id}:${n.position.x},${n.position.y}`).join("|"), [base])
+  const [nodes, setNodes] = React.useState(base.nodes)
+  React.useEffect(() => {
+    let kept: { sig?: string; pos?: Record<string, { x: number; y: number }> } | null = null
+    try {
+      kept = JSON.parse(window.localStorage.getItem(LAYOUT_KEY) ?? "null")
+    } catch {
+      kept = null
+    }
+    const pos = kept?.sig === sig ? kept.pos : undefined
+    setNodes(base.nodes.map((n) => (pos?.[n.id] ? { ...n, position: pos[n.id] } : n)))
+  }, [base, sig])
+  const onNodesChange = React.useCallback((changes: NodeChange[]) => setNodes((ns) => applyNodeChanges(changes, ns)), [])
+  const moved = React.useMemo(() => {
+    const out = new Set<string>()
+    for (const n of nodes) {
+      const h = home.get(n.id)
+      if (h && (h.x !== n.position.x || h.y !== n.position.y)) out.add(n.id)
+    }
+    return out
+  }, [nodes, home])
+  // Kept once a drag ends, not on every frame of it.
+  React.useEffect(() => {
+    if (nodes.some((n) => n.dragging)) return
+    try {
+      if (moved.size) window.localStorage.setItem(LAYOUT_KEY, JSON.stringify({ sig, pos: Object.fromEntries(nodes.filter((n) => moved.has(n.id)).map((n) => [n.id, n.position])) }))
+      else window.localStorage.removeItem(LAYOUT_KEY)
+    } catch {
+      // storage full or off: the layout lasts the visit
+    }
+  }, [nodes, moved, sig])
+  const reset = () => setNodes(base.nodes)
   const [open, setOpen] = React.useState(false)
   const [focus, setFocus] = React.useState<Focus>(null)
   const lit = React.useMemo(() => lights(focus, nodes, edges), [focus, nodes, edges])
@@ -680,13 +722,22 @@ export function FactoryCanvas({ counts }: { counts: FactoryCounts }) {
   return (
     <div className="relative flex min-h-[70dvh] min-w-0 flex-1 overflow-hidden bg-pax2-mist">
       <LitCtx.Provider value={lit}>
-        <ReactFlowProvider>
-          <Canvas nodes={nodes} edges={edges} onPane={() => setFocus(null)} />
-        </ReactFlowProvider>
+        <MovedCtx.Provider value={moved}>
+          <ReactFlowProvider>
+            <Canvas nodes={nodes} edges={edges} onNodesChange={onNodesChange} onPane={() => setFocus(null)} />
+          </ReactFlowProvider>
+        </MovedCtx.Provider>
       </LitCtx.Provider>
-      <button type="button" onClick={() => setOpen(true)} aria-label="Key" title="Key" aria-expanded={open} className={whiteButton("circle", "absolute left-4 top-4 z-10", open && "pointer-events-none opacity-0")}>
-        <Settings2 className="size-4" />
-      </button>
+      <div className={cn("absolute left-4 top-4 z-10 flex items-center gap-2 transition-opacity", open && "pointer-events-none opacity-0")}>
+        <button type="button" onClick={() => setOpen(true)} aria-label="Key" title="Key" aria-expanded={open} className={whiteButton("circle")}>
+          <Settings2 className="size-4" />
+        </button>
+        {moved.size > 0 && (
+          <button type="button" onClick={reset} className={whiteButton("md", "h-10 py-0")}>
+            <RotateCcw className="size-4" /> Reset layout
+          </button>
+        )}
+      </div>
       <div className={cn("absolute inset-y-4 left-4 z-20 w-[min(360px,calc(100%-32px))] transition-transform duration-300 ease-in-out", open ? "translate-x-0" : "-translate-x-[calc(100%+24px)]")} aria-hidden={!open}>
         <Legend
           edges={edges}
