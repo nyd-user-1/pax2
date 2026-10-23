@@ -25,6 +25,8 @@ type View = "welcome" | "blocks" | "chat" | "slack" | "discord"
 // it; these keep its place through the move: the view it's on and the shelf tile last opened.
 let keptView: View = "welcome"
 let keptSelected: string | null = null
+// The service a Slack or Discord view talks to, named by its logo in the header at every level.
+const LOGO: Partial<Record<View, string>> = { slack: "/logos/slack.png", discord: "/logos/discord-icon.svg" }
 const TITLE: Record<View, string> = { welcome: "Discussion", blocks: "Blocks", chat: "Chat", slack: "Slack", discord: "Discord" }
 
 function Row({ icon, label, sub, onClick }: { icon: React.ReactNode; label: string; sub?: string; onClick: () => void }) {
@@ -204,6 +206,10 @@ export function DiscussionPanel({ onClose: close, admin = false }: { onClose: ()
             <button type="button" onClick={() => (sub ? sub.back() : setView("welcome"))} aria-label="Back" className="-ml-2 flex size-9 shrink-0 items-center justify-center rounded-full text-slate-600 hover:bg-white hover:text-pax2-blue">
               <ArrowLeft className="size-4" />
             </button>
+          )}
+          {LOGO[view] && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={LOGO[view]} alt="" className="size-5 shrink-0 object-contain" />
           )}
           <p className="truncate font-display text-xl text-slate-900">{sub?.title ?? TITLE[view]}</p>
         </div>
