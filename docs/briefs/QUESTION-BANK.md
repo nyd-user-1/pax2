@@ -68,3 +68,88 @@ Inventory, over the 5,379 baseline shorts:
 | Swayable patterns | 28 trait differences in vote choice; no trait's 90% range clears zero, so persuasion answers stay descriptive | all |
 
 On-screen text is stored as word counts, not the words, so "what would someone know by second three with the sound off" is pass 2.
+
+## Report (2026-10-22)
+
+**Inventory.** The table under Progress, with one change during the build: the codebook landed at 20:20, so the Swayable, Wesleyan and Upworthy questions answer from it (5,375 / 5,378 / 5,379 baseline shorts). Every Swayable trait's 90% range crosses zero, so persuasion answers stay descriptive. The census's `peopleScreenShare` is the share of sampled frames with a person, not the frame area, and the people question was reworded to match before it was scored and cut.
+
+**Scoring.** Brendan scored 65 of 66 on the universe page (1 cut, 5 keep): 25 fives, 18 fours, 10 threes, 11 twos, 3 ones. The three 1s are removed. The unscored one, "How do I get closer to the winning craft?", is now "How should I edit this to look like the ones that outperformed?" and counts as a 5. Every question carries its score in `src/lib/question-bank.ts`. Chips are the 39 rated 4-5 that need no GPU; the 2s and 3s stay defined, without resolvers.
+
+**The questions, by register, with the columns each resolver reads.**
+
+**The video in hand** (12)
+
+| score | chip | reads |
+|---|---|---|
+| 5 | Is there a call to action, and when does it show? | `census.callToAction`, `census.ctaSec` |
+| 5 | How many words is the script? | `transcript.words`, `composition.durationSec` |
+| 5 | What kind of video is this? | `census.format` |
+| 5 | Where was this shot? | `census.setting` |
+| 5 | Which persuasion techniques does it use? | `codebook.swayable`, `swayable.traits` |
+| 5 | Is this trying to persuade? | `codebook.wesleyan` |
+| 4 | Does my hook open on a face, on text, or on b-roll? | `census.format`, `raw.frames[0..2].words` |
+| 4 | What does this look like on mute? | `census.captionsBurnedIn`, `composition.textFrameShare`, `composition.textWordsPerFrame` |
+| 4 | Is it loud enough? | `composition.loudnessLufs`, `composition.loudnessRange` |
+| 4 | How does it end? | `raw.frames[-3..].words`, `raw.loudness.perSecond[-3..]`, `census.ctaSec`, `transcript.words[-8..]` |
+| 4 | How much does the picture move? | `composition.visualActivity`, `craft.visualActivity` |
+| 4 | What does my title do? | `composition.titleChars`, `composition.titleWords`, `composition.titleQuestion`, `composition.titleNumber`, `composition.titleCapsRun`, `composition.titleEmoji` |
+
+**Against the field** (19)
+
+| score | chip | reads |
+|---|---|---|
+| 5 | Where does this rank on my channel? | `catalog.ratio`, `catalog.channelId` |
+| 5 | What's different about my best video? | `catalog.ratio`, `craft.*` |
+| 5 | Show me videos like this one. | `index.neighbors[0..5]`, `catalog.ratio` |
+| 5 | What do videos like this one do differently? | `index.neighbors[0..20]`, `catalog.tier`, `composition.*` |
+| 5 | Is this a good length? | `catalog.durationSec`, `lengths.bins`, `lengths.crossing` |
+| 5 | How does my opening compare with ones that outperformed? | `composition.cutsHook`, `composition.textHook`, `composition.wordsHook`, `composition.firstWordSec`, `findings.overall` |
+| 5 | How does this format do elsewhere? | `census.format`, `registry.rows[format=*]` |
+| 5 | Are people liking and commenting more than usual? | `catalog.likes`, `catalog.comments`, `craft.likeRate`, `craft.commentRate` |
+| 5 | How fast did it pick up views? | `velocity72.views1h`, `velocity72.views6h`, `velocity72.views24h`, `velocity72.views72h` |
+| 5 | What separates winners from the rest on this topic? | `topics.cluster`, `findings.clusters[].splits`, `findings.findings` |
+| 5 | Do my videos that outperformed share a format? | `census.format`, `catalog.tier`, `catalog.channelId` |
+| 5 | Will this change minds? | `codebook.swayable`, `swayable.traits` |
+| 4 | How did this do against my usual? | `catalog.views`, `catalog.channelMedian`, `catalog.ratio`, `catalog.tier` |
+| 4 | Why might this one have outperformed? | `catalog.ratio`, `registry.rows[measured]`, `topics.lift`, `modes.score`, `lengths.bins` |
+| 4 | What's this about, and how does that topic do? | `topics.cluster`, `topics.lift` |
+| 4 | Does this match the craft of the winners? | `modes.scores`, `modes.full.modes[survived]` |
+| 4 | Where does this stand out on my channel? | `craft.*` |
+| 4 | Is it ahead of where my videos usually are? | `velocity72.*`, `velocity72.byChannel` |
+| 4 | Is my title built like headlines that win? | `codebook.upworthy.patterns`, `upworthy-top.patterns` |
+
+**What to do** (8)
+
+| score | chip | reads |
+|---|---|---|
+| 5 | Should I put a call to action on screen? | `census.callToAction`, `census.ctaSec`, `registry.rows[callToAction]` |
+| 5 | When should I ask viewers to act? | `census.ctaSec`, `registry.rows[callToAction]`, `composition.durationSec` |
+| 5 | How should I edit this to look like the ones that outperformed? | `modes.full.modes[survived].center`, `craft.*` |
+| 5 | What one change would help most? | `registry.rows[recommendation]`, `modes.*`, `findings.findings` |
+| 5 | What should my next one be about? | `topics.lift` |
+| 5 | What would make it more persuasive? | `codebook.swayable`, `swayable.traits` |
+| 4 | When should I post the next one like this? | `policy.mean`, `policy.precision`, `topics.cluster`, `catalog.durationSec`, `channels.family` |
+| 4 | What length should the next one be? | `policy.mean`, `topics.cluster`, `channels.family` |
+
+**Held, rated 2-3, defined but unanswered** (16): When does my first word land? (3); What happens before my first word lands? (2); Show me every moment with on-screen text. (3); How many shots do I use, and where's the longest? (3); How long before the first cut? (2); How fast is it cut? (2); What's happening at the loudest moment? (2); Where does the sound drop out? (3); How fast do I talk? (3); How much of it is talking? (2); What am I saying when text first appears? (3); Are my captions burned in? (2); Is anyone else's logo on screen? (2); Is it too dark? (3); How many of my shorts have captions? (3); How many of my shorts open on text? (3).
+
+**Pass 2, GPU read** (8): Is my thumbnail frame actually in the video? (4); Does anything on screen contradict what's said? (5); What would someone know by second three with the sound off? (4); Are my captions readable on a phone? (4); Am I on screen in the first second? (2); Does this show a news clip or someone else's footage? (2); How long is our logo on screen in each video? (2); Which of our videos have voting footage we could reuse? (3).
+
+**The bank.** `data/generated/question-bank.json`, **3.0 MB**, committed and read server-side (under the 8 MB line, so no S3). It carries what the uncommitted stores supply, per baseline short (5,379): catalog figures, transcript word count and last words, OCR words in the first 3 s and the last 3 s with their loudness, and the 20 nearest other-channel neighbors in the serving index, plus baseline quantiles, channel families and the 40 cluster labels. Rebuild: `node scripts/question-bank/build.mjs` (calls `scripts/question-bank/neighbors.py`). Everything committed (census, codebook, composition summary, craft templates, winning modes, topic lift, findings, length crossing, the census lift and registry, publish policy, Swayable and Upworthy) is read at answer time by `src/lib/question-resolver.ts`: one typed resolver per chip, no model call anywhere. Run over 43 baseline shorts (39 chips each), no answer carried an undefined, NaN or broken value. The two 72-hour questions answer for 59 shorts and render their unlocking action for the rest.
+
+**The answers.** Conversational chip, scientific answer: a number, a timestamp or a comparison, and its basis in small type under it. Census answers carry their audit once ("read from the frames, 94 of 99 right in audit"). Recommendations render only where a measured lift backs them, each with its citation: the on-screen call to action (three chips), and the winning mode's held-out lift (two chips). Everything else is descriptive. A video missing a measurement gets its unlocking action as a dashed row (Run the flask links to /lab), never an apology.
+
+**The chips as shipped.**
+- Video page: **Ask about this video** under the player opens the chat in the right panel at 420px, preloaded with the video. Inside the drawer, where the right panel is the drawer itself, it opens the full page with `?ask=1` and the panel opens there.
+- /chat: picking a short from the plus menu's Shorts brings the chips over the input.
+- Four chips a draw. Slots by register: video panel = video, video, field, action; /chat = field, action, video, field. A tap sends the chip as the reader's turn and the measured answer as the reply (`model: measured`, no Retry). The answer's basis rides in a `pax-basis` block, so saved chats reopen with it. The tapped chip leaves the row and the next draw excludes it.
+
+**Event wiring.** `chip-shown` and `chip-tap` are added to `USAGE_KINDS` (`src/lib/usage.ts`) and written through the existing `logUsage` beacon. `chip-shown`: subject = chip id, meta `{position, propensity, surface, videoId}`, one row per chip per draw. `chip-tap`: meta `{position, surface, videoId}`. That is exactly the registration in `learning/chat-suggested-prompts.json`. The propensity is exact: each slot draws uniformly from the unshown chips of its register, so P(chip at position) = 1 / (eligible in that register at that draw). The registry's arms now list the 39 chip ids (`scripts/policy/loops/cold_start_specs.py`, regenerated JSON).
+
+**Sketches.** `docs/sketches/question-universe.html` (scorable, scores prefilled from the file), `chips-video-panel.html`, `chips-chat.html`, the last two filled with the resolver's real answers for one Brennan Center short.
+
+**Deferred.**
+- The 16 held questions (rated 2-3): no resolvers. Their columns are in the file if a later rating lifts them.
+- Pass 2 (8): needs a GPU read of the frames. "Does anything on screen contradict what's said?" was rated 5 and "thumbnail in the video", "second three on mute" and "captions readable" 4, so pass 2 has its order.
+- Not checked: types (no local typecheck; the remote build checks them) and how the pages look in the browser (left for Brendan in local dev).
+- In the working tree, `src/components/chat/chat.tsx` carries another session's uncommitted chat-saving work alongside these changes. Only the chip changes were staged, built on the committed file, so that session's commit will carry both.
