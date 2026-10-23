@@ -139,6 +139,29 @@ const pass = stackAuc >= best[1].pooledAuc
 const w = fitLogit(H)
 const coverage = Object.fromEntries(NAMES.map((n, i) => [n, { baseline: rows.filter((r) => r.q[i] != null).length, heldOut: H.filter((r) => r.q[i] != null).length }]))
 
+// The gauge's scores. pre and post share one 0-100 scale, so the signed difference compares like with like:
+// pre is the stack's prediction as a percentile among the baseline, post the measured ratio's percentile
+// among the same shorts (ties count half). p is the probability, its intercept shifted from the held-out
+// rows' outperform share to the settled catalog's (the prior-shift correction for label-picked rows).
+const pctAmong = (xs) => {
+  const s = [...xs].sort((a, b) => a - b)
+  const bound = (x, strict) => { let lo = 0, hi = s.length; while (lo < hi) { const m = (lo + hi) >> 1; if (strict ? s[m] < x : s[m] <= x) lo = m + 1; else hi = m } return lo }
+  return (x) => (100 * (bound(x, true) + (bound(x, false) - bound(x, true)) / 2)) / s.length
+}
+const rawLogit = (p) => Math.log(p / (1 - p))
+const settled = [...catalog.values()].filter((v) => v.tier !== "unsettled")
+const catalogRate = settled.filter((v) => v.tier === "breakout").length / settled.length
+const heldOutRate = H.filter((r) => r.y).length / H.length
+const shift = rawLogit(catalogRate) - rawLogit(heldOutRate)
+const zOf = (r) => [1, ...X(r)].reduce((s, x, j) => s + w[j] * x, 0)
+const preAt = pctAmong(rows.map(zOf))
+const postAt = pctAmong(rows.map((r) => catalog.get(r.id).ratio).filter((x) => x != null))
+const r1 = (x) => Math.round(x * 10) / 10
+const scores = Object.fromEntries(rows.map((r) => {
+  const ratio = catalog.get(r.id).ratio
+  return [r.id, { pre: r1(preAt(zOf(r))), ...(ratio != null ? { post: r1(postAt(ratio)) } : {}), p: r4(1 / (1 + Math.exp(-(zOf(r) + shift)))) }]
+}))
+
 const out = {
   builtAt: new Date().toISOString(),
   name: "Resonance, Gen 1 stack",
@@ -161,6 +184,8 @@ const out = {
     "The held-out rows' outperform share is high because baseline media were mostly label-picked; AUC is unaffected by the base rate, the intercept is not, so the served probability needs recalibration against the uniform catalog rate before display.",
   ],
   futureInputs: "Window Q's audited census columns with a measured lift (data/generated/model/vqa-lift.json) join at the next refit (Gen 2).",
+  calibration: { heldOutRate: r4(heldOutRate), catalogRate: r4(catalogRate), settledCatalog: settled.length, interceptShift: r4(shift), scale: "pre: the prediction's percentile among the baseline; post: the measured ratio's percentile among the baseline; p: the probability at the catalog rate" },
+  scores,
 }
 fs.writeFileSync(path.join(root, "data/generated/model/resonance-formula.json"), JSON.stringify(out, null, 1) + "\n")
-console.log(JSON.stringify({ rows: out.rows, validation: out.validation, weights: out.weights }, null, 1))
+console.log(JSON.stringify({ rows: out.rows, validation: out.validation, weights: out.weights, calibration: out.calibration, scored: Object.keys(scores).length }, null, 1))
