@@ -12,8 +12,6 @@ import {
   ScanEye, Search, Server, Settings2, Shapes, Table, Timer, TrendingUp, Zap, type LucideIcon,
 } from "lucide-react"
 
-import { createPortal } from "react-dom"
-
 import { useShellPanel } from "@/components/shell"
 import { whiteButton } from "@/components/white-button"
 import { cn } from "@/ui/lib/utils"
@@ -21,8 +19,8 @@ import { cn } from "@/ui/lib/utils"
 // /erd (once /pipeline-2): the whole PAX2 factory as one fixed diagram on the xyflow canvas. Six node kinds
 // (door, stage, store, instrument, service, surface) and three edge kinds (flow, loop, planned). Boxes carry
 // their names and live counts; what each one is shows on hover. Each edge carries an icon chip, blue for flow,
-// purple for a loop with its number, dashed for planned; its words show on hover. The gear in the header
-// opens the Architecture panel in the shell's right slot: Factory (the kinds and the loops) and Widgets
+// purple for a loop with its number, dashed for planned; its words show on hover. The gear at the canvas's
+// top right opens the Architecture panel in the shell's right slot: Factory (the kinds and the loops) and Widgets
 // (every chip and its words). Clicking an entry lights its boxes or lines and dims the rest.
 // Instrument numbers are the rows of the Models table on docs/ACCOUNTING.html (scripts/accounting.mjs).
 // Every position derives from the column and row constants above build(). The boxes drag; where they were
@@ -687,7 +685,7 @@ function Canvas({ nodes, edges, onNodesChange, onPane }: { nodes: Node[]; edges:
   )
 }
 
-/** The canvas. Its key is the Architecture panel, which the gear in the shell header opens in the right slot. */
+/** The canvas. Its key is the Architecture panel, which the gear at its top right opens in the shell's right slot. */
 const LAYOUT_KEY = "erd-layout"
 const ARCH_KEY = "erd-architecture"
 
@@ -750,8 +748,6 @@ export function FactoryCanvas({ counts }: { counts: FactoryCounts }) {
   React.useEffect(() => {
     if (!showing) setFocus(null)
   }, [showing])
-  const [slot, setSlot] = React.useState<HTMLElement | null>(null)
-  React.useEffect(() => setSlot(document.getElementById("page-actions")), [])
   const lit = React.useMemo(() => lights(focus, nodes, edges), [focus, nodes, edges])
   React.useEffect(() => {
     const key = (e: KeyboardEvent) => e.key === "Escape" && setFocus(null)
@@ -772,20 +768,16 @@ export function FactoryCanvas({ counts }: { counts: FactoryCounts }) {
           <RotateCcw className="size-4" /> Reset layout
         </button>
       )}
-      {slot &&
-        createPortal(
-          <button
-            type="button"
-            onClick={() => (showing ? openAside(null) : (setView("rows"), panel("rows")))}
-            aria-pressed={showing}
-            aria-label="Architecture"
-            title="Architecture"
-            className={whiteButton("circle")}
-          >
-            <Settings2 className="size-4" />
-          </button>,
-          slot,
-        )}
+      <button
+        type="button"
+        onClick={() => (showing ? openAside(null) : (setView("rows"), panel("rows")))}
+        aria-pressed={showing}
+        aria-label="Architecture"
+        title="Architecture"
+        className={whiteButton("circle", "absolute right-4 top-4 z-10")}
+      >
+        <Settings2 className="size-4" />
+      </button>
     </div>
   )
 }
