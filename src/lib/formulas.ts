@@ -9,7 +9,7 @@ export const FORMULAS: [string, string][] = [
   ["90% range", String.raw`\begin{gathered} \hat{\Delta}^{*(1)}, \dots, \hat{\Delta}^{*(1000)} \\ \text{channels drawn with replacement} \\[6pt] \left[\, \hat{\Delta}^{*}_{(50)},\ \hat{\Delta}^{*}_{(950)} \,\right] \end{gathered}`],
   ["Worked example", String.raw`\begin{gathered} \Delta_{\text{Holler}} = \tfrac{13}{70} - \tfrac{19}{208} = 0.094 \\[4pt] w = \tfrac{2 \cdot 70 \cdot 208}{278} = 104.7 \\[4pt] \hat{\Delta}_{\text{reform, CTA}} = \tfrac{2073.7}{252.5} = +8.2 \end{gathered}`],
   // docs/RESONANCE.md's formula, with the fitted weights of data/generated/model/resonance-formula.json.
-  ["Resonance", String.raw`\begin{gathered} \hat{P}(\text{outperform } 3\times) = \sigma\Big( b_0 + \textstyle\sum_i b_i \cdot \operatorname{logit}(q_i) \Big) \\[6pt] b_0 = 0.1926,\ \ b_c = 0.1573,\ \ b_x = 0.1048,\ \ b_h = 0.1550 \end{gathered}`],
+  ["Resonance", String.raw`\begin{gathered} \hat{P}(\text{outperform } 3\times) \\ = \sigma\Big( b_0 + \textstyle\sum_i b_i \cdot \operatorname{logit}(q_i) \Big) \\[6pt] b_0 = 0.1926,\ \ b_c = 0.1573 \\ b_x = 0.1048,\ \ b_h = 0.1550 \end{gathered}`],
 ]
 export const EXPLAIN: Record<string, { pill: string; facts: [string, string][]; rows: [string, string][] }> = {
   Label: {

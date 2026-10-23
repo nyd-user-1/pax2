@@ -19,7 +19,7 @@ import { Hint } from "@/components/hint"
 import { boostCounts } from "@/lib/boost"
 import { ChevronRight } from "lucide-react"
 
-import { AccordionBlock, CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock } from "@/components/blocks"
+import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, SmallBlock } from "@/components/blocks"
 import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/components/codebook-blocks"
 import { CensusCharacteristics } from "@/components/census-characteristics"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
@@ -312,9 +312,9 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "audio",
       "Audio",
       <Locked key="audio" locked={locked}>
-        <ChartBlock title="Audio" height="auto" footer={sampled ? SAMPLE : undefined}>
+        <SmallBlock title="Audio" footer={sampled ? SAMPLE : undefined}>
           <Loudness f={f.audio} />
-        </ChartBlock>
+        </SmallBlock>
       </Locked>,
     ])
   if (siblings.length)
@@ -322,7 +322,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "comps",
       "Comps",
       <Locked key="comps" locked={locked}>
-        <ListBlock title="Comps" height="max" footer={sampled ? SAMPLE : undefined}>
+        <SmallBlock title="Comps" footer={sampled ? SAMPLE : undefined}>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {siblings.map((x) => {
               const r = ratioOf(x.id)
@@ -336,7 +336,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
               )
             })}
           </div>
-        </ListBlock>
+        </SmallBlock>
       </Locked>,
     ])
 
@@ -344,7 +344,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     left.push([
       "tags",
       "Tags",
-      <AccordionBlock key="tags" title="Tags" height="max" footer={!realTags.length && tags.length ? SAMPLE : undefined}>
+      <SmallBlock key="tags" title="Tags" footer={!realTags.length && tags.length ? SAMPLE : undefined}>
         <div className="flex flex-col gap-2">
           {tags.filter((t) => t !== "aggrieved").map((t, ti) => {
             const others = byTag(t)
@@ -378,7 +378,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
             )
           })}
         </div>
-      </AccordionBlock>,
+      </SmallBlock>,
     ])
 
   const coded = (await codebookP)?.[ytId]

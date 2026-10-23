@@ -21,6 +21,9 @@ import { cn } from "@/ui/lib/utils"
 
 /** Half View: every block's default height. */
 export const BLOCK_HEIGHT = "h-[420px]"
+/** A SmallBlock's Half and Full View: its content's own height, capped. */
+const SMALL_HALF = "max-h-[420px]"
+const SMALL_FULL = "max-h-[840px]"
 /** Full View: as tall as the content needs, never shorter than Half View, at most 840px; past it the
  *  body scrolls. */
 export const BLOCK_FULL = "min-h-[420px] max-h-[840px]"
@@ -58,15 +61,17 @@ export type BlockProps = {
   /** Extra entries for the three-dot menu. */
   menuItems?: React.ReactNode
   className?: string
+  /** A SmallBlock (the aside column's): sized to its content, not the 420px standard. */
+  small?: boolean
 }
 
-export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, height, peek, id, menuItems, className }: BlockProps) {
+export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, height, peek, id, menuItems, className, small }: BlockProps) {
   const [size, setSize] = React.useState<BlockSize>(defaultOpen ? "half" : "collapsed")
   const open = size !== "collapsed"
   const half = height && height !== "auto" && height !== "max" ? height : BLOCK_HEIGHT
   return (
     <PAX2Table2 value={searchValue} onChange={onSearch}>
-      <Card className={cn("gap-4", open && (size === "full" ? BLOCK_FULL : half), className)}>
+      <Card className={cn("gap-4", open && (small ? (size === "full" ? SMALL_FULL : SMALL_HALF) : size === "full" ? BLOCK_FULL : half), className)}>
         <CardHeader className={cn((open || peek) && "border-b [.border-b]:pb-2")}>
           <div className="flex items-center gap-1">
             <CardAnchor id={id}>{title}</CardAnchor>
@@ -94,6 +99,12 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
       </Card>
     </PAX2Table2>
   )
+}
+
+/** The aside column's block (Brendan, 2026-10-23): as tall as its content, up to 420px; Full View lets it
+ *  reach 840px. */
+export function SmallBlock(props: BlockProps) {
+  return <MainBlock {...props} small />
 }
 
 /** MainBlock with a table in it: the column header pins while the rows scroll. */
