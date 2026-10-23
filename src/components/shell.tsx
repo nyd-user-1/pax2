@@ -37,11 +37,12 @@ const RESEARCH = [
   { href: "/methodology", label: "Methodology", icon: Sigma },
   { href: "/polling", label: "Polling", icon: Vote },
 ]
+// A to Z (Brendan, 2026-10-23).
 const ADMIN = [
+  { href: "/build", label: "Build", icon: Hammer },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/evals", label: "Evals", icon: Target },
   { href: "/pipeline", label: "Pipeline", icon: Workflow },
-  { href: "/build", label: "Build", icon: Hammer },
   { href: "/project-management", label: "Project Management", icon: GanttChart },
   { href: "/reinforcement-learning", label: "Reinforcement learning", icon: Brain },
 ]
