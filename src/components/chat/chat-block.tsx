@@ -117,7 +117,9 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
             )}
           </div>
         ) : state.error ? (
-          <span className="text-slate-500">{state.error}</span>
+          <a href={path} onClick={(e) => (e.preventDefault(), router.push(path))} className="font-medium text-pax2-light-blue hover:underline">
+            Open the page
+          </a>
         ) : (
           <Loader2 className="size-5 animate-spin text-slate-400" />
         )}

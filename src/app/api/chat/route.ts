@@ -7,6 +7,8 @@ import { board, workspace } from "@/lib/review"
 import { anonSpend } from "@/lib/anon"
 import { evidencePrompt } from "@/lib/script-evidence"
 import { metricsGuide } from "@/lib/metrics-guide"
+import { termById } from "@/lib/glossary"
+import { videosContext } from "@/lib/chat-videos"
 
 // The /chat answer, after solar's /api/chat: a system prompt carrying the record (here, every take's
 // current score and its parts, and the scripts), then the reply streamed back as plain text.
@@ -16,7 +18,7 @@ const MODEL = process.env.PAX2_CHAT_MODEL ?? process.env.PAX2_MODEL ?? "us.anthr
 
 const BASE_SYSTEM_PROMPT = `You are the analyst inside PAX2, a tool that scores advocacy videos for the Question 3 campaign (Massachusetts' top-two primary initiative).
 
-Resonance is a 0-100 score: 50 is the reference average of the first round of paid results. It is built from Engage (3-second plays over impressions, 25%), Interest (average watch time over length, 40%) and Act (shares, saves and comments over 3-second plays, 35%). Each score carries a range; a take whose range spans 50 cannot yet be told apart from average.
+Resonance, as PAX2's glossary defines it: ${termById("resonance")?.definition ?? ""} ${termById("resonance-gauge")?.definition ?? ""}
 
 When the record below has a number, use that exact number. When it does not, say so plainly rather than estimating. Delivery (spend, reach) is a condition beside the score, never part of it. Speak like a sharp campaign analyst: lead with the numbers, compare takes, and say what the evidence does and does not support.
 
@@ -30,7 +32,9 @@ A video script you draft goes alone in a \`\`\`pax-script code block (that tag, 
 
 An ACTIVE CONTEXT section below is the user's attachment, read from PAX2's own pages moments ago: it is evidence as good as the record. Answer from it, quote its numbers, and never say a short or block is missing from the record when the attachment describes it; the record covers only the campaign's scored takes.
 
-When the context lists blocks from an attached page, you may show one in the answer by writing its reference alone on its own line, exactly as listed: [[block:/v/yt-ID#anchor]]. The chat renders the block there. Show a block when it carries the evidence you cite; never invent a reference that is not listed.`
+The first time an answer names a short, link its title to its page as markdown, [its title](/v/yt-ID), with an id taken from the context (the SHORTS section, an attachment, the record); never invent an id. Answer about the short the user asks about; bring in the campaign's scored takes only when the question is about them. The SHORTS section lists the shorts PAX2 holds that the user's last message points at, with their figures: answer from them. Only when a short the user names is in no section, say it is not among the shorts PAX2 holds, and ask for its link.
+
+When the context lists blocks from an attached page, you may show one in the answer by writing its reference alone on its own line, exactly as listed: [[block:/v/yt-ID#anchor]]. The chat renders the block there. Show a block when it carries the evidence you cite. Write a [[block:…]] reference only when an ACTIVE CONTEXT lists that exact reference; with no attachment, write none.`
 
 async function record(): Promise<string> {
   try {
@@ -87,10 +91,12 @@ export async function POST(req: Request) {
   const modelId = model && MODEL_IDS.has(model) ? model : MODEL
   // Extra context from the caller (the graph canvas: what is on it, an attached entity, a prompt step's wiring; a library report, every page), after the record.
   const extra = typeof systemContext === "string" && systemContext.trim() ? `\n\n${systemContext.slice(0, 80_000)}` : ""
+  // The shorts the user's last message points at, by title, link or id (src/lib/chat-videos.ts).
+  const lastUser = [...messages].reverse().find((m) => m.role === "user")?.content ?? ""
   const r = await client.send(
     new ConverseStreamCommand({
       modelId,
-      system: [{ text: BASE_SYSTEM_PROMPT + (await record()) + `\n\n${metricsGuide()}` + extra + addressContext(address, place) + `\n\n${evidencePrompt()}` }],
+      system: [{ text: BASE_SYSTEM_PROMPT + (await record()) + `\n\n${metricsGuide()}` + extra + addressContext(address, place) + (await videosContext(lastUser)) + `\n\n${evidencePrompt()}` }],
       messages: messages.filter((m) => m.content.trim()).map((m): Message => ({ role: m.role, content: [{ text: m.content }] })),
       inferenceConfig: { maxTokens: 2000, temperature: 0.3 },
     }),
