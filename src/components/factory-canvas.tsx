@@ -3,8 +3,8 @@
 import * as React from "react"
 import {
   Background, BackgroundVariant, BaseEdge, ConnectionMode, Controls, EdgeLabelRenderer, getSmoothStepPath, Handle,
-  MarkerType, Position, ReactFlow, ReactFlowProvider, applyNodeChanges,
-  type Edge, type EdgeProps, type Node, type NodeChange, type NodeProps,
+  MarkerType, Position, ReactFlow, ReactFlowProvider, applyNodeChanges, useInternalNode,
+  type Edge, type EdgeProps, type InternalNode, type Node, type NodeChange, type NodeProps,
 } from "@xyflow/react"
 import {
   AudioLines, Binary, ChartLine, ChevronRight, Clock, Columns3, Cpu, Database, Eye, Factory, FileBraces, FileText, Film, FlaskConical, GraduationCap, HardDrive, Layers,
@@ -24,7 +24,8 @@ import { cn } from "@/ui/lib/utils"
 // (every chip and its words). Clicking an entry lights its boxes or lines and dims the rest.
 // Instrument numbers are the rows of the Models table on docs/ACCOUNTING.html (scripts/accounting.mjs).
 // Every position derives from the column and row constants above build(). The boxes drag; where they were
-// dragged is kept in this browser until Reset layout puts them back.
+// dragged is kept in this browser until Reset layout puts them back. A line touching a moved box reroutes
+// between the sides that face each other; the rails keep their routes.
 
 export type FactoryCounts = {
   catalog: number | null
@@ -273,11 +274,43 @@ function EdgeChip({ d, big = false, className, style }: { d: FxData; big?: boole
   )
 }
 
+type Rect = { x: number; y: number; w: number; h: number }
+const rectOf = (n: InternalNode | undefined): Rect | null =>
+  n?.measured?.width ? { x: n.internals.positionAbsolute.x, y: n.internals.positionAbsolute.y, w: n.measured.width, h: n.measured.height ?? 0 } : null
+type Ends = { sourceX: number; sourceY: number; sourcePosition: Position; targetX: number; targetY: number; targetPosition: Position }
+
+/** A line from box a to box b on the sides that face each other: straight down or up where the boxes overlap
+ *  side to side, straight across where they overlap top to bottom, one elbow where they overlap neither way
+ *  (out of a's side, into b's top or bottom). Null when the boxes overlap each other. */
+function facing(a: Rect, b: Rect): Ends | null {
+  const ox: [number, number] = [Math.max(a.x, b.x), Math.min(a.x + a.w, b.x + b.w)]
+  const oy: [number, number] = [Math.max(a.y, b.y), Math.min(a.y + a.h, b.y + b.h)]
+  const below = b.y >= a.y + a.h
+  const above = b.y + b.h <= a.y
+  const right = b.x >= a.x + a.w
+  const left = b.x + b.w <= a.x
+  if ((below || above) && ox[1] - ox[0] > 16) {
+    const x = (ox[0] + ox[1]) / 2
+    return { sourceX: x, sourceY: below ? a.y + a.h : a.y, sourcePosition: below ? Position.Bottom : Position.Top, targetX: x, targetY: below ? b.y : b.y + b.h, targetPosition: below ? Position.Top : Position.Bottom }
+  }
+  if ((right || left) && oy[1] - oy[0] > 12) {
+    const y = (oy[0] + oy[1]) / 2
+    return { sourceX: right ? a.x + a.w : a.x, sourceY: y, sourcePosition: right ? Position.Right : Position.Left, targetX: right ? b.x : b.x + b.w, targetY: y, targetPosition: right ? Position.Left : Position.Right }
+  }
+  if ((below || above) && (right || left))
+    return { sourceX: right ? a.x + a.w : a.x, sourceY: a.y + a.h / 2, sourcePosition: right ? Position.Right : Position.Left, targetX: b.x + b.w / 2, targetY: below ? b.y : b.y + b.h, targetPosition: below ? Position.Top : Position.Bottom }
+  return null
+}
+
 function FxEdge({ id, source, target, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data, markerEnd }: EdgeProps<Edge<FxData>>) {
   const d = data!
   const lit = useLit("edges", id)
   const moved = React.useContext(MovedCtx)
-  const [path, lx, ly] = getSmoothStepPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition, borderRadius: 14, offset: d.offset ?? 22 })
+  const a = rectOf(useInternalNode(source))
+  const b = rectOf(useInternalNode(target))
+  // A moved box's line takes the facing sides; a rail (a set offset) keeps the route it was drawn with.
+  const ends = (moved.has(source) || moved.has(target)) && d.offset === undefined && a && b ? facing(a, b) : null
+  const [path, lx, ly] = getSmoothStepPath({ ...(ends ?? { sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition }), borderRadius: 14, offset: d.offset ?? 22 })
   const [x, y] = d.at && !moved.has(source) && !moved.has(target) ? d.at : [lx, ly]
   const color = d.kind === "loop" ? LOOP : d.kind === "planned" ? PLANNED : FLOW
   const width = (d.kind === "loop" ? 2.25 : 1.75) + (lit === "lit" ? 1 : 0)
