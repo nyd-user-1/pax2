@@ -2,13 +2,13 @@
 
 import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { CheckIcon, ChevronsDownUpIcon, CopyIcon, DownloadIcon, EllipsisVerticalIcon, LayoutGridIcon, LayoutListIcon, MessagesSquareIcon, PinIcon, RectangleHorizontalIcon, RectangleVerticalIcon, RefreshCwIcon, StarIcon } from "lucide-react"
+import { CheckIcon, ChevronsDownUpIcon, CopyIcon, DownloadIcon, EllipsisVerticalIcon, LayoutGridIcon, LayoutListIcon, MessagesSquareIcon, PinIcon, RectangleHorizontalIcon, RectangleVerticalIcon, RefreshCwIcon, StarIcon, Trash2Icon } from "lucide-react"
 
 import { CardTitle } from "@/ui/components/nova/card"
 import { usePinTop } from "@/components/dash/block-order"
 import { KebabMenu, MenuFlyout, MenuFoot, MenuRow, MenuSeparator } from "@/components/kebab-menu"
 import { useShellPanel } from "@/components/shell"
-import { useShelf } from "@/lib/home-blocks"
+import { useHiddenBlocks, useShelf } from "@/lib/home-blocks"
 import { useNavFavorites } from "@/lib/nav-favorites"
 import { cn } from "@/ui/lib/utils"
 
@@ -118,6 +118,7 @@ export function CardTools({
   const { askAbout } = useShellPanel()
   const { favs, toggle: toggleFav } = useNavFavorites()
   const shelf = useShelf()
+  const { hide } = useHiddenBlocks()
   const root = React.useRef<HTMLDivElement>(null)
   const key = anchor ? `${path}#${anchor}` : null
   const fav = !!key && favs.includes(key)
@@ -159,6 +160,9 @@ export function CardTools({
             <MenuRow label="JSON" onClick={() => download(rows, name, "json")} />
           </MenuFlyout>
         )}
+        <MenuSeparator />
+        {/* Delete: off this page, onto the Blocks shelf, where opening it puts it back. */}
+        <MenuRow icon={<Trash2Icon />} label="Delete" danger disabled={!key || !title} onClick={() => key && title && anchor && (shelf.add({ key, title, path, anchor }), hide(key))} />
         {title && (
           <>
             <MenuSeparator />

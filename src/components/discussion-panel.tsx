@@ -8,7 +8,7 @@ import { connections } from "@/app/connect-actions"
 import { Chat } from "@/components/chat/chat"
 import { ConnectView, type Nav } from "@/components/connect-view"
 import { useShellPanel } from "@/components/shell"
-import { useShelf, type ShelfBlock, type ShelfItem } from "@/lib/home-blocks"
+import { useHiddenBlocks, useShelf, type ShelfBlock, type ShelfItem } from "@/lib/home-blocks"
 import { setShelfDrag } from "@/lib/shelf-drag"
 import { cn } from "@/ui/lib/utils"
 import { whiteButton } from "@/components/white-button"
@@ -54,7 +54,16 @@ const PLACE = (path: string) => (path === "/" ? "Landing" : path.slice(1).split(
 function BlocksShelf() {
   const router = useRouter()
   const path = usePathname()
-  const { items, remove, move } = useShelf()
+  const { items, add, remove, move } = useShelf()
+  const { show } = useHiddenBlocks()
+  // Every block on the page onto the shelf, in the page's order (blocks in other tabs included).
+  const addAll = () => {
+    const titles = Array.from(document.querySelectorAll<HTMLElement>('[data-slot="card-title"][id]')).filter((el) => !el.closest("[data-shelf]"))
+    titles.reverse().forEach((el) => {
+      const title = el.textContent?.trim()
+      if (title) add({ key: `${path}#${el.id}`, title, path, anchor: el.id })
+    })
+  }
   const [dragging, setDragging] = React.useState<string | null>(null)
   const [over, setOver] = React.useState<string | null>(null)
   // The panel's box, for the columns and the empty slots that fill it.
@@ -83,6 +92,7 @@ function BlocksShelf() {
     router.push(`/v/yt-${id}`)
   }
   const open = (b: ShelfBlock) => {
+    show(b.key)
     setSelected(`b:${b.key}`)
     if (b.path === path) document.getElementById(b.anchor)?.scrollIntoView({ behavior: "smooth", block: "start" })
     else {
@@ -127,7 +137,12 @@ function BlocksShelf() {
       over === key && dragging !== key && "ring-2 ring-pax2-light-blue",
     )
   return (
-    <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-1">
+    <div data-shelf className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-1">
+    <div className="mb-3 flex justify-end">
+      <button type="button" onClick={addAll} className="text-xs font-medium text-pax2-light-blue hover:underline">
+        Add all on this page
+      </button>
+    </div>
     <div ref={box} className="h-full">
     <div className="grid content-start" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`, gap: GAP }}>
       {items.map((it) =>
@@ -154,7 +169,7 @@ function BlocksShelf() {
             <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/85 to-transparent px-2 pb-1.5 pt-6">
               <span className="line-clamp-2 text-[11px] font-semibold leading-snug text-white">{it.video.title}</span>
             </span>
-            <span className="absolute right-1.5 top-1.5 rounded-md bg-slate-950/70 px-1 py-0.5 font-mono text-[10px] text-white">{it.video.duration}</span>
+            {it.video.duration && <span className="absolute right-1.5 top-1.5 rounded-md bg-slate-950/70 px-1 py-0.5 font-mono text-[10px] text-white">{it.video.duration}</span>}
           </div>
         ),
       )}

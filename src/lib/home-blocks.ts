@@ -57,10 +57,62 @@ const readOrder = (): string[] => {
 
 export type ShelfItem = { key: string; block: ShelfBlock; video?: never } | { key: string; video: ShelfVideo; block?: never }
 
+// Blocks deleted from their page (Brendan, 2026-10-23): hidden there and kept on the shelf. Opening one from
+// the shelf, or taking it off the shelf, puts it back on its page.
+const HIDDEN = "pax2-hidden-blocks"
+const readHidden = (): string[] => {
+  try {
+    return JSON.parse(localStorage.getItem(HIDDEN) ?? "[]") as string[]
+  } catch {
+    return []
+  }
+}
+const writeHidden = (keys: string[]) => {
+  try {
+    localStorage.setItem(HIDDEN, JSON.stringify(keys))
+  } catch {}
+  window.dispatchEvent(new Event(EVENT))
+}
+export function useHiddenBlocks() {
+  const [hidden, setHidden] = React.useState<string[]>([])
+  React.useEffect(() => {
+    const on = () => setHidden(readHidden())
+    on()
+    window.addEventListener(EVENT, on)
+    window.addEventListener("storage", on)
+    return () => {
+      window.removeEventListener(EVENT, on)
+      window.removeEventListener("storage", on)
+    }
+  }, [])
+  const hide = React.useCallback((key: string) => writeHidden([...readHidden().filter((k) => k !== key), key]), [])
+  const show = React.useCallback((key: string) => writeHidden(readHidden().filter((k) => k !== key)), [])
+  return { hidden, hide, show }
+}
+
+// The page's own shorts (Brendan, 2026-10-23): a video page lists its channel's shorts on the shelf, after
+// the saved items, for as long as the page is open.
+let pageShorts: ShelfVideo[] = []
+/** Rendered by a page to put its shorts on the shelf; takes them off when the page goes. */
+export function PageShorts({ videos }: { videos: ShelfVideo[] }) {
+  const ids = videos.map((v) => v.id).join(",")
+  React.useEffect(() => {
+    pageShorts = videos
+    window.dispatchEvent(new Event(EVENT))
+    return () => {
+      pageShorts = []
+      window.dispatchEvent(new Event(EVENT))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ids])
+  return null
+}
+
 /** Everything on the shelf in its dragged order. Items the order hasn't met yet go where they belong
  *  by default: a newly added block first, a short last. */
-function arrange(blocks: ShelfBlock[], order: string[]): ShelfItem[] {
-  const all: ShelfItem[] = [...blocks.map((b) => ({ key: `b:${b.key}`, block: b })), ...SHELF.map((v) => ({ key: `v:${v.id}`, video: v }))]
+function arrange(blocks: ShelfBlock[], order: string[], extra: ShelfVideo[] = []): ShelfItem[] {
+  const shorts = [...SHELF, ...extra.filter((v) => !SHELF.some((s) => s.id === v.id))]
+  const all: ShelfItem[] = [...blocks.map((b) => ({ key: `b:${b.key}`, block: b })), ...shorts.map((v) => ({ key: `v:${v.id}`, video: v }))]
   const byKey = new Map(all.map((i) => [i.key, i]))
   const placed = order.filter((k) => byKey.has(k))
   const fresh = all.filter((i) => !placed.includes(i.key))
@@ -71,10 +123,12 @@ function arrange(blocks: ShelfBlock[], order: string[]): ShelfItem[] {
 export function useShelf() {
   const [blocks, setBlocks] = React.useState<ShelfBlock[]>([])
   const [order, setOrder] = React.useState<string[]>([])
+  const [extra, setExtra] = React.useState<ShelfVideo[]>([])
   React.useEffect(() => {
     const on = () => {
       setBlocks(read())
       setOrder(readOrder())
+      setExtra(pageShorts)
     }
     on()
     window.addEventListener(EVENT, on)
@@ -88,8 +142,12 @@ export function useShelf() {
     const now = read().filter((x) => x.key !== b.key)
     write([{ ...b, added: new Date().toISOString() }, ...now])
   }, [])
-  const remove = React.useCallback((key: string) => write(read().filter((x) => x.key !== key)), [])
-  const items = React.useMemo(() => arrange(blocks, order), [blocks, order])
+  // Taking a block off the shelf also puts it back on its page, so a deleted block is never lost.
+  const remove = React.useCallback((key: string) => {
+    writeHidden(readHidden().filter((k) => k !== key))
+    write(read().filter((x) => x.key !== key))
+  }, [])
+  const items = React.useMemo(() => arrange(blocks, order, extra), [blocks, order, extra])
   /** Moves an item to where another sits (null: to the end). */
   const move = React.useCallback(
     (from: string, to: string | null) => {

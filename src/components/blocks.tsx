@@ -2,12 +2,14 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 
 import { CardAnchor, CardTools, slug } from "@/components/dash/card-tools"
 import { CarouselChevrons } from "@/components/record/chart-carousel"
 import { PAX2Search, PAX2Table2 } from "@/components/pax2-table2"
 import { Card, CardAction, CardContent, CardFooter, CardHeader } from "@/ui/components/nova/card"
+import { useHiddenBlocks } from "@/lib/home-blocks"
 import { cn } from "@/ui/lib/utils"
 
 // The one block (Brendan, 2026-10-06): every dashboard block is the same card —
@@ -74,6 +76,10 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
   const [size, setSize] = React.useState<BlockSize>(defaultOpen ? "full" : "collapsed")
   const open = size !== "collapsed"
   const half = height && height !== "auto" && height !== "max" ? height : BLOCK_HEIGHT
+  // A block deleted from its page stays on the Blocks shelf and is gone from here until it is opened there.
+  const path = usePathname()
+  const { hidden } = useHiddenBlocks()
+  if (title && hidden.includes(`${path}#${id ?? slug(title)}`)) return null
   return (
     <PAX2Table2 value={searchValue} onChange={onSearch}>
       <Card className={cn("gap-4", open && (small ? (size === "full" ? SMALL_FULL : SMALL_HALF) : size === "full" ? BLOCK_FULL : half), className)}>
