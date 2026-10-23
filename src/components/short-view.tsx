@@ -409,7 +409,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     ],
     ["recs", "Recommendations", <ListBlock key="recs" title="Recommendations" height="auto"><Recommendations rows={recipe} unlock={recipe ? [] : unlock} /></ListBlock>],
     // Moved from /evidence#carry (2026-10-22): the catalog's lift, read against this video.
-    ["carry", "What the pushed videos carry", <CarryBlock key="carry" ytId={ytId} />],
+    ["carry", "Feature index", <CarryBlock key="carry" ytId={ytId} />],
     // The per-video chart homes (docs/RESONANCE-EVAL.md): the craft octagon, then the root's length
     // and topic charts in per-video form. Each appears only when its measure exists for this video.
     ...(template ? ([["craft", "Production profile", <ChartBlock key="craft" title="Production profile" height="auto"><CraftOctagon template={template} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
