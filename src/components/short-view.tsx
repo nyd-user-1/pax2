@@ -12,7 +12,9 @@ import { CarryBlock } from "@/components/evidence/carry"
 import { CraftOctagon, LengthOnCurve, ModeMatch, Recommendations, ResonanceGauge, TopicRows, UnlockList, ingredients } from "@/components/video-reads"
 import { craftTemplate, modeMatch, resonanceScore, topicOf, unlockActions } from "@/lib/video-reads"
 import { boostCounts } from "@/lib/boost"
-import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, TableBlock } from "@/components/blocks"
+import { ChevronRight } from "lucide-react"
+
+import { AccordionBlock, CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, TableBlock } from "@/components/blocks"
 import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/components/codebook-blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { HitsScatter, TIER } from "@/components/hits-scatter"
@@ -334,20 +336,22 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     left.push([
       "tags",
       "Tags",
-      <CardBlock key="tags" title="Tags" height="auto" footer={!realTags.length && tags.length ? SAMPLE : undefined}>
-        <div className="flex flex-col gap-5">
-          {tags.filter((t) => t !== "aggrieved").map((t) => {
+      <AccordionBlock key="tags" title="Tags" height="auto" footer={!realTags.length && tags.length ? SAMPLE : undefined}>
+        <div className="flex flex-col gap-2">
+          {tags.filter((t) => t !== "aggrieved").map((t, ti) => {
             const others = byTag(t)
             return (
-              <section key={t} className="flex flex-col gap-2">
-                <div className="flex items-baseline justify-between gap-2">
-                  <h3 className="text-sm font-semibold capitalize text-slate-900">{t}</h3>
+              <details key={t} data-find open={ti === 0} className="group/tag rounded-md border bg-card">
+                <summary className="flex cursor-pointer list-none items-center gap-2.5 px-3 py-2 [&::-webkit-details-marker]:hidden">
+                  <ChevronRight className="size-3.5 shrink-0 text-slate-800 transition-transform group-open/tag:rotate-90" />
+                  <h3 className="min-w-0 flex-1 truncate text-sm font-semibold capitalize text-slate-900">{t}</h3>
                   {others.length > 0 && (
                     <Link href={tagHref(t)} className="shrink-0 text-xs font-medium text-pax2-light-blue hover:underline">
                       See all
                     </Link>
                   )}
-                </div>
+                </summary>
+                <div className="border-t px-3 py-3">
                 {others.length > 0 ? (
                   <div className="grid grid-cols-3 gap-2">
                     {others.map((o) => (
@@ -361,11 +365,12 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 ) : (
                   <p className="text-xs text-slate-400">No other video carries this tag yet.</p>
                 )}
-              </section>
+                </div>
+              </details>
             )
           })}
         </div>
-      </CardBlock>,
+      </AccordionBlock>,
     ])
 
   const right: [string, string, ReactNode][] = [
