@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useRouter } from "next/navigation"
 import { Check, Loader2, Pencil, Bookmark, Hammer } from "lucide-react"
 
 import { callIt, decide, requestReading, type SavedReading } from "@/app/actions"
@@ -34,7 +35,10 @@ function Evidence({ refs, index }: { refs: string[]; index: Map<string, Ev> }) {
 
 const STATUS_LABEL: Record<string, string> = { approved: "Approved", revised: "Revised", saved: "Saved for later", made: "Made — a new take exists", proposed: "Proposed" }
 
-function StepCard({ p, i, takeId, saved, events }: { p: Proposal; i: number; takeId: string; saved: SavedReading; events: StepEv[] }) {
+// `refresh` re-reads the page after a decision or a forecast, for pages whose path the actions do not
+// revalidate (they revalidate /v/<take>); the take pages leave it off.
+function StepCard({ p, i, takeId, saved, events, refresh }: { p: Proposal; i: number; takeId: string; saved: SavedReading; events: StepEv[]; refresh?: boolean }) {
+  const router = useRouter()
   const stepId = `${saved.at}-${i}`
   const mine = events.filter((e) => e.stepId === stepId).sort((a, b) => a.at.localeCompare(b.at))
   const latest = mine.at(-1)
@@ -42,7 +46,10 @@ function StepCard({ p, i, takeId, saved, events }: { p: Proposal; i: number; tak
   const [text, setText] = React.useState(latest?.change ?? p.change)
   const [pending, start] = React.useTransition()
   const act = (status: "approved" | "revised" | "saved" | "made", change = text) =>
-    start(() => decide({ takeId, stepId, status, change, prompted: p.prompted, uncertain: p.uncertain, measure: p.measure, snapshotId: saved.snapshotId, reference: saved.reference, findingAt: saved.at }))
+    start(async () => {
+      await decide({ takeId, stepId, status, change, prompted: p.prompted, uncertain: p.uncertain, measure: p.measure, snapshotId: saved.snapshotId, reference: saved.reference, findingAt: saved.at })
+      if (refresh) router.refresh()
+    })
   return (
     <div className="flex flex-col gap-3 rounded-xl border bg-card p-4">
       <div className="flex items-start justify-between gap-3">
@@ -101,7 +108,7 @@ function StepCard({ p, i, takeId, saved, events }: { p: Proposal; i: number; tak
   )
 }
 
-export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead, nextDataset, baseline, baselineSnapshot, bare = false }: { takeId: string; evidence: Ev[]; initial: SavedReading | null; events: StepEv[]; calls: Call[]; canRead: boolean; nextDataset: string | null; baseline: number | null; baselineSnapshot: string; /** Inside a block that already carries the Forecast header. */ bare?: boolean }) {
+export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead, nextDataset, baseline, baselineSnapshot, bare = false, reader, caller, refresh }: { reader?: (id: string) => Promise<SavedReading>; caller?: typeof callIt; refresh?: boolean; takeId: string; evidence: Ev[]; initial: SavedReading | null; events: StepEv[]; calls: Call[]; canRead: boolean; nextDataset: string | null; baseline: number | null; baselineSnapshot: string; /** Inside a block that already carries the Forecast header. */ bare?: boolean }) {
   const [saved, setSaved] = React.useState<SavedReading | null>(initial)
   const [pending, start] = React.useTransition()
   const [error, setError] = React.useState<string | null>(null)
@@ -112,7 +119,7 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
       <Button disabled={!canRead || pending} onClick={() => start(async () => {
         setError(null)
         try {
-          setSaved(await requestReading(takeId))
+          setSaved(await (reader ?? requestReading)(takeId))
         } catch (e) {
           setError((e as Error).message)
         }
@@ -191,19 +198,20 @@ export function ReadingPanel({ takeId, evidence, initial, events, calls, canRead
           <div className="flex flex-col gap-3">
             <h3 className="font-display text-xl text-slate-900">Next test</h3>
             {r.nextSteps.map((p, i) => (
-              <StepCard key={i} p={p} i={i} takeId={takeId} saved={saved!} events={events} />
+              <StepCard key={i} p={p} i={i} takeId={takeId} saved={saved!} events={events} refresh={refresh} />
             ))}
           </div>
         </>
       )}
 
-      <Forecast action={assess} takeId={takeId} calls={calls} nextDataset={nextDataset} baseline={baseline} baselineSnapshot={baselineSnapshot} bare={bare} />
+      <Forecast action={assess} takeId={takeId} calls={calls} nextDataset={nextDataset} baseline={baseline} baselineSnapshot={baselineSnapshot} bare={bare} refresh={refresh} caller={caller} />
     </div>
   )
 }
 
 /** Step 6: a forecast logged before the next results load, then shown against the actual. Locked once logged. */
-function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapshot, bare }: { action: React.ReactNode; takeId: string; calls: Call[]; nextDataset: string | null; baseline: number | null; baselineSnapshot: string; bare: boolean }) {
+function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapshot, bare, refresh, caller }: { action: React.ReactNode; takeId: string; calls: Call[]; nextDataset: string | null; baseline: number | null; baselineSnapshot: string; bare: boolean; refresh?: boolean; caller?: typeof callIt }) {
+  const router = useRouter()
   const [predicted, setPredicted] = React.useState<"higher" | "lower" | "same">("higher")
   const [reason, setReason] = React.useState("")
   const [msg, setMsg] = React.useState<string | null>(null)
@@ -220,7 +228,7 @@ function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapsh
             <li key={c.at} className="flex flex-wrap items-baseline gap-2">
               <span className="rounded bg-pax2-lavender px-1.5 text-[11px] font-medium text-pax2-light-blue">Locked {new Date(c.at).toLocaleString()}</span>
               <span>
-                {c.by}: {c.predicted} than {c.baseline?.toFixed(0) ?? "—"} by {c.target === "round-1" ? "Round 1" : "Round 2"}
+                {c.by}: {c.predicted} than {c.baseline?.toFixed(0) ?? "—"} by {c.target === "round-1" ? "Round 1" : c.target === "round-2" ? "Round 2" : c.target}
               </span>
               <span className="text-xs text-slate-800">“{c.reason}”</span>
             </li>
@@ -238,8 +246,9 @@ function Forecast({ action, takeId, calls, nextDataset, baseline, baselineSnapsh
           </div>
           <Textarea value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Why? One line." className="min-h-8 flex-1 text-sm" />
           <Button size="sm" disabled={pending || !reason.trim()} onClick={() => start(async () => {
-            const r = await callIt({ takeId, by: "Partner", target: nextDataset, predicted, component: "resonance", reason, baseline, baselineSnapshot })
+            const r = await (caller ?? callIt)({ takeId, by: "Partner", target: nextDataset, predicted, component: "resonance", reason, baseline, baselineSnapshot })
             setMsg(r.ok ? "Locked." : r.reason)
+            if (r.ok && refresh) router.refresh()
             if (r.ok) setReason("")
           })}>
             Log the forecast

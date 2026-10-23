@@ -7,7 +7,7 @@ import { useUsage } from "@/components/usage-beacon"
 import type { Features } from "@/lib/catalog"
 import { cn } from "@/ui/lib/utils"
 
-const SeekCtx = React.createContext<{ seek: (t: number) => void; now: number }>({ seek: () => {}, now: 0 })
+export const SeekCtx = React.createContext<{ seek: (t: number) => void; now: number }>({ seek: () => {}, now: 0 })
 export const useSeek = () => React.useContext(SeekCtx)
 
 export function SeekProvider({ children }: { children: React.ReactNode }) {

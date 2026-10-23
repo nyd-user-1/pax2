@@ -12,6 +12,7 @@ const KIND: Record<string, { bg: string; fg: string }> = {
   Reference: { bg: "#dbeafe", fg: "#1e3a8a" },
   Code: { bg: "#fee2e2", fg: "#991b1b" },
   Report: { bg: "#172554", fg: "#ffffff" },
+  Paid: { bg: "#7f1d1d", fg: "#ffffff" },
 }
 
 const TAGS = [

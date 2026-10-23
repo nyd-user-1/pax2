@@ -80,12 +80,14 @@ export function evidenceIndex(take: TakeInfo, state: TakeState, ref: Reference |
   if (f?.transcript?.wpm) out.push({ ref: "pace", label: `Speaking pace ${f.transcript.wpm} words per minute (measured)` })
   for (const p of peers) {
     if (p.take.id === take.id || !p.latest || p.latest.score.value == null) continue
-    out.push({ ref: `take:${p.take.id}`, label: `${scriptById(p.take.scriptId)!.title} — ${takeLabel(p.take)}: Resonance ${p.latest.score.value.toFixed(0)} (${p.latest.score.low!.toFixed(0)}–${p.latest.score.high!.toFixed(0)})` })
+    // A piece without a library script (a partner's own video) goes by its title.
+    const name = scriptById(p.take.scriptId)?.title ?? (p.take as { title?: string }).title ?? p.take.id
+    out.push({ ref: `take:${p.take.id}`, label: `${name}${takeLabel(p.take) ? ` — ${takeLabel(p.take)}` : ""}: Resonance ${p.latest.score.value.toFixed(0)} (${p.latest.score.low!.toFixed(0)}–${p.latest.score.high!.toFixed(0)})` })
   }
   const rm = referenceModel as unknown as { outcomes: Record<string, { features: { key: string; label: string; diff: number; low: number; high: number }[] }> }
   const RELEVANT = new Set(["technique_plain_folks", "messenger_every_people", "narration_personal_story", "narration_explain_facts", "fact_new_yes", "style_text_on_screen", "style_amateur", "explicit_vote_for", "production_value_high", "tone_negative", "emotion_anger", "how_scripted"])
   for (const ft of (rm.outcomes.votechoice?.features ?? []).filter((x) => RELEVANT.has(x.key))) out.push({ ref: `research:${ft.key}`, label: `Swayable archive, vote choice: ads coded “${ft.label}” moved ${ft.diff >= 0 ? "+" : ""}${ft.diff.toFixed(2)} pts vs. those without (95% CI ${ft.low.toFixed(2)} to ${ft.high.toFixed(2)})` })
-  if (ref) out.push({ ref: "reference", label: `Reference scale ref-1, built from ${ref.n} flights in ${ref.dataset} and frozen` })
+  if (ref) out.push({ ref: "reference", label: `Reference scale ${ref.id}, built from ${ref.n} flights in ${ref.dataset} and frozen` })
   return out
 }
 
@@ -149,14 +151,19 @@ const STEPS = {
   },
 }
 
-export async function read(take: TakeInfo, state: TakeState, ref: Reference | null, peers: TakeState[], prior: { finding: string; decided?: string }[]): Promise<{ reading: Reading; evidence: Ev[]; model: string; raw: unknown }> {
+/** `about` adds to the model's context for a piece that is not a synthetic take (a partner's own video): what
+ *  it is and what its records do and do not contain. */
+export async function read(take: TakeInfo, state: TakeState, ref: Reference | null, peers: TakeState[], prior: { finding: string; decided?: string }[], about?: Record<string, unknown>): Promise<{ reading: Reading; evidence: Ev[]; model: string; raw: unknown }> {
   const evidence = evidenceIndex(take, state, ref, peers)
-  const script = scriptById(take.scriptId)!
+  const script = scriptById(take.scriptId)
   const s: Score | undefined = state.latest?.score
   const snap: Snapshot | undefined = state.latest?.snapshot
   const f = featuresFor(take.id)
   const context = {
-    take: { name: `“${script.title}” read by ${take.voice}${take.captions ? "" : ", without captions"}${take.cut ? ", short cut" : ""}`, framing: script.framing, captions: take.captions, shortCut: take.cut, seconds: take.durationSec },
+    take: script
+      ? { name: `“${script.title}” read by ${take.voice}${take.captions ? "" : ", without captions"}${take.cut ? ", short cut" : ""}`, framing: script.framing, captions: take.captions, shortCut: take.cut, seconds: take.durationSec }
+      : { name: `“${(take as { title?: string }).title ?? take.id}”`, seconds: take.durationSec },
+    ...(about ? { about } : {}),
     definitions: {
       stop: "Engage = 3-second plays ÷ impressions. Did the opening stop the scroll.",
       hold: "Interest = average watch time ÷ video length. How much of the video the average viewer watched.",

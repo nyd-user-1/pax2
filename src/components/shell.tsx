@@ -102,6 +102,7 @@ const TITLES: [string, string][] = [
   ["/metrics", "Metrics"],
   ["/experiments", "Experiments"],
   ["/polling", "Polling"],
+  ["/paid", "Paid results"],
   ["/graph", "Graph"],
   ["/tags", "Tags"],
   ["/library", "Library"],

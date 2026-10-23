@@ -47,7 +47,7 @@ import type { Measure, MetricKey, Snapshot, Take } from "@/lib/types"
 // against the other videos in this batch, not against any wider set.
 
 type Row = Record<string, string>
-type Creative = { creativeId: string; cut: "exact" | "edit"; videoId: string; durationSeconds: number; rows: Row[] }
+export type Creative = { creativeId: string; creativeSet?: string; name?: string; cut: "exact" | "edit"; videoId: string; durationSeconds: number; rows: Row[] }
 
 export type PaidRange = { score: number | null; low: number | null; high: number | null; range: string }
 
@@ -87,16 +87,47 @@ function watchPerStart(c: Creative) {
   return { sec, starts, len }
 }
 const KEYS: ComponentKey[] = ["stop", "hold", "act"]
-const creatives = paidBatch.creatives as unknown as Creative[]
+export const creatives = paidBatch.creatives as unknown as Creative[]
+
+/** The creatives that count for a video: its exact cuts, or its edits when no exact cut ran. */
+export function countedFor(ytId: string) {
+  const all = creatives.filter((c) => c.videoId === ytId)
+  const exact = all.filter((c) => c.cut === "exact")
+  return exact.length ? exact : all
+}
+
+/** A delivery segment as the partner labeled it: audience group by age band. */
+const segOf = (r: Row) => `${r.audience_group}|${r.age_group}`
+
+/** Starts per impression in each delivery segment across every counted row of the batch: the rates the
+ *  delivery-mix adjustment expects a video to reach, given who it was shown to. Learned from the data. */
+export function segmentRates() {
+  const acc = new Map<string, { imp: number; starts: number }>()
+  let imp = 0
+  let starts = 0
+  for (const id of [...new Set(creatives.map((c) => c.videoId))])
+    for (const r of countedFor(id).flatMap((c) => c.rows)) {
+      const a = acc.get(segOf(r)) ?? { imp: 0, starts: 0 }
+      a.imp += Number(r.impressions) || 0
+      a.starts += Number(r.video_starts) || 0
+      acc.set(segOf(r), a)
+      imp += Number(r.impressions) || 0
+      starts += Number(r.video_starts) || 0
+    }
+  return { segments: Object.fromEntries([...acc].map(([k, v]) => [k, { ...v, rate: v.imp ? v.starts / v.imp : 0 }])), overall: imp ? starts / imp : 0 }
+}
 
 const fmt = (n: number | null | undefined, d = 0) => (n == null ? DASH : n.toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d }))
 const pct = (n: number | null | undefined, d = 2) => (n == null ? DASH : `${(n * 100).toFixed(d)}%`)
 
-function snapshotFor(ytId: string): { s: Snapshot; take: Take } | null {
+/** One snapshot per video from its counted creatives. With `mix`, starts are restated at the batch's
+ *  delivery mix (indirect standardization: observed starts over the starts its segments' batch rates
+ *  expect, times the batch rate, times its impressions), so an audience that starts videos less often
+ *  does not lower Engage; watch depth barely differs by segment and is left as reported. */
+export function snapshotFor(ytId: string, opts: { mix?: boolean } = {}): { s: Snapshot; take: Take; expectedStarts?: number } | null {
   const all = creatives.filter((c) => c.videoId === ytId)
   if (!all.length) return null
-  const exact = all.filter((c) => c.cut === "exact")
-  const used = exact.length ? exact : all
+  const used = countedFor(ytId)
   const rows = used.flatMap((c) => c.rows)
   const sum = (k: string) => rows.reduce((t, r) => t + (Number(r[k]) || 0), 0)
   const curves = used.map(watchPerStart).filter((w): w is { sec: number; starts: number; len: number } => w != null)
@@ -134,15 +165,21 @@ function snapshotFor(ytId: string): { s: Snapshot; take: Take } | null {
     metrics,
   }
   const take: Take = { id: `yt-${ytId}`, scriptId: "", messenger: { label: "" }, durationSec: watch?.len ?? (used[0].durationSeconds || Number(rows[0]?.duration_seconds) || 0) }
-  return { s, take }
+  if (!opts.mix) return { s, take }
+  const sr = segmentRates()
+  const expected = rows.reduce((t, r) => t + (Number(r.impressions) || 0) * (sr.segments[segOf(r)]?.rate ?? sr.overall), 0)
+  const observed = sum("video_starts")
+  const imp = sum("impressions")
+  const adjusted = expected ? (observed / expected) * sr.overall * imp : observed
+  return { s: { ...s, id: `${s.id}~mix`, metrics: { ...metrics, plays3s: derived(adjusted) } }, take, expectedStarts: expected }
 }
 
-const videoIds = [...new Set(creatives.map((c) => c.videoId))]
+export const videoIds = [...new Set(creatives.map((c) => c.videoId))]
 let ref: Reference | null = null
 /** The paid batch as its own reference, built once. */
-function reference() {
+export function reference() {
   if (!ref) {
-    const rows = videoIds.map(snapshotFor).filter((r): r is { s: Snapshot; take: Take } => r != null)
+    const rows = videoIds.map((id) => snapshotFor(id)).filter((r): r is { s: Snapshot; take: Take } => r != null)
     ref = buildReference("paid-batch", "voter-freedom-paid", rows, FORMULA_V1)
   }
   return ref
