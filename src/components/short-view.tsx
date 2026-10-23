@@ -610,13 +610,15 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         rightClassName={inDrawer ? "@xl:-mt-5" : "@4xl:-mt-5"}
         left={
           <>
-            {/* The original page's portrait: 300px wide, 9/16, centered in its column. */}
+            {/* The portrait, 300px wide at 9/16, until the column is wider than it; then the frame turns
+                landscape at the column's width, the short whole inside it on black. */}
+            <div className="@container/portrait w-full">
             {real ? (
-              <div className="mx-auto aspect-[9/16] w-full max-w-[300px] overflow-hidden rounded-2xl bg-black shadow-e2">
-                <Player src={`/api/video/${id}`} subject={id} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} className="aspect-auto size-full max-w-none rounded-none object-cover shadow-none" />
+              <div className="mx-auto aspect-[9/16] w-full max-w-[300px] overflow-hidden rounded-2xl bg-black shadow-e2 @[301px]/portrait:aspect-video @[301px]/portrait:max-w-none">
+                <Player src={`/api/video/${id}`} subject={id} poster={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} className="aspect-auto size-full max-w-none rounded-none object-cover shadow-none @[301px]/portrait:object-contain" />
               </div>
             ) : (
-              <div className="mx-auto aspect-[9/16] w-full max-w-[300px] overflow-hidden rounded-2xl bg-slate-900 shadow-e2">
+              <div className="mx-auto aspect-[9/16] w-full max-w-[300px] overflow-hidden rounded-2xl bg-slate-900 shadow-e2 @[301px]/portrait:aspect-video @[301px]/portrait:max-w-none">
                 <iframe
                   src={`https://www.youtube.com/embed/${ytId}`}
                   title={v?.title ?? "YouTube short"}
@@ -626,6 +628,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 />
               </div>
             )}
+            </div>
             {column("video-left", left, () => false)}
           </>
         }
