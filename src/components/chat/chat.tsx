@@ -62,7 +62,7 @@ const speechRecognition = () => (typeof window === 'undefined' ? undefined : ((w
 
 // The empty state's PAX draws itself with GSAP; its code loads only when that state shows, since the
 // chat also sits in every page's side panel.
-const PaxDraw = dynamic(() => import('@/components/pax-draw').then((m) => m.PaxDraw), { loading: () => <span className="block h-12 w-24" /> })
+const PaxDraw = dynamic(() => import('@/components/pax-draw').then((m) => m.PaxDraw), { loading: () => <span className="block h-[65px] w-[130px]" /> })
 
 const RECORD_OPENER = "I'm ready to make my first video — where do we start?"
 
@@ -752,7 +752,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
               textareaRef.current?.focus()
             }}
             className={`relative ml-2 shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
-              recordMode ? 'bg-pax2-light-blue text-white' : 'text-[var(--muted)] hover:bg-[rgba(0,0,0,0.07)] hover:text-[var(--txt)]'
+              recordMode ? 'bg-pax2-blue text-white' : 'text-[var(--muted)] hover:bg-[rgba(0,0,0,0.07)] hover:text-[var(--txt)]'
             }`}
             title={recordMode ? 'Leave record mode' : 'Record mode — build toward a recording'}>
             <Video className="h-4 w-4" />
@@ -856,7 +856,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
               {!compact &&
                 (heading ?? (
                   <div className="flex flex-col items-center">
-                    <PaxDraw size={34} />
+                    <PaxDraw size={46} />
                   </div>
                 ))}
               {inputBox}
