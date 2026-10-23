@@ -11,6 +11,7 @@ import { cn } from "@/ui/lib/utils"
 import { currentUser } from "@/lib/auth"
 import { AskReport, ReportView } from "@/components/library/report-view"
 import { ReportShelf } from "@/components/library/report-shelf"
+import { PageTour, type PageTourStep } from "@/components/page-tour"
 import { TabRail } from "@/components/tab-rail"
 import { AudienceFinder } from "@/components/trials/audience-finder"
 import { DetectableLift } from "@/components/trials/detectable-lift"
@@ -63,6 +64,24 @@ export default async function PollingPage({ searchParams }: { searchParams: Prom
   const armN = Math.round(TRIALS.tests.flatMap((t) => t.arms).reduce((s, a) => s + a.n, 0) / TRIALS.tests.flatMap((t) => t.arms).length)
   const docs = REPORTS.map((r) => ({ slug: r.slug, title: r.title, publisher: r.publisher, date: r.date, summary: reportAbout(r.slug).summary, pages: r.pages.map((p) => ({ n: p.n, text: p.text })), context: reportContext(r, r.slug === TRIALS.report ? trialsText() : undefined) }))
 
+  // The guided tour of the Question 3 tests tab, a stage per block; its figures come from the data.
+  const matched = TRIALS.tests.flatMap((t) => t.arms.filter((a) => a.pax2))
+  const lifts = matched.map((a) => a.yes?.lift ?? 0)
+  const seen = matched.map((a) => a.pax2!.views)
+  const tour: PageTourStep[] = [
+    { target: "polling-tabs", text: `Polling has two tabs. Question 3 tests works through ${TRIALS.fieldedBy}'s two randomized tests of ${TRIALS.tests.reduce((n, t) => n + videoArms(t).length, 0)} Question 3 videos; Archives searches every page of every report and poll in the library.` },
+    { target: "polling-ask", text: `Ask about this report opens the discussion panel with all ${report.pages.length} pages and both tests' results loaded; each answer cites its page. Open the report shows the original.` },
+    { target: "block-polling-tests-prediction", text: `Prediction against the trial sets what the trial measured beside what PAX2 reads on the same videos' YouTube uploads. The ${matched.length} matched videos moved Yes by ${Math.min(...lifts)} to ${Math.max(...lifts)} points while their views differed ${Math.round(Math.max(...seen) / Math.min(...seen))}-fold. A dash names the step that would fill it.` },
+    { target: "block-polling-tests-finder", text: "Audience finder: choose a voter group, and each test's videos rank by their Yes share in that group, with the group's placebo level drawn as the line. Green means the source found the gap at its 90% threshold; italic, under 50 responses." },
+    { target: "block-polling-tests-results", text: "Each test against its own placebo: the bar is the lift in ballot support, the right column the lift in comprehension. The tests ran on separate samples, so a video in one is never ranked against a video in the other." },
+    { target: "block-polling-tests-gaps", text: "Open audiences lists the groups no video moved, and those only one video moved: the next test's targets. Detectable lift gives the smallest lift a test of a given size finds, and the size a target lift needs." },
+    { target: "block-polling-tests-groups", text: "Question 3 by voter group reads the placebo arms: support among adults who saw no Question 3 video, after the ballot explanation. Beside it, the video format each sample trusts most, asked before any video." },
+    { target: "block-polling-tests-grid", text: "The full grid: every voter group down, every video across, for either test. Search a group, or download the rows from the block's menu." },
+    { target: "block-polling-tests-questions", text: "What the report leaves open, each item linked to its page, and the tested videos not yet matched to a YouTube upload." },
+    { target: "block-polling-tests-report", text: "The report itself, as the original PDF or as searchable text." },
+    { target: "polling-tabs", text: "Archives: every page of this report and of MassINC's September topline, searched at once. A match opens the document at that page; Ask loads it into the discussion panel." },
+  ]
+
   const rail = (
     <TabRail
       tabs={[
@@ -76,8 +95,9 @@ export default async function PollingPage({ searchParams }: { searchParams: Prom
   if (tab === "tests")
     return (
       <div className="flex flex-col">
-        {rail}
-        <div className="mt-5 flex flex-wrap items-center gap-2">
+        <div id="polling-tabs">{rail}</div>
+        <div id="polling-ask" className="mt-5 flex flex-wrap items-center gap-2">
+          <PageTour page="polling-tests" steps={tour} />
           <AskReport context={context} />
           <Link href={reportHref()} className="press flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-800 shadow-e1 transition-colors hover:border-pax2-light-blue hover:text-pax2-blue">
             Open the report
