@@ -185,7 +185,7 @@ export function FootageBlock({ script, videoModel, focus }: { script: string; vi
 
   return (
     <div ref={ref}>
-      <ShelvedCard id={`shots-${plan.key}`} title="Shots" className={cn(focus === 'shots' && 'ring-2 ring-pax2-light-blue ring-offset-4')}>
+      <ShelvedCard id={`shots-${plan.key}`} title="Shots">
         <CardHeader className="border-b [.border-b]:pb-2">
           <CardTitle>Shots</CardTitle>
         </CardHeader>
@@ -296,7 +296,7 @@ export function FootageBlock({ script, videoModel, focus }: { script: string; vi
           <div className="flex gap-3 overflow-x-auto pb-1 no-scrollbar">
             {kinds.map((k) => (
               <figure key={k.id} className="flex w-[150px] shrink-0 flex-col gap-1.5" title={k.about}>
-                <div className={cn('overflow-hidden rounded-lg border border-[var(--border)]', focus === k.id && 'ring-2 ring-pax2-light-blue ring-offset-2')}>
+                <div className="overflow-hidden rounded-lg border border-[var(--border)]">
                   <Player component={GraphicVideo} inputProps={{ kind: k.id, graphics: plan.graphics, brand }} durationInFrames={k.seconds * FPS} fps={FPS} compositionWidth={1080} compositionHeight={1920} style={{ width: '100%', aspectRatio: '9 / 16' }} loop autoPlay />
                 </div>
                 <figcaption className="text-xs text-[var(--muted)]">{k.label}</figcaption>
