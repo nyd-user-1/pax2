@@ -110,3 +110,88 @@ Tonight (all code changes go out in **one commit and one build**; builds 30 and 
 Findings 8 (dashboard `Promise.all`) and the logo cache headers in 6 are also safe if there is time; both are small gains.
 
 After the demo: finding 4 (dynamic imports out of the shell, the largest client-side gain at ~240 KB br on every page), 7 (`/tags` and `/home` DOM size), 9 (Recharts), the logo resize in 6, the poller writing a precomputed patterns file, `zod` removal, and a PageSpeed run with an API key on a project where the PageSpeed API is enabled, to get LCP/TBT/CLS.
+
+- 2026-10-23 · PageSpeed Insights run on all page routes once a key was available (`PAGESPEED_API_KEY`, restricted to the PageSpeed API, in `.env.local`): 118 runs across 60 routes, mobile and desktop, signed out. 25 routes were sent to `/signin`, so their numbers describe the shell, the redirect and the sign-in page, not the page.
+
+### 4. PageSpeed Insights (Lighthouse lab data, run on Google's machines)
+
+Mobile is Lighthouse's simulated slow 4G and mid-range phone; desktop is unthrottled. Lab LCP on mobile runs well above what a laptop on office Wi-Fi sees. Use it to rank pages, not as the demo experience.
+
+**New findings from these runs**, continuing the numbering of table 1:
+
+| # | Finding | Evidence | Fix | Effort | Risk | Safe before demo |
+|---|---|---|---|---|---|---|
+| 14 | On `/home` and `/tags` the largest element on screen is the first YouTube thumbnail, and it is marked `loading="lazy"`. The browser therefore discovers and fetches it late. | `/home`: mobile LCP 5.8 s; Lighthouse attributes **~9.0 s of "resource load delay"** to that `<img>` on both mobile and desktop (simulated). `/tags`: ~2.0 s of delay. Lighthouse flags: "LCP resources should not use loading=lazy", "fetchpriority=high should be applied". | Load the first row of cards eagerly with `fetchpriority="high"`; keep `lazy` on the rest. | 15 min | Low | yes |
+| 15 | The feed's pinned row renders empty on the server and fills in after hydration from `localStorage`, pushing the whole grid down. | CLS **0.44** on `/record` desktop, **0.35** on `/videos` desktop, **0.23** on `/` mobile; the shifting node is the feed grid (`div.grid … @4xl:grid-cols-3`). Cause: `src/components/record/feed.tsx:246` (`useState<string[]>([])`, set in an effect). | Start `pinned` as the server's default (the e2 ids) so the first paint already contains the row. Returning visitors with custom pins would still shift; a first-time visitor (the demo audience) would not. | 15 min | Low | yes |
+| 16 | Signed-out visits to gated pages download the shell, then redirect in the browser to `/signin`, sometimes in two hops (`/patterns`, then `/metrics`, then `/signin`). | 25 routes ended at `/signin`. Lighthouse "Avoid multiple page redirects": **2.25 s** on `/dashboard` mobile. The extreme desktop TBT values (`/my-channels` 8,390 ms, `/lab/1` 6,270 ms, `/signup/welcome` 5,470 ms) are all redirect runs and do not describe those pages. | Redirect signed-out requests for gated paths in `src/proxy.ts` (no session cookie), straight to the final `/signin?next=` URL. | 1 h | Medium: sign-in flow | no (demo is signed in) |
+| 17 | Even light pages have a mobile LCP floor of 3.9–4.2 s. Lighthouse's "Reduce unused JavaScript" is the top suggestion on every page (600–910 ms mobile). | `/record/studio` mobile: Remotion chunk **49 KB of 58 KB unused**, motion chunk **37 KB of 41 KB unused**. | Same as finding 4 (dynamic imports out of the shell). | — | — | no |
+| 18 | `/v/<id>` shifts: CLS 0.32 mobile, 0.33 desktop. On desktop the shifting node is `main` itself; on mobile most of it (0.28) is the `<video>`'s native controls. | PageSpeed layout-shift audit. I did not isolate the desktop cause; the sign-up overlay is fixed-position and ruled out. | Investigate after the demo. | 1 h | — | no |
+
+Add findings **14** and **15** to tonight's list: each is about 15 minutes and both are visible to a first-time visitor.
+
+**All routes**, sorted with the real (not redirected) pages first, lowest mobile score first. LCP and TBT are rounded; CLS above 0.1 is poor.
+
+| Route | Mobile: score · LCP · TBT · CLS | Desktop: score · LCP · TBT · CLS |
+|---|---|---|
+| `/v/yt--50yfo3yqNg` | 53 · 6.2 s · 50 ms · 0.32 | 75 · 1.2 s · 80 ms · 0.33 |
+| `/` | 56 · 5.0 s · 280 ms · 0.23 | 84 · 0.9 s · 210 ms · 0.00 |
+| `/viometrics` | 56 · 6.2 s · 720 ms · 0.04 | 72 · 0.7 s · 650 ms · 0.02 |
+| `/chat` | 59 · 7.0 s · 620 ms · 0.04 | 97 · 1.2 s · 30 ms · 0.02 |
+| `/tags` | 60 · 5.2 s · 630 ms · 0.04 | 61 · 1.2 s · 1,990 ms · 0.02 |
+| `/learn/ranker` | 64 · 4.4 s · 630 ms · 0.04 | 100 · 0.8 s · 10 ms · 0.02 |
+| `/home` | 68 · 5.8 s · 90 ms · 0.04 | 57 · 1.4 s · 1,020 ms · 0.02 |
+| `/signup` | 68 · 4.1 s · 710 ms · 0.00 | 77 · 0.8 s · 450 ms · 0.00 |
+| `/channels` | 71 · 5.9 s · 180 ms · 0.00 | 99 · 0.9 s · 20 ms · 0.02 |
+| `/recording` | 74 · 4.2 s · 430 ms · 0.04 | 100 · 0.8 s · 20 ms · 0.02 |
+| `/drafts` | 74 · 6.9 s · 70 ms · 0.08 | 97 · 1.2 s · 0 ms · 0.05 |
+| `/publishing` | 74 · 6.8 s · 100 ms · 0.08 | 93 · 1.2 s · 160 ms · 0.05 |
+| `/scored` | 74 · 6.8 s · 90 ms · 0.08 | 92 · 1.2 s · 180 ms · 0.05 |
+| `/scoring` | 75 · 6.9 s · 10 ms · 0.08 | 97 · 1.2 s · 60 ms · 0.05 |
+| `/labeling` | 75 · 6.9 s · 0 ms · 0.08 | 96 · 1.3 s · 100 ms · 0.05 |
+| `/videos` | 76 · 5.5 s · 40 ms · 0.04 | 79 · 1.2 s · 60 ms · 0.35 |
+| `/record/start` | 76 · 7.0 s · 90 ms · 0.04 | 97 · 1.2 s · 60 ms · 0.05 |
+| `/record` | 76 · 5.9 s · 60 ms · 0.00 | 76 · 1.2 s · 20 ms · 0.44 |
+| `/channels/UCJjSDX-jUChzOEyok9XYRJQ` | 77 · 4.7 s · 140 ms · 0.00 | 99 · 0.9 s · 60 ms · 0.02 |
+| `/glossary` | 78 · 4.5 s · 150 ms · 0.00 | 99 · 0.9 s · 50 ms · 0.02 |
+| `/record/personal` | 81 · 4.2 s · 110 ms · 0.00 | 100 · 0.8 s · 60 ms · 0.02 |
+| `/learn` | 81 · 4.2 s · 70 ms · 0.00 | 99 · 0.9 s · 50 ms · 0.02 |
+| `/my-videos` | 83 · 4.1 s · 200 ms · 0.04 | 100 · 0.8 s · 40 ms · 0.03 |
+| `/record/library` | 84 · 4.1 s · 150 ms · 0.04 | 99 · 0.9 s · 60 ms · 0.02 |
+| `/scripts` | 84 · 4.4 s · 80 ms · 0.04 | 97 · 0.8 s · 130 ms · 0.02 |
+| `/signin` | 85 · 4.1 s · 120 ms · 0.00 | 67 · 1.0 s · 730 ms · 0.00 |
+| `/privacy` | 85 · 4.1 s · 160 ms · 0.04 | 100 · 0.8 s · 30 ms · 0.02 |
+| `/library` | 86 · 4.1 s · 60 ms · 0.04 | 99 · 0.9 s · 60 ms · 0.02 |
+| `/record/guide` | 86 · 3.9 s · 150 ms · 0.04 | 100 · 0.8 s · 40 ms · 0.02 |
+| `/library/swayable-archive` | 86 · 4.1 s · 80 ms · 0.04 | 100 · 0.8 s · 0 ms · 0.02 |
+| `/record/studio` | 87 · 4.1 s · 0 ms · 0.04 | 100 · 0.8 s · 10 ms · 0.03 |
+| `/record/camera` | 87 · 3.9 s · 90 ms · 0.05 | 100 · 0.8 s · 0 ms · 0.03 |
+| `/learn/classifier` | 87 · 3.9 s · 100 ms · 0.04 | 100 · 0.8 s · 50 ms · 0.03 |
+| `/learn/classifier/finish` | 88 · 3.9 s · 20 ms · 0.04 | 100 · 0.8 s · 40 ms · 0.03 |
+| `/record/script` | 94 · 2.7 s · 50 ms · 0.09 | 99 · 0.8 s · 40 ms · 0.05 |
+| `/tracking` (sent to sign-in) | 35 · 10.1 s · 4,510 ms · 0.08 | 60 · 1.8 s · 750 ms · 0.05 |
+| `/scoring/method` (sent to sign-in) | 38 · 9.9 s · 3,520 ms · 0.04 | 88 · 1.8 s · 120 ms · 0.05 |
+| `/live-tracking` (sent to sign-in) | 38 · 9.9 s · 3,180 ms · 0.04 | 59 · 1.8 s · 790 ms · 0.05 |
+| `/feature-lift` (sent to sign-in) | 39 · 9.9 s · 2,480 ms · 0.04 | 84 · 1.8 s · 160 ms · 0.05 |
+| `/ml` (sent to sign-in) | 39 · 10.1 s · 2,620 ms · 0.04 | 60 · 1.7 s · 790 ms · 0.05 |
+| `/project-management` (sent to sign-in) | 45 · 7.0 s · 1,910 ms · 0.00 | 61 · 1.5 s · 890 ms · 0.02 |
+| `/patterns` (sent to sign-in) | 45 · 9.9 s · 990 ms · 0.08 | 61 · 1.8 s · 640 ms · 0.05 |
+| `/evidence` (sent to sign-in) | 46 · 10.0 s · 850 ms · 0.08 | 71 · 1.8 s · 390 ms · 0.05 |
+| `/build` (sent to sign-in) | 49 · 6.9 s · 1,200 ms · 0.00 | 90 · 1.3 s · 180 ms · 0.02 |
+| `/flow` (sent to sign-in) | 52 · 9.8 s · 720 ms · 0.00 | 86 · 1.7 s · 160 ms · 0.05 |
+| `/my-channels` (sent to sign-in) | 53 · 6.9 s · 860 ms · 0.00 | 57 · 1.3 s · 8,390 ms · 0.02 |
+| `/signup/welcome` (sent to sign-in) | 56 · 6.9 s · 680 ms · 0.00 | 58 · 1.2 s · 5,470 ms · 0.00 |
+| `/lab/1` (sent to sign-in) | 57 · 7.1 s · 650 ms · 0.04 | 57 · 1.4 s · 6,270 ms · 0.02 |
+| `/metrics` (sent to sign-in) | 57 · 7.2 s · 600 ms · 0.04 | 93 · 1.2 s · 140 ms · 0.02 |
+| `/graph` (sent to sign-in) | 61 · 7.2 s · 440 ms · 0.04 | 95 · 1.2 s · 70 ms · 0.02 |
+| `/velocity-tracker` (sent to sign-in) | 64 · 9.9 s · 240 ms · 0.08 | 57 · 2.0 s · 850 ms · 0.05 |
+| `/polling` (sent to sign-in) | 65 · 10.1 s · 170 ms · 0.08 | 87 · 1.7 s · 130 ms · 0.05 |
+| `/evals` (sent to sign-in) | 68 · 6.9 s · 270 ms · 0.04 | 93 · 1.3 s · 120 ms · 0.02 |
+| `/dashboard` (sent to sign-in) | 69 · 6.9 s · 240 ms · 0.04 | 71 · 1.2 s · 510 ms · 0.02 |
+| `/reinforcement-learning` (sent to sign-in) | 70 · 6.9 s · 200 ms · 0.04 | 87 · 1.2 s · 210 ms · 0.02 |
+| `/campaigns` (sent to sign-in) | 71 · 7.1 s · 180 ms · 0.04 | 89 · 1.3 s · 160 ms · 0.02 |
+| `/pipeline-2` (sent to sign-in) | 72 · 7.1 s · 140 ms · 0.04 | 67 · 1.5 s · 590 ms · 0.02 |
+| `/pipeline` (sent to sign-in) | 73 · 6.9 s · 80 ms · 0.04 | 62 · 1.2 s · 1,290 ms · 0.02 |
+| `/outliers` (sent to sign-in) | — | 63 · 1.8 s · 600 ms · 0.05 |
+| `/app/home` (sent to sign-in) | — | 63 · 1.2 s · 1,070 ms · 0.02 |
+
+After the demo, separately: PAX2's `YOUTUBE_API_KEY` belongs to the **govblocks** Google Cloud project (`govblocks-507405`). The two products share one YouTube quota, and a key change made for govblocks would break PAX2's YouTube calls. Create a YouTube key in the `pax2` project and swap it into `.env.local` and Amplify.
