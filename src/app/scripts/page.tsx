@@ -1,5 +1,6 @@
 import codes from "../../../data/generated/model/script-codes.json"
 import vf from "../../../data/generated/vf-scripts.json"
+import { savedFootage } from "@/app/footage-actions"
 import { ScriptCatalog, type CatalogScript } from "@/components/scripts/script-catalog"
 import { SCRIPTS } from "@/lib/catalog"
 import { board, workspace } from "@/lib/review"
@@ -105,5 +106,7 @@ export default async function ScriptsPage() {
     }
   })
 
-  return <ScriptCatalog scripts={[...scripts, ...vfScripts]} solo />
+  const all = [...scripts, ...vfScripts]
+  const saved = await savedFootage(all.map((x) => x.text)).catch(() => all.map(() => false))
+  return <ScriptCatalog scripts={all.map((x, i) => ({ ...x, footage: saved[i] }))} solo />
 }

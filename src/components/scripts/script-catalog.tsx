@@ -1,12 +1,14 @@
 "use client"
 
 import * as React from "react"
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import { ArrowLeft, Check, Minus, PenLine, X } from "lucide-react"
 
 import { AccordionBlock, CardBlock, ListBlock, MainBlock, TwoThirdBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { HOME_BLOCK } from "@/app/_home/height"
+import { useVideoModel } from "@/components/chat/video-model-picker"
 import { RecordScript } from "@/components/record/record-script"
 import { toneClasses, toneOf } from "@/lib/tone"
 import { cn } from "@/ui/lib/utils"
@@ -38,7 +40,11 @@ export type CatalogScript = {
   features: { label: string; diff: number; sign: "up" | "down" | "flat"; note?: string }[]
   why: CatalogWhy[]
   channels: CatalogChannels | null
+  /** Saved from chat with Save to Script: the page shows its Shots and Graphics cards. */
+  footage?: boolean
 }
+
+const FootageBlock = dynamic(() => import("@/components/chat/footage-block").then((m) => m.FootageBlock), { ssr: false })
 
 const ts = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`
 const pts = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1)}`
@@ -95,6 +101,7 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
   const [id, setId] = React.useState(scripts[0]?.id)
   const [hot, setHot] = React.useState<number | null>(null)
   const [reading, setReading] = React.useState(false)
+  const [videoModel] = useVideoModel()
   const approachColor = React.useMemo(() => {
     const names = [...new Set(scripts.map((s) => s.approach).filter(Boolean))].sort()
     return new Map(names.map((n, i) => [n, APPROACH_COLORS[i % APPROACH_COLORS.length]]))
@@ -132,6 +139,11 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
       {s.provenance && <p className="mt-8 text-xs leading-relaxed text-slate-400">{s.provenance}</p>}
     </>
   )
+  const footage = s.footage ? (
+    <div className="mt-10">
+      <FootageBlock key={s.id} script={s.text} videoModel={videoModel} />
+    </div>
+  ) : null
   const whyLadder = (
     <ol className="flex flex-col gap-4">
       {s.why.map((w, k) => (
@@ -236,6 +248,7 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
             {whyLadder}
           </div>
         </div>
+        {footage}
       </CardBlock>
     ) : (
       <CardBlock title="Scripts" search="Search scripts…" height={HOME_BLOCK} className="mt-5">
@@ -253,6 +266,7 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
         <TwoThirdBlock key={s.id} className="rise">
           <MainBlock title={s.title} id="script" className="xl:col-span-2" actions={<RecordScript id={s.id} title={s.title} text={s.text} label="Record" />}>
             {scriptBody}
+            {footage}
           </MainBlock>
 
           <AccordionBlock title="Citations">

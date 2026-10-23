@@ -104,6 +104,20 @@ export async function bankedShots(key: string): Promise<Record<string, BankedSho
   return out
 }
 
+/** Which of these scripts carry saved footage (Save to Script writes brand.json), from one listing of
+ *  studio/footage/. The Scripts page shows the Shots and Graphics cards under each one that does. */
+export async function savedFootage(texts: string[]): Promise<boolean[]> {
+  const { m, c } = await s3()
+  const saved = new Set<string>()
+  let token: string | undefined
+  do {
+    const r = await c.send(new m.ListObjectsV2Command({ Bucket: BUCKET, Prefix: "studio/footage/", ContinuationToken: token }))
+    for (const o of r.Contents ?? []) if (o.Key?.endsWith("/brand.json")) saved.add(o.Key.split("/")[2])
+    token = r.IsTruncated ? r.NextContinuationToken : undefined
+  } while (token)
+  return texts.map((t) => saved.has(keyOf(t.trim())))
+}
+
 /** The clips banked for a script, with the line each sits behind; no plan is written by asking. */
 export async function bankedForScript(script: string): Promise<{ id: string; url: string; line?: string; seconds: number }[]> {
   const key = keyOf(script.trim())
