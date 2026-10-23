@@ -31,13 +31,20 @@ export function LibraryBrowser({ cards }: { cards: Card[] }) {
     <div className="flex flex-col gap-6">
       {/* The feed's search bar (src/components/record/feed.tsx), centered as on /tags, the kinds beneath it. */}
       <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-3">
-        <SearchBar q={q} setQ={setQ} placeholder="Search datasets and reports: persuasion, hooks, Massachusetts, shorts…" />
-        <div className="flex flex-wrap justify-center gap-2">
+        <SearchBar q={q} setQ={setQ} aiMode placeholder="Search datasets and reports: persuasion, hooks, Massachusetts, shorts…" className="h-14 border-slate-400 shadow-md hover:border-pax2-blue hover:bg-slate-50 focus-within:border-pax2-blue" />
+        {/* One row that scrolls sideways, its scrollbar hidden and its edges faded and softly blurred. */}
+        <div className="relative w-full">
+          <div className="no-scrollbar overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_2.5rem,black_calc(100%-2.5rem),transparent)]">
+            <div className="mx-auto flex w-max gap-2 px-8 py-1">
           {[null, ...kinds].map((k) => (
-            <button key={k ?? "all"} type="button" onClick={() => setKind(k)} style={k && kind === k ? kindStyle(k) : undefined} className={cn("rounded-full px-3.5 py-1.5 text-sm transition-colors", kind === k ? (k ? "font-medium shadow-e1" : "bg-pax2-blue font-medium text-white") : "bg-white text-slate-600 shadow-e1 hover:text-pax2-blue")}>
+            <button key={k ?? "all"} type="button" onClick={() => setKind(k)} style={k && kind === k ? kindStyle(k) : undefined} className={cn("shrink-0 whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm transition-colors", kind === k ? (k ? "font-medium shadow-e1" : "bg-pax2-blue font-medium text-white") : "bg-white text-slate-600 shadow-e1 hover:text-pax2-blue")}>
               {k ?? "All"}
             </button>
           ))}
+            </div>
+          </div>
+          <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-6 backdrop-blur-[1.5px] [mask-image:linear-gradient(to_right,black,transparent)]" />
+          <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 w-6 backdrop-blur-[1.5px] [mask-image:linear-gradient(to_left,black,transparent)]" />
         </div>
       </div>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

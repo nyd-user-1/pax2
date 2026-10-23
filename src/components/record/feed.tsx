@@ -666,12 +666,15 @@ export function SearchBar({
   className,
   refine,
   trending,
+  aiMode,
 }: {
   q: string
   setQ: (q: string) => void
   placeholder?: string
   className?: string
   refine?: Refine
+  /** The AI Mode pill without the feed's sort and filter (the library's bar). */
+  aiMode?: boolean
   /** Videos to offer under Trending while the bar is empty and focused. */
   trending?: FeedVideo[]
 }) {
@@ -763,7 +766,7 @@ export function SearchBar({
           </button>
         )}
         {/* Google's AI Mode pill: the question goes to the chat instead. */}
-        {refine && (
+        {(refine || aiMode) && (
           <Link href="/chat" className="ml-1 flex h-10 shrink-0 items-center whitespace-nowrap rounded-full bg-slate-100 px-4 text-sm font-medium text-slate-800 transition-colors hover:bg-slate-200">
             AI Mode
           </Link>
@@ -783,7 +786,7 @@ export function SearchBar({
             {refined && !sorting && <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-pax2-blue ring-2 ring-white" />}
           </button>
         ) : (
-          <span className="w-3" />
+          <span className={aiMode ? "w-2" : "w-3"} />
         )}
       </form>
       {open && (
