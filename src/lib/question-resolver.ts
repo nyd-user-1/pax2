@@ -535,6 +535,13 @@ function publishAdvice(id: string, vary: "hour" | "length"): Out | null {
 }
 
 // ── public ──────────────────────────────────────────────────────────────────────────────────────
+/** One short's own measurements for the video page's Analytics block: its census answers (read from the
+ *  frames) and its raw composition (extracted from the file). */
+export async function videoFacts(ytId: string): Promise<{ census: Census | null; comp: Comp | null }> {
+  await ready()
+  return { census: census()[ytId] ?? null, comp: comp()[ytId] ?? null }
+}
+
 export async function resolveQuestion(questionId: string, ytId: string): Promise<Answer | null> {
   await ready()
   const q = questionById(questionId)

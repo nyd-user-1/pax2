@@ -13,6 +13,7 @@ import { LengthBlock } from "@/components/record/resonance-length"
 import { ResonanceCard, ResonanceFactors, ResonanceGauge } from "@/components/resonance-views"
 import { CraftOctagon, ModeMatch, Recommendations, TopicRows, UnlockList, ingredients } from "@/components/video-reads"
 import { craftTemplate, modeMatch, resonanceFactors, resonanceScore, topicOf, unlockActions } from "@/lib/video-reads"
+import { videoFacts } from "@/lib/question-resolver"
 import { boostCounts } from "@/lib/boost"
 import { ChevronRight } from "lucide-react"
 
@@ -177,6 +178,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const boostsP = boostCounts([ytId]).catch(() => ({}) as Record<string, number>)
   const commentsP = topComments(ytId)
   const codebookP = generatedJson<Record<string, Codes>>("codebook")
+  const factsP = videoFacts(ytId).catch(() => ({ census: null, comp: null }))
   userP.catch(() => {})
   commentsP.catch(() => {})
   const data = shorts as unknown as Yt
@@ -280,7 +282,6 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   /** The eight up front: views, median, likes and like rate, then the four ad figures. */
   const core = [...statRows.slice(0, 4), ...(locked ? [] : analyticsRows)]
   const advanced = statRows.slice(4)
-  const statGrid = (rs: [string, string][]) => <div className="grid grid-cols-2 gap-4">{rs.map(([label, value]) => <React.Fragment key={label}>{stat(label, value)}</React.Fragment>)}</div>
 
   const comments = await commentsP
   /** A video's outperformance multiple when the catalog knows it. */
@@ -376,6 +377,70 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       </AccordionBlock>,
     ])
 
+  const coded = (await codebookP)?.[ytId]
+  // Every figure the platform holds for every baseline short, its own or derived from its own: the
+  // catalog's counts, the census read from the frames, the composition extracted from the file, and the
+  // scores. Paid figures (one partner's ad batch) and the owner's YouTube Analytics stay out.
+  const { census: cen, comp: cmp } = await factsP
+  const yesNo = (x: number | null | undefined) => (x == null ? DASH : x ? "Yes" : "No")
+  const ord = (x: number) => `${x}${x % 100 >= 11 && x % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][x % 10] ?? "th"}`
+  const clock = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`
+  const fixed = (x: number | null | undefined, d = 2, unit = "") => (x == null ? DASH : `${x.toFixed(d)}${unit}`)
+  const subs = v ? (subscribers as Record<string, number | null>)[v.channelId] : null
+  const days = v ? Math.max(1, (Date.now() - Date.parse(v.published)) / 86_400_000) : null
+  const outcome = ratio == null ? DASH : ratio >= 3 ? "Outperformed 3x" : ratio <= 0.5 ? "Under half its median" : "Within its usual range"
+  const analytics: [string, [string, string][]][] = [
+    [
+      "Performance",
+      [
+        ["Views", n(v?.views)],
+        ["Channel median", n(scored ? Math.round(scored.channelMedian) : null)],
+        ["Outlier Score", ratio == null ? DASH : times(ratio)],
+        ["Outcome", outcome],
+        ["Views per day", v?.views != null && days ? n(Math.round(v.views / days)) : DASH],
+        ["Against the catalog median", v?.views == null ? DASH : times(v.views / warBaseline.median)],
+        ["Likes", n(likes)],
+        ["Like rate", pct(likes)],
+        ["Comments", n(v?.comments)],
+        ["Comment rate", pct(v?.comments)],
+        ...(boosts > 0 ? ([["Boosts", n(boosts)]] as [string, string][]) : []),
+      ],
+    ],
+    ["Channel", [["Subscribers", n(subs)], ["Views per subscriber", v?.views != null && subs ? fixed(v.views / subs, 2) : DASH], ["Published", v ? new Date(v.published).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : DASH]]],
+    [
+      "On screen",
+      [
+        ["Format", cen?.format ? cen.format.replace(/^./, (c) => c.toUpperCase()) : DASH],
+        ["Setting", cen?.setting ? cen.setting.replace(/^./, (c) => c.toUpperCase()) : DASH],
+        ["Captions burned in", yesNo(cen?.captionsBurnedIn)],
+        ["Call to action", cen == null ? DASH : cen.callToAction ? (cen.ctaSec != null ? `Yes, at ${clock(cen.ctaSec)}` : "Yes") : "No"],
+        ["A person on screen", cen?.peopleScreenShare == null ? DASH : `${Math.round(cen.peopleScreenShare * 100)}% of frames`],
+        ["Third-party watermark", yesNo(cen?.thirdPartyWatermark)],
+      ],
+    ],
+    [
+      "Production",
+      [
+        ["Length", v ? clock(secs(v.duration)) : DASH],
+        ["Cuts per second", fixed(cmp?.cutsPerSec)],
+        ["Seconds to first cut", fixed(cmp?.firstCutSec, 1, " s")],
+        ["Cuts in the first 2 s", cmp?.cutsHook == null ? DASH : String(cmp.cutsHook)],
+        ["Frames with text", cmp?.textFrameShare == null ? DASH : `${Math.round(cmp.textFrameShare * 100)}%`],
+        ["Loudness", fixed(cmp?.loudnessLufs, 1, " LUFS")],
+        ["Spoken words per second", fixed(cmp?.speechWps, 1)],
+        ["Seconds to first word", fixed(cmp?.firstWordSec, 1, " s")],
+      ],
+    ],
+    [
+      "Scores",
+      [
+        ["Resonance", score ? (score.post != null ? `${Math.round(score.pre)} predicted, ${Math.round(score.post)} measured` : `${Math.round(score.pre)} predicted`) : DASH],
+        ["Profile similarity", match ? `${match.score} / 100` : DASH],
+        ["Headline percentile", score?.h == null ? DASH : ord(Math.round(score.h))],
+        ["Wesleyan goal", coded?.wesleyan ? coded.wesleyan.replace(/^./, (c) => c.toUpperCase()) : DASH],
+      ],
+    ],
+  ]
   const right: [string, string, ReactNode][] = [
     // Resonance first (docs/RESONANCE.md): the gauge with the stack's factors beside it. It reads only
     // resonance-formula.json and stays empty, naming what unlocks it, until that file holds this video.
@@ -395,13 +460,14 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "stats",
       "Analytics",
-      <CardBlock key="stats" title="Analytics" height="max" defaultOpen={false} footer={sampleLikes != null || (!ads && paid && !locked) ? SAMPLE : undefined} peek={statGrid(core)} rows={allStats.map(([stat, value]) => ({ stat, value }))} name={`analytics-${ytId}`}>
-        <div className="flex flex-col gap-6">
-          {statGrid(core)}
-          <div className="flex flex-col gap-4 border-t border-slate-100 pt-4">
-            <h3 className="text-sm font-medium text-slate-900">Advanced analytics</h3>
-            {statGrid(advanced)}
-          </div>
+      <CardBlock key="stats" title="Analytics" height="max" rows={analytics.flatMap(([group, rs]) => rs.map(([stat, value]) => ({ group, stat, value })))} name={`analytics-${ytId}`}>
+        <div className="@container flex flex-col gap-5">
+          {analytics.map(([group, rs]) => (
+            <section key={group} className="flex flex-col gap-3">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">{group}</h3>
+              <div className="grid grid-cols-2 gap-4 @md:grid-cols-3 @2xl:grid-cols-4">{rs.map(([label, value]) => <React.Fragment key={label}>{stat(label, value)}</React.Fragment>)}</div>
+            </section>
+          ))}
         </div>
       </CardBlock>,
     ],
@@ -420,84 +486,6 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     ...(template ? ([["craft", "Production profile", <ChartBlock key="craft" title="Production profile" height="auto"><CraftOctagon template={template} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
     ...(lengthSec > 0 ? ([["length", "Resonant Length", <LengthBlock key="length" mark={lengthSec} />]] as [string, string, ReactNode][]) : []),
     ...(topic != null ? ([["topic", "Resonant Topic", <ChartBlock key="topic" title="Resonant Topic" height="max"><TopicRows cluster={topic} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
-    [
-      "kpis",
-      "KPIs",
-      <TableBlock key="kpis" title="KPIs" tools={<Term id="kpis" label={false} />} height="max" footer={!pr && sample ? SAMPLE : undefined}>
-        <div className="overflow-x-auto">
-          <table className="tabular w-full text-sm">
-            <thead className="text-left text-xs text-slate-500">
-              <tr className="[&_th]:whitespace-nowrap [&_th]:py-2 [&_th]:pr-6 [&_th]:font-medium">
-                <th />
-                {COMPONENTS.map((meta, i) => (
-                  <th key={meta.key}>
-                    {meta.name} <span className="font-normal text-slate-400">· {[25, 40, 35][i]}%</span>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="[&_td]:whitespace-nowrap [&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2 [&_td]:pr-6">
-              {KPI_ROWS.map((label) => (
-                <tr key={label}>
-                  <td className="text-slate-500">{label}</td>
-                  {COMPONENTS.map((meta) => (
-                    <td key={meta.key}>{(pr ? pr.kpis[label]?.[meta.key] : (sample?.kpis[label] as Record<string, string> | undefined)?.[meta.key]) ?? DASH}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </TableBlock>,
-    ],
-    [
-      "paid",
-      "Paid",
-      <ListBlock key="paid" title="Spend" tools={<Term id="paid" label={false} />} height="max" footer={ads ? undefined : paid ? SAMPLE : undefined}>
-        {ads ? (
-          <div className="grid gap-x-6 text-xs @md:grid-cols-2">
-            <div className="col-span-full mb-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
-              {(
-                [
-                  ["Spend", `$${Math.round(ads.spend).toLocaleString("en-US")}`],
-                  ["Impressions (1k)", per(ads.spend * 1000, ads.impressions)],
-                  ["Thru", rate(ads.thruplays, ads.starts)],
-                  ["Per start", per(ads.spend, ads.starts)],
-                ] as const
-              ).map(([label, value]) => (
-                <div key={label} className="rounded-lg bg-muted/50 px-2 py-1.5">
-                  <div className="text-[10px] text-slate-800">{label}</div>
-                  <div className="tabular text-sm text-pax2-blue">{value}</div>
-                </div>
-              ))}
-            </div>
-            {adRows.map(([label, value]) => (
-              <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
-                <span className="text-slate-800">{label}</span>
-                <span className="tabular">{value}</span>
-              </div>
-            ))}
-          </div>
-        ) : (
-        <div className="grid gap-x-6 text-xs @md:grid-cols-2">
-          {WINDOW_ROWS.map((label) => (
-            <div key={label} className="flex items-center justify-between gap-2 border-t py-1.5">
-              <span className="text-slate-800">{label}</span>
-              <span className="tabular">{paid?.[label] ?? DASH}</span>
-            </div>
-          ))}
-          <div className="col-span-full mt-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
-            {["Spend", "Impressions (1k)", "3s play", "Per Person"].map((label) => (
-              <div key={label} className="rounded-lg bg-muted/50 px-2 py-1.5">
-                <div className="text-[10px] text-slate-800">{label}</div>
-                <div className="tabular text-sm text-pax2-blue">{paid?.tiles[label] ?? DASH}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-        )}
-      </ListBlock>,
-    ],
   ]
   if (f)
     right.push([
@@ -524,7 +512,6 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       </ListBlock>,
     ])
   // The two ad codebooks: the video's real codes (data/generated/codebook.json) first, the sample's only where none exist.
-  const coded = (await codebookP)?.[ytId]
   const swayable = coded?.swayable ?? sample?.codes?.swayable
   const wesleyanGoal = coded?.wesleyan ?? sample?.codes?.wesleyan
   // Every video page carries all three; a block with no code for this video says so and offers a notification.
