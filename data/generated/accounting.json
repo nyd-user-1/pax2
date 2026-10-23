@@ -25,7 +25,7 @@
  },
  "passed": [
   {
-   "name": "Outlier classifier v1",
+   "name": "Metadata classifier",
    "kind": "logistic regression",
    "does": "chance a short outperforms 3× its channel median, from publish-day fields",
    "inputs": "title, description, tags, length, posting time, thumbnail",
@@ -33,7 +33,7 @@
    "last": "Live"
   },
   {
-   "name": "Outlier classifier v3",
+   "name": "Transcript classifier",
    "kind": "logistic regression",
    "does": "the same, with transcript and embedding evidence",
    "inputs": "v1's fields + transcript TF-IDF + 32 components of the PAX2 Encoder embedding",
@@ -49,7 +49,7 @@
    "last": "Live"
   },
   {
-   "name": "Behavior-corrected text embedding",
+   "name": "Behavior embeddings",
    "kind": "fine-tuned embedding",
    "does": "places videos near videos that performed alike",
    "inputs": "title, description, transcript (fine-tuned bge-m3)",
@@ -73,7 +73,7 @@
    "last": "Live"
   },
   {
-   "name": "Persuasion evidence reference",
+   "name": "Persuasion reference",
    "kind": "reference",
    "does": "measured per-trait effects on favorability and vote choice from 146 randomized ad tests",
    "inputs": "Swayable replication archive (APSR 2024)",
@@ -81,7 +81,7 @@
    "last": "Live"
   },
   {
-   "name": "Composition pair picker",
+   "name": "Composition pairs",
    "kind": "Bradley-Terry pairwise",
    "does": "picks which of a same-channel pair outperformed, from the file's measurables",
    "inputs": "composition features; combined variant adds neighbor evidence",
@@ -89,7 +89,7 @@
    "last": "Staged"
   },
   {
-   "name": "Pairwise picker, Reform & Voting rights",
+   "name": "Pairwise",
    "kind": "Bradley-Terry pairwise",
    "does": "same-channel pair winner within two families",
    "inputs": "35 pre-publish features",
@@ -97,7 +97,7 @@
    "last": "Staged"
   },
   {
-   "name": "Resonance text embedding, behavior arm",
+   "name": "Resonance embeddings",
    "kind": "fine-tuned embedding",
    "does": "the encoder recipe plus a behavioral co-occurrence term",
    "inputs": "same corpus + co-outlier and co-surge groups",
@@ -105,7 +105,7 @@
    "last": "Staged"
   },
   {
-   "name": "Resonance text embedding, full arm",
+   "name": "Text embeddings",
    "kind": "fine-tuned embedding",
    "does": "the same with publish-week co-surge proxy groups",
    "inputs": "as above, λ = 0.25",
@@ -113,7 +113,7 @@
    "last": "Staged"
   },
   {
-   "name": "Watch-through regressor v0",
+   "name": "Completion predictor",
    "kind": "ridge regression",
    "does": "how much of a short a viewer watches, from length, type, tags",
    "inputs": "KuaiRand-1K random exposures (pretrain)",
@@ -137,7 +137,7 @@
    "last": "Staged"
   },
   {
-   "name": "Publish-next policy (P)",
+   "name": "Planner",
    "kind": "contextual bandit (reinforcement learning)",
    "does": "advises the next video's topic, length and hour, learning from every outcome",
    "inputs": "the catalog's settled choice-and-outcome rows",

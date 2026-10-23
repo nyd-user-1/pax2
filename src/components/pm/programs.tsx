@@ -11,7 +11,7 @@ const n = (x: number) => x.toLocaleString("en-US")
 
 const PROGRAMS = [
   { key: "Q", ledger: "Ask-a-video (Q)", brief: "docs/briefs/WINDOW-Q.md", budget: "$5 hard cap", runs: "one spot GPU box, g6e.xlarge class" },
-  { key: "P", ledger: "Publish-next policy (P)", brief: "docs/briefs/WINDOW-P.md", budget: "$2", runs: "replay of the settled catalog; no new fetch" },
+  { key: "P", ledger: "Planner", brief: "docs/briefs/WINDOW-P.md", budget: "$2", runs: "replay of the settled catalog; no new fetch" },
 ]
 
 const OUTSIDE_LABEL = { transcript: "No transcript", media: "No media in S3", composition: "No composition", index: "Not in the serving index" } as const

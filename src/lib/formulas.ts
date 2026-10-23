@@ -77,7 +77,7 @@ export const EXPLAIN: Record<string, { pill: string; facts: [string, string][]; 
     facts: [["Stack AUC", "0.5977"], ["Best single", "q_c, 0.5835"], ["Fit on", "1,240 shorts, 10 channels"], ["Intercept shift", "−1.5077"]],
     rows: [
       ["q_c", "The calibrated probability the video outperforms 3× its channel median, from the outlier classifier."],
-      ["q_x", "The craft rank: the share of the channel's measured shorts this video beats pairwise under the composition pair picker (combined variant)."],
+      ["q_x", "The craft rank: the share of the channel's measured shorts this video beats pairwise under Composition pairs (combined variant)."],
       ["q_h", "The headline percentile against the tested-headline reference."],
       ["Fit", "One logistic fit over the uniform baseline, held out by channel, with a missing-component indicator per absent q_i. Each q is clamped to [0.01, 0.99]."],
       ["Acceptance", "The stack's held-out AUC must be at least the best single component's, else that component alone serves. The stack, 0.5977, beats q_c's 0.5835, so the stack serves."],

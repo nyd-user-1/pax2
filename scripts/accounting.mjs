@@ -86,21 +86,21 @@ const outside = {
 // on Hugging Face (one repo per fitted model, published pass or fail) and the artifacts under
 // data/generated/model/.
 const PASSED = [
-  ["Outlier classifier v1", "logistic regression", "chance a short outperforms 3\u00d7 its channel median, from publish-day fields", "title, description, tags, length, posting time, thumbnail", "AUC 0.611 pooled, 0.566 within-channel", "Live"],
-  ["Outlier classifier v3", "logistic regression", "the same, with transcript and embedding evidence", "v1's fields + transcript TF-IDF + 32 components of the PAX2 Encoder embedding", "0.648 held-out, 0.630 within", "Live"],
+  ["Metadata classifier", "logistic regression", "chance a short outperforms 3\u00d7 its channel median, from publish-day fields", "title, description, tags, length, posting time, thumbnail", "AUC 0.611 pooled, 0.566 within-channel", "Live"],
+  ["Transcript classifier", "logistic regression", "the same, with transcript and embedding evidence", "v1's fields + transcript TF-IDF + 32 components of the PAX2 Encoder embedding", "0.648 held-out, 0.630 within", "Live"],
   ["Early-hit predictor", "logistic regression", "whether a short hits 3\u00d7 by 72 hours, from its first hours of views", "the poller's view curve + v1's features", "6-hour AUC 0.729 pooled, 0.862 within", "Live"],
-  ["Behavior-corrected text embedding", "fine-tuned embedding", "places videos near videos that performed alike", "title, description, transcript (fine-tuned bge-m3)", "kNN-AUC over stock +0.031 pooled, +0.022 within", "Live"],
+  ["Behavior embeddings", "fine-tuned embedding", "places videos near videos that performed alike", "title, description, transcript (fine-tuned bge-m3)", "kNN-AUC over stock +0.031 pooled, +0.022 within", "Live"],
   ["Candidate re-scorer", "fine-tuned transformer", "re-scores the embedding's nearest candidates pairwise", "the two shorts' texts (gte-reranker-modernbert fine-tune)", "0.572 pooled over 0.571; 0.563 within", "Live"],
   ["Headline picker", "fine-tuned transformer", "picks the stronger of two headlines", "the headline text (bert-base-uncased, Upworthy-trained)", "held-out pairwise 0.672", "Live"],
-  ["Persuasion evidence reference", "reference", "measured per-trait effects on favorability and vote choice from 146 randomized ad tests", "Swayable replication archive (APSR 2024)", "e.g. explicit ask +0.59 points of vote choice (0.19\u20130.99)", "Live"],
-  ["Composition pair picker", "Bradley-Terry pairwise", "picks which of a same-channel pair outperformed, from the file's measurables", "composition features; combined variant adds neighbor evidence", "pair accuracy 0.566; combined 0.595", "Staged"],
-  ["Pairwise picker, Reform & Voting rights", "Bradley-Terry pairwise", "same-channel pair winner within two families", "35 pre-publish features", "pair accuracy 0.550 over v1's 0.512", "Staged"],
-  ["Resonance text embedding, behavior arm", "fine-tuned embedding", "the encoder recipe plus a behavioral co-occurrence term", "same corpus + co-outlier and co-surge groups", "kNN-AUC over stock +0.027; pair ranking 0.582 over the encoder's 0.562", "Staged"],
-  ["Resonance text embedding, full arm", "fine-tuned embedding", "the same with publish-week co-surge proxy groups", "as above, \u03bb = 0.25", "kNN-AUC over stock +0.037; pair ranking 0.578", "Staged"],
-  ["Watch-through regressor v0", "ridge regression", "how much of a short a viewer watches, from length, type, tags", "KuaiRand-1K random exposures (pretrain)", "Spearman 0.746 per held-out video", "Live"],
+  ["Persuasion reference", "reference", "measured per-trait effects on favorability and vote choice from 146 randomized ad tests", "Swayable replication archive (APSR 2024)", "e.g. explicit ask +0.59 points of vote choice (0.19\u20130.99)", "Live"],
+  ["Composition pairs", "Bradley-Terry pairwise", "picks which of a same-channel pair outperformed, from the file's measurables", "composition features; combined variant adds neighbor evidence", "pair accuracy 0.566; combined 0.595", "Staged"],
+  ["Pairwise", "Bradley-Terry pairwise", "same-channel pair winner within two families", "35 pre-publish features", "pair accuracy 0.550 over v1's 0.512", "Staged"],
+  ["Resonance embeddings", "fine-tuned embedding", "the encoder recipe plus a behavioral co-occurrence term", "same corpus + co-outlier and co-surge groups", "kNN-AUC over stock +0.027; pair ranking 0.582 over the encoder's 0.562", "Staged"],
+  ["Text embeddings", "fine-tuned embedding", "the same with publish-week co-surge proxy groups", "as above, \u03bb = 0.25", "kNN-AUC over stock +0.037; pair ranking 0.578", "Staged"],
+  ["Completion predictor", "ridge regression", "how much of a short a viewer watches, from length, type, tags", "KuaiRand-1K random exposures (pretrain)", "Spearman 0.746 per held-out video", "Live"],
   ["Feed ranker v0", "logistic regression", "which short a given reader watches through", "KuaiRand-1K (pretrain): video + reader history features", "AUC 0.697 pooled, 0.553 within-reader", "Staged"],
   ["Ask-a-video (Q)", "vision-language model (Qwen3-VL)", "answers any question about any held video; the fixed census batch is its first run", "the video file and the question", "in build \u2014 20-video verification first", "Staged"],
-  ["Publish-next policy (P)", "contextual bandit (reinforcement learning)", "advises the next video's topic, length and hour, learning from every outcome", "the catalog's settled choice-and-outcome rows", "in build \u2014 off-policy evaluation registered before any fit", "Staged"],
+  ["Planner", "contextual bandit (reinforcement learning)", "advises the next video's topic, length and hour, learning from every outcome", "the catalog's settled choice-and-outcome rows", "in build \u2014 off-policy evaluation registered before any fit", "Staged"],
 ]
 const FAILED = [
   ["Outlier classifier v2", "logistic regression", "add the transcript's words to v1", "v1's fields + 400-term TF-IDF", "AUC 0.597 against a 0.624 bar", "the transcript's words, read this way, do not predict an outlier"],
@@ -115,7 +115,7 @@ const FAILED = [
 ]
 // The Flow tab places the models: the four the scoring step calls sit at Scored; every other passed
 // model was fitted before a take arrives, so it stands in a row above the triggers. Names are the ledger's.
-const AT_SCORED = ["Headline picker", "Outlier classifier v3", "Behavior-corrected text embedding", "Candidate re-scorer"]
+const AT_SCORED = ["Headline picker", "Transcript classifier", "Behavior embeddings", "Candidate re-scorer"]
 for (const n of AT_SCORED) if (!PASSED.some((r) => r[0] === n)) throw new Error(`Flow names a model the ledger lacks: ${n}`)
 const chips = (names) => `<div class="fchips">${names.map((n) => `<span class="fchip">${n}</span>`).join("")}</div>`
 const BEFORE = PASSED.map((r) => r[0]).filter((n) => !AT_SCORED.includes(n))

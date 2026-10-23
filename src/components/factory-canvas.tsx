@@ -7,7 +7,7 @@ import {
   type Edge, type EdgeProps, type InternalNode, type Node, type NodeChange, type NodeProps,
 } from "@xyflow/react"
 import {
-  AudioLines, Binary, Calculator, ChartLine, ChevronRight, Clock, Columns3, Cpu, Database, Eye, Factory, FileBraces, FileText, Film, FlaskConical, GraduationCap, HardDrive, Layers,
+  AudioLines, Binary, Calculator, ChartLine, ChevronRight, Clock, Columns3, Cpu, Database, Eye, Factory, FileBraces, FileText, Film, GraduationCap, HardDrive, Layers,
   Lightbulb, ListVideo, Magnet, Mail, MessageCircleQuestionMark, Monitor, Network, PencilRuler, PenLine, RefreshCw, RotateCcw, Rss, Ruler, Save, Scissors, ScrollText,
   ScanEye, Search, Server, Settings2, Shapes, Table, Timer, TrendingUp, Zap, type LucideIcon,
 } from "lucide-react"
@@ -27,18 +27,6 @@ import { cn } from "@/ui/lib/utils"
 // dragged is kept in this browser until Reset layout puts them back. A line touching a moved box reroutes
 // between the sides that face each other; the rails keep their routes.
 
-export type FactoryCounts = {
-  catalog: number | null
-  composition: number | null
-  media: number | null
-  index: number | null
-  transcripts: number | null
-  /** The date scripts/accounting.mjs took media, index and transcripts. */
-  asOf: string | null
-  /** Shorts inside the poller's 72-hour window, and the channels it follows, from its last snapshot. */
-  window: number | null
-  channels: number | null
-}
 
 const FLOW = "#94a3b8"
 const LOOP = "#7c3aed"
@@ -61,13 +49,13 @@ const MODELS: Chip[] = [
   { n: 1, name: "Metadata classifier", status: "Live", make: "statistical" },
   { n: 2, name: "Transcript classifier", status: "Live", make: "statistical" },
   { n: 3, name: "Early-hit predictor", status: "Live", make: "statistical" },
-  { n: 4, name: "Behavior-corrected text embedding", status: "Live", make: "neural" },
+  { n: 4, name: "Behavior embeddings", status: "Live", make: "neural" },
   { n: 5, name: "Candidate re-scorer", status: "Live", make: "neural" },
   { n: 6, name: "Headline picker", status: "Live", make: "neural" },
   { n: 7, name: "Persuasion reference", status: "Live", make: "reference" },
   { n: 8, name: "Composition pairs", status: "Staged", make: "statistical" },
   { n: 9, name: "Pairwise", status: "Staged", make: "statistical" },
-  { n: 10, name: "Behavior embeddings", status: "Staged", make: "neural" },
+  { n: 10, name: "Resonance embeddings", status: "Staged", make: "neural" },
   { n: 11, name: "Text embeddings", status: "Staged", make: "neural" },
   { n: 12, name: "Completion predictor", status: "Live", make: "statistical" },
   { n: 13, name: "Feed ranker v0", status: "Staged", make: "statistical" },
@@ -75,8 +63,6 @@ const MODELS: Chip[] = [
   { n: 15, name: "Planner", status: "Staged", make: "statistical" },
 ]
 const model = (n: number) => MODELS[n - 1]
-
-const fmt = (n: number | null) => (n == null ? null : n.toLocaleString("en-US"))
 
 // ---------------------------------------------------------------------------------------------
 // What's lit: the boxes and lines a sidebar entry points at. Everything else dims while one is.
@@ -133,12 +119,12 @@ function Sides({ extra = [] }: { extra?: Extra[] }) {
 }
 
 // ---------------------------------------------------------------------------------------------
-// The six node kinds: a name, a count where there is one; `about` is the hover.
+// The six node kinds: a name; `about` is the hover.
 
 type Box = { w: number; h: number; extra?: Extra[]; about?: string }
 type DoorData = Box & { title: string; planned?: boolean; big?: boolean }
 type StageData = Box & { title: string; tools?: [string, string][]; foot?: string[] }
-type StoreData = Box & { service: "Amazon S3" | "Amazon DynamoDB" | "Catalog JSON"; title: string; count?: string | null }
+type StoreData = Box & { service: "Amazon S3" | "Amazon DynamoDB" | "Catalog JSON"; title: string }
 type ChipData = Box & { n: number }
 type RackData = Box & { ns: number[] }
 type ServiceData = Box & { title: string; cost?: string }
@@ -149,7 +135,6 @@ const STORE_ICON: Record<StoreData["service"], LucideIcon> = { "Amazon S3": Hard
 function Door({ id, data: d }: NodeProps<Node<DoorData>>) {
   return (
     <div title={d.about} style={{ width: d.w, height: d.h }} className={cn("flex items-center justify-center gap-2 rounded-xl px-3", d.planned ? "border-2 border-dashed border-slate-300 bg-white" : "bg-pax2-blue shadow-e1", d.big && "ring-4 ring-pax2-lavender", glow(useLit("nodes", id)))}>
-      {d.title === "Button" && <FlaskConical className="size-4 shrink-0 text-white" />}
       <span className={cn("font-semibold leading-tight", d.big ? "text-lg" : "text-[15px]", d.planned ? "text-slate-500" : "text-white")}>{d.title}</span>
       <Sides extra={d.extra} />
     </div>
@@ -187,7 +172,6 @@ function Store({ id, data: d }: NodeProps<Node<StoreData>>) {
         <Icon className="size-3.5 shrink-0 text-slate-500" />
         {d.title}
       </p>
-      {d.count && <p className="tabular mt-0.5 text-[13px] font-semibold leading-snug text-pax2-blue">{d.count}</p>}
       <Sides extra={d.extra} />
     </div>
   )
@@ -265,7 +249,8 @@ const nodeTypes = { door: Door, stage: Stage, store: Store, instrument: Instrume
 // The one edge: a rounded orthogonal path, styled by kind, carrying its chip. `at` pins a chip (the long
 // rails); `offset` sets how far a rail runs past its lower or upper node. Lit, it carries a travelling light.
 
-type FxData = { kind: Kindof; label: string; icon?: LucideIcon; text?: string; loop?: number; offset?: number; at?: [number, number] }
+/** `auto` runs the line between the boxes' facing sides; `bare` draws it with no chip. */
+type FxData = { kind: Kindof; label: string; icon?: LucideIcon; text?: string; loop?: number; offset?: number; at?: [number, number]; auto?: boolean; bare?: boolean }
 
 function LoopBadge({ n }: { n: number }) {
   return <span className="tabular flex size-[18px] shrink-0 items-center justify-center rounded-full bg-violet-600 text-[10px] font-semibold text-white">{n}</span>
@@ -328,7 +313,7 @@ function FxEdge({ id, source, target, sourceX, sourceY, targetX, targetY, source
   const a = rectOf(useInternalNode(source))
   const b = rectOf(useInternalNode(target))
   // A moved box's line takes the facing sides; a rail (a set offset) keeps the route it was drawn with.
-  const ends = (moved.has(source) || moved.has(target)) && d.offset === undefined && a && b ? facing(a, b) : null
+  const ends = (d.auto || moved.has(source) || moved.has(target)) && d.offset === undefined && a && b ? facing(a, b) : null
   const [path, lx, ly] = getSmoothStepPath({ ...(ends ?? { sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition }), borderRadius: 14, offset: d.offset ?? 22 })
   const [x, y] = d.at && !moved.has(source) && !moved.has(target) ? d.at : [lx, ly]
   const color = d.kind === "loop" ? LOOP : d.kind === "planned" ? PLANNED : FLOW
@@ -337,14 +322,14 @@ function FxEdge({ id, source, target, sourceX, sourceY, targetX, targetY, source
     <>
       <BaseEdge id={id} path={path} markerEnd={markerEnd} style={{ stroke: color, strokeWidth: width, opacity: lit === "dim" ? 0.15 : 1, transition: "opacity 300ms", ...(d.kind === "planned" && { strokeDasharray: "6 5" }) }} />
       {lit === "lit" && <path d={path} fill="none" stroke={LIGHT[d.kind]} strokeWidth={5} className="erd-travel" style={{ filter: `drop-shadow(0 0 4px ${LIGHT[d.kind]})` }} />}
-      <EdgeLabelRenderer>
+      {!d.bare && <EdgeLabelRenderer>
         {/* Above every line, the elevated loops included. */}
         <EdgeChip
           d={d}
           style={{ transform: `translate(-50%, -50%) translate(${x}px, ${y}px)`, zIndex: 10 }}
           className={cn("pointer-events-auto absolute transition-opacity duration-300", lit === "dim" && "opacity-20", lit === "lit" && "ring-2 ring-sky-300")}
         />
-      </EdgeLabelRenderer>
+      </EdgeLabelRenderer>}
     </>
   )
 }
@@ -429,7 +414,7 @@ function Architecture({ view, edges, focus, onFocus, onOpen }: { view: View; edg
       .map((e) => {
         const d = e.data as FxData
         return (
-          <Entry key={e.id} focus={{ on: "edge", id: e.id }} current={focus} onFocus={onFocus} sample={<EdgeChip d={d} big />}>
+          <Entry key={e.id} focus={{ on: "edge", id: e.id }} current={focus} onFocus={onFocus} sample={d.bare ? <Line kind={d.kind} /> : <EdgeChip d={d} big />}>
             <Def>{d.label}</Def>
           </Entry>
         )
@@ -456,9 +441,9 @@ function Architecture({ view, edges, focus, onFocus, onOpen }: { view: View; edg
         <div className="space-y-1">
           {kind("door", <span className="h-6 w-14 rounded-lg bg-pax2-blue" />, "Door", "How a video enters.")}
           {kind("stage", <span className="h-6 w-14 rounded-xl border-2 border-pax2-light-blue bg-white" />, "Stage", "What the Lab does to the video, with the tools that do it.")}
-          {kind("store", <span className="flex h-6 w-14 items-center justify-center rounded-[10px_10px_6px_6px] border border-slate-300 bg-slate-50"><HardDrive className="size-3.5 text-slate-500" /></span>, "Store", "Where it is kept: S3 prefixes, the DynamoDB ledger, the catalog. The count is what it holds; a dated count is from the last accounting run.")}
+          {kind("store", <span className="flex h-6 w-14 items-center justify-center rounded-[10px_10px_6px_6px] border border-slate-300 bg-slate-50"><HardDrive className="size-3.5 text-slate-500" /></span>, "Store", "Where it is kept: S3 prefixes, the DynamoDB ledger, the catalog.")}
           {kind("instrument", <span className="flex h-6 w-14 items-center gap-1 rounded-full border border-indigo-200 bg-indigo-50 pl-0.5"><MakeBadge make="neural" small /></span>, "Instrument", "A fitted model or a measured reference, numbered to the Models table. Its circle names the kind: a network for a neural network, a calculator for a statistical model, a pencil and ruler for measured effects. A dashed one is staged: fitted or in build, not yet serving.")}
-          {kind("service", <span className="flex h-6 w-14 items-center justify-center rounded-lg border border-amber-300 bg-amber-50"><Server className="size-3.5 text-amber-700" /></span>, "Service", "A paid external the factory calls, with its unit cost where one is recorded.")}
+          {kind("service", <span className="flex h-6 w-14 items-center justify-center rounded-lg border border-amber-300 bg-amber-50"><Server className="size-3.5 text-amber-700" /></span>, "Service", "A paid service the factory calls, named for its job; the provider shows on hover.")}
           {kind("surface", <span className="h-6 w-14 overflow-hidden rounded-lg border border-slate-300 bg-white"><span className="block h-1.5 bg-slate-100" /></span>, "Surface", "A page the factory feeds.")}
         </div>
         <div className="mt-3 space-y-1 border-t border-slate-200/70 pt-3">
@@ -503,7 +488,7 @@ function Architecture({ view, edges, focus, onFocus, onOpen }: { view: View; edg
 const GAP = 80 // between columns: room for a chip
 const STEP_GAP = 64 // Score, Review and Publish
 
-const W = { door: 130, store: 200, service: 130, ec2: 160, surface: 150, measure: 210, score: 150, step: 130, comp: 180, index: 210, catalog: 180, rack: 440, chip: 190, p15: 140, i4: 210, q14: 180 }
+const W = { door: 130, store: 200, service: 130, surface: 150, measure: 210, score: 150, step: 130, comp: 180, index: 210, catalog: 180, rack: 440, chip: 190, p15: 140, i4: 210, q14: 180 }
 const CHIP_H = 38 // an instrument chip whose name runs to two lines
 
 const X_DOOR = 0
@@ -519,7 +504,6 @@ const X_CATALOG = X_INDEX + W.index + 20
 const X_RACK = X_CATALOG + W.catalog + GAP
 const X_Q14 = X_RACK + W.rack + 20 // clear of the rack, so its rail rises beside it
 const X_SURFACE = X_Q14 + W.q14 + GAP
-const X_RIGHT = X_SURFACE + W.surface + GAP
 
 // Rows. The doors, 44 tall and 20 apart.
 const DOOR_H = 44
@@ -538,7 +522,7 @@ const C = {
   oauth: mid(Y_OAUTH, OAUTH_H),
   admin: mid(Y_ADMIN, DOOR_H),
 }
-const STORE_H = 60 // a store with a count; one without is 44
+const STORE_H = 44
 const Y_TOP = 70 // the stores above Measure, and the rack
 const Y_SERVICE = 150 // Polly and EC2, top-aligned
 const MEASURE_Y = 250
@@ -546,7 +530,7 @@ const MEASURE_H = Y_ADMIN + DOOR_H + 24 - MEASURE_Y
 const Y_MAIN = 426 // the main line's center: Measure's right handle, Score, Review, Publish
 const STAGE_H = 52
 const Y_Q14 = 378 // Q's center, between the rack and Score
-const READINGS_H = 80
+const READINGS_H = 44
 const Y_READINGS = Y_MAIN + STAGE_H / 2 + 93 // under Publish, with room for its loop chip and the rail above it
 const Y_WATCH = mid(Y_READINGS, READINGS_H) // readings, Tracking and the early-hit chip share a center line
 const SURFACE_H = 48
@@ -559,8 +543,7 @@ const RAIL_BOTTOM = [745, 775, 805, 835]
 // Measure's left handles sit level with the door or store that feeds each one.
 const ML = (id: string, y: number): Extra => ({ id, side: "l", at: y - MEASURE_Y })
 
-export function build(c: FactoryCounts): { nodes: Node[]; edges: Edge[] } {
-  const asOf = (n: number | null, what: string) => (n == null ? null : `${fmt(n)} ${what}${c.asOf ? ` · ${c.asOf}` : ""}`)
+export function build(): { nodes: Node[]; edges: Edge[] } {
   const n = (id: string, type: string, x: number, y: number, data: Record<string, unknown>): Node => ({ id, type, position: { x, y }, data, selectable: false })
   const centered = (cy: number, h: number) => cy - h / 2
   const cx = (x: number, w: number) => x + w / 2
@@ -569,7 +552,7 @@ export function build(c: FactoryCounts): { nodes: Node[]; edges: Edge[] } {
     // Doors
     n("record", "door", X_DOOR, doorY(0), { w: W.door, h: DOOR_H, title: "Record", about: "a take in the studio, in the browser" }),
     n("upload", "door", X_DOOR, doorY(1), { w: W.door, h: DOOR_H, title: "Upload", about: "the owner's own file" }),
-    n("button", "door", X_DOOR, doorY(2), { w: W.door, h: DOOR_H, title: "Button", about: "the flask on any video card, opening /lab" }),
+    n("button", "door", X_DOOR, doorY(2), { w: W.door, h: DOOR_H, title: "Lab Eval", about: "the flask on any video card, opening /lab" }),
     n("scrape", "door", X_DOOR, doorY(3), { w: W.door, h: DOOR_H, title: "Scrape", about: "admin console: fetch a list of shorts", planned: true }),
     n("process", "door", X_DOOR, doorY(4), { w: W.door, h: DOOR_H, title: "Process", about: "admin console: measure what is held", planned: true }),
     n("oauth", "door", X_DOOR, Y_OAUTH, { w: W.door, h: OAUTH_H, title: "OAuth", about: "a client connects their YouTube channel", big: true }),
@@ -578,16 +561,16 @@ export function build(c: FactoryCounts): { nodes: Node[]; edges: Edge[] } {
 
     // Intake stores, each level with what feeds it
     n("uploads", "store", X_STORE, centered((C.record + C.upload) / 2, 44), { w: W.store, h: 44, service: "Amazon S3", title: "uploads/", about: "every recorded or uploaded take, as mp4" }),
-    n("media", "store", X_STORE, centered(C.scrape, STORE_H), { w: W.store, h: STORE_H, service: "Amazon S3", title: "catalog-media/", about: "catalog shorts: 360p mp4 and m4a", count: asOf(c.media, "shorts held") }),
+    n("media", "store", X_STORE, centered(C.scrape, STORE_H), { w: W.store, h: STORE_H, service: "Amazon S3", title: "catalog-media/", about: "catalog shorts: 360p mp4 and m4a" }),
     n("ledger", "store", X_STORE, centered(C.oauth, 44), { w: W.store, h: 44, service: "Amazon DynamoDB", title: "pax2-ledger", about: "append-only: takes, reads, channel runs, the fetch queue" }),
 
     // Above Measure
-    n("polly", "service", X_DOOR, Y_SERVICE, { w: W.service, h: 44, title: "Polly", about: "neural narration for a script" }),
-    n("ec2", "service", X_STORE, Y_SERVICE, { w: W.ec2, h: 56, title: "EC2", cost: "1.5¢ an upload", about: "self-terminating boxes; about 1.5¢ an upload on a c7i.large" }),
-    n("composition", "store", X_COMP, Y_TOP, { w: W.comp, h: STORE_H, service: "Amazon S3", title: "composition/", about: "per short: cuts, loudness, text", count: c.composition == null ? null : `${fmt(c.composition)} shorts measured` }),
-    n("index", "store", X_INDEX, Y_TOP, { w: W.index, h: STORE_H, service: "Amazon S3", title: "model/encoder-index/", about: "the serving index", count: asOf(c.index, "embedded") }),
+    n("polly", "service", X_DOOR, Y_SERVICE, { w: W.service, h: 44, title: "Voice", about: "Amazon Polly: neural narration for a script" }),
+    n("ec2", "service", X_STORE, Y_SERVICE, { w: W.service, h: 44, title: "Compute", about: "Amazon EC2: self-terminating boxes, about 1.5¢ an upload on a c7i.large" }),
+    n("composition", "store", X_COMP, Y_TOP, { w: W.comp, h: STORE_H, service: "Amazon S3", title: "composition/", about: "per short: cuts, loudness, text" }),
+    n("index", "store", X_INDEX, Y_TOP, { w: W.index, h: STORE_H, service: "Amazon S3", title: "model/encoder-index/", about: "the serving index" }),
     n("i4", "instrument", cx(X_INDEX, W.index) - W.i4 / 2, Y_TOP + STORE_H + 36, { w: W.i4, n: 4 }),
-    n("catalog", "store", X_CATALOG, Y_TOP, { w: W.catalog, h: STORE_H, service: "Catalog JSON", title: "feed-index.json", about: "every catalog short and its measured columns", count: c.catalog == null ? null : `${fmt(c.catalog)} shorts`, extra: [{ id: "t-q", side: "t", at: 40 }, { id: "t-home", side: "t", at: 150 }] }),
+    n("catalog", "store", X_CATALOG, Y_TOP, { w: W.catalog, h: STORE_H, service: "Catalog JSON", title: "feed-index.json", about: "every catalog short and its measured columns", extra: [{ id: "t-q", side: "t", at: 40 }, { id: "t-home", side: "t", at: 150 }] }),
     n("rack", "rack", X_RACK, Y_TOP, { w: W.rack, ns: [1, 2, 5, 6, 7, 8, 9, 10, 11, 12] }),
     n("q14", "instrument", X_Q14, centered(Y_Q14, CHIP_H), { w: W.q14, n: 14 }),
 
@@ -595,14 +578,17 @@ export function build(c: FactoryCounts): { nodes: Node[]; edges: Edge[] } {
     n("measure", "stage", X_MEASURE, MEASURE_Y, {
       w: W.measure, h: MEASURE_H, title: "Measure", about: "Where it runs: one self-terminating EC2 box per upload; a fleet of them for the catalog",
       tools: [
-        ["ffmpeg", "the scene score of every frame, for cuts and pace; EBU R128 loudness each second"],
+        ["ffmpeg", "the scene score of every frame, for cuts, pace and visual activity; EBU R128 loudness each second; brightness and saturation"],
         ["ffprobe", "each file's duration"],
-        ["Tesseract OCR", "on-screen text, one frame a second"],
-        ["Whisper", "a word-timed transcript from the audio"],
+        ["Tesseract OCR", "on-screen text, one frame a second: the words and the area they cover"],
+        ["Whisper", "a word-timed transcript from the audio, with words per minute, the first word's time and the language"],
         ["Captions", "YouTube's own, through the proxy fleet and TranscriptAPI"],
+        ["Pitch and pauses", "the voice's pitch each second with its median and range, the pauses, the loudest and quietest seconds"],
+        ["CLIP", "an image embedding of a frame every 5 seconds and of the thumbnail, with the thumbnail's brightness, contrast and colorfulness"],
+        ["ResMem", "how memorable the first frame and the thumbnail are"],
+        ["Pegasus", "Twelve Labs' video model, on Bedrock, reading the video itself"],
         ["Text embedding", "title, description and transcript into the serving index"],
       ],
-      foot: [asOf(c.transcripts, "transcripts")].filter(Boolean),
       extra: [
         ML("l-uploads", (C.record + C.upload) / 2), ML("l-button", C.button), ML("l-media", C.scrape), ML("l-process", C.process), ML("l-ledger", C.oauth), ML("l-admin", C.admin),
         { id: "r-score", side: "r", at: Y_MAIN - MEASURE_Y },
@@ -620,7 +606,7 @@ export function build(c: FactoryCounts): { nodes: Node[]; edges: Edge[] } {
     // Below the main line
     n("readings", "store", cx(X_PUBLISH, W.step) - W.store / 2, Y_READINGS, {
       w: W.store, h: READINGS_H, service: "Amazon S3", title: "velocity/", about: "the poller's readings, every 15 minutes",
-      count: c.window == null ? null : `${fmt(c.window)} shorts in the 72-hour window${c.channels ? ` · ${fmt(c.channels)} channels` : ""}`,
+      extra: [{ id: "t-i3", side: "t", at: 150 }],
     }),
 
     // Surfaces and what feeds them
@@ -628,9 +614,11 @@ export function build(c: FactoryCounts): { nodes: Node[]; edges: Edge[] } {
     n("chat", "surface", X_SURFACE, Y_CHAT, { w: W.surface, h: SURFACE_H, title: "Chat", path: "/chat", about: "answers from the record" }),
     n("tracking", "surface", X_SURFACE, centered(Y_WATCH, SURFACE_H), { w: W.surface, h: SURFACE_H, title: "Tracking", path: "/tracking", about: "curves against the channel median" }),
     n("vpages", "surface", X_SURFACE, centered(Y_WATCH, SURFACE_H) + SURFACE_H + 48, { w: W.surface, h: SURFACE_H, title: "Video pages", path: "/v", about: "each video's measured record" }),
-    n("i13", "instrument", X_RIGHT, centered(Y_HOME + SURFACE_H / 2, CHIP_H), { w: W.chip, n: 13 }),
-    n("bedrock", "service", X_RIGHT, centered(Y_CHAT + SURFACE_H / 2, 44), { w: W.service, h: 44, title: "Bedrock", about: "Chat's written answers" }),
-    n("i3", "instrument", X_RIGHT, centered(Y_WATCH, CHIP_H), { w: W.chip, n: 3 }),
+    // Each sits by the surface it feeds: the feed ranker over Home, its line clear of the feed index's; the
+    // inference service under Chat; the early-hit predictor over Tracking.
+    n("i13", "instrument", X_SURFACE - 108, Y_HOME - 150, { w: W.chip, n: 13 }),
+    n("bedrock", "service", X_SURFACE + (W.surface - W.service) / 2, Y_CHAT + SURFACE_H + 71, { w: W.service, h: 44, title: "Inference", about: "Amazon Bedrock: Chat's written answers" }),
+    n("i3", "instrument", X_SURFACE + (W.surface - W.chip) / 2, centered(Y_WATCH, SURFACE_H) - 71 - CHIP_H, { w: W.chip, n: 3, extra: [{ id: "b-in", side: "b", at: 40 }] }),
   ]
 
   const e = (id: string, source: string, sh: string, target: string, th: string, data: FxData): Edge => {
@@ -664,7 +652,7 @@ export function build(c: FactoryCounts): { nodes: Node[]; edges: Edge[] } {
     e("upload-uploads", "upload", "r", "uploads", "l", flow(Film, "mp4")),
     e("uploads-measure", "uploads", "r", "measure", "l-uploads", flow(Zap, "the S3 event starts a box")),
     e("button-measure", "button", "r", "measure", "l-button", planned(Film, "an unmeasured video through the boxes", { at: [storeMid, C.button] })),
-    e("scrape-media", "scrape", "r", "media", "l", planned("fetches", "fetches the files")),
+    e("scrape-media", "scrape", "r", "media", "l", { kind: "planned", label: "fetches the files into catalog-media/", bare: true }),
     e("media-measure", "media", "r", "measure", "l-media", flow(Film, "mp4 and m4a")),
     e("process-measure", "process", "r", "measure", "l-process", planned(Layers, "a held batch through Measure", { at: [storeMid, C.process] })),
     e("oauth-ledger", "oauth", "r", "ledger", "l", flow(ChartLine, "catalog, analytics totals, retention curves")),
@@ -687,13 +675,13 @@ export function build(c: FactoryCounts): { nodes: Node[]; edges: Edge[] } {
 
     // Watching
     e("readings-tracking", "readings", "r", "tracking", "l", flow(Table, "live and finished tables")),
-    e("readings-i3", "readings", "t", "i3", "t", flow(Eye, "first hours of views", { offset: 22, at: [gapMid(X_SURFACE + W.surface), Y_READINGS - 22] })),
-    e("i3-tracking", "i3", "l", "tracking", "r", flow(Timer, "early-hit read at 72 hours")),
+    e("readings-i3", "readings", "t-i3", "i3", "b-in", flow(Eye, "first hours of views")),
+    e("i3-tracking", "i3", "b", "tracking", "t", flow(Timer, "early-hit read at 72 hours", { auto: true })),
 
     // What feeds the surfaces
     e("catalog-home", "catalog", "t-home", "home", "t", flow(Rss, "the feed index", { offset: above(RAIL_TOP[0], Y_TOP, Y_HOME), at: [X_Q14 + W.q14 + GAP / 2, RAIL_TOP[0]] })),
-    e("i13-home", "i13", "l", "home", "r", flow(Magnet, "reader-channel affinity it measured")),
-    e("bedrock-chat", "bedrock", "l", "chat", "r", flow(PenLine, "written answers")),
+    e("i13-home", "i13", "b", "home", "t", flow(Magnet, "reader-channel affinity it measured", { auto: true })),
+    e("bedrock-chat", "bedrock", "t", "chat", "b", flow(PenLine, "written answers", { auto: true })),
 
     // Loop 1: published, polled, back in as measured outcome
     e("publish-readings", "publish", "b", "readings", "t", loop(1, Clock, "on the poller, read every 15 minutes", { at: [cx(X_PUBLISH, W.step), Y_MAIN + STAGE_H / 2 + 34] })),
@@ -738,11 +726,11 @@ function Canvas({ nodes, edges, onNodesChange, onPane }: { nodes: Node[]; edges:
 }
 
 /** The canvas. Its key is the Architecture panel, which the gear at its top right opens in the shell's right slot. */
-const LAYOUT_KEY = "erd-layout"
+const LAYOUT_KEY = "erd-layout-v3" // a new key whenever the default layout changes, so old moves don't stack on it
 const ARCH_KEY = "erd-architecture"
 
-export function FactoryCanvas({ counts }: { counts: FactoryCounts }) {
-  const base = React.useMemo(() => build(counts), [counts])
+export function FactoryCanvas() {
+  const base = React.useMemo(() => build(), [])
   const { edges } = base
   // Where the drawing puts each box. A kept layout holds each moved box's offset from that home, so a
   // change to the drawing carries the moves with it.

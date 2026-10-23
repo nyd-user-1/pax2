@@ -175,7 +175,7 @@ export default async function PipelinePage() {
     ),
   }
 
-  const scoredNames = ["Headline picker", "Outlier classifier v3", "Behavior-corrected text embedding", "Candidate re-scorer"]
+  const scoredNames = ["Headline picker", "Transcript classifier", "Behavior embeddings", "Candidate re-scorer"]
   const feeds: MapNode[] = [
     {
       id: "scored",
@@ -251,7 +251,7 @@ export default async function PipelinePage() {
     },
     {
       id: "policy",
-      title: "Publish-next policy (P)",
+      title: "Planner",
       count: "Planned",
       planned: true,
       edge: "settled outcomes",
