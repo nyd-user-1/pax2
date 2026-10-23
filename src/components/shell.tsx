@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, ArrowLeft, Sigma, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronDown, ChevronUp, ChevronsUpDown, Clapperboard, Columns2, Columns3, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, Microscope, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, ShieldCheck, Star, Tag, Target, Tv, TvMinimal, User2, Video, Vote, Workflow, X } from "lucide-react"
+import { Activity, ArrowLeft, Database, Sigma, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronDown, ChevronUp, ChevronsUpDown, Clapperboard, Columns2, Columns3, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, Microscope, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, ShieldCheck, Star, Tag, Target, Tv, TvMinimal, User2, Video, Vote, Workflow, X } from "lucide-react"
 
 import dynamic from "next/dynamic"
 import { SidebarChats } from "@/components/sidebar-chats"
@@ -41,6 +41,7 @@ const RESEARCH = [
 const ADMIN = [
   { href: "/build", label: "Build", icon: Hammer },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/data", label: "Data", icon: Database },
   { href: "/evals", label: "Evals", icon: Target },
   { href: "/pipeline", label: "Pipeline", icon: Workflow },
   { href: "/project-management", label: "Project Management", icon: GanttChart },
@@ -106,6 +107,7 @@ const TITLES: [string, string][] = [
   ["/library", "Library"],
   ["/glossary", "Glossary"],
   ["/dashboard", "Dashboard"],
+  ["/data", "Data"],
   ["/evals", "Evals"],
   ["/pipeline", "Pipeline"],
   ["/erd", "ERD"],
