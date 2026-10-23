@@ -249,7 +249,8 @@ function LoopBadge({ n }: { n: number }) {
 }
 
 /** An edge's chip: a circle holding its icon (a pill for a word), blue on white for flow, purple with the
- *  loop's number on its shoulder, dashed when planned. `big` is the sidebar's size. */
+ *  loop's number on its shoulder, dashed when planned. `big` is the sidebar's size, where the loop's
+ *  section heading carries the number. */
 function EdgeChip({ d, big = false, className, style }: { d: FxData; big?: boolean; className?: string; style?: React.CSSProperties }) {
   const Icon = d.icon
   return (
@@ -258,15 +259,13 @@ function EdgeChip({ d, big = false, className, style }: { d: FxData; big?: boole
       style={style}
       className={cn(
         "relative flex shrink-0 items-center justify-center rounded-full border bg-white font-medium leading-none",
-        Icon ? (big ? "size-10" : "size-7") : cn("w-max whitespace-nowrap", big ? "h-10 px-3 text-[13px]" : "h-7 px-2.5 text-xs"),
+        Icon ? (big ? "size-8" : "size-7") : cn("w-max whitespace-nowrap px-2.5 text-xs", big ? "h-8" : "h-7"),
         d.kind === "loop" ? "border-violet-300 text-violet-700" : d.kind === "planned" ? "border-dashed border-slate-300 italic text-slate-400" : "border-slate-200 text-pax2-blue",
         className,
       )}
     >
-      {Icon ? <Icon className={big ? "size-[18px]" : "size-3.5"} strokeWidth={2} /> : d.text}
-      {d.loop && (
-        <span className={cn("tabular absolute flex items-center justify-center rounded-full bg-violet-600 font-semibold not-italic text-white ring-2 ring-white", big ? "-right-1 -top-1 size-[18px] text-[10px]" : "-right-1.5 -top-1.5 size-4 text-[9px]")}>{d.loop}</span>
-      )}
+      {Icon ? <Icon className={big ? "size-4" : "size-3.5"} strokeWidth={2} /> : d.text}
+      {d.loop && !big && <span className="tabular absolute -right-1.5 -top-1.5 flex size-4 items-center justify-center rounded-full bg-violet-600 text-[9px] font-semibold not-italic text-white ring-2 ring-white">{d.loop}</span>}
     </span>
   )
 }
@@ -328,8 +327,8 @@ const same = (a: Focus, b: Focus) => JSON.stringify(a) === JSON.stringify(b)
 function Entry({ focus, current, onFocus, sample, children }: { focus: Focus; current: Focus; onFocus: (f: Focus) => void; sample: React.ReactNode; children: React.ReactNode }) {
   const on = same(focus, current)
   return (
-    <button type="button" onClick={() => onFocus(on ? null : focus)} aria-pressed={on} className={cn("-mx-2 flex w-[calc(100%+16px)] items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-white", on && "bg-white ring-1 ring-pax2-light-blue")}>
-      <span className="flex min-h-10 w-16 shrink-0 items-center justify-center">{sample}</span>
+    <button type="button" onClick={() => onFocus(on ? null : focus)} aria-pressed={on} className={cn("-mx-2 flex w-[calc(100%+16px)] items-center gap-2.5 rounded-xl px-2 py-1.5 text-left transition-colors hover:bg-white", on && "bg-white ring-1 ring-pax2-light-blue")}>
+      <span className="flex min-h-8 w-14 shrink-0 items-center justify-center">{sample}</span>
       <span className="min-w-0">{children}</span>
     </button>
   )
@@ -406,7 +405,7 @@ function Legend({ edges, focus, onFocus, onClose }: { edges: Edge[]; focus: Focu
             ))}
           </div>
         </TabsContent>
-        <TabsContent value="widgets" className="min-h-0 space-y-4 divide-y divide-slate-200/70 overflow-y-auto border-t border-slate-200/70 px-5 py-4 [&>*:not(:first-child)]:pt-4">
+        <TabsContent value="widgets" className="min-h-0 space-y-3 divide-y divide-slate-200/70 overflow-y-auto border-t border-slate-200/70 px-5 py-4 [&>*:not(:first-child)]:pt-3">
           {LOOPS.map(([n, name]) => (
             <div key={n}>
               {heading(name, { on: "loop", n }, n)}
