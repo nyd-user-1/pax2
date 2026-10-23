@@ -46,6 +46,10 @@ h2{font-size:clamp(34px,4.4vw,66px);line-height:1.08}
 .wide>.shot img{max-height:100%;width:auto;max-width:100%;border-radius:18px;box-shadow:0 18px 40px -12px rgb(15 23 42/.22),0 6px 12px -6px rgb(15 23 42/.1);outline:1px solid rgb(15 23 42/.06)}
 .wide .split{height:100%;align-items:center}
 .wide:has(.split){justify-content:center;padding-top:10vh}
+.next{position:fixed;left:50%;bottom:3.2vh;transform:translateX(-50%);width:48px;height:48px;border-radius:50%;border:1px solid rgb(15 23 42/.12);background:#fff;color:var(--blue);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px -4px rgb(15 23 42/.18);z-index:6;transition:opacity .2s,transform .2s}
+.next:hover{transform:translateX(-50%) translateY(2px)}
+.next.gone{opacity:0;pointer-events:none}
+.next svg{width:22px;height:22px}
 .page{position:absolute;right:9vw;bottom:4vh;font:12px var(--mono);color:var(--faint)}
 .nav{position:fixed;right:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:5}
 .nav a{width:7px;height:7px;border-radius:50%;background:#cbd5e1;display:block}
@@ -57,7 +61,7 @@ svg text{font-family:var(--sans)}
   html{scroll-snap-type:none}
   .slide{height:100vh;min-height:0;break-after:page;page-break-after:always;padding:8vh 8vw;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .slide:last-child{break-after:auto;page-break-after:auto}
-  .nav{display:none}
+  .nav,.next{display:none}
   .shot img{max-height:70vh}
 }
 </style>
@@ -248,6 +252,7 @@ svg text{font-family:var(--sans)}
   <div class="page">17</div>
 </section>
 
+<button class="next" type="button" aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
 <nav class="nav" aria-label="Slides"></nav>
 <script>
 (() => {
@@ -265,9 +270,12 @@ svg text{font-family:var(--sans)}
     for (const e of es) if (e.isIntersecting) {
       at = slides.indexOf(e.target)
       dots.forEach((d, i) => d.classList.toggle("on", i === at))
+      next.classList.toggle("gone", at === slides.length - 1)
     }
   }, { threshold: 0.6 })
   slides.forEach((s) => io.observe(s))
+  const next = document.querySelector(".next")
+  next.addEventListener("click", () => go(at + 1))
   const go = (i) => slides[Math.max(0, Math.min(slides.length - 1, i))].scrollIntoView({ behavior: "smooth" })
   addEventListener("keydown", (e) => {
     if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); go(at + 1) }
