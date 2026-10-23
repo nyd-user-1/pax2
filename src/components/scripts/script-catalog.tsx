@@ -6,7 +6,7 @@ import { ArrowLeft, Check, Minus, PenLine, X } from "lucide-react"
 
 import { AccordionBlock, CardBlock, ListBlock, MainBlock, TwoThirdBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
-import { HOME_BLOCK } from "@/app/home/height"
+import { HOME_BLOCK } from "@/app/_home/height"
 import { RecordScript } from "@/components/record/record-script"
 import { toneClasses, toneOf } from "@/lib/tone"
 import { cn } from "@/ui/lib/utils"

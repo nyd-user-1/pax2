@@ -1,4 +1,4 @@
-import { HOME_BLOCK } from "@/app/home/height"
+import { HOME_BLOCK } from "@/app/_home/height"
 import { TableBlock } from "@/components/blocks"
 import { GLOSSARY } from "@/lib/glossary"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/components/nova/table"
