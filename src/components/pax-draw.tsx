@@ -4,14 +4,13 @@ import StrokeText from "@/components/stroke-text"
 
 import "./load-curtain.css"
 
-// The A's crossbar between its legs, in the PAX Curtain font's units (1000 to the em; the A starts after
-// P's 600-unit advance): the crossbar spans y 141 to 273, the legs' inner edges run from (171, 0) and
-// (429, 0) up to (300, 520).
+// The A's crossbar, the font's own second contour, in PAX Curtain's units (1000 to the em; the A starts
+// after P's 600-unit advance). Drawn whole, it crosses over both legs.
 const STRIPE = [
-  [171 + (129 * 141) / 520, 141],
-  [171 + (129 * 273) / 520, 273],
-  [429 - (129 * 273) / 520, 273],
-  [429 - (129 * 141) / 520, 141],
+  [153, 141],
+  [190, 273],
+  [410, 273],
+  [447, 141],
 ]
 
 /** The PAX mark drawing itself, as on the root page's header button, without the button: navy strokes
