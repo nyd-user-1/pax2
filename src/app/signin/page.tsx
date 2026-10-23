@@ -2,7 +2,6 @@ import { AuthForm } from "@/components/auth/auth-form"
 import { DemoAccess } from "@/components/auth/demo-access"
 import { LandingGrid } from "@/components/landing-grid"
 import { LandingHeader } from "@/components/record/landing-header"
-import { ReadySetGo } from "@/components/auth/ready-set-go"
 import TextType from "@/components/text-type"
 
 export const metadata = { title: "Sign in" }
@@ -16,7 +15,10 @@ export default function SignInPage() {
   return (
     <div className="bg-pax2-mist">
       <LandingGrid pulseAt={PAX_DRAWN} />
-      <LandingHeader arriveAt={0} lead={<ReadySetGo className="text-xl md:text-2xl" />} />
+      <LandingHeader
+        arriveAt={0}
+        lead={<TextType as="span" text={["Ready to make change?", "Ready to make a video?", "Ready to make a storyboard?", "Ready to make a script?", "Ready to make a difference?", "Ready. Set. Go."]} loop={false} typingSpeed={70} className="font-display text-xl font-normal text-pax2-blue md:text-2xl" />}
+      />
       {/* Not positioned, so the gradient paints beneath the fixed grid; the form, positioned, paints above it. */}
       <section className="-mt-16 flex min-h-dvh flex-col items-center justify-center bg-gradient-to-b from-pax2-lavender to-pax2-mist px-6">
         <div className="relative w-full max-w-[451px]">
