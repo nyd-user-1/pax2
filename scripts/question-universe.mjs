@@ -71,12 +71,13 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
 .bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#f5f7fb;padding:10px 0 14px;margin-bottom:6px}
 .bar button,.bar select{border:1px solid #cbd5e1;border-radius:999px;background:#fff;padding:6px 14px;font:13px -apple-system,system-ui,sans-serif;color:#0f172a;cursor:pointer}
 .bar button.on{background:#1e3a8a;color:#fff;border-color:#1e3a8a}
+.bar .key{font-size:13px;font-weight:600;color:#1e3a8a;margin-right:4px}
 .bar .n{font-size:13px;color:#64748b;margin-left:auto}
 .hide{display:none}
 @media (max-width:640px){body{padding:28px 14px}section{padding:18px}}
 </style></head><body><div class="wrap">
 <h1>The question universe</h1>
-<div class="bar"><button type="button" id="picked">Picked only</button><select id="min"><option value="0">Any score</option><option value="5">5</option><option value="4">4 and up</option><option value="3">3 and up</option><option value="-1">Unscored</option></select><button type="button" id="sort">Sort by score</button><button type="button" id="copy">Copy scores</button><button type="button" id="clear">Clear</button><span class="n" id="n"></span></div>
+<div class="bar"><span class="key">1 cut · 5 keep</span><button type="button" id="picked">Picked only</button><select id="min"><option value="0">Any score</option><option value="5">5</option><option value="4">4 and up</option><option value="3">3 and up</option><option value="-1">Unscored</option></select><button type="button" id="sort">Sort by score</button><button type="button" id="copy">Copy scores</button><button type="button" id="clear">Clear</button><span class="n" id="n"></span></div>
 ${REGISTERS.map((r) => {
   const qs = QUESTIONS.filter((q) => q.register === r.id)
   return `<section><h2>${esc(r.label)}<small>${qs.filter((q) => q.pass !== 2).length}${qs.some((q) => q.pass === 2) ? ` + ${qs.filter((q) => q.pass === 2).length} pass 2` : ""}</small></h2><div class="grid">${qs.map(chip).join("\n")}</div></section>`
