@@ -10,17 +10,16 @@ import { useDraft } from "@/components/record/draft"
 import { CameraFlow } from "@/components/record/camera-flow"
 import { ScriptBox } from "@/components/record/editor"
 import { LibraryCard, type CardData } from "@/components/record/library-card"
-import { PersonalForm } from "@/components/record/personal-form"
 import { StudioFlow } from "@/components/record/studio-flow"
 import { RevealFx } from "@/components/reveal-fx"
 import { whiteButton } from "@/components/white-button"
 import { cn } from "@/ui/lib/utils"
 
 // The ways into recording: write in your own words, or choose, skip the camera, create or upload.
-// Shared by /recording, where the first opens /chat in record mode and the rest their /record pages,
-// and the landing's third section, where each opens in place.
+// Shared by /recording and the landing's third section. Writing in your own words opens /chat in record
+// mode from both; the rest open their /record pages from /recording and open in place on the landing.
 
-type Step = "options" | "personal" | "library" | "script" | "camera" | "studio"
+type Step = "options" | "library" | "script" | "camera" | "studio"
 
 const OPTIONS = [
   { href: "/record/library", step: "library", icon: ListChecks, title: "Choose a script" },
@@ -29,11 +28,11 @@ const OPTIONS = [
   { href: "/record/camera#upload", step: "camera", icon: Upload, title: "Upload a video" },
 ] as const
 
-type Pick = (typeof OPTIONS)[number]["step"] | "personal"
+type Pick = (typeof OPTIONS)[number]["step"]
 
 const ARROW = "flex size-8 items-center justify-center rounded-full bg-pax2-mist transition-colors group-hover:bg-primary group-hover:text-white"
 
-/** With `onPick`, every option stays on the page (the landing) instead of going to its /record page. */
+/** With `onPick`, the four options stay on the page (the landing) instead of going to their /record pages. */
 export function RecordOptions({ onPick }: { onPick?: (to: Pick) => void }) {
   const lead = (
     <>
@@ -50,15 +49,9 @@ export function RecordOptions({ onPick }: { onPick?: (to: Pick) => void }) {
   )
   return (
     <div className="flex flex-col gap-4">
-      {onPick ? (
-        <button type="button" onClick={() => onPick("personal")} className="lift group surface flex cursor-pointer flex-col gap-3 p-6 text-left">
-          {lead}
-        </button>
-      ) : (
-        <Link href="/chat?record=1" className="lift group surface flex cursor-pointer flex-col gap-3 p-6">
-          {lead}
-        </Link>
-      )}
+      <Link href="/chat?record=1" className="lift group surface flex cursor-pointer flex-col gap-3 p-6">
+        {lead}
+      </Link>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:grid-rows-2">
         {OPTIONS.map(({ href, step, icon: Icon, title }) => {
           const body = (
@@ -90,7 +83,7 @@ export function RecordOptions({ onPick }: { onPick?: (to: Pick) => void }) {
 }
 
 // Where each step's back link returns to, named for the step it returns to.
-const BACK: Record<Step, string> = { options: "Start", personal: "About you", library: "Scripts", script: "Script", camera: "Record", studio: "Without a camera" }
+const BACK: Record<Step, string> = { options: "Start", library: "Scripts", script: "Script", camera: "Record", studio: "Without a camera" }
 
 /** The landing's recording section: every path of the record flow, in place, up to the moment of
  *  recording, where a signed-out reader is asked to sign in. Each step wipes in over the last, with a
@@ -149,16 +142,7 @@ export function RecordChooser({ children }: { children?: React.ReactNode }) {
           <ArrowLeft className="size-4" /> {BACK[trail[trail.length - 2]]}
         </button>
       )}
-      {step === "personal" ? (
-        <InPlace title="Tell us a little about you." lead="Three short answers. PAX2 writes a script that sounds like you, and you can change every word.">
-          <PersonalForm
-            onWritten={(t) => {
-              setText(t)
-              go("script")
-            }}
-          />
-        </InPlace>
-      ) : step === "script" ? (
+      {step === "script" ? (
         <InPlace title="Make it yours." lead="Change anything you'd like. It should sound like you.">
           <ScriptBox
             text={text}
