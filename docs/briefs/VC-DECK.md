@@ -26,7 +26,7 @@ Every number on a slide is a fact from this repository and carries no more preci
 
 ## Voice and dress
 
-- Third person throughout: the platform does things; no "I", no "we", no model vendor or assistant named anywhere.
+- First person singular throughout ("I," "me," "my") — ruled by Brendan 2026-10-22, reversing the earlier line here. Never "we"/"our," never third-person self-reference (no "PAX2 does X," no "the platform…"); no model vendor or assistant named anywhere.
 - Plain spoken English, short declarative lines. No hyperbole, no mood words, no jargon; a term that needs the glossary doesn't belong on a slide. Warmth comes from the story, not adjectives.
 - Defined terms that do appear use their exact names (`src/lib/glossary.ts`); never "breakout" — name the arithmetic if a slide needs it.
 - No lead-in paragraph under any heading; no caption restating a visual; no "→".

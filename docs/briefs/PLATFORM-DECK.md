@@ -30,7 +30,7 @@ Honesty rows stay in: what the system does not yet hold (survey and experiment i
 
 ## Voice and dress
 
-- Third person throughout. The deck never says "I" or "we," never names a model vendor or an assistant. Attribute work to the platform.
+- First person singular throughout ("I," "me," "my") — ruled by Brendan 2026-10-22, reversing the earlier line here. Never "we"/"our," never third-person self-reference (no "the platform…"); never a model vendor or an assistant named.
 - Scientific voice: declarative sentences carrying a fact, a number, a mechanism. No metaphor, no hyperbole, no mood words. Uncertainty states its basis (interval, sample size, holdout).
 - Defined terms come from `src/lib/glossary.ts` — one concept, one name ("outperformed 3x", "Resonance", "Outlier Score"). Never "breakout"; name the arithmetic.
 - No lead-in paragraph under any heading. No caption that restates what a figure already shows. No "→" anywhere.
