@@ -1,5 +1,6 @@
 import { LibraryBrowser } from "@/components/library-browser"
 import { bytes, count, DATASETS } from "@/lib/library"
+import { REPORTS, reportAbout } from "@/lib/reports"
 
 // The working documents, served as static pages under /sketches.
 const SKETCHES = [
@@ -17,6 +18,7 @@ export default function LibraryPage() {
     <div className="flex flex-col gap-8">
       <LibraryBrowser
         cards={[
+          ...REPORTS.map((r) => ({ slug: r.slug, title: r.title, publisher: r.publisher ?? "", summary: reportAbout(r.slug).summary, kind: "Report", tags: reportAbout(r.slug).tags, license: "", size: `${r.pages.length} pages`, rows: null, used: 0, pages: r.pages.map((p) => ({ n: p.n, text: p.text })) })),
           ...DATASETS.map((d) => ({ slug: d.slug, title: d.title, publisher: d.publisher, summary: d.summary, kind: d.kind, tags: d.tags, license: d.license, size: d.bytes ? bytes(d.bytes) : "", rows: d.rows ? count(d.rows) : null, used: d.usedIn.length })),
           ...SKETCHES,
         ]}

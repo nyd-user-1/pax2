@@ -11,6 +11,7 @@ const KIND: Record<string, { bg: string; fg: string }> = {
   Opinion: { bg: "#f87171", fg: "#ffffff" },
   Reference: { bg: "#dbeafe", fg: "#1e3a8a" },
   Code: { bg: "#fee2e2", fg: "#991b1b" },
+  Report: { bg: "#172554", fg: "#ffffff" },
 }
 
 const TAGS = [

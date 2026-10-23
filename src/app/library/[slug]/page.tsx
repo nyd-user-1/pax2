@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { ArrowLeft, Check, Download, ExternalLink, Minus } from "lucide-react"
 
 import upworthyTop from "../../../../data/generated/upworthy-top.json"
@@ -7,15 +7,22 @@ import { CardBlock, TableBlock } from "@/components/blocks"
 import { TabRail } from "@/components/tab-rail"
 import { UpworthyLessons, UpworthyTable, type UpworthyData } from "@/components/library/upworthy-top"
 import { bytes, count, datasetBySlug, type Dataset, type Table } from "@/lib/library"
+import { ReportView } from "@/components/library/report-view"
+import { currentUser } from "@/lib/auth"
+import { reportAbout, reportBySlug, reportContext, type Report } from "@/lib/reports"
 import { kindStyle, tagStyle } from "@/lib/swatches"
+import { trialsText } from "@/lib/trials"
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const d = datasetBySlug((await params).slug)
-  return { title: d?.title ?? "Library" }
+  const { slug } = await params
+  return { title: reportBySlug(slug)?.title ?? datasetBySlug(slug)?.title ?? "Library" }
 }
 
-export default async function DatasetPage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ t?: string }> }) {
-  const d = datasetBySlug((await params).slug)
+export default async function DatasetPage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ t?: string; page?: string }> }) {
+  const { slug } = await params
+  const report = reportBySlug(slug)
+  if (report) return <ReportPage r={report} page={Number((await searchParams).page) || undefined} />
+  const d = datasetBySlug(slug)
   if (!d) notFound()
   const { t } = await searchParams
   const tables = d.tables.filter((x) => !x.error)
@@ -119,6 +126,38 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
 
       <FilesSection d={d} />
       <TailSections d={d} />
+    </div>
+  )
+}
+
+/** A report: the original or its text, and the discussion panel with every page loaded. Client research,
+ *  so signed-in readers only. */
+async function ReportPage({ r, page }: { r: Report; page?: number }) {
+  if (!(await currentUser())) redirect(`/signin?next=/library/${r.slug}`)
+  const about = reportAbout(r.slug)
+  const context = reportContext(r, about.experiments ? trialsText() : undefined)
+  return (
+    <div className="flex flex-col gap-8">
+      <BackLink />
+      <header className="rise flex flex-col gap-3">
+        <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">{r.title}</h1>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="w-fit rounded-full px-2.5 py-0.5 text-[11px] font-semibold" style={kindStyle("Report")}>Report</span>
+          {r.publisher && <span className="text-xs text-slate-500">{r.publisher}</span>}
+          <span className="tabular text-xs text-slate-400">· {r.pages.length} pages</span>
+          {about.tags.map((x) => (
+            <span key={x} className="rounded-full px-2.5 py-0.5 text-xs font-medium" style={tagStyle(x)}>
+              {x}
+            </span>
+          ))}
+          {about.experiments && (
+            <Link href="/experiments" className="ml-1 text-xs font-medium text-pax2-blue underline underline-offset-2 hover:text-pax2-light-blue">
+              Experiments
+            </Link>
+          )}
+        </div>
+      </header>
+      <ReportView slug={r.slug} title={r.title} pages={r.pages} context={context} page={page} />
     </div>
   )
 }

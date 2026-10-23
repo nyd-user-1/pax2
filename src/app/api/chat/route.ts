@@ -85,8 +85,8 @@ export async function POST(req: Request) {
   const { messages, address, place, systemContext, model, record: recordMode } = (await req.json()) as { messages: { role: "user" | "assistant"; content: string }[]; address?: string; place?: Place | null; systemContext?: string; model?: string; record?: boolean }
   // The picker's choice when it is one of the models this account answers on (lib/model-options); else the default.
   const modelId = model && MODEL_IDS.has(model) ? model : MODEL
-  // Extra context from the caller (the graph canvas: what is on it, an attached entity, a prompt step's wiring), after the record.
-  const extra = typeof systemContext === "string" && systemContext.trim() ? `\n\n${systemContext.slice(0, 40_000)}` : ""
+  // Extra context from the caller (the graph canvas: what is on it, an attached entity, a prompt step's wiring; a library report, every page), after the record.
+  const extra = typeof systemContext === "string" && systemContext.trim() ? `\n\n${systemContext.slice(0, 80_000)}` : ""
   const r = await client.send(
     new ConverseStreamCommand({
       modelId,
