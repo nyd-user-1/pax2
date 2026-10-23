@@ -68,8 +68,10 @@ export function ResonanceGauge({ pre, post }: { pre: number | null; post?: numbe
   const settled = live != null && final != null && Math.abs(live - final) < 0.5
   const diff = post != null && pre != null ? Math.round(post - pre) : null
   return (
-    <div className="flex flex-col items-center gap-2">
-      <svg viewBox="0 0 200 116" className="h-auto w-full max-w-[320px]" role="img" aria-label="Resonance gauge">
+    // The score and its band sit inside the drawing, so the whole gauge scales as one to the height the
+    // block gives it and stays centered in it.
+    <div className="flex h-full min-h-0 w-full items-center justify-center">
+      <svg viewBox="0 0 200 150" className="h-auto max-h-full w-full max-w-[560px]" role="img" aria-label="Resonance gauge">
         {BANDS.map((b) => (
           <path key={b.name} d={arc(b.from + 0.6, b.to - 0.6, 82)} fill="none" stroke={final == null ? "#e2e8f0" : b.color} strokeWidth={14} strokeDasharray={final == null ? "4 3" : undefined} />
         ))}
@@ -87,17 +89,15 @@ export function ResonanceGauge({ pre, post }: { pre: number | null; post?: numbe
             {diff > 0 ? `+${diff}` : diff}
           </text>
         )}
+        {live != null && final != null ? (
+          <text x={100} y={146} textAnchor="middle">
+            <tspan className="tabular fill-pax2-blue font-display" fontSize={34}>{Math.round(live)}</tspan>
+            <tspan dx={6} fontSize={11} fontWeight={500} fill={bandOf(final).color}>{bandOf(final).name}</tspan>
+          </text>
+        ) : (
+          <text x={100} y={140} textAnchor="middle" fontSize={10} fill="#94a3b8">No Resonance score yet</text>
+        )}
       </svg>
-      {live != null && final != null ? (
-        <div className="flex flex-col items-center">
-          <span className="tabular font-display text-5xl leading-none text-pax2-blue">{Math.round(live)}</span>
-          <span className="mt-1 text-sm font-medium" style={{ color: bandOf(final).color }}>
-            {bandOf(final).name}
-          </span>
-        </div>
-      ) : (
-        <span className="text-sm text-slate-400">No Resonance score yet</span>
-      )}
     </div>
   )
 }

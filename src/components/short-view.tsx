@@ -409,8 +409,8 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "resonance",
       "Resonance",
       <ChartBlock key="resonance" title="Resonance" height="auto">
-        <div className="@container">
-          <div className="grid items-center gap-6 @2xl:grid-cols-[minmax(0,320px)_minmax(0,1fr)]">
+        <div className="@container h-full">
+          <div className="grid h-full items-center gap-6 @2xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
             <ResonanceGauge pre={score?.pre ?? null} post={score?.post ?? null} />
             <ResonanceFactors score={score} factors={factors} />
           </div>
