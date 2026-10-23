@@ -91,7 +91,10 @@ export async function POST(req: Request, { params }: { params: Promise<{ action:
     const name = (e as { name?: string }).name ?? ""
     // An unconfirmed account isn't an error — it's the next step.
     if (name === "UserNotConfirmedException") return NextResponse.json({ confirm: true }, { status: 409 })
-    if (action === "reset" && name === "InvalidParameterException") return NextResponse.json({ error: FRIENDLY.InvalidPasswordException }, { status: 400 })
+    // Cognito answers a password under 6 characters with InvalidParameterException, the same name it uses
+    // for a malformed email: read its message, so a short password never reads as a bad email.
+    const said = String((e as { message?: string }).message ?? "")
+    if (name === "InvalidParameterException" && (action === "reset" || /password/i.test(said))) return NextResponse.json({ error: FRIENDLY.InvalidPasswordException }, { status: 400 })
     return NextResponse.json({ error: FRIENDLY[name] ?? "Something went wrong — try again." }, { status: 400 })
   }
 }

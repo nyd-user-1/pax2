@@ -141,7 +141,7 @@ export function AuthForm({ mode, onStep }: { mode: Mode; onStep?: (step: AuthSte
           </label>
           <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700">
             New password
-            <input type="password" required autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="8+ characters, mixed" className={FIELD} />
+            <input type="password" required autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="8+ characters: upper, lower, number, symbol" className={FIELD} />
             <span className="text-xs font-normal text-slate-400">8+ characters with an upper, a lower, a number and a symbol.</span>
           </label>
           {error && <p className="text-sm font-medium text-pax2-red-deep">{error}</p>}
