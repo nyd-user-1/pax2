@@ -13,7 +13,7 @@ import { tagsFor } from "@/lib/tags"
 // not into the build (6.9 MB against Amplify's 220 MB bundle cap); a local copy serves development.
 // The path is assembled, not a literal, so the build's file tracer cannot bundle it anyway.
 
-const LOCAL = [process.cwd(), "data", "generated", "feed-index.json"].join("/")
+const LOCAL = [/*turbopackIgnore: true*/ process.cwd(), "data", "generated", "feed-index.json"].join("/")
 
 let ALL: Promise<FeedVideo[]> | null = null
 

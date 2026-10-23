@@ -33,7 +33,7 @@ import path from "node:path"
  * roots below.
  */
 
-const REPO = process.cwd()
+const REPO = /*turbopackIgnore: true*/ process.cwd()
 
 /** Where components live. Deliberately NOT the whole repo — .next holds
  *  thousands of compiled chunks and walking it dwarfs the real work. */

@@ -16,10 +16,10 @@ type Modes = { builtAt: string; definition: string; axes: Record<string, { label
  *  post-release score once its 72-hour window completes. */
 export type Formula = { builtAt: string; scores: Record<string, { pre: number; post?: number }> }
 
-const at = (p: string) => path.join(process.cwd(), p)
-const load = <T,>(p: string): T | null => {
+// Each call names its file by a literal path: a variable path makes the build trace the whole project.
+const load = <T,>(text: () => string): T | null => {
   try {
-    return JSON.parse(fs.readFileSync(at(p), "utf8")) as T
+    return JSON.parse(text()) as T
   } catch {
     return null
   }
@@ -28,10 +28,10 @@ const load = <T,>(p: string): T | null => {
 let _reads: Reads | null | undefined
 let _modes: Modes | null | undefined
 let _formula: Formula | null | undefined
-const reads = () => (_reads === undefined ? (_reads = load<Reads>("data/generated/video-reads.json")) : _reads)
-const modes = () => (_modes === undefined ? (_modes = load<Modes>("data/generated/model/winning-modes.json")) : _modes)
+const reads = () => (_reads === undefined ? (_reads = load<Reads>(() => fs.readFileSync(path.join(process.cwd(), "data/generated/video-reads.json"), "utf8"))) : _reads)
+const modes = () => (_modes === undefined ? (_modes = load<Modes>(() => fs.readFileSync(path.join(process.cwd(), "data/generated/model/winning-modes.json"), "utf8"))) : _modes)
 // Not cached when absent, so the gauge appears the moment the file lands.
-const formula = () => (_formula ? _formula : (_formula = load<Formula>("data/generated/model/resonance-formula.json")))
+const formula = () => (_formula ? _formula : (_formula = load<Formula>(() => fs.readFileSync(path.join(process.cwd(), "data/generated/model/resonance-formula.json"), "utf8"))))
 
 /** The short's craft template: axis key to within-channel percentile, 0 to 100. */
 export function craftTemplate(ytId: string): Record<string, number> | null {
@@ -62,7 +62,7 @@ export function resonanceScore(ytId: string): { pre: number; post?: number } | n
 
 type Stages = { order: string[]; ids: Record<string, string> }
 let _stages: Stages | null | undefined
-const stages = () => (_stages === undefined ? (_stages = load<Stages>("data/generated/lab-stages.json")) : _stages)
+const stages = () => (_stages === undefined ? (_stages = load<Stages>(() => fs.readFileSync(path.join(process.cwd(), "data/generated/lab-stages.json"), "utf8"))) : _stages)
 
 /** Which of the Lab's file-measured stages exist for the short (lab-stages.json, scripts/accounting.mjs). */
 export function measured(ytId: string): Record<"cuts" | "loudness" | "text" | "transcript" | "index", boolean> {

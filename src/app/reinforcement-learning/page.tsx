@@ -18,9 +18,10 @@ export const metadata = { title: "Reinforcement learning" }
 type EventsFile = { builtAt: string; replayRows: number; features: string[]; events: RLEvent[] }
 type ModelFile = { epochMarker: { replayRows: number; lastReplayedPublished: string } }
 
-const read = <T,>(p: string): T | null => {
+// Each call names its file by a literal path: a variable path makes the build trace the whole project.
+const read = <T,>(text: () => string): T | null => {
   try {
-    return JSON.parse(fs.readFileSync(path.join(process.cwd(), p), "utf8")) as T
+    return JSON.parse(text()) as T
   } catch {
     return null
   }
@@ -30,8 +31,8 @@ export default async function ReinforcementLearningPage() {
   const user = await currentUser()
   if (!user) redirect("/signin?next=/reinforcement-learning")
   if (!user.admin) notFound()
-  const file = read<EventsFile>("data/generated/model/martian-publish-policy-events.json")
-  const model = read<ModelFile>("data/generated/model/martian-publish-policy.json")
+  const file = read<EventsFile>(() => fs.readFileSync(path.join(process.cwd(), "data/generated/model/martian-publish-policy-events.json"), "utf8"))
+  const model = read<ModelFile>(() => fs.readFileSync(path.join(process.cwd(), "data/generated/model/martian-publish-policy.json"), "utf8"))
   const topicNames = Object.fromEntries((topicLift.topics as { id: number; name: string }[]).map((t) => [t.id, t.name]))
   const data: RLData = {
     replayRows: model?.epochMarker.replayRows ?? file?.replayRows ?? 0,

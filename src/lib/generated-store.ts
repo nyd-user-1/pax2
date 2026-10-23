@@ -18,7 +18,7 @@ export type GeneratedName = keyof typeof GENERATED
 const cache = new Map<GeneratedName, Promise<unknown>>()
 
 async function read(name: GeneratedName): Promise<unknown> {
-  const local = [process.cwd(), ...GENERATED[name]].join("/")
+  const local = [/*turbopackIgnore: true*/ process.cwd(), ...GENERATED[name]].join("/")
   try {
     if (fs.existsSync(local)) return JSON.parse(fs.readFileSync(local, "utf8"))
     const { S3Client, GetObjectCommand } = await import("@aws-sdk/client-s3")

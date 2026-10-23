@@ -14,6 +14,8 @@ jobs:
     env:
       # Build 32 deployed at next=223M by this same du measure; build 31 failed above it.
       LIMIT_MB: 223
+      # Amplify builds standalone output; this makes the runner do the same.
+      NEXT_PRIVATE_STANDALONE: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -33,3 +35,6 @@ jobs:
           mb=$(du -sm .next | cut -f1)
           echo "next=${mb} MB, limit ${LIMIT_MB} MB" >> "$GITHUB_STEP_SUMMARY"
           if [ "$mb" -gt "$LIMIT_MB" ]; then echo "::error::.next is ${mb} MB, over ${LIMIT_MB} MB"; exit 1; fi
+      - name: Every data file the server reads is in the build
+        shell: bash
+        run: bash scripts/check-traced.sh
