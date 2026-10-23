@@ -5,7 +5,8 @@
 set -u
 EXEMPT='data/generated/question-bank.json|data/generated/codebook.json|data/generated/model/vqa-census.json|data/generated/feed-index.json'
 missing=0
-for f in $(grep -rhoE 'data/[A-Za-z0-9_./-]+\.(json|jsonl|csv)' src | sort -u); do
+# Only paths read from disk (process.cwd() joins); a static JSON import is compiled into the code.
+for f in $(grep -rhoE 'cwd\(\), "data/[A-Za-z0-9_./-]+\.(json|jsonl|csv)"' src | grep -oE 'data/[^"]+' | sort -u); do
   [ -f "$f" ] || continue
   git ls-files --error-unmatch "$f" >/dev/null 2>&1 || continue
   echo "$f" | grep -qE "^($EXEMPT)$" && continue
