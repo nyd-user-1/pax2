@@ -184,7 +184,7 @@ export function DiscussionPanel({ onClose: close, admin = false }: { onClose: ()
   const [view, setViewState] = React.useState<View>(keptView)
   const [linked, setLinked] = React.useState<{ slack: string | null; discord: string | null } | null>(null)
   React.useEffect(() => {
-    if (admin) connections().then(setLinked).catch(() => {})
+    if (admin) connections().then(setLinked).catch(() => setLinked({ slack: null, discord: null }))
   }, [admin])
   const status = (name: string | null | undefined) => (linked ? (name ?? "Not connected") : undefined)
   const setView = (v: View) => setViewState((keptView = v))
@@ -232,7 +232,7 @@ export function DiscussionPanel({ onClose: close, admin = false }: { onClose: ()
         )}
         {view === "blocks" && <BlocksShelf />}
         {view === "chat" && <Chat compact />}
-        {(view === "slack" || view === "discord") && <ConnectView key={view} service={view} />}
+        {(view === "slack" || view === "discord") && (linked ? <ConnectView key={view} service={view} mock={!linked[view]} /> : <Loader2 className="mx-6 my-6 size-5 animate-spin text-pax2-blue" />)}
       </div>
     </section>
   )

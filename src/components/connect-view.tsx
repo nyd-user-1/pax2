@@ -4,16 +4,25 @@ import * as React from "react"
 import { ArrowLeft, ArrowUp, ChevronRight, Hash, Loader2, Lock, MessagesSquare } from "lucide-react"
 
 import { listDiscordChannels, listDiscordThreads, listSlackChannels, readDiscord, readSlack, sendDiscord, sendSlack, type Result } from "@/app/connect-actions"
+import { mockSource } from "@/components/connect-mock"
 
 // The side panel's Slack and Discord views, after 44b's review-channel stream (components/SamsStreams.tsx):
 // the channels, then a channel's messages, read again every 15 seconds while open, with a box to post.
-// A Discord forum opens to its posts first. Everything goes through connect-actions, admins only.
+// A Discord forum opens to its posts first. Everything goes through connect-actions, admins only. Until a
+// service is connected, `mock` fills the same views from connect-mock.ts, posting off, over an Integration
+// pending footer.
 
 const POLL_MS = 15_000
 
 type Service = "slack" | "discord"
-type Item = { id: string; name: string; icon: "hash" | "lock" | "forum"; sub?: string }
-type Message = { id: string; text: string; author: string; avatar: string | null; at: string }
+export type Item = { id: string; name: string; icon: "hash" | "lock" | "forum"; sub?: string }
+export type Message = { id: string; text: string; author: string; avatar: string | null; at: string }
+/** Where a view's lists and messages come from; `send` is null where posting is off. */
+export type Source = {
+  items: (forum?: string) => Promise<Result<Item[]>>
+  read: (id: string) => Promise<Result<Message[]>>
+  send: ((id: string, text: string, parent?: string) => Promise<Result<null>>) | null
+}
 type Step = { kind: "list"; forum?: Item } | { kind: "stream"; item: Item; parent?: string }
 
 const ICON = { hash: Hash, lock: Lock, forum: MessagesSquare }
@@ -31,8 +40,11 @@ async function items(service: Service, forum?: string): Promise<Result<Item[]>> 
   return r.ok ? { ok: true, data: r.data.map((c) => ({ id: c.id, name: c.name, icon: c.forum ? "forum" : "hash" })) } : r
 }
 
-const read = (service: Service, id: string) => (service === "slack" ? readSlack(id) : readDiscord(id))
-const send = (service: Service, id: string, text: string, parent?: string) => (service === "slack" ? sendSlack(id, text) : sendDiscord(id, text, parent))
+const liveSource = (service: Service): Source => ({
+  items: (forum) => items(service, forum),
+  read: (id) => (service === "slack" ? readSlack(id) : readDiscord(id)),
+  send: (id, text, parent) => (service === "slack" ? sendSlack(id, text) : sendDiscord(id, text, parent)),
+})
 
 const when = (iso: string) => {
   const d = new Date(iso)
@@ -44,16 +56,16 @@ function Line({ children }: { children: React.ReactNode }) {
   return <p className="px-6 py-6 text-sm text-slate-500">{children}</p>
 }
 
-function List({ service, forum, onOpen }: { service: Service; forum?: Item; onOpen: (it: Item) => void }) {
+function List({ source, forum, onOpen }: { source: Source; forum?: Item; onOpen: (it: Item) => void }) {
   const [state, setState] = React.useState<Result<Item[]> | null>(null)
   React.useEffect(() => {
     let live = true
     setState(null)
-    items(service, forum?.id).then((r) => live && setState(r))
+    source.items(forum?.id).then((r) => live && setState(r))
     return () => {
       live = false
     }
-  }, [service, forum?.id])
+  }, [source, forum?.id])
   if (!state) return <Loader2 className="mx-6 my-6 size-5 animate-spin text-pax2-blue" />
   if (!state.ok) return <Line>{state.error}</Line>
   if (!state.data.length) return <Line>{forum ? "No posts in this forum yet." : "No channels PAX can see yet."}</Line>
@@ -76,33 +88,33 @@ function List({ service, forum, onOpen }: { service: Service; forum?: Item; onOp
   )
 }
 
-function Stream({ service, item, parent }: { service: Service; item: Item; parent?: string }) {
+function Stream({ service, source, item, parent }: { service: Service; source: Source; item: Item; parent?: string }) {
   const [state, setState] = React.useState<Result<Message[]> | null>(null)
   const [draft, setDraft] = React.useState("")
   const [busy, setBusy] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
   const body = React.useRef<HTMLDivElement>(null)
-  const load = React.useCallback(async () => setState(await read(service, item.id)), [service, item.id])
+  const load = React.useCallback(async () => setState(await source.read(item.id)), [source, item.id])
   React.useEffect(() => {
     let live = true
-    const tick = () => read(service, item.id).then((r) => live && setState(r))
+    const tick = () => source.read(item.id).then((r) => live && setState(r))
     tick()
     const timer = window.setInterval(tick, POLL_MS)
     return () => {
       live = false
       window.clearInterval(timer)
     }
-  }, [service, item.id])
+  }, [source, item.id])
   const count = state?.ok ? state.data.length : 0
   React.useEffect(() => {
     body.current?.scrollTo({ top: body.current.scrollHeight })
   }, [count])
   const post = async () => {
     const text = draft.trim()
-    if (!text || busy) return
+    if (!text || busy || !source.send) return
     setBusy(true)
     setError(null)
-    const r = await send(service, item.id, text, parent)
+    const r = await source.send(item.id, text, parent)
     setBusy(false)
     if (!r.ok) return setError(r.error)
     setDraft("")
@@ -152,10 +164,11 @@ function Stream({ service, item, parent }: { service: Service; item: Item; paren
               }
             }}
             rows={1}
+            disabled={!source.send}
             placeholder={`Message ${service === "slack" ? "#" : ""}${item.name}`}
-            className="max-h-32 min-h-8 flex-1 resize-none bg-transparent py-1.5 text-sm text-slate-900 outline-none placeholder:text-slate-400"
+            className="max-h-32 min-h-8 flex-1 resize-none bg-transparent py-1.5 text-sm text-slate-900 outline-none placeholder:text-slate-400 disabled:cursor-not-allowed"
           />
-          <button type="button" onClick={post} disabled={!draft.trim() || busy} aria-label="Send" className="flex size-8 shrink-0 items-center justify-center rounded-full bg-pax2-blue text-white transition-opacity disabled:opacity-30">
+          <button type="button" onClick={post} disabled={!draft.trim() || busy || !source.send} aria-label="Send" className="flex size-8 shrink-0 items-center justify-center rounded-full bg-pax2-blue text-white transition-opacity disabled:opacity-30">
             {busy ? <Loader2 className="size-4 animate-spin" /> : <ArrowUp className="size-4" />}
           </button>
         </div>
@@ -164,7 +177,8 @@ function Stream({ service, item, parent }: { service: Service; item: Item; paren
   )
 }
 
-export function ConnectView({ service }: { service: Service }) {
+export function ConnectView({ service, mock = false }: { service: Service; mock?: boolean }) {
+  const source = React.useMemo(() => (mock ? mockSource(service) : liveSource(service)), [service, mock])
   const [trail, setTrail] = React.useState<Step[]>([{ kind: "list" }])
   const step = trail[trail.length - 1]
   const back = () => setTrail((t) => t.slice(0, -1))
@@ -181,7 +195,8 @@ export function ConnectView({ service }: { service: Service }) {
           <span className="truncate">{service === "slack" && step.kind === "stream" ? `#${title}` : title}</span>
         </button>
       )}
-      {step.kind === "list" ? <List key={step.forum?.id ?? "top"} service={service} forum={step.forum} onOpen={open} /> : <Stream key={step.item.id} service={service} item={step.item} parent={step.parent} />}
+      {step.kind === "list" ? <List key={step.forum?.id ?? "top"} source={source} forum={step.forum} onOpen={open} /> : <Stream key={step.item.id} service={service} source={source} item={step.item} parent={step.parent} />}
+      {mock && <p className="shrink-0 border-t border-slate-200/70 px-6 py-3 text-center text-xs text-slate-500">Integration pending.</p>}
     </div>
   )
 }
