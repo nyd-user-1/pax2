@@ -560,6 +560,15 @@ export async function resolveQuestion(questionId: string, ytId: string): Promise
 const inBank = (ytId: string) => !!bank()?.shorts[ytId]
 
 export type Surface = "video-panel" | "chat"
+/** The video page's wide-column tabs; each draws its chips from its own questions. */
+export type ChipTab = "score" | "analysis" | "research" | "notes"
+export const CHIP_TABS: ChipTab[] = ["score", "analysis", "research", "notes"]
+const TAB_CHIPS: Record<ChipTab, string[]> = {
+  score: ["outlier-score", "channel-rank", "first-72h", "curve-vs-channel", "mode-match", "closer-to-mode", "one-change", "why-outperformed", "engagement", "best-video-diff"],
+  analysis: ["hook-opens-on", "on-mute", "loud-enough", "ending", "format", "setting", "motion", "craft-extremes", "hook-vs-winners", "topic", "good-length"],
+  research: ["neighbors", "like-this-differently", "persuasion-traits", "ad-goal", "persuade", "title-patterns", "topic-splits", "channel-format-winners", "format-field", "should-ask-onscreen"],
+  notes: ["script-length", "title", "cta-when", "when-ask", "when-post", "next-length", "next-topic"],
+}
 export type ChipOffer = { id: string; ask: string; register: Register; position: number; propensity: number }
 
 /** Position slots by register for each surface: the video page leads with the video in hand, /chat
@@ -573,11 +582,20 @@ const SLOTS: Record<Surface, Register[]> = {
  *  uniformly from the eligible chips of its register not yet shown or tapped, so a chip's propensity at
  *  its position is exactly 1 / (eligible in that register at that draw). Eligible = rated 4-5; a chip
  *  whose measurement this video lacks still shows, and its answer is the unlocking action. */
-export async function chipsFor(ytId: string, surface: Surface, exclude: string[] = []): Promise<ChipOffer[]> {
+export async function chipsFor(ytId: string, surface: Surface, exclude: string[] = [], tab?: ChipTab): Promise<ChipOffer[]> {
   await ready()
   if (!inBank(ytId)) return []
   const pool = CHIP_QUESTIONS.filter((q) => !exclude.includes(q.id))
   const out: ChipOffer[] = []
+  // A tab's chips: three drawn uniformly from its own questions, so each propensity is 1 / (left at the draw).
+  if (tab) {
+    const left = pool.filter((q) => TAB_CHIPS[tab].includes(q.id))
+    while (out.length < 3 && left.length) {
+      const [q] = left.splice(Math.floor(Math.random() * left.length), 1)
+      out.push({ id: q.id, ask: q.ask, register: q.register, position: out.length, propensity: Math.round((1 / (left.length + 1)) * 10000) / 10000 })
+    }
+    return out
+  }
   for (const reg of SLOTS[surface]) {
     const left = pool.filter((q) => q.register === reg && !out.some((o) => o.id === q.id))
     if (!left.length) continue
