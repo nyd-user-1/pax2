@@ -12,6 +12,9 @@ export function scatterPoints(): ScatterPoint[] {
   return labVideos().map((v) => ({ id: v.id, title: v.title, channel: v.channel, published: v.published, views: v.views, ratio: v.ratio, tier: v.tier }))
 }
 
-export function HitsScatter() {
-  return <ScatterCanvas points={scatterPoints()} />
+/** `mark`: the video in view, added when the lab's set does not already hold it. */
+export function HitsScatter({ mark }: { mark?: ScatterPoint } = {}) {
+  const points = scatterPoints()
+  if (mark && !points.some((p) => p.id === mark.id)) points.push(mark)
+  return <ScatterCanvas points={points} mark={mark?.id} />
 }

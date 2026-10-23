@@ -20,7 +20,8 @@ const B = 28
 const y = (ratio: number) => 10 + (1 - (Math.log10(Math.max(0.04, Math.min(120, ratio))) - R_MIN) / (R_MAX - R_MIN)) * (H - B - 10)
 const fmt = (r: number) => (r >= 10 ? r.toFixed(0) : r.toFixed(1))
 
-export function ScatterCanvas({ points, query = "" }: { points: ScatterPoint[]; query?: string }) {
+/** `mark`: the video in view (its own page), drawn larger, ringed and on top, with its name beside it. */
+export function ScatterCanvas({ points, query = "", mark }: { points: ScatterPoint[]; query?: string; mark?: string }) {
   const box = React.useRef<HTMLDivElement>(null)
   const [tip, setTip] = React.useState<{ p: ScatterPoint; x: number; y: number; flip: boolean } | null>(null)
   const times = points.map((v) => Date.parse(v.published))
@@ -56,7 +57,7 @@ export function ScatterCanvas({ points, query = "" }: { points: ScatterPoint[]; 
             {new Date(t).toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" })}
           </text>
         ))}
-        {points.map((v) => {
+        {points.filter((v) => v.id !== mark).map((v) => {
           const on = hit(v)
           return (
             <a key={v.id} href={`/v/yt-${v.id}`} aria-label={`${v.title}, ${fmt(v.ratio)}x its channel's median`}>
@@ -74,6 +75,21 @@ export function ScatterCanvas({ points, query = "" }: { points: ScatterPoint[]; 
             </a>
           )
         })}
+        {(() => {
+          const m = mark ? points.find((v) => v.id === mark) : undefined
+          if (!m) return null
+          const cx = x(m.published)
+          const cy = y(m.ratio)
+          return (
+            <g pointerEvents="none">
+              <circle cx={cx} cy={cy} r={14} fill={TIER[m.tier].dot} fillOpacity={0.18} />
+              <circle cx={cx} cy={cy} r={8} fill={TIER[m.tier].dot} stroke="#1e3a8a" strokeWidth={2.5} />
+              <text x={cx > W * 0.8 ? cx - 18 : cx + 18} y={cy + 4} textAnchor={cx > W * 0.8 ? "end" : "start"} fontSize="13" fontWeight={600} fill="#1e3a8a">
+                This video, {fmt(m.ratio)}x
+              </text>
+            </g>
+          )
+        })()}
       </svg>
       {tip && (
         <div

@@ -539,7 +539,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         }
       >
         <div className="aspect-[1100/460] w-full">
-          <HitsScatter />
+          <HitsScatter mark={v && ratio != null ? { id: ytId, title: v.title, channel: ch?.name ?? "", published: v.published, views: v.views ?? 0, ratio, tier: ratio >= 3 ? "breakout" : ratio <= 0.5 ? "killed" : "baseline" } : undefined} />
         </div>
       </ChartBlock>,
     ],
