@@ -39,6 +39,8 @@ interface Props {
   videos: VideoChip[]
   shorts?: VideoChip[]
   onSelect: (text: string) => void
+  /** A short picked from the menu, for the question bank's chips. */
+  onShort?: (v: VideoChip) => void
   /** Once the input is pinned to the bottom of the page, the menu opens upward. */
   dropUp?: boolean
 }
@@ -52,7 +54,7 @@ const VOICE_LINE = 'Open primaries let every voter pick the person, not the part
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 
-export function PlusMenu({ videos, shorts = [], onSelect, dropUp = false }: Props) {
+export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = false }: Props) {
   const scripts = OPEN_SCRIPTS
   const [menuOpen, setMenuOpen] = useState(false)
   const [step, setStep] = useState<DrillStep>('categories')
@@ -220,7 +222,7 @@ export function PlusMenu({ videos, shorts = [], onSelect, dropUp = false }: Prop
               filteredShorts.length === 0
                 ? <p className="px-4 py-3 text-xs text-[var(--muted)]">No matches</p>
                 : filteredShorts.map((v, i) => (
-                  <button key={v.id} onClick={() => { onSelect(`What explains how “${v.label.split(' · ')[0]}” performed?`); closeMenu() }} className={row(i)}>
+                  <button key={v.id} onClick={() => { onSelect(`What explains how “${v.label.split(' · ')[0]}” performed?`); onShort?.(v); closeMenu() }} className={row(i)}>
                     {v.poster
                       // eslint-disable-next-line @next/next/no-img-element
                       ? <img src={v.poster} alt="" className="h-8 w-12 object-cover rounded-sm shrink-0 border border-[var(--border)]" />

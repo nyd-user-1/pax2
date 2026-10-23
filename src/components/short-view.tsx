@@ -20,6 +20,7 @@ import { HitsScatter, TIER } from "@/components/hits-scatter"
 import { FormulaExplainer } from "@/components/formula-explainer"
 import { CommentThread, type Thread, type ThreadComment } from "@/components/comment-thread"
 import { ReadingPanel } from "@/components/reading-panel"
+import { AskVideo } from "@/components/ask-video"
 import { SplitColumns } from "@/components/split-columns"
 import { Term } from "@/components/term"
 import { SignupGate } from "@/components/signup-gate"
@@ -610,6 +611,9 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 />
               </div>
             )}
+            <div className="mt-4 flex">
+              <AskVideo ytId={ytId} inDrawer={inDrawer} title={(v?.title ?? "This short").replace(/\s*#\w+/g, "").trim() || "This short"} />
+            </div>
             {column("video-left", left, () => false)}
           </>
         }

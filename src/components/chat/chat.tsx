@@ -29,6 +29,10 @@ import { BLOCK_REF, ChatBlock } from '@/components/chat/chat-block'
 import { ModelPicker, useChatModel } from '@/components/chat/model-picker'
 import { useVideoModel, VideoModelPicker } from '@/components/chat/video-model-picker'
 import { ResponseFooter } from '@/components/chat/response-footer'
+import { answerChip, chipOffers } from '@/app/question-actions'
+import { ChipRow, MeasuredFooter, measuredContent, splitMeasured } from '@/components/chat/measured'
+import { useUsage } from '@/components/usage-beacon'
+import type { ChipOffer, Surface } from '@/lib/question-resolver'
 
 type Message = { id: string; role: 'user' | 'assistant'; content: string; model?: string }
 
@@ -99,13 +103,34 @@ const ask = (v: VideoChip) => `What explains the score on ${v.label}?`
  *  the canvas); `attachment` renders above the input box (the dock's attached-entity banner).
  *  /app/home dresses the same chat as its front page: `heading` stands in for the wordmark,
  *  `below` hangs under the input in the empty state, `explore: false` yields that spot, and
- *  `shelf` renders past the fold — the empty state fills the viewport and the shelf scrolls up. */
-export function Chat({ scripts = [], videos = [], shorts = [], compact = false, context, attachment, heading, below, explore = true, shelf }: { scripts?: ScriptChip[]; videos?: VideoChip[]; shorts?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode; heading?: React.ReactNode; below?: React.ReactNode; explore?: boolean; shelf?: React.ReactNode }) {
+ *  `shelf` renders past the fold — the empty state fills the viewport and the shelf scrolls up.
+ *  `chipVideo` preloads a video for the question bank's chips (the video page's side panel); on /chat a
+ *  short attached from the plus menu brings them. `surface` names where the chips show, for the log. */
+export function Chat({ scripts = [], videos = [], shorts = [], compact = false, context, attachment, heading, below, explore = true, shelf, chipVideo, surface = 'chat' }: { scripts?: ScriptChip[]; videos?: VideoChip[]; shorts?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode; heading?: React.ReactNode; below?: React.ReactNode; explore?: boolean; shelf?: React.ReactNode; chipVideo?: string; surface?: Surface }) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [streaming, setStreaming] = useState(false)
   const [selectedVideo, setSelectedVideo] = useState<VideoChip | null>(null)
+  // The question bank's chips: drawn for the video in context, each draw logged as chip-shown with its
+  // position and propensity, each tap as chip-tap (learning/chat-suggested-prompts.json). A tapped chip
+  // leaves the row and the next draw excludes it.
+  const [chipTarget, setChipTarget] = useState<string | null>(chipVideo ?? null)
+  const [chips, setChips] = useState<ChipOffer[]>([])
+  const [tapped, setTapped] = useState<string[]>([])
+  const logUsage = useUsage()
+  useEffect(() => {
+    if (!chipTarget) { setChips([]); return }
+    let live = true
+    chipOffers(chipTarget, surface, tapped)
+      .then((cs) => {
+        if (!live) return
+        setChips(cs)
+        for (const c of cs) logUsage('chip-shown', c.id, { position: c.position, propensity: c.propensity, surface, videoId: chipTarget })
+      })
+      .catch(() => {})
+    return () => { live = false }
+  }, [chipTarget, surface, tapped, logUsage])
   const [isFocused, setIsFocused] = useState(false)
   const [model, setModel] = useChatModel()
   const [videoModel, setVideoModel] = useVideoModel()
@@ -511,6 +536,22 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
     }
   }
 
+  /** A chip's answer comes from the stored measurements, not the model: the question goes in as the
+   *  reader's turn, the measured answer as the reply. */
+  const tapChip = async (c: ChipOffer) => {
+    if (!chipTarget || loading || streaming) return
+    const videoId = chipTarget
+    logUsage('chip-tap', c.id, { position: c.position, surface, videoId })
+    stickRef.current = true
+    setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'user', content: c.ask }])
+    setChips((cs) => cs.filter((x) => x.id !== c.id))
+    setLoading(true)
+    const a = await answerChip(c.id, videoId).catch(() => null)
+    setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: a ? measuredContent(a, videoId) : 'No measured answer for this video.', model: 'measured' }])
+    setLoading(false)
+    setTapped((t) => [...t, c.id])
+  }
+
   const isEmpty = messages.length === 0
 
   // The script card rides the newest reply that carries a script.
@@ -550,6 +591,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
           ))}
         </div>
       )}
+      {chipTarget && <ChipRow chips={chips} onTap={tapChip} disabled={loading || streaming} />}
       {attachment}
       {attached && (
         <div className={`-mb-2 flex min-w-0 items-center gap-1.5 rounded-t-2xl border border-b-0 border-[var(--border)] px-4 pb-4 pt-2 text-[11px] text-slate-600 ${reading ? 'animate-pulse bg-pax2-lavender/60' : 'bg-slate-100'}`}>
@@ -632,7 +674,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
         )}
 
         <div className="flex items-center pt-1">
-          <PlusMenu videos={videos} shorts={shorts} dropUp={!isEmpty || compact} onSelect={(text) => { setInput(text); textareaRef.current?.focus() }} />
+          <PlusMenu videos={videos} shorts={shorts} dropUp={!isEmpty || compact} onSelect={(text) => { setInput(text); textareaRef.current?.focus() }} onShort={chipVideo ? undefined : (v) => { setChipTarget(v.id); setTapped([]) }} />
 
           <button
             onClick={() => {
@@ -809,6 +851,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
               const fields = msg.role === 'assistant' && !msgStreaming ? parseFieldBlock(msg.content) : null
               const script = recordMode && msg.id === scriptMsg?.id && !msgStreaming ? scriptText(msg.content) : null
               const seg = script ? splitAtScript(shown) : null
+              const measured = msg.role === 'assistant' ? splitMeasured(shown) : null
               const prose = (content: string) =>
                 pieces(content).map((p, i) =>
                   'text' in p ? (
@@ -833,6 +876,11 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
                             <ScriptCard text={script} onRecord={() => startRecording(script)} />
                             {prose(seg.after)}
                           </>
+                        ) : measured?.basis ? (
+                          <>
+                            {measured.prose && prose(measured.prose)}
+                            <MeasuredFooter basis={measured.basis} />
+                          </>
                         ) : (
                           prose(shown)
                         )}
@@ -846,7 +894,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
                             onSubmit={(values) => submit(answersText(fields, values))}
                           />
                         )}
-                        {!msgStreaming && (
+                        {!msgStreaming && !measured?.basis && (
                           <ResponseFooter
                             text={shown}
                             model={msg.model}

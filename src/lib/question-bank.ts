@@ -587,7 +587,7 @@ export const QUESTIONS: Question[] = [
     reads: ["codebook.swayable", "swayable.traits"],
     needs: ["codebook"],
     basis: "Swayable's randomized tests (575 ads): the summed difference of the traits the script carries; no single trait's 90% range clears zero",
-    template: "Persuasion lean {lean} points of vote choice against a placebo, summed over the {n} traits it carries; the archive's median ad moved {median}. Largest contributions: {traits}.",
+    template: "Persuasion lean {lean} points of vote choice: the summed differences of the {n} Swayable traits it carries. Largest: {traits}. No single trait's 90% range clears zero, so the lean is descriptive.",
     unlock: RUN_CODEBOOK,
   },
   {
