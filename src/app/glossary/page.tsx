@@ -5,9 +5,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 export const metadata = { title: "Glossary" }
 
+/** A to Z by the term's full name, letters only: "e² (end to end)" files under E. */
+const SORTED = [...GLOSSARY].sort((a, b) => a.full.replace(/[^\p{L}\p{N} ]/gu, "").localeCompare(b.full.replace(/[^\p{L}\p{N} ]/gu, ""), "en", { sensitivity: "base" }))
+
 export default function GlossaryPage() {
   return (
-    <TableBlock title="Glossary" search="Search terms…" rows={GLOSSARY.map((t) => ({ term: t.full, definition: t.definition, section: t.group }))} name="glossary" height={HOME_BLOCK}>
+    <TableBlock title="Glossary" search="Search terms…" rows={SORTED.map((t) => ({ term: t.full, definition: t.definition, section: t.group }))} name="glossary" height={HOME_BLOCK}>
       <Table className="table-fixed">
         <TableHeader>
           <TableRow className="bg-muted/60">
@@ -17,7 +20,7 @@ export default function GlossaryPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {GLOSSARY.map((t) => (
+          {SORTED.map((t) => (
             <TableRow key={t.id} id={t.id} className="scroll-mt-24 target:bg-pax2-lavender/50">
               <TableCell className="align-top whitespace-normal">
                 <p className="font-semibold text-slate-900">{t.full}</p>
