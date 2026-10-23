@@ -5,10 +5,12 @@ const model = referenceModelFile()
 
 // The prompt PAX2GPT (Claude on Bedrock, rented) writes a volunteer's script from: the framing to
 // build on, what Swayable's tested campaign ads found, what travels on the campaign's own channels
-// (organic-evidence.ts), and the volunteer's three answers. A plain function so the prompt can be
+// (organic-evidence.ts), what won Upworthy's headline tests and what Wesleyan says other campaigns ran
+// (script-evidence.ts, the same lines /chat's writer reads), and the volunteer's three answers. A plain function so the prompt can be
 // read and tested without the server action around it (src/app/actions.ts writeScript).
 import channels from "../../data/velocity/channels.json"
 import { CAMPAIGN_FAMILY, organicEvidence, type OrganicFamily } from "./organic-evidence"
+import { evidenceLines } from "./script-evidence"
 
 export type WriterAnswers = { name: string; role: string; town: string; why: string; moment: string }
 export type WriterBase = { title: string; framing: string; text: string }
@@ -66,6 +68,12 @@ ${swayableLines().map((l) => `- ${l}`).join("\n") || "- (nothing measured clears
 
 What travels on these channels
 ${channelLines(family)}
+
+What opened a story in Upworthy's randomized headline tests (apply to the opening line):
+${evidenceLines("upworthy")}
+
+What other campaigns ran, from Wesleyan's coding of 2022 Meta ads (description, not effect; keep this script a persuasion piece and apart from the pack):
+${evidenceLines("wesleyan")}
 
 Observed patterns, not rules: weigh them, don't obey them blindly. Where they fit this person's story, favor the traits that lift and avoid the ones that sink. Never quote any of these figures in the script itself.
 

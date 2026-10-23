@@ -115,7 +115,7 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
           )
         })}
       </ol>
-      <p className="mt-8 text-xs leading-relaxed text-slate-400">{s.provenance}</p>
+      {s.provenance && <p className="mt-8 text-xs leading-relaxed text-slate-400">{s.provenance}</p>}
     </>
   )
   const whyLadder = (
@@ -218,7 +218,7 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
         <div className="grid gap-10 xl:grid-cols-3">
           <div className="xl:col-span-2">{scriptBody}</div>
           <div className="flex flex-col gap-4">
-            <p className="text-sm font-semibold text-slate-900">Why it’s written this way</p>
+            <p className="text-sm font-semibold text-slate-900">Citations</p>
             {whyLadder}
           </div>
         </div>
@@ -241,7 +241,7 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
             {scriptBody}
           </MainBlock>
 
-          <AccordionBlock title="Why it’s written this way">
+          <AccordionBlock title="Citations">
             {whyLadder}
             <div className="mt-5 flex flex-col gap-3 border-t pt-4">
               <span className="text-sm font-semibold text-slate-900">In tested ads</span>

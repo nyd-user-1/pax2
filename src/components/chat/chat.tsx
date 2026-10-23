@@ -19,7 +19,7 @@ import { MarkdownContent } from '@/components/chat/markdown'
 import { RecordFlow, type Analysis } from '@/components/chat/record-flow'
 import { ScriptCard } from '@/components/chat/script-card'
 import { useDraft } from '@/components/record/draft'
-import { answersText, parseFieldBlock, stripFieldBlock, stripOpenBlock } from '@/lib/chat-fields'
+import { answersText, parseCiteBlock, parseFieldBlock, stripFieldBlock, stripOpenBlock } from '@/lib/chat-fields'
 import { PlusMenu, type ScriptChip, type VideoChip } from '@/components/chat/plus-menu'
 import { Wordmark } from '@/components/wordmark'
 import { cn } from '@/ui/lib/utils'
@@ -29,6 +29,7 @@ import { BLOCK_REF, ChatBlock } from '@/components/chat/chat-block'
 import { ModelPicker, useChatModel } from '@/components/chat/model-picker'
 import { useVideoModel, VideoModelPicker } from '@/components/chat/video-model-picker'
 import { ResponseFooter } from '@/components/chat/response-footer'
+import { saveChat } from '@/app/chat-actions'
 import { answerChip, chipOffers } from '@/app/question-actions'
 import { ChipRow, MeasuredFooter, measuredContent, splitMeasured } from '@/components/chat/measured'
 import { useUsage } from '@/components/usage-beacon'
@@ -62,7 +63,7 @@ const speechRecognition = () => (typeof window === 'undefined' ? undefined : ((w
 // inputs, from-sam's pattern); the final script gets a Record button that opens the camera in place.
 const RECORD_GUIDE = `RECORD MODE — the user pressed the camera. From here the conversation is an onboarding that culminates in a recording, made right here on this page. Run it one short question at a time: who they are in a few words, their town, then why open primaries matter to them personally.
 Ask each question as real controls: one short line of prose, then a \`\`\`pax-fields\`\`\` code block holding a JSON array of one or two fields, e.g. [{"key":"town","label":"Your town","kind":"text","placeholder":"Worcester"}]. Kinds: "text", "textarea", and "choice" with "options": ["…"]. The user may fill the controls or type in the chat box — both are the answer. Never mention the block or the controls in prose.
-Then draft a script in their own words — hook under 12 words, first person, one concrete number, 50 to 60 words (about 25 seconds spoken), ending with what the viewer should do. Refine it with them until it sounds like them. Put every draft alone in a plain code block; the page shows it as a script card with a Record button, so never tell them to copy it anywhere. When they are happy, invite them to press Record on the card — the camera opens here and the teleprompter scrolls their words at their own pace, nothing to memorize.
+Then draft a script in their own words — hook under 12 words, first person, one concrete number, 50 to 60 words (about 25 seconds spoken), ending with what the viewer should do. Write it from the EVIDENCE section of the system prompt: build the hook on the Upworthy findings, make the choices the Swayable and channel findings support, and keep it a persuasion piece apart from what the Wesleyan coding says everyone else ran. The concrete number comes from FACTS only, stated as written there; never use a number from anywhere else. Refine it with them until it sounds like them. Put every draft alone in a plain code block; the page shows it as a script card with a Record button, so never tell them to copy it anywhere. Right after every draft's code block, add a \`\`\`pax-cite\`\`\` block: a JSON array with one entry per line that leans on evidence, each {"quote": "<a few exact words from that line>", "note": "<one sentence: why the line is written this way>", "ids": ["<evidence ids from the EVIDENCE section>"]}. Cite only ids that are listed. Never mention the block in prose. When they are happy, invite them to press Record on the card — the camera opens here and the teleprompter scrolls their words at their own pace, nothing to memorize.
 Terms of the craft (hook, concrete number, explicit ask) are underlined and defined on hover wherever they appear, so use them naturally; a one-line definition in prose is welcome here and there, never more than one per reply.
 Once a video is in, an Enhance card sits under it: captions, the hook on screen, an end card, a clean-up pass on the footage, a generated b-roll insert — each ends in a scored next version measured against the original. Mention it once, lightly, when the moment fits.
 After the script is delivered the Record button stays on its card. If they ask something else instead of recording, answer it, then add one supportive line pointing back to recording — one follow-up, never pushy. If they name a barrier (nerves, time, lighting), address or soothe that barrier and encourage them past it; a named barrier invites one more follow-up, and only one. If they still decline, close warmly: one encouragement, then offer a calendar invite to record another day, or to connect them with a communications specialist who will walk them through it. If they change the subject entirely, say in one line that their script is saved right here in the chat, then help with the new task. Keep every turn to one question or one revision.`
@@ -71,7 +72,7 @@ After the script is delivered the Record button stays on its card. If they ask s
 function scriptText(content: string): string | null {
   let out: string | null = null
   for (const m of content.matchAll(/```([\w-]*)[^\S\n]*\n?([\s\S]*?)```/g)) {
-    if (m[1] === 'pax-fields') continue
+    if (m[1] === 'pax-fields' || m[1] === 'pax-cite') continue
     const body = m[2].trim()
     if (body) out = body
   }
@@ -82,7 +83,7 @@ function scriptText(content: string): string | null {
 function splitAtScript(text: string): { before: string; after: string } | null {
   let last: { start: number; end: number } | null = null
   for (const m of text.matchAll(/```([\w-]*)[^\S\n]*\n?[\s\S]*?```/g)) {
-    if (m[1] === 'pax-fields') continue
+    if (m[1] === 'pax-fields' || m[1] === 'pax-cite') continue
     last = { start: m.index!, end: m.index! + m[0].length }
   }
   return last ? { before: text.slice(0, last.start).trimEnd(), after: text.slice(last.end).trimStart() } : null
@@ -104,10 +105,13 @@ const ask = (v: VideoChip) => `What explains the score on ${v.label}?`
  *  /app/home dresses the same chat as its front page: `heading` stands in for the wordmark,
  *  `below` hangs under the input in the empty state, `explore: false` yields that spot, and
  *  `shelf` renders past the fold — the empty state fills the viewport and the shelf scrolls up.
+ *  `chatId` keeps the conversation (/chat only): it saves to the reader's chats once the first message
+ *  goes out and after every reply, the URL becomes /chat?c=<id>, and the sidebar's list refreshes;
+ *  `initialMessages` reopens a saved one.
  *  `chipVideo` preloads a video for the question bank's chips (the video page's side panel); on /chat a
  *  short attached from the plus menu brings them. `surface` names where the chips show, for the log. */
-export function Chat({ scripts = [], videos = [], shorts = [], compact = false, context, attachment, heading, below, explore = true, shelf, chipVideo, surface = 'chat' }: { scripts?: ScriptChip[]; videos?: VideoChip[]; shorts?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode; heading?: React.ReactNode; below?: React.ReactNode; explore?: boolean; shelf?: React.ReactNode; chipVideo?: string; surface?: Surface }) {
-  const [messages, setMessages] = useState<Message[]>([])
+export function Chat({ scripts = [], videos = [], shorts = [], compact = false, context, attachment, heading, below, explore = true, shelf, chatId, initialMessages, chipVideo, surface = 'chat' }: { scripts?: ScriptChip[]; videos?: VideoChip[]; shorts?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode; heading?: React.ReactNode; below?: React.ReactNode; explore?: boolean; shelf?: React.ReactNode; chatId?: string; initialMessages?: Message[]; chipVideo?: string; surface?: Surface }) {
+  const [messages, setMessages] = useState<Message[]>(initialMessages ?? [])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [streaming, setStreaming] = useState(false)
@@ -145,6 +149,26 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   // The reader is scrolled up in the conversation; the round arrow brings them back to the end.
   const [away, setAway] = useState(false)
   const { update: updateDraft } = useDraft()
+
+  // Saved between turns, never mid-stream; a reopened chat is not re-saved until it changes.
+  const savedRef = useRef(initialMessages?.length ? JSON.stringify(initialMessages) : '')
+  useEffect(() => {
+    if (!chatId || streaming || messages.length === 0) return
+    const sig = JSON.stringify(messages)
+    if (sig === savedRef.current) return
+    savedRef.current = sig
+    saveChat(chatId, messages)
+      .then((meta) => {
+        if (!meta) return
+        const u = new URL(window.location.href)
+        if (u.pathname === '/chat' && u.searchParams.get('c') !== chatId) {
+          u.searchParams.set('c', chatId)
+          window.history.replaceState(window.history.state, '', u)
+        }
+        window.dispatchEvent(new Event('pax2:chats'))
+      })
+      .catch(() => {})
+  }, [chatId, streaming, messages])
 
   // A Blocks-shelf tile dropped on the chat attaches as context, after livingston's drag-to-chat: a short
   // carries its own facts; a block is read from its page at drop time (/api/block-context), so the chat
@@ -278,7 +302,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: allMessages.map(m => ({ role: m.role, content: m.content })), ...(selectedAddress ? { address: selectedAddress.description, place: placeInsight } : {}), ...((context || attached?.context || recordMode || analysisRef.current) ? { systemContext: [context?.(), attached?.context, recordMode ? RECORD_GUIDE : null, analysisRef.current].filter(Boolean).join('\n\n') } : {}), model }),
+        body: JSON.stringify({ messages: allMessages.map(m => ({ role: m.role, content: m.content })), ...(selectedAddress ? { address: selectedAddress.description, place: placeInsight } : {}), ...((context || attached?.context || recordMode || analysisRef.current) ? { systemContext: [context?.(), attached?.context, recordMode ? RECORD_GUIDE : null, analysisRef.current].filter(Boolean).join('\n\n') } : {}), ...(recordMode ? { record: true } : {}), model }),
         signal: controller.signal,
       })
       if (!res.ok || !res.body) {
@@ -850,8 +874,9 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
               const shown = msg.role === 'assistant' ? stripOpenBlock(stripFieldBlock(msg.content)) : msg.content
               const fields = msg.role === 'assistant' && !msgStreaming ? parseFieldBlock(msg.content) : null
               const script = recordMode && msg.id === scriptMsg?.id && !msgStreaming ? scriptText(msg.content) : null
-              const seg = script ? splitAtScript(shown) : null
+              const cites = script ? parseCiteBlock(msg.content) : null
               const measured = msg.role === 'assistant' ? splitMeasured(shown) : null
+              const seg = script ? splitAtScript(shown) : null
               const prose = (content: string) =>
                 pieces(content).map((p, i) =>
                   'text' in p ? (
@@ -873,7 +898,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
                         {script && seg ? (
                           <>
                             {prose(seg.before)}
-                            <ScriptCard text={script} onRecord={() => startRecording(script)} />
+                            <ScriptCard text={script} cites={cites} onRecord={() => startRecording(script)} />
                             {prose(seg.after)}
                           </>
                         ) : measured?.basis ? (

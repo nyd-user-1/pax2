@@ -27,6 +27,27 @@
   code { font:12.5px/1.5 ui-monospace, Menlo, monospace; background:var(--mist); padding:1px 6px; border-radius:6px; font-weight:400; }
   .fblock { font:14px/1.9 ui-monospace, Menlo, monospace; background:var(--mist); border-radius:12px; padding:14px 18px; margin-top:26px; white-space:pre; overflow-x:auto; }
   .plain { margin-top:18px; font-size:15px; line-height:1.7; max-width:880px; }
+  .print-pdf { position:absolute; top:30px; right:32px; padding:8px 16px; border:1px solid rgb(15 23 42 / .12); border-radius:10px; background:#fff; color:var(--blue); font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer; }
+  .print-pdf:hover { box-shadow:0 1px 3px rgb(2 6 23 / .1); }
+  @media print { .print-pdf, .tabs { display:none; } }
+@font-face {
+  font-family: "PAX Curtain";
+  src: url(data:font/woff2;base64,d09GMgABAAAAAAKsAA8AAAAABXAAAAJSAAGzdQAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbIBwqBmA/U1RBVDYARBEICoEogSABNgIkAwwLCgAEIAWDUAcgG1cEEdWbiQC+SOAN0T/1hnpVMoxW1xO2TthLEPmnOR7+367v97lVT9UDOzKcIohmTQhlwgeRAu5ja05SuThTqwz8zXPQBjj+A2DimvpJkCCSZZFY/OfRhg/09kvayCIJBzIgm26TSeTjUQZTxS5AoBYgCSETAoVW2oix46fOVS2HMiBQ6KKbxJlXZ+uqvds1Y54HeVqY/qwgnU4LMcX/n7HcgBhNCjUAAgDmzx4z1ZNGWZh99/9H5CPjNAJS8/Q82qkUQrWERgKdpAMbNu4NbNq7amt0FpJMSNEFBEjI0Egm0EiuH6pVSxhlpoVl+gTlJ2+UrwsAIcrqIuSgGhXoiRGAHJAkUZXXrilKK0rLiuVL5y8ozStVlM68956T775bFDKN34hTr2PDksWlTcXiJaWNRf3Hnntw2edOVq2k/tlOPsWyqc9/MXnnoMmG9djhzL/uw+VvI1peri7vTH245g66Yj535e6ae+iC89xFsFIgbu47/Mdvr6g79LfqLPsSPlt47Quf//HjO+qTJqTnUSmBYPZWWsgA6tOR5SNP8esAWZuqrUCuSYYaOVY4LhN5DS7xpkITl6ikjkdUZqCXhzmPqtAiElmpUbQqBLWiH8DO6NDP6qIIfre07MSVXPjQqDVa8BIUtlR6PtxcS1HswzzwheV6kBO+b3uDapVLOz34V7BlVEPqYqoLX8UuMymYfiX6l/O3+Q+WgesjaT4oD3Tk1ivdWm34eSxPw+6xs2VOlc37UCiSY0AutV65agNfYVrKvptv1CV+WAYys1A+3/hzAAAA) format("woff2");
+  font-weight: 100 900;
+  font-display: block;
+}
+  .brand-print { display:none; }
+  @page { size:landscape; margin:12mm; }
+  @media print {
+    body { padding:0; background:#fff; }
+    .wrap { max-width:none; }
+    .card { box-shadow:none; }
+    td:nth-child(5) { white-space:normal; }
+    .brand-print { display:flex; align-items:baseline; justify-content:space-between; margin:0 0 20px; padding-bottom:12px; border-bottom:2px solid var(--blue); }
+    .brand-print .mark { font-family:"PAX Curtain", ui-monospace, Menlo, monospace; font-weight:700; font-size:24px; color:var(--blue); }
+    .brand-print .mark .a { color:#dc2626; }
+    .brand-print .date { font-size:12px; color:var(--muted); }
+  }
 </style>
 </head>
 <body>
@@ -41,8 +62,9 @@
     <a class="tab" href="STUDIO-ONLY.html">Studio Only</a>
     <a class="tab" href="PARTNER-CSV.html">CSV</a>
     <a class="tab" href="CORPUS.html">Corpus</a>
-  </nav>
-  <div class="card">
+    </nav>
+  <div class="brand-print"><span class="mark">P<span class="a">A</span>X</span><span class="date"></span></div>
+  <div class="card"><button class="print-pdf" onclick="window.print()">Print to PDF</button>
   <h1>Resonance</h1>
   <table>
     <thead><tr><th>Name</th><th>Input</th><th>Kind</th><th>State</th><th>Description</th><th>Formula</th></tr></thead>
@@ -75,5 +97,6 @@ on YouTube: threeSecondPlays = video starts × retention at 0:03</div>
   <p class="plain"><b>For a 5th grader:</b> A video has three jobs: make people stop, keep them watching, and make them care enough to do something. Each job gets a grade where 50 means “exactly average against the videos that came before.” If only a few people saw it, we don’t fully trust the grades yet, so they get pulled toward 50. Then the three grades combine into one — keeping people watching counts most — and that one number is Resonance.</p>
   </div>
 </div>
+<script>for (const e of document.querySelectorAll(".brand-print .date")) e.textContent = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })</script>
 </body>
 </html>

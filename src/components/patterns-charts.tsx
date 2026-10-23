@@ -42,12 +42,14 @@ function TipBox({ tip }: { tip: Tip }) {
 
 /* ── 1 · velocity, every 15 minutes ──────────────────────────────────────── */
 
+// The video chip's three bands (Brendan, 2026-10-22): under 3x black, 3x to 5x light green, 5x and
+// over full green. No red. `chip` dresses the band's buttons here and the table's cells.
 const BANDS = [
-  { key: "breakout", label: "> 3x", test: (r: number) => r >= 3, color: GREEN },
-  { key: "mid", label: "1–3x", test: (r: number) => r >= 1 && r < 3, color: DARK },
-  { key: "low", label: ".5–1x", test: (r: number) => r > 0.5 && r < 1, color: GRAY },
-  { key: "killed", label: "< .5x", test: (r: number) => r <= 0.5, color: RED },
+  { key: "full", label: "5x and over", test: (r: number) => r >= 5, color: "#16a34a", chip: "bg-green-600 text-white" },
+  { key: "light", label: "3x to 5x", test: (r: number) => r >= 3 && r < 5, color: "#4ade80", chip: "bg-green-200 text-green-950" },
+  { key: "under", label: "Under 3x", test: (r: number) => r < 3, color: "#0f172a", chip: "bg-slate-900 text-white" },
 ] as const
+const bandOf = (r: number) => BANDS.find((b) => b.test(r))!
 
 const VW = 1280
 const VH = 640
@@ -58,7 +60,7 @@ const MB = 36
 
 export function VelocityLines({ data }: { data: PatternsData }) {
   const router = useRouter()
-  const [band, setBand] = useState<(typeof BANDS)[number]["key"]>("breakout")
+  const [band, setBand] = useState<(typeof BANDS)[number]["key"]>("full")
   const [tip, setTip] = useState<Tip>(null)
   const [hot, setHot] = useState<string | null>(null)
 
@@ -111,8 +113,7 @@ export function VelocityLines({ data }: { data: PatternsData }) {
             <button
               key={b.key}
               onClick={() => { setBand(b.key); setHot(null); setTip(null) }}
-              className={cn("rounded-full px-3 py-1 text-xs font-semibold transition-shadow", b.key === band ? "text-white" : "bg-white text-slate-600 shadow-e1 hover:shadow-e2")}
-              style={b.key === band ? { backgroundColor: b.color } : undefined}
+              className={cn("rounded-full px-3 py-1 text-xs font-semibold transition-shadow", b.key === band ? b.chip : "bg-white text-slate-600 shadow-e1 hover:shadow-e2")}
             >
               {b.label}
             </button>
@@ -180,8 +181,7 @@ export function PublishHeatmap({ data, view = "published" }: { data: PatternsDat
             <button
               key={b.key}
               onClick={() => setBand(b.key)}
-              className={cn("rounded-full px-3 py-1 text-xs font-semibold transition-shadow", b.key === band ? "text-white" : "bg-white text-slate-600 shadow-e1 hover:shadow-e2")}
-              style={b.key === band ? { backgroundColor: b.color } : undefined}
+              className={cn("rounded-full px-3 py-1 text-xs font-semibold transition-shadow", b.key === band ? b.chip : "bg-white text-slate-600 shadow-e1 hover:shadow-e2")}
             >
               {b.label}
             </button>
@@ -733,7 +733,9 @@ function VelocityTable({ data }: { data: PatternsData }) {
               </td>
               <td className="whitespace-nowrap px-4 py-2 text-slate-500">{v.channel}</td>
               {cells.map((c, i) => (
-                <td key={i} className={cn("px-4 py-2 text-right", c != null && c >= 3 ? "font-semibold text-above" : "text-slate-700")}>{x(c)}</td>
+                <td key={i} className="px-4 py-2 text-right">
+                  {c == null ? <span className="text-slate-400">–</span> : <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-semibold", bandOf(c).chip)}>{x(c)}</span>}
+                </td>
               ))}
             </tr>
           ))}
@@ -746,7 +748,7 @@ function VelocityTable({ data }: { data: PatternsData }) {
 export function PatternSections({ data }: { data: PatternsData }) {
   const [story, setStory] = useState<string | null>(null)
   const [heatView, setHeatView] = useState("published")
-  const [vTab, setVTab] = useState<"data" | "table">("data")
+  const [vTab, setVTab] = useState("chart")
   const tales = useMemo(() => stories(data), [data])
   const subs = new Map(data.channels.map((c) => [c.id, c.subs]))
   const videoRows = data.videos.map((v) => ({ title: v.title, channel: v.channel, published: v.published, views: v.views, median: v.median ?? "", ratio: v.ratio != null ? Math.round(v.ratio * 100) / 100 : "", likes: v.likes ?? "", subscribers: subs.get(v.channelId) ?? "" }))
@@ -771,21 +773,12 @@ export function PatternSections({ data }: { data: PatternsData }) {
           name={`patterns-${s.key}`}
           rows={s.rows}
           height="h-[92dvh]"
-          views={s.key === "publish" ? [{ value: "published", label: "Published" }, { value: "velocity", label: "Velocity" }] : undefined}
-          view={s.key === "publish" ? heatView : undefined}
-          onView={s.key === "publish" ? setHeatView : undefined}
+          views={s.key === "publish" ? [{ value: "published", label: "Published" }, { value: "velocity", label: "Velocity" }] : s.key === "velocity" ? [{ value: "table", label: "Table View" }, { value: "chart", label: "Chart View" }] : undefined}
+          view={s.key === "publish" ? heatView : s.key === "velocity" ? vTab : undefined}
+          onView={s.key === "publish" ? setHeatView : s.key === "velocity" ? setVTab : undefined}
           menuItems={<MenuRow icon={<BookOpen />} label="Narrative" onClick={() => setStory(s.key)} />}
         >
           <div className="flex h-full min-h-0 flex-col gap-3">
-            {s.key === "velocity" && (
-              <div className="flex w-fit gap-1 rounded-full bg-pax2-mist p-1">
-                {(["data", "table"] as const).map((t) => (
-                  <button key={t} type="button" onClick={() => setVTab(t)} className={cn("rounded-full px-4 py-1 text-xs font-semibold transition-colors", vTab === t ? "bg-white text-pax2-blue shadow-e1" : "text-slate-500 hover:text-pax2-blue")}>
-                    {t === "data" ? "Data" : "Table"}
-                  </button>
-                ))}
-              </div>
-            )}
             {(() => {
               const desc = s.key === "publish" && heatView === "velocity" ? "Each cell holds one tile per video published in that hour and weekday, Eastern time, colored by where it finished against its channel's median - the band legend sits below the grid." : DESC[s.key]
               return desc ? <p className="text-sm text-slate-500">{desc}</p> : null

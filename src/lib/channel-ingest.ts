@@ -16,12 +16,16 @@ import { channelAccessToken } from "@/lib/youtube"
 //   catalog  every upload on the channel (playlistItems.list, videos.list; about one quota unit per 50
 //            videos on the YouTube Data API), keeping the public and the picked ones. Each kept video that
 //            can be fetched from outside the account (not private) enters the fetch-targets queue.
-//   stats    the YouTube Analytics API per kept video, lifetime: views, watch time, average view duration
-//            and percentage, likes, shares, subscribers gained, and thumbnail impressions and their
-//            click-through rate where the API returns them. 50 videos a call.
+//   stats    the YouTube Analytics API per kept video, lifetime — the contract is every non-monetary field
+//            on docs/ANALYTICS-API.html: views, watch time, average view duration and percentage, likes,
+//            shares, subscribers gained; comments, dislikes, engaged views, subscribers lost, playlist adds
+//            and removes; card impressions, clicks and click rate; and thumbnail impressions and their
+//            click-through rate. 50 videos a call, in metric groups the API caps at ten; a group the API
+//            refuses drops out with a note instead of stopping the run.
 //   curves   the audience-retention curve per kept video: audienceWatchRatio and relativeRetentionPerformance
 //            on YouTube's fixed grid of 100 points of elapsedVideoTimeRatio, 0.01 to 1.00, as parallel
-//            arrays (each row names its grid). One call per video.
+//            arrays (each row names its grid). Viewer demographics (viewerPercentage by age group and
+//            gender) ride the same per-video step. Two calls per video.
 //
 // Every row of one run carries the run's runAt in its sort key, so a training join reads a coherent
 // snapshot of a video (metadata, totals and curve) without matching timestamps.
@@ -36,6 +40,7 @@ import { channelAccessToken } from "@/lib/youtube"
 //   YTVID#<channelId>       <youtubeId>#<runAt>             the video's metadata and public counts
 //   YTSTAT#<channelId>      <youtubeId>#<runAt>             its YouTube Analytics totals
 //   YTCURVE#<channelId>     <youtubeId>#<runAt>             its retention curve
+//   YTDEMO#<channelId>      <youtubeId>#<runAt>             its viewer demographics
 //   FETCH#target            <youtubeId>                     the acquisition queue (docs/FETCH-WORKER.md)
 //   FETCH#req#<youtubeId>   <email>                         who asked for it
 
@@ -48,13 +53,15 @@ const STALE_MS = 16 * 60_000
 
 export type ChannelMeta = { channelId: string; title: string; handle: string | null; thumbnail: string | null; subscribers: number | null; videoCount: number | null; publishedAt: string; uploads: string }
 export type VideoRow = Item & { channelId: string; youtubeId: string; runAt: string; title: string; description: string; tags: string[]; durationSec: number; published: string; privacy: string | null; views: number | null; likes: number | null; comments: number | null; thumbnail: string | null }
-export type StatRow = Item & { channelId: string; youtubeId: string; runAt: string; views: number | null; estimatedMinutesWatched: number | null; averageViewDuration: number | null; averageViewPercentage: number | null; likes: number | null; shares: number | null; subscribersGained: number | null; impressions: number | null; impressionsCtr: number | null }
+export type StatRow = Item & { channelId: string; youtubeId: string; runAt: string; views: number | null; estimatedMinutesWatched: number | null; averageViewDuration: number | null; averageViewPercentage: number | null; likes: number | null; shares: number | null; subscribersGained: number | null; comments: number | null; dislikes: number | null; engagedViews: number | null; subscribersLost: number | null; videosAddedToPlaylists: number | null; videosRemovedFromPlaylists: number | null; cardImpressions: number | null; cardClicks: number | null; cardClickRate: number | null; impressions: number | null; impressionsCtr: number | null }
 export const CURVE_GRID = "elapsedVideoTimeRatio, 100 points, 0.01 to 1.00; watch[k] and relative[k] are read at ratio[k]"
 export type CurveRow = Item & { channelId: string; youtubeId: string; runAt: string; at: string; grid: string; ratio: number[]; watch: number[]; relative: number[] }
+export const DEMO_GRID = "ageGroup × gender; pct[k] is viewerPercentage for (ageGroup[k], gender[k])"
+export type DemoRow = Item & { channelId: string; youtubeId: string; runAt: string; at: string; grid: string; ageGroup: string[]; gender: string[]; pct: number[] }
 type RunRow = Item & { runAt: string; by: string }
 type CatalogRow = Item & { runAt: string; ids: string[]; channel: ChannelMeta; hidden: number }
 type PermitRow = Item & { at: string; ids: string[]; by: string }
-type StatsDoneRow = Item & { runAt: string; impressions: "yes" | "no"; note: string | null }
+type StatsDoneRow = Item & { runAt: string; impressions: "yes" | "no"; extras?: "yes" | "no"; cards?: "yes" | "no"; note: string | null }
 
 export type Progress = {
   runAt: string
@@ -185,7 +192,7 @@ async function prune(channelId: string, keep: Set<string>) {
     const rows = await query<Item & { youtubeId: string }>(pk)
     await pool(rows.filter((r) => !keep.has(r.youtubeId)), 8, (r) => remove(r.pk, r.sk))
   }
-  await Promise.all([gone(`YTVID#${channelId}`), gone(`YTSTAT#${channelId}`), gone(`YTCURVE#${channelId}`)])
+  await Promise.all([gone(`YTVID#${channelId}`), gone(`YTSTAT#${channelId}`), gone(`YTCURVE#${channelId}`), gone(`YTDEMO#${channelId}`)])
   const targets = (await query<FetchTarget>("FETCH#target")).filter((t) => t.channelId === channelId && !keep.has(t.youtubeId))
   await pool(targets, 8, async (t) => {
     await remove("FETCH#target", t.youtubeId)
@@ -225,34 +232,60 @@ async function stats(channelId: string, runAt: string, cat: CatalogRow) {
     return new Map((r.rows ?? []).map((row) => [String(row[0]), Object.fromEntries(names.map((n, k) => [n, row[k]]))]))
   }
   let impressions: "yes" | "no" = "yes"
+  let extras: "yes" | "no" = "yes"
+  let cards: "yes" | "no" = "yes"
   let note: string | null = null
+  const noted = (e: unknown) => (note = [note, (e as Error).message.slice(0, 300)].filter(Boolean).join(" | "))
   const out: StatRow[] = []
   for (let i = 0; i < cat.ids.length; i += 50) {
     const batch = cat.ids.slice(i, i + 50)
     const filter = `&filters=video==${batch.join(",")}`
     const core = table(await yt<Report>(token, `${base}&metrics=views,estimatedMinutesWatched,averageViewDuration,averageViewPercentage,likes,shares,subscribersGained${filter}`))
+    let ext = new Map<string, Record<string, unknown>>()
+    if (extras === "yes") {
+      try {
+        ext = table(await yt<Report>(token, `${base}&metrics=comments,dislikes,engagedViews,subscribersLost,videosAddedToPlaylists,videosRemovedFromPlaylists${filter}`))
+      } catch (e) {
+        extras = "no"
+        noted(e)
+      }
+    }
+    let crd = new Map<string, Record<string, unknown>>()
+    if (cards === "yes") {
+      try {
+        crd = table(await yt<Report>(token, `${base}&metrics=cardImpressions,cardClicks,cardClickRate${filter}`))
+      } catch (e) {
+        cards = "no"
+        noted(e)
+      }
+    }
     let imp = new Map<string, Record<string, unknown>>()
     if (impressions === "yes") {
       try {
         imp = table(await yt<Report>(token, `${base}&metrics=views,videoThumbnailImpressions,videoThumbnailImpressionsClickRate${filter}`))
       } catch (e) {
         impressions = "no"
-        note = (e as Error).message.slice(0, 300)
+        noted(e)
       }
     }
     for (const id of batch) {
       const a = core.get(id) ?? {}
+      const x = ext.get(id) ?? {}
+      const c = crd.get(id) ?? {}
       const b = imp.get(id) ?? {}
       out.push({
         pk: `YTSTAT#${channelId}`, sk: `${id}#${runAt}`, channelId, youtubeId: id, runAt,
         views: num(a.views), estimatedMinutesWatched: num(a.estimatedMinutesWatched), averageViewDuration: num(a.averageViewDuration), averageViewPercentage: num(a.averageViewPercentage),
         likes: num(a.likes), shares: num(a.shares), subscribersGained: num(a.subscribersGained),
+        comments: num(x.comments), dislikes: num(x.dislikes), engagedViews: num(x.engagedViews),
+        subscribersLost: num(x.subscribersLost), videosAddedToPlaylists: num(x.videosAddedToPlaylists), videosRemovedFromPlaylists: num(x.videosRemovedFromPlaylists),
+        cardImpressions: num(c.cardImpressions), cardClicks: num(c.cardClicks), cardClickRate: num(c.cardClickRate),
         impressions: num(b.videoThumbnailImpressions), impressionsCtr: num(b.videoThumbnailImpressionsClickRate),
       })
     }
   }
   await pool(out, 8, (r) => putOnce(r))
-  await putOnce({ pk: `YTCH#${channelId}`, sk: `RUN#${runAt}#stats`, runAt, impressions, note, at: now() })
+  await putOnce({ pk: `YTCH#${channelId}`, sk: `RUN#${runAt}#stats`, runAt, impressions, extras, cards, note, at: now() })
 }
 
 async function curves(channelId: string, runAt: string, cat: CatalogRow): Promise<{ done: number; total: number; finished: boolean }> {
@@ -267,12 +300,17 @@ async function curves(channelId: string, runAt: string, cat: CatalogRow): Promis
     await pool(next, 4, async (id) => {
       const at = now()
       let rows: (string | number)[][] = []
+      let demo: (string | number)[][] = []
       // A video nobody has watched has no curve; it is stored empty so it is not asked for again.
       if ((watched.get(id) ?? 0) > 0) {
         type Report = { rows?: (string | number)[][] }
         const r = await yt<Report>(token, `${ANALYTICS}?ids=channel==MINE&startDate=${start}&endDate=${end}&dimensions=elapsedVideoTimeRatio&metrics=audienceWatchRatio,relativeRetentionPerformance&filters=video==${id}`)
         rows = r.rows ?? []
+        const d = await yt<Report>(token, `${ANALYTICS}?ids=channel==MINE&startDate=${start}&endDate=${end}&dimensions=ageGroup,gender&metrics=viewerPercentage&filters=video==${id}`)
+        demo = d.rows ?? []
       }
+      // The demographics row goes in first: the curve row's presence is what marks the video finished.
+      await putOnce({ pk: `YTDEMO#${channelId}`, sk: `${id}#${runAt}`, channelId, youtubeId: id, runAt, at, grid: DEMO_GRID, ageGroup: demo.map((x) => String(x[0])), gender: demo.map((x) => String(x[1])), pct: demo.map((x) => Number(x[2])) })
       await putOnce({ pk: `YTCURVE#${channelId}`, sk: `${id}#${runAt}`, channelId, youtubeId: id, runAt, at, grid: CURVE_GRID, ratio: rows.map((x) => Number(x[0])), watch: rows.map((x) => Number(x[1])), relative: rows.map((x) => Number(x[2])) })
     })
   }
@@ -357,7 +395,7 @@ export async function channelData(channelId: string) {
   const cat = latest(runs.filter((r) => r.sk.endsWith("#catalog")) as CatalogRow[])
   if (!cat) return null
   const statsDone = runs.find((r) => r.sk === `RUN#${cat.runAt}#stats`) as StatsDoneRow | undefined
-  const [vids, stats, curves] = await Promise.all([query<VideoRow>(`YTVID#${channelId}`), query<StatRow>(`YTSTAT#${channelId}`), query<CurveRow>(`YTCURVE#${channelId}`)])
+  const [vids, stats, curves, demos] = await Promise.all([query<VideoRow>(`YTVID#${channelId}`), query<StatRow>(`YTSTAT#${channelId}`), query<CurveRow>(`YTCURVE#${channelId}`), query<DemoRow>(`YTDEMO#${channelId}`)])
   const pick = <T extends { youtubeId: string; sk: string }>(rows: T[]) => {
     const m = new Map<string, T>()
     for (const r of rows) if (!m.has(r.youtubeId) || m.get(r.youtubeId)!.sk < r.sk) m.set(r.youtubeId, r)
@@ -366,11 +404,12 @@ export async function channelData(channelId: string) {
   const v = pick(vids)
   const s = pick(stats)
   const c = pick(curves)
+  const d = pick(demos)
   // An un-picked video drops from view at once, before the Lambda deletes its rows.
   const picked = await permitted(channelId)
   const videos = cat.ids
-    .map((id) => ({ video: v.get(id) ?? null, stat: s.get(id) ?? null, curve: c.get(id) ?? null }))
-    .filter((x): x is { video: VideoRow; stat: StatRow | null; curve: CurveRow | null } => !!x.video && (x.video.privacy === "public" || picked.has(x.video.youtubeId)))
+    .map((id) => ({ video: v.get(id) ?? null, stat: s.get(id) ?? null, curve: c.get(id) ?? null, demo: d.get(id) ?? null }))
+    .filter((x): x is { video: VideoRow; stat: StatRow | null; curve: CurveRow | null; demo: DemoRow | null } => !!x.video && (x.video.privacy === "public" || picked.has(x.video.youtubeId)))
   return { channel: cat.channel, runAt: cat.runAt, impressions: statsDone?.impressions ?? null, hidden: cat.hidden ?? 0, videos }
 }
 

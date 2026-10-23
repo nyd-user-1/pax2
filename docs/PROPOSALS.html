@@ -20,6 +20,27 @@
   dt { font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding-top:2px; }
   dd { margin:0; font-size:15px; }
   code { font:12.5px ui-monospace, Menlo, monospace; background:var(--mist); padding:1px 6px; border-radius:6px; }
+  .print-pdf { position:absolute; top:30px; right:32px; padding:8px 16px; border:1px solid rgb(15 23 42 / .12); border-radius:10px; background:#fff; color:var(--blue); font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer; }
+  .print-pdf:hover { box-shadow:0 1px 3px rgb(2 6 23 / .1); }
+  @media print { .print-pdf, .tabs { display:none; } }
+@font-face {
+  font-family: "PAX Curtain";
+  src: url(data:font/woff2;base64,d09GMgABAAAAAAKsAA8AAAAABXAAAAJSAAGzdQAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbIBwqBmA/U1RBVDYARBEICoEogSABNgIkAwwLCgAEIAWDUAcgG1cEEdWbiQC+SOAN0T/1hnpVMoxW1xO2TthLEPmnOR7+367v97lVT9UDOzKcIohmTQhlwgeRAu5ja05SuThTqwz8zXPQBjj+A2DimvpJkCCSZZFY/OfRhg/09kvayCIJBzIgm26TSeTjUQZTxS5AoBYgCSETAoVW2oix46fOVS2HMiBQ6KKbxJlXZ+uqvds1Y54HeVqY/qwgnU4LMcX/n7HcgBhNCjUAAgDmzx4z1ZNGWZh99/9H5CPjNAJS8/Q82qkUQrWERgKdpAMbNu4NbNq7amt0FpJMSNEFBEjI0Egm0EiuH6pVSxhlpoVl+gTlJ2+UrwsAIcrqIuSgGhXoiRGAHJAkUZXXrilKK0rLiuVL5y8ozStVlM68956T775bFDKN34hTr2PDksWlTcXiJaWNRf3Hnntw2edOVq2k/tlOPsWyqc9/MXnnoMmG9djhzL/uw+VvI1peri7vTH245g66Yj535e6ae+iC89xFsFIgbu47/Mdvr6g79LfqLPsSPlt47Quf//HjO+qTJqTnUSmBYPZWWsgA6tOR5SNP8esAWZuqrUCuSYYaOVY4LhN5DS7xpkITl6ikjkdUZqCXhzmPqtAiElmpUbQqBLWiH8DO6NDP6qIIfre07MSVXPjQqDVa8BIUtlR6PtxcS1HswzzwheV6kBO+b3uDapVLOz34V7BlVEPqYqoLX8UuMymYfiX6l/O3+Q+WgesjaT4oD3Tk1ivdWm34eSxPw+6xs2VOlc37UCiSY0AutV65agNfYVrKvptv1CV+WAYys1A+3/hzAAAA) format("woff2");
+  font-weight: 100 900;
+  font-display: block;
+}
+  .brand-print { display:none; }
+  @page { size:landscape; margin:12mm; }
+  @media print {
+    body { padding:0; background:#fff; }
+    .wrap { max-width:none; }
+    .card { box-shadow:none; }
+    td:nth-child(5) { white-space:normal; }
+    .brand-print { display:flex; align-items:baseline; justify-content:space-between; margin:0 0 20px; padding-bottom:12px; border-bottom:2px solid var(--blue); }
+    .brand-print .mark { font-family:"PAX Curtain", ui-monospace, Menlo, monospace; font-weight:700; font-size:24px; color:var(--blue); }
+    .brand-print .mark .a { color:#dc2626; }
+    .brand-print .date { font-size:12px; color:var(--muted); }
+  }
 </style>
 </head>
 <body>
@@ -34,9 +55,29 @@
     <a class="tab" href="STUDIO-ONLY.html">Studio Only</a>
     <a class="tab" href="PARTNER-CSV.html">CSV</a>
     <a class="tab" href="CORPUS.html">Corpus</a>
-  </nav>
+    </nav>
+  <div class="brand-print"><span class="mark">P<span class="a">A</span>X</span><span class="date"></span></div>
+  <div class="card"><button class="print-pdf" onclick="window.print()">Print to PDF</button>
+  <h1>eR</h1>
+  <p class="thesis">The standing definition, which the five below redefine: three rates per paid run — stop, watch, act — each against a frozen reference average.</p>
+  <div class="formula">R = 0.25·Engage + 0.40·Interest + 0.35·Act                 50 = the reference average
+
+Engage    = threeSecondPlays ÷ impressions
+Interest  = averageViewDuration ÷ videoLength
+Act       = (shares + saves + comments) ÷ threeSecondPlays
+
+each rate → evidence-weighted:  (count + k·ref) ÷ (base + k)
+each rate → component score:    percentile of distance from reference, log-odds scale, 0–100</div>
+  <dl>
+    <dt>Inputs</dt><dd>Analytics API, Data API</dd>
+    <dt>Rewards</dt><dd>Stopping the scroll, holding the watch, prompting an action — against the first round’s pooled average</dd>
+    <dt>State</dt><dd>Defined, unscored: no real video carries an eR; impressions, shares, and saves exist only for paid delivery</dd>
+    <dt>Limit</dt><dd>Within-run only — nothing is normalized to the channel, so eR cannot compare across channels the way the proposals can</dd>
+    <dt>Reads as</dt><dd>50 = the reference average; the full definition lives on the Resonance tab</dd>
+  </dl>
+  </div>
   <div class="card">
-  <h1>1. Resonance-P (public)</h1>
+  <h1>pR</h1>
   <p class="thesis">Built from public data alone: the audience’s disproportionate response, read from what YouTube shows everyone.</p>
   <div class="formula">R = 100 · Φ( 0.50·z(outlierScore) + 0.30·z(engagementRate) + 0.20·z(durability) )
 
@@ -52,7 +93,7 @@ durability      = days the poller saw velocity above threshold  (vs the channel�
   </dl>
   </div>
   <div class="card">
-  <h1>2. Resonance-H (full house)</h1>
+  <h1>hR</h1>
   <p class="thesis">Everything in hand, nothing invented: what happened, weighted 70, against what it resembles, weighted 30.</p>
   <div class="formula">R = 100 · Φ( 0.70·OUTCOME + 0.30·CONTEXT )
 
@@ -68,7 +109,7 @@ paid rows add:  OUTCOME += z(completion_rate_reported_pct), weights renormalized
   </dl>
   </div>
   <div class="card">
-  <h1>3. Resonance-X (bounds test)</h1>
+  <h1>xR</h1>
   <p class="thesis">Derivations of derivations: each video becomes a fitted curve and a feature vector, scored by its projection onto the axis that historically separates winners.</p>
   <div class="formula">1. Fit the poller series:   V(t) = V∞ · (1 − e^(−t/τ))         → V∞ (ceiling), τ (time constant)
 2. Engagement elasticity:    ε = d(log likes) ÷ d(log views)    across the series
@@ -85,7 +126,7 @@ paid rows add:  OUTCOME += z(completion_rate_reported_pct), weights renormalized
   </dl>
   </div>
   <div class="card">
-  <h1>4. Resonance, first principles</h1>
+  <h1>fR</h1>
   <p class="thesis">Forget the metric list. Resonance is disproportionate response: how much more an audience gives a video than that audience gives everything else, per unit of exposure.</p>
   <div class="formula">R = 100 · Φ( log [ ∫ response(t) dt  ÷  ∫ expected_response(t) dt ] )
 
@@ -101,7 +142,7 @@ exposure          = whatever pushed it — impressions, paid starts, algorithmic
   </dl>
   </div>
   <div class="card">
-  <h1>5. Modal Resonance</h1>
+  <h1>mR</h1>
   <p class="thesis">From physics: a driven system responds enormously at its natural modes, and different modes produce different — but each perfectly regular — patterns. Outperformers are videos that hit a mode.</p>
   <div class="formula">1. Template:  normalize every video onto the same fixed axes (craft, trajectory, neighborhood,
               engagement profile), each axis a within-channel percentile → one regular polygon per video
@@ -120,5 +161,6 @@ similarity = cosine on the normalized axes;   lift_k = the mode’s measured sha
   </dl>
   </div>
 </div>
+<script>for (const e of document.querySelectorAll(".brand-print .date")) e.textContent = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })</script>
 </body>
 </html>

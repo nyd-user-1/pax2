@@ -17,7 +17,7 @@ export const CLAIM = library.claim
 export const SCRIPTS: Script[] = library.scripts.map((s) => {
   const words = s.text.split(/\s+/).filter(Boolean).length
   const x = s as { short?: string; approach?: string; structure?: string; method?: string; hook?: string; why?: ScriptWhy[] }
-  return { id: s.id, claimId: library.claim.id, title: s.title, short: x.short ?? s.title, framing: s.framing, approach: x.approach ?? "", structure: x.structure ?? "", method: x.method ?? "", hook: x.hook ?? s.title, text: s.text, words, seconds: Math.round((words / 130) * 60), source: s.source, why: x.why ?? [] }
+  return { id: s.id, claimId: library.claim.id, title: s.title, short: x.short ?? s.title, framing: s.framing, approach: x.approach ?? "", structure: x.structure ?? "", method: x.method ?? "", hook: x.hook ?? s.title, text: s.text, words, seconds: Math.round((words / 130) * 60), source: (s as { source?: string }).source ?? "", why: x.why ?? [] }
 })
 export const scriptById = (id: string) => SCRIPTS.find((s) => s.id === id)
 

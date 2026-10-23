@@ -22,6 +22,9 @@ export function VelocityMenuItems({ tab, id, sort, filter }: { tab?: string; id:
   const router = useRouter()
   const go = (s: VelocitySort, f: VelocityFilter) => {
     const q = new URLSearchParams(tab ? { tab } : {})
+    // The block's view (cards or table) stays where it was.
+    const view = new URLSearchParams(window.location.search).get("view")
+    if (view) q.set("view", view)
     if (s !== "oldest") q.set("s", s)
     if (f !== "all") q.set("f", f)
     const qs = q.toString()

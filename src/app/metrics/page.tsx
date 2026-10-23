@@ -26,7 +26,7 @@ const TABS = [
 ] as const
 type Tab = (typeof TABS)[number]["key"]
 
-export default async function MetricsPage({ searchParams }: { searchParams: Promise<{ tab?: string; s?: string; f?: string; o?: string }> }) {
+export default async function MetricsPage({ searchParams }: { searchParams: Promise<{ tab?: string; s?: string; f?: string; o?: string; view?: string }> }) {
   if (!(await currentUser())) redirect("/signin?next=/metrics")
   const sp = await searchParams
   const tab: Tab = TABS.some((t) => t.key === sp.tab) ? (sp.tab as Tab) : "live"
@@ -34,7 +34,7 @@ export default async function MetricsPage({ searchParams }: { searchParams: Prom
     <div className="flex flex-col gap-6">
       <TabRail tabs={TABS.map((t) => ({ key: t.key, label: t.label, href: t.key === "live" ? "/metrics" : `/metrics?tab=${t.key}` }))} active={tab} />
       {tab === "live" || tab === "complete" ? (
-        <TrackingTab phase={tab} s={sp.s} f={sp.f} />
+        <TrackingTab phase={tab} s={sp.s} f={sp.f} view={sp.view} />
       ) : tab === "patterns" ? (
         <PatternSections data={await patternsData()} />
       ) : tab === "outliers" ? (

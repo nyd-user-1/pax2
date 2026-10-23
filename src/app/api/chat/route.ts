@@ -5,6 +5,7 @@ import { COMPONENTS } from "@/lib/resonance"
 import { SCRIPTS, scriptById, takeLabel } from "@/lib/catalog"
 import { board, workspace } from "@/lib/review"
 import { anonSpend } from "@/lib/anon"
+import { evidencePrompt } from "@/lib/script-evidence"
 
 // The /chat answer, after solar's /api/chat: a system prompt carrying the record (here, every take's
 // current score and its parts, and the scripts), then the reply streamed back as plain text.
@@ -78,7 +79,7 @@ export async function POST(req: Request) {
   } catch (e) {
     return new Response(JSON.stringify({ error: (e as Error).message, gate: true }), { status: 402, headers: { "Content-Type": "application/json" } })
   }
-  const { messages, address, place, systemContext, model } = (await req.json()) as { messages: { role: "user" | "assistant"; content: string }[]; address?: string; place?: Place | null; systemContext?: string; model?: string }
+  const { messages, address, place, systemContext, model, record: recordMode } = (await req.json()) as { messages: { role: "user" | "assistant"; content: string }[]; address?: string; place?: Place | null; systemContext?: string; model?: string; record?: boolean }
   // The picker's choice when it is one of the models this account answers on (lib/model-options); else the default.
   const modelId = model && MODEL_IDS.has(model) ? model : MODEL
   // Extra context from the caller (the graph canvas: what is on it, an attached entity, a prompt step's wiring), after the record.
@@ -86,7 +87,7 @@ export async function POST(req: Request) {
   const r = await client.send(
     new ConverseStreamCommand({
       modelId,
-      system: [{ text: BASE_SYSTEM_PROMPT + (await record()) + extra + addressContext(address, place) }],
+      system: [{ text: BASE_SYSTEM_PROMPT + (await record()) + extra + addressContext(address, place) + (recordMode ? `\n\n${evidencePrompt()}` : "") }],
       messages: messages.filter((m) => m.content.trim()).map((m): Message => ({ role: m.role, content: [{ text: m.content }] })),
       inferenceConfig: { maxTokens: 2000, temperature: 0.3 },
     }),

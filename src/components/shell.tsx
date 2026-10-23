@@ -3,9 +3,10 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronsUpDown, Clapperboard, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, Star, Tag, Target, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
+import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronDown, ChevronUp, ChevronsUpDown, Clapperboard, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, Microscope, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, ShieldCheck, Star, Tag, Target, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
 
 import { DiscussionPanel } from "@/components/discussion-panel"
+import { SidebarChats } from "@/components/sidebar-chats"
 import { KebabMenu, MenuFoot, MenuHeader, MenuRow, MenuSeparator } from "@/components/kebab-menu"
 import { useNavFavorites } from "@/lib/nav-favorites"
 import { RevealFx } from "@/components/reveal-fx"
@@ -14,12 +15,28 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { cn } from "@/ui/lib/utils"
 import { whiteButton } from "@/components/white-button"
 
-// The sidebar by audience (the UX audit's split, ruled 2026-10-19): the creator's product plain
-// at the top, the research behind it under its own label, and the admin surfaces for admins only.
-// The product half in Brendan's grouping (2026-10-22): Chat, then Create, Explore and Lab as group
-// rows whose pages hang beneath them, always open, then Learn. /app/home stays as a route, off the sidebar.
+// The sidebar by audience (the UX audit's split, ruled 2026-10-19): the creator's product first, then the
+// research behind it, then the admin surfaces for admins only. Brendan's grouping (2026-10-22): Chat,
+// then Create, Explore and Lab as group rows, then Learn, then Research and Admin as group rows too.
+// A group row folds its pages open and shut with its chevron; every group starts shut. /app/home stays
+// as a route, off the sidebar.
 type NavLink = { href: string; label: string; icon: typeof House }
-const NAV_TREE: (NavLink | { label: string; icon: typeof House; children: NavLink[] })[] = [
+type NavGroup = { label: string; icon: typeof House; children: NavLink[]; admin?: boolean }
+const RESEARCH = [
+  { href: "/metrics", label: "Metrics", icon: Activity },
+  { href: "/graph", label: "Graph", icon: Workflow },
+  { href: "/library", label: "Library", icon: Library },
+  { href: "/glossary", label: "Glossary", icon: BookA },
+]
+const ADMIN = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/evals", label: "Evals", icon: Target },
+  { href: "/pipeline", label: "Pipeline", icon: Workflow },
+  { href: "/build", label: "Build", icon: Hammer },
+  { href: "/project-management", label: "Project Management", icon: GanttChart },
+  { href: "/reinforcement-learning", label: "Reinforcement learning", icon: Brain },
+]
+const NAV_TREE: (NavLink | NavGroup)[] = [
   { href: "/chat", label: "Chat", icon: MessagesSquare },
   {
     label: "Create",
@@ -47,23 +64,12 @@ const NAV_TREE: (NavLink | { label: string; icon: typeof House; children: NavLin
     ],
   },
   { href: "/learn", label: "Learn", icon: ListChecks },
+  { label: "Research", icon: Microscope, children: RESEARCH },
+  { label: "Admin", icon: ShieldCheck, children: ADMIN, admin: true },
 ]
-// Every page in the tree, in order: the search's list and the phone's strip.
-const NAV: NavLink[] = NAV_TREE.flatMap((n) => ("children" in n ? n.children : [n]))
-const RESEARCH = [
-  { href: "/metrics", label: "Metrics", icon: Activity },
-  { href: "/graph", label: "Graph", icon: Workflow },
-  { href: "/library", label: "Library", icon: Library },
-  { href: "/glossary", label: "Glossary", icon: BookA },
-]
-const ADMIN = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/evals", label: "Evals", icon: Target },
-  { href: "/pipeline", label: "Pipeline", icon: Workflow },
-  { href: "/build", label: "Build", icon: Hammer },
-  { href: "/project-management", label: "Project Management", icon: GanttChart },
-  { href: "/reinforcement-learning", label: "Reinforcement learning", icon: Brain },
-]
+// The product's pages, in order: the search's list and the phone's strip.
+const NAV: NavLink[] = NAV_TREE.filter((n) => !("children" in n) || (n.label !== "Research" && n.label !== "Admin")).flatMap((n) => ("children" in n ? n.children : [n]))
+const OPEN_KEY = "pax2:nav-open"
 // Off the sidebar and the search: early pages kept for reference, under the account menu's Lab.
 const LAB = [{ href: "/campaigns", label: "Campaigns", icon: Clapperboard }]
 
@@ -119,9 +125,15 @@ type PanelState = {
   toggleSidebar: () => void
   discuss: boolean
   toggleDiscuss: () => void
+  /** Opens content in the right panel (a chat script's Citations); null closes it. */
+  openAside: (aside: Aside | null) => void
+  /** Which content the right panel holds now, by its key. */
+  asideKey: string | null
 }
+/** `key` names the content's owner, so it can tell whether the panel still shows it. */
+export type Aside = { key: string; title: string; body: React.ReactNode }
 export type PanelSize = "third" | "half" | "full" | "custom"
-const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {}, size: "third", nextSize: "half", cycleSize: () => {}, panelOpen: false, sidebarOpen: false, toggleSidebar: () => {}, discuss: false, toggleDiscuss: () => {} })
+const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {}, size: "third", nextSize: "half", cycleSize: () => {}, panelOpen: false, sidebarOpen: false, toggleSidebar: () => {}, discuss: false, toggleDiscuss: () => {}, openAside: () => {}, asideKey: null })
 export const useShellPanel = () => React.useContext(PanelCtx)
 
 export function Shell({ children, drawer, signedIn = false, admin = false }: { children: React.ReactNode; drawer: React.ReactNode; signedIn?: boolean; admin?: boolean }) {
@@ -138,6 +150,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
   const nextSize: PanelSize = size === "third" ? "half" : size === "half" ? "full" : size === "full" ? "third" : split < 0.5 ? "half" : "full"
   const [scrolled, setScrolled] = React.useState(false)
   const [discuss, setDiscuss] = React.useState(false)
+  const [aside, setAside] = React.useState<Aside | null>(null)
   const animKey = React.useRef("Scored")
   const panel = React.useMemo<PanelState>(
     () => ({
@@ -151,9 +164,14 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
       sidebarOpen,
       toggleSidebar: () => setSidebarOpen((v) => !v),
       discuss,
-      toggleDiscuss: () => setDiscuss((v) => !v),
+      toggleDiscuss: () => (setAside(null), setDiscuss((v) => !v)),
+      openAside: (a: Aside | null) => {
+        if (a) setDiscuss(false)
+        setAside(a)
+      },
+      asideKey: aside?.key ?? null,
     }),
-    [wide, size, nextSize, panelOpen, sidebarOpen, discuss],
+    [wide, size, nextSize, panelOpen, sidebarOpen, discuss, aside?.key],
   )
   // The dragged split is remembered between visits, but a panel always opens at the third.
   React.useEffect(() => {
@@ -167,7 +185,9 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
     localStorage.setItem(SPLIT_KEY, JSON.stringify({ size, split }))
   }, [size, split, dragging])
   // Closing the panel after the page was closed beside it brings the page back at its old split.
-  const open = panelOpen || discuss
+  const open = panelOpen || discuss || !!aside
+  // What a page handed the panel belongs to that page.
+  React.useEffect(() => setAside(null), [path])
   // Every panel opens at the one-third view, 420px (Brendan's rule, 2026-10-20); a drag resizes it after.
   // A video opening or closing beside the discussion counts: each lands at the third.
   React.useEffect(() => {
@@ -203,6 +223,22 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
   // Create stays lit through the whole recording flow, whichever prefix a step lives under.
   const active = (href: string) => (href === "/recording" ? path.startsWith("/recording") || path.startsWith("/record/") : path.startsWith(href))
   const { favs, toggle: toggleFav } = useNavFavorites()
+  // Which group rows are folded open, kept in this browser; every group starts shut.
+  const [openGroups, setOpenGroups] = React.useState<string[]>([])
+  React.useEffect(() => {
+    try {
+      const kept = JSON.parse(localStorage.getItem(OPEN_KEY) ?? "[]") as unknown
+      if (Array.isArray(kept)) setOpenGroups(kept.filter((x): x is string => typeof x === "string"))
+    } catch {}
+  }, [])
+  const toggleGroup = (label: string) =>
+    setOpenGroups((g) => {
+      const next = g.includes(label) ? g.filter((x) => x !== label) : [...g, label]
+      try {
+        localStorage.setItem(OPEN_KEY, JSON.stringify(next))
+      } catch {}
+      return next
+    })
   const findable = React.useMemo(() => [...NAV, ...RESEARCH, ...(admin ? ADMIN : [])], [admin])
   // The front door (landing, record entry, sign-in) is full bleed; the recording flow, from /recording on, sits in the shell.
   // /signup and /signin are the landing's first screen with a form in place of the hero, sidebar and all.
@@ -267,25 +303,43 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
       <Link href="/" aria-label="Home" className="mb-4 flex px-3 pt-1">
         <Wordmark size={20} />
       </Link>
-      {/* A group's pages hang off it on the comment thread's tree lines: the trunk down
-          from the group's icon, a rounded elbow turning into each page. */}
-      <nav className="flex flex-col gap-0.5">
+      {/* The ⌘K search sits under the wordmark, above Chat (moved from the header, 2026-10-22). */}
+      <div className="mb-3">
+        <HeaderSearch items={findable} onSummon={() => setSidebarOpen(true)} />
+      </div>
+      {/* A group row folds its pages open and shut; open, they hang off it on the comment thread's tree
+          lines: the trunk down from the group's icon, a rounded elbow turning into each page. */}
+      <nav className="-mx-1 flex shrink-0 flex-col gap-0.5 overflow-y-auto px-1 max-h-[55%]">
         {NAV_TREE.map((n) => {
           if (!("children" in n)) return item(n.href, n.label, n.icon)
+          if (n.admin && !admin) return null
           const subs = n.children
+          const isOpen = openGroups.includes(n.label)
+          // Shut, the row still says the page in view lives under it.
+          const holds = !isOpen && subs.some((c) => active(c.href))
+          const Chevron = isOpen ? ChevronUp : ChevronDown
           return (
             <React.Fragment key={n.label}>
-              <div className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-slate-500">
-                <n.icon className="size-[18px] shrink-0" strokeWidth={1.75} />
-                {n.label}
-              </div>
-              {subs.length > 0 && (
+              <button
+                type="button"
+                onClick={() => toggleGroup(n.label)}
+                aria-expanded={isOpen}
+                className={cn(
+                  "group flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm outline-none transition-[color,background-color,box-shadow] hover:bg-white/70 hover:text-pax2-blue hover:shadow-e1 focus-visible:bg-white/70",
+                  holds ? "font-semibold text-pax2-blue" : "text-slate-500",
+                )}
+              >
+                <n.icon className={cn("icon-pop size-[18px] shrink-0 transition-colors", holds ? "fill-pax2-lavender text-pax2-blue" : "group-hover:fill-pax2-lavender group-hover:text-pax2-blue")} strokeWidth={holds ? 2.25 : 1.75} />
+                <span className="flex-1">{n.label}</span>
+                <Chevron className="size-4 shrink-0 text-slate-400 transition-colors group-hover:text-pax2-blue" />
+              </button>
+              {isOpen && (
                 <div className="flex flex-col">
-                  {subs.map((s, k) => (
-                    <div key={s.href} className="relative pl-8">
+                  {subs.map((c, k) => (
+                    <div key={c.href} className="relative pl-8">
                       {k < subs.length - 1 && <span aria-hidden className="absolute bottom-0 left-[21px] top-0 w-px bg-slate-300" />}
                       <span aria-hidden className="absolute left-[21px] top-0 h-4 w-5 rounded-bl-[10px] border-b-[1.5px] border-l-[1.5px] border-slate-300" />
-                      {item(s.href, s.label, s.icon, true)}
+                      {item(c.href, c.label, c.icon, true)}
                     </div>
                   ))}
                 </div>
@@ -294,14 +348,11 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
           )
         })}
       </nav>
-      <div className="mt-3 min-h-0 flex-1 overflow-y-auto border-t border-slate-200/70 pt-3">
-        <p className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Research</p>
-        <nav className="flex flex-col gap-0.5">{RESEARCH.map((n) => item(n.href, n.label, n.icon))}</nav>
-        {admin && (
-          <>
-            <p className="mt-3 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Admin</p>
-            <nav className="flex flex-col gap-0.5">{ADMIN.map((n) => item(n.href, n.label, n.icon))}</nav>
-          </>
+      <div className="mt-3 flex min-h-0 flex-1 flex-col border-t border-slate-200/70 pt-3">
+        {signedIn && (
+          <React.Suspense>
+            <SidebarChats />
+          </React.Suspense>
         )}
       </div>
       <div className="border-t border-slate-200/70 pt-3">
@@ -333,7 +384,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
   const takeover = open && size === "full"
   // Both panes side by side: the divider and the corner closes show.
   const paired = open && !takeover
-  const closePanel = () => (panelOpen ? router.back() : setDiscuss(false))
+  const closePanel = () => (panelOpen ? router.back() : discuss ? setDiscuss(false) : setAside(null))
   // /chat fills the content card edge to edge, as solar's chat fills its main area; /app/home is the same chat dressed as the home.
   const full = path.startsWith("/chat") || path.startsWith("/graph") || path.startsWith("/pipeline-2") || path.startsWith("/app/home") || path.startsWith("/flow/")
   return (
@@ -364,16 +415,14 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
               </button>
               {/* /home's title is the context switcher again (restored 2026-10-20); everywhere else it stays plain. */}
               {path === "/home" ? <PageSwitcher title={title} items={findable} /> : <h1 className="font-display max-w-[220px] truncate pl-1 text-[17px] text-slate-900">{title}</h1>}
-              <div className="flex min-w-0 flex-1 justify-center px-4">
-                <HeaderSearch items={findable} />
-              </div>
+              <div className="flex-1" />
               {/* A page's own header controls (the dashboard's poller switch and pipeline run) portal in here. */}
               <div id="page-actions" className="flex items-center gap-3" />
               <Link href="/record" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-pax2-blue text-white shadow-md transition-shadow hover:shadow-e3">
                 <Video className="size-4" />
               </Link>
               {/* 44b's DiscussionHeaderButton: the discussion panel opens from every page. */}
-              <button type="button" onClick={() => setDiscuss((v) => !v)} aria-pressed={discuss} aria-label="Open the discussion" className={whiteButton("circle")}>
+              <button type="button" onClick={() => (setAside(null), setDiscuss((v) => !v))} aria-pressed={discuss} aria-label="Open the discussion" className={whiteButton("circle")}>
                 <MessagesSquare className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
               </button>
             </div>
@@ -426,6 +475,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
           <div className={cn("relative h-full", takeover ? "w-full" : panelW)}>
             {drawer}
             {discuss && !panelOpen && <DiscussionPanel onClose={() => setDiscuss(false)} />}
+            {aside && !discuss && !panelOpen && <AsidePanel aside={aside} onClose={() => setAside(null)} />}
             {paired && <CornerClose label="Close" onClose={closePanel} />}
           </div>
         </div>
@@ -580,7 +630,9 @@ function PageSwitcher({ title, items }: { title: string; items: { href: string; 
   )
 }
 
-function HeaderSearch({ items }: { items: { href: string; label: string; icon: typeof Gauge }[] }) {
+/** The ⌘K search, in the sidebar under the wordmark. `onSummon` opens a shut sidebar first, so the
+ *  shortcut always lands in a box the reader can see. */
+function HeaderSearch({ items, onSummon }: { items: { href: string; label: string; icon: typeof Gauge }[]; onSummon?: () => void }) {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const [q, setQ] = React.useState("")
@@ -590,7 +642,9 @@ function HeaderSearch({ items }: { items: { href: string; label: string; icon: t
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault()
-        inputRef.current?.focus()
+        onSummon?.()
+        // The sidebar slides in over 300ms; focus once it is there.
+        window.setTimeout(() => inputRef.current?.focus({ preventScroll: true }), 320)
         setOpen(true)
       }
       if (e.key === "Escape") {
@@ -600,7 +654,7 @@ function HeaderSearch({ items }: { items: { href: string; label: string; icon: t
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [])
+  }, [onSummon])
   React.useEffect(() => {
     if (!open) return
     const onDown = (e: MouseEvent) => {
@@ -618,7 +672,7 @@ function HeaderSearch({ items }: { items: { href: string; label: string; icon: t
   const needle = q.trim().toLowerCase()
   const filtered = needle ? items.filter((d) => d.label.toLowerCase().includes(needle)) : items
   return (
-    <div ref={ref} className="relative w-full max-w-[420px]">
+    <div ref={ref} className="relative w-full">
       <div className="flex h-9 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 shadow-e1 transition-colors focus-within:border-slate-300">
         <Search className="size-4 shrink-0 text-slate-400" />
         <input
@@ -632,7 +686,7 @@ function HeaderSearch({ items }: { items: { href: string; label: string; icon: t
           onKeyDown={(e) => {
             if (e.key === "Enter" && filtered[0]) go(filtered[0].href)
           }}
-          placeholder="Search everything…"
+          placeholder="Search…"
           aria-label="Search everything"
           className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
         />
@@ -764,5 +818,20 @@ function AccountMenu() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  )
+}
+
+/** The right panel holding content a page hands it (openAside): the discussion panel's frame, its title, and close. */
+function AsidePanel({ aside, onClose }: { aside: Aside; onClose: () => void }) {
+  return (
+    <section className="fixed inset-0 z-50 flex flex-col bg-pax2-mist md:static md:z-auto md:h-full md:overflow-hidden md:rounded-2xl md:border md:border-slate-500 md:shadow-e2">
+      <div className="flex min-h-[73px] shrink-0 items-center justify-between gap-3 px-6 py-4">
+        <p className="truncate font-display text-xl text-slate-900">{aside.title}</p>
+        <button type="button" onClick={onClose} className={whiteButton("circle")} aria-label="Close">
+          <X className="size-4" />
+        </button>
+      </div>
+      <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-200/70 px-6 py-5">{aside.body}</div>
+    </section>
   )
 }

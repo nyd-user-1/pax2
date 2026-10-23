@@ -15,7 +15,7 @@ export interface ChatField {
 }
 
 const BLOCK = /```pax-fields\s*([\s\S]*?)```/
-const OPEN_BLOCK = /```pax-fields[\s\S]*$/
+const OPEN_BLOCK = /```pax-(?:fields|cite)[\s\S]*$/
 const KINDS: ChatFieldKind[] = ['text', 'textarea', 'choice']
 
 /** Read the field block out of a message, if there is one. */
@@ -51,7 +51,30 @@ export function parseFieldBlock(text: string): ChatField[] | null {
 }
 
 /** The block is scaffolding; it never belongs in the prose. */
-export const stripFieldBlock = (text: string) => text.replace(BLOCK, '').replace(/\n{3,}/g, '\n\n').trimEnd()
+export const stripFieldBlock = (text: string) => text.replace(BLOCK, '').replace(CITE_BLOCK, '').replace(/\n{3,}/g, '\n\n').trimEnd()
+
+// A script's citations ride beside it in a ```pax-cite``` block: a JSON array, one entry per cited
+// line — the line's words (`quote`), why it is written that way (`note`), and the evidence ids it
+// leans on (`ids`, from the evidence list the writer was given). The Citations panel renders them.
+const CITE_BLOCK = /```pax-cite\s*([\s\S]*?)```/
+
+export type ScriptCite = { quote: string; note: string; ids: string[] }
+
+/** The script's citations, if the reply carries a well-formed block. */
+export function parseCiteBlock(text: string): ScriptCite[] | null {
+  const m = CITE_BLOCK.exec(text)
+  if (!m) return null
+  try {
+    const raw = JSON.parse(m[1].trim()) as unknown
+    const out = (Array.isArray(raw) ? raw : [raw])
+      .filter((r): r is Record<string, unknown> => !!r && typeof r === 'object')
+      .map((r) => ({ quote: typeof r.quote === 'string' ? r.quote.trim() : '', note: typeof r.note === 'string' ? r.note.trim() : '', ids: Array.isArray(r.ids) ? r.ids.filter((x): x is string => typeof x === 'string') : [] }))
+      .filter((c) => c.note || c.ids.length)
+    return out.length ? out : null
+  } catch {
+    return null
+  }
+}
 
 /** A block still streaming in — fence open, not yet closed — would otherwise show as raw JSON
  *  until it completes. Once whole blocks are stripped, an opening fence left is an open one. */

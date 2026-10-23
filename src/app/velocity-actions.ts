@@ -70,3 +70,11 @@ export async function moreVelocityCards(offset: number, focus?: string, sort: Ve
   const pool = focus ? [...all.filter((c) => c.id === focus), ...all.filter((c) => c.id !== focus)] : all
   return { cards: pool.slice(offset, offset + 12), total: pool.length }
 }
+
+/** The ids `moreVelocityCards` would page through, in its order: the table view filters and sorts by
+ *  the same rule as the cards. */
+export async function velocityOrder(sort: VelocitySort = "oldest", filter: VelocityFilter = "all", ids?: string[]): Promise<string[]> {
+  const keep = ids ? new Set(ids) : null
+  const every = [...(await allCards())].filter((c) => !keep || keep.has(c.id)).sort(ORDER[sort] ?? ORDER.oldest)
+  return (filter === "all" ? every : every.filter((c) => c.tier === filter)).map((c) => c.id)
+}

@@ -35,9 +35,12 @@ export function VelocityGrid({ initial, total, focus, sort, filter, ids }: { ini
   }, [done, focus, sort, filter, ids])
   return (
     <>
-      <section className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+      {/* pt-3: a card's hover plate reaches 12px past it, and the block's scroll box would clip the top row's. */}
+      <section className="grid gap-8 pt-3 sm:grid-cols-2 xl:grid-cols-3">
         {cards.map((c) => (
-          <CurveCard key={c.id} c={c} href={`/v/yt-${c.id}`} focused={c.id === focus} />
+          <div key={c.id} data-find>
+            <CurveCard c={c} href={`/v/yt-${c.id}`} focused={c.id === focus} />
+          </div>
         ))}
       </section>
       {!done && <div ref={sentinel} aria-hidden className="h-10" />}
