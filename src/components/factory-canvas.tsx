@@ -58,18 +58,18 @@ const MAKE: Record<Make, { icon: LucideIcon; label: string }> = {
 
 // The Models table's passed rows, in its order.
 const MODELS: Chip[] = [
-  { n: 1, name: "Outlier classifier v1", status: "Live", make: "statistical" },
-  { n: 2, name: "Outlier classifier v3", status: "Live", make: "statistical" },
+  { n: 1, name: "Metadata classifier", status: "Live", make: "statistical" },
+  { n: 2, name: "Transcript classifier", status: "Live", make: "statistical" },
   { n: 3, name: "Early-hit predictor", status: "Live", make: "statistical" },
   { n: 4, name: "Behavior-corrected text embedding", status: "Live", make: "neural" },
   { n: 5, name: "Candidate re-scorer", status: "Live", make: "neural" },
   { n: 6, name: "Headline picker", status: "Live", make: "neural" },
-  { n: 7, name: "Persuasion evidence reference", status: "Live", make: "reference" },
-  { n: 8, name: "Composition pair picker", status: "Staged", make: "statistical" },
-  { n: 9, name: "Pairwise picker, Reform & Voting rights", status: "Staged", make: "statistical" },
-  { n: 10, name: "Resonance text embedding, behavior arm", status: "Staged", make: "neural" },
-  { n: 11, name: "Resonance text embedding, full arm", status: "Staged", make: "neural" },
-  { n: 12, name: "Watch-through regressor v0", status: "Live", make: "statistical" },
+  { n: 7, name: "Persuasion reference", status: "Live", make: "reference" },
+  { n: 8, name: "Composition pairs", status: "Staged", make: "statistical" },
+  { n: 9, name: "Pairwise", status: "Staged", make: "statistical" },
+  { n: 10, name: "Behavior embeddings", status: "Staged", make: "neural" },
+  { n: 11, name: "Text embeddings", status: "Staged", make: "neural" },
+  { n: 12, name: "Completion predictor", status: "Live", make: "statistical" },
   { n: 13, name: "Feed ranker v0", status: "Staged", make: "statistical" },
   { n: 14, name: "Ask-a-video (Q)", status: "Staged", make: "neural" },
   { n: 15, name: "Planner", status: "Staged", make: "statistical" },
@@ -503,7 +503,7 @@ function Architecture({ view, edges, focus, onFocus, onOpen }: { view: View; edg
 const GAP = 80 // between columns: room for a chip
 const STEP_GAP = 64 // Score, Review and Publish
 
-const W = { door: 130, store: 200, service: 130, ec2: 160, surface: 150, measure: 210, score: 150, step: 130, comp: 180, index: 210, catalog: 180, rack: 440, chip: 190, p15: 200, i4: 210, q14: 180 }
+const W = { door: 130, store: 200, service: 130, ec2: 160, surface: 150, measure: 210, score: 150, step: 130, comp: 180, index: 210, catalog: 180, rack: 440, chip: 190, p15: 140, i4: 210, q14: 180 }
 const CHIP_H = 38 // an instrument chip whose name runs to two lines
 
 const X_DOOR = 0
@@ -744,20 +744,30 @@ const ARCH_KEY = "erd-architecture"
 export function FactoryCanvas({ counts }: { counts: FactoryCounts }) {
   const base = React.useMemo(() => build(counts), [counts])
   const { edges } = base
-  // Where the drawing puts each box; a kept layout applies only to the drawing it was made on.
+  // Where the drawing puts each box. A kept layout holds each moved box's offset from that home, so a
+  // change to the drawing carries the moves with it.
   const home = React.useMemo(() => new Map(base.nodes.map((n) => [n.id, n.position])), [base])
-  const sig = React.useMemo(() => base.nodes.map((n) => `${n.id}:${n.position.x},${n.position.y}`).join("|"), [base])
   const [nodes, setNodes] = React.useState(base.nodes)
   React.useEffect(() => {
-    let kept: { sig?: string; pos?: Record<string, { x: number; y: number }> } | null = null
+    type Kept = { v?: number; moves?: Record<string, { dx: number; dy: number }>; sig?: string; pos?: Record<string, { x: number; y: number }> }
+    let kept: Kept | null = null
     try {
       kept = JSON.parse(window.localStorage.getItem(LAYOUT_KEY) ?? "null")
     } catch {
       kept = null
     }
-    const pos = kept?.sig === sig ? kept.pos : undefined
-    setNodes(base.nodes.map((n) => (pos?.[n.id] ? { ...n, position: pos[n.id] } : n)))
-  }, [base, sig])
+    let moves: Record<string, { dx: number; dy: number }> = kept?.v === 2 ? (kept.moves ?? {}) : {}
+    // The first format kept absolute positions beside the drawing they were made on (`sig`, id:x,y|...).
+    if (kept && kept.v !== 2 && kept.sig && kept.pos) {
+      const was = new Map(kept.sig.split("|").map((t) => {
+        const [id, xy] = t.split(":")
+        const [x, y] = xy.split(",").map(Number)
+        return [id, { x, y }] as const
+      }))
+      moves = Object.fromEntries(Object.entries(kept.pos).flatMap(([id, p]) => (was.has(id) ? [[id, { dx: p.x - was.get(id)!.x, dy: p.y - was.get(id)!.y }]] : [])))
+    }
+    setNodes(base.nodes.map((n) => (moves[n.id] ? { ...n, position: { x: n.position.x + moves[n.id].dx, y: n.position.y + moves[n.id].dy } } : n)))
+  }, [base])
   const onNodesChange = React.useCallback((changes: NodeChange[]) => setNodes((ns) => applyNodeChanges(changes, ns)), [])
   const moved = React.useMemo(() => {
     const out = new Set<string>()
@@ -771,12 +781,13 @@ export function FactoryCanvas({ counts }: { counts: FactoryCounts }) {
   React.useEffect(() => {
     if (nodes.some((n) => n.dragging)) return
     try {
-      if (moved.size) window.localStorage.setItem(LAYOUT_KEY, JSON.stringify({ sig, pos: Object.fromEntries(nodes.filter((n) => moved.has(n.id)).map((n) => [n.id, n.position])) }))
+      const moves = Object.fromEntries(nodes.filter((n) => moved.has(n.id)).map((n) => [n.id, { dx: n.position.x - home.get(n.id)!.x, dy: n.position.y - home.get(n.id)!.y }]))
+      if (moved.size) window.localStorage.setItem(LAYOUT_KEY, JSON.stringify({ v: 2, moves }))
       else window.localStorage.removeItem(LAYOUT_KEY)
     } catch {
       // storage full or off: the layout lasts the visit
     }
-  }, [nodes, moved, sig])
+  }, [nodes, moved, home])
   const reset = () => setNodes(base.nodes)
   const [focus, setFocus] = React.useState<Focus>(null)
   // The Architecture panel: handed to the shell's right slot, handed again whenever what it shows changes.
