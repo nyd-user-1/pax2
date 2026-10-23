@@ -388,7 +388,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     const k = Math.round(x)
     return `${k}${k % 100 >= 11 && k % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][k % 10] ?? "th"}`
   }
-  // Analytics in the Spend block's shape: four tiles, the rest as label and value in two columns. A
+  // Analytics in the Spend block's shape: four tiles on top, the rest as label and value in two columns. A
   // channel-level row reads its channel's figure; hovering a value shows the channel and the baseline.
   const TILES = ["Views", "Outlier Score", "Engagement rate", "Hit probability"]
   const tiles = metrics ? TILES.map((label) => metrics.rows.find((r) => r.label === label)).filter((r): r is AnalyticsRow => !!r) : []
@@ -423,15 +423,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       <ListBlock key="stats" title="Analytics" height="auto">
         {metrics ? (
           <div className="grid gap-x-6 text-xs @md:grid-cols-2">
-            {listed.map((r) => (
-              <div key={r.label} className="flex items-center justify-between gap-2 border-t py-1.5">
-                <span className="text-slate-800">{r.label}</span>
-                <Hint text={compare(r)}>
-                  <span className="tabular">{shown(r)}</span>
-                </Hint>
-              </div>
-            ))}
-            <div className="col-span-full mt-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
+            <div className="col-span-full mb-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
               {tiles.map((r) => (
                 <div key={r.label} className="rounded-lg bg-muted/50 px-2 py-1.5">
                   <div className="text-[10px] text-slate-800">{r.label}</div>
@@ -441,6 +433,14 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 </div>
               ))}
             </div>
+            {listed.map((r) => (
+              <div key={r.label} className="flex items-center justify-between gap-2 border-t py-1.5">
+                <span className="text-slate-800">{r.label}</span>
+                <Hint text={compare(r)}>
+                  <span className="tabular">{shown(r)}</span>
+                </Hint>
+              </div>
+            ))}
           </div>
         ) : (
           <p className="text-sm text-slate-600">This short is outside the baseline the metrics are computed over.</p>
