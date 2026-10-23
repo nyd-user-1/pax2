@@ -119,27 +119,23 @@ type Topic = { id: number; name: string; lift: number; low: number; high: number
 const TOPICS = (topicLift.topics as Topic[]).slice().sort((p, q) => q.lift - p.lift)
 
 export function TopicRows({ cluster }: { cluster: number | null }) {
-  const max = Math.max(...TOPICS.map((t) => t.high))
-  const min = Math.min(0, ...TOPICS.map((t) => t.low))
-  const x = (v: number) => ((v - min) / (max - min)) * 100
+  // A scale centered on zero lift, so the halfway point is "no better than the channel's usual".
+  const span = Math.max(...TOPICS.map((t) => Math.abs(t.lift))) || 1
+  const at = (v: number) => 50 + (v / span) * 50
   const mine = TOPICS.find((t) => t.id === cluster)
   return (
     <div className="flex flex-col gap-2">
       {!mine && <p className="text-xs text-slate-500">This video&apos;s topic is not among the topics with enough channels to size its lift.</p>}
       <ol className="flex flex-col">
-        {TOPICS.map((t) => (
+        {TOPICS.map((t, i) => (
           <li key={t.id} id={t.id === cluster ? "topic-mine" : undefined} className={cn("grid grid-cols-[minmax(0,12rem)_minmax(0,1fr)_4.5rem] items-center gap-3 rounded-lg px-2 py-1.5", t.id === cluster && "bg-pax2-lavender/70 ring-1 ring-pax2-blue/30")}>
             <span className={cn("truncate text-sm", t.id === cluster ? "font-semibold text-pax2-blue" : "text-slate-700")}>{t.name}</span>
-            <svg viewBox="0 0 100 10" preserveAspectRatio="none" className="h-4 w-full">
-              <rect x={x(0)} y={0} width={0.4} height={10} className="fill-slate-300" />
-              <rect x={x(t.low)} y={4.2} width={Math.max(0.6, x(t.high) - x(t.low))} height={1.6} rx={0.8} className={t.id === cluster ? "fill-pax2-blue" : "fill-slate-300"} />
-              <circle cx={x(t.lift)} cy={5} r={1.8} className={t.id === cluster ? "fill-pax2-blue" : "fill-slate-500"} />
-            </svg>
-            <span className={cn("tabular text-right text-sm", t.id === cluster ? "font-semibold text-pax2-blue" : "text-slate-600")}>{t.lift.toFixed(1)}</span>
+            <GrowBar value={at(t.lift)} i={i} tone={t.lift >= 0 ? "green" : "red"} marker={50} title={`90% range ${t.low.toFixed(1)} to ${t.high.toFixed(1)} points, ${t.shorts} shorts`} />
+            <span className={cn("tabular text-right text-sm", t.id === cluster ? "font-semibold text-pax2-blue" : "text-slate-600")}>{t.lift > 0 ? "+" : ""}{t.lift.toFixed(1)}</span>
           </li>
         ))}
       </ol>
-      <p className="text-xs text-slate-400">Lift in percentage points of shorts over 3x their channel median, with the 90% range.</p>
+      <p className="text-xs text-slate-400">Lift in percentage points of shorts over 3x their channel median; the tick is zero. The shaded row is this video&apos;s topic.</p>
     </div>
   )
 }
