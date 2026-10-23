@@ -109,7 +109,7 @@ export default async function PaidPage() {
       </OrderedBlock>
 
       <OrderedBlock id="assumptions" label="Assumptions">
-        <TableBlock title="Assumptions" rows={sens.map((s) => ({ change: s.label, kind: s.kind, rank_agreement: Number(s.rho.toFixed(2)), largest_move: s.maxMove, video: s.mover?.title ?? null }))} name="paid-assumptions">
+        <TableBlock title="Assumptions" rows={sens.map((s) => ({ change: s.label, kind: s.kind, rank_agreement: s.rho == null ? null : Number(s.rho.toFixed(2)), largest_move: s.maxMove, video: s.mover?.title ?? null }))} name="paid-assumptions">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/60">
@@ -123,7 +123,7 @@ export default async function PaidPage() {
               {sens.map((s) => (
                 <TableRow key={s.label}>
                   <TableCell className="font-medium text-slate-900">{s.label}</TableCell>
-                  <TableCell className="tabular text-right">{s.rho.toFixed(2)}</TableCell>
+                  <TableCell className="tabular text-right">{s.rho == null ? "—" : s.rho.toFixed(2)}</TableCell>
                   <TableCell className="tabular text-right">{s.maxMove ? `${s.maxMove} ranks` : "none"}</TableCell>
                   <TableCell className="whitespace-normal text-slate-600">{s.mover ? `${s.mover.title} (${signed(s.mover.by)})` : "—"}</TableCell>
                 </TableRow>
@@ -134,7 +134,7 @@ export default async function PaidPage() {
       </OrderedBlock>
 
       <OrderedBlock id="single" label="Against one measure">
-        <TableBlock title="Against one measure" rows={single.map((s) => ({ measure: s.label, rank_agreement: Number(s.rho.toFixed(2)), most_apart: s.gap.title, resonance_rank: s.gap.resRank, measure_rank: s.gap.measureRank }))} name="paid-single-measures">
+        <TableBlock title="Against one measure" rows={single.map((s) => ({ measure: s.label, rank_agreement: s.rho == null ? null : Number(s.rho.toFixed(2)), most_apart: s.gap.title, resonance_rank: s.gap.resRank, measure_rank: s.gap.measureRank }))} name="paid-single-measures">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/60">
@@ -147,7 +147,7 @@ export default async function PaidPage() {
               {single.map((s) => (
                 <TableRow key={s.label}>
                   <TableCell className="font-medium text-slate-900">{s.label}</TableCell>
-                  <TableCell className="tabular text-right">{s.rho.toFixed(2)}</TableCell>
+                  <TableCell className="tabular text-right">{s.rho == null ? "—" : s.rho.toFixed(2)}</TableCell>
                   <TableCell className="whitespace-normal text-slate-600">
                     {s.gap.title}: rank {s.gap.resRank} on Paid Resonance, {s.gap.measureRank} on this measure
                   </TableCell>
