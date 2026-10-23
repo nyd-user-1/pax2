@@ -38,6 +38,12 @@ function Body({ c, you }: { c: ThreadComment; you?: boolean }) {
  * under the comment's avatar, a rounded elbow into each reply, the line drawn in the accent for the
  * reader's own. Replies the reader writes live in this browser.
  */
+/** A commenter's picture; with none (YouTube sent no URL), their initial in a circle instead of an empty src. */
+function Avatar({ src, name, className }: { src?: string; name?: string; className: string }) {
+  if (src) return <img src={src} alt="" className={cn("shrink-0 rounded-full bg-slate-100 object-cover", className)} referrerPolicy="no-referrer" />
+  return <span aria-hidden className={cn("flex shrink-0 items-center justify-center rounded-full bg-slate-100 font-semibold text-slate-500", className)}>{(name?.replace(/^@/, "").trim()[0] ?? "?").toUpperCase()}</span>
+}
+
 export function CommentThread({ videoId, threads }: { videoId: string; threads: Thread[] }) {
   const key = `pax2:replies:${videoId}`
   const [mine, setMine] = React.useState<Record<string, Mine[]>>({})
@@ -63,7 +69,7 @@ export function CommentThread({ videoId, threads }: { videoId: string; threads: 
             <div className="relative flex gap-3">
               {/* The trunk leaves the avatar and runs down into the replies. */}
               {(replies.length > 0 || open === t.id) && <span aria-hidden className="absolute -bottom-2 left-4 top-10 w-px bg-slate-300" />}
-              <img src={t.avatar} alt="" className="size-8 shrink-0 rounded-full bg-slate-100 object-cover" referrerPolicy="no-referrer" />
+              <Avatar src={t.avatar} name={t.author} className="size-8 text-xs" />
               <div className="flex min-w-0 flex-1 flex-col gap-1">
                 <Body c={t} />
                 <div className="flex items-center gap-3 text-xs">
@@ -87,7 +93,7 @@ export function CommentThread({ videoId, threads }: { videoId: string; threads: 
                         {you ? (
                           <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-pax2-lavender text-[10px] font-semibold text-pax2-blue">You</span>
                         ) : (
-                          <img src={c.avatar} alt="" className="size-6 shrink-0 rounded-full bg-slate-100 object-cover" referrerPolicy="no-referrer" />
+                          <Avatar src={c.avatar} name={c.author} className="size-6 text-[10px]" />
                         )}
                         <Body c={c} you={you} />
                       </div>

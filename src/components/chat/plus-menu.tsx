@@ -4,10 +4,10 @@
 // drill-down drawer with its search field. The categories: Video Analytics (prompts over the record),
 // Scripts (every script /scripts lists), Videos (on /chat the e2 videos and more Voter Freedom shorts;
 // the scored takes elsewhere), Shorts (the catalog's real shorts), and Voices (the studio's readers —
-// hear one, or write for it). Icons wear the sidebar's clothes: 18px, 1.75 stroke, lavender fill on hover.
+// hear one, or write for it), and Generate video (prompts for the composer's text-to-video model). Icons wear the sidebar's clothes: 18px, 1.75 stroke, lavender fill on hover.
 
 import { useState, useRef, useEffect } from 'react'
-import { Plus, ChevronRight, ArrowLeft, X, ChartColumn, NotebookPen, PlaySquare, Clapperboard, AudioLines, Volume2, Loader2 } from 'lucide-react'
+import { Plus, ChevronRight, ArrowLeft, X, ChartColumn, NotebookPen, PlaySquare, Clapperboard, AudioLines, Volume2, Loader2, Film } from 'lucide-react'
 
 import { narrate } from '@/app/studio-actions'
 import type { ListedScript } from '@/lib/script-list'
@@ -30,7 +30,17 @@ const ANALYTICS_PROMPTS = [
 /*  Types                                                              */
 /* ------------------------------------------------------------------ */
 
-type DrillStep = 'categories' | 'prompts' | 'pick-script' | 'pick-video' | 'pick-short' | 'pick-voice'
+/*  Generate video prompts: written for the text-to-video model picked in the composer, the same models
+    the Enhance card sends b-roll and end cards to. `{model}` is that model's name. */
+const GENERATE_PROMPTS = [
+  'Turn my latest script into a shot list: each line, the b-roll that sits behind it, and its length in seconds, each shot written as a prompt for {model}.',
+  'Write a 5-second opening shot for {model} that shows the problem my hook names, vertical 9:16, no text on screen.',
+  'Write five 5-second b-roll prompts for {model} that show uncontested Massachusetts House races, one per line, vertical 9:16.',
+  'Write a 4-second end-card shot for {model}: the ask on screen over a plain background, vertical 9:16.',
+  'Write three versions of my strongest line as a 5-second {model} shot, each a different visual, and say which the evidence favors.',
+]
+
+type DrillStep = 'categories' | 'prompts' | 'pick-script' | 'pick-video' | 'pick-short' | 'pick-voice' | 'generate'
 
 export type ScriptChip = { id: string; title: string; short: string }
 /** `youtube`: a YouTube video, whose score is its Outlier Score (views over its channel's median). */
@@ -40,10 +50,12 @@ interface Props {
   videos: VideoChip[]
   shorts?: VideoChip[]
   onSelect: (text: string) => void
-  /** A short picked from the menu, for the question bank's chips. */
+  /** A video picked from the menu: the chat attaches its page as context (and a short brings the question bank's chips). */
   onShort?: (v: VideoChip) => void
   /** Once the input is pinned to the bottom of the page, the menu opens upward. */
   dropUp?: boolean
+  /** The composer's text-to-video model, named in the Generate video prompts. */
+  videoModel?: string
 }
 
 /* Sidebar dress for every menu icon (shell.tsx's item): 18px, 1.75 stroke, lavender fill on row hover. */
@@ -57,7 +69,7 @@ const outlier = (x: number) => `${x >= 10 ? x.toFixed(0) : x.toFixed(1)}×`
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 
-export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = false }: Props) {
+export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = false, videoModel = 'the video model' }: Props) {
   const [scripts, setScripts] = useState<ListedScript[] | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [step, setStep] = useState<DrillStep>('categories')
@@ -113,6 +125,7 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
     if (step === 'pick-video') return 'Videos'
     if (step === 'pick-short') return 'Shorts'
     if (step === 'pick-voice') return 'Voices'
+    if (step === 'generate') return 'Generate video'
     return ''
   }
 
@@ -124,6 +137,7 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
     ...(videos.length ? [{ key: 'pick-video' as const, label: 'Videos', icon: <PlaySquare className={ICON} strokeWidth={1.75} /> }] : []),
     ...(shorts.length ? [{ key: 'pick-short' as const, label: 'Shorts', icon: <Clapperboard className={ICON} strokeWidth={1.75} /> }] : []),
     { key: 'pick-voice', label: 'Voices', icon: <AudioLines className={ICON} strokeWidth={1.75} /> },
+    { key: 'generate', label: 'Generate video', icon: <Film className={ICON} strokeWidth={1.75} /> },
   ]
 
   const row = (i: number) => `group flex w-full items-center gap-3 px-4 py-3 hover:bg-[var(--inp-bg)] transition-colors ${i > 0 ? 'border-t border-[var(--border)]' : ''}`
@@ -190,6 +204,19 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
               </>
             )}
 
+            {/* Generate video — prompts written for the composer's text-to-video model */}
+            {step === 'generate' && (
+              <>
+                {GENERATE_PROMPTS.map((t) => t.split('{model}').join(videoModel))
+                  .filter((p) => !search || p.toLowerCase().includes(q))
+                  .map((p, i) => (
+                    <button key={p} onClick={() => { onSelect(p); closeMenu() }} className={row(i) + ' items-start'}>
+                      <span className="text-sm text-[var(--txt)] text-left">{p}</span>
+                    </button>
+                  ))}
+              </>
+            )}
+
             {/* Scripts — the /scripts catalog; picking one brings its text in to make yours */}
             {step === 'pick-script' && (
               <>
@@ -215,7 +242,7 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
               filteredVideos.length === 0
                 ? <p className="px-4 py-3 text-xs text-[var(--muted)]">No matches</p>
                 : filteredVideos.map((v, i) => (
-                  <button key={v.id} onClick={() => { if (v.youtube) askYouTube(v); else onSelect(`What explains the score on ${v.label}?`); closeMenu() }} className={row(i)}>
+                  <button key={v.id} onClick={() => { if (v.youtube) askYouTube(v); else { onSelect(`What explains the score on ${v.label}?`); onShort?.(v) } closeMenu() }} className={row(i)}>
                     {v.poster
                       // eslint-disable-next-line @next/next/no-img-element
                       ? <img src={v.poster} alt="" className="h-8 w-5 object-cover rounded-sm shrink-0 border border-[var(--border)]" />

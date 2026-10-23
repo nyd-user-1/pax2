@@ -29,6 +29,7 @@ import { useShelf } from '@/lib/home-blocks'
 import { BLOCK_REF, ChatBlock } from '@/components/chat/chat-block'
 import { ModelPicker, useChatModel } from '@/components/chat/model-picker'
 import { useVideoModel, VideoModelPicker } from '@/components/chat/video-model-picker'
+import { videoModelById } from '@/lib/video-model-options'
 import { ResponseFooter } from '@/components/chat/response-footer'
 import { saveChat } from '@/app/chat-actions'
 import { answerChip, chipOffers } from '@/app/question-actions'
@@ -59,41 +60,51 @@ export type PlaceInsight = { district: string | null; state?: string; chamber?: 
 type Recognition = { lang: string; continuous: boolean; interimResults: boolean; start: () => void; stop: () => void; abort: () => void; onresult: ((e: { resultIndex: number; results: ArrayLike<ArrayLike<{ transcript: string }> & { isFinal: boolean }> }) => void) | null; onerror: ((e: { error: string }) => void) | null; onend: (() => void) | null }
 const speechRecognition = () => (typeof window === 'undefined' ? undefined : ((window as unknown as { SpeechRecognition?: new () => Recognition; webkitSpeechRecognition?: new () => Recognition }).SpeechRecognition ?? (window as unknown as { webkitSpeechRecognition?: new () => Recognition }).webkitSpeechRecognition))
 
-const RECORD_OPENER = "I'm ready to make my first video — where do we start?"
 // The empty state's PAX draws itself with GSAP; its code loads only when that state shows, since the
 // chat also sits in every page's side panel.
 const PaxDraw = dynamic(() => import('@/components/pax-draw').then((m) => m.PaxDraw), { loading: () => <span className="block h-12 w-24" /> })
 
+const RECORD_OPENER = "I'm ready to make my first video — where do we start?"
 
 // Record mode (the camera button): the conversation becomes an onboarding that ends in a recording,
 // made on this page. Questions go out as real controls (a pax-fields block the transcript renders as
 // inputs, from-sam's pattern); the final script gets a Record button that opens the camera in place.
 const RECORD_GUIDE = `RECORD MODE — the user pressed the camera. From here the conversation is an onboarding that culminates in a recording, made right here on this page. Run it one short question at a time: who they are in a few words, their town, then why open primaries matter to them personally.
 Ask each question as real controls: one short line of prose, then a \`\`\`pax-fields\`\`\` code block holding a JSON array of one or two fields, e.g. [{"key":"town","label":"Your town","kind":"text","placeholder":"Worcester"}]. Kinds: "text", "textarea", and "choice" with "options": ["…"]. The user may fill the controls or type in the chat box — both are the answer. Never mention the block or the controls in prose.
-Then draft a script in their own words — hook under 12 words, first person, one concrete number, 50 to 60 words (about 25 seconds spoken), ending with what the viewer should do. Write it from the EVIDENCE section of the system prompt: build the hook on the Upworthy findings, make the choices the Swayable and channel findings support, and keep it a persuasion piece apart from what the Wesleyan coding says everyone else ran. The concrete number comes from FACTS only, stated as written there; never use a number from anywhere else. Refine it with them until it sounds like them. Put every draft alone in a plain code block; the page shows it as a script card with a Record button, so never tell them to copy it anywhere. Right after every draft's code block, add a \`\`\`pax-cite\`\`\` block: a JSON array with one entry per line that leans on evidence, each {"quote": "<a few exact words from that line>", "note": "<one sentence: why the line is written this way>", "ids": ["<evidence ids from the EVIDENCE section>"]}. Cite only ids that are listed. Never mention the block in prose. When they are happy, invite them to press Record on the card — the camera opens here and the teleprompter scrolls their words at their own pace, nothing to memorize.
+Then draft a script in their own words — hook under 12 words, first person, one concrete number, 50 to 60 words (about 25 seconds spoken), ending with what the viewer should do. Write it from the EVIDENCE section of the system prompt: build the hook on the Upworthy findings, make the choices the Swayable and channel findings support, and keep it a persuasion piece apart from what the Wesleyan coding says everyone else ran. The concrete number comes from FACTS only, stated as written there; never use a number from anywhere else. Refine it with them until it sounds like them. Put every draft alone in a \`\`\`pax-script code block (that tag, nothing else inside); the page shows it as a script card with a Record button, so never tell them to copy it anywhere. Right after every draft's code block, add a \`\`\`pax-cite\`\`\` block: a JSON array with one entry per line that leans on evidence, each {"quote": "<a few exact words from that line>", "note": "<one sentence: why the line is written this way>", "ids": ["<evidence ids from the EVIDENCE section>"]}. Cite only ids that are listed. Never mention the block in prose. When they are happy, invite them to press Record on the card — the camera opens here and the teleprompter scrolls their words at their own pace, nothing to memorize.
 Terms of the craft (hook, concrete number, explicit ask) are underlined and defined on hover wherever they appear, so use them naturally; a one-line definition in prose is welcome here and there, never more than one per reply.
 Once a video is in, an Enhance card sits under it: captions, the hook on screen, an end card, a clean-up pass on the footage, a generated b-roll insert — each ends in a scored next version measured against the original. Mention it once, lightly, when the moment fits.
 After the script is delivered the Record button stays on its card. If they ask something else instead of recording, answer it, then add one supportive line pointing back to recording — one follow-up, never pushy. If they name a barrier (nerves, time, lighting), address or soothe that barrier and encourage them past it; a named barrier invites one more follow-up, and only one. If they still decline, close warmly: one encouragement, then offer a calendar invite to record another day, or to connect them with a communications specialist who will walk them through it. If they change the subject entirely, say in one line that their script is saved right here in the chat, then help with the new task. Keep every turn to one question or one revision.`
 
-/** The script: the last plain code block in a reply (pax-fields blocks are controls, not script). */
+/** The script: the last ```pax-script block in a reply. Replies written before the tag existed put the
+ *  script in an untagged block with its ```pax-cite block right after it; that pairing marks it too.
+ *  Every other code block is code, and renders as the code card. */
 function scriptText(content: string): string | null {
   let out: string | null = null
   for (const m of content.matchAll(/```([\w-]*)[^\S\n]*\n?([\s\S]*?)```/g)) {
-    if (m[1] === 'pax-fields' || m[1] === 'pax-cite') continue
+    const legacy = m[1] === '' && /^\s*```pax-cite/.test(content.slice(m.index! + m[0].length))
+    if (m[1] !== 'pax-script' && !legacy) continue
     const body = m[2].trim()
     if (body) out = body
   }
   return out
 }
 
-/** Split a reply around its final code fence, whose body the script card renders in the fence's place. */
-function splitAtScript(text: string): { before: string; after: string } | null {
+/** Split a reply around the block holding `script`, which the script card renders in the block's place. */
+function splitAtScript(text: string, script: string): { before: string; after: string } | null {
   let last: { start: number; end: number } | null = null
-  for (const m of text.matchAll(/```([\w-]*)[^\S\n]*\n?[\s\S]*?```/g)) {
-    if (m[1] === 'pax-fields' || m[1] === 'pax-cite') continue
-    last = { start: m.index!, end: m.index! + m[0].length }
+  for (const m of text.matchAll(/```([\w-]*)[^\S\n]*\n?([\s\S]*?)```/g)) {
+    if (m[2].trim() === script) last = { start: m.index!, end: m.index! + m[0].length }
   }
   return last ? { before: text.slice(0, last.start).trimEnd(), after: text.slice(last.end).trimStart() } : null
+}
+
+/** Mid-stream, a ```pax-script block that has opened but not yet closed: the prose before it and the
+ *  script so far, so the card fills in as the words arrive. */
+function openScript(text: string): { before: string; partial: string } | null {
+  const at = text.lastIndexOf('```pax-script')
+  if (at < 0 || text.indexOf('```', at + 3) >= 0) return null
+  return { before: text.slice(0, at).trimEnd(), partial: text.slice(at + '```pax-script'.length).replace(/^[^\S\n]*\n?/, '') }
 }
 
 const SKIN = {
@@ -171,6 +182,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
         const u = new URL(window.location.href)
         if (u.pathname === '/chat' && u.searchParams.get('c') !== chatId) {
           u.searchParams.set('c', chatId)
+          u.searchParams.delete('record')
           window.history.replaceState(window.history.state, '', u)
         }
         window.dispatchEvent(new Event('pax2:chats'))
@@ -181,12 +193,27 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   // A Blocks-shelf tile dropped on the chat attaches as context, after livingston's drag-to-chat: a short
   // carries its own facts; a block is read from its page at drop time (/api/block-context), so the chat
   // gets what the block shows now. The ribbon over the input names it; the X lets it go.
-          u.searchParams.delete('record')
   const [attached, setAttached] = useState<{ kind: 'block' | 'video'; title: string; place: string; context: string | null; error?: string; key?: string } | null>(null)
   const blocksShelf = useShelf()
   const [dragOver, setDragOver] = useState(false)
   // The drop's page is still being read into context; the ribbon shimmers and Send holds until it lands.
   const reading = !!attached && attached.context == null && !attached.error
+  // A video picked from Explore or the + menu is attached the way a dropped one is: its video page is read
+  // into the chat's context, so the answer works from what PAX2 holds on it, not the scored takes alone.
+  const attachVideo = async (v: VideoChip) => {
+    const [title, channel] = v.label.split(' · ')
+    const path = v.youtube ? `/v/yt-${v.id}` : `/v/${v.id}`
+    const head = `ACTIVE CONTEXT — the user picked the ${v.youtube ? 'short' : 'take'} "${title}"${channel ? ` by ${channel}` : ''}. Its video page, ${path}, shows right now, block by block (each block's [[block:…]] reference beside its title):`
+    setAttached({ kind: 'video', title, place: channel ?? path, context: null })
+    try {
+      const r = await fetch('/api/block-context', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ path }) })
+      const j = (await r.json()) as { text?: string; error?: string }
+      setAttached((a) => (a && a.title === title ? { ...a, context: j.text ? `${head}\n${j.text}` : null, error: j.error ?? (j.text ? undefined : 'nothing on its page') } : a))
+    } catch (x) {
+      setAttached((a) => (a && a.title === title ? { ...a, error: (x as Error).message } : a))
+    }
+  }
+
   const attach = async (e: React.DragEvent) => {
     const d = readShelfDrag(e.dataTransfer)
     setDragOver(false)
@@ -224,6 +251,11 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   const bottomRef = useRef<HTMLDivElement>(null)
   const exploreScrollRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  // Arriving in record mode, the caret waits at the end of the opener.
+  useEffect(() => {
+    const t = textareaRef.current
+    if (record && t) { t.focus(); t.setSelectionRange(t.value.length, t.value.length) }
+  }, [record])
   const abortControllerRef = useRef<AbortController | null>(null)
 
   // ── Voice recording ──
@@ -234,11 +266,6 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   const recordingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const stopAndTranscribeRef = useRef<() => void>(() => {})
 
-  // Arriving in record mode, the caret waits at the end of the opener.
-  useEffect(() => {
-    const t = textareaRef.current
-    if (record && t) { t.focus(); t.setSelectionRange(t.value.length, t.value.length) }
-  }, [record])
   // ── Waveform visualization ──
   const audioCtxRef = useRef<AudioContext | null>(null)
   const analyserRef = useRef<AnalyserNode | null>(null)
@@ -656,6 +683,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
         </div>
       )}
       <div className={`relative flex flex-col rounded-2xl border ${addressMode || recordMode ? 'border-pax2-light-blue' : recordingState !== 'idle' ? 'border-blue-500' : 'border-[var(--border)]'} bg-[var(--inp-bg)] px-4 pt-3 pb-3 transition-all gap-1 shadow-[0_1px_3px_rgba(0,0,0,0.04)] ${isFocused ? 'shadow-[0_8px_24px_rgba(0,0,0,0.08)]' : ''}`}>
+        {recordMode && <BorderLight />}
 
         {selectedAddress && (
           <div className="flex items-center gap-2 pb-2.5 mb-1 border-b border-[var(--border)]">
@@ -666,7 +694,6 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
             </button>
           </div>
         )}
-        {recordMode && <BorderLight />}
 
         {selectedVideo ? (
           <div
@@ -714,7 +741,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
         )}
 
         <div className="flex items-center pt-1">
-          <PlusMenu videos={videos} shorts={shorts} dropUp={!isEmpty || compact} onSelect={(text) => { setInput(text); textareaRef.current?.focus() }} onShort={chipVideo ? undefined : (v) => { setChipTarget(v.id); setTapped([]) }} />
+          <PlusMenu videos={videos} shorts={shorts} dropUp={!isEmpty || compact} onSelect={(text) => { setInput(text); textareaRef.current?.focus() }} onShort={(v) => { if (!chipVideo && v.youtube) { setChipTarget(v.id); setTapped([]) } attachVideo(v) }} videoModel={videoModelById(videoModel).label} />
 
           <button
             onClick={() => {
@@ -853,7 +880,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
                   <div ref={exploreScrollRef} className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory">
                     {videos.slice(0, 15).map(v => (
                       <button key={v.id} type="button"
-                        onClick={() => { setSelectedVideo(v); setInput('') }}
+                        onClick={() => { setSelectedVideo(v); setInput(''); attachVideo(v) }}
                         className="group relative shrink-0 w-[150px] h-[100px] rounded-2xl overflow-hidden snap-start shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
                         <div
                           className="absolute inset-0 bg-[var(--inp-bg)]"
@@ -891,10 +918,11 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
               const fields = msg.role === 'assistant' && !msgStreaming ? parseFieldBlock(msg.content) : null
               // Every reply that carries a script shows it as the script card (the footer with Citations and
               // Record), in every chat and every draft; the plain code block is never used for a script.
-              const script = msg.role === 'assistant' && !msgStreaming ? scriptText(msg.content) : null
-              const cites = script ? parseCiteBlock(msg.content) : null
+              const script = msg.role === 'assistant' ? scriptText(msg.content) : null
+              const opening = msg.role === 'assistant' && msgStreaming && !script ? openScript(shown) : null
+              const cites = script && !msgStreaming ? parseCiteBlock(msg.content) : null
               const measured = msg.role === 'assistant' ? splitMeasured(shown) : null
-              const seg = script ? splitAtScript(shown) : null
+              const seg = script ? splitAtScript(shown, script) : null
               const prose = (content: string) =>
                 pieces(content).map((p, i) =>
                   'text' in p ? (
@@ -916,8 +944,13 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
                         {script && seg ? (
                           <>
                             {prose(seg.before)}
-                            <ScriptCard text={script} cites={cites} onRecord={() => startRecording(script)} />
+                            <ScriptCard text={script} cites={cites} streaming={msgStreaming} onRecord={() => startRecording(script)} />
                             {prose(seg.after)}
+                          </>
+                        ) : opening ? (
+                          <>
+                            {prose(opening.before)}
+                            <ScriptCard text={opening.partial.trim()} streaming onRecord={() => {}} />
                           </>
                         ) : measured?.basis ? (
                           <>

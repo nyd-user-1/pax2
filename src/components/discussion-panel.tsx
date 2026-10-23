@@ -120,7 +120,7 @@ function BlocksShelf() {
   const tile = (key: string) =>
     cn(
       "relative aspect-square cursor-grab overflow-hidden rounded-xl border bg-white shadow-e1 transition-[opacity,box-shadow,border-color] active:cursor-grabbing",
-      selected === key ? "border-pax2-blue" : "border-slate-200",
+      selected === key ? "border-pax2-blue" : "border-slate-200 hover:border-pax2-blue",
       dragging === key && "opacity-40",
       over === key && dragging !== key && "ring-2 ring-pax2-light-blue",
     )

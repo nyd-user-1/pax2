@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Link from 'next/link'
 import { childText } from '@/components/chat/child-text'
+import { CodeCard } from '@/components/chat/code-card'
 import { decorateTerms } from '@/components/chat/term-tip'
 
 interface Props {
@@ -59,24 +60,15 @@ export function MarkdownContent({ content, isStreaming }: Props) {
     hr: () => (
       <div className="my-4 border-t border-[var(--border)]" />
     ),
-    code: ({ children, className }) => {
-      const isBlock = className?.includes('language-')
-      if (isBlock) {
-        return (
-          <code className="block bg-[var(--inp-bg)] rounded-xl px-4 py-3 text-xs font-mono text-[var(--txt)] overflow-x-auto mb-3">
-            {children}
-          </code>
-        )
-      }
-      return (
-        <code className="bg-[var(--inp-bg)] text-pax2-light-blue rounded px-1.5 py-0.5 text-xs font-mono">{children}</code>
-      )
-    },
-    pre: ({ children }) => (
-      <pre className="bg-[var(--inp-bg)] rounded-xl px-4 py-3 overflow-x-auto mb-3 text-xs font-mono text-[var(--txt)]">
-        {children}
-      </pre>
+    // Inline code only: a code block arrives through `pre`, which renders the code card instead.
+    code: ({ children }) => (
+      <code className="bg-[var(--inp-bg)] text-pax2-light-blue rounded px-1.5 py-0.5 text-xs font-mono">{children}</code>
     ),
+    pre: ({ children }) => {
+      const el = (Array.isArray(children) ? children[0] : children) as { props?: { className?: string; children?: React.ReactNode } } | undefined
+      const language = /language-([\w-]+)/.exec(el?.props?.className ?? '')?.[1]
+      return <CodeCard code={childText(el?.props?.children ?? children).replace(/\n$/, '')} language={language} />
+    },
     table: ({ children }) => (
       <div className="overflow-x-auto mb-3 rounded-xl border border-[var(--border)]">
         <table className="w-full text-sm text-left">{children}</table>

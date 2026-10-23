@@ -52,10 +52,21 @@ export function ChatFields({ fields, live, onSubmit }: { fields: ChatField[]; li
     }
   }
 
+  // Tab in an empty field takes its placeholder as the answer (without the "e.g." in front); with
+  // something typed, Tab moves on as usual.
+  const keys = (f: ChatField, v: string) => (e: React.KeyboardEvent) => {
+    if (e.key === 'Tab' && !e.shiftKey && !v && f.placeholder) {
+      e.preventDefault()
+      set(f.key, f.placeholder.replace(/^\s*e\.g\.,?\s*/i, ''))
+      return
+    }
+    enterKey(e)
+  }
+
   const control = (f: ChatField) => {
     const v = values[f.key] ?? ''
     if (f.kind === 'textarea')
-      return <textarea rows={2} className={`${INPUT} resize-none`} value={v} placeholder={f.placeholder} onChange={(e) => set(f.key, e.target.value)} onKeyDown={enterKey} />
+      return <textarea rows={2} className={`${INPUT} resize-none`} value={v} placeholder={f.placeholder} onChange={(e) => set(f.key, e.target.value)} onKeyDown={keys(f, v)} />
     if (f.kind === 'choice')
       return (
         <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label={f.label}>
@@ -78,7 +89,7 @@ export function ChatFields({ fields, live, onSubmit }: { fields: ChatField[]; li
           })}
         </div>
       )
-    return <input type="text" className={INPUT} value={v} placeholder={f.placeholder} onChange={(e) => set(f.key, e.target.value)} onKeyDown={enterKey} />
+    return <input type="text" className={INPUT} value={v} placeholder={f.placeholder} onChange={(e) => set(f.key, e.target.value)} onKeyDown={keys(f, v)} />
   }
 
   const controls = (

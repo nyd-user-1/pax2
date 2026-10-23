@@ -1,10 +1,9 @@
 'use client'
 
-// The script as a block: the title, the measured length and Record in the header, and the body a
-// transcript — monospace, left-aligned, double-spaced, the text block centered at reading width.
-// A cited line carries its number, as on /scripts; the footer's Citations opens the right panel with
-// why each line is written that way and the evidence behind it. With nothing cited, the footer is the
-// blocks' Glossary link.
+// The script as a block: the title and the round Record button in the header, the body a transcript —
+// monospace, left-aligned, double-spaced, the text block centered at reading width — and the footer's
+// Citations (or the blocks' Glossary link when nothing is cited) opposite the measured length. Citations
+// opens the right panel with why each line is written that way; hovering a citation there lights its line.
 
 import * as React from 'react'
 import Link from 'next/link'
@@ -15,11 +14,14 @@ import { secondsAt, words } from '@/components/record/draft'
 import { useShellPanel } from '@/components/shell'
 import type { ScriptCite } from '@/lib/chat-fields'
 import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from '@/ui/components/nova/card'
+import { Skeleton } from '@/ui/components/nova/skeleton'
 import { cn } from '@/ui/lib/utils'
 
 const norm = (s: string) => s.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()
 
-export function ScriptCard({ text, cites, onRecord }: { text: string; cites?: ScriptCite[] | null; onRecord: () => void }) {
+/** `streaming`: the reply is still arriving. The card fills in as the words land (a skeleton until the
+ *  first ones do), and Record and Citations wait for the finished script. */
+export function ScriptCard({ text, cites, onRecord, streaming = false }: { text: string; cites?: ScriptCite[] | null; onRecord: () => void; streaming?: boolean }) {
   const { openAside, asideKey } = useShellPanel()
   const key = React.useId()
   const [hot, setHot] = React.useState<number | null>(null)
@@ -56,44 +58,42 @@ export function ScriptCard({ text, cites, onRecord }: { text: string; cites?: Sc
   return (
     <Card className="my-4 animate-in fade-in slide-in-from-bottom-1 duration-300">
       <CardHeader className="border-b [.border-b]:pb-2">
-        <div className="flex items-center gap-3">
-          <CardTitle>Script</CardTitle>
-          <span className="text-xs text-slate-800">
-            {words(text)} words · about {secondsAt(text)} seconds
-          </span>
-        </div>
+        <CardTitle>Script</CardTitle>
         <CardAction>
           <button
             type="button"
             onClick={onRecord}
-            className="flex items-center gap-1.5 rounded-full bg-pax2-blue px-4 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-85"
+            disabled={streaming}
+            aria-label="Record"
+            title="Record"
+            className="flex size-[30px] items-center justify-center rounded-full bg-pax2-blue text-white shadow-md transition-opacity hover:opacity-85 disabled:pointer-events-none disabled:opacity-40"
           >
-            <Video className="size-3.5" /> Record
+            <Video className="size-[15px]" />
           </button>
         </CardAction>
       </CardHeader>
       <CardContent>
+        {streaming && !text ? (
+          <div className="mx-auto flex max-w-[36rem] flex-col gap-4 py-6">
+            <Skeleton className="h-4 w-11/12" />
+            <Skeleton className="h-4 w-10/12" />
+            <Skeleton className="h-4 w-9/12" />
+            <Skeleton className="h-4 w-7/12" />
+          </div>
+        ) : (
         <div className="mx-auto max-w-[36rem] whitespace-pre-wrap py-4 font-mono text-[17px] leading-[2.1] text-[var(--txt)]">
           {parts.map((p, i) => (
             <React.Fragment key={i}>
               <span className={cn('rounded transition-colors', marks.get(i)?.includes(hot ?? -1) && 'bg-pax2-lavender/60')}>{p}</span>
-              {marks.get(i)?.map((n) => (
-                <sup key={n}>
-                  <span
-                    onMouseEnter={() => setHot(n)}
-                    onMouseLeave={() => setHot(null)}
-                    className={cn('ml-1 inline-flex size-[17px] cursor-default items-center justify-center rounded-full align-baseline font-sans text-[10px] font-bold transition-colors', hot === n ? 'bg-pax2-light-blue text-white' : 'bg-pax2-lavender text-pax2-blue')}
-                  >
-                    {n}
-                  </span>
-                </sup>
-              ))}
             </React.Fragment>
           ))}
         </div>
+        )}
       </CardContent>
-      <CardFooter className="bg-transparent py-3 text-xs text-slate-800">
-        {list.length > 0 ? (
+      <CardFooter className="justify-between gap-3 bg-transparent py-3 text-xs text-slate-800">
+        {streaming ? (
+          <Skeleton className="h-3 w-16" />
+        ) : list.length > 0 ? (
           <button type="button" onClick={() => (shown ? openAside(null) : open(hot))} aria-expanded={shown} className="font-medium text-slate-800 underline underline-offset-2 hover:text-pax2-light-blue">
             Citations
           </button>
@@ -101,6 +101,11 @@ export function ScriptCard({ text, cites, onRecord }: { text: string; cites?: Sc
           <Link href="/glossary" className="font-medium text-slate-800 underline underline-offset-2 hover:text-pax2-light-blue">
             Glossary
           </Link>
+        )}
+        {text && (
+          <span className="tabular">
+            {words(text)} words · about {secondsAt(text)} seconds
+          </span>
         )}
       </CardFooter>
     </Card>
