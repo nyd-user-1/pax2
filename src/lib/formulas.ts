@@ -1,4 +1,4 @@
-// The Breakout lift's six steps as KaTeX, with the plain-language explainer each one opens:
+// The Breakout lift's six steps and the Resonance formula as KaTeX, with the plain-language explainer each one opens:
 // shown on /ml and on every video's Formula panel.
 
 export const FORMULAS: [string, string][] = [
@@ -8,6 +8,8 @@ export const FORMULAS: [string, string][] = [
   ["Pooled, in points", String.raw`\hat{\Delta} = 100 \cdot \dfrac{\sum_{c} w_c\,\Delta_c}{\sum_{c} w_c}`],
   ["90% range", String.raw`\begin{gathered} \hat{\Delta}^{*(1)}, \dots, \hat{\Delta}^{*(1000)} \\ \text{channels drawn with replacement} \\[6pt] \left[\, \hat{\Delta}^{*}_{(50)},\ \hat{\Delta}^{*}_{(950)} \,\right] \end{gathered}`],
   ["Worked example", String.raw`\begin{gathered} \Delta_{\text{Holler}} = \tfrac{13}{70} - \tfrac{19}{208} = 0.094 \\[4pt] w = \tfrac{2 \cdot 70 \cdot 208}{278} = 104.7 \\[4pt] \hat{\Delta}_{\text{reform, CTA}} = \tfrac{2073.7}{252.5} = +8.2 \end{gathered}`],
+  // docs/RESONANCE.md's formula, with the fitted weights of data/generated/model/resonance-formula.json.
+  ["Resonance", String.raw`\begin{gathered} \hat{P}(\text{outperform } 3\times) = \sigma\Big( b_0 + \textstyle\sum_i b_i \cdot \operatorname{logit}(q_i) \Big) \\[6pt] b_0 = 0.1926,\ \ b_c = 0.1573,\ \ b_x = 0.1048,\ \ b_h = 0.1550 \end{gathered}`],
 ]
 export const EXPLAIN: Record<string, { pill: string; facts: [string, string][]; rows: [string, string][] }> = {
   Label: {
@@ -68,6 +70,19 @@ export const EXPLAIN: Record<string, { pill: string; facts: [string, string][]; 
       ["Step 3", "Weight each channel: the Holler gets 104.7."],
       ["Step 4", "Average across the nine channels: 2,073.7 \u00f7 252.5 = +8.2 points."],
       ["Caveat", "The Hometown Holler carries 41% of the weight, so this finding leans on one channel."],
+    ],
+  },
+  Resonance: {
+    pill: "Gen 1",
+    facts: [["Stack AUC", "0.5977"], ["Best single", "q_c, 0.5835"], ["Fit on", "1,240 shorts, 10 channels"], ["Intercept shift", "−1.5077"]],
+    rows: [
+      ["q_c", "The calibrated probability the video outperforms 3× its channel median, from the outlier classifier."],
+      ["q_x", "The craft rank: the share of the channel's measured shorts this video beats pairwise under the composition pair picker (combined variant)."],
+      ["q_h", "The headline percentile against the tested-headline reference."],
+      ["Fit", "One logistic fit over the uniform baseline, held out by channel, with a missing-component indicator per absent q_i. Each q is clamped to [0.01, 0.99]."],
+      ["Acceptance", "The stack's held-out AUC must be at least the best single component's, else that component alone serves. The stack, 0.5977, beats q_c's 0.5835, so the stack serves."],
+      ["Calibration", "The intercept shifts from the held-out rows' outperform share, 44.1%, to the settled catalog's, 14.9%."],
+      ["Score", "Pre is the prediction's percentile among the baseline; post is the measured ratio's percentile among the baseline."],
     ],
   },
 }
