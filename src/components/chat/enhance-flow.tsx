@@ -11,6 +11,7 @@ import { Player } from '@remotion/player'
 import { Check, Loader2, Sparkles, X } from 'lucide-react'
 
 import { uploadUrl } from '@/app/actions'
+import { bankedForScript } from '@/app/footage-actions'
 import { submitOriginal } from '@/app/original-actions'
 import { cleanupStatus, generateHiggsfield, generationStatus, startCleanup, startGeneration } from '@/app/video-gen-actions'
 import { EnhanceVideo } from '@/components/studio/enhance-video'
@@ -39,6 +40,11 @@ export function EnhanceFlow({ clipUrl, clipKey, seconds, script, parentId, email
   const [brollPrompt, setBrollPrompt] = React.useState(`Documentary b-roll, no one speaking to camera: ${numberLine}`)
   const [atSec, setAtSec] = React.useState(Math.max(2, Math.round(seconds * 0.4)))
   const [broll, setBroll] = React.useState<Job>({ state: 'idle' })
+  // Shots already made for this script under its Footage block, each one tap to use.
+  const [madeFor, setMadeFor] = React.useState<{ id: string; url: string; line?: string }[]>([])
+  React.useEffect(() => {
+    bankedForScript(script).then(setMadeFor).catch(() => {})
+  }, [script])
 
   const [render, setRender] = React.useState<'idle' | 'rendering' | 'sending' | 'done' | 'error'>('idle')
   const [progress, setProgress] = React.useState(0)
@@ -242,6 +248,15 @@ export function EnhanceFlow({ clipUrl, clipKey, seconds, script, parentId, email
             runBroll,
             broll.state === 'idle' || broll.state === 'error' ? (
               <div className="flex flex-col gap-2">
+                {madeFor.length > 0 && (
+                  <div className="flex gap-2 overflow-x-auto no-scrollbar">
+                    {madeFor.map((m) => (
+                      <button key={m.id} type="button" onClick={() => setBroll({ state: 'done', url: m.url, message: 'Made for this script' })} title={m.line ?? 'Opening shot'} className="aspect-[9/16] w-[54px] shrink-0 overflow-hidden rounded-md border border-[var(--border)] hover:ring-2 hover:ring-pax2-light-blue">
+                        <video src={m.url} muted loop playsInline autoPlay className="size-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                )}
                 <div className="flex flex-wrap gap-1.5">
                   {VIDEO_MODEL_OPTIONS.map((p) => (
                     <button key={p.id} type="button" onClick={() => setProvider(p.id)} className={CHIP(provider === p.id)}>{p.label}</button>

@@ -29,7 +29,7 @@ import { useShelf } from '@/lib/home-blocks'
 import { BLOCK_REF, ChatBlock } from '@/components/chat/chat-block'
 import { ModelPicker, useChatModel } from '@/components/chat/model-picker'
 import { useVideoModel, VideoModelPicker } from '@/components/chat/video-model-picker'
-import { videoModelById } from '@/lib/video-model-options'
+import type { FootageFocus } from '@/lib/footage'
 import { ResponseFooter } from '@/components/chat/response-footer'
 import { saveChat } from '@/app/chat-actions'
 import { answerChip, chipOffers } from '@/app/question-actions'
@@ -62,6 +62,7 @@ const speechRecognition = () => (typeof window === 'undefined' ? undefined : ((w
 
 // The empty state's PAX draws itself with GSAP; its code loads only when that state shows, since the
 // chat also sits in every page's side panel.
+const FootageBlock = dynamic(() => import('@/components/chat/footage-block').then((m) => m.FootageBlock), { ssr: false })
 const PaxDraw = dynamic(() => import('@/components/pax-draw').then((m) => m.PaxDraw), { loading: () => <span className="block h-[65px] w-[130px]" /> })
 
 const RECORD_OPENER = "I'm ready to make my first video — where do we start?"
@@ -157,6 +158,8 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   const [isFocused, setIsFocused] = useState(false)
   const [model, setModel] = useChatModel()
   const [videoModel, setVideoModel] = useVideoModel()
+  // A script the plus menu put in the chat (or picked a graphic for), and what its footage block should light.
+  const [footageFocus, setFootageFocus] = useState<{ script: string; focus: FootageFocus } | null>(null)
   const [recordMode, setRecordMode] = useState(record)
   // The close of record mode: the recording happens in the transcript itself — Record on the
   // script card opens the flow's cards right under the conversation, the script in the session draft.
@@ -741,7 +744,10 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
         )}
 
         <div className="flex items-center pt-1">
-          <PlusMenu videos={videos} shorts={shorts} dropUp={!isEmpty || compact} onSelect={(text) => { setInput(text); textareaRef.current?.focus() }} onShort={(v) => { if (!chipVideo && v.youtube) { setChipTarget(v.id); setTapped([]) } attachVideo(v) }} videoModel={videoModelById(videoModel).label} />
+          <PlusMenu videos={videos} shorts={shorts} dropUp={!isEmpty || compact} onSelect={(text) => { setInput(text); textareaRef.current?.focus() }} onShort={(v) => { if (!chipVideo && v.youtube) { setChipTarget(v.id); setTapped([]) } attachVideo(v) }}
+            hasScript={messages.some((m) => m.role === 'assistant' && !!scriptText(m.content))}
+            onFootage={(text, focus) => { setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: '```pax-script\n' + text.trim() + '\n```', model: 'library' }]); setFootageFocus({ script: text.trim(), focus }) }}
+            onGraphic={(kind) => { const last = [...messages].reverse().map((m) => (m.role === 'assistant' ? scriptText(m.content) : null)).find(Boolean); if (last) setFootageFocus({ script: last, focus: kind }) }} />
 
           <button
             onClick={() => {
@@ -945,6 +951,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
                           <>
                             {prose(seg.before)}
                             <ScriptCard text={script} cites={cites} streaming={msgStreaming} onRecord={() => startRecording(script)} />
+                            {!msgStreaming && <FootageBlock script={script} videoModel={videoModel} focus={footageFocus?.script === script ? footageFocus.focus : null} />}
                             {prose(seg.after)}
                           </>
                         ) : opening ? (
@@ -970,7 +977,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
                             onSubmit={(values) => submit(answersText(fields, values))}
                           />
                         )}
-                        {!msgStreaming && !measured?.basis && (
+                        {!msgStreaming && !measured?.basis && msg.model !== 'library' && (
                           <ResponseFooter
                             text={shown}
                             model={msg.model}

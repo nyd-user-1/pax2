@@ -4,12 +4,14 @@
 // drill-down drawer with its search field. The categories: Video Analytics (prompts over the record),
 // Scripts (every script /scripts lists), Videos (on /chat the e2 videos and more Voter Freedom shorts;
 // the scored takes elsewhere), Shorts (the catalog's real shorts), and Voices (the studio's readers —
-// hear one, or write for it), and Generate video (prompts for the composer's text-to-video model). Icons wear the sidebar's clothes: 18px, 1.75 stroke, lavender fill on hover.
+// hear one, or write for it), Generate video (a script, put in the chat with its shots to generate), and
+// Graphics (the cards Remotion draws from a script). Icons wear the sidebar's clothes: 18px, 1.75 stroke, lavender fill on hover.
 
 import { useState, useRef, useEffect } from 'react'
-import { Plus, ChevronRight, ArrowLeft, X, ChartColumn, NotebookPen, PlaySquare, Clapperboard, AudioLines, Volume2, Loader2, Film } from 'lucide-react'
+import { Plus, ChevronRight, ArrowLeft, X, ChartColumn, NotebookPen, PlaySquare, Clapperboard, AudioLines, Volume2, Loader2, Film, Shapes } from 'lucide-react'
 
 import { narrate } from '@/app/studio-actions'
+import { GRAPHIC_KINDS, type FootageFocus, type GraphicKind } from '@/lib/footage'
 import type { ListedScript } from '@/lib/script-list'
 import { VOICES, type VoiceId } from '@/lib/studio-style'
 
@@ -30,17 +32,7 @@ const ANALYTICS_PROMPTS = [
 /*  Types                                                              */
 /* ------------------------------------------------------------------ */
 
-/*  Generate video prompts: written for the text-to-video model picked in the composer, the same models
-    the Enhance card sends b-roll and end cards to. `{model}` is that model's name. */
-const GENERATE_PROMPTS = [
-  'Turn my latest script into a shot list: each line, the b-roll that sits behind it, and its length in seconds, each shot written as a prompt for {model}.',
-  'Write a 5-second opening shot for {model} that shows the problem my hook names, vertical 9:16, no text on screen.',
-  'Write five 5-second b-roll prompts for {model} that show uncontested Massachusetts House races, one per line, vertical 9:16.',
-  'Write a 4-second end-card shot for {model}: the ask on screen over a plain background, vertical 9:16.',
-  'Write three versions of my strongest line as a 5-second {model} shot, each a different visual, and say which the evidence favors.',
-]
-
-type DrillStep = 'categories' | 'prompts' | 'pick-script' | 'pick-video' | 'pick-short' | 'pick-voice' | 'generate'
+type DrillStep = 'categories' | 'prompts' | 'pick-script' | 'pick-video' | 'pick-short' | 'pick-voice' | 'generate' | 'graphics' | 'graphic-script'
 
 export type ScriptChip = { id: string; title: string; short: string }
 /** `youtube`: a YouTube video, whose score is its Outlier Score (views over its channel's median). */
@@ -54,8 +46,12 @@ interface Props {
   onShort?: (v: VideoChip) => void
   /** Once the input is pinned to the bottom of the page, the menu opens upward. */
   dropUp?: boolean
-  /** The composer's text-to-video model, named in the Generate video prompts. */
-  videoModel?: string
+  /** A script picked under Generate video or Graphics: the chat shows it with its footage, `focus` lit. */
+  onFootage?: (script: string, focus: FootageFocus) => void
+  /** A graphic picked while the chat already holds a script: that script's footage lights it. */
+  onGraphic?: (kind: GraphicKind) => void
+  /** Whether the conversation holds a finished script for a graphic to come from. */
+  hasScript?: boolean
 }
 
 /* Sidebar dress for every menu icon (shell.tsx's item): 18px, 1.75 stroke, lavender fill on row hover. */
@@ -69,12 +65,13 @@ const outlier = (x: number) => `${x >= 10 ? x.toFixed(0) : x.toFixed(1)}×`
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 
-export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = false, videoModel = 'the video model' }: Props) {
+export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = false, onFootage, onGraphic, hasScript = false }: Props) {
   const [scripts, setScripts] = useState<ListedScript[] | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [step, setStep] = useState<DrillStep>('categories')
   const [search, setSearch] = useState('')
   const [hearing, setHearing] = useState<string | null>(null)
+  const [kind, setKind] = useState<GraphicKind | null>(null)
   const menuRef = useRef<HTMLDivElement>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
@@ -126,6 +123,8 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
     if (step === 'pick-short') return 'Shorts'
     if (step === 'pick-voice') return 'Voices'
     if (step === 'generate') return 'Generate video'
+    if (step === 'graphics') return 'Graphics'
+    if (step === 'graphic-script') return 'Scripts'
     return ''
   }
 
@@ -138,7 +137,23 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
     ...(shorts.length ? [{ key: 'pick-short' as const, label: 'Shorts', icon: <Clapperboard className={ICON} strokeWidth={1.75} /> }] : []),
     { key: 'pick-voice', label: 'Voices', icon: <AudioLines className={ICON} strokeWidth={1.75} /> },
     { key: 'generate', label: 'Generate video', icon: <Film className={ICON} strokeWidth={1.75} /> },
+    { key: 'graphics', label: 'Graphics', icon: <Shapes className={ICON} strokeWidth={1.75} /> },
   ]
+
+  const scriptRows = (pick: (s: ListedScript) => void) => (
+    <>
+      {filteredScripts.map((s, i) => (
+        <button key={s.id} onClick={() => { pick(s); closeMenu() }} className={row(i)}>
+          <NotebookPen className={ICON} strokeWidth={1.75} />
+          <span className="min-w-0 flex-1 text-left">
+            <span className="block text-sm font-semibold text-[var(--txt)]">{s.title}</span>
+            <span className="block truncate text-xs text-[var(--muted)]">{s.framing}</span>
+          </span>
+        </button>
+      ))}
+      {scripts && filteredScripts.length === 0 && <p className="px-4 py-3 text-xs text-[var(--muted)]">No matches</p>}
+    </>
+  )
 
   const row = (i: number) => `group flex w-full items-center gap-3 px-4 py-3 hover:bg-[var(--inp-bg)] transition-colors ${i > 0 ? 'border-t border-[var(--border)]' : ''}`
 
@@ -204,18 +219,32 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
               </>
             )}
 
-            {/* Generate video — prompts written for the composer's text-to-video model */}
-            {step === 'generate' && (
+            {/* Generate video — a script, shown in the chat with its shots ready to generate */}
+            {step === 'generate' && scriptRows((s) => onFootage?.(s.text, 'shots'))}
+
+            {/* Graphics — the cards Remotion draws from a script, at no cost */}
+            {step === 'graphics' && (
               <>
-                {GENERATE_PROMPTS.map((t) => t.split('{model}').join(videoModel))
-                  .filter((p) => !search || p.toLowerCase().includes(q))
-                  .map((p, i) => (
-                    <button key={p} onClick={() => { onSelect(p); closeMenu() }} className={row(i) + ' items-start'}>
-                      <span className="text-sm text-[var(--txt)] text-left">{p}</span>
-                    </button>
-                  ))}
+                {GRAPHIC_KINDS.filter((k) => !search || k.label.toLowerCase().includes(q) || k.about.toLowerCase().includes(q)).map((k, i) => (
+                  <button
+                    key={k.id}
+                    onClick={() => {
+                      if (hasScript) { onGraphic?.(k.id); closeMenu() } else { setKind(k.id); setSearch(''); setStep('graphic-script') }
+                    }}
+                    className={row(i) + ' items-start'}
+                  >
+                    <Shapes className={ICON} strokeWidth={1.75} />
+                    <span className="min-w-0 flex-1 text-left">
+                      <span className="block text-sm font-semibold text-[var(--txt)]">{k.label}</span>
+                      <span className="block text-xs text-[var(--muted)]">{k.about}</span>
+                    </span>
+                  </button>
+                ))}
               </>
             )}
+
+            {/* A graphic picked with no script in the chat yet: the script it comes from */}
+            {step === 'graphic-script' && scriptRows((s) => onFootage?.(s.text, kind ?? 'checklist'))}
 
             {/* Scripts — the /scripts catalog; picking one brings its text in to make yours */}
             {step === 'pick-script' && (
