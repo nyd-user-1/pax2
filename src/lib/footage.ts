@@ -18,8 +18,30 @@ export type GraphicKind = keyof Graphics
 
 export type FootagePlan = { key: string; shots: Shot[]; graphics: Graphics }
 
-/** Where the plus menu sends a script: its shots, or one of its graphics. */
-export type FootageFocus = "shots" | GraphicKind
+/** Where the plus menu sends a script: its shots, its graphics, or one graphic. */
+export type FootageFocus = "shots" | "graphics" | GraphicKind
+
+/** Which of a script's two cards a chat message shows: Generate video brings the shots, Graphics the graphics. */
+export type FootageShow = "shots" | "graphics"
+
+// ---------- generic b-roll ----------
+// Generate video's second list (Brendan, 2026-10-23): footage that belongs to no one script, each made once
+// on tap with the composer's model and kept for everyone, like a script's shots.
+
+export const BROLL: { id: string; label: string; prompt: string; seconds: number }[] = [
+  { id: "rally", label: "Crowd at a rally", prompt: "Vertical 9:16 handheld footage of a diverse crowd at an outdoor civic rally, people holding blank hand-made signs, daylight, shallow depth of field, no readable text, no logos.", seconds: 5 },
+  { id: "polling", label: "Polling place", prompt: "Vertical 9:16 footage inside a community polling place: voters at private booths and a poll worker's table, warm gymnasium light, faces out of focus, no readable text.", seconds: 5 },
+  { id: "ballot", label: "Ballot being marked", prompt: "Vertical 9:16 close-up of a hand filling in an oval on a paper ballot with a pen, soft natural light, the ballot's printing blurred and unreadable.", seconds: 5 },
+  { id: "statehouse", label: "State house", prompt: "Vertical 9:16 slow push-in on a classical gold-domed state house, flags moving in the wind, blue sky, morning light.", seconds: 5 },
+  { id: "mainstreet", label: "Small-town main street", prompt: "Vertical 9:16 steady shot of a New England small-town main street: brick storefronts, people walking, late-afternoon sun, signs out of focus.", seconds: 5 },
+  { id: "city", label: "City sidewalk", prompt: "Vertical 9:16 footage of a busy city sidewalk at golden hour, commuters crossing, traffic moving behind them, shallow depth of field.", seconds: 5 },
+  { id: "townhall", label: "Town hall meeting", prompt: "Vertical 9:16 footage of a town hall meeting: residents in folding chairs, one person standing to speak at a microphone, warm indoor light, faces soft.", seconds: 5 },
+  { id: "doors", label: "Door knocking", prompt: "Vertical 9:16 footage of a volunteer with a clipboard knocking on a suburban front door, autumn leaves on the walk, daylight.", seconds: 5 },
+  { id: "kitchen", label: "Kitchen table", prompt: "Vertical 9:16 footage of a family at a kitchen table sorting mail and bills, warm morning light, faces soft.", seconds: 5 },
+  { id: "phone", label: "Phone scrolling", prompt: "Vertical 9:16 close-up of a thumb scrolling a smartphone feed, the screen abstract and blurred, cozy indoor light.", seconds: 5 },
+  { id: "handshake", label: "Handshake", prompt: "Vertical 9:16 close-up of two people shaking hands outdoors, shallow depth of field, daylight.", seconds: 5 },
+  { id: "aerial", label: "Aerial landscape", prompt: "Vertical 9:16 aerial drone shot over New England autumn hills and a small town with a white church steeple, golden light.", seconds: 5 },
+]
 
 export const GRAPHIC_KINDS: { id: GraphicKind; label: string; about: string; seconds: number }[] = [
   { id: "checklist", label: "Checklist card", about: "A title, three checked rows and a footer bar, over the lower half", seconds: 5 },

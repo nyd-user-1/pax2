@@ -4,14 +4,15 @@
 // drill-down drawer with its search field. The categories: Video Analytics (prompts over the record),
 // Scripts (every script /scripts lists), Videos (on /chat the e2 videos and more Voter Freedom shorts;
 // the scored takes elsewhere), Shorts (the catalog's real shorts), and Voices (the studio's readers —
-// hear one, or write for it), Generate video (a script, put in the chat with its shots to generate), and
-// Graphics (the cards Remotion draws from a script). Icons wear the sidebar's clothes: 18px, 1.75 stroke, lavender fill on hover.
+// hear one, or write for it), Generate video (a script, put in the chat with its shots to generate; then
+// generic b-roll, each its own shot), and Graphics (the cards Remotion draws, then the scripts, each put in
+// the chat with its Graphics card). Icons wear the sidebar's clothes: 18px, 1.75 stroke, lavender fill on hover.
 
 import { useState, useRef, useEffect } from 'react'
 import { Plus, ChevronRight, ArrowLeft, X, ChartColumn, NotebookPen, PlaySquare, Clapperboard, AudioLines, Volume2, Loader2, Film, Shapes } from 'lucide-react'
 
 import { narrate } from '@/app/studio-actions'
-import { GRAPHIC_KINDS, type FootageFocus, type GraphicKind } from '@/lib/footage'
+import { BROLL, GRAPHIC_KINDS, type FootageFocus, type GraphicKind } from '@/lib/footage'
 import type { ListedScript } from '@/lib/script-list'
 import { VOICES, type VoiceId } from '@/lib/studio-style'
 
@@ -60,6 +61,8 @@ interface Props {
   dropUp?: boolean
   /** A script picked under Generate video or Graphics: the chat shows it with its footage, `focus` lit. */
   onFootage?: (script: string, focus: FootageFocus) => void
+  /** A generic b-roll shot picked under Generate video: the chat shows it ready to generate. */
+  onBroll?: (id: string) => void
   /** A graphic picked while the chat already holds a script: that script's footage lights it. */
   onGraphic?: (kind: GraphicKind) => void
   /** Whether the conversation holds a finished script for a graphic to come from. */
@@ -77,7 +80,7 @@ const outlier = (x: number) => `${x >= 10 ? x.toFixed(0) : x.toFixed(1)}×`
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 
-export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = false, onFootage, onGraphic, hasScript = false }: Props) {
+export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = false, onFootage, onBroll, onGraphic, hasScript = false }: Props) {
   const [scripts, setScripts] = useState<ListedScript[] | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [step, setStep] = useState<DrillStep>('categories')
@@ -168,6 +171,9 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
   )
 
   const row = (i: number) => `group flex w-full items-center gap-3 px-4 py-3 hover:bg-[var(--inp-bg)] transition-colors ${i > 0 ? 'border-t border-[var(--border)]' : ''}`
+  /** Where one list in a drawer ends and the next begins. */
+  const section = (label: string, first = false) => <div className={`px-4 pb-1.5 pt-3 text-xs font-medium text-[var(--muted)] ${first ? '' : 'border-t border-[var(--border)]'}`}>{label}</div>
+  const filteredBroll = BROLL.filter((b) => !search || b.label.toLowerCase().includes(q))
 
   const panelSide = dropUp ? 'bottom-full mb-2' : 'top-full mt-2'
 
@@ -231,12 +237,25 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
               </>
             )}
 
-            {/* Generate video — a script, shown in the chat with its shots ready to generate */}
-            {step === 'generate' && scriptRows((s) => onFootage?.(s.text, 'shots'))}
+            {/* Generate video — a script, shown in the chat with its shots ready to generate; then generic b-roll */}
+            {step === 'generate' && (
+              <>
+                {section('Scripts', true)}
+                {scriptRows((s) => onFootage?.(s.text, 'shots'))}
+                {filteredBroll.length > 0 && section('B-roll')}
+                {filteredBroll.map((b, i) => (
+                  <button key={b.id} onClick={() => { onBroll?.(b.id); closeMenu() }} className={row(i)}>
+                    <Film className={ICON} strokeWidth={1.75} />
+                    <span className="min-w-0 flex-1 text-left text-sm font-semibold text-[var(--txt)]">{b.label}</span>
+                  </button>
+                ))}
+              </>
+            )}
 
-            {/* Graphics — the cards Remotion draws from a script, at no cost */}
+            {/* Graphics — the cards Remotion draws from a script, at no cost; then the scripts themselves */}
             {step === 'graphics' && (
               <>
+                {section('Graphics', true)}
                 {GRAPHIC_KINDS.filter((k) => !search || k.label.toLowerCase().includes(q) || k.about.toLowerCase().includes(q)).map((k, i) => (
                   <button
                     key={k.id}
@@ -252,6 +271,8 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
                     </span>
                   </button>
                 ))}
+                {section('Scripts')}
+                {scriptRows((s) => onFootage?.(s.text, 'graphics'))}
               </>
             )}
 

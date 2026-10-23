@@ -29,7 +29,7 @@ import { useShelf } from '@/lib/home-blocks'
 import { BLOCK_REF, ChatBlock } from '@/components/chat/chat-block'
 import { ModelPicker, useChatModel } from '@/components/chat/model-picker'
 import { useVideoModel, VideoModelPicker } from '@/components/chat/video-model-picker'
-import type { FootageFocus } from '@/lib/footage'
+import type { FootageFocus, FootageShow } from '@/lib/footage'
 import { ResponseFooter } from '@/components/chat/response-footer'
 import { saveChat } from '@/app/chat-actions'
 import { answerChip, chipOffers } from '@/app/question-actions'
@@ -63,6 +63,11 @@ const speechRecognition = () => (typeof window === 'undefined' ? undefined : ((w
 // The empty state's PAX draws itself with GSAP; its code loads only when that state shows, since the
 // chat also sits in every page's side panel.
 const FootageBlock = dynamic(() => import('@/components/chat/footage-block').then((m) => m.FootageBlock), { ssr: false })
+const BrollBlock = dynamic(() => import('@/components/chat/footage-block').then((m) => m.BrollBlock), { ssr: false })
+// A message the + menu placed carries what it shows in `model`: library-shots (Generate video), library-graphics
+// (Graphics), library-broll (one generic b-roll shot, its id in a pax-broll block); plain library shows both cards.
+const footageShow = (model?: string): FootageShow | undefined => (model === 'library-shots' ? 'shots' : model === 'library-graphics' ? 'graphics' : undefined)
+const brollOf = (m: { model?: string; content: string }) => (m.model === 'library-broll' ? m.content.replace(/```(pax-broll)?/g, '').trim() : null)
 const TextType = dynamic(() => import('@/components/text-type'), { loading: () => <span className="block h-[65px]" /> })
 const READY = ['Ready to make change?', 'Ready to make a video?', 'Ready to make a storyboard?', 'Ready to make a script?', 'Ready to make a difference?', 'Ready. Set. Go.']
 
@@ -794,8 +799,16 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
         <div className="flex items-center pt-1">
           <PlusMenu videos={videos} shorts={shorts} dropUp={!isEmpty || compact} onSelect={(text) => { setInput(text); textareaRef.current?.focus() }} onShort={(v) => { if (!chipVideo && v.youtube) { setChipTarget(v.id); setTapped([]) } attachVideo(v) }}
             hasScript={messages.some((m) => m.role === 'assistant' && !!scriptText(m.content))}
-            onFootage={(text, focus) => { setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: '```pax-script\n' + text.trim() + '\n```', model: 'library' }]); setFootageFocus({ script: text.trim(), focus }) }}
-            onGraphic={(kind) => { const last = [...messages].reverse().map((m) => (m.role === 'assistant' ? scriptText(m.content) : null)).find(Boolean); if (last) setFootageFocus({ script: last, focus: kind }) }} />
+            onFootage={(text, focus) => { setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: '```pax-script\n' + text.trim() + '\n```', model: focus === 'shots' ? 'library-shots' : 'library-graphics' }]); setFootageFocus({ script: text.trim(), focus }) }}
+            onBroll={(id) => setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: '```pax-broll\n' + id + '\n```', model: 'library-broll' }])}
+            onGraphic={(kind) => {
+              const last = [...messages].reverse().find((m) => m.role === 'assistant' && !!scriptText(m.content))
+              const text = last ? scriptText(last.content) : null
+              if (!last || !text) return
+              // The script's message shows only its shots: the graphic arrives as the script's Graphics card.
+              if (last.model === 'library-shots') setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: '```pax-script\n' + text + '\n```', model: 'library-graphics' }])
+              setFootageFocus({ script: text, focus: kind })
+            }} />
           <button type="button" onClick={() => pdfInput.current?.click()} aria-label="Attach a PDF" title="Attach a PDF" className="flex size-9 items-center justify-center rounded-full text-[var(--muted)] transition-colors hover:bg-slate-100 hover:text-[var(--txt)]">
             <Paperclip className="size-[18px]" />
           </button>
@@ -999,11 +1012,13 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
                   <div className="group/reply flex-1 min-w-0 text-[17px] pt-0.5">
                     {msg.content ? (
                       <>
-                        {script && seg ? (
+                        {brollOf(msg) ? (
+                          <BrollBlock id={brollOf(msg)!} videoModel={videoModel} />
+                        ) : script && seg ? (
                           <>
                             {prose(seg.before)}
                             <ScriptCard text={script} cites={cites} streaming={msgStreaming} onRecord={() => startRecording(script)} />
-                            {!msgStreaming && <FootageBlock script={script} videoModel={videoModel} focus={footageFocus?.script === script ? footageFocus.focus : null} />}
+                            {!msgStreaming && <FootageBlock script={script} videoModel={videoModel} show={footageShow(msg.model)} focus={footageFocus?.script === script ? footageFocus.focus : null} />}
                             {prose(seg.after)}
                           </>
                         ) : opening ? (
@@ -1029,7 +1044,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
                             onSubmit={(values) => submit(answersText(fields, values))}
                           />
                         )}
-                        {!msgStreaming && !measured?.basis && msg.model !== 'library' && (
+                        {!msgStreaming && !measured?.basis && !msg.model?.startsWith('library') && (
                           <ResponseFooter
                             text={shown}
                             model={msg.model}

@@ -6,17 +6,18 @@
 // Graphics: drawn by Remotion from the script's own words at no cost, dressed in a brand kit picked from
 // the palette in the card's corner (a preset, a typeface, two colors, a logo); its footer downloads every
 // graphic as one MP4 and saves the kit to the script. Each card sits in the chat's block frame, Add to Blocks
-// in its bar. The plan behind both is written once per script and kept.
+// in its bar. The plan behind both is written once per script and kept. A script placed from the + menu
+// shows one card: Generate video its Shots, Graphics its Graphics. BrollBlock: one generic b-roll shot.
 
 import * as React from 'react'
 import { usePathname } from 'next/navigation'
 import { Player } from '@remotion/player'
 import { Check, Download, LayoutGrid, Loader2, Palette } from 'lucide-react'
 
-import { bankedShots, footageBrand, footagePlan, saveFootageBrand, shotStatus, startShot, type BankedShot } from '@/app/footage-actions'
+import { bankedShots, brollPlan, footageBrand, footagePlan, saveFootageBrand, shotStatus, startShot, type BankedShot } from '@/app/footage-actions'
 import { GraphicVideo, GraphicsReel } from '@/components/studio/graphic-video'
 import { useShelf } from '@/lib/home-blocks'
-import { BRAND_PRESETS, FONTS, GRAPHIC_KINDS, type Brand, type BrandFont, type FootageFocus, type FootagePlan, type GraphicKind } from '@/lib/footage'
+import { BRAND_PRESETS, FONTS, GRAPHIC_KINDS, type Brand, type BrandFont, type FootageFocus, type FootagePlan, type FootageShow, type GraphicKind, type Shot } from '@/lib/footage'
 import { FPS } from '@/lib/studio-style'
 import { videoModelById, type VideoProvider } from '@/lib/video-model-options'
 import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from '@/ui/components/nova/card'
@@ -81,49 +82,17 @@ function ShelvedCard({ id, title, children, className }: { id: string; title: st
   )
 }
 
-export function FootageBlock({ script, videoModel, focus }: { script: string; videoModel: VideoProvider; focus?: FootageFocus | null }) {
-  const [plan, setPlan] = React.useState<FootagePlan | null>(null)
-  const [failed, setFailed] = React.useState<string | null>(null)
+/** A plan's clips: the banked ones, the ones being made, and `run`, which makes one (the chosen model
+ *  first, then the others down the fallback list) and banks it for everyone. */
+function useShots(plan: FootagePlan | null) {
   const [banked, setBanked] = React.useState<Record<string, BankedShot>>({})
   const [jobs, setJobs] = React.useState<Record<string, Job>>({})
-  const [brand, setBrandState] = React.useState<Brand>(BRAND_PRESETS[0])
-  const [saved, setSaved] = React.useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
-  const [rendering, setRendering] = React.useState<number | null>(null)
-  const [renderError, setRenderError] = React.useState<string | null>(null)
-  const ref = React.useRef<HTMLDivElement>(null)
-  const logoInput = React.useRef<HTMLInputElement>(null)
-  const primaryInput = React.useRef<HTMLInputElement>(null)
-  const accentInput = React.useRef<HTMLInputElement>(null)
   const alive = React.useRef(true)
-  React.useEffect(() => () => { alive.current = false }, [])
-  const setBrand = (b: Brand) => {
-    setBrandState(b)
-    setSaved('idle')
-  }
-
   React.useEffect(() => {
-    let off = false
-    footagePlan(script)
-      .then(async (p) => {
-        if (off) return
-        setPlan(p)
-        const [b, kit] = await Promise.all([bankedShots(p.key), footageBrand(p.key).catch(() => null)])
-        if (off) return
-        setBanked(b)
-        if (kit) {
-          setBrandState(kit)
-          setSaved('saved')
-        }
-      })
-      .catch((e) => !off && setFailed((e as Error).message))
-    return () => { off = true }
-  }, [script])
-
-  React.useEffect(() => {
-    if (focus && plan) ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-  }, [focus, plan])
-
-  const run = async (shotId: string, first: VideoProvider, tried: VideoProvider[] = []) => {
+    alive.current = true
+    return () => { alive.current = false }
+  }, [])
+  const run = async (shotId: string, first: VideoProvider, tried: VideoProvider[] = []): Promise<void> => {
     if (!plan) return
     setJobs((j) => ({ ...j, [shotId]: { state: 'working', provider: first, tried } }))
     try {
@@ -147,18 +116,132 @@ export function FootageBlock({ script, videoModel, focus }: { script: string; vi
       if (alive.current) setJobs((j) => ({ ...j, [shotId]: { state: 'error', message: (e as Error).message } }))
     }
   }
+  return { banked, setBanked, jobs, run }
+}
 
-  if (failed) return null
-  if (!plan)
-    return (
-      <Card className="my-4">
-        <CardContent className="flex flex-col gap-3 py-4">
-          <Skeleton className="h-4 w-1/3" />
-          <Skeleton className="h-16 w-full" />
-          <Skeleton className="h-16 w-full" />
-        </CardContent>
-      </Card>
-    )
+/** A card of shots, each with its clip once made and Generate until then. */
+function ShotsCard({ id, title, shots, banked, jobs, onRun }: { id: string; title: string; shots: Shot[]; banked: Record<string, BankedShot>; jobs: Record<string, Job>; onRun: (shotId: string) => void }) {
+  return (
+    <ShelvedCard id={id} title={title}>
+      <CardHeader className="border-b [.border-b]:pb-2">
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="py-2">
+        <ul className="flex flex-col divide-y divide-[var(--border)]">
+          {shots.map((s) => {
+            const b = banked[s.id]
+            const job = jobs[s.id]
+            return (
+              <li key={s.id} className="flex items-center gap-3 py-2.5">
+                <div className="aspect-[9/16] w-[54px] shrink-0 overflow-hidden rounded-md border border-dashed border-slate-300 bg-slate-50">
+                  {b && <video src={b.url} muted loop playsInline autoPlay className="size-full object-cover" />}
+                </div>
+                <div className="min-w-0 flex-1" title={s.prompt}>
+                  <p className="text-sm text-[var(--txt)]">{s.kind === 'opening' ? 'Opening shot' : s.line}</p>
+                  <p className="text-xs text-[var(--muted)] tabular">{s.seconds} s{b ? ` · ${videoModelById(b.provider).label}` : ''}</p>
+                </div>
+                {!b &&
+                  (job?.state === 'working' ? (
+                    <span className="flex shrink-0 items-center gap-1.5 text-xs text-[var(--muted)]">
+                      <Loader2 className="size-3.5 animate-spin" />
+                      {videoModelById(job.provider).label}
+                    </span>
+                  ) : (
+                    <button type="button" onClick={() => onRun(s.id)} title={job?.state === 'error' ? job.message : undefined} className={cn('shrink-0 rounded-full px-3 py-1 text-xs font-semibold hover:bg-pax2-lavender/60', job?.state === 'error' ? 'text-pax2-red' : 'text-pax2-blue')}>
+                      {job?.state === 'error' ? 'Retry' : 'Generate'}
+                    </button>
+                  ))}
+              </li>
+            )
+          })}
+        </ul>
+      </CardContent>
+    </ShelvedCard>
+  )
+}
+
+const LoadingCard = () => (
+  <Card className="my-4">
+    <CardContent className="flex flex-col gap-3 py-4">
+      <Skeleton className="h-4 w-1/3" />
+      <Skeleton className="h-16 w-full" />
+    </CardContent>
+  </Card>
+)
+
+/** A load that failed says so, never vanishes (the 2026-10-23 outage hid every footage card without a word). */
+const FailedCard = ({ message }: { message: string }) => (
+  <Card className="my-4">
+    <CardContent className="py-4 text-sm text-pax2-red">Footage didn&apos;t load: {message}</CardContent>
+  </Card>
+)
+
+/** One generic b-roll shot, picked from Generate video's B-roll list. */
+export function BrollBlock({ id, videoModel }: { id: string; videoModel: VideoProvider }) {
+  const [plan, setPlan] = React.useState<FootagePlan | null>(null)
+  const [failed, setFailed] = React.useState<string | null>(null)
+  const { banked, setBanked, jobs, run } = useShots(plan)
+  React.useEffect(() => {
+    let off = false
+    brollPlan()
+      .then(async (p) => {
+        if (off) return
+        setPlan(p)
+        const b = await bankedShots(p.key)
+        if (!off) setBanked(b)
+      })
+      .catch((e) => !off && setFailed((e as Error).message))
+    return () => { off = true }
+  }, [setBanked])
+  if (failed) return <FailedCard message={failed} />
+  if (!plan) return <LoadingCard />
+  const shot = plan.shots.find((s) => s.id === id)
+  if (!shot) return <FailedCard message="that b-roll is no longer on the list." />
+  return <ShotsCard id={`broll-${id}`} title="B-roll" shots={[shot]} banked={banked} jobs={jobs} onRun={(shotId) => run(shotId, videoModel)} />
+}
+
+/** `show`: one of the two cards (a script placed from Generate video or Graphics); both when unset. */
+export function FootageBlock({ script, videoModel, focus, show }: { script: string; videoModel: VideoProvider; focus?: FootageFocus | null; show?: FootageShow }) {
+  const [plan, setPlan] = React.useState<FootagePlan | null>(null)
+  const [failed, setFailed] = React.useState<string | null>(null)
+  const { banked, setBanked, jobs, run } = useShots(plan)
+  const [brand, setBrandState] = React.useState<Brand>(BRAND_PRESETS[0])
+  const [saved, setSaved] = React.useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
+  const [rendering, setRendering] = React.useState<number | null>(null)
+  const [renderError, setRenderError] = React.useState<string | null>(null)
+  const ref = React.useRef<HTMLDivElement>(null)
+  const logoInput = React.useRef<HTMLInputElement>(null)
+  const primaryInput = React.useRef<HTMLInputElement>(null)
+  const accentInput = React.useRef<HTMLInputElement>(null)
+  const setBrand = (b: Brand) => {
+    setBrandState(b)
+    setSaved('idle')
+  }
+
+  React.useEffect(() => {
+    let off = false
+    footagePlan(script)
+      .then(async (p) => {
+        if (off) return
+        setPlan(p)
+        const [b, kit] = await Promise.all([bankedShots(p.key), footageBrand(p.key).catch(() => null)])
+        if (off) return
+        setBanked(b)
+        if (kit) {
+          setBrandState(kit)
+          setSaved('saved')
+        }
+      })
+      .catch((e) => !off && setFailed((e as Error).message))
+    return () => { off = true }
+  }, [script, setBanked])
+
+  React.useEffect(() => {
+    if (focus && plan) ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [focus, plan])
+
+  if (failed) return <FailedCard message={failed} />
+  if (!plan) return <LoadingCard />
 
   const kinds = GRAPHIC_KINDS.filter((k) => usable(k.id, plan))
   const download = async () => {
@@ -185,42 +268,9 @@ export function FootageBlock({ script, videoModel, focus }: { script: string; vi
 
   return (
     <div ref={ref}>
-      <ShelvedCard id={`shots-${plan.key}`} title="Shots">
-        <CardHeader className="border-b [.border-b]:pb-2">
-          <CardTitle>Shots</CardTitle>
-        </CardHeader>
-        <CardContent className="py-2">
-          <ul className="flex flex-col divide-y divide-[var(--border)]">
-            {plan.shots.map((s) => {
-              const b = banked[s.id]
-              const job = jobs[s.id]
-              return (
-                <li key={s.id} className="flex items-center gap-3 py-2.5">
-                  <div className="aspect-[9/16] w-[54px] shrink-0 overflow-hidden rounded-md border border-dashed border-slate-300 bg-slate-50">
-                    {b && <video src={b.url} muted loop playsInline autoPlay className="size-full object-cover" />}
-                  </div>
-                  <div className="min-w-0 flex-1" title={s.prompt}>
-                    <p className="text-sm text-[var(--txt)]">{s.kind === 'opening' ? 'Opening shot' : s.line}</p>
-                    <p className="text-xs text-[var(--muted)] tabular">{s.seconds} s{b ? ` · ${videoModelById(b.provider).label}` : ''}</p>
-                  </div>
-                  {!b &&
-                    (job?.state === 'working' ? (
-                      <span className="flex shrink-0 items-center gap-1.5 text-xs text-[var(--muted)]">
-                        <Loader2 className="size-3.5 animate-spin" />
-                        {videoModelById(job.provider).label}
-                      </span>
-                    ) : (
-                      <button type="button" onClick={() => run(s.id, videoModel)} title={job?.state === 'error' ? job.message : undefined} className={cn('shrink-0 rounded-full px-3 py-1 text-xs font-semibold hover:bg-pax2-lavender/60', job?.state === 'error' ? 'text-pax2-red' : 'text-pax2-blue')}>
-                        {job?.state === 'error' ? 'Retry' : 'Generate'}
-                      </button>
-                    ))}
-                </li>
-              )
-            })}
-          </ul>
-        </CardContent>
-      </ShelvedCard>
+      {show !== 'graphics' && <ShotsCard id={`shots-${plan.key}`} title="Shots" shots={plan.shots} banked={banked} jobs={jobs} onRun={(shotId) => run(shotId, videoModel)} />}
 
+      {show !== 'shots' && (
       <ShelvedCard id={`graphics-${plan.key}`} title="Graphics">
         <CardHeader className="border-b [.border-b]:pb-2">
           <CardTitle>Graphics</CardTitle>
@@ -317,6 +367,7 @@ export function FootageBlock({ script, videoModel, focus }: { script: string; vi
           </button>
         </CardFooter>
       </ShelvedCard>
+      )}
     </div>
   )
 }

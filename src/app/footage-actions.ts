@@ -4,7 +4,7 @@ import { createHash } from "node:crypto"
 
 import { generateHiggsfield, generationStatus, startGeneration, type GenStatus } from "@/app/video-gen-actions"
 import { anonSpend } from "@/lib/anon"
-import type { Brand, FootagePlan, Graphics, Shot } from "@/lib/footage"
+import { BROLL, type Brand, type FootagePlan, type Graphics, type Shot } from "@/lib/footage"
 import { fallbackChain, type VideoProvider } from "@/lib/video-model-options"
 
 // A script's footage plan and its banked shots, in S3 under studio/footage/<key>/: plan.json (written
@@ -102,6 +102,21 @@ export async function bankedShots(key: string): Promise<Record<string, BankedSho
     if (s) out[id] = s
   }
   return out
+}
+
+// Generic b-roll keeps one plan of its own (lib/footage.ts BROLL), so its clips bank like a script's shots.
+const BROLL_KEY = keyOf("pax b-roll library")
+const NO_GRAPHICS: Graphics = { checklist: { title: "", items: [], footer: "" }, callout: { text: "", highlight: "" }, stat: { value: "", label: "" }, quote: { text: "", by: "" }, intro: { title: "", sub: "" }, end: { ask: "", handle: "" } }
+
+/** The b-roll plan, rewritten whenever the list in lib/footage.ts changes. */
+export async function brollPlan(): Promise<FootagePlan> {
+  const shots: Shot[] = BROLL.map((b) => ({ id: b.id, kind: "broll", line: b.label, prompt: b.prompt, seconds: b.seconds }))
+  const at = `studio/footage/${BROLL_KEY}/plan.json`
+  const kept = await getJson<FootagePlan>(at)
+  if (kept && JSON.stringify(kept.shots) === JSON.stringify(shots)) return kept
+  const plan: FootagePlan = { key: BROLL_KEY, shots, graphics: NO_GRAPHICS }
+  await putJson(at, plan)
+  return plan
 }
 
 /** Which of these scripts carry saved footage (Save to Script writes brand.json), from one listing of
