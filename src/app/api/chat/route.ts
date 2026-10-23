@@ -6,6 +6,7 @@ import { SCRIPTS, scriptById, takeLabel } from "@/lib/catalog"
 import { board, workspace } from "@/lib/review"
 import { anonSpend } from "@/lib/anon"
 import { evidencePrompt } from "@/lib/script-evidence"
+import { metricsGuide } from "@/lib/metrics-guide"
 
 // The /chat answer, after solar's /api/chat: a system prompt carrying the record (here, every take's
 // current score and its parts, and the scripts), then the reply streamed back as plain text.
@@ -89,7 +90,7 @@ export async function POST(req: Request) {
   const r = await client.send(
     new ConverseStreamCommand({
       modelId,
-      system: [{ text: BASE_SYSTEM_PROMPT + (await record()) + extra + addressContext(address, place) + (recordMode ? `\n\n${evidencePrompt()}` : "") }],
+      system: [{ text: BASE_SYSTEM_PROMPT + (await record()) + `\n\n${metricsGuide()}` + extra + addressContext(address, place) + (recordMode ? `\n\n${evidencePrompt()}` : "") }],
       messages: messages.filter((m) => m.content.trim()).map((m): Message => ({ role: m.role, content: [{ text: m.content }] })),
       inferenceConfig: { maxTokens: 2000, temperature: 0.3 },
     }),

@@ -19,13 +19,23 @@ import { VOICES, type VoiceId } from '@/lib/studio-style'
 /*  Video Analytics prompts                                            */
 /* ------------------------------------------------------------------ */
 
+/*  Each one teaches a metric the site shows: the video page's blocks, /metrics' tabs and the graph. */
 const ANALYTICS_PROMPTS = [
-  'Rank the takes by Resonance and explain the spread.',
-  'Compare the highest and lowest scoring takes — name what separates them.',
-  'List the takes whose range still spans the reference average, and what each needs.',
-  'Break the latest take into Engage, Interest and Act, and say which moved its score.',
-  'Say which component — Engage, Interest or Act — explains more of the spread, with numbers.',
-  'Propose the next three tests the evidence supports.',
+  'What is Resonance, and how do I read its gauge: the needle, the dashed tick and the number in the center?',
+  'What does "outperformed 3x" mean, and why is it measured against the channel\'s own median?',
+  'What is the Outlier Score, and how is it different from a view count?',
+  'What does the Mode match measure, and what makes a mode a winning one?',
+  'How do I read the Craft template, axis by axis?',
+  'What do Resonant Length and Resonant Topic tell me about a video?',
+  'What do the Swayable, Wesleyan and Upworthy blocks each measure, and how far can I trust them?',
+  'What are the Recommendations based on, and why do some say there is no verdict yet?',
+  'What do Lab Tested and e² mean?',
+  'What does the Live tab on /metrics show, and why the first 72 hours?',
+  'What does the Complete tab add that the Live tab does not have?',
+  'How do I read the Patterns tab: the share at 3x and the lift?',
+  'What makes a short an outlier on the Outliers tab?',
+  'What does Feature worth show, and how was each feature\'s worth measured?',
+  'What is a neighborhood on the graph, and what does a cluster tell me?',
 ]
 
 /* ------------------------------------------------------------------ */
