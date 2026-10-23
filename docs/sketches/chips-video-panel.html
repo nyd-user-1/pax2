@@ -1,0 +1,38 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sketch: chips in the video panel</title><style>
+*{box-sizing:border-box}body{margin:0;background:#e2e8f0;font:15px/1.5 -apple-system,system-ui,sans-serif;color:#0f172a}
+.app{display:flex;gap:18px;height:100vh;padding:18px}
+.pane{background:#f5f7fb;border:1px solid #64748b;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 20px;box-shadow:0 4px 12px -8px rgb(15 23 42/.25);font-size:17px}
+.page{flex:1;overflow:auto;padding:28px 36px;display:grid;grid-template-columns:300px 1fr;gap:28px;align-content:start}
+.player{aspect-ratio:9/16;border-radius:16px;background:#0f172a center/cover;box-shadow:0 2px 8px rgb(0 0 0/.15)}
+.ask{margin:16px auto 0;display:flex;align-items:center;gap:8px;border:1px solid #2563eb;color:#1e3a8a;background:#fff;border-radius:999px;padding:8px 16px;font:500 14px -apple-system,system-ui,sans-serif;width:max-content}
+.card{background:#fff;border-radius:20px;outline:1px solid rgb(15 23 42/.06);padding:18px 22px;margin-bottom:16px}
+.card h3{margin:0 0 10px;font-size:15px}.bar{height:9px;border-radius:5px;background:#e2e8f0;margin:8px 0}
+.panel{width:420px;flex:none}
+.ph-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 24px;min-height:73px;border-bottom:1px solid rgb(226 232 240/.7)}
+.ph-head b{font-weight:400;font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x{width:36px;height:36px;border-radius:999px;background:#fff;border:1px solid #e2e8f0;display:grid;place-items:center;color:#64748b;flex:none}
+.thread{flex:1;overflow:auto;padding:24px 16px;display:flex;flex-direction:column;gap:16px}
+.msg.user{display:flex;justify-content:flex-end}.msg.user span{max-width:80%;background:#fff;border-radius:16px 16px 4px 16px;padding:12px 16px;font-size:16px}
+.msg.bot{font-size:16px}.msg.bot p{margin:0 0 10px}.msg.bot ul{margin:0 0 10px;padding-left:20px}
+table{border-collapse:collapse;font-size:13px;margin:6px 0 10px;width:100%}th,td{border-bottom:1px solid #e2e8f0;padding:6px 8px;text-align:left}th{font-weight:600;color:#334155}.num{text-align:right;font-variant-numeric:tabular-nums}
+.foot{margin-top:4px;display:flex;flex-direction:column;gap:6px}.cite{margin:0;border-left:2px solid rgb(37 99 235/.6);padding-left:10px;font-size:12px;color:#475569;line-height:1.4}.basis{margin:0;font-size:12px;color:#94a3b8;line-height:1.4}
+.composer{padding:8px 16px 16px}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.chips button{border:1px solid #e2e8f0;background:#fff;border-radius:999px;padding:6px 12px;font:13px/1.35 -apple-system,system-ui,sans-serif;color:#0f172a;text-align:left}
+.box{border:1px solid #e2e8f0;border-radius:16px;background:#fff;padding:12px 16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}.ph{color:#94a3b8;font-size:16px;min-height:36px}
+.tools{display:flex;align-items:center;gap:8px;color:#64748b}.ic{width:32px;height:32px;display:grid;place-items:center;border-radius:999px;font-size:14px}.sp{flex:1}.send{width:36px;height:36px;border-radius:12px;background:#1e3a8a;color:#fff;display:grid;place-items:center;opacity:.3}
+.ribbon{display:flex;align-items:center;gap:6px;margin-bottom:-8px;border:1px solid #e2e8f0;border-bottom:0;border-radius:16px 16px 0 0;background:#f1f5f9;padding:8px 16px 16px;font-size:11px;color:#475569}.ribbon b{color:#0f172a;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ribbon .k{text-transform:uppercase;letter-spacing:.04em}
+.full .thread{max-width:773px;width:100%;margin:0 auto}.full .composer{max-width:805px;width:100%;margin:0 auto}
+.dev{position:fixed;right:18px;bottom:18px;width:430px;background:#0f172a;color:#e2e8f0;border-radius:12px;padding:12px 14px;font:11px/1.55 ui-monospace,Menlo,monospace;box-shadow:0 8px 24px rgb(0 0 0/.3);opacity:.94}
+.dev .h{color:#94a3b8;margin-bottom:6px}.dev .tap{color:#86efac}
+@media (max-width:900px){.app{flex-direction:column;height:auto}.panel{width:auto}.page{grid-template-columns:1fr}.dev{position:static;width:auto;margin:18px}}
+</style></head><body>
+<div class="app">
+<div class="pane" style="flex:1"><div class="top">Videos</div>
+<div class="page"><div><div class="player" style="background-image:url(https://i.ytimg.com/vi/_uCaxImRvvw/hqdefault.jpg)"></div><div class="ask">&#128172; Ask about this video</div></div>
+<div><div class="card"><h3>Analytics</h3><div class="bar" style="width:70%"></div><div class="bar" style="width:52%"></div></div><div class="card"><h3>Mode match</h3><div class="bar" style="width:33%"></div></div><div class="card"><h3>Recommendations</h3><div class="bar" style="width:80%"></div><div class="bar" style="width:60%"></div></div></div></div></div>
+<div class="pane panel"><div class="ph-head"><b>The Weaponization of the Department of Justice</b><span class="x">&#10005;</span></div>
+<div class="thread"><div class="msg user"><span>Should I put a call to action on screen?</span></div>
+<div class="msg bot"><p>Shorts with an on-screen call to action outperformed 3x <b>7.0 points less often</b> than others in the same channels (90% range −11.4 to −3.3, 32 channels). This short shows one at 56 s. <b>Recommendation: take the on-screen ask out.</b></p><div class="foot"><p class="cite">On-screen call to action: the feature lift formula over 4,396 settled shorts in 57 channels, within-channel, 90% range from 1,000 channel resamples (data/generated/model/vqa-lift.json); the column read 94 of 99 right in audit.</p><p class="basis">the registry's one recommendation: the feature lift formula for an on-screen call to action; read from the frames, 94 of 99 right in audit</p></div></div></div>
+<div class="composer"><div class="chips"><button>What does this look like on mute?</button><button>How does it end?</button><button>Where does this rank on my channel?</button><button>What one change would help most?</button></div><div class="box"><div class="ph">Ask about the scores, scripts and results…</div><div class="tools"><span class="ic">+</span><span class="ic">&#9673;</span><span class="ic">&#127908;</span><span class="sp"></span><span class="send">&#8593;</span></div></div></div>
+</div></div></body></html>

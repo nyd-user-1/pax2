@@ -298,7 +298,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <button type="button" class="chip">Why might this one have outperformed?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>catalog.ratio</code> <code>registry.rows[measured]</code> <code>topics.lift</code> <code>modes.score</code> <code>lengths.bins</code></div>
-  <div><b>Basis</b> the traits it carries that have a measured Breakout lift, within the same channels</div>
+  <div><b>Basis</b> the traits it carries that have a measured feature lift, within the same channels</div>
   <div><b>Answer</b> Outlier Score {ratio}×. Of the traits measured to move the outperform rate, it carries: {traits}. These are associations measured across channels, not causes of this one result.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
@@ -378,7 +378,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <button type="button" class="chip">How does this format do elsewhere?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.format</code> <code>registry.rows[format=*]</code></div>
-  <div><b>Basis</b> the Breakout lift for the format, 4,396 settled shorts in 57 channels; 72 of 86 right in audit</div>
+  <div><b>Basis</b> the feature lift formula for the format, 4,396 settled shorts in 57 channels; 72 of 86 right in audit</div>
   <div><b>Answer</b> {format} shorts outperform 3x {points} points {moreLess} often than others in the same channels (90% range {low} to {high}, {channels} channels). Descriptive: the format read is below the 0.85 accuracy a recommendation needs.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
@@ -443,7 +443,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>codebook.swayable</code> <code>swayable.traits</code></div>
   <div><b>Basis</b> Swayable's randomized tests (575 ads): the summed difference of the traits the script carries; no single trait's 90% range clears zero</div>
-  <div><b>Answer</b> Persuasion lean {lean} points of vote choice against a placebo, summed over the {n} traits it carries; the archive's median ad moved {median}. Largest contributions: {traits}.</div>
+  <div><b>Answer</b> Persuasion lean {lean} points of vote choice: the summed differences of the {n} Swayable traits it carries. Largest: {traits}. No single trait's 90% range clears zero, so the lean is descriptive.</div>
   <div class="cov">5,375 of 5,379 baseline shorts; the rest: Run the codebook on this video: the Swayable, Upworthy and Wesleyan codes land with it</div></div>
 </div>
 <div class="q" data-id="title-patterns" data-ask="Is my title built like headlines that win?" data-score="4">
@@ -474,7 +474,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <button type="button" class="chip">Should I put a call to action on screen?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.callToAction</code> <code>census.ctaSec</code> <code>registry.rows[callToAction]</code></div>
-  <div><b>Basis</b> the registry's one recommendation: the Breakout lift for an on-screen call to action; 94 of 99 right in audit</div>
+  <div><b>Basis</b> the registry's one recommendation: the feature lift formula for an on-screen call to action; 94 of 99 right in audit</div>
   <div><b>Answer</b> Shorts with an on-screen call to action outperformed 3x {points} points less often than others in the same channels (90% range {low} to {high}, {channels} channels). {here}</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>

@@ -22,7 +22,7 @@ export type Store =
   | "topics" // video-reads.json topic + encoder-map.json clusters + topic-lift.json measured lifts
   | "findings" // data/generated/model/composition-findings.json: paired splits, overall and per cluster
   | "lengths" // data/generated/model/length-crossing.json: outperform and underperform share by length
-  | "registry" // data/generated/model/vqa-registry.json + vqa-lift.json: census traits with the Breakout lift
+  | "registry" // data/generated/model/vqa-registry.json + vqa-lift.json: census traits with the feature lift formula
   | "velocity72" // data/generated/model/velocity-features.json: views at 1, 6, 24 and 72 hours
   | "policy" // data/generated/model/martian-publish-policy.json: posterior over topic x length x hour block
   | "swayable" // data/generated/swayable-patterns.json: each trait's measured difference in vote choice
@@ -386,7 +386,7 @@ export const QUESTIONS: Question[] = [
     ask: "Why might this one have outperformed?",
     reads: ["catalog.ratio", "registry.rows[measured]", "topics.lift", "modes.score", "lengths.bins"],
     needs: ["catalog", "census"],
-    basis: "the traits it carries that have a measured Breakout lift, within the same channels",
+    basis: "the traits it carries that have a measured feature lift, within the same channels",
     template: "Outlier Score {ratio}×. Of the traits measured to move the outperform rate, it carries: {traits}. These are associations measured across channels, not causes of this one result.",
     unlock: RUN_CENSUS,
   },
@@ -493,7 +493,7 @@ export const QUESTIONS: Question[] = [
     ask: "How does this format do elsewhere?",
     reads: ["census.format", "registry.rows[format=*]"],
     needs: ["census"],
-    basis: "the Breakout lift for the format, 4,396 settled shorts in 57 channels",
+    basis: "the feature lift formula for the format, 4,396 settled shorts in 57 channels",
     template: "{format} shorts outperform 3x {points} points {moreLess} often than others in the same channels (90% range {low} to {high}, {channels} channels). Descriptive: the format read is below the 0.85 accuracy a recommendation needs.",
     census: "format",
     unlock: RUN_CENSUS,
@@ -610,7 +610,7 @@ export const QUESTIONS: Question[] = [
     ask: "Should I put a call to action on screen?",
     reads: ["census.callToAction", "census.ctaSec", "registry.rows[callToAction]"],
     needs: ["census", "registry"],
-    basis: "the registry's one recommendation: the Breakout lift for an on-screen call to action",
+    basis: "the registry's one recommendation: the feature lift formula for an on-screen call to action",
     template: "Shorts with an on-screen call to action outperformed 3x {points} points less often than others in the same channels (90% range {low} to {high}, {channels} channels). {here}",
     census: "callToAction",
     unlock: RUN_CENSUS,

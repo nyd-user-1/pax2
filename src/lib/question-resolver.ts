@@ -137,7 +137,7 @@ const survivingMode = () => modes()?.full.modes.find((m) => m.survived) ?? null
 const channelShorts = (ch: string) => Object.entries(bank()?.shorts ?? {}).filter(([, s]) => s.ch === ch)
 const liftRow = (key: string) => lift()?.rows.find((r) => r.key === key)
 const cta = () => liftRow("callToAction")
-const CTA_CITATION = "On-screen call to action: the Breakout lift over 4,396 settled shorts in 57 channels, within-channel, 90% range from 1,000 channel resamples (data/generated/model/vqa-lift.json); the column read 94 of 99 right in audit."
+const CTA_CITATION = "On-screen call to action: the feature lift formula over 4,396 settled shorts in 57 channels, within-channel, 90% range from 1,000 channel resamples (data/generated/model/vqa-lift.json); the column read 94 of 99 right in audit."
 
 // ── resolvers ───────────────────────────────────────────────────────────────────────────────────
 type Out = Omit<Answer, "id" | "ask" | "basis">
