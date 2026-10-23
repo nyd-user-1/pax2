@@ -2,9 +2,11 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { ArrowUpRight, ChevronsDownUp, ChevronsUpDown, EllipsisVertical, LayoutGrid, Link2, Loader2, RefreshCw } from "lucide-react"
+import { ArrowUpRight, ChevronsDownUp, ChevronsUpDown, EllipsisVertical, LayoutGrid, Link2, Loader2, MessagesSquare, Pin, RefreshCw, Star } from "lucide-react"
 
-import { KebabMenu, MenuFoot, MenuHeader, MenuRow, MenuSeparator } from "@/components/kebab-menu"
+import { KebabMenu, MenuFoot, MenuRow, MenuSeparator } from "@/components/kebab-menu"
+import { useShellPanel } from "@/components/shell"
+import { useNavFavorites } from "@/lib/nav-favorites"
 
 import { useShelf } from "@/lib/home-blocks"
 import { cn } from "@/ui/lib/utils"
@@ -20,7 +22,9 @@ export const BLOCK_REF = /\[\[block:(\/[^\]#\s]*)#([\w-]+)\]\]/g
 
 export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
   const router = useRouter()
-  const { add, has } = useShelf()
+  const { add, remove, has } = useShelf()
+  const { askAbout } = useShellPanel()
+  const { favs, toggle: toggleFav } = useNavFavorites()
   const [state, setState] = React.useState<{ html?: string; error?: string }>({})
   const [collapsed, setCollapsed] = React.useState(false)
   const [nonce, setNonce] = React.useState(0)
@@ -87,13 +91,15 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
             {kebab && (
               <span className="absolute" style={{ top: kebab.top, left: kebab.left }}>
                 <KebabMenu label="Block options" trigger={<EllipsisVertical className="size-4" />} triggerClassName="inline-flex size-8 items-center justify-center rounded-md text-slate-800 outline-none hover:bg-muted hover:text-foreground aria-expanded:bg-muted">
-                  <MenuHeader text={`#${anchor}`} copy={typeof window === "undefined" ? key : link()} />
-                  <MenuSeparator />
-                  <MenuRow icon={<LayoutGrid />} label={onShelf ? "On the Blocks shelf" : "Add to Blocks"} checked={onShelf} onClick={() => !onShelf && add({ key, title, path, anchor })} />
-                  <MenuRow icon={<ArrowUpRight />} label="Open on its page" onClick={() => router.push(`${path}#${anchor}`)} />
-                  <MenuRow icon={<Link2 />} label="Copy link" onClick={() => navigator.clipboard.writeText(link())} />
+                  <MenuRow icon={<Pin />} label="Pin to top" disabled onClick={() => {}} />
+                  <MenuRow icon={<Star className={favs.includes(key) ? "fill-amber-400 text-amber-400" : undefined} />} label={favs.includes(key) ? "Unfavorite" : "Favorite"} onClick={() => toggleFav(key)} />
+                  <MenuRow icon={<LayoutGrid />} label={onShelf ? "Remove from Blocks" : "Add to Blocks"} checked={onShelf} onClick={() => (onShelf ? remove(key) : add({ key, title, path, anchor }))} />
+                  <MenuRow icon={<MessagesSquare />} label="Ask PAX" onClick={() => { const text = (snap.current?.innerText ?? "").replace(/\n{3,}/g, "\n\n").slice(0, 8000); askAbout({ context: () => `ACTIVE CONTEXT — the user is asking about the block "${title}" on ${path}. What the block shows on screen:\n${text}` }) }} />
                   <MenuRow icon={<RefreshCw />} label="Refresh" onClick={() => setNonce((n) => n + 1)} />
                   <MenuRow icon={collapsed ? <ChevronsUpDown /> : <ChevronsDownUp />} label={collapsed ? "Expand" : "Collapse"} onClick={() => setCollapsed((c) => !c)} />
+                  <MenuSeparator />
+                  <MenuRow icon={<ArrowUpRight />} label="Open on its page" onClick={() => router.push(`${path}#${anchor}`)} />
+                  <MenuRow icon={<Link2 />} label="Copy link" onClick={() => navigator.clipboard.writeText(link())} />
                   <MenuSeparator />
                   <MenuFoot title={title} sub={path} />
                 </KebabMenu>

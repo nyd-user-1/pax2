@@ -18,18 +18,19 @@ const ROW = "group/row flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5
 const ICON = "flex size-4 shrink-0 items-center justify-center text-slate-400 transition-colors group-hover/row:text-pax2-blue [&_svg]:size-4"
 
 /** One action. It runs, then the menu closes. `checked` marks the current choice in a set. */
-export function MenuRow({ icon, label, onClick, checked, danger, hint }: { icon?: React.ReactNode; label: React.ReactNode; onClick: () => void; checked?: boolean; danger?: boolean; hint?: React.ReactNode }) {
+export function MenuRow({ icon, label, onClick, checked, danger, hint, disabled }: { icon?: React.ReactNode; label: React.ReactNode; onClick: () => void; checked?: boolean; danger?: boolean; hint?: React.ReactNode; disabled?: boolean }) {
   const { close } = React.useContext(MenuCtx)
   return (
     <button
       type="button"
       role="menuitem"
+      disabled={disabled}
       onClick={(e) => {
         e.stopPropagation()
         onClick()
         close()
       }}
-      className={cn(ROW, danger && "text-destructive hover:text-destructive", checked && "font-medium text-slate-900")}
+      className={cn(ROW, danger && "text-destructive hover:text-destructive", checked && "font-medium text-slate-900", disabled && "pointer-events-none opacity-40")}
     >
       {icon !== undefined && <span className={ICON}>{icon}</span>}
       <span className="min-w-0 flex-1 truncate">{label}</span>

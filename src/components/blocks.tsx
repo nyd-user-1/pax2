@@ -2,13 +2,10 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { ChevronDown, LayoutGrid } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 
 import { CardAnchor, CardTools, slug } from "@/components/dash/card-tools"
 import { CarouselChevrons } from "@/components/record/chart-carousel"
-import { useShelf } from "@/lib/home-blocks"
-import { MenuRow } from "@/components/kebab-menu"
 import { PAX2Search, PAX2Table2 } from "@/components/pax2-table2"
 import { Card, CardAction, CardContent, CardFooter, CardHeader } from "@/ui/components/nova/card"
 import { cn } from "@/ui/lib/utils"
@@ -58,17 +55,6 @@ export type BlockProps = {
   className?: string
 }
 
-/** The menu's "Add to Blocks": puts this block on the discussion panel's Blocks shelf, or takes it off. */
-function ShelfItem({ title, anchor }: { title: string; anchor: string }) {
-  const path = usePathname()
-  const { add, remove, has } = useShelf()
-  const key = `${path}#${anchor}`
-  const on = has(key)
-  return (
-    <MenuRow icon={<LayoutGrid />} label={on ? "Remove from Blocks" : "Add to Blocks"} checked={on} onClick={() => (on ? remove(key) : add({ key, title, path, anchor }))} />
-  )
-}
-
 export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, height, peek, id, menuItems, className }: BlockProps) {
   const [open, setOpen] = React.useState(defaultOpen)
   return (
@@ -83,7 +69,7 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
             {search && <PAX2Search placeholder={search} />}
           </div>
           <CardAction>
-            <CardTools rows={rows} name={name ?? title.toLowerCase()} views={views} view={view} onView={onView} collapsed={!open} onCollapse={() => setOpen(!open)} menuItems={<>{title && <ShelfItem title={title} anchor={id ?? slug(title)} />}{menuItems}</>} title={title || undefined} anchor={title || id ? (id ?? slug(title)) : undefined}>
+            <CardTools rows={rows} name={name ?? title.toLowerCase()} views={views} view={view} onView={onView} collapsed={!open} onCollapse={() => setOpen(!open)} menuItems={menuItems} title={title || undefined} anchor={title || id ? (id ?? slug(title)) : undefined}>
               {actions}
               <button type="button" aria-label={open ? `Collapse ${title}` : `Expand ${title}`} onClick={() => setOpen(!open)} className="inline-flex size-8 items-center justify-center rounded-md text-slate-800 hover:bg-muted hover:text-foreground">
                 <ChevronDown className={cn("size-4 transition-transform", open && "rotate-180")} />

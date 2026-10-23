@@ -2,11 +2,14 @@
 
 import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { CheckIcon, ChevronsDownUpIcon, ChevronsUpDownIcon, CopyIcon, DownloadIcon, EllipsisVerticalIcon, LayoutListIcon, PinIcon, RefreshCwIcon } from "lucide-react"
+import { CheckIcon, ChevronsDownUpIcon, ChevronsUpDownIcon, CopyIcon, DownloadIcon, EllipsisVerticalIcon, LayoutGridIcon, LayoutListIcon, MessagesSquareIcon, PinIcon, RefreshCwIcon, StarIcon } from "lucide-react"
 
 import { CardTitle } from "@/ui/components/nova/card"
 import { usePinTop } from "@/components/dash/block-order"
-import { KebabMenu, MenuFlyout, MenuFoot, MenuHeader, MenuRow, MenuSeparator } from "@/components/kebab-menu"
+import { KebabMenu, MenuFlyout, MenuFoot, MenuRow, MenuSeparator } from "@/components/kebab-menu"
+import { useShellPanel } from "@/components/shell"
+import { useShelf } from "@/lib/home-blocks"
+import { useNavFavorites } from "@/lib/nav-favorites"
 import { cn } from "@/ui/lib/utils"
 
 // Two things every Admin card carries (Brendan, 2026-09-06): a title that
@@ -72,7 +75,10 @@ function download(rows: readonly Record<string, unknown>[], name: string, kind: 
   URL.revokeObjectURL(a.href)
 }
 
-/** The card's controls: whatever it had, then the standard three-dot menu (GovBlock's ComponentActions). */
+/** The card's controls: whatever it had, then the standard three-dot menu (Brendan, 2026-10-23), the same
+ *  six rows on every block in this order: Pin to top, Favorite, Add to Blocks, Ask PAX, Refresh, Collapse.
+ *  A block's own entries (View, Download, extras) follow below a separator. Pin to top works where the
+ *  block sits in an ordered column and is greyed where it is already first or the page has no order. */
 export function CardTools({
   children,
   className,
@@ -100,27 +106,40 @@ export function CardTools({
   name?: string
   collapsed?: boolean
   onCollapse?: () => void
-  /** The block's title and anchor, for the menu's identity line and its foot. */
+  /** The block's title and anchor: Favorite and Add to Blocks key on them, the foot shows the title. */
   title?: string
   anchor?: string
 }) {
   const router = useRouter()
   const path = usePathname()
   const pinTop = usePinTop()
+  const { askAbout } = useShellPanel()
+  const { favs, toggle: toggleFav } = useNavFavorites()
+  const shelf = useShelf()
+  const root = React.useRef<HTMLDivElement>(null)
+  const key = anchor ? `${path}#${anchor}` : null
+  const fav = !!key && favs.includes(key)
+  const onShelf = !!key && shelf.has(key)
+  // Ask PAX: the side panel's chat opens with the block's content, read off the screen at the click.
+  const ask = () => {
+    const card = root.current?.closest<HTMLElement>('[data-slot="card"]')
+    const name = title ?? card?.querySelector('[data-slot="card-title"]')?.textContent ?? "this block"
+    const text = (card?.innerText ?? "").replace(/\n{3,}/g, "\n\n").slice(0, 8000)
+    askAbout({ context: () => `ACTIVE CONTEXT — the user is asking about the block "${name}" on ${path}. What the block shows on screen:\n${text}` })
+  }
+  const extras = (views && views.length > 1) || !!menuItems || (rows && rows.length > 0)
   return (
-    <div className={cn("flex items-center gap-1", className)}>
+    <div ref={root} className={cn("flex items-center gap-1", className)}>
       {children}
       {/* Code/hq's row kebab, in PAX's light dress (components/kebab-menu.tsx). */}
       <KebabMenu label="Block options" trigger={<EllipsisVerticalIcon className="size-4" />} triggerClassName="inline-flex size-8 items-center justify-center rounded-md text-slate-800 outline-none hover:bg-muted hover:text-foreground aria-expanded:bg-muted">
-        {anchor && (
-          <>
-            <MenuHeader text={`#${anchor}`} copy={typeof window === "undefined" ? `${path}#${anchor}` : `${window.location.origin}${path}#${anchor}`} />
-            <MenuSeparator />
-          </>
-        )}
+        <MenuRow icon={<PinIcon />} label="Pin to top" disabled={!pinTop || pinTop.first} onClick={() => pinTop?.pin()} />
+        <MenuRow icon={<StarIcon className={fav ? "fill-amber-400 text-amber-400" : undefined} />} label={fav ? "Unfavorite" : "Favorite"} disabled={!key} onClick={() => key && toggleFav(key)} />
+        <MenuRow icon={<LayoutGridIcon />} label={onShelf ? "Remove from Blocks" : "Add to Blocks"} checked={onShelf} disabled={!key || !title} onClick={() => key && title && anchor && (onShelf ? shelf.remove(key) : shelf.add({ key, title, path, anchor }))} />
+        <MenuRow icon={<MessagesSquareIcon />} label="Ask PAX" onClick={ask} />
         <MenuRow icon={<RefreshCwIcon />} label="Refresh" onClick={() => router.refresh()} />
-        {onCollapse && <MenuRow icon={collapsed ? <ChevronsUpDownIcon /> : <ChevronsDownUpIcon />} label={collapsed ? "Expand" : "Collapse"} onClick={onCollapse} />}
-        {pinTop && !pinTop.first && <MenuRow icon={<PinIcon />} label="Pin to top" onClick={pinTop.pin} />}
+        <MenuRow icon={collapsed ? <ChevronsUpDownIcon /> : <ChevronsDownUpIcon />} label={collapsed ? "Expand" : "Collapse"} disabled={!onCollapse} onClick={() => onCollapse?.()} />
+        {extras && <MenuSeparator />}
         {views && views.length > 1 && (
           <MenuFlyout id="view" icon={<LayoutListIcon />} label="View" hint={views.find((v) => v.value === view)?.label}>
             {views.map((v) => (
