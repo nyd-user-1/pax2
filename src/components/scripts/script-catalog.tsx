@@ -81,10 +81,24 @@ function SourceLink({ source }: { source: { label: string; href: string } }) {
 
 /** The catalog: every script a card, the chosen one read line by line with the reason for every line beside it.
  *  `solo` renders the Scripts block alone, at the /home blocks' full-viewport height. */
+// One soft background and strong ink per approach; assigned over the approaches present, in sorted order,
+// so no two approaches on the page share a color.
+const APPROACH_COLORS: [string, string][] = [
+  ["#dbeafe", "#1e40af"], ["#fce7f3", "#9d174d"], ["#dcfce7", "#166534"], ["#fef3c7", "#92400e"],
+  ["#ede9fe", "#5b21b6"], ["#ffedd5", "#9a3412"], ["#cffafe", "#155e75"], ["#fee2e2", "#991b1b"],
+  ["#ecfccb", "#3f6212"], ["#e0e7ff", "#3730a3"], ["#fae8ff", "#86198f"], ["#ccfbf1", "#115e59"],
+  ["#fef9c3", "#854d0e"], ["#ffe4e6", "#9f1239"], ["#e0f2fe", "#075985"], ["#d1fae5", "#065f46"],
+  ["#f1f5f9", "#334155"], ["#f5f5f4", "#44403c"],
+]
+
 export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: CatalogScript[]; opposition?: { items: string[]; note: string; href: string }; solo?: boolean }) {
   const [id, setId] = React.useState(scripts[0]?.id)
   const [hot, setHot] = React.useState<number | null>(null)
   const [reading, setReading] = React.useState(false)
+  const approachColor = React.useMemo(() => {
+    const names = [...new Set(scripts.map((s) => s.approach).filter(Boolean))].sort()
+    return new Map(names.map((n, i) => [n, APPROACH_COLORS[i % APPROACH_COLORS.length]]))
+  }, [scripts])
   const s = scripts.find((x) => x.id === id) ?? scripts[0]
   React.useEffect(() => setHot(null), [id])
   if (!s) return null
@@ -177,7 +191,7 @@ export function ScriptCatalog({ scripts, opposition, solo = false }: { scripts: 
                   className={cn("lift surface flex flex-col gap-2 p-5 text-left", on && "ring-2 ring-pax2-light-blue/50")}
                 >
                   <span className="flex w-full items-center justify-between gap-2">
-                    <span className="rounded-full bg-pax2-lavender px-2.5 py-0.5 text-[11px] font-semibold text-pax2-blue">{x.approach}</span>
+                    <span className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold" style={{ background: approachColor.get(x.approach)?.[0], color: approachColor.get(x.approach)?.[1] }}>{x.approach}</span>
                     {x.average != null && (
                       <span className={cn("tabular rounded-full px-2 py-0.5 text-xs font-bold", toneClasses[t], t === "even" && "outline outline-1 outline-slate-200")}>{x.average.toFixed(0)}</span>
                     )}
