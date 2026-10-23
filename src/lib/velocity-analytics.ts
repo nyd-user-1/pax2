@@ -55,10 +55,32 @@ function etBin(iso: string): { dow: number; hour: number } {
   return { dow: Math.max(0, dow), hour }
 }
 
+// Rebuilding reads every daily poll file since tracking began (64 MB on 2026-10-23), so a visitor
+// never waits on it after the first build: a stale result is served at once and refreshed in the
+// background, and concurrent requests share one rebuild. The poller writes every 15 minutes.
+const TTL = 30 * 60_000
 let cache: { at: number; data: PatternsData } | null = null
+let building: Promise<PatternsData> | null = null
+
+function rebuild(): Promise<PatternsData> {
+  building ??= buildPatterns()
+    .then((data) => {
+      cache = { at: Date.now(), data }
+      return data
+    })
+    .finally(() => {
+      building = null
+    })
+  return building
+}
 
 export async function patternsData(): Promise<PatternsData> {
-  if (cache && Date.now() - cache.at < 10 * 60_000) return cache.data
+  if (!cache) return rebuild()
+  if (Date.now() - cache.at >= TTL) rebuild().catch(() => {})
+  return cache.data
+}
+
+async function buildPatterns(): Promise<PatternsData> {
   const days = Math.min(60, Math.ceil((Date.now() - START) / 864e5) + 1)
   const [rows, meds, meta] = await Promise.all([recentPolls(days), baselines(), videoMeta()])
   const chName = new Map(CH.map((c) => [c.id, c.name]))
@@ -120,6 +142,5 @@ export async function patternsData(): Promise<PatternsData> {
   }).filter((c) => c.n > 0)
 
   const data: PatternsData = { videos, series, heat, channels, start: "2026-10-06", readings: rows.length }
-  cache = { at: Date.now(), data }
   return data
 }
