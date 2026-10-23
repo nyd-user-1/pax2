@@ -579,7 +579,10 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   const isEmpty = messages.length === 0
 
   // The script card rides the newest reply that carries a script.
-  const scriptMsg = recordMode ? [...messages].reverse().find((m) => m.role === 'assistant' && scriptText(m.content)) : undefined
+  // The reply holding the latest script wears the script card in any chat, including a reopened one (which
+  // starts outside record mode); only record mode copies it into the recording draft.
+  const cardMsg = [...messages].reverse().find((m) => m.role === 'assistant' && scriptText(m.content))
+  const scriptMsg = recordMode ? cardMsg : undefined
   const latestScript = scriptMsg && !streaming ? scriptText(scriptMsg.content) : null
 
   // Every settled draft is saved as it lands — the script survives a pivot, a detour, a reload of
@@ -873,7 +876,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
               // so it never shows as raw JSON) and rendered as real controls below.
               const shown = msg.role === 'assistant' ? stripOpenBlock(stripFieldBlock(msg.content)) : msg.content
               const fields = msg.role === 'assistant' && !msgStreaming ? parseFieldBlock(msg.content) : null
-              const script = recordMode && msg.id === scriptMsg?.id && !msgStreaming ? scriptText(msg.content) : null
+              const script = msg.id === cardMsg?.id && !msgStreaming ? scriptText(msg.content) : null
               const cites = script ? parseCiteBlock(msg.content) : null
               const measured = msg.role === 'assistant' ? splitMeasured(shown) : null
               const seg = script ? splitAtScript(shown) : null
