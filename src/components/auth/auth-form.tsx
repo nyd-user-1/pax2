@@ -11,7 +11,7 @@ type Mode = "signup" | "signin"
 
 const post = async (action: string, body: object) => {
   const r = await fetch(`/api/auth/${action}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
-  const j = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string; confirm?: boolean; resent?: boolean }
+  const j = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string; confirm?: boolean; resent?: boolean; signedIn?: boolean }
   return { status: r.status, ...j }
 }
 
@@ -56,7 +56,7 @@ export function AuthForm({ mode, onStep }: { mode: Mode; onStep?: (step: AuthSte
     const r = await post("signin", { email, password })
     if (r.status === 409) {
       await post("resend", { email })
-      setNotice("Confirm your email first — we just sent you a fresh code.")
+      setNotice("Confirm your email first. I just sent you a fresh code.")
       setStep("code")
       return false
     }
@@ -96,9 +96,11 @@ export function AuthForm({ mode, onStep }: { mode: Mode; onStep?: (step: AuthSte
       } else if (mode === "signup") {
         const r = await post("signup", { email, password })
         if (!r.ok) setError(r.error ?? "Something went wrong.")
+        // The email already had an account and this was its password: signed in, onward as a returning reader.
+        else if (r.signedIn) window.location.assign(nextPath("signin"))
         else {
           setResumed(!!r.resent)
-          setNotice(`We emailed a six-digit code to ${email}.`)
+          setNotice(`I emailed a six-digit code to ${email}.`)
           setStep("code")
         }
       } else {
@@ -122,7 +124,7 @@ export function AuthForm({ mode, onStep }: { mode: Mode; onStep?: (step: AuthSte
     else {
       setCode("")
       setPassword("")
-      setNotice(`We emailed a six-digit code to ${email}. Enter it with a new password.`)
+      setNotice(`I emailed a six-digit code to ${email}. Enter it with a new password.`)
       setStep("reset")
     }
   }
@@ -156,7 +158,7 @@ export function AuthForm({ mode, onStep }: { mode: Mode; onStep?: (step: AuthSte
         <>
           <p className="flex items-start gap-2.5 rounded-xl bg-pax2-lavender/60 px-4 py-3 text-sm leading-relaxed text-pax2-blue">
             <MailCheck className="mt-0.5 size-4 shrink-0" />
-            {notice ?? `We emailed a six-digit code to ${email}.`}
+            {notice ?? `I emailed a six-digit code to ${email}.`}
           </p>
           <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700">
             Confirmation code
