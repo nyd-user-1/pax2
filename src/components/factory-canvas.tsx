@@ -64,7 +64,7 @@ const MODELS: Chip[] = [
   { n: 12, name: "Watch-through regressor v0", status: "Live" },
   { n: 13, name: "Feed ranker v0", status: "Staged" },
   { n: 14, name: "Ask-a-video (Q)", status: "Staged" },
-  { n: 15, name: "Publish-next policy (P)", status: "Staged" },
+  { n: 15, name: "Planner", status: "Staged" },
 ]
 const model = (n: number) => MODELS[n - 1]
 
@@ -340,7 +340,7 @@ const edgeTypes = { fx: FxEdge }
 const LOOPS: [number, string, string][] = [
   [1, "Re-entry", "Publish puts the video on the poller; its readings bring it back through the admin console as measured outcome."],
   [2, "Machine learning", "Every run's measurements join the catalog; the instruments refit from it."],
-  [3, "Reinforcement learning", "Outcomes train the publish-next policy (15), which advises the next recording."],
+  [3, "Reinforcement learning", "Outcomes train the Planner (15), which advises the next recording."],
   [4, "Questions", "A question asked in Chat runs through Q (14); the answer becomes a census column."],
 ]
 
@@ -684,7 +684,7 @@ export function build(c: FactoryCounts): { nodes: Node[]; edges: Edge[] } {
     e("measure-catalog", "measure", "r-cat", "catalog", "b", loop(2, Ruler, "measurements join the catalog", { at: [cx(X_CATALOG, W.catalog), (Y_TOP + STORE_H + MEASURE_Y + 40) / 2] })),
     e("catalog-rack", "catalog", "r", "rack", "l", loop(2, RefreshCw, "refit")),
     // Loop 3: outcomes train P, P advises the next recording
-    e("readings-p15", "readings", "b", "p15", "b", loop(3, GraduationCap, "outcomes train the policy", { offset: below(RAIL_BOTTOM[3], bottom("readings"), bottom("p15")), at: [cx(X_STORE, W.store), RAIL_BOTTOM[3]] })),
+    e("readings-p15", "readings", "b", "p15", "b", loop(3, GraduationCap, "outcomes train the Planner", { offset: below(RAIL_BOTTOM[3], bottom("readings"), bottom("p15")), at: [cx(X_STORE, W.store), RAIL_BOTTOM[3]] })),
     e("p15-record", "p15", "r", "record", "l", loop(3, Lightbulb, "advises the next recording")),
     // Loop 4: questions through Q become census columns
     e("chat-q14", "chat", "l", "q14", "r", loop(4, MessageCircleQuestionMark, "a question asked in Chat")),
