@@ -25,6 +25,7 @@ import { AsideVideos, TagSections } from "@/components/aside-videos"
 import { PageShorts } from "@/lib/home-blocks"
 import { VideoNotes } from "@/components/notes/video-notes"
 import { TrialBlock } from "@/components/trials/trial-block"
+import { GuidanceBlock } from "@/components/guidance-block"
 import { trialEntries } from "@/lib/trials"
 import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/components/codebook-blocks"
 import { CensusCharacteristics } from "@/components/census-characteristics"
@@ -559,7 +560,9 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   // the experiments session; the trials file stays on the server).
   const trials = trialEntries(ytId)
   if (trials.length) right.splice(1, 0, ["trial", "Message test", <TrialBlock key="trial" entries={trials} />])
-  const TAB_OF: Record<string, "score" | "research" | "notes"> = { trial: "score", resonance: "score", "resonance-card": "score", recs: "score", forecast: "score", carry: "research", codebooks: "research", visual: "research", hits: "research", formula: "research", notes: "notes", transcript: "notes" }
+  // Guidance follows Recommendations in Score: frames, formats, messengers and messages measured to work.
+  right.splice(right.findIndex(([key]) => key === "recs") + 1 || right.length, 0, ["guidance", "Guidance", <GuidanceBlock key="guidance" codes={coded?.swayable} census={cen} />])
+  const TAB_OF: Record<string, "score" | "research" | "notes"> = { guidance: "score", trial: "score", resonance: "score", "resonance-card": "score", recs: "score", forecast: "score", carry: "research", codebooks: "research", visual: "research", hits: "research", formula: "research", notes: "notes", transcript: "notes" }
   const inTab = (tab: "score" | "analysis" | "research" | "notes") => right.filter(([key]) => (TAB_OF[key] ?? "analysis") === tab)
 
   const column = (page: string, blocks: [string, string, ReactNode][], lock: (key: string) => boolean) => (
