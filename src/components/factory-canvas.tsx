@@ -7,7 +7,7 @@ import {
   type Edge, type EdgeProps, type InternalNode, type Node, type NodeChange, type NodeProps,
 } from "@xyflow/react"
 import {
-  AudioLines, Binary, Calculator, ChartLine, ChevronRight, Clock, Columns3, Cpu, Database, DraftingCompass, Eye, Factory, FileBraces, FileText, Film, FlaskConical, GraduationCap, HardDrive, Layers,
+  AudioLines, Binary, Calculator, ChartLine, ChevronRight, Clock, Columns3, Cpu, Database, Eye, Factory, FileBraces, FileText, Film, FlaskConical, GraduationCap, HardDrive, Layers,
   Lightbulb, ListVideo, Magnet, Mail, MessageCircleQuestionMark, Monitor, Network, PenLine, RefreshCw, RotateCcw, Rss, Ruler, Save, Scissors, ScrollText,
   ScanEye, Search, Server, Settings2, Shapes, Table, Timer, TrendingUp, Zap, type LucideIcon,
 } from "lucide-react"
@@ -53,7 +53,7 @@ type Chip = { n: number; name: string; status: Status; make: Make }
 const MAKE: Record<Make, { icon: LucideIcon; label: string }> = {
   neural: { icon: Network, label: "neural network" },
   statistical: { icon: Calculator, label: "statistical model" },
-  reference: { icon: DraftingCompass, label: "measured effects" },
+  reference: { icon: Calculator, label: "measured effects" },
 }
 
 // The Models table's passed rows, in its order.
@@ -457,7 +457,7 @@ function Architecture({ view, edges, focus, onFocus, onOpen }: { view: View; edg
           {kind("door", <span className="h-6 w-14 rounded-lg bg-pax2-blue" />, "Door", "How a video enters.")}
           {kind("stage", <span className="h-6 w-14 rounded-xl border-2 border-pax2-light-blue bg-white" />, "Stage", "What the Lab does to the video, with the tools that do it.")}
           {kind("store", <span className="flex h-6 w-14 items-center justify-center rounded-[10px_10px_6px_6px] border border-slate-300 bg-slate-50"><HardDrive className="size-3.5 text-slate-500" /></span>, "Store", "Where it is kept: S3 prefixes, the DynamoDB ledger, the catalog. The count is what it holds; a dated count is from the last accounting run.")}
-          {kind("instrument", <span className="flex h-6 w-14 items-center gap-1 rounded-full border border-indigo-200 bg-indigo-50 pl-0.5"><MakeBadge make="neural" small /></span>, "Instrument", "A fitted model or a measured reference, numbered to the Models table. Its circle names the kind: a network for a neural network, a calculator for a statistical model, a compass for measured effects. A dashed one is staged: fitted or in build, not yet serving.")}
+          {kind("instrument", <span className="flex h-6 w-14 items-center gap-1 rounded-full border border-indigo-200 bg-indigo-50 pl-0.5"><MakeBadge make="neural" small /></span>, "Instrument", "A fitted model or a measured reference, numbered to the Models table. Its circle names the kind: a network for a neural network, a calculator for a statistical model or measured effects. A dashed one is staged: fitted or in build, not yet serving.")}
           {kind("service", <span className="flex h-6 w-14 items-center justify-center rounded-lg border border-amber-300 bg-amber-50"><Server className="size-3.5 text-amber-700" /></span>, "Service", "A paid external the factory calls, with its unit cost where one is recorded.")}
           {kind("surface", <span className="h-6 w-14 overflow-hidden rounded-lg border border-slate-300 bg-white"><span className="block h-1.5 bg-slate-100" /></span>, "Surface", "A page the factory feeds.")}
         </div>
