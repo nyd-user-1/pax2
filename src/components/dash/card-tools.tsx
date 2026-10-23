@@ -162,7 +162,7 @@ export function CardTools({
         )}
         <MenuSeparator />
         {/* Delete: off this page, onto the Blocks shelf, where opening it puts it back. */}
-        <MenuRow icon={<Trash2Icon />} label="Delete" danger disabled={!key || !title} onClick={() => key && title && anchor && (shelf.add({ key, title, path, anchor }), hide(key))} />
+        <MenuRow icon={<Trash2Icon />} label="Delete" danger disabled={!pinTop && (!key || !title)} onClick={() => (pinTop ? pinTop.hide() : key && title && anchor && (shelf.add({ key, title, path, anchor }), hide(key)))} />
         {title && (
           <>
             <MenuSeparator />

@@ -8,8 +8,8 @@ import { connections } from "@/app/connect-actions"
 import { Chat } from "@/components/chat/chat"
 import { ConnectView, type Nav } from "@/components/connect-view"
 import { useShellPanel } from "@/components/shell"
-import { useHiddenBlocks, useShelf, type ShelfBlock, type ShelfItem } from "@/lib/home-blocks"
-import { setShelfDrag } from "@/lib/shelf-drag"
+import { useHiddenBlocks, useShelf, type PageBlock, type ShelfBlock, type ShelfItem } from "@/lib/home-blocks"
+import { setPageBlockDrag, setShelfDrag } from "@/lib/shelf-drag"
 import { cn } from "@/ui/lib/utils"
 import { whiteButton } from "@/components/white-button"
 
@@ -54,15 +54,14 @@ const PLACE = (path: string) => (path === "/" ? "Landing" : path.slice(1).split(
 function BlocksShelf() {
   const router = useRouter()
   const path = usePathname()
-  const { items, add, remove, move } = useShelf()
-  const { show } = useHiddenBlocks()
-  // Every block on the page onto the shelf, in the page's order (blocks in other tabs included).
-  const addAll = () => {
-    const titles = Array.from(document.querySelectorAll<HTMLElement>('[data-slot="card-title"][id]')).filter((el) => !el.closest("[data-shelf]"))
-    titles.reverse().forEach((el) => {
-      const title = el.textContent?.trim()
-      if (title) add({ key: `${path}#${el.id}`, title, path, anchor: el.id })
-    })
+  const { items, layout, remove, move } = useShelf()
+  const { hidden, show } = useHiddenBlocks()
+  // The page's own layout leads the shelf: every block of it, the deleted ones dimmed. Pressing one puts it
+  // back if deleted and scrolls to it; dragging one onto the page drops it where it lands.
+  const offPage = (b: PageBlock) => hidden.includes(`${b.page}/${b.id}`)
+  const reveal = (b: PageBlock) => {
+    show(`${b.page}/${b.id}`)
+    setTimeout(() => document.getElementById(`block-${b.page}-${b.id}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), 50)
   }
   const [dragging, setDragging] = React.useState<string | null>(null)
   const [over, setOver] = React.useState<string | null>(null)
@@ -78,8 +77,8 @@ function BlocksShelf() {
   }, [])
   const cols = Math.min(6, Math.max(3, Math.floor((size.w + GAP) / (MIN_TILE + GAP))))
   const tileSide = (size.w - GAP * (cols - 1)) / cols
-  const rows = Math.max(Math.ceil(items.length / cols), Math.ceil((size.h + GAP) / (tileSide + GAP)))
-  const empties = rows * cols - items.length
+  const rows = Math.max(Math.ceil((items.length + layout.length) / cols), Math.ceil((size.h + GAP) / (tileSide + GAP)))
+  const empties = rows * cols - items.length - layout.length
   // A block's page can take a moment; its tile spins until the page has arrived.
   const [pending, startNav] = React.useTransition()
   const [going, setGoing] = React.useState<string | null>(null)
@@ -138,13 +137,33 @@ function BlocksShelf() {
     )
   return (
     <div data-shelf className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 pt-1">
-    <div className="mb-3 flex justify-end">
-      <button type="button" onClick={addAll} className="text-xs font-medium text-pax2-light-blue hover:underline">
-        Add all on this page
-      </button>
-    </div>
     <div ref={box} className="h-full">
     <div className="grid content-start" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`, gap: GAP }}>
+      {layout.map((b) => {
+        const off = offPage(b)
+        return (
+          <div
+            key={`p:${b.page}/${b.id}`}
+            draggable
+            onDragStart={(e) => {
+              setPageBlockDrag(e.dataTransfer, { page: b.page, id: b.id })
+              setShelfDrag(e.dataTransfer, { kind: "block", title: b.label, path, anchor: b.id })
+            }}
+            role="button"
+            tabIndex={0}
+            onClick={() => reveal(b)}
+            onKeyDown={(e) => e.key === "Enter" && reveal(b)}
+            aria-label={off ? `Put ${b.label} back on the page` : `Go to ${b.label}`}
+            className={cn(tile(`p:${b.id}`), "group flex flex-col justify-between p-2.5 hover:shadow-e2", off && "border-dashed bg-slate-50 opacity-70")}
+          >
+            <LayoutGrid className={cn("size-4", off ? "text-slate-400" : "text-pax2-blue")} />
+            <span className="min-w-0">
+              <span className="line-clamp-3 text-[12px] font-semibold leading-snug text-slate-900">{b.label}</span>
+              <span className="mt-0.5 block truncate text-[10px] text-slate-500">{off ? "Off the page" : "On the page"}</span>
+            </span>
+          </div>
+        )
+      })}
       {items.map((it) =>
         it.block ? (
           <div key={it.key} {...drag(it)} role="button" tabIndex={0} onClick={() => open(it.block)} onKeyDown={(e) => e.key === "Enter" && open(it.block)} aria-label={`Open ${it.block.title}`} className={cn(tile(it.key), "group flex flex-col justify-between p-2.5 hover:shadow-e2")}>

@@ -26,3 +26,18 @@ export function readShelfDrag(dt: DataTransfer | null): ShelfDrag | null {
 }
 
 export const isShelfDrag = (dt: DataTransfer | null) => !!dt?.types.includes(SHELF_MIME)
+
+/** A page's own block dragged from the shelf back onto its page: which column, which block. */
+export const PAGE_BLOCK_MIME = "application/x-pax-page-block"
+export type PageBlockDrag = { page: string; id: string }
+export function setPageBlockDrag(dt: DataTransfer, d: PageBlockDrag) {
+  dt.setData(PAGE_BLOCK_MIME, JSON.stringify(d))
+}
+export function readPageBlockDrag(dt: DataTransfer | null): PageBlockDrag | null {
+  try {
+    const raw = dt?.getData(PAGE_BLOCK_MIME)
+    return raw ? (JSON.parse(raw) as PageBlockDrag) : null
+  } catch {
+    return null
+  }
+}

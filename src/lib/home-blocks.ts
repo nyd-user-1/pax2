@@ -90,6 +90,20 @@ export function useHiddenBlocks() {
   return { hidden, hide, show }
 }
 
+// The page's own blocks (Brendan, 2026-10-23): every block in an ordered column registers here while its
+// page is open, so the shelf lists the whole layout, on the page or deleted from it.
+export type PageBlock = { page: string; id: string; label: string }
+const pageBlocks = new Map<string, PageBlock>()
+export function registerPageBlock(b: PageBlock) {
+  const k = `${b.page}/${b.id}`
+  pageBlocks.set(k, b)
+  window.dispatchEvent(new Event(EVENT))
+  return () => {
+    pageBlocks.delete(k)
+    window.dispatchEvent(new Event(EVENT))
+  }
+}
+
 // The page's own shorts (Brendan, 2026-10-23): a video page lists its channel's shorts on the shelf, after
 // the saved items, for as long as the page is open.
 let pageShorts: ShelfVideo[] = []
@@ -124,11 +138,13 @@ export function useShelf() {
   const [blocks, setBlocks] = React.useState<ShelfBlock[]>([])
   const [order, setOrder] = React.useState<string[]>([])
   const [extra, setExtra] = React.useState<ShelfVideo[]>([])
+  const [layout, setLayout] = React.useState<PageBlock[]>([])
   React.useEffect(() => {
     const on = () => {
       setBlocks(read())
       setOrder(readOrder())
       setExtra(pageShorts)
+      setLayout([...pageBlocks.values()])
     }
     on()
     window.addEventListener(EVENT, on)
@@ -162,5 +178,5 @@ export function useShelf() {
     },
     [items],
   )
-  return { blocks, items, add, remove, move, has: (key: string) => blocks.some((b) => b.key === key) }
+  return { blocks, items, layout, add, remove, move, has: (key: string) => blocks.some((b) => b.key === key) }
 }
