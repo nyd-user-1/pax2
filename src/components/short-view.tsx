@@ -20,6 +20,8 @@ import { boostCounts } from "@/lib/boost"
 import { ChevronRight } from "lucide-react"
 
 import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, SmallBlock } from "@/components/blocks"
+import { AsideTabs } from "@/components/aside-tabs"
+import { AsideVideos } from "@/components/aside-videos"
 import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/components/codebook-blocks"
 import { CensusCharacteristics } from "@/components/census-characteristics"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
@@ -213,8 +215,8 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const duration = f?.audio?.durationSec ?? (v ? secs(v.duration) : 0)
   const siblings = v
     ? sampled
-      ? [...data.videos, ...(homeFeed as unknown as Yt["videos"])].filter((x, i, all) => x.channelId === v.channelId && x.id !== ytId && all.findIndex((y) => y.id === x.id) === i).slice(0, 3)
-      : data.videos.filter((x) => x.channelId === v.channelId && x.id !== ytId && featuresFor(`yt-${x.id}`)).slice(0, 3)
+      ? [...data.videos, ...(homeFeed as unknown as Yt["videos"])].filter((x, i, all) => x.channelId === v.channelId && x.id !== ytId && all.findIndex((y) => y.id === x.id) === i).slice(0, 8)
+      : data.videos.filter((x) => x.channelId === v.channelId && x.id !== ytId && featuresFor(`yt-${x.id}`)).slice(0, 8)
     : []
   const times = (x: number) => `${x >= 10 ? x.toFixed(0) : x.toFixed(1)}×`
   const n = (x: number | null | undefined) => (x == null ? DASH : COMPACT.format(x))
@@ -291,13 +293,13 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   /** A video's outperformance multiple when the catalog knows it. */
   const ratioOf = (vid: string) => (homeFeed as { id: string; ratio?: number }[]).find((x) => x.id === vid)?.ratio ?? null
   const titleOf = (vid: string) => [...data.videos, ...(homeFeed as unknown as Yt["videos"])].find((x) => x.id === vid)?.title ?? null
-  /** Up to three other videos carrying `tag`, newest tagging first, each with a known title. */
+  /** Up to eight other videos carrying `tag`, newest tagging first, each with a known title. */
   const byTag = (tag: string) =>
     taggedVideos()
       .filter((x) => x.id !== id && x.tags.includes(tag))
       .map((x) => ({ id: x.id.replace(/^yt-/, ""), title: titleOf(x.id.replace(/^yt-/, "")) }))
       .filter((x): x is { id: string; title: string } => !!x.title)
-      .slice(0, 3)
+      .slice(0, 8)
   const template = craftTemplate(ytId)
   const topic = topicOf(ytId)
   const lengthSec = v ? secs(v.duration) : 0
@@ -317,68 +319,45 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         </SmallBlock>
       </Locked>,
     ])
-  if (siblings.length)
+  // Channel, Tags and Comps (Brendan, 2026-10-23): two to a row, at least two videos or no block, four at
+  // Half View and up to eight at Full View. Channel holds the channel's other shorts not already in Comps,
+  // newest first; Tags the shorts carrying this one's tags, its first tag's first; both link to their page.
+  const clean = (title: string) => title.replace(/\s*#\w+/g, "").trim() || title
+  const compIds = new Set(siblings.map((x) => x.id))
+  const channelVids = v
+    ? [...data.videos, ...(homeFeed as unknown as Yt["videos"])]
+        .filter((x, i, all) => x.channelId === v.channelId && x.id !== ytId && !compIds.has(x.id) && all.findIndex((y) => y.id === x.id) === i)
+        .sort((a, b) => String(b.published ?? "").localeCompare(String(a.published ?? "")))
+        .slice(0, 8)
+        .map((x) => ({ id: x.id, title: clean(x.title) }))
+    : []
+  const shownTags = tags.filter((t) => t !== "aggrieved")
+  const tagVids = [...new Map(shownTags.flatMap((t) => byTag(t)).map((x) => [x.id, { id: x.id, title: clean(x.title) }])).values()].slice(0, 8)
+  if (v && channelVids.length >= 2)
+    left.push([
+      "channel",
+      "Channel",
+      <SmallBlock key="channel" title="Channel" more={`/channels/${v.channelId}`}>
+        <AsideVideos videos={channelVids} inDrawer={inDrawer} />
+      </SmallBlock>,
+    ])
+  if (tagVids.length >= 2)
+    left.push([
+      "tags",
+      "Tags",
+      <SmallBlock key="tags" title="Tags" more={tagHref(shownTags[0])}>
+        <AsideVideos videos={tagVids} inDrawer={inDrawer} />
+      </SmallBlock>,
+    ])
+  if (siblings.length >= 2)
     left.push([
       "comps",
       "Comps",
       <Locked key="comps" locked={locked}>
-        <SmallBlock title="Comps" footer={sampled ? SAMPLE : undefined}>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {siblings.map((x) => {
-              const r = ratioOf(x.id)
-              return (
-                <Link key={x.id} href={`/v/yt-${x.id}`} scroll={false} replace={inDrawer} className="group flex min-w-0 flex-col gap-1.5">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={`https://i.ytimg.com/vi/${x.id}/mqdefault.jpg`} alt="" className="aspect-video w-full rounded-lg bg-slate-100 object-cover" />
-                  <span className="line-clamp-2 text-sm text-slate-800 group-hover:text-pax2-blue">{x.title.replace(/\s*#\w+/g, "").trim() || x.title}</span>
-                  {r != null && <span className="tabular text-xs font-semibold text-slate-600">{times(r)}</span>}
-                </Link>
-              )
-            })}
-          </div>
+        <SmallBlock title="Comps">
+          <AsideVideos videos={siblings.map((x) => ({ id: x.id, title: clean(x.title) }))} inDrawer={inDrawer} />
         </SmallBlock>
       </Locked>,
-    ])
-
-  if (tags.length)
-    left.push([
-      "tags",
-      "Tags",
-      <SmallBlock key="tags" title="Tags" footer={!realTags.length && tags.length ? SAMPLE : undefined}>
-        <div className="flex flex-col gap-2">
-          {tags.filter((t) => t !== "aggrieved").map((t, ti) => {
-            const others = byTag(t)
-            return (
-              <details key={t} data-find open={ti === 0} className="group/tag rounded-md border bg-card">
-                <summary className="flex cursor-pointer list-none items-center gap-2.5 px-3 py-2 [&::-webkit-details-marker]:hidden">
-                  <ChevronRight className="size-3.5 shrink-0 text-slate-800 transition-transform group-open/tag:rotate-90" />
-                  <h3 className="min-w-0 flex-1 truncate text-sm font-semibold capitalize text-slate-900">{t}</h3>
-                  {others.length > 0 && (
-                    <Link href={tagHref(t)} className="shrink-0 text-xs font-medium text-pax2-light-blue hover:underline">
-                      See all
-                    </Link>
-                  )}
-                </summary>
-                <div className="border-t px-3 py-3">
-                {others.length > 0 ? (
-                  <div className="grid grid-cols-3 gap-2">
-                    {others.map((o) => (
-                      <Link key={o.id} href={`/v/yt-${o.id}`} scroll={false} replace={inDrawer} className="group flex min-w-0 flex-col gap-1">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={`https://i.ytimg.com/vi/${o.id}/mqdefault.jpg`} alt="" className="aspect-video w-full rounded-md bg-slate-100 object-cover" />
-                        <span className="line-clamp-2 text-[11px] leading-snug text-slate-600 group-hover:text-pax2-blue">{o.title}</span>
-                      </Link>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-xs text-slate-400">No other video carries this tag yet.</p>
-                )}
-                </div>
-              </details>
-            )
-          })}
-        </div>
-      </SmallBlock>,
     ])
 
   const coded = (await codebookP)?.[ytId]
@@ -552,14 +531,16 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     ],
   )
 
-  // The comments sit at the foot of the right column, in the seven-row shape.
-  right.push([
-    "comments",
-    "Comments",
-    <ListBlock key="comments" title="Comments" height="max">
-      <CommentThread videoId={ytId} threads={sevenRows(comments)} />
-    </ListBlock>,
-  ])
+  // The comments sit in the aside column's Comments tab, in the seven-row shape.
+  const commentBlocks: [string, string, ReactNode][] = [
+    [
+      "comments",
+      "Comments",
+      <SmallBlock key="comments" title="Comments">
+        <CommentThread videoId={ytId} threads={sevenRows(comments)} />
+      </SmallBlock>,
+    ],
+  ]
   // The same score as a credit-report card, at the foot: the number and its band, then what helps and hurts it.
   if (score) right.push(["resonance-card", "Resonance factors", <ChartBlock key="resonance-card" title="Resonance factors" height="auto"><ResonanceCard score={score} factors={factors} /></ChartBlock>])
 
@@ -602,7 +583,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
               </div>
             )}
             </div>
-            {column("video-left", left, () => false)}
+            <AsideTabs av={column("video-left", left, () => false)} comments={column("video-comments", commentBlocks, () => false)} />
           </>
         }
         right={

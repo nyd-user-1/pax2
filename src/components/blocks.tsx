@@ -28,6 +28,9 @@ const SMALL_FULL = "max-h-[840px]"
  *  body scrolls. */
 export const BLOCK_FULL = "min-h-[420px] max-h-[840px]"
 export type BlockSize = "collapsed" | "half" | "full"
+const SizeCtx = React.createContext<BlockSize>("half")
+/** The size of the block a component sits in, for content that shows more at Full View. */
+export const useBlockSize = () => React.useContext(SizeCtx)
 
 export type BlockProps = {
   title: string
@@ -63,9 +66,11 @@ export type BlockProps = {
   className?: string
   /** A SmallBlock (the aside column's): sized to its content, not the 420px standard. */
   small?: boolean
+  /** The footer link reads More and goes here (the block's own page) instead of the Glossary. */
+  more?: string
 }
 
-export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, height, peek, id, menuItems, className, small }: BlockProps) {
+export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, height, peek, id, menuItems, className, small, more }: BlockProps) {
   const [size, setSize] = React.useState<BlockSize>(defaultOpen ? "half" : "collapsed")
   const open = size !== "collapsed"
   const half = height && height !== "auto" && height !== "max" ? height : BLOCK_HEIGHT
@@ -90,10 +95,14 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
           </CardAction>
         </CardHeader>
         {!open && peek && <CardContent>{peek}</CardContent>}
-        {open && <CardContent className="min-h-0 flex-1 overflow-y-auto [&_[data-slot=table-container]]:overflow-visible [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10 [&_thead]:bg-card">{children}</CardContent>}
+        {open && (
+          <CardContent className="min-h-0 flex-1 overflow-y-auto [&_[data-slot=table-container]]:overflow-visible [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10 [&_thead]:bg-card">
+            <SizeCtx.Provider value={size}>{children}</SizeCtx.Provider>
+          </CardContent>
+        )}
         {open && (
           <CardFooter className="bg-transparent py-3 text-xs text-slate-800">
-            <Link href="/glossary" className="font-medium text-slate-800 underline underline-offset-2 hover:text-pax2-light-blue">Glossary</Link>
+            <Link href={more ?? "/glossary"} className="font-medium text-slate-800 underline underline-offset-2 hover:text-pax2-light-blue">{more ? "More" : "Glossary"}</Link>
           </CardFooter>
         )}
       </Card>
