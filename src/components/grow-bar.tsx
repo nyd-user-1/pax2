@@ -24,3 +24,20 @@ export function GrowBar({ value, i = 0, tone = "blue", marker, title, className 
     </div>
   )
 }
+
+/** A signed figure as a bar from a centre tick: right and green for a gain, left and red for a loss,
+ *  grey when `measured` is false (the range crosses zero). `reach` is the figure at either end. The fill
+ *  grows out from the centre on arrival, staggered by `i`. */
+export function DivergeBar({ value, reach, i = 0, measured = true, title, className }: { value: number; reach: number; i?: number; measured?: boolean; title?: string; className?: string }) {
+  const half = Math.min(50, (Math.abs(value) / (reach || 1)) * 50)
+  const up = value >= 0
+  return (
+    <div className={cn("relative h-3 rounded-full bg-slate-100", className)} title={title}>
+      <div
+        className={cn("grow absolute inset-y-0 rounded-full", !measured ? "bg-slate-300" : up ? "bg-green-500" : "bg-red-400")}
+        style={{ [up ? "left" : "right"]: "50%", width: `${half}%`, transformOrigin: up ? "left" : "right", "--i": i } as CSSProperties}
+      />
+      <div className="absolute -inset-y-0.5 left-1/2 w-px bg-slate-500/70" />
+    </div>
+  )
+}

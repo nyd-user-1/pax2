@@ -19,6 +19,7 @@ import { ChevronRight } from "lucide-react"
 
 import { AccordionBlock, CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, TableBlock } from "@/components/blocks"
 import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/components/codebook-blocks"
+import { CensusCharacteristics } from "@/components/census-characteristics"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { HitsScatter, TIER } from "@/components/hits-scatter"
 import { FormulaExplainer } from "@/components/formula-explainer"
@@ -495,14 +496,6 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         <Observations part="summary" f={f} />
       </CardBlock>,
     ])
-  if (f?.pegasus?.result?.characteristics)
-    right.push([
-      "characteristics",
-      "Visual Characteristics",
-      <CardBlock key="characteristics" title="Visual Characteristics" height="max" footer={sampled ? SAMPLE : undefined}>
-        <Observations part="detail" f={f} />
-      </CardBlock>,
-    ])
   if (lines)
     right.push([
       "transcript",
@@ -515,9 +508,17 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const swayable = coded?.swayable ?? sample?.codes?.swayable
   const wesleyanGoal = coded?.wesleyan ?? sample?.codes?.wesleyan
   // Every video page carries all three; a block with no code for this video says so and offers a notification.
-  right.push(["swayable", "Swayable", <SwayableBlock key="swayable" videoId={ytId} codes={swayable} footer={swayable?.length && !coded?.swayable ? SAMPLE : undefined} />])
-  right.push(["wesleyan", "Wesleyan", <WesleyanBlock key="wesleyan" videoId={ytId} goal={wesleyanGoal} footer={wesleyanGoal && !coded?.wesleyan ? SAMPLE : undefined} />])
-  right.push(["upworthy", "Upworthy", <UpworthyBlock key="upworthy" videoId={ytId} title={v?.title} />])
+  // Two blocks to a row where the column is wide enough, one above the other where it is not.
+  const pair = (a: ReactNode, b: ReactNode) => (
+    <div className="@container">
+      <div className="grid gap-5 @3xl:grid-cols-2 [&>*]:min-w-0">
+        {a}
+        {b}
+      </div>
+    </div>
+  )
+  right.push(["codebooks", "Swayable and Upworthy", pair(<SwayableBlock key="swayable" videoId={ytId} codes={swayable} footer={swayable?.length && !coded?.swayable ? SAMPLE : undefined} />, <UpworthyBlock key="upworthy" videoId={ytId} title={v?.title} />)])
+  right.push(["visual", "Wesleyan and Visual Characteristics", pair(<WesleyanBlock key="wesleyan" videoId={ytId} goal={wesleyanGoal} party={coded?.wesleyanParty} footer={wesleyanGoal && !coded?.wesleyan ? SAMPLE : undefined} />, <CensusCharacteristics key="characteristics" census={cen} />)])
   right.push(
     [
       "hits",

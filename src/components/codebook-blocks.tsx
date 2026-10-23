@@ -1,6 +1,6 @@
 import upworthy from "../../data/generated/upworthy-top.json"
 import wesleyan from "../../data/generated/wesleyan-meta-2022.json"
-import { RangeBar } from "@/components/bits"
+import { DivergeBar } from "@/components/grow-bar"
 import { CardBlock, ListBlock, TableBlock } from "@/components/blocks"
 import { Term } from "@/components/term"
 import { titlePatterns } from "@/lib/headline-patterns"
@@ -59,8 +59,6 @@ export function SwayableBlock({ codes, footer, videoId }: { codes?: string[]; fo
     )
   const out = model.outcomes.votechoice
   const features = codes.map((k) => (out.features as Feature[]).find((f) => f.key === k)).filter((f): f is Feature => !!f)
-  // −1.5 to +1.5 points across the bar, zero in the middle.
-  const at = (x: number) => Math.min(100, Math.max(0, ((x + 1.5) / 3) * 100))
   return (
     <ListBlock title="Swayable" tools={<Term id="swayable" label={false} />} height="max" footer={footer}>
       <div className="flex flex-col gap-6">
@@ -69,10 +67,10 @@ export function SwayableBlock({ codes, footer, videoId }: { codes?: string[]; fo
           <Figure value={`${Math.round(out.shareAboveZero * 100)}%`} label="Ads that moved voters their way" />
         </div>
         <div className="flex flex-col divide-y divide-slate-100">
-          {features.map((f) => (
-            <div key={f.key} className="grid items-center gap-x-6 gap-y-1.5 py-3 @lg:grid-cols-[1fr_200px_110px]">
+          {features.map((f, i) => (
+            <div key={f.key} className="grid items-center gap-x-6 gap-y-1.5 py-3 @lg:grid-cols-[1fr_200px_110px]" title={`90% range ${pts(f.low)} to ${pts(f.high)} points`}>
               <span className="text-sm font-medium text-slate-900">{f.label}</span>
-              <RangeBar value={at(f.diff)} low={at(f.low)} high={at(f.high)} />
+              <DivergeBar value={f.diff} reach={1.5} i={i} measured={f.low > 0 || f.high < 0} />
               <span className="tabular text-sm text-slate-600 @lg:text-right">
                 {pts(f.diff)} <span className="text-xs text-slate-400">({pts(f.low)} to {pts(f.high)})</span>
               </span>
@@ -91,7 +89,7 @@ const GOALS: Record<string, string> = { persuade: "Persuade", money: "Raise mone
 
 /** Wesleyan: what everyone else ran. The video's goal set among every pro-Democratic video ad
  *  Meta carried in 2022, by count, money and reach. */
-export function WesleyanBlock({ goal, footer, videoId }: { goal?: string; footer?: string; videoId: string }) {
+export function WesleyanBlock({ goal, party, footer, videoId }: { goal?: string; party?: string; footer?: string; videoId: string }) {
   if (!goal)
     return (
       <TableBlock title="Wesleyan" tools={<Term id="wesleyan" label={false} />} height="max">
@@ -101,7 +99,10 @@ export function WesleyanBlock({ goal, footer, videoId }: { goal?: string; footer
   return (
     <TableBlock title="Wesleyan" tools={<Term id="wesleyan" label={false} />} height="max" footer={footer}>
       <div className="flex flex-col gap-6">
-        <Figure value={GOALS[goal]} label="Goal" />
+        <div className="grid grid-cols-2 gap-4">
+          <Figure value={GOALS[goal]} label="Goal" />
+          {party && <Figure value={party === "neither" ? "Neither" : party} label="Party it favors" />}
+        </div>
         <div className="overflow-x-auto">
           <table className="tabular w-full text-sm">
             <thead className="text-left text-xs text-slate-500">
@@ -157,9 +158,7 @@ export function UpworthyBlock({ title, videoId }: { title?: string; videoId: str
           <Figure value={carried.length ? `${net >= 0 ? "+" : ""}${net.toFixed(1)} pts` : "None"} label={`This title: ${carried.length} of ${patterns.length} patterns`} />
         </div>
         <ul className="flex flex-col gap-1">
-          {patterns.map((p) => {
-            const tone = p.lift > 0.05 ? "bg-green-600" : p.lift < -0.05 ? "bg-red-600" : "bg-slate-300"
-            const width = `${(Math.abs(p.lift) / reach) * 50}%`
+          {patterns.map((p, i) => {
             return (
               <li key={p.key} className={cn("grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1.5 rounded-lg px-2.5 py-2 @lg:grid-cols-[minmax(0,1fr)_8rem_4.5rem]", p.has && "bg-pax2-lavender/60")}>
                 <span className="flex min-w-0 items-center gap-2 text-sm">
@@ -167,10 +166,7 @@ export function UpworthyBlock({ title, videoId }: { title?: string; videoId: str
                   <span className={cn("truncate", p.has ? "font-medium text-slate-900" : "text-slate-800")}>{p.label}</span>
                 </span>
                 {/* The lift, from a centre line: right for patterns more common among winners, left for losers. */}
-                <span aria-hidden className="relative col-span-2 h-1.5 rounded-full bg-slate-100 @lg:col-span-1 @lg:col-start-2 @lg:row-start-1">
-                  <span className="absolute inset-y-[-3px] left-1/2 w-px bg-slate-300" />
-                  <span className={cn("absolute inset-y-0 rounded-full", tone)} style={p.lift >= 0 ? { left: "50%", width } : { right: "50%", width }} />
-                </span>
+                <DivergeBar value={p.lift} reach={reach} i={i} measured={Math.abs(p.lift) > 0.05} className="col-span-2 @lg:col-span-1 @lg:col-start-2 @lg:row-start-1" />
                 <span className="tabular row-start-1 text-right @lg:col-start-3">
                   <span className={cn("block text-sm font-semibold", p.lift > 0.05 ? "text-green-700" : p.lift < -0.05 ? "text-red-700" : "text-slate-800")}>
                     {p.lift > 0 ? "+" : ""}
