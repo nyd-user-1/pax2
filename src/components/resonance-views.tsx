@@ -131,7 +131,11 @@ export function ResonanceFactors({ score, factors }: { score: Score | null; fact
  *  hurting it. The card reads the prediction, since the factors are what the prediction is made of. */
 export function ResonanceCard({ score, factors }: { score: Score; factors: Factor[] }) {
   const v = useRise(score.pre) ?? 0
+  const u = useRise(score.post ?? null)
   const band = bandOf(score.pre)
+  // The stretch between the two scores: green from the prediction up to the measured score, light red
+  // from the measured score up to the prediction when it fell short. Both rise together.
+  const gap = u == null ? null : u >= v ? { lo: v, hi: u, color: "#16a34a" } : { lo: u, hi: v, color: "#fca5a5" }
   const sorted = [...factors].sort((a, b) => Number(helps(score, a)) - Number(helps(score, b)))
   return (
     <div className="overflow-hidden rounded-2xl border border-slate-200">
@@ -142,10 +146,10 @@ export function ResonanceCard({ score, factors }: { score: Score; factors: Facto
             <span className="tabular font-display text-6xl leading-none">{Math.round(v)}</span>
           </div>
           {score.post != null && (
-            <span className="text-right text-xs leading-snug text-white/75">
-              Measured after 72 hours
-              <span className="tabular block font-display text-2xl text-white">{Math.round(score.post)}</span>
-            </span>
+            <div className="flex flex-col items-end gap-1">
+              <span className="text-xs font-semibold uppercase tracking-[0.18em] text-white/75">72hrs</span>
+              <span className="tabular font-display text-6xl leading-none">{Math.round(u ?? score.post)}</span>
+            </div>
           )}
         </div>
         <span className="flex w-fit items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm font-semibold">
@@ -157,8 +161,14 @@ export function ResonanceCard({ score, factors }: { score: Score; factors: Facto
             {BANDS.map((b) => {
               const fill = Math.max(0, Math.min(1, (v - b.from) / (b.to - b.from)))
               return (
-                <div key={b.name} className="h-1.5 overflow-hidden rounded-full bg-white/85" style={{ flex: b.to - b.from }}>
+                <div key={b.name} className="relative h-1.5 overflow-hidden rounded-full bg-white/85" style={{ flex: b.to - b.from }}>
                   <div className="h-full rounded-full" style={{ width: `${fill * 100}%`, background: band.color }} />
+                  {gap && Math.min(gap.hi, b.to) > Math.max(gap.lo, b.from) && (
+                    <div
+                      className="absolute inset-y-0"
+                      style={{ left: `${((Math.max(gap.lo, b.from) - b.from) / (b.to - b.from)) * 100}%`, width: `${((Math.min(gap.hi, b.to) - Math.max(gap.lo, b.from)) / (b.to - b.from)) * 100}%`, background: gap.color }}
+                    />
+                  )}
                 </div>
               )
             })}
