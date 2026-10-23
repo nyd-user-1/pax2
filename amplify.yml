@@ -10,7 +10,7 @@ frontend:
         # The server reads AWS through the compute role; these only name the resources.
         - printf 'PAX2_REGION=us-east-1\nPAX2_BUCKET=pax-2-638175140432\nPAX2_LEDGER_TABLE=pax2-ledger\n' > .env.production
         # Sign-in and admin settings come from the Amplify app's environment; the server only sees them through .env.production.
-        - env | grep -E '^(PAX2_COGNITO_CLIENT_ID|PAX2_COGNITO_POOL_ID|ADMIN_EMAILS|PAX2_URL|PAX2_MAIL_FROM|PAX2_AUTOSCORE|ELEVENLABS_API_KEY|PAX2_GOOGLE_CLIENT_ID|PAX2_GOOGLE_CLIENT_SECRET|PAX2_YOUTUBE_PRIVACY|RESEND_API_KEY)=' >> .env.production
+        - env | grep -E '^(PAX2_COGNITO_CLIENT_ID|PAX2_COGNITO_POOL_ID|ADMIN_EMAILS|PAX2_URL|PAX2_MAIL_FROM|PAX2_AUTOSCORE|ELEVENLABS_API_KEY|PAX2_GOOGLE_CLIENT_ID|PAX2_GOOGLE_CLIENT_SECRET|PAX2_YOUTUBE_PRIVACY|RESEND_API_KEY|HIGGSFIELD_API_KEY|KLING_API_KEY|RUNWAY_API_KEY|VEO_API_KEY)=' >> .env.production
         - npx next build
         # Amplify caps the server bundle at 220 MB; the build log reports the sizes on every build.
         - 'echo "BUNDLE server=$(du -sh .next/server | cut -f1) standalone=$(du -sh .next/standalone 2>/dev/null | cut -f1) next=$(du -sh .next | cut -f1)"'
