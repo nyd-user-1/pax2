@@ -2,11 +2,11 @@ import "server-only"
 
 import { generatedJson } from "@/lib/generated-store"
 
-// The video page's Analytics table (data/generated/analytics.json, scripts/analytics/build.mjs): the 36
-// metrics of docs/HOUSE.html and docs/DATA-API.html the platform holds or derives for the baseline
-// shorts. Each row reads this short's value, its channel's figure, the figure across the baseline, and
-// the short's percentile within its channel (the rate percentiles, extended to every per-video metric).
-// Channel-level rows have no value of the short's own; yes/no rows read as shares of shorts.
+// The video page's Analytics block (data/generated/analytics.json, scripts/analytics/build.mjs): the 36
+// metrics of docs/HOUSE.html and docs/DATA-API.html held or derived for the baseline shorts. Each row
+// carries this short's value, its channel's figure, the figure across the baseline, and the short's
+// percentile within its channel. Channel-level rows have no value of the short's own; yes/no rows read
+// as shares of shorts.
 
 type Doc = {
   video: string[]
@@ -18,7 +18,7 @@ type Doc = {
   rows: Record<string, { ch: string; v: (number | null)[]; p: (number | null)[] }>
 }
 
-export type AnalyticsRow = { group: string; label: string; value: string; channel: string; all: string; pct: number | null }
+export type AnalyticsRow = { kind: "video" | "level" | "flag"; group: string; label: string; value: string; channel: string; all: string; pct: number | null }
 
 const DASH = "—"
 const COMPACT = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 })
@@ -65,13 +65,13 @@ const SPEC: Spec[] = [
   { group: "Length and title", label: "Title asks a question", flag: "titleQuestion" },
   { group: "Length and title", label: "Title carries a number", flag: "titleNumber" },
   { group: "Length and title", label: "Title in the first person", flag: "titleFirstPerson" },
-  { group: "Transcript", label: "Words", video: "wordCount", fmt: dec(0) },
+  { group: "Transcript", label: "Words spoken", video: "wordCount", fmt: dec(0) },
   { group: "Transcript", label: "Sentences", video: "sentenceCount", fmt: dec(0) },
   { group: "Transcript", label: "Mean sentence length", video: "meanSentenceLength", fmt: dec(1, " words") },
   { group: "Transcript", label: "Hook words", video: "hookWordCount", fmt: dec(0) },
   { group: "Transcript", label: "Pace", video: "wpm", fmt: dec(0, " wpm") },
   { group: "Transcript", label: "Opens on a question", flag: "questionLed" },
-  { group: "Transcript", label: "First person", flag: "firstPerson" },
+  { group: "Transcript", label: "Spoken in the first person", flag: "firstPerson" },
   { group: "Transcript", label: "A concrete number", flag: "concreteNumber" },
   { group: "Transcript", label: "An explicit ask", flag: "explicitAsk" },
   { group: "Transcript", label: "Repetition", flag: "repetition" },
@@ -93,11 +93,11 @@ export async function videoAnalytics(ytId: string): Promise<{ rows: AnalyticsRow
   const rows = SPEC.map((s): AnalyticsRow => {
     if ("video" in s) {
       const i = at(s.video)
-      return { group: s.group, label: s.label, value: show(row.v[i], s.fmt), channel: show(ch?.medians[s.video], s.fmt), all: show(doc.baseline[s.video], s.fmt), pct: row.p[i] }
+      return { kind: "video", group: s.group, label: s.label, value: show(row.v[i], s.fmt), channel: show(ch?.medians[s.video], s.fmt), all: show(doc.baseline[s.video], s.fmt), pct: row.p[i] }
     }
-    if ("level" in s) return { group: s.group, label: s.label, value: DASH, channel: show(ch?.level[s.level], s.fmt), all: show(doc.baselineLevel[s.level], s.fmt), pct: null }
+    if ("level" in s) return { kind: "level", group: s.group, label: s.label, value: DASH, channel: show(ch?.level[s.level], s.fmt), all: show(doc.baselineLevel[s.level], s.fmt), pct: null }
     const x = row.v[flagAt(s.flag)]
-    return { group: s.group, label: s.label, value: x == null ? DASH : x ? "Yes" : "No", channel: show(ch?.flags[s.flag], share), all: show(doc.baselineFlags[s.flag], share), pct: null }
+    return { kind: "flag", group: s.group, label: s.label, value: x == null ? DASH : x ? "Yes" : "No", channel: show(ch?.flags[s.flag], share), all: show(doc.baselineFlags[s.flag], share), pct: null }
   })
   return { rows, shorts: Object.keys(doc.rows).length }
 }

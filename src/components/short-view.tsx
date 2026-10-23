@@ -14,11 +14,12 @@ import { ResonanceCard, ResonanceFactors, ResonanceGauge } from "@/components/re
 import { CraftOctagon, ModeMatch, Recommendations, TopicRows, UnlockList, ingredients } from "@/components/video-reads"
 import { craftTemplate, modeMatch, resonanceFactors, resonanceScore, topicOf, unlockActions } from "@/lib/video-reads"
 import { videoFacts } from "@/lib/question-resolver"
-import { videoAnalytics } from "@/lib/analytics"
+import { videoAnalytics, type AnalyticsRow } from "@/lib/analytics"
+import { Hint } from "@/components/hint"
 import { boostCounts } from "@/lib/boost"
 import { ChevronRight } from "lucide-react"
 
-import { AccordionBlock, CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, TableBlock } from "@/components/blocks"
+import { AccordionBlock, CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock } from "@/components/blocks"
 import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/components/codebook-blocks"
 import { CensusCharacteristics } from "@/components/census-characteristics"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
@@ -387,6 +388,19 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     const k = Math.round(x)
     return `${k}${k % 100 >= 11 && k % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][k % 10] ?? "th"}`
   }
+  // Analytics in the Spend block's shape: four tiles, the rest as label and value in two columns. A
+  // channel-level row reads its channel's figure; hovering a value shows the channel and the baseline.
+  const TILES = ["Views", "Outlier Score", "Engagement rate", "Hit probability"]
+  const tiles = metrics ? TILES.map((label) => metrics.rows.find((r) => r.label === label)).filter((r): r is AnalyticsRow => !!r) : []
+  const listed = metrics ? metrics.rows.filter((r) => !TILES.includes(r.label)) : []
+  const baseN = metrics ? `all ${metrics.shorts.toLocaleString("en-US")}` : ""
+  const compare = (r: AnalyticsRow) =>
+    r.kind === "level"
+      ? `Median of ${baseN}: ${r.all}`
+      : r.kind === "flag"
+        ? `Its channel: ${r.channel} of shorts · ${baseN}: ${r.all}`
+        : `Channel median ${r.channel} · median of ${baseN} ${r.all}${r.pct == null ? "" : ` · ${ordinal(r.pct)} percentile in its channel`}`
+  const shown = (r: AnalyticsRow) => (r.kind === "level" ? r.channel : r.value)
   const right: [string, string, ReactNode][] = [
     // Resonance first (docs/RESONANCE.md): the gauge with the stack's factors beside it. It reads only
     // resonance-formula.json and stays empty, naming what unlocks it, until that file holds this video.
@@ -406,45 +420,32 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "stats",
       "Analytics",
-      // The KPI table's shape: one row a metric, this short beside its channel and the whole baseline, and
-      // its percentile within its channel (src/lib/analytics.ts).
-      <TableBlock key="stats" title="Analytics" height="max" search="Search metrics…" rows={(metrics?.rows ?? []).map((r) => ({ group: r.group, metric: r.label, thisShort: r.value, channel: r.channel, baseline: r.all, percentileInChannel: r.pct }))} name={`analytics-${ytId}`}>
+      <ListBlock key="stats" title="Analytics" height="auto">
         {metrics ? (
-          <div className="overflow-x-auto">
-            <table className="tabular w-full text-sm">
-              <thead className="text-left text-xs text-slate-500">
-                <tr className="[&_th]:whitespace-nowrap [&_th]:py-2 [&_th]:pr-6 [&_th]:font-medium">
-                  <th />
-                  <th>This short</th>
-                  <th>Its channel</th>
-                  <th>All {metrics.shorts.toLocaleString("en-US")}</th>
-                  <th>Percentile in its channel</th>
-                </tr>
-              </thead>
-              <tbody className="[&_td]:whitespace-nowrap [&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2 [&_td]:pr-6">
-                {[...new Set(metrics.rows.map((r) => r.group))].map((g) => (
-                  <React.Fragment key={g}>
-                    <tr>
-                      <td colSpan={5} className="pt-4 text-xs font-semibold uppercase tracking-wide text-slate-500">{g}</td>
-                    </tr>
-                    {metrics.rows.filter((r) => r.group === g).map((r) => (
-                      <tr key={r.label} data-find>
-                        <td className="text-slate-500">{r.label}</td>
-                        <td className="font-medium text-slate-900">{r.value}</td>
-                        <td>{r.channel}</td>
-                        <td>{r.all}</td>
-                        <td>{r.pct == null ? "—" : ordinal(r.pct)}</td>
-                      </tr>
-                    ))}
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </table>
+          <div className="grid gap-x-6 text-xs @md:grid-cols-2">
+            {listed.map((r) => (
+              <div key={r.label} className="flex items-center justify-between gap-2 border-t py-1.5">
+                <span className="text-slate-800">{r.label}</span>
+                <Hint text={compare(r)}>
+                  <span className="tabular">{shown(r)}</span>
+                </Hint>
+              </div>
+            ))}
+            <div className="col-span-full mt-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
+              {tiles.map((r) => (
+                <div key={r.label} className="rounded-lg bg-muted/50 px-2 py-1.5">
+                  <div className="text-[10px] text-slate-800">{r.label}</div>
+                  <Hint text={compare(r)}>
+                    <span className="tabular block text-sm text-pax2-blue">{r.value}</span>
+                  </Hint>
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
           <p className="text-sm text-slate-600">This short is outside the baseline the metrics are computed over.</p>
         )}
-      </TableBlock>,
+      </ListBlock>,
     ],
     [
       "mode",
