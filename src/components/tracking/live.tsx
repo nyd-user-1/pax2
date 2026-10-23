@@ -9,7 +9,7 @@ import { CURVE_TIER as TIER } from "@/lib/velocity-meta"
 
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { liveForecast } from "@/lib/velocity-live"
-import { baselines, recentPolls, videoMeta, type VideoMeta } from "@/lib/velocity-store"
+import { baselines, recentPollsCached, videoMeta, type VideoMeta } from "@/lib/velocity-store"
 import { cn } from "@/ui/lib/utils"
 import { velocityCards } from "@/components/tracking/curves"
 import { TrackingBlock } from "@/components/tracking/tracking-block"
@@ -71,7 +71,7 @@ function Spark({ series, color }: { series: [number, number][]; color: string })
 const times = (r: number | null) => (r == null ? "-" : `${r >= 10 ? r.toFixed(0) : r.toFixed(1)}×`)
 
 export async function TrackingTab({ phase, s: sort, f: filter, view }: { phase: "live" | "complete"; s?: string; f?: string; view?: string }) {
-  const [rows, medians, meta] = await Promise.all([recentPolls(7), baselines(), videoMeta()])
+  const [rows, medians, meta] = await Promise.all([recentPollsCached(7), baselines(), videoMeta()])
   const all = watched(rows, medians, meta)
   const list = all.filter((w) => (phase === "live" ? w.age < 72 : w.age >= 72)).sort((a, b) => (b.ratio ?? -1) - (a.ratio ?? -1))
   const csv = (ws: Watched[]) => ws.map((w) => ({ channel: w.channel, video: w.title, ageHours: Math.round(w.age * 10) / 10, views: w.views, ratio: w.ratio == null ? "" : Math.round(w.ratio * 100) / 100, chance: w.p == null ? "" : Math.round(w.p * 100) / 100, horizonHours: w.horizon ?? "" }))

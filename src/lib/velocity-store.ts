@@ -28,6 +28,20 @@ export async function recentPolls(days = 7): Promise<PollRow[]> {
   return (await Promise.all(keys.map(getText))).flatMap((t) => lines<PollRow>(t))
 }
 
+// The poller writes every 15 minutes; a five-minute per-server copy, shared by concurrent requests,
+// spares each page view the download of a week of poll files (about 24 MB on 2026-10-23).
+const recentCache = new Map<number, { at: number; rows: Promise<PollRow[]> }>()
+
+/** recentPolls, cached for five minutes per server. */
+export function recentPollsCached(days = 7): Promise<PollRow[]> {
+  const hit = recentCache.get(days)
+  if (hit && Date.now() - hit.at < 5 * 60_000) return hit.rows
+  const rows = recentPolls(days)
+  recentCache.set(days, { at: Date.now(), rows })
+  rows.catch(() => recentCache.delete(days))
+  return rows
+}
+
 /** Every reading from `days` UTC days starting at `from`, for a video whose first hours are older
  *  than the last week. */
 export async function pollsFrom(from: string, days: number): Promise<PollRow[]> {
