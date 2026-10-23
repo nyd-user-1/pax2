@@ -36,7 +36,13 @@ async function load(): Promise<FeedVideo[]> {
 }
 
 export function feedIndex(): Promise<FeedVideo[]> {
-  if (!ALL) ALL = load()
+  if (!ALL) {
+    ALL = load()
+    // A failed read is not kept, so the next request tries S3 again.
+    ALL.catch(() => {
+      ALL = null
+    })
+  }
   return ALL
 }
 
