@@ -46,13 +46,19 @@ export function feedIndex(): Promise<FeedVideo[]> {
   return ALL
 }
 
-/** The refine menu's channel and tag lists, from the whole index. */
+/** The refine menu's channel and tag lists, from the whole index; computed once per loaded index. */
+let FACETS: { of: FeedVideo[]; facets: { channels: string[]; tags: string[] } } | null = null
 export async function feedFacets(): Promise<{ channels: string[]; tags: string[] }> {
   const all = await feedIndex()
-  return {
-    channels: [...new Set(all.map((v) => v.channel))].sort((a, b) => a.localeCompare(b)),
-    tags: [...new Set(all.flatMap((v) => v.tags ?? []))].sort((a, b) => a.localeCompare(b)),
-  }
+  if (FACETS?.of !== all)
+    FACETS = {
+      of: all,
+      facets: {
+        channels: [...new Set(all.map((v) => v.channel))].sort((a, b) => a.localeCompare(b)),
+        tags: [...new Set(all.flatMap((v) => v.tags ?? []))].sort((a, b) => a.localeCompare(b)),
+      },
+    }
+  return FACETS.facets
 }
 
 /** The page the server renders: the e2 videos (the pinned row's seed), then the newest.

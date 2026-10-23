@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { Activity, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronDown, ChevronUp, ChevronsUpDown, Clapperboard, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, Microscope, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, ShieldCheck, Star, Tag, Target, Tv, TvMinimal, User2, Video, Workflow, X } from "lucide-react"
 
-import { DiscussionPanel } from "@/components/discussion-panel"
+import dynamic from "next/dynamic"
 import { SidebarChats } from "@/components/sidebar-chats"
 import { KebabMenu, MenuFoot, MenuHeader, MenuRow, MenuSeparator } from "@/components/kebab-menu"
 import { useNavFavorites } from "@/lib/nav-favorites"
@@ -14,6 +14,10 @@ import { Wordmark } from "@/components/wordmark"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
 import { cn } from "@/ui/lib/utils"
 import { whiteButton } from "@/components/white-button"
+
+// The discussion panel carries the whole chat (markdown, the Remotion player): it loads the first time it opens,
+// not with every page.
+const DiscussionPanel = dynamic(() => import("@/components/discussion-panel").then((m) => m.DiscussionPanel), { ssr: false })
 
 // The sidebar by audience (the UX audit's split, ruled 2026-10-19): the creator's product first, then the
 // research behind it, then the admin surfaces for admins only. Brendan's grouping (2026-10-22): Chat,

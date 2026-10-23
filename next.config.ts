@@ -12,6 +12,15 @@ const config: NextConfig = {
         ? {}
         : { "@/components/dev/inspector": "./src/components/dev/inspector.stub.tsx" },
   },
+  // Files under public/ otherwise go out with max-age=5, so every visit downloads the logos again.
+  async headers() {
+    const day = [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }]
+    return [
+      { source: "/logos/:path*", headers: day },
+      { source: "/visuals/:path*", headers: day },
+      { source: "/flags/:path*", headers: day },
+    ]
+  },
   async redirects() {
     return [
       { source: "/reviews", destination: "/evals", permanent: false },

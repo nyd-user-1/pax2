@@ -12,12 +12,15 @@ import { Check, CheckCircle2, ChevronRight, Loader2, RotateCcw, Upload, Video } 
 
 import { uploadUrl } from '@/app/actions'
 import { myAnalysis, submitOriginal, viewer } from '@/app/original-actions'
-import { EnhanceFlow } from '@/components/chat/enhance-flow'
+import dynamic from 'next/dynamic'
 import { ConsensusVote } from '@/components/consensus-vote'
 import { Teleprompter } from '@/components/record/teleprompter'
 import { useDraft } from '@/components/record/draft'
 import { type VideoProvider } from '@/lib/video-model-options'
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/ui/components/nova/card'
+
+// The enhance step brings the Remotion player; it loads when a recording reaches it.
+const EnhanceFlow = dynamic(() => import('@/components/chat/enhance-flow').then((m) => m.EnhanceFlow), { ssr: false })
 
 type Clip = { blob: Blob; url: string; seconds: number; mime: string }
 export type Analysis = NonNullable<Awaited<ReturnType<typeof myAnalysis>>>

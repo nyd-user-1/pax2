@@ -61,13 +61,10 @@ export async function reference(ws: string): Promise<Reference | null> {
 }
 
 export async function loads(ws: string) {
-  const out: { dataset: string; fileHash: string; at: string; rows: number; asOf: string }[] = []
-  for (const d of DATASETS) {
-    const items = await query<Item & { at: string; rows: number; asOf: string }>(k(ws, `LOAD#${d.id}`))
-    for (const i of items) out.push({ dataset: d.id, fileHash: i.sk, at: i.at, rows: i.rows, asOf: i.asOf })
-  }
-  const uploads = await query<Item & { at: string; rows: number; asOf: string }>(k(ws, "LOAD#upload"))
-  for (const i of uploads) out.push({ dataset: "upload", fileHash: i.sk, at: i.at, rows: i.rows, asOf: i.asOf })
+  // One query per dataset, all at once.
+  const ids = [...DATASETS.map((d) => d.id), "upload"]
+  const lists = await Promise.all(ids.map((id) => query<Item & { at: string; rows: number; asOf: string }>(k(ws, `LOAD#${id}`))))
+  const out = lists.flatMap((items, n) => items.map((i) => ({ dataset: ids[n], fileHash: i.sk, at: i.at, rows: i.rows, asOf: i.asOf })))
   return out.sort((a, b) => a.at.localeCompare(b.at))
 }
 

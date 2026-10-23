@@ -25,7 +25,7 @@ export function ChannelCards({ channels }: { channels: Awaited<ReturnType<typeof
       {channels.map((c) => (
         <Link key={c.id} data-find={c.name} href={`/channels/${c.id}`} className="lift flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition-shadow hover:shadow-e2">
           {c.logo ? (
-            <img src={`/logos/channels/${c.id}.jpg`} alt="" className="size-10 shrink-0 rounded-full object-cover" />
+            <img src={`/logos/channels/${c.id}.jpg`} alt="" loading="lazy" decoding="async" className="size-10 shrink-0 rounded-full object-cover" />
           ) : (
             <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-pax2-lavender text-sm font-semibold text-pax2-blue">{c.name.charAt(0)}</span>
           )}

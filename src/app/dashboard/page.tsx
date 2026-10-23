@@ -35,9 +35,16 @@ export default async function DashboardPage() {
   const gatekeeper = await currentUser()
   if (!gatekeeper) redirect("/signin?next=/dashboard")
   if (!gatekeeper.admin) notFound()
+  // The operations reads (poller, queue, usage) start now and run beside the ledger reads below.
+  const side = Promise.all([currentUser(), pollerStatus().catch(() => null), pipelineQueue().catch(() => null), usageSince(7).catch(() => [])])
   const ws = await workspace()
   const [{ takes }, history, sent, chosen, voteRows] = await Promise.all([board(ws), loads(ws), submissions(ws), picks(ws), votes(ws, "open-primaries")])
-  const per = await Promise.all(takes.map(async (t) => ({ t, fs: await findings(ws, t.take.id), ev: await steps(ws, t.take.id), calls: await forecasts(ws, t.take.id) })))
+  const per = await Promise.all(
+    takes.map(async (t) => {
+      const [fs, ev, calls] = await Promise.all([findings(ws, t.take.id), steps(ws, t.take.id), forecasts(ws, t.take.id)])
+      return { t, fs, ev, calls }
+    }),
+  )
   const readings = per.flatMap((p) => p.fs)
   const events = per.flatMap((p) => p.ev.map((e) => ({ ...e, take: p.t })))
   const lastByStep = new Map<string, (typeof events)[number]>()
@@ -98,7 +105,7 @@ export default async function DashboardPage() {
   const show = { sent: sent.length, sentNote: sent.length ? `Latest ${new Date(sent[0].at).toLocaleDateString()}` : "None yet", calls: resolved.length ? `${resolved.filter(Boolean).length} of ${resolved.length}` : "—", activity, readings: readings.length, decisions: decided.length, votes: voteRows.length, feed }
   const activityRows = show.activity.length ? show.activity : [{ date: new Date().toISOString().slice(0, 10), item1: 0, item2: 0 }]
 
-  const [user, poller, queue, usage] = await Promise.all([currentUser(), pollerStatus().catch(() => null), pipelineQueue().catch(() => null), usageSince(7).catch(() => [])])
+  const [user, poller, queue, usage] = await side
 
   // Readers: what people did on PAX2 in the last 7 days, from the usage log.
   const titleOf = (subject: string) => (homeFeed as { id: string; title: string }[]).find((v) => `yt-${v.id}` === subject || v.id === subject)?.title ?? subject

@@ -56,8 +56,9 @@ const dur = (iso: string) => {
 const thumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
 
 /** Hover a moment and the real video plays in place, muted — only for the
- *  shorts whose file we actually hold. */
-function HoverThumb({ v, aspect, playButton }: { v: FeedVideo; aspect: string; playButton?: boolean }) {
+ *  shorts whose file we actually hold. `eager` is for cards in the first screenful: the largest image on
+ *  the page should not wait for lazy loading. */
+function HoverThumb({ v, aspect, playButton, eager }: { v: FeedVideo; aspect: string; playButton?: boolean; eager?: boolean }) {
   const [play, setPlay] = React.useState(false)
   const timer = React.useRef<ReturnType<typeof setTimeout> | null>(null)
   const enter = () => {
@@ -73,7 +74,7 @@ function HoverThumb({ v, aspect, playButton }: { v: FeedVideo; aspect: string; p
       {play ? (
         <video src={`/api/video/yt-${v.id}`} poster={thumb(v.id)} autoPlay muted loop playsInline className="size-full object-cover" />
       ) : (
-        <img src={thumb(v.id)} alt="" loading="lazy" className={cn("size-full object-cover", aspect !== "aspect-video" && "transition-transform duration-300 group-hover:scale-[1.02]")} />
+        <img src={thumb(v.id)} alt="" loading={eager ? "eager" : "lazy"} fetchPriority={eager ? "high" : undefined} className={cn("size-full object-cover", aspect !== "aspect-video" && "transition-transform duration-300 group-hover:scale-[1.02]")} />
       )}
       {v.lab && (
         <span title={v.e2 ? "e\u00b2" : "Lab Tested"} aria-label={v.e2 ? "e\u00b2" : "Lab Tested"} className="absolute right-1.5 top-1.5 z-10 flex size-6 items-center justify-center rounded-full bg-white/85 text-slate-900 ring-1 ring-white backdrop-blur-md">
@@ -113,7 +114,7 @@ function Score({ v }: { v: FeedVideo }) {
 }
 
 function Avatar({ id, className }: { id: string; className?: string }) {
-  return <img src={`/logos/channels/${id}.jpg`} alt="" className={cn("size-8 shrink-0 rounded-full object-cover", className)} />
+  return <img src={`/logos/channels/${id}.jpg`} alt="" loading="lazy" decoding="async" className={cn("size-8 shrink-0 rounded-full object-cover", className)} />
 }
 
 
@@ -244,7 +245,9 @@ const PinCtx = React.createContext<{ pinned: string[]; toggle: (id: string) => v
 const PINS_KEY = "pax2-pins"
 
 function usePins(videos: FeedVideo[]) {
-  const [pinned, setPinned] = React.useState<string[]>([])
+  // Starts from the default (the e2 videos) so the server's paint already holds the pinned row; a reader's
+  // own pins replace it after load. Starting empty pushed the whole grid down once the row arrived.
+  const [pinned, setPinned] = React.useState<string[]>(() => videos.filter((v) => v.e2).map((v) => v.id))
   const log = useUsage()
   React.useEffect(() => {
     try {
@@ -276,7 +279,7 @@ function PinnedRow({ items }: { items: FeedVideo[] }) {
   return (
     <div className={cn("grid gap-8", cols)}>
       {items.map((v) => (
-        <LandscapeCard key={v.id} v={v} />
+        <LandscapeCard key={v.id} v={v} eager />
       ))}
     </div>
   )
@@ -397,12 +400,12 @@ export function ShortCard({ v }: { v: FeedVideo }) {
 /** One landscape card, two or three across: the thumbnail in its own box, its running time in the
  *  corner and a play button on hover (the hover video plays inside it), then a grey ribbon with the
  *  channel and its velocity score, then the title, the description's first lines and the counts. */
-export function LandscapeCard({ v }: { v: FeedVideo }) {
+export function LandscapeCard({ v, eager }: { v: FeedVideo; eager?: boolean }) {
   return (
     <Link href={`/v/yt-${v.id}`} className="group relative isolate before:absolute before:-inset-3 before:-z-10 before:rounded-2xl before:border before:border-slate-200 before:bg-white before:transition-colors before:duration-200 hover:before:border-pax2-blue flex flex-col gap-3">
       <div className="overflow-hidden rounded-xl bg-slate-200">
         <div className="relative overflow-hidden">
-          <HoverThumb v={v} aspect="aspect-video" playButton />
+          <HoverThumb v={v} aspect="aspect-video" playButton eager={eager} />
           <span className="tabular pointer-events-none absolute bottom-2 right-2 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">{dur(v.duration)}</span>
         </div>
         <Ribbon v={v} />

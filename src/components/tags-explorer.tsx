@@ -53,13 +53,13 @@ function RunLabel({ shorts }: { shorts: boolean }) {
 }
 
 /** A tag's videos, side by side in pairs — every section on the page carries at least two. */
-function TagVideos({ videos }: { videos: FeedVideo[] }) {
+function TagVideos({ videos, eager }: { videos: FeedVideo[]; eager?: boolean }) {
   return (
     <div className="flex flex-col gap-3">
       <RunLabel shorts={false} />
       <div className="grid gap-8 sm:grid-cols-2">
-        {videos.map((v) => (
-          <LandscapeCard key={v.id} v={v} />
+        {videos.map((v, i) => (
+          <LandscapeCard key={v.id} v={v} eager={eager && i < 2} />
         ))}
       </div>
     </div>
@@ -110,16 +110,16 @@ export function TagsExplorer({ sections }: { sections: TagSection[] }) {
       <hr className="border-border" />
 
       <div className="flex flex-col gap-12">
-        {groups.map((g) => (
+        {groups.map((g, gi) => (
           <section key={g.letter} id={letterId(g.letter)} className="flex scroll-mt-24 flex-col gap-8">
             <div className="flex items-center gap-4">
               <LetterHeading letter={g.letter} />
               <span className="h-px flex-1 bg-border" />
             </div>
-            {g.sections.map((s) => (
+            {g.sections.map((s, si) => (
               <section key={s.tag} id={tagId(s.tag)} className="flex scroll-mt-24 flex-col gap-4">
                 <h3 className="text-lg font-semibold text-slate-900">{s.tag[0].toUpperCase() + s.tag.slice(1)}</h3>
-                <TagVideos videos={s.videos} />
+                <TagVideos videos={s.videos} eager={gi === 0 && si === 0} />
               </section>
             ))}
           </section>

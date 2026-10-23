@@ -4,8 +4,11 @@ import * as React from 'react'
 import { createPortal } from 'react-dom'
 import { MessagesSquare, X } from 'lucide-react'
 
-import { Chat } from '@/components/chat/chat'
+import dynamic from 'next/dynamic'
 import { whiteButton } from '@/components/white-button'
+
+// The chat loads when the panel first opens, not with the video page.
+const Chat = dynamic(() => import('@/components/chat/chat').then((m) => m.Chat), { ssr: false })
 
 // The video page's question button: the chat opens in a right panel at the standing 420px, preloaded with
 // this video, its chips drawn from the question bank (src/lib/question-bank.ts). The panel is its own,

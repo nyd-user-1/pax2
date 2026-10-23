@@ -112,7 +112,7 @@ export async function TrackingTab({ phase, s: sort, f: filter, view }: { phase: 
               <td className="whitespace-nowrap px-4 py-2.5 text-slate-500">
                 <a href={`https://youtube.com/channel/${w.channelId}`} target="_blank" rel="noreferrer" className="flex items-center gap-2.5 hover:text-pax2-light-blue">
                   {logo ? (
-                    <img src={`/logos/channels/${w.channelId}.jpg`} alt="" className="size-7 shrink-0 rounded-full object-cover" />
+                    <img src={`/logos/channels/${w.channelId}.jpg`} alt="" loading="lazy" decoding="async" className="size-7 shrink-0 rounded-full object-cover" />
                   ) : (
                     <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-pax2-lavender text-xs font-semibold text-pax2-blue">{w.channel.charAt(0)}</span>
                   )}
