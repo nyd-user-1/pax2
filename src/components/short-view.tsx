@@ -10,8 +10,9 @@ import sampleVideos from "../../data/sample/videos.json"
 import paidBatch from "../../data/generated/voter-freedom-paid.json"
 import { CarryBlock } from "@/components/evidence/carry"
 import { LengthBlock } from "@/components/record/resonance-length"
-import { CraftOctagon, ModeMatch, Recommendations, ResonanceGauge, TopicRows, UnlockList, ingredients } from "@/components/video-reads"
-import { craftTemplate, modeMatch, resonanceScore, topicOf, unlockActions } from "@/lib/video-reads"
+import { ResonanceCard, ResonanceFactors, ResonanceGauge } from "@/components/resonance-views"
+import { CraftOctagon, ModeMatch, Recommendations, TopicRows, UnlockList, ingredients } from "@/components/video-reads"
+import { craftTemplate, modeMatch, resonanceFactors, resonanceScore, topicOf, unlockActions } from "@/lib/video-reads"
 import { boostCounts } from "@/lib/boost"
 import { ChevronRight } from "lucide-react"
 
@@ -296,6 +297,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const topic = topicOf(ytId)
   const lengthSec = v ? secs(v.duration) : 0
   const score = resonanceScore(ytId)
+  const factors = resonanceFactors()
   const match = modeMatch(ytId)
   const recipe = match && template ? ingredients(template, match.mode, match.axes) : null
   const unlock = unlockActions(ytId)
@@ -375,6 +377,21 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     ])
 
   const right: [string, string, ReactNode][] = [
+    // Resonance first (docs/RESONANCE.md): the gauge with the stack's factors beside it. It reads only
+    // resonance-formula.json and stays empty, naming what unlocks it, until that file holds this video.
+    [
+      "resonance",
+      "Resonance",
+      <ChartBlock key="resonance" title="Resonance" height="auto">
+        <div className="@container">
+          <div className="grid items-center gap-6 @2xl:grid-cols-[minmax(0,320px)_minmax(0,1fr)]">
+            <ResonanceGauge pre={score?.pre ?? null} post={score?.post ?? null} />
+            <ResonanceFactors score={score} factors={factors} />
+          </div>
+          {!score && <UnlockList actions={[{ what: "The gauge fills once the Resonance stack is fitted" }, ...unlock]} />}
+        </div>
+      </ChartBlock>,
+    ],
     [
       "stats",
       "Analytics",
@@ -387,19 +404,6 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
           </div>
         </div>
       </CardBlock>,
-    ],
-    // Resonance as settled (docs/RESONANCE.md): the gauge, the profile similarity and the recommendations, three
-    // blocks. The gauge reads only resonance-formula.json and the match only the winning-modes artifact;
-    // each stays empty, naming what unlocks it, until its file holds this video.
-    [
-      "resonance",
-      "Resonance",
-      <ChartBlock key="resonance" title="Resonance" height="auto">
-        <div className="flex flex-col gap-4">
-          <ResonanceGauge pre={score?.pre ?? null} post={score?.post ?? null} />
-          {!score && <UnlockList actions={[{ what: "The gauge fills once the Resonance stack is fitted" }, ...unlock]} />}
-        </div>
-      </ChartBlock>,
     ],
     [
       "mode",
@@ -587,6 +591,8 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       <CommentThread videoId={ytId} threads={sevenRows(comments)} />
     </ListBlock>,
   ])
+  // The same score as a credit-report card, at the foot: the number and its band, then what helps and hurts it.
+  if (score) right.push(["resonance-card", "Resonance factors", <ChartBlock key="resonance-card" title="Resonance factors" height="auto"><ResonanceCard score={score} factors={factors} /></ChartBlock>])
 
   const column = (page: string, blocks: [string, string, ReactNode][], lock: (key: string) => boolean) => (
     <BlockOrder page={page} initial={blocks.map(([key]) => key)}>

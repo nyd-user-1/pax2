@@ -157,10 +157,21 @@ const zOf = (r) => [1, ...X(r)].reduce((s, x, j) => s + w[j] * x, 0)
 const preAt = pctAmong(rows.map(zOf))
 const postAt = pctAmong(rows.map((r) => catalog.get(r.id).ratio).filter((x) => x != null))
 const r1 = (x) => Math.round(x * 10) / 10
+// Each component's percentile among the baseline (c content, x production, h headline): the factors the
+// video page lists as helping (50 and up) or hurting this short's score.
+const compAt = NAMES.map((_, i) => pctAmong(rows.map((r) => r.q[i]).filter((q) => q != null)))
 const scores = Object.fromEntries(rows.map((r) => {
   const ratio = catalog.get(r.id).ratio
-  return [r.id, { pre: r1(preAt(zOf(r))), ...(ratio != null ? { post: r1(postAt(ratio)) } : {}), p: r4(1 / (1 + Math.exp(-(zOf(r) + shift)))) }]
+  const f = Object.fromEntries(["c", "x", "h"].flatMap((k, i) => (r.q[i] != null ? [[k, r1(compAt[i](r.q[i]))]] : [])))
+  return [r.id, { pre: r1(preAt(zOf(r))), ...(ratio != null ? { post: r1(postAt(ratio)) } : {}), p: r4(1 / (1 + Math.exp(-(zOf(r) + shift)))), ...f }]
 }))
+// The factors' shares of the stack: each slope over the three.
+const slope = w[1] + w[2] + w[3] || 1
+const factors = [
+  { key: "c", name: "Content", about: "what the outlier classifier reads in the transcript and the content vector", share: r4(w[1] / slope) },
+  { key: "x", name: "Production", about: "how many of its channel's measured shorts it beats on production", share: r4(w[2] / slope) },
+  { key: "h", name: "Headline", about: "where its title falls against the tested-headline reference", share: r4(w[3] / slope) },
+]
 
 const out = {
   builtAt: new Date().toISOString(),
@@ -184,6 +195,7 @@ const out = {
     "The held-out rows' outperform share is high because baseline media were mostly label-picked; AUC is unaffected by the base rate, the intercept is not, so the served probability needs recalibration against the uniform catalog rate before display.",
   ],
   futureInputs: "Window Q's audited census columns with a measured lift (data/generated/model/vqa-lift.json) join at the next refit (Gen 2).",
+  factors,
   calibration: { heldOutRate: r4(heldOutRate), catalogRate: r4(catalogRate), settledCatalog: settled.length, interceptShift: r4(shift), scale: "pre: the prediction's percentile among the baseline; post: the measured ratio's percentile among the baseline; p: the probability at the catalog rate" },
   scores,
 }

@@ -14,7 +14,10 @@ export type Mode = { id: number; name: string; center: Record<string, number>; s
 type Modes = { builtAt: string; definition: string; axes: Record<string, { label: string; group: string }>; full: { axes: string[]; modes: Mode[] }; scores: Record<string, number> }
 /** The shape the fitted stack is expected to write: each short's pre-release score, and the measured
  *  post-release score once its 72-hour window completes. */
-export type Formula = { builtAt: string; scores: Record<string, { pre: number; post?: number }> }
+/** Each short's score, with its three factors' percentiles (c content, x production, h headline). */
+export type Score = { pre: number; post?: number; p?: number; c?: number; x?: number; h?: number }
+export type Factor = { key: "c" | "x" | "h"; name: string; about: string; share: number }
+export type Formula = { builtAt: string; scores: Record<string, Score>; factors?: Factor[] }
 
 // Each call names its file by a literal path: a variable path makes the build trace the whole project.
 const load = <T,>(text: () => string): T | null => {
@@ -56,8 +59,13 @@ export function modeMatch(ytId: string): { score: number; mode: Mode; axes: stri
   return m && score != null && mode ? { score, mode, axes: m.full.axes } : null
 }
 
-export function resonanceScore(ytId: string): { pre: number; post?: number } | null {
+export function resonanceScore(ytId: string): Score | null {
   return formula()?.scores?.[ytId] ?? null
+}
+
+/** The stack's three factors and each one's share of it. */
+export function resonanceFactors(): Factor[] {
+  return formula()?.factors ?? []
 }
 
 type Stages = { order: string[]; ids: Record<string, string> }
