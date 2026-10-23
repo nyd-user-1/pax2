@@ -246,3 +246,33 @@ body {
     animation: none !important;
   }
 }
+
+/* The ERD's highlight (src/components/factory-canvas.tsx): a lit box glows, a lit line carries a light. */
+@keyframes pax2-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgb(96 165 250 / 0.35), 0 0 16px rgb(37 99 235 / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgb(96 165 250 / 0.5), 0 0 28px rgb(37 99 235 / 0.5);
+  }
+}
+.erd-lit {
+  animation: pax2-glow 1.6s ease-in-out infinite;
+}
+@keyframes pax2-travel {
+  to {
+    stroke-dashoffset: -420;
+  }
+}
+.erd-travel {
+  stroke-dasharray: 3 417;
+  stroke-linecap: round;
+  animation: pax2-travel 2.4s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .erd-lit,
+  .erd-travel {
+    animation: none;
+  }
+}
