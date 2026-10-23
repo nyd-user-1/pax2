@@ -4,7 +4,7 @@ import * as React from "react"
 import { ActivityIcon, CalendarArrowUpIcon } from "lucide-react"
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Label, Pie, PieChart, XAxis, YAxis } from "recharts"
 
-import { CardAnchor, CardTools, slug } from "@/components/dash/card-tools"
+import { AskPaxChip, CardAnchor, CardTools, slug } from "@/components/dash/card-tools"
 import { Card, CardAction, CardContent, CardHeader } from "@/ui/components/nova/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/ui/components/nova/chart"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/ui/components/nova/select"
@@ -68,6 +68,7 @@ export function Chart1({
         </div>
         <CardAction>
           <CardTools title={title} anchor={slug(title)}>
+            <AskPaxChip title={title} />
             <Select value={range} onValueChange={(v) => v && setRange(String(v))}>
               <SelectTrigger className="w-max min-w-28" size="sm" aria-label="Select time range">
                 <SelectValue>{() => ranges.find((r) => r.value === range)?.label ?? range}</SelectValue>
@@ -149,6 +150,7 @@ export function Chart2({ title = "Weekly Traffic", data, columns = SLOTS, unit =
           <CardAnchor>{title}</CardAnchor>
         </div>
         <CardTools className="gap-2" title={title} anchor={slug(title)}>
+          <AskPaxChip title={title} />
           <span className="text-sm text-slate-800">
             L<span className="max-sm:hidden">ow</span>
           </span>

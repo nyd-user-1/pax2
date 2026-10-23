@@ -10,6 +10,8 @@ import { KebabMenu, MenuFlyout, MenuFoot, MenuRow, MenuSeparator } from "@/compo
 import { useShellPanel } from "@/components/shell"
 import { useHiddenBlocks, useShelf } from "@/lib/home-blocks"
 import { useNavFavorites } from "@/lib/nav-favorites"
+import { PaxMark } from "@/components/pax-mark"
+import { whiteButton } from "@/components/white-button"
 import { cn } from "@/ui/lib/utils"
 
 // Two things every Admin card carries (Brendan, 2026-09-06): a title that
@@ -49,6 +51,33 @@ export function CardAnchor({ children, id, className }: { children: string; id?:
         {copied ? <CheckIcon className="size-3.5 text-green-600" /> : <CopyIcon className="size-3.5 opacity-0 transition-opacity group-hover/anchor:opacity-100" />}
       </button>
     </CardTitle>
+  )
+}
+
+/** Opens the side panel's chat with the block around `from` as its context: the block's content, read off
+ *  the screen at the click. */
+function useAskBlock(from: React.RefObject<HTMLElement | null>, title?: string) {
+  const { askAbout } = useShellPanel()
+  const path = usePathname()
+  return () => {
+    const card = from.current?.closest<HTMLElement>('[data-slot="card"]')
+    const name = title ?? card?.querySelector('[data-slot="card-title"]')?.textContent ?? "this block"
+    const text = (card?.innerText ?? "").replace(/\n{3,}/g, "\n\n").slice(0, 8000)
+    askAbout({ context: () => `ACTIVE CONTEXT — the user is asking about the block "${name}" on ${path}. What the block shows on screen:\n${text}` })
+  }
+}
+
+/** Every block's Ask PAX chip (Brendan, 2026-10-23): the home page's white PAX button in small, "Ask" in
+ *  black before the mark, in the header just before the chevron. It opens the side panel's chat with the
+ *  block as its context. */
+export function AskPaxChip({ title }: { title?: string }) {
+  const self = React.useRef<HTMLButtonElement>(null)
+  const ask = useAskBlock(self, title)
+  return (
+    <button ref={self} type="button" onClick={ask} aria-label={`Ask PAX about ${title ?? "this block"}`} className={whiteButton("md", "h-7 gap-1 px-2.5 py-0 text-xs shadow-sm")}>
+      <span className="font-medium text-slate-900">Ask</span>
+      <PaxMark size={14} className="translate-y-px" />
+    </button>
   )
 }
 
@@ -115,7 +144,6 @@ export function CardTools({
   const router = useRouter()
   const path = usePathname()
   const pinTop = usePinTop()
-  const { askAbout } = useShellPanel()
   const { favs, toggle: toggleFav } = useNavFavorites()
   const shelf = useShelf()
   const { hide } = useHiddenBlocks()
@@ -124,12 +152,7 @@ export function CardTools({
   const fav = !!key && favs.includes(key)
   const onShelf = !!key && shelf.has(key)
   // Ask PAX: the side panel's chat opens with the block's content, read off the screen at the click.
-  const ask = () => {
-    const card = root.current?.closest<HTMLElement>('[data-slot="card"]')
-    const name = title ?? card?.querySelector('[data-slot="card-title"]')?.textContent ?? "this block"
-    const text = (card?.innerText ?? "").replace(/\n{3,}/g, "\n\n").slice(0, 8000)
-    askAbout({ context: () => `ACTIVE CONTEXT — the user is asking about the block "${name}" on ${path}. What the block shows on screen:\n${text}` })
-  }
+  const ask = useAskBlock(root, title)
   const extras = (views && views.length > 1) || !!menuItems || (rows && rows.length > 0)
   return (
     <div ref={root} className={cn("flex items-center gap-1", className)}>

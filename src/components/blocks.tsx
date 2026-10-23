@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 
-import { CardAnchor, CardTools, slug } from "@/components/dash/card-tools"
+import { AskPaxChip, CardAnchor, CardTools, slug } from "@/components/dash/card-tools"
 import { CarouselChevrons } from "@/components/record/chart-carousel"
 import { PAX2Search, PAX2Table2 } from "@/components/pax2-table2"
 import { Card, CardAction, CardContent, CardFooter, CardHeader } from "@/ui/components/nova/card"
@@ -94,6 +94,7 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
           <CardAction>
             <CardTools rows={rows} name={name ?? title.toLowerCase()} views={views} view={view} onView={onView} size={size} onSize={setSize} menuItems={menuItems} title={title || undefined} anchor={title || id ? (id ?? slug(title)) : undefined}>
               {actions}
+              <AskPaxChip title={title || undefined} />
               <button type="button" aria-label={size === "half" ? `Full view ${title}` : `Half view ${title}`} onClick={() => setSize(size === "half" ? "full" : "half")} className="inline-flex size-8 items-center justify-center rounded-md text-slate-800 hover:bg-muted hover:text-foreground">
                 <ChevronDown className={cn("size-4 transition-transform", size === "full" && "rotate-180")} />
               </button>

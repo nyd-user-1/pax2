@@ -57,6 +57,10 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
     if (!b) return
     const label = b.getAttribute("aria-label") ?? ""
     if (/^(Half|Full) view /.test(label)) setSize((s) => (s === "half" ? "full" : "half"))
+    else if (/^Ask PAX about /.test(label)) {
+      const text = (snap.current?.innerText ?? "").replace(/\n{3,}/g, "\n\n").slice(0, 8000)
+      askAbout({ context: () => `ACTIVE CONTEXT — the user is asking about the block "${title}" on ${path}. What the block shows on screen:\n${text}` })
+    }
     else if (/How to read|End the tour/.test(label)) router.push(`${path}#${anchor}`)
     else if (b.closest('[data-slot="card-title"]')) navigator.clipboard.writeText(link())
   }
