@@ -395,7 +395,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
                   </Link>
                 ))}
               </nav>
-              <Link href="/record" className="flex shrink-0 items-center gap-1.5 rounded-full bg-pax2-blue px-3 py-1.5 text-xs font-semibold text-white">
+              <Link href="/recording" className="flex shrink-0 items-center gap-1.5 rounded-full bg-pax2-blue px-3 py-1.5 text-xs font-semibold text-white">
                 <Video className="size-3.5" /> Record
               </Link>
             </header>
@@ -408,7 +408,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
               <div className="flex-1" />
               {/* A page's own header controls (the dashboard's poller switch and pipeline run) portal in here. */}
               <div id="page-actions" className="flex items-center gap-3" />
-              <Link href="/record" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-pax2-blue text-white shadow-md transition-shadow hover:shadow-e3">
+              <Link href="/recording" aria-label="Record" title="Record" className="press flex size-10 items-center justify-center rounded-full bg-pax2-blue text-white shadow-md transition-shadow hover:shadow-e3">
                 <Video className="size-4" />
               </Link>
               {/* 44b's DiscussionHeaderButton: the discussion panel opens from every page. */}

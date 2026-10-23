@@ -17,8 +17,8 @@ import { whiteButton } from "@/components/white-button"
 import { cn } from "@/ui/lib/utils"
 
 // The ways into recording: write in your own words, or choose, skip the camera, create or upload.
-// Shared by /recording, where each opens its /record page, and the landing's third section, where
-// each opens in place.
+// Shared by /recording, where the first opens /chat in record mode and the rest their /record pages,
+// and the landing's third section, where each opens in place.
 
 type Step = "options" | "personal" | "library" | "script" | "camera" | "studio"
 
@@ -55,7 +55,7 @@ export function RecordOptions({ onPick }: { onPick?: (to: Pick) => void }) {
           {lead}
         </button>
       ) : (
-        <Link href="/record/personal" className="lift group surface flex cursor-pointer flex-col gap-3 p-6">
+        <Link href="/chat?record=1" className="lift group surface flex cursor-pointer flex-col gap-3 p-6">
           {lead}
         </Link>
       )}

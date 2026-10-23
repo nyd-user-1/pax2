@@ -229,3 +229,20 @@ body {
     background: rgb(219 231 250 / 0.2);
   }
 }
+
+/* The angle that turns BorderLight's band (src/components/border-light.tsx) round its border. */
+@property --pax2-spin {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes pax2-spin {
+  to {
+    --pax2-spin: 360deg;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pax2-spin] {
+    animation: none !important;
+  }
+}

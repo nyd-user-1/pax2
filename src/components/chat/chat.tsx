@@ -22,6 +22,7 @@ import { useDraft } from '@/components/record/draft'
 import { answersText, parseCiteBlock, parseFieldBlock, stripFieldBlock, stripOpenBlock } from '@/lib/chat-fields'
 import { PlusMenu, type ScriptChip, type VideoChip } from '@/components/chat/plus-menu'
 import { Wordmark } from '@/components/wordmark'
+import { BorderLight } from '@/components/border-light'
 import { cn } from '@/ui/lib/utils'
 import { isShelfDrag, readShelfDrag } from '@/lib/shelf-drag'
 import { useShelf } from '@/lib/home-blocks'
@@ -57,6 +58,8 @@ export type PlaceInsight = { district: string | null; state?: string; chamber?: 
 // The browser's speech recognition (Chrome, Edge, Safari): not in TypeScript's DOM types.
 type Recognition = { lang: string; continuous: boolean; interimResults: boolean; start: () => void; stop: () => void; abort: () => void; onresult: ((e: { resultIndex: number; results: ArrayLike<ArrayLike<{ transcript: string }> & { isFinal: boolean }> }) => void) | null; onerror: ((e: { error: string }) => void) | null; onend: (() => void) | null }
 const speechRecognition = () => (typeof window === 'undefined' ? undefined : ((window as unknown as { SpeechRecognition?: new () => Recognition; webkitSpeechRecognition?: new () => Recognition }).SpeechRecognition ?? (window as unknown as { webkitSpeechRecognition?: new () => Recognition }).webkitSpeechRecognition))
+
+const RECORD_OPENER = "I'm ready to make my first video — where do we start?"
 
 // Record mode (the camera button): the conversation becomes an onboarding that ends in a recording,
 // made on this page. Questions go out as real controls (a pax-fields block the transcript renders as
@@ -109,10 +112,11 @@ const ask = (v: VideoChip) => `What explains the score on ${v.label}?`
  *  goes out and after every reply, the URL becomes /chat?c=<id>, and the sidebar's list refreshes;
  *  `initialMessages` reopens a saved one.
  *  `chipVideo` preloads a video for the question bank's chips (the video page's side panel); on /chat a
- *  short attached from the plus menu brings them. `surface` names where the chips show, for the log. */
-export function Chat({ scripts = [], videos = [], shorts = [], compact = false, context, attachment, heading, below, explore = true, shelf, chatId, initialMessages, chipVideo, surface = 'chat' }: { scripts?: ScriptChip[]; videos?: VideoChip[]; shorts?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode; heading?: React.ReactNode; below?: React.ReactNode; explore?: boolean; shelf?: React.ReactNode; chatId?: string; initialMessages?: Message[]; chipVideo?: string; surface?: Surface }) {
+ *  short attached from the plus menu brings them. `surface` names where the chips show, for the log.
+ *  `record` opens in record mode with the opener in the box (/chat?record=1, from /recording). */
+export function Chat({ scripts = [], videos = [], shorts = [], compact = false, context, attachment, heading, below, explore = true, shelf, chatId, initialMessages, chipVideo, surface = 'chat', record = false }: { scripts?: ScriptChip[]; videos?: VideoChip[]; shorts?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode; heading?: React.ReactNode; below?: React.ReactNode; explore?: boolean; shelf?: React.ReactNode; chatId?: string; initialMessages?: Message[]; chipVideo?: string; surface?: Surface; record?: boolean }) {
   const [messages, setMessages] = useState<Message[]>(initialMessages ?? [])
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState(record && !initialMessages?.length ? RECORD_OPENER : '')
   const [loading, setLoading] = useState(false)
   const [streaming, setStreaming] = useState(false)
   const [selectedVideo, setSelectedVideo] = useState<VideoChip | null>(null)
@@ -138,7 +142,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   const [isFocused, setIsFocused] = useState(false)
   const [model, setModel] = useChatModel()
   const [videoModel, setVideoModel] = useVideoModel()
-  const [recordMode, setRecordMode] = useState(false)
+  const [recordMode, setRecordMode] = useState(record)
   // The close of record mode: the recording happens in the transcript itself — Record on the
   // script card opens the flow's cards right under the conversation, the script in the session draft.
   const [flowScript, setFlowScript] = useState<string | null>(null)
@@ -173,6 +177,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   // A Blocks-shelf tile dropped on the chat attaches as context, after livingston's drag-to-chat: a short
   // carries its own facts; a block is read from its page at drop time (/api/block-context), so the chat
   // gets what the block shows now. The ribbon over the input names it; the X lets it go.
+          u.searchParams.delete('record')
   const [attached, setAttached] = useState<{ kind: 'block' | 'video'; title: string; place: string; context: string | null; error?: string; key?: string } | null>(null)
   const blocksShelf = useShelf()
   const [dragOver, setDragOver] = useState(false)
@@ -225,6 +230,11 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   const recordingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const stopAndTranscribeRef = useRef<() => void>(() => {})
 
+  // Arriving in record mode, the caret waits at the end of the opener.
+  useEffect(() => {
+    const t = textareaRef.current
+    if (record && t) { t.focus(); t.setSelectionRange(t.value.length, t.value.length) }
+  }, [record])
   // ── Waveform visualization ──
   const audioCtxRef = useRef<AudioContext | null>(null)
   const analyserRef = useRef<AnalyserNode | null>(null)
@@ -652,6 +662,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
             </button>
           </div>
         )}
+        {recordMode && <BorderLight />}
 
         {selectedVideo ? (
           <div
@@ -706,7 +717,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
               const next = !recordMode
               setRecordMode(next)
               setVideoReady(false)
-              if (next && !input.trim() && messages.length === 0) setInput("I'm ready to make my first video — where do we start?")
+              if (next && !input.trim() && messages.length === 0) setInput(RECORD_OPENER)
               textareaRef.current?.focus()
             }}
             className={`relative ml-2 shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
