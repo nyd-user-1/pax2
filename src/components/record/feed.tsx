@@ -572,7 +572,7 @@ function Cycle({ items, ruled }: { items: FeedVideo[]; ruled?: boolean }) {
 }
 
 /** Every word has to appear somewhere in the title, channel or description, in any order. */
-export const matches = (v: FeedVideo, needle: string) => needle.split(/\s+/).filter(Boolean).every((w) => `${v.title} ${v.channel} ${v.description}`.toLowerCase().includes(w))
+export const matches = (v: FeedVideo, needle: string) => needle.split(/\s+/).filter(Boolean).every((w) => `${v.title} ${v.channel} ${v.description}${v.paid ? " paid" : ""}`.toLowerCase().includes(w))
 
 const RETURN = "pax2:feed-return"
 const RECENT = "pax2:recent-searches"

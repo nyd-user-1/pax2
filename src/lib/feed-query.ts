@@ -9,7 +9,7 @@ export const wordsMatch = (v: FeedVideo, needle: string) =>
   needle
     .split(/\s+/)
     .filter(Boolean)
-    .every((w) => `${v.title} ${v.channel} ${v.description} ${(v.tags ?? []).join(" ")}`.toLowerCase().includes(w))
+    .every((w) => `${v.title} ${v.channel} ${v.description} ${(v.tags ?? []).join(" ")}${v.paid ? " paid" : ""}`.toLowerCase().includes(w))
 
 const posted = (v: FeedVideo) => new Date(v.published).getTime()
 const perDay = (v: FeedVideo) => v.views / Math.max(1, (Date.now() - posted(v)) / 86_400_000)
