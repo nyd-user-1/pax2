@@ -1,0 +1,483 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sketch: the question universe</title>
+<style>
+body{margin:0;padding:48px 24px;background:#f5f7fb;font:15px/1.5 -apple-system,system-ui,sans-serif;color:#0f172a}
+.wrap{max-width:1120px;margin:0 auto}
+h1{font-size:26px;color:#1e3a8a;margin:0 0 24px}
+section{background:#fff;border-radius:20px;outline:1px solid rgb(15 23 42/.06);padding:24px 28px;margin-bottom:20px}
+h2{font-size:17px;color:#1e3a8a;margin:0 0 16px}
+h2 small{font-weight:400;color:#94a3b8;font-size:13px;margin-left:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px 22px}
+.q{min-width:0}
+.chip{display:inline-block;border:1px solid #cbd5e1;border-radius:999px;padding:7px 14px;font-size:14px;background:#fff;color:#0f172a}
+.p2 .chip{border-style:dashed;color:#64748b;background:transparent}
+.tag{margin-left:6px;font-size:11px;color:#2563eb;background:#dbeafe;border-radius:999px;padding:2px 8px;vertical-align:middle}
+.meta{margin:8px 2px 0;font-size:12px;line-height:1.45;color:#64748b;display:flex;flex-direction:column;gap:3px}
+.meta b{color:#334155;font-weight:600;margin-right:4px}
+code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px;padding:0 4px;color:#334155;word-break:break-all}
+.cov{color:#16a34a}.cov.zero{color:#b45309}.p2 .cov{color:#94a3b8}
+@media (max-width:640px){body{padding:28px 14px}section{padding:18px}}
+</style></head><body><div class="wrap">
+<h1>The question universe</h1>
+<section><h2>The video in hand<small>28 + 7 pass 2</small></h2><div class="grid"><div class="q">
+  <span class="chip">What happens in the first two seconds?</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.cutsHook</code> <code>composition.textHook</code> <code>composition.wordsHook</code> <code>composition.hookLoudnessDelta</code> <code>raw.frames[0..2].words</code></div>
+  <div><b>Basis</b> the media file: scene cuts, OCR at one frame a second, the loudness curve, the timed transcript</div>
+  <div><b>Answer</b> In the first 2 s: {cuts} cuts, {spoken} spoken words, {onscreen} on-screen words. The opening is {delta} LU {louderQuieter} than the short as a whole.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">When does my first word land?</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.firstWordSec</code> <code>transcript.words[0]</code></div>
+  <div><b>Basis</b> word timings from the captions or Whisper</div>
+  <div><b>Answer</b> The first spoken word, “{word}”, lands at {sec} s. {fieldPct} of baseline shorts speak sooner.</div>
+  <div class="cov">4,714 of 5,379 baseline shorts; the rest: Add captions: word timings come from captions or a Whisper pass</div></div>
+</div>
+<div class="q">
+  <span class="chip">What happens before my first word lands?</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.firstWordSec</code> <code>raw.cuts</code> <code>raw.frames[].words</code> <code>raw.loudness.perSecond</code></div>
+  <div><b>Basis</b> the media file's cuts, OCR and loudness up to the first timed word</div>
+  <div><b>Answer</b> Before the first word at {sec} s: {cuts} cuts, {textSeconds} seconds with on-screen text, loudness {lufs} LUFS on average.</div>
+  <div class="cov">4,714 of 5,379 baseline shorts; the rest: Add captions: word timings come from captions or a Whisper pass</div></div>
+</div>
+<div class="q">
+  <span class="chip">Does my hook open on a face, on text, or on b-roll?</span>
+  <div class="meta"><div><b>Reads</b> <code>census.format</code> <code>census.peopleScreenShare</code> <code>raw.frames[0..2].words</code></div>
+  <div><b>Basis</b> the census's format read and OCR on the first three sampled frames; 72 of 86 right in audit</div>
+  <div><b>Answer</b> The first three sampled seconds carry {words} on-screen words. The census reads the format as {format}, with people in {share} of the frame.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Is there a call to action, and when does it show?</span>
+  <div class="meta"><div><b>Reads</b> <code>census.callToAction</code> <code>census.ctaSec</code></div>
+  <div><b>Basis</b> the census's on-screen call-to-action read; the timestamp within 2 s on 28 of 28; 94 of 99 right in audit</div>
+  <div><b>Answer</b> An on-screen call to action shows at {sec} s. | No on-screen call to action in the sampled frames.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">What does this look like on mute?</span>
+  <div class="meta"><div><b>Reads</b> <code>census.captionsBurnedIn</code> <code>composition.textFrameShare</code> <code>composition.textWordsPerFrame</code></div>
+  <div><b>Basis</b> OCR at one frame a second and the census's captions read; 88 of 99 right in audit</div>
+  <div><b>Answer</b> {share}% of seconds carry on-screen text, {wpf} words a frame on average. Captions {are} burned in.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Show me every moment with on-screen text.</span>
+  <div class="meta"><div><b>Reads</b> <code>raw.frames[].t</code> <code>raw.frames[].words</code></div>
+  <div><b>Basis</b> OCR at one frame a second; a moment is a run of seconds with 2+ words</div>
+  <div><b>Answer</b> {n} stretches carry on-screen text: {spans}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">How many shots do I use, and where's the longest?</span>
+  <div class="meta"><div><b>Reads</b> <code>raw.cuts</code> <code>raw.durationSec</code></div>
+  <div><b>Basis</b> scene cuts from the ffmpeg scene score</div>
+  <div><b>Answer</b> {shots} shots over {duration} s. The longest runs {longest} s, from {from} s to {to} s.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">How long before the first cut?</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.firstCutSec</code> <code>craft.firstCutSec</code></div>
+  <div><b>Basis</b> scene cuts; the percentile is within the channel</div>
+  <div><b>Answer</b> The first cut comes at {sec} s, the {pct} percentile of the channel's shorts.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">How fast is it cut?</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.cutsPerSec</code> <code>craft.cutsPerSec</code></div>
+  <div><b>Basis</b> scene cuts per second; the percentile is within the channel</div>
+  <div><b>Answer</b> {rate} cuts a second, one every {every} s on average: the {pct} percentile of the channel's shorts.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">What's happening at the loudest moment?</span>
+  <div class="meta"><div><b>Reads</b> <code>raw.loudness.perSecond</code> <code>raw.cuts</code> <code>raw.frames[].words</code> <code>transcript.words</code></div>
+  <div><b>Basis</b> the per-second loudness curve, with the cuts, OCR and words at that second</div>
+  <div><b>Answer</b> The loudest second is {sec} s at {lufs} LUFS, {over} LU over the integrated level. {context}</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Where does the sound drop out?</span>
+  <div class="meta"><div><b>Reads</b> <code>raw.loudness.perSecond</code> <code>raw.loudness.integrated</code></div>
+  <div><b>Basis</b> seconds 10 LU or more under the integrated level</div>
+  <div><b>Answer</b> {n} drops of 10 LU or more: {spans}. | No second falls 10 LU under the integrated level.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Is it loud enough?</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.loudnessLufs</code> <code>composition.loudnessRange</code></div>
+  <div><b>Basis</b> integrated loudness against the 5,379-short baseline</div>
+  <div><b>Answer</b> Integrated loudness {lufs} LUFS; the baseline median is {median} LUFS ({pct} percentile). Loudness range {range} LU.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">How fast do I talk?</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.speechWps</code> <code>craft.speechWps</code></div>
+  <div><b>Basis</b> spoken words per second between the first and last timed word</div>
+  <div><b>Answer</b> {wps} words a second, the {pct} percentile of the channel's shorts; the baseline median is {median}.</div>
+  <div class="cov">4,714 of 5,379 baseline shorts; the rest: Add captions: word timings come from captions or a Whisper pass</div></div>
+</div>
+<div class="q">
+  <span class="chip">How much of it is talking?</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.speechShare</code></div>
+  <div><b>Basis</b> share of audible seconds carrying speech</div>
+  <div><b>Answer</b> Speech fills {share}% of the audible seconds; the baseline median is {median}%.</div>
+  <div class="cov">4,714 of 5,379 baseline shorts; the rest: Add captions: word timings come from captions or a Whisper pass</div></div>
+</div>
+<div class="q">
+  <span class="chip">How many words is the script?</span>
+  <div class="meta"><div><b>Reads</b> <code>transcript.words</code> <code>composition.durationSec</code></div>
+  <div><b>Basis</b> the transcript's word count over the file's length</div>
+  <div><b>Answer</b> {words} words over {duration} s.</div>
+  <div class="cov">5,378 of 5,379 baseline shorts; the rest: Add captions: word timings come from captions or a Whisper pass</div></div>
+</div>
+<div class="q">
+  <span class="chip">What am I saying when text first appears?</span>
+  <div class="meta"><div><b>Reads</b> <code>raw.frames[].words</code> <code>transcript.words[].t</code></div>
+  <div><b>Basis</b> the first OCR second with 2+ words, matched to the timed words around it</div>
+  <div><b>Answer</b> On-screen text first appears at {sec} s, over the words “{words}”.</div>
+  <div class="cov">4,714 of 5,379 baseline shorts; the rest: Add captions: word timings come from captions or a Whisper pass</div></div>
+</div>
+<div class="q">
+  <span class="chip">How does it end?</span>
+  <div class="meta"><div><b>Reads</b> <code>raw.frames[-3..].words</code> <code>raw.loudness.perSecond[-3..]</code> <code>census.ctaSec</code> <code>transcript.words[-8..]</code></div>
+  <div><b>Basis</b> the last 3 seconds of OCR, loudness and words</div>
+  <div><b>Answer</b> The last 3 s: {text}, loudness {lufs} LUFS{cta}. Last words: “{words}”.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Are my captions burned in?</span>
+  <div class="meta"><div><b>Reads</b> <code>census.captionsBurnedIn</code></div>
+  <div><b>Basis</b> the census: on-screen text that changes with the speech; 88 of 99 right in audit</div>
+  <div><b>Answer</b> Captions {are} burned in.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">What kind of video is this?</span>
+  <div class="meta"><div><b>Reads</b> <code>census.format</code></div>
+  <div><b>Basis</b> the census's format read; 72 of 86 right in audit</div>
+  <div><b>Answer</b> Format: {format}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Where was this shot?</span>
+  <div class="meta"><div><b>Reads</b> <code>census.setting</code></div>
+  <div><b>Basis</b> the census's setting read; 83 of 90 right in audit</div>
+  <div><b>Answer</b> Setting: {setting}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">How much of the frame do people fill?</span>
+  <div class="meta"><div><b>Reads</b> <code>census.peopleScreenShare</code></div>
+  <div><b>Basis</b> the census's screen-share read; counts only, no identity; 80 of 99 right in audit</div>
+  <div><b>Answer</b> People fill about {share} of the frame.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Is anyone else's logo on screen?</span>
+  <div class="meta"><div><b>Reads</b> <code>census.thirdPartyWatermark</code></div>
+  <div><b>Basis</b> the census's third-party watermark read; precision 0.64, so a yes deserves a look; 83 of 97 right in audit</div>
+  <div><b>Answer</b> A third-party watermark or chyron {is} read in the sampled frames.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">How much does the picture move?</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.visualActivity</code> <code>craft.visualActivity</code></div>
+  <div><b>Basis</b> mean frame-to-frame scene score; the percentile is within the channel</div>
+  <div><b>Answer</b> Visual activity {value}, the {pct} percentile of the channel's shorts.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Is it too dark?</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.brightness</code> <code>composition.saturation</code></div>
+  <div><b>Basis</b> mean frame brightness and saturation, 0 to 255, against the baseline</div>
+  <div><b>Answer</b> Brightness {y} of 255 (baseline median {median}), saturation {sat}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">What does my title do?</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.titleChars</code> <code>composition.titleWords</code> <code>composition.titleQuestion</code> <code>composition.titleNumber</code> <code>composition.titleCapsRun</code> <code>composition.titleEmoji</code></div>
+  <div><b>Basis</b> the title's measured traits against the baseline</div>
+  <div><b>Answer</b> {words} words, {chars} characters (baseline median {median}). {traits}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Which persuasion techniques does it use?</span>
+  <div class="meta"><div><b>Reads</b> <code>codebook.swayable</code> <code>swayable.traits</code></div>
+  <div><b>Basis</b> the codebook's Swayable coding of the transcript; 82% agreement with a second coder over 20 videos</div>
+  <div><b>Answer</b> {n} of Swayable's 28 traits: {traits}.</div>
+  <div class="cov">5,375 of 5,379 baseline shorts; the rest: Run the codebook on this video: the Swayable, Upworthy and Wesleyan codes land with it</div></div>
+</div>
+<div class="q">
+  <span class="chip">Is this trying to persuade?</span>
+  <div class="meta"><div><b>Reads</b> <code>codebook.wesleyan</code></div>
+  <div><b>Basis</b> the codebook's Wesleyan goal coding of the transcript; two coders agreed on 16 of 20</div>
+  <div><b>Answer</b> Wesleyan goal: {goal}.</div>
+  <div class="cov">5,375 of 5,379 baseline shorts; the rest: Run the codebook on this video: the Swayable, Upworthy and Wesleyan codes land with it</div></div>
+</div>
+<div class="q p2">
+  <span class="chip">Is my thumbnail frame actually in the video?</span>
+  <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
+  <div><b>Basis</b> a frame match of the thumbnail against the file</div>
+  
+  <div class="cov">GPU read, pass 2</div></div>
+</div>
+<div class="q p2">
+  <span class="chip">Does anything on screen contradict what's said?</span>
+  <div class="meta"><div><b>Reads</b> <code>frames-gpu</code> <code>transcript.words</code></div>
+  <div><b>Basis</b> the on-screen words read against the transcript</div>
+  
+  <div class="cov">GPU read, pass 2</div></div>
+</div>
+<div class="q p2">
+  <span class="chip">What would someone know by second three with the sound off?</span>
+  <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
+  <div><b>Basis</b> the text and picture of the first three seconds, read</div>
+  
+  <div class="cov">GPU read, pass 2</div></div>
+</div>
+<div class="q p2">
+  <span class="chip">Are my captions readable on a phone?</span>
+  <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
+  <div><b>Basis</b> caption size and contrast at phone scale</div>
+  
+  <div class="cov">GPU read, pass 2</div></div>
+</div>
+<div class="q p2">
+  <span class="chip">Am I on screen in the first second?</span>
+  <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
+  <div><b>Basis</b> a person in the frames at 0, 0.5 and 1 s</div>
+  
+  <div class="cov">GPU read, pass 2</div></div>
+</div>
+<div class="q p2">
+  <span class="chip">Is the paid-for-by line on screen?</span>
+  <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
+  <div><b>Basis</b> the disclaimer read from the frames</div>
+  
+  <div class="cov">GPU read, pass 2</div></div>
+</div>
+<div class="q p2">
+  <span class="chip">Does this show a news clip or someone else's footage?</span>
+  <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
+  <div><b>Basis</b> footage source read from the frames</div>
+  
+  <div class="cov">GPU read, pass 2</div></div>
+</div></div></section>
+<section><h2>Against the field<small>21 + 2 pass 2</small></h2><div class="grid"><div class="q">
+  <span class="chip">How did this do against my usual?</span>
+  <div class="meta"><div><b>Reads</b> <code>catalog.views</code> <code>catalog.channelMedian</code> <code>catalog.ratio</code> <code>catalog.tier</code></div>
+  <div><b>Basis</b> views over the channel's median views (the Outlier Score)</div>
+  <div><b>Answer</b> {views} views against a channel median of {median}: an Outlier Score of {ratio}×. {verdict}</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Why might this one have outperformed?</span>
+  <div class="meta"><div><b>Reads</b> <code>catalog.ratio</code> <code>registry.rows[measured]</code> <code>topics.lift</code> <code>modes.score</code> <code>lengths.bins</code></div>
+  <div><b>Basis</b> the traits it carries that have a measured Breakout lift, within the same channels</div>
+  <div><b>Answer</b> Outlier Score {ratio}×. Of the traits measured to move the outperform rate, it carries: {traits}. These are associations measured across channels, not causes of this one result.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Where does this rank on my channel?</span>
+  <div class="meta"><div><b>Reads</b> <code>catalog.ratio</code> <code>catalog.channelId</code></div>
+  <div><b>Basis</b> Outlier Score rank among the channel's catalog shorts</div>
+  <div><b>Answer</b> {rank} of {n} on the channel by Outlier Score; {outperformed} of the {n} outperformed 3x.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">What's different about my best video?</span>
+  <div class="meta"><div><b>Reads</b> <code>catalog.ratio</code> <code>craft.*</code></div>
+  <div><b>Basis</b> the channel's top Outlier Score short, compared axis by axis in within-channel percentiles</div>
+  <div><b>Answer</b> The channel's best is “{title}” at {ratio}×. The widest gaps: {gaps}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Show me videos like this one.</span>
+  <div class="meta"><div><b>Reads</b> <code>index.neighbors[0..5]</code> <code>catalog.ratio</code></div>
+  <div><b>Basis</b> nearest neighbors in the serving index (cosine on the 1,024-dimension embedding)</div>
+  <div><b>Answer</b> Nearest in the index: {list}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">What do videos like this one do differently?</span>
+  <div class="meta"><div><b>Reads</b> <code>index.neighbors[0..20]</code> <code>catalog.tier</code> <code>composition.*</code></div>
+  <div><b>Basis</b> the 20 nearest neighbors split by whether they outperformed 3x, compared on measured craft</div>
+  <div><b>Answer</b> Of its 20 nearest neighbors, {k} outperformed 3x. Against the rest they {diffs}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">What's this about, and how does that topic do?</span>
+  <div class="meta"><div><b>Reads</b> <code>topics.cluster</code> <code>topics.lift</code></div>
+  <div><b>Basis</b> the encoder map's 40 clusters; the topic lift where measured in 5+ channels</div>
+  <div><b>Answer</b> Topic: {label} ({n} shorts). {lift}</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Is this a good length?</span>
+  <div class="meta"><div><b>Reads</b> <code>catalog.durationSec</code> <code>lengths.bins</code> <code>lengths.crossing</code></div>
+  <div><b>Basis</b> outperform and underperform share by length, within channels, 18,544 shorts</div>
+  <div><b>Answer</b> At {sec} s it sits in the {bin} bin: {out}% outperformed 3x, {under}% fell to half the median or less. Past {crossing} s the underperform share exceeds the outperform share.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Does this match the craft of the winners?</span>
+  <div class="meta"><div><b>Reads</b> <code>modes.scores</code> <code>modes.full.modes[survived]</code></div>
+  <div><b>Basis</b> the one winning mode that re-measured above base on held-out channels</div>
+  <div><b>Answer</b> Mode-match {score} of 100 against “{mode}”, which outperformed 3x at {lift}% against a base of {base}% on held-out channels.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Where does this stand out on my channel?</span>
+  <div class="meta"><div><b>Reads</b> <code>craft.*</code></div>
+  <div><b>Basis</b> within-channel percentiles on 24 craft axes</div>
+  <div><b>Answer</b> Furthest from the channel's usual: {extremes}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">How does my opening compare with ones that outperformed?</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.cutsHook</code> <code>composition.textHook</code> <code>composition.wordsHook</code> <code>composition.firstWordSec</code> <code>findings.overall</code></div>
+  <div><b>Basis</b> 2,770 within-channel pairs, outperformer against a same-channel control</div>
+  <div><b>Answer</b> {rows}</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">How does this format do elsewhere?</span>
+  <div class="meta"><div><b>Reads</b> <code>census.format</code> <code>registry.rows[format=*]</code></div>
+  <div><b>Basis</b> the Breakout lift for the format, 4,396 settled shorts in 57 channels; 72 of 86 right in audit</div>
+  <div><b>Answer</b> {format} shorts outperform 3x {points} points {moreLess} often than others in the same channels (90% range {low} to {high}, {channels} channels). Descriptive: the format read is below the 0.85 accuracy a recommendation needs.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Are people liking and commenting more than usual?</span>
+  <div class="meta"><div><b>Reads</b> <code>catalog.likes</code> <code>catalog.comments</code> <code>craft.likeRate</code> <code>craft.commentRate</code></div>
+  <div><b>Basis</b> likes and comments per view, as within-channel percentiles</div>
+  <div><b>Answer</b> Like rate {likeRate}% ({likePct} percentile on the channel); comment rate {commentRate}% ({commentPct} percentile).</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">How fast did it pick up views?</span>
+  <div class="meta"><div><b>Reads</b> <code>velocity72.views1h</code> <code>velocity72.views6h</code> <code>velocity72.views24h</code> <code>velocity72.views72h</code></div>
+  <div><b>Basis</b> the polled view counts, read at 1, 6, 24 and 72 hours after publish</div>
+  <div><b>Answer</b> {h1} views at 1 h, {h6} at 6 h, {h24} at 24 h, {h72} at 72 h.</div>
+  <div class="cov">59 of 5,379 baseline shorts; the rest: Connect the channel: new publishes are polled from their first hour, so the 72-hour curve fills</div></div>
+</div>
+<div class="q">
+  <span class="chip">Is it ahead of where my videos usually are?</span>
+  <div class="meta"><div><b>Reads</b> <code>velocity72.*</code> <code>velocity72.byChannel</code></div>
+  <div><b>Basis</b> the channel's tracked shorts at the same hour since publish</div>
+  <div><b>Answer</b> At {hour} h it had {views} views; the channel's tracked median at that hour is {median} ({n} shorts).</div>
+  <div class="cov">59 of 5,379 baseline shorts; the rest: Connect the channel: new publishes are polled from their first hour, so the 72-hour curve fills</div></div>
+</div>
+<div class="q">
+  <span class="chip">What separates winners from the rest on this topic?</span>
+  <div class="meta"><div><b>Reads</b> <code>topics.cluster</code> <code>findings.clusters[].splits</code> <code>findings.findings</code></div>
+  <div><b>Basis</b> paired splits in the topic's cluster, Benjamini-Hochberg q &lt; 0.1 over 721 tests</div>
+  <div><b>Answer</b> {finding} | No craft split in this cluster clears q &lt; 0.1 ({pairs} pairs); the strongest is {top}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Do my videos that outperformed share a format?</span><span class="tag">channel</span>
+  <div class="meta"><div><b>Reads</b> <code>census.format</code> <code>catalog.tier</code> <code>catalog.channelId</code></div>
+  <div><b>Basis</b> the census format of every baseline short on the channel, split by tier; 72 of 86 right in audit</div>
+  <div><b>Answer</b> Of the channel's {n} outperformers, {top}. Among the rest: {rest}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">How many of my shorts have captions?</span><span class="tag">channel</span>
+  <div class="meta"><div><b>Reads</b> <code>census.captionsBurnedIn</code> <code>catalog.channelId</code></div>
+  <div><b>Basis</b> the census's captions read across the channel's baseline shorts; 88 of 99 right in audit</div>
+  <div><b>Answer</b> {k} of {n} of the channel's shorts carry burned-in captions.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">How many of my shorts open on text?</span><span class="tag">channel</span>
+  <div class="meta"><div><b>Reads</b> <code>composition.textHook</code> <code>catalog.channelId</code></div>
+  <div><b>Basis</b> OCR on the first 2 s of each of the channel's measured shorts</div>
+  <div><b>Answer</b> {k} of {n} open with on-screen words in the first 2 s; of those, {out} outperformed 3x, against {outRest} of the rest.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">Will this change minds?</span>
+  <div class="meta"><div><b>Reads</b> <code>codebook.swayable</code> <code>swayable.traits</code></div>
+  <div><b>Basis</b> Swayable's randomized tests (575 ads): the summed difference of the traits the script carries; no single trait's 90% range clears zero</div>
+  <div><b>Answer</b> Persuasion lean {lean} points of vote choice against a placebo, summed over the {n} traits it carries; the archive's median ad moved {median}. Largest contributions: {traits}.</div>
+  <div class="cov">5,375 of 5,379 baseline shorts; the rest: Run the codebook on this video: the Swayable, Upworthy and Wesleyan codes land with it</div></div>
+</div>
+<div class="q">
+  <span class="chip">Is my title built like headlines that win?</span>
+  <div class="meta"><div><b>Reads</b> <code>codebook.upworthy.patterns</code> <code>upworthy-top.patterns</code></div>
+  <div><b>Basis</b> Upworthy's 32,487 randomized headline tests: each pattern's share among winning and losing headlines</div>
+  <div><b>Answer</b> It carries {patterns}. {rows} | It carries none of the ten Upworthy patterns.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q p2">
+  <span class="chip">How long is our logo on screen in each video?</span><span class="tag">channel</span>
+  <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
+  <div><b>Basis</b> the channel's branding located frame by frame</div>
+  
+  <div class="cov">GPU read, pass 2</div></div>
+</div>
+<div class="q p2">
+  <span class="chip">Which of our videos have voting footage we could reuse?</span><span class="tag">channel</span>
+  <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
+  <div><b>Basis</b> polling places and ballots located in the frames</div>
+  
+  <div class="cov">GPU read, pass 2</div></div>
+</div></div></section>
+<section><h2>What to do<small>8</small></h2><div class="grid"><div class="q">
+  <span class="chip">Should I put a call to action on screen?</span>
+  <div class="meta"><div><b>Reads</b> <code>census.callToAction</code> <code>census.ctaSec</code> <code>registry.rows[callToAction]</code></div>
+  <div><b>Basis</b> the registry's one recommendation: the Breakout lift for an on-screen call to action; 94 of 99 right in audit</div>
+  <div><b>Answer</b> Shorts with an on-screen call to action outperformed 3x {points} points less often than others in the same channels (90% range {low} to {high}, {channels} channels). {here}</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">When should I ask viewers to act?</span>
+  <div class="meta"><div><b>Reads</b> <code>census.ctaSec</code> <code>registry.rows[callToAction]</code> <code>composition.durationSec</code></div>
+  <div><b>Basis</b> the on-screen call-to-action lift; spoken asks carry no measurement; 94 of 99 right in audit</div>
+  <div><b>Answer</b> {here} The measured lift is for asks shown on screen, mostly subscribe overlays and end cards: {points} points (90% range {low} to {high}). Asks in the spoken script are not measured.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">How do I get closer to the winning craft?</span>
+  <div class="meta"><div><b>Reads</b> <code>modes.full.modes[survived].center</code> <code>craft.*</code></div>
+  <div><b>Basis</b> the surviving mode's held-out lift; the gaps are this short's percentiles against the mode's center</div>
+  <div><b>Answer</b> The furthest from the mode: {gaps}. Shorts on the mode outperformed 3x at {lift}% against {base}% on held-out channels.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">What one change would help most?</span>
+  <div class="meta"><div><b>Reads</b> <code>registry.rows[recommendation]</code> <code>modes.*</code> <code>findings.findings</code></div>
+  <div><b>Basis</b> the largest measured lift among changes that apply to this short</div>
+  <div><b>Answer</b> {change} | No measured lift applies: every trait this short carries is descriptive or already on the measured side.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">When should I post the next one like this?</span>
+  <div class="meta"><div><b>Reads</b> <code>policy.mean</code> <code>policy.precision</code> <code>topics.cluster</code> <code>catalog.durationSec</code> <code>channels.family</code></div>
+  <div><b>Basis</b> the publish policy's posterior for this topic, length and channel family, fitted on 18,307 settled shorts</div>
+  <div><b>Answer</b> Best block: {block} ET, {p}% chance to outperform 3x against {worst}% for {worstBlock}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">What length should the next one be?</span>
+  <div class="meta"><div><b>Reads</b> <code>policy.mean</code> <code>topics.cluster</code> <code>channels.family</code></div>
+  <div><b>Basis</b> the publish policy's posterior over the four length arms for this topic and family</div>
+  <div><b>Answer</b> {best} scores highest for this topic: {p}% chance to outperform 3x, against {worst}% at {worstLen}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">What should my next one be about?</span>
+  <div class="meta"><div><b>Reads</b> <code>topics.lift</code></div>
+  <div><b>Basis</b> topic lifts measured in 5+ channels, 90% range clear of zero</div>
+  <div><b>Answer</b> Measured topics that outperform within channels: {top}. This short's topic: {mine}.</div>
+  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
+</div>
+<div class="q">
+  <span class="chip">What would make it more persuasive?</span>
+  <div class="meta"><div><b>Reads</b> <code>codebook.swayable</code> <code>swayable.traits</code></div>
+  <div><b>Basis</b> Swayable trait differences with 25+ ads; a change is recommended only where the 90% range clears zero</div>
+  <div><b>Answer</b> {change} | No Swayable trait's 90% range clears zero, so no change is recommended. The largest point estimates this script could move: {candidates}.</div>
+  <div class="cov">5,375 of 5,379 baseline shorts; the rest: Run the codebook on this video: the Swayable, Upworthy and Wesleyan codes land with it</div></div>
+</div></div></section>
+</div></body></html>

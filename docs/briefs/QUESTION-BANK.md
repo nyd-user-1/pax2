@@ -41,3 +41,30 @@ Three cheap HTML sketches under `docs/sketches/`, committed with the rest:
 ## Report
 
 Append `## Report`: the inventory, the question list by register with resolver columns, the bank's size and home, the chips as shipped with their event wiring, and anything deferred with why.
+
+## Progress
+
+**2026-10-22, the universe for review.** 57 free questions (28 the video in hand, 21 against the field, 8 what to do) and 9 pass-2 questions, each with its columns, basis, answer template and unlocking action, in `src/lib/question-bank.ts`; drawn whole in `docs/sketches/question-universe.html` with how many of the 5,379 baseline shorts each answers today (`node --experimental-strip-types scripts/question-universe.mjs`). Strike or reword there or in the file; edits fold in before the chips ship.
+
+Inventory, over the 5,379 baseline shorts:
+
+| store | what a question can resolve to | covers |
+|---|---|---|
+| composition, per short (`data/raw/composition/raw/`) | every scene cut, OCR word count and text area each second, loudness each second, integrated level and range | 5,379 |
+| composition, summary (`model/composition.json`) | 23 features: pacing, hook cuts/text/words, loudness, brightness, title traits | 5,379 (speech timing 4,714) |
+| transcripts | the words; timed where the source is captions (4,135) or Whisper (579); the transcript API's 664 carry word order only | 5,378 |
+| census (`model/vqa-census.json`) | captions, call to action and its second, format, setting, people screen share, third-party watermark; audit counts from `vqa-audit.json` ride with each answer; people count (0.36) and product (unvalidated) are not used | 5,379 |
+| codebook (`codebook.json`, landed 20:20 today) | 28 Swayable traits, Wesleyan goal, Upworthy title patterns | 5,375 / 5,375 / 5,379 |
+| serving index (`data/raw/composition/index`) | nearest neighbors, cosine on 1,024 dimensions | 5,379 |
+| velocity catalog | views, likes, comments, channel median, Outlier Score, tier | 5,379 |
+| 72-hour curves (`model/velocity-features.json`) | views at 1, 6, 24, 72 h | 59 |
+| craft templates (`video-reads.json`) | within-channel percentiles on 24 axes | 5,379 |
+| winning modes | mode-match score; one surviving mode, held-out lift 50.8% against 39.9% | 5,379 |
+| topics + topic lift | 40 clusters; 14 topics with a lift measured in 5+ channels | 5,379 |
+| composition findings | 2,770 within-channel pairs, overall and per cluster, 7 splits at q < 0.1 | all |
+| length crossing | outperform/underperform share by length bin | all |
+| census registry (`model/vqa-registry.json`) | Breakout lift per census trait; one recommendation (on-screen call to action, -7.0) | all |
+| publish policy | posterior over topic x length x hour block, by family | 5,379 |
+| Swayable patterns | 28 trait differences in vote choice; no trait's 90% range clears zero, so persuasion answers stay descriptive | all |
+
+On-screen text is stored as word counts, not the words, so "what would someone know by second three with the sound off" is pass 2.
