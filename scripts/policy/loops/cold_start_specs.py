@@ -36,8 +36,8 @@ specs = {
                       "readIt": {"dataset": feed["dataset"], "label": feed["label"], "results": feed["results"]}},
     },
     "chat-suggested-prompts": {
-        "arms": {"what": "the suggested-prompt chips", "source": "the chip list Window U ships with the per-video question button; arm id = chip id",
-                 "now": "no chips exist in src yet; the arms list fills when they do"},
+        "arms": {"what": "the suggested-prompt chips", "source": "CHIP_QUESTIONS in src/lib/question-bank.ts (rated 4-5, no GPU); arm id = chip id; drawn per register slot by chipsFor in src/lib/question-resolver.ts",
+                 "now": ["hook-opens-on", "cta-when", "on-mute", "loud-enough", "script-length", "ending", "format", "setting", "motion", "title", "persuasion-traits", "ad-goal", "outlier-score", "why-outperformed", "channel-rank", "best-video-diff", "neighbors", "like-this-differently", "topic", "good-length", "mode-match", "craft-extremes", "hook-vs-winners", "format-field", "engagement", "first-72h", "curve-vs-channel", "topic-splits", "channel-format-winners", "persuade", "title-patterns", "should-ask-onscreen", "when-ask", "closer-to-mode", "one-change", "when-post", "next-length", "next-topic", "more-persuasive"]},
         "context": ["where the chat opened (video page, home, metrics)", "a video in view or not", "reader tier", "chips already tapped this session"],
         "reward": {"primary": "chip tapped while shown", "kinds": ["chip-tap"]},
         "logging": {"store": "pax2-ledger usage log (src/lib/usage.ts)",
