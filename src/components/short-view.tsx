@@ -14,6 +14,7 @@ import { ResonanceCard, ResonanceFactors, ResonanceGauge } from "@/components/re
 import { CraftOctagon, ModeMatch, Recommendations, TopicRows, UnlockList, ingredients } from "@/components/video-reads"
 import { craftTemplate, modeMatch, resonanceFactors, resonanceScore, topicOf, unlockActions } from "@/lib/video-reads"
 import { videoFacts } from "@/lib/question-resolver"
+import { videoAnalytics } from "@/lib/analytics"
 import { boostCounts } from "@/lib/boost"
 import { ChevronRight } from "lucide-react"
 
@@ -180,6 +181,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const commentsP = topComments(ytId)
   const codebookP = generatedJson<Record<string, Codes>>("codebook")
   const factsP = videoFacts(ytId).catch(() => ({ census: null, comp: null }))
+  const analyticsP = videoAnalytics(ytId).catch(() => null)
   userP.catch(() => {})
   commentsP.catch(() => {})
   const data = shorts as unknown as Yt
@@ -379,69 +381,12 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     ])
 
   const coded = (await codebookP)?.[ytId]
-  // Every figure the platform holds for every baseline short, its own or derived from its own: the
-  // catalog's counts, the census read from the frames, the composition extracted from the file, and the
-  // scores. Paid figures (one partner's ad batch) and the owner's YouTube Analytics stay out.
-  const { census: cen, comp: cmp } = await factsP
-  const yesNo = (x: number | null | undefined) => (x == null ? DASH : x ? "Yes" : "No")
-  const ord = (x: number) => `${x}${x % 100 >= 11 && x % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][x % 10] ?? "th"}`
-  const clock = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`
-  const fixed = (x: number | null | undefined, d = 2, unit = "") => (x == null ? DASH : `${x.toFixed(d)}${unit}`)
-  const subs = v ? (subscribers as Record<string, number | null>)[v.channelId] : null
-  const days = v ? Math.max(1, (Date.now() - Date.parse(v.published)) / 86_400_000) : null
-  const outcome = ratio == null ? DASH : ratio >= 3 ? "Outperformed 3x" : ratio <= 0.5 ? "Under half its median" : "Within its usual range"
-  const analytics: [string, [string, string][]][] = [
-    [
-      "Performance",
-      [
-        ["Views", n(v?.views)],
-        ["Channel median", n(scored ? Math.round(scored.channelMedian) : null)],
-        ["Outlier Score", ratio == null ? DASH : times(ratio)],
-        ["Outcome", outcome],
-        ["Views per day", v?.views != null && days ? n(Math.round(v.views / days)) : DASH],
-        ["Against the catalog median", v?.views == null ? DASH : times(v.views / warBaseline.median)],
-        ["Likes", n(likes)],
-        ["Like rate", pct(likes)],
-        ["Comments", n(v?.comments)],
-        ["Comment rate", pct(v?.comments)],
-        ...(boosts > 0 ? ([["Boosts", n(boosts)]] as [string, string][]) : []),
-      ],
-    ],
-    ["Channel", [["Subscribers", n(subs)], ["Views per subscriber", v?.views != null && subs ? fixed(v.views / subs, 2) : DASH], ["Published", v ? new Date(v.published).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : DASH]]],
-    [
-      "On screen",
-      [
-        ["Format", cen?.format ? cen.format.replace(/^./, (c) => c.toUpperCase()) : DASH],
-        ["Setting", cen?.setting ? cen.setting.replace(/^./, (c) => c.toUpperCase()) : DASH],
-        ["Captions burned in", yesNo(cen?.captionsBurnedIn)],
-        ["Call to action", cen == null ? DASH : cen.callToAction ? (cen.ctaSec != null ? `Yes, at ${clock(cen.ctaSec)}` : "Yes") : "No"],
-        ["A person on screen", cen?.peopleScreenShare == null ? DASH : `${Math.round(cen.peopleScreenShare * 100)}% of frames`],
-        ["Third-party watermark", yesNo(cen?.thirdPartyWatermark)],
-      ],
-    ],
-    [
-      "Production",
-      [
-        ["Length", v ? clock(secs(v.duration)) : DASH],
-        ["Cuts per second", fixed(cmp?.cutsPerSec)],
-        ["Seconds to first cut", fixed(cmp?.firstCutSec, 1, " s")],
-        ["Cuts in the first 2 s", cmp?.cutsHook == null ? DASH : String(cmp.cutsHook)],
-        ["Frames with text", cmp?.textFrameShare == null ? DASH : `${Math.round(cmp.textFrameShare * 100)}%`],
-        ["Loudness", fixed(cmp?.loudnessLufs, 1, " LUFS")],
-        ["Spoken words per second", fixed(cmp?.speechWps, 1)],
-        ["Seconds to first word", fixed(cmp?.firstWordSec, 1, " s")],
-      ],
-    ],
-    [
-      "Scores",
-      [
-        ["Resonance", score ? (score.post != null ? `${Math.round(score.pre)} predicted, ${Math.round(score.post)} measured` : `${Math.round(score.pre)} predicted`) : DASH],
-        ["Profile similarity", match ? `${match.score} / 100` : DASH],
-        ["Headline percentile", score?.h == null ? DASH : ord(Math.round(score.h))],
-        ["Wesleyan goal", coded?.wesleyan ? coded.wesleyan.replace(/^./, (c) => c.toUpperCase()) : DASH],
-      ],
-    ],
-  ]
+  const { census: cen } = await factsP
+  const metrics = await analyticsP
+  const ordinal = (x: number) => {
+    const k = Math.round(x)
+    return `${k}${k % 100 >= 11 && k % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][k % 10] ?? "th"}`
+  }
   const right: [string, string, ReactNode][] = [
     // Resonance first (docs/RESONANCE.md): the gauge with the stack's factors beside it. It reads only
     // resonance-formula.json and stays empty, naming what unlocks it, until that file holds this video.
@@ -461,16 +406,45 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "stats",
       "Analytics",
-      <CardBlock key="stats" title="Analytics" height="max" rows={analytics.flatMap(([group, rs]) => rs.map(([stat, value]) => ({ group, stat, value })))} name={`analytics-${ytId}`}>
-        <div className="@container flex flex-col gap-5">
-          {analytics.map(([group, rs]) => (
-            <section key={group} className="flex flex-col gap-3">
-              <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">{group}</h3>
-              <div className="grid grid-cols-2 gap-4 @md:grid-cols-3 @2xl:grid-cols-4">{rs.map(([label, value]) => <React.Fragment key={label}>{stat(label, value)}</React.Fragment>)}</div>
-            </section>
-          ))}
-        </div>
-      </CardBlock>,
+      // The KPI table's shape: one row a metric, this short beside its channel and the whole baseline, and
+      // its percentile within its channel (src/lib/analytics.ts).
+      <TableBlock key="stats" title="Analytics" height="max" search="Search metrics…" rows={(metrics?.rows ?? []).map((r) => ({ group: r.group, metric: r.label, thisShort: r.value, channel: r.channel, baseline: r.all, percentileInChannel: r.pct }))} name={`analytics-${ytId}`}>
+        {metrics ? (
+          <div className="overflow-x-auto">
+            <table className="tabular w-full text-sm">
+              <thead className="text-left text-xs text-slate-500">
+                <tr className="[&_th]:whitespace-nowrap [&_th]:py-2 [&_th]:pr-6 [&_th]:font-medium">
+                  <th />
+                  <th>This short</th>
+                  <th>Its channel</th>
+                  <th>All {metrics.shorts.toLocaleString("en-US")}</th>
+                  <th>Percentile in its channel</th>
+                </tr>
+              </thead>
+              <tbody className="[&_td]:whitespace-nowrap [&_td]:border-t [&_td]:border-slate-100 [&_td]:py-2 [&_td]:pr-6">
+                {[...new Set(metrics.rows.map((r) => r.group))].map((g) => (
+                  <React.Fragment key={g}>
+                    <tr>
+                      <td colSpan={5} className="pt-4 text-xs font-semibold uppercase tracking-wide text-slate-500">{g}</td>
+                    </tr>
+                    {metrics.rows.filter((r) => r.group === g).map((r) => (
+                      <tr key={r.label} data-find>
+                        <td className="text-slate-500">{r.label}</td>
+                        <td className="font-medium text-slate-900">{r.value}</td>
+                        <td>{r.channel}</td>
+                        <td>{r.all}</td>
+                        <td>{r.pct == null ? "—" : ordinal(r.pct)}</td>
+                      </tr>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-sm text-slate-600">This short is outside the baseline the metrics are computed over.</p>
+        )}
+      </TableBlock>,
     ],
     [
       "mode",

@@ -7,6 +7,7 @@ const FILES = {
   "question-bank": "data/generated/question-bank.json",
   codebook: "data/generated/codebook.json",
   "vqa-census": "data/generated/model/vqa-census.json",
+  analytics: "data/generated/analytics.json",
 }
 const bucket = process.env.PAX2_BUCKET ?? "pax-2-638175140432"
 for (const [name, file] of Object.entries(FILES)) {

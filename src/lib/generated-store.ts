@@ -12,6 +12,7 @@ export const GENERATED = {
   "question-bank": ["data", "generated", "question-bank.json"],
   codebook: ["data", "generated", "codebook.json"],
   "vqa-census": ["data", "generated", "model", "vqa-census.json"],
+  analytics: ["data", "generated", "analytics.json"],
 } as const
 export type GeneratedName = keyof typeof GENERATED
 
