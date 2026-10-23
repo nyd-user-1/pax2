@@ -509,9 +509,10 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const coded = (codebook as unknown as Record<string, Codes>)[ytId]
   const swayable = coded?.swayable ?? sample?.codes?.swayable
   const wesleyanGoal = coded?.wesleyan ?? sample?.codes?.wesleyan
-  if (swayable?.length) right.push(["swayable", "Swayable", <SwayableBlock key="swayable" codes={swayable} footer={coded?.swayable ? undefined : SAMPLE} />])
-  if (wesleyanGoal) right.push(["wesleyan", "Wesleyan", <WesleyanBlock key="wesleyan" goal={wesleyanGoal} footer={coded?.wesleyan ? undefined : SAMPLE} />])
-  if (v?.title) right.push(["upworthy", "Upworthy", <UpworthyBlock key="upworthy" title={v.title} />])
+  // Every video page carries all three; a block with no code for this video says so and offers a notification.
+  right.push(["swayable", "Swayable", <SwayableBlock key="swayable" videoId={ytId} codes={swayable} footer={swayable?.length && !coded?.swayable ? SAMPLE : undefined} />])
+  right.push(["wesleyan", "Wesleyan", <WesleyanBlock key="wesleyan" videoId={ytId} goal={wesleyanGoal} footer={wesleyanGoal && !coded?.wesleyan ? SAMPLE : undefined} />])
+  right.push(["upworthy", "Upworthy", <UpworthyBlock key="upworthy" videoId={ytId} title={v?.title} />])
   right.push(
     [
       "hits",

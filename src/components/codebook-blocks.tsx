@@ -6,6 +6,7 @@ import { Term } from "@/components/term"
 import { titlePatterns } from "@/lib/headline-patterns"
 import { cn } from "@/ui/lib/utils"
 import { referenceModelFile } from "@/lib/data-files"
+import { DEMO_ADMIN } from "@/lib/demo"
 
 const model = referenceModelFile()
 
@@ -31,11 +32,31 @@ function Figure({ value, label }: { value: string; label: string }) {
   )
 }
 
+/** A codebook block's body for a video not yet coded on it: the line, and a mail link to ask for the score. */
+function Unscored({ block, videoId }: { block: string; videoId: string }) {
+  const href = `mailto:${DEMO_ADMIN}?subject=${encodeURIComponent(`Notify me: ${block} for ${videoId}`)}`
+  return (
+    <p className="text-sm text-slate-700">
+      Watch this space: I scan thousands of videos an hour. If you'd like to be notified when this block is scored,{" "}
+      <a href={href} className="text-pax2-light-blue underline underline-offset-2">
+        click here
+      </a>
+      .
+    </p>
+  )
+}
+
 const pts = (x: number) => `${x > 0 ? "+" : x < 0 ? "−" : ""}${Math.abs(x).toFixed(2)}`
 
 /** Swayable: what persuades. Each of the video's traits beside the vote-choice shift Swayable's
  *  randomized tests measured for ads with it over ads without it. */
-export function SwayableBlock({ codes, footer }: { codes: string[]; footer?: string }) {
+export function SwayableBlock({ codes, footer, videoId }: { codes?: string[]; footer?: string; videoId: string }) {
+  if (!codes?.length)
+    return (
+      <ListBlock title="Swayable" tools={<Term id="swayable" label={false} />} height="auto">
+        <Unscored block="Swayable" videoId={videoId} />
+      </ListBlock>
+    )
   const out = model.outcomes.votechoice
   const features = codes.map((k) => (out.features as Feature[]).find((f) => f.key === k)).filter((f): f is Feature => !!f)
   // −1.5 to +1.5 points across the bar, zero in the middle.
@@ -70,7 +91,13 @@ const GOALS: Record<string, string> = { persuade: "Persuade", money: "Raise mone
 
 /** Wesleyan: what everyone else ran. The video's goal set among every pro-Democratic video ad
  *  Meta carried in 2022, by count, money and reach. */
-export function WesleyanBlock({ goal, footer }: { goal: string; footer?: string }) {
+export function WesleyanBlock({ goal, footer, videoId }: { goal?: string; footer?: string; videoId: string }) {
+  if (!goal)
+    return (
+      <TableBlock title="Wesleyan" tools={<Term id="wesleyan" label={false} />} height="auto">
+        <Unscored block="Wesleyan" videoId={videoId} />
+      </TableBlock>
+    )
   return (
     <TableBlock title="Wesleyan" tools={<Term id="wesleyan" label={false} />} height="auto" footer={footer}>
       <div className="flex flex-col gap-6">
@@ -108,7 +135,13 @@ export function WesleyanBlock({ goal, footer }: { goal: string; footer?: string 
 /** Upworthy's headline tests read against this video's title: each pattern's lift — its share of winning
  *  headlines minus its share of losing ones, in points — on a bar centred at zero, strongest first, the
  *  patterns this title carries picked out. */
-export function UpworthyBlock({ title }: { title: string }) {
+export function UpworthyBlock({ title, videoId }: { title?: string; videoId: string }) {
+  if (!title)
+    return (
+      <ListBlock title="Upworthy" tools={<Term id="upworthy" label={false} />} height="auto">
+        <Unscored block="Upworthy" videoId={videoId} />
+      </ListBlock>
+    )
   const patterns = titlePatterns(title)
     .map((p) => ({ ...p, lift: Number(p.won) - Number(p.lost) }))
     .sort((a, b) => b.lift - a.lift)
