@@ -4,12 +4,22 @@ import { Video } from "lucide-react"
 import ma from "../../../data/generated/ma-house-2022.json"
 import maps from "../../../data/generated/campaign-maps.json"
 import polling from "../../../data/polling.json"
-import { ChartBlock, ListBlock, MapBlock, TableBlock, TwoThirdBlock } from "@/components/blocks"
+import { ChartBlock, ListBlock, MapBlock, TableBlock, TwoHalfBlock, TwoThirdBlock } from "@/components/blocks"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
 import { UncontestedMap } from "@/components/map/maps"
 import { cn } from "@/ui/lib/utils"
 import { currentUser } from "@/lib/auth"
-import { fieldDates, reportHref, TRIALS } from "@/lib/trials"
+import { AskReport, ReportView } from "@/components/library/report-view"
+import { ReportShelf } from "@/components/library/report-shelf"
+import { TabRail } from "@/components/tab-rail"
+import { AudienceFinder } from "@/components/trials/audience-finder"
+import { DetectableLift } from "@/components/trials/detectable-lift"
+import { Gaps, OpenQuestions } from "@/components/trials/gaps"
+import { PredictionVsTrial } from "@/components/trials/prediction-vs-trial"
+import { TestResults } from "@/components/trials/test-results"
+import { TrialGrid } from "@/components/trials/trial-grid"
+import { REPORTS, reportAbout, reportBySlug, reportContext } from "@/lib/reports"
+import { fieldDates, reportHref, trialsText, TRIALS, videoArms } from "@/lib/trials"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/components/nova/table"
 import { redirect } from "next/navigation"
 
@@ -23,10 +33,13 @@ function Source({ href, children }: { href: string; children: React.ReactNode })
   )
 }
 
-/** Where Question 3 stands, how the idea has fared on other ballots, and where races go uncontested.
- *  Off the sidebar 2026-10-22, back 2026-10-23 with the message tests' placebo arms: Question 3 support by
- *  voter group among adults who saw no Question 3 video, and the video format each test's sample trusts most. */
-export default async function PollingPage() {
+/** Two tabs (Brendan, 2026-10-23). Question 3 tests: the workspace for the Grow Progress message-testing
+ *  report, the trial set beside what PAX2 measures, the audiences each video moved, the open audiences and
+ *  the size of test that could close them, the report's open questions, and the report itself with the
+ *  discussion panel. Archives: every report and poll in the library searched page by page, then the earlier
+ *  polling (MassINC's topline, the idea on other ballots, uncontested districts). */
+export default async function PollingPage({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
+  const tab = (await searchParams).tab === "archives" ? "archives" : "tests"
   const gatekeeper = await currentUser()
   if (!gatekeeper) redirect("/signin?next=/polling")
   const q = polling.q3
@@ -44,44 +57,68 @@ export default async function PollingPage() {
     { label: "Podcast or interview clip", t1: t1.mediaTrust.podcast, t2: t2.mediaTrust.podcast },
   ]
 
-  return (
-    <BlockOrder page="polling" initial={["q3", "groups", "ballots", "uncontested"]}>
-      <OrderedBlock id="q3" label="Top-Two Primary Elections Initiative (2026)">
-        <ChartBlock title="Top-Two Primary Elections Initiative (2026)" rows={[{ yes: q.yes, no: q.no, undecided: q.undecided, refused: q.refused, pollster: q.pollster, sample: q.sample, field: q.field, moe: q.moe }]} name="question-3">
-          <div className="flex flex-col gap-5">
-            <div>
-              <Source href={q.url}>
-                {q.pollster} · {q.sample} · {q.field} · {q.moe}
-              </Source>
-            </div>
-            <div className="flex h-12 overflow-hidden rounded-xl">
-              <div className="grow flex items-center bg-above px-3 text-sm font-bold text-white" style={{ width: `${q.yes}%` }}>
-                Yes {q.yes}%
-              </div>
-              <div className="grow flex items-center justify-center bg-slate-200 text-sm font-semibold text-slate-600" style={{ width: `${q.undecided + q.refused}%`, ["--i" as string]: 1 }}>
-                {q.undecided}%
-              </div>
-              <div className="grow flex items-center justify-end bg-below px-3 text-sm font-bold text-white" style={{ width: `${q.no}%`, ["--i" as string]: 2 }}>
-                No {q.no}%
-              </div>
-            </div>
-            <div className="grid grid-cols-3 gap-3">
-              <div className="flex flex-col gap-1 rounded-xl bg-slate-50 p-4">
-                <span className="tabular font-display text-3xl text-slate-900">{q.undecided}%</span>
-                <span className="text-sm text-slate-600">undecided: the voters a script has to win</span>
-              </div>
-              <div className="flex flex-col gap-1 rounded-xl bg-slate-50 p-4">
-                <span className="tabular font-display text-3xl text-slate-900">{polling.enrollment.unenrolled}%</span>
-                <span className="text-sm text-slate-600">of registered voters belong to no party</span>
-              </div>
-              <div className="flex flex-col gap-1 rounded-xl bg-slate-50 p-4">
-                <span className="tabular font-display text-3xl text-below">{unc.pct}%</span>
-                <span className="text-sm text-slate-600">of legislative races uncontested, 2014–2022</span>
-              </div>
-            </div>
-          </div>
-        </ChartBlock>
-      </OrderedBlock>
+  const report = reportBySlug(TRIALS.report)!
+  const context = reportContext(report, trialsText())
+  const unmatched = TRIALS.tests.flatMap((t) => videoArms(t).filter((a) => !a.youtube).map((a) => a.name))
+  const armN = Math.round(TRIALS.tests.flatMap((t) => t.arms).reduce((s, a) => s + a.n, 0) / TRIALS.tests.flatMap((t) => t.arms).length)
+  const docs = REPORTS.map((r) => ({ slug: r.slug, title: r.title, publisher: r.publisher, date: r.date, summary: reportAbout(r.slug).summary, pages: r.pages.map((p) => ({ n: p.n, text: p.text })), context: reportContext(r, r.slug === TRIALS.report ? trialsText() : undefined) }))
+
+  const rail = (
+    <TabRail
+      tabs={[
+        { key: "tests", label: "Question 3 tests", href: "/polling" },
+        { key: "archives", label: "Archives", href: "/polling?tab=archives", count: REPORTS.length },
+      ]}
+      active={tab}
+    />
+  )
+
+  if (tab === "tests")
+    return (
+      <div className="flex flex-col">
+        {rail}
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <AskReport context={context} />
+          <Link href={reportHref()} className="press flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-800 shadow-e1 transition-colors hover:border-pax2-light-blue hover:text-pax2-blue">
+            Open the report
+          </Link>
+          <span className="text-xs text-slate-500">
+            {TRIALS.fieldedBy} for {TRIALS.preparedBy} · {TRIALS.tests.map((t) => `${t.label} ${fieldDates(t)}`).join(" · ")}
+          </span>
+        </div>
+        <BlockOrder page="polling-tests" initial={["prediction", "finder", "results", "gaps", "groups", "grid", "questions", "report"]}>
+          <OrderedBlock id="prediction" label="Prediction against the trial">
+            <TableBlock title="Prediction against the trial" more="/experiments" rows={TRIALS.tests.flatMap((t) => t.arms.filter((a) => a.pax2).map((a) => ({ test: t.label, video: a.name, youtube: a.youtube, trial_yes_lift: a.yes?.lift ?? null, trial_comprehension_lift: a.comprehension?.lift ?? null, views: a.pax2!.views, outlier_score: a.pax2!.outlier, resonance: a.pax2!.resonance, persuasion_score: a.pax2!.persuasion })))} name="prediction-vs-trial">
+              <PredictionVsTrial tests={TRIALS.tests} />
+            </TableBlock>
+          </OrderedBlock>
+
+          <OrderedBlock id="finder" label="Audience finder">
+            <ChartBlock title="Audience finder" more={reportHref(TRIALS.tests[1].pages.pairings as number)}>
+              <AudienceFinder tests={TRIALS.tests} />
+            </ChartBlock>
+          </OrderedBlock>
+
+          <OrderedBlock id="results" label="Ballot support and comprehension">
+            <TwoHalfBlock>
+              {TRIALS.tests.map((t) => (
+                <ChartBlock key={t.id} title={`${t.label} · ${fieldDates(t)}`} id={`polling-${t.id}`} more={reportHref(t.pages.summary as number)} rows={t.arms.map((a) => ({ video: a.name, n: a.n, yes_lift: a.yes?.lift ?? null, comprehension_lift: a.comprehension?.lift ?? null }))} name={t.id}>
+                  <TestResults test={t} />
+                </ChartBlock>
+              ))}
+            </TwoHalfBlock>
+          </OrderedBlock>
+
+          <OrderedBlock id="gaps" label="Open audiences">
+            <TwoThirdBlock>
+              <ListBlock title="Open audiences" className="xl:col-span-2" search="Search groups…">
+                <Gaps tests={TRIALS.tests} />
+              </ListBlock>
+              <ChartBlock title="Detectable lift">
+                <DetectableLift armN={armN} />
+              </ChartBlock>
+            </TwoThirdBlock>
+          </OrderedBlock>
 
       <OrderedBlock id="groups" label="Question 3 by voter group">
         <TwoThirdBlock>
@@ -157,6 +194,67 @@ export default async function PollingPage() {
             </div>
           </ChartBlock>
         </TwoThirdBlock>
+      </OrderedBlock>
+
+          <OrderedBlock id="grid" label="Video × voter group">
+            <TrialGrid tests={TRIALS.tests} more={reportHref(TRIALS.tests[1].pages.pairings as number)} />
+          </OrderedBlock>
+
+          <OrderedBlock id="questions" label="Open questions">
+            <ListBlock title="Open questions" more={reportHref(16)}>
+              <OpenQuestions unmatched={unmatched} />
+            </ListBlock>
+          </OrderedBlock>
+
+          <OrderedBlock id="report" label={report.title}>
+            <ReportView bare slug={report.slug} title={report.title} pages={report.pages} context="" />
+          </OrderedBlock>
+        </BlockOrder>
+      </div>
+    )
+
+  return (
+    <div className="flex flex-col">
+      {rail}
+      <div className="mt-6">
+        <ReportShelf docs={docs} />
+      </div>
+    <BlockOrder page="polling-archives" initial={["q3", "ballots", "uncontested"]}>
+      <OrderedBlock id="q3" label="Top-Two Primary Elections Initiative (2026)">
+        <ChartBlock title="Top-Two Primary Elections Initiative (2026)" rows={[{ yes: q.yes, no: q.no, undecided: q.undecided, refused: q.refused, pollster: q.pollster, sample: q.sample, field: q.field, moe: q.moe }]} name="question-3">
+          <div className="flex flex-col gap-5">
+            <div>
+              <Source href={q.url}>
+                {q.pollster} · {q.sample} · {q.field} · {q.moe}
+              </Source>
+            </div>
+            <div className="flex h-12 overflow-hidden rounded-xl">
+              <div className="grow flex items-center bg-above px-3 text-sm font-bold text-white" style={{ width: `${q.yes}%` }}>
+                Yes {q.yes}%
+              </div>
+              <div className="grow flex items-center justify-center bg-slate-200 text-sm font-semibold text-slate-600" style={{ width: `${q.undecided + q.refused}%`, ["--i" as string]: 1 }}>
+                {q.undecided}%
+              </div>
+              <div className="grow flex items-center justify-end bg-below px-3 text-sm font-bold text-white" style={{ width: `${q.no}%`, ["--i" as string]: 2 }}>
+                No {q.no}%
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="flex flex-col gap-1 rounded-xl bg-slate-50 p-4">
+                <span className="tabular font-display text-3xl text-slate-900">{q.undecided}%</span>
+                <span className="text-sm text-slate-600">undecided: the voters a script has to win</span>
+              </div>
+              <div className="flex flex-col gap-1 rounded-xl bg-slate-50 p-4">
+                <span className="tabular font-display text-3xl text-slate-900">{polling.enrollment.unenrolled}%</span>
+                <span className="text-sm text-slate-600">of registered voters belong to no party</span>
+              </div>
+              <div className="flex flex-col gap-1 rounded-xl bg-slate-50 p-4">
+                <span className="tabular font-display text-3xl text-below">{unc.pct}%</span>
+                <span className="text-sm text-slate-600">of legislative races uncontested, 2014–2022</span>
+              </div>
+            </div>
+          </div>
+        </ChartBlock>
       </OrderedBlock>
 
       <OrderedBlock id="ballots" label="On other ballots">
@@ -242,5 +340,6 @@ export default async function PollingPage() {
         </TwoThirdBlock>
       </OrderedBlock>
     </BlockOrder>
+    </div>
   )
 }

@@ -218,5 +218,32 @@ const out = {
   // script. The YouTube upload may be a different cut from the tested one.
 }
 
+// What PAX2 holds on each matched YouTube upload, beside what the trial measured: its public views and
+// Outlier Score (views over the channel's median, the catalog's ratio), its Resonance before release where
+// the baseline scored it, and the persuasion score of the Swayable traits the codebook found in its
+// transcript (sum of each trait's effect in points of vote choice against placebo). null = not measured.
+const catalog = JSON.parse(readFileSync("data/velocity/catalog.json", "utf8"))
+const shorts = Array.isArray(catalog) ? catalog : (catalog.videos ?? catalog.items ?? Object.values(catalog))
+const resonance = JSON.parse(readFileSync("data/generated/model/resonance-formula.json", "utf8")).scores ?? {}
+const codebook = JSON.parse(readFileSync("data/generated/codebook.json", "utf8"))
+const traits = Object.fromEntries(JSON.parse(readFileSync("data/generated/swayable-patterns.json", "utf8")).traits.map((t) => [t.key, t]))
+for (const t of out.tests)
+  for (const a of t.arms) {
+    if (!a.youtube) continue
+    const v = shorts.find((s) => s.id === a.youtube)
+    if (!v) fail(`${a.name}: ${a.youtube} not in the catalog`)
+    const coded = codebook[a.youtube]?.swayable ?? null
+    a.pax2 = {
+      title: v.title,
+      published: String(v.published).slice(0, 10),
+      views: v.views,
+      channelMedian: v.channelMedian,
+      outlier: v.ratio,
+      resonance: resonance[a.youtube]?.pre ?? null,
+      persuasion: coded ? Math.round(coded.reduce((s, k) => s + (traits[k]?.diff ?? 0), 0) * 100) / 100 : null,
+      traits: coded ? coded.filter((k) => traits[k]).map((k) => ({ key: k, label: traits[k].label, diff: traits[k].diff })) : null,
+    }
+  }
+
 writeFileSync("data/generated/trials.json", JSON.stringify(out, null, 1))
 console.log(`wrote data/generated/trials.json: test 1 ${groups(t1)} groups, test 2 ${groups(t2)} groups; checks passed`)

@@ -10,25 +10,32 @@ import type { ReportPage } from "@/lib/reports"
 // A report in the library: the original in its own frame (served from private S3 to a signed-in reader),
 // or every page's text, searchable; and the discussion panel with the whole report loaded.
 // ?page=N opens the original at that page.
-export function ReportView({ slug, title, pages, context, page }: { slug: string; title: string; pages: ReportPage[]; context: string; page?: number }) {
+/** Opens the discussion panel with the whole report loaded. */
+export function AskReport({ context }: { context: string }) {
   const { askAbout } = useShellPanel()
+  return (
+    <button
+      type="button"
+      onClick={() => askAbout({ context: () => context })}
+      className="press flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-800 shadow-e1 transition-colors hover:border-pax2-light-blue hover:text-pax2-blue"
+    >
+      <MessagesSquare className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
+      Ask about this report
+    </button>
+  )
+}
+
+export function ReportView({ slug, title, pages, context, page, bare }: { slug: string; title: string; pages: ReportPage[]; context: string; page?: number; bare?: boolean }) {
   const [view, setView] = React.useState("original")
   const src = `/api/reports/${slug}/pdf${page ? `#page=${page}` : ""}`
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          onClick={() => askAbout({ context: () => context })}
-          className="press flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-800 shadow-e1 transition-colors hover:border-pax2-light-blue hover:text-pax2-blue"
-        >
-          <MessagesSquare className="size-4" style={{ color: "#033882", fill: "#dbe7fa" }} />
-          Ask about this report
-        </button>
+      {!bare && <div className="flex flex-wrap items-center gap-2">
+        <AskReport context={context} />
         <a href={`/api/reports/${slug}/pdf?download=1`} className="press flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-800 shadow-e1 transition-colors hover:border-pax2-light-blue hover:text-pax2-blue">
           <Download className="size-4" /> Download
         </a>
-      </div>
+      </div>}
       <MainBlock
         title={title}
         id="report"

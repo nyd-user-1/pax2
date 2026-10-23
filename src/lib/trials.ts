@@ -19,6 +19,8 @@ export type Arm = {
   review?: string
   tested?: string
   youtube?: string
+  /** What PAX2 holds on the matched YouTube upload; null fields were not measured. */
+  pax2?: { title: string; published: string; views: number; channelMedian: number; outlier: number; resonance: number | null; persuasion: number | null; traits: { key: string; label: string; diff: number }[] | null }
 }
 export type Test = {
   id: string

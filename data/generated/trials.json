@@ -105,7 +105,78 @@
       "sig": false
      },
      "review": "https://next.frame.io/share/ed42d6ec-f4eb-4e9d-b4af-83173df40de8/view/5a5daad0-422f-4a67-8897-686dc781f85e",
-     "youtube": "pn1g00H9YKA"
+     "youtube": "pn1g00H9YKA",
+     "pax2": {
+      "title": "Vote YES on Massachusetts Question 3 so that more young people run for office! #massachusetts",
+      "published": "2026-10-06",
+      "views": 227,
+      "channelMedian": 1040,
+      "outlier": 0.22,
+      "resonance": 15.2,
+      "persuasion": 0.45,
+      "traits": [
+       {
+        "key": "tone_contrast",
+        "label": "Contrast",
+        "diff": 0.14
+       },
+       {
+        "key": "technique_plain_folks",
+        "label": "Plain-folks appeal",
+        "diff": 0.11
+       },
+       {
+        "key": "explicit_vote_for",
+        "label": "Explicit ask to vote for",
+        "diff": 0.11
+       },
+       {
+        "key": "emotion_enthusiasm",
+        "label": "Enthusiasm",
+        "diff": 0.09
+       },
+       {
+        "key": "narration_explain_facts",
+        "label": "Explains facts",
+        "diff": 0.08
+       },
+       {
+        "key": "emotion_hope_pride",
+        "label": "Pride",
+        "diff": 0.04
+       },
+       {
+        "key": "fact_new_yes",
+        "label": "Offers a fact the viewer likely hasn't heard",
+        "diff": 0.03
+       },
+       {
+        "key": "how_scripted",
+        "label": "Sounds scripted",
+        "diff": 0.01
+       },
+       {
+        "key": "policy_facts",
+        "label": "Policy facts",
+        "diff": 0
+       },
+       {
+        "key": "tone_positive",
+        "label": "Positive tone",
+        "diff": -0.02
+       },
+       {
+        "key": "messenger_every_people",
+        "label": "Everyday people as messengers",
+        "diff": -0.07
+       },
+       {
+        "key": "narration_advocate_opinions",
+        "label": "Advocates an opinion",
+        "diff": -0.07
+       }
+      ]
+     }
     },
     {
      "id": "official-ad",
@@ -137,7 +208,53 @@
       "sig": false
      },
      "review": "https://next.frame.io/share/ed42d6ec-f4eb-4e9d-b4af-83173df40de8/view/cee18145-b226-43e2-bc9d-ea869c6c702c",
-     "youtube": "bLQQHGa-Css"
+     "youtube": "bLQQHGa-Css",
+     "pax2": {
+      "title": "Veterans for Massachusetts Question 3. #massachusetts",
+      "published": "2026-10-07",
+      "views": 191,
+      "channelMedian": 1040,
+      "outlier": 0.18,
+      "resonance": 28.3,
+      "persuasion": 0.26,
+      "traits": [
+       {
+        "key": "messenger_veteran",
+        "label": "Veteran as messenger",
+        "diff": 0.2
+       },
+       {
+        "key": "technique_plain_folks",
+        "label": "Plain-folks appeal",
+        "diff": 0.11
+       },
+       {
+        "key": "narration_explain_facts",
+        "label": "Explains facts",
+        "diff": 0.08
+       },
+       {
+        "key": "policy_facts",
+        "label": "Policy facts",
+        "diff": 0
+       },
+       {
+        "key": "tone_positive",
+        "label": "Positive tone",
+        "diff": -0.02
+       },
+       {
+        "key": "style_amateur",
+        "label": "Amateur, phone-shot style",
+        "diff": -0.04
+       },
+       {
+        "key": "narration_advocate_opinions",
+        "label": "Advocates an opinion",
+        "diff": -0.07
+       }
+      ]
+     }
     },
     {
      "id": "rodriguez",
@@ -1775,7 +1892,17 @@
      },
      "tested": "https://s3.amazonaws.com/condoropenskies.net/videos/435f181a420581798fd5d3f0fb00fc15.mp4",
      "review": "https://next.frame.io/share/80e0f5ad-075b-44f7-8622-ca68ce99085b/view/3571fae1-0ae1-425b-8c1d-8916032e199a",
-     "youtube": "oTytFVuVQzE"
+     "youtube": "oTytFVuVQzE",
+     "pax2": {
+      "title": "Young people are ready to shake up the system. Vote YES on Question 3!",
+      "published": "2026-10-12",
+      "views": 3307,
+      "channelMedian": 1040,
+      "outlier": 3.18,
+      "resonance": null,
+      "persuasion": null,
+      "traits": null
+     }
     },
     {
      "id": "dizoglio",
@@ -1830,7 +1957,17 @@
      },
      "tested": "https://s3.amazonaws.com/condoropenskies.net/videos/6ca5b15be2ca5c2ce9ea963e6b66fd35.mp4",
      "review": "https://next.frame.io/share/80e0f5ad-075b-44f7-8622-ca68ce99085b/view/3cdb9f3d-9eff-48a5-b965-e589e18e17d8",
-     "youtube": "7ux0S0cNvd8"
+     "youtube": "7ux0S0cNvd8",
+     "pax2": {
+      "title": "✅ Vote YES on Question 3 for real competitive elections in Massachusetts!",
+      "published": "2026-10-12",
+      "views": 3380,
+      "channelMedian": 1040,
+      "outlier": 3.25,
+      "resonance": null,
+      "persuasion": null,
+      "traits": null
+     }
     }
    ],
    "subgroups": [
