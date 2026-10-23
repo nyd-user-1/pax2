@@ -67,10 +67,10 @@ export function TopicRows({ cluster }: { cluster: number | null }) {
       {!mine && <p className="text-xs text-slate-500">This video&apos;s topic is not among the topics with enough channels to size its lift.</p>}
       <ol className="flex flex-col">
         {TOPICS.map((t, i) => (
-          <li key={t.id} id={t.id === cluster ? "topic-mine" : undefined} className={cn("grid grid-cols-[minmax(0,12rem)_minmax(0,1fr)_4.5rem] items-center gap-3 rounded-lg px-2 py-1.5", t.id === cluster && "bg-pax2-lavender/70 ring-1 ring-pax2-blue/30")}>
-            <span className={cn("truncate text-sm", t.id === cluster ? "font-semibold text-pax2-blue" : "text-slate-700")}>{t.name}</span>
+          <li key={t.id} id={t.id === cluster ? "topic-mine" : undefined} className="grid grid-cols-[minmax(0,12rem)_minmax(0,1fr)_4.5rem] items-center gap-3 rounded-lg px-2 py-1.5">
+            <span className={cn("truncate text-sm text-slate-700", t.id === cluster && "font-medium")}>{t.name}</span>
             <GrowBar value={at(t.lift)} i={i} tone={t.lift >= 0 ? "green" : "red"} marker={50} title={`90% range ${t.low.toFixed(1)} to ${t.high.toFixed(1)} points, ${t.shorts} shorts`} />
-            <span className={cn("tabular text-right text-sm", t.id === cluster ? "font-semibold text-pax2-blue" : "text-slate-600")}>{t.lift > 0 ? "+" : ""}{t.lift.toFixed(1)}</span>
+            <span className={cn("tabular text-right text-sm text-slate-600", t.id === cluster && "font-medium")}>{t.lift > 0 ? "+" : ""}{t.lift.toFixed(1)}</span>
           </li>
         ))}
       </ol>
@@ -180,10 +180,8 @@ export function ModeMatch({ score, rows, template, mode }: { score: number; rows
 
 // ---------- recommendations ----------
 
-const ordinal = (n: number) => {
-  const r = n % 100
-  return `${n}${r >= 11 && r <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] ?? "th"}`
-}
+/** Where a percentile sits among the channel's shorts, in words. */
+const where = (p: number) => (p < 15 ? "near the bottom" : p < 35 ? "in the lower third" : p <= 65 ? "in the middle" : p <= 85 ? "in the upper third" : "near the top")
 
 /** What to do on each feature, in the volunteer's words: `up` when the outperformers sit higher on
  *  it than this short, `down` when lower. */
@@ -219,7 +217,7 @@ const PLAIN: Record<string, { up: string; down: string }> = {
  *  registry holds no measured lift for them yet, so none is a tested cause. A short on the mode
  *  everywhere reads "No change recommended." */
 export function Recommendations({ rows, unlock }: { rows: Ingredient[] | null; unlock: { what: string; href?: string }[] }) {
-  const off = (rows ?? []).filter((r) => r.band !== "On mode")
+  const off = (rows ?? []).filter((r) => r.band !== "On mode").sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff)).slice(0, 4)
   return (
     <div className="@container flex flex-col gap-3">
       {rows && !off.length && <p className="text-sm font-medium text-slate-900">No change recommended.</p>}
@@ -234,14 +232,13 @@ export function Recommendations({ rows, unlock }: { rows: Ingredient[] | null; u
                 {plain && <span className="text-[15px] font-medium leading-snug text-slate-900">{plain}</span>}
                 <span className="text-xs leading-snug text-slate-500">
                   <span className="font-semibold text-slate-600">Coach: </span>
-                  this short sits at the {ordinal(r.video)} percentile of its channel; shorts that outperformed 3x center at the {ordinal(r.center)}.
+                  on this, it sits {where(r.video)} of its channel&apos;s shorts. The ones that outperformed 3x sit {where(r.center)}, {r.center > r.video ? "higher" : "lower"} than this one.
                 </span>
               </li>
             )
           })}
         </ul>
       )}
-      {off.length > 0 && <p className="text-xs text-slate-400">Comparisons with shorts that outperformed 3x; none is yet a tested cause.</p>}
       {!rows && <p className="text-sm text-slate-600">No production read yet.</p>}
       <UnlockList actions={unlock} />
     </div>

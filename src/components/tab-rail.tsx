@@ -12,7 +12,7 @@ import { cn } from "@/ui/lib/utils"
 
 export type RailTab = { key: string; label: string; href: string; count?: number; disabled?: boolean }
 
-export function TabRail({ tabs, active, trailing, className }: { tabs: RailTab[]; active?: string; trailing?: React.ReactNode; className?: string }) {
+export function TabRail({ tabs, active, trailing, className, onSelect }: { tabs: RailTab[]; active?: string; trailing?: React.ReactNode; className?: string; onSelect?: (key: string) => void }) {
   const pathname = usePathname()
   const search = useSearchParams()
   const here = `${pathname}${search.size ? `?${search}` : ""}`
@@ -51,6 +51,23 @@ export function TabRail({ tabs, active, trailing, className }: { tabs: RailTab[]
             <span key={t.key} role="tab" aria-selected={false} aria-disabled className={cls}>
               {inner}
             </span>
+          )
+        if (onSelect)
+          return (
+            <button
+              key={t.key}
+              ref={(el) => {
+                els.current[t.key] = el
+              }}
+              type="button"
+              role="tab"
+              aria-selected={on}
+              className={cls}
+              onClick={() => onSelect(t.key)}
+              onMouseEnter={(e) => setHover({ left: e.currentTarget.offsetLeft, width: e.currentTarget.offsetWidth })}
+            >
+              {inner}
+            </button>
           )
         return (
           <Link

@@ -21,7 +21,7 @@ import { ChevronRight } from "lucide-react"
 
 import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, SmallBlock } from "@/components/blocks"
 import { AsideTabs } from "@/components/aside-tabs"
-import { AsideVideos } from "@/components/aside-videos"
+import { AsideVideos, TagSections } from "@/components/aside-videos"
 import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/components/codebook-blocks"
 import { CensusCharacteristics } from "@/components/census-characteristics"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
@@ -320,33 +320,33 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       </Locked>,
     ])
   // Channel, Tags and Comps (Brendan, 2026-10-23): two to a row, at least two videos or no block, four at
-  // Half View and up to eight at Full View. Channel holds the channel's other shorts not already in Comps,
-  // newest first; Tags the shorts carrying this one's tags, its first tag's first; both link to their page.
+  // Half View and up to eight at Full View. Channel holds the channel's other shorts, newest first, with no
+  // Comps short in its first two places; Tags reads as the published app drew it, a few tags at a time.
   const clean = (title: string) => title.replace(/\s*#\w+/g, "").trim() || title
   const compIds = new Set(siblings.map((x) => x.id))
   const channelVids = v
     ? [...data.videos, ...(homeFeed as unknown as Yt["videos"])]
-        .filter((x, i, all) => x.channelId === v.channelId && x.id !== ytId && !compIds.has(x.id) && all.findIndex((y) => y.id === x.id) === i)
+        .filter((x, i, all) => x.channelId === v.channelId && x.id !== ytId && all.findIndex((y) => y.id === x.id) === i)
         .sort((a, b) => String(b.published ?? "").localeCompare(String(a.published ?? "")))
-        .slice(0, 8)
         .map((x) => ({ id: x.id, title: clean(x.title) }))
     : []
+  const leadChannel = channelVids.filter((x) => !compIds.has(x.id)).slice(0, 2)
+  const channelShown = [...leadChannel, ...channelVids.filter((x) => !leadChannel.includes(x))].slice(0, 8)
   const shownTags = tags.filter((t) => t !== "aggrieved")
-  const tagVids = [...new Map(shownTags.flatMap((t) => byTag(t)).map((x) => [x.id, { id: x.id, title: clean(x.title) }])).values()].slice(0, 8)
-  if (v && channelVids.length >= 2)
+  if (v && channelShown.length >= 2)
     left.push([
       "channel",
       "Channel",
       <SmallBlock key="channel" title="Channel" more={`/channels/${v.channelId}`}>
-        <AsideVideos videos={channelVids} inDrawer={inDrawer} />
+        <AsideVideos videos={channelShown} inDrawer={inDrawer} />
       </SmallBlock>,
     ])
-  if (tagVids.length >= 2)
+  if (shownTags.length)
     left.push([
       "tags",
       "Tags",
-      <SmallBlock key="tags" title="Tags" more={tagHref(shownTags[0])}>
-        <AsideVideos videos={tagVids} inDrawer={inDrawer} />
+      <SmallBlock key="tags" title="Tags" more="/tags">
+        <TagSections sections={shownTags.map((t) => ({ tag: t, href: tagHref(t), videos: byTag(t) }))} inDrawer={inDrawer} />
       </SmallBlock>,
     ])
   if (siblings.length >= 2)

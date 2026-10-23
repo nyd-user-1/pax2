@@ -59,6 +59,7 @@ export function SwayableBlock({ codes, footer, videoId }: { codes?: string[]; fo
     )
   const out = model.outcomes.votechoice
   const features = codes.map((k) => (out.features as Feature[]).find((f) => f.key === k)).filter((f): f is Feature => !!f)
+  const reach = Math.max(...features.map((f) => Math.abs(f.diff)), 0.01)
   return (
     <ListBlock title="Swayable" tools={<Term id="swayable" label={false} />} height="max" footer={footer}>
       <div className="flex flex-col gap-6">
@@ -70,7 +71,7 @@ export function SwayableBlock({ codes, footer, videoId }: { codes?: string[]; fo
           {features.map((f, i) => (
             <div key={f.key} className="grid items-center gap-x-6 gap-y-1.5 py-3 @lg:grid-cols-[1fr_200px_110px]" title={`90% range ${pts(f.low)} to ${pts(f.high)} points`}>
               <span className="text-sm font-medium text-slate-900">{f.label}</span>
-              <DivergeBar value={f.diff} reach={1.5} i={i} measured={f.low > 0 || f.high < 0} />
+              <DivergeBar value={f.diff} reach={reach} i={i} />
               <span className="tabular text-sm text-slate-600 @lg:text-right">
                 {pts(f.diff)} <span className="text-xs text-slate-400">({pts(f.low)} to {pts(f.high)})</span>
               </span>

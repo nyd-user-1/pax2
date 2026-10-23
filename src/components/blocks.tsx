@@ -13,8 +13,8 @@ import { cn } from "@/ui/lib/utils"
 // The one block (Brendan, 2026-10-06): every dashboard block is the same card —
 // the title, the searchbar beside it, the three-dot menu, the size chevron,
 // and a body that scrolls inside its height. Three sizes (Brendan, 2026-10-23):
-// Half View, 420px, the default; Full View, the content's own height up to
-// 840px, where the body scrolls; Collapse, the header alone. The chevron steps Half and Full; the menu
+// Half View, 420px; Full View, the content's own height up to 840px, where
+// the body scrolls, and every block's state on load; Collapse, the header alone. The chevron steps Half and Full; the menu
 // holds all three. TableBlock, CardBlock and
 // AccordionBlock are MainBlock under the variant's name, so the inspector says
 // what the screen shows; only the content inside differs.
@@ -71,7 +71,7 @@ export type BlockProps = {
 }
 
 export function MainBlock({ title, children, search, searchValue, onSearch, tools, actions, rows, name, views, view, onView, defaultOpen = true, height, peek, id, menuItems, className, small, more }: BlockProps) {
-  const [size, setSize] = React.useState<BlockSize>(defaultOpen ? "half" : "collapsed")
+  const [size, setSize] = React.useState<BlockSize>(defaultOpen ? "full" : "collapsed")
   const open = size !== "collapsed"
   const half = height && height !== "auto" && height !== "max" ? height : BLOCK_HEIGHT
   return (

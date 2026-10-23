@@ -13,7 +13,7 @@ import { cn } from "@/ui/lib/utils"
 // the video in view.
 
 export function CarryBlock({ ytId }: { ytId: string }) {
-  const { rows, analyzed, breakouts } = featureLift()
+  const { rows } = featureLift()
   const flags = featureFlagsFor(ytId)
   return (
     <ListBlock
@@ -29,12 +29,12 @@ export function CarryBlock({ ytId }: { ytId: string }) {
       rows={rows.map((r) => ({ feature: r.label, outperformers: Math.round(r.breakout * 100), rest: Math.round(r.rest * 100), index: Number(r.lift.toFixed(2)), ...(flags && { thisVideo: !!flags[r.key] }) }))}
       name={`carry-${ytId}`}
     >
-      <div className="@container flex flex-col divide-y divide-slate-100">
+      <div className="@container grid gap-x-8 @3xl:grid-cols-2">
         {rows.map((r, i) => {
           const has = flags?.[r.key]
           const share = Math.round(r.breakout * 100)
           return (
-            <div key={r.key} data-find className="grid items-center gap-x-4 gap-y-2 py-3 @md:grid-cols-[1fr_200px_3rem_64px]">
+            <div key={r.key} data-find className="grid items-center gap-x-4 gap-y-2 border-b border-slate-100 py-3 @md:grid-cols-[1fr_140px_3rem_56px] @3xl:grid-cols-[1fr_96px_2.5rem_52px]">
               <span className="flex flex-wrap items-center gap-2 text-sm font-medium text-slate-900">
                 {r.label}
                 {has && <span className="rounded-full bg-pax2-lavender px-2 py-0.5 text-[10px] font-semibold text-pax2-blue">This video</span>}
@@ -46,9 +46,6 @@ export function CarryBlock({ ytId }: { ytId: string }) {
           )
         })}
       </div>
-      <p className="pt-3 text-xs text-slate-500">
-        The index is the smoothed share among shorts that outperformed 3x over the share among the rest, from the {analyzed} analyzed videos. With {breakouts} outperformers, anything under about 2x reads as noise until the catalog grows.
-      </p>
     </ListBlock>
   )
 }
