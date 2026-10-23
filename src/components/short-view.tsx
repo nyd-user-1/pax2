@@ -168,6 +168,13 @@ async function topComments(ytId: string): Promise<Thread[] | null> {
 
 export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer?: boolean }) {
   const ytId = id.replace(/^yt-/, "")
+  // The four network reads start together; each is awaited where the page needs it.
+  const userP = currentUser()
+  const boostsP = boostCounts([ytId]).catch(() => ({}) as Record<string, number>)
+  const commentsP = topComments(ytId)
+  const codebookP = generatedJson<Record<string, Codes>>("codebook")
+  userP.catch(() => {})
+  commentsP.catch(() => {})
   const data = shorts as unknown as Yt
   const v = data.videos.find((x) => x.id === ytId) ?? (homeFeed as unknown as Yt["videos"]).find((x) => x.id === ytId)
   // The ratio and its baseline: the home feed's catalog figures, else the lab's for the original 179.
@@ -190,7 +197,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   /** The analysis on show is the invented sample, not a real pass. */
   const sampled = !real && !!f
   const SAMPLE = "Sample figures"
-  const signedIn = !!(await currentUser())
+  const signedIn = !!(await userP)
   const ch = v ? channelById(v.channelId) : undefined
   const lines = transcriptLines(f)
   const duration = f?.audio?.durationSec ?? (v ? secs(v.duration) : 0)
@@ -234,7 +241,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const sampleLikes = v?.likes == null ? (sample as { likes?: number } | undefined)?.likes : undefined
   const likes = v?.likes ?? sampleLikes ?? null
   // The video's running Boost count from DynamoDB; the row appears from the first boost.
-  const boosts = (await boostCounts([ytId]).catch(() => ({}) as Record<string, number>))[ytId] ?? 0
+  const boosts = (await boostsP)[ytId] ?? 0
   const statRows: [string, string][] = [
     ["Views", n(v?.views)],
     ["Median", n(scored ? Math.round(scored.channelMedian) : null)],
@@ -271,7 +278,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   const advanced = statRows.slice(4)
   const statGrid = (rs: [string, string][]) => <div className="grid grid-cols-2 gap-4">{rs.map(([label, value]) => <React.Fragment key={label}>{stat(label, value)}</React.Fragment>)}</div>
 
-  const comments = await topComments(ytId)
+  const comments = await commentsP
   /** A video's outperformance multiple when the catalog knows it. */
   const ratioOf = (vid: string) => (homeFeed as { id: string; ratio?: number }[]).find((x) => x.id === vid)?.ratio ?? null
   const titleOf = (vid: string) => [...data.videos, ...(homeFeed as unknown as Yt["videos"])].find((x) => x.id === vid)?.title ?? null
@@ -507,7 +514,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       </ListBlock>,
     ])
   // The two ad codebooks: the video's real codes (data/generated/codebook.json) first, the sample's only where none exist.
-  const coded = (await generatedJson<Record<string, Codes>>("codebook"))?.[ytId]
+  const coded = (await codebookP)?.[ytId]
   const swayable = coded?.swayable ?? sample?.codes?.swayable
   const wesleyanGoal = coded?.wesleyan ?? sample?.codes?.wesleyan
   // Every video page carries all three; a block with no code for this video says so and offers a notification.
