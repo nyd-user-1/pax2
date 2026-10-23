@@ -1,8 +1,8 @@
 import { GLOSSARY } from "@/lib/glossary"
 
 // What chat reads to answer the Video Analytics prompts, which each teach one metric the site shows.
-// Sources: docs/RESONANCE.md (Resonance, the mode match), data/generated/model/resonance-formula.json
-// (the stack's held-out AUC, the scale), src/components/video-reads.tsx (the craft template, length,
+// Sources: docs/RESONANCE.md (Resonance, the profile similarity), data/generated/model/resonance-formula.json
+// (the stack's held-out AUC, the scale), src/components/video-reads.tsx (the production profile, length,
 // topic and the recommendations), the Codebook 5K and Window Q reports (agreement figures), and the
 // glossary's current entries. The glossary's Engage, Interest, Act, Formula and old Resonance entries
 // describe the retired paid score and stay out.
@@ -17,9 +17,9 @@ Outperformed 3x: a short whose views reached at least three times its own channe
 
 Outlier Score: a short's views divided by its channel's median, written as a multiple. 3.0x is the outperformed-3x line.
 
-Mode match: a winning mode is a craft configuration that recurs among shorts that outperformed 3x, found by clustering their craft templates and kept only if its lift re-measures above the base rate on held-out channels. The mode match scores how closely this short's craft template matches the surviving mode. Each ingredient row gives the axis's weight in the match, the short's percentile against the mode's center, and a band: On mode, Near or Off.
+Profile similarity (formerly "Mode match"): a winning mode is a production configuration that recurs among shorts that outperformed 3x, found by clustering their production profiles and kept only if its lift re-measures above the base rate on held-out channels. Profile similarity scores how closely this short's production profile matches the surviving mode. Each ingredient row gives the axis's weight in the match, the short's percentile against the mode's center, and a band: On mode, Near or Off.
 
-Craft template: craft axes from the composition, speech, length and title measures, each this short's percentile within its own channel. The rings mark 25, 50 (the channel's middle) and 75. The outcome is never one of the axes.
+Production profile (formerly "Craft template"): production axes from the composition, speech, length and title measures, each this short's percentile within its own channel. The rings mark 25, 50 (the channel's middle) and 75. The outcome is never one of the axes.
 
 Resonant Length: across the catalog, within each channel, the share of shorts that outperformed against the share that underperformed at each length; the length where the two curves cross is marked, and so is this short's length.
 

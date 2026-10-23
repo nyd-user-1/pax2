@@ -2,6 +2,9 @@ import Link from "next/link"
 
 import lengthCrossing from "../../data/generated/model/length-crossing.json"
 import topicLift from "../../data/generated/model/topic-lift.json"
+import { GrowBar } from "@/components/grow-bar"
+import { Hint } from "@/components/hint"
+import { Radar } from "@/components/radar"
 import { axisLabel, type Mode } from "@/lib/video-reads"
 import { cn } from "@/ui/lib/utils"
 
@@ -14,58 +17,38 @@ const NAVY = "#1e3a8a"
 const RED = "#dc2626"
 const LIGHT = "#3b82f6"
 
-// ---------- the craft octagon ----------
+// ---------- the production profile ----------
 
-/** Eight craft axes: composition, speech, length and title, each a within-channel percentile. */
+/** Eight production axes: composition, speech, length and title, each a within-channel percentile. */
 export const OCTAGON_AXES = ["cutsPerSec", "visualActivity", "loudnessLufs", "textFrameShare", "speechWps", "firstWordSec", "durationSec", "titleWords"]
 
-function polar(i: number, n: number, r: number, c = 120) {
-  const a = -Math.PI / 2 + (i * 2 * Math.PI) / n
-  return [c + r * Math.cos(a), c + r * Math.sin(a)] as const
-}
-const ring = (n: number, r: number) => Array.from({ length: n }, (_, i) => polar(i, n, r).join(",")).join(" ")
-
-/** A radar over `axes`: the reference rings at 25, 50 (the channel's middle) and 75; `shapes` drawn in order. */
-export function Radar({ axes, shapes, size = 280 }: { axes: string[]; shapes: { values: Record<string, number>; stroke: string; fill: string; dashed?: boolean }[]; size?: number }) {
-  const n = axes.length
-  const R = 88
-  return (
-    <svg viewBox="-40 -10 320 260" width={size} className="mx-auto h-auto max-w-full overflow-visible" role="img" aria-label="Craft axes, within-channel percentiles">
-      {[25, 50, 75, 100].map((p) => (
-        <polygon key={p} points={ring(n, (R * p) / 100)} fill="none" stroke={p === 50 ? "#94a3b8" : "#e2e8f0"} strokeDasharray={p === 50 ? "3 3" : undefined} />
-      ))}
-      {axes.map((_, i) => {
-        const [x, y] = polar(i, n, R)
-        return <line key={i} x1={120} y1={120} x2={x} y2={y} stroke="#e2e8f0" />
-      })}
-      {shapes.map((s, k) => (
-        <polygon key={k} points={axes.map((a, i) => polar(i, n, (R * Math.max(2, s.values[a] ?? 50)) / 100).join(",")).join(" ")} fill={s.fill} stroke={s.stroke} strokeWidth={2} strokeDasharray={s.dashed ? "5 4" : undefined} />
-      ))}
-      {axes.map((a, i) => {
-        const [x, y] = polar(i, n, R + 16)
-        return (
-          <text key={a} x={x} y={y} textAnchor={x < 115 ? "end" : x > 125 ? "start" : "middle"} dominantBaseline="middle" className="fill-slate-600 text-[9px]">
-            {axisLabel(a)}
-          </text>
-        )
-      })}
-    </svg>
-  )
-}
-
 export function CraftOctagon({ template }: { template: Record<string, number> }) {
+  const axes = OCTAGON_AXES.map((a) => ({ key: a, label: axisLabel(a) }))
   return (
-    <div className="flex flex-col items-center gap-3">
-      <Radar axes={OCTAGON_AXES} shapes={[{ values: template, stroke: NAVY, fill: "rgb(30 58 138 / 0.12)" }]} />
-      <div className="tabular grid w-full grid-cols-2 gap-x-6 gap-y-1 text-xs">
-        {OCTAGON_AXES.map((a) => (
-          <div key={a} className="flex justify-between gap-2 border-b border-slate-100 py-1">
-            <span className="text-slate-500">{axisLabel(a)}</span>
-            <span className="font-semibold text-slate-800">{template[a]}</span>
-          </div>
-        ))}
+    <div className="@container">
+      <div className="grid items-center gap-6 @xl:grid-cols-[minmax(0,300px)_minmax(0,1fr)]">
+        <Radar axes={axes} label="Production profile, within-channel percentiles" shapes={[{ name: "This short", values: template, stroke: NAVY, fill: "rgb(30 58 138 / 0.12)" }]} />
+        <table className="tabular w-full max-w-xl text-sm">
+          <thead className="text-left text-xs text-slate-500">
+            <tr className="[&_th]:pb-2 [&_th]:font-medium">
+              <th>Feature</th>
+              <th className="w-1/2">Percentile in its channel</th>
+              <th className="text-right" />
+            </tr>
+          </thead>
+          <tbody className="[&_td]:border-t [&_td]:border-slate-100 [&_td]:py-1.5">
+            {OCTAGON_AXES.map((a, i) => (
+              <tr key={a}>
+                <td className="pr-3 text-slate-700">{axisLabel(a)}</td>
+                <td className="pr-3">
+                  <GrowBar value={template[a] ?? 0} i={i} marker={50} title="The tick is the channel's middle" />
+                </td>
+                <td className="w-10 text-right font-semibold text-slate-900">{template[a]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <p className="self-start text-xs text-slate-400">Within-channel percentiles; the dashed ring is the channel&apos;s middle.</p>
     </div>
   )
 }
@@ -259,7 +242,7 @@ export function UnlockList({ actions }: { actions: { what: string; href?: string
   )
 }
 
-// ---------- Resonance: the mode match ----------
+// ---------- Resonance: the profile similarity ----------
 
 export type Ingredient = { axis: string; weight: number; video: number; center: number; diff: number; band: "On mode" | "Near" | "Off" }
 
@@ -275,36 +258,45 @@ export function ingredients(template: Record<string, number>, mode: Mode, axes: 
   })
 }
 
-const CHIP: Record<Ingredient["band"], string> = { "On mode": "bg-above-soft text-above", Near: "bg-slate-100 text-slate-600", Off: "bg-below-soft text-below" }
+const CHIP: Record<Ingredient["band"], string> = { "On mode": "bg-above-soft text-above", Near: "bg-pax2-lavender text-pax2-blue", Off: "bg-below-soft text-below" }
 
 export function ModeMatch({ score, rows, template, mode }: { score: number; rows: Ingredient[]; template: Record<string, number>; mode: Mode }) {
-  const axes = rows.map((r) => r.axis)
+  const axes = rows.map((r) => ({ key: r.axis, label: axisLabel(r.axis) }))
+  const profile = mode.name.replace(/^./, (c) => c.toUpperCase())
   return (
-    <div className="@container flex flex-col gap-4">
-      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <span className="tabular font-display text-4xl text-pax2-blue">{score}</span>
-        <span className="text-sm text-slate-500">mode match, against the label-blind sample</span>
-      </div>
-      <p className="text-sm text-slate-700">{mode.name.replace(/^./, (c) => c.toUpperCase())}</p>
-      <div className="grid items-start gap-4 @xl:grid-cols-[280px_minmax(0,1fr)]">
-        <div className="flex flex-col items-center gap-1">
-          <Radar axes={axes} size={260} shapes={[{ values: mode.center, stroke: "#94a3b8", fill: "rgb(148 163 184 / 0.08)", dashed: true }, { values: template, stroke: NAVY, fill: "rgb(30 58 138 / 0.12)" }]} />
+    <div className="@container">
+      <div className="grid items-start gap-6 @xl:grid-cols-[minmax(0,300px)_minmax(0,1fr)]">
+        <div className="flex flex-col items-center gap-4">
+          <Hint text={`How closely this short's production profile matches the profile shared by shorts that outperformed 3x (${profile.toLowerCase()}), scored against the label-blind sample.`}>
+            <span className="flex items-baseline gap-1.5">
+              <span className="tabular font-display text-6xl leading-none text-pax2-blue">{score}</span>
+              <span className="text-sm text-slate-400">/ 100</span>
+            </span>
+          </Hint>
+          <Radar
+            axes={axes}
+            label="This short against the outperformers' profile"
+            shapes={[
+              { name: "Outperformers", values: mode.center, stroke: "#94a3b8", fill: "rgb(148 163 184 / 0.08)", dashed: true },
+              { name: "This short", values: template, stroke: NAVY, fill: "rgb(30 58 138 / 0.12)" },
+            ]}
+          />
           <div className="flex gap-4 text-[11px] text-slate-500">
             <span className="flex items-center gap-1.5">
-              <span className="h-0.5 w-4" style={{ background: NAVY }} /> this video
+              <span className="h-0.5 w-4" style={{ background: NAVY }} /> this short
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="h-0.5 w-4 border-t-2 border-dashed border-slate-400" /> winning mode
+              <span className="h-0.5 w-4 border-t-2 border-dashed border-slate-400" /> outperformers
             </span>
           </div>
         </div>
-        <table className="tabular w-full text-sm">
+        <table className="tabular w-full max-w-xl text-sm">
           <thead className="text-left text-xs text-slate-500">
             <tr className="[&_th]:pb-2 [&_th]:font-medium">
-              <th>Ingredient</th>
+              <th>Feature</th>
               <th className="text-right">Weight</th>
-              <th className="text-right">Video</th>
-              <th className="text-right">Mode</th>
+              <th className="text-right">This short</th>
+              <th className="text-right">Outperformers</th>
               <th className="text-right" />
             </tr>
           </thead>
@@ -315,7 +307,7 @@ export function ModeMatch({ score, rows, template, mode }: { score: number; rows
                 <td className="text-right text-slate-500">{r.weight}%</td>
                 <td className="text-right font-semibold text-slate-900">{r.video}</td>
                 <td className="text-right text-slate-500">{r.center}</td>
-                <td className="pl-2 text-right">
+                <td className="pl-3 text-right">
                   <span className={cn("inline-flex whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-medium", CHIP[r.band])}>
                     {r.band} {r.diff > 0 ? `+${r.diff}` : r.diff}
                   </span>

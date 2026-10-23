@@ -387,7 +387,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         </div>
       </CardBlock>,
     ],
-    // Resonance as settled (docs/RESONANCE.md): the gauge, the mode match and the recommendations, three
+    // Resonance as settled (docs/RESONANCE.md): the gauge, the profile similarity and the recommendations, three
     // blocks. The gauge reads only resonance-formula.json and the match only the winning-modes artifact;
     // each stays empty, naming what unlocks it, until its file holds this video.
     [
@@ -402,9 +402,9 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     ],
     [
       "mode",
-      "Mode match",
-      <ChartBlock key="mode" title="Mode match" height="auto">
-        {match && template ? <ModeMatch score={match.score} mode={match.mode} template={template} rows={recipe!} /> : <UnlockList actions={unlock.length ? unlock : [{ what: "No mode-match read for this video yet" }]} />}
+      "Profile similarity",
+      <ChartBlock key="mode" title="Profile similarity" height="auto">
+        {match && template ? <ModeMatch score={match.score} mode={match.mode} template={template} rows={recipe!} /> : <UnlockList actions={unlock.length ? unlock : [{ what: "No profile-similarity read for this video yet" }]} />}
       </ChartBlock>,
     ],
     ["recs", "Recommendations", <ListBlock key="recs" title="Recommendations" height="auto"><Recommendations rows={recipe} unlock={recipe ? [] : unlock} /></ListBlock>],
@@ -412,7 +412,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     ["carry", "What the pushed videos carry", <CarryBlock key="carry" ytId={ytId} />],
     // The per-video chart homes (docs/RESONANCE-EVAL.md): the craft octagon, then the root's length
     // and topic charts in per-video form. Each appears only when its measure exists for this video.
-    ...(template ? ([["craft", "Craft template", <ChartBlock key="craft" title="Craft template" height="auto"><CraftOctagon template={template} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
+    ...(template ? ([["craft", "Production profile", <ChartBlock key="craft" title="Production profile" height="auto"><CraftOctagon template={template} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
     ...(lengthSec > 0 ? ([["length", "Resonant Length", <ChartBlock key="length" title="Resonant Length" height="auto"><LengthOnCurve seconds={lengthSec} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
     ...(topic != null ? ([["topic", "Resonant Topic", <ChartBlock key="topic" title="Resonant Topic" height="auto"><TopicRows cluster={topic} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
     [
