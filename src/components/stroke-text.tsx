@@ -68,7 +68,7 @@ type StrokeTextProps = {
   shadowColor?: string
   className?: string
   style?: CSSProperties
-  /** Drawn over the fill in the text's own units (baseline at y = 0); an element marked data-after-fill fades in a beat after the fills. */
+  /** Drawn over the fill in the text's own units (baseline at y = 0); an element marked data-after-fill wipes in left to right a beat after the fills. */
   overlay?: ReactNode
 }
 
@@ -204,7 +204,7 @@ const StrokeText = ({
       gsap.killTweensOf(targets)
       gsap.set(strokes, { strokeDasharray: dash, strokeDashoffset: dash, strokeOpacity: 1 })
       gsap.set(fills, { opacity: useWipe ? 1 : 0 })
-      gsap.set(afters, { opacity: 0 })
+      gsap.set(afters, { opacity: 1, clipPath: "inset(0% 100% 0% 0%)" })
       if (wipe) gsap.set(wipe, { attr: frames.start })
       if (drop) gsap.set(drop, { attr: grounded })
     }
@@ -213,7 +213,7 @@ const StrokeText = ({
       gsap.killTweensOf(targets)
       gsap.set(strokes, { strokeDasharray: dash, strokeDashoffset: 0, strokeOpacity: 1 })
       gsap.set(fills, { opacity: fillEnabled ? 1 : 0 })
-      gsap.set(afters, { opacity: fillEnabled ? 1 : 0 })
+      gsap.set(afters, { opacity: fillEnabled ? 1 : 0, clipPath: "inset(0% 0% 0% 0%)" })
       if (wipe) gsap.set(wipe, { attr: fillEnabled ? frames.end : frames.start })
       if (drop) gsap.set(drop, { attr: fillEnabled ? lifted : grounded })
     }
@@ -247,10 +247,10 @@ const StrokeText = ({
         )
       }
 
-      // Overlay marked data-after-fill lands a beat after the last fill.
+      // Overlay marked data-after-fill wipes in left to right, as the fill does, a beat after the last fill.
       if (afters.length && fillEnabled) {
         const fillsEnd = drawDuration + fillDelay + fillDuration + (useWipe ? 0 : stagger * Math.max(0, fills.length - 1))
-        tl.to(afters, { opacity: 1, duration: 0.3, ease: "power2.out" }, fillsEnd + 0.25)
+        tl.to(afters, { clipPath: "inset(0% 0% 0% 0%)", duration: fillDuration, ease: "power2.inOut" }, fillsEnd + 0.25)
       }
 
       if (drop && fillEnabled) {
