@@ -30,6 +30,14 @@ The roadmap's placement: chips on the video page's chat side panel and in /chat 
 - Where a census column answers, the answer carries its audited accuracy once, quietly ("read from the frames, 95 of 100 right in audit").
 - GPU-answered free-text questions are out of scope here; they are pass 2, registered separately.
 
+## Sketches (added 2026-10-22, before the Report)
+
+Three cheap HTML sketches under `docs/sketches/`, committed with the rest:
+
+1. `question-universe.html` — the whole bank on one browsable page: the three registers as sections, every question drawn as its chip with the columns it reads and its basis in small type beneath, and GPU-only pass-2 questions present but dashed.
+2. `chips-video-panel.html` — the video page with the chat side panel open at its standing 420px, the chip row above the composer, one chip tapped and its answer rendered in the app's chat dress: the number, the timestamp, the basis.
+3. `chips-chat.html` — /chat with a video attached from the plus menu, the same chips re-ranked for that context, one answered, and a small dev-corner overlay showing the `chip-shown` and `chip-tap` events the taps would log.
+
 ## Report
 
 Append `## Report`: the inventory, the question list by register with resolver columns, the bank's size and home, the chips as shipped with their event wiring, and anything deferred with why.
