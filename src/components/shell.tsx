@@ -100,6 +100,7 @@ const TITLES: [string, string][] = [
   ["/dashboard", "Dashboard"],
   ["/evals", "Evals"],
   ["/pipeline", "Pipeline"],
+  ["/erd", "ERD"],
   ["/build", "Build"],
   ["/project-management", "Project Management"],
   ["/reinforcement-learning", "Reinforcement learning"],
@@ -377,7 +378,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
   const paired = open && !takeover
   const closePanel = () => (panelOpen ? router.back() : discuss ? setDiscuss(false) : setAside(null))
   // /chat fills the content card edge to edge, as solar's chat fills its main area; /app/home is the same chat dressed as the home.
-  const full = path.startsWith("/chat") || path.startsWith("/graph") || path.startsWith("/pipeline-2") || path.startsWith("/app/home") || path.startsWith("/flow/")
+  const full = path.startsWith("/chat") || path.startsWith("/graph") || path.startsWith("/erd") || path.startsWith("/app/home") || path.startsWith("/flow/")
   return (
     <PanelCtx.Provider value={panel}>
       <div className="flex min-h-dvh md:h-dvh md:overflow-hidden md:bg-slate-200/60 md:p-[18px]">

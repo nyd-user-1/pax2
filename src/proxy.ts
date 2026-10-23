@@ -19,6 +19,7 @@ const expiresSoon = (token: string) => {
 // Old addresses that now live on /metrics. Answered here, before any render, so the browser gets one
 // redirect instead of a rendered shell that redirects itself (the page files keep the same mapping).
 function alias(path: string, q: URLSearchParams): string | null {
+  if (path === "/pipeline-2") return "/erd"
   if (path === "/patterns") return "/metrics?tab=patterns"
   if (path === "/outliers") return "/metrics?tab=outliers"
   if (["/polling", "/feature-lift", "/ml", "/velocity-tracker", "/live-tracking", "/flow"].includes(path) || path.startsWith("/flow/")) return "/metrics"
@@ -47,7 +48,7 @@ function alias(path: string, q: URLSearchParams): string | null {
 
 // Pages that send a signed-out reader to /signin. With no session and no refresh cookie the answer is
 // known before render, so the redirect happens here (each page still checks for itself).
-const GATED = ["/metrics", "/dashboard", "/pipeline", "/pipeline-2", "/evals", "/app/home", "/signup/welcome", "/lab", "/project-management", "/my-channels", "/graph", "/campaigns", "/build", "/reinforcement-learning"]
+const GATED = ["/metrics", "/dashboard", "/pipeline", "/erd", "/evals", "/app/home", "/signup/welcome", "/lab", "/project-management", "/my-channels", "/graph", "/campaigns", "/build", "/reinforcement-learning"]
 const gated = (path: string) => GATED.some((g) => path === g || path.startsWith(`${g}/`))
 
 export async function proxy(req: NextRequest) {

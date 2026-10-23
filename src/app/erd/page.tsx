@@ -10,7 +10,7 @@ import { feedIndex } from "@/lib/feed-data"
 import { snapshots } from "@/lib/velocity-store"
 
 export const dynamic = "force-dynamic"
-export const metadata = { title: "Pipeline" }
+export const metadata = { title: "ERD" }
 
 // The whole factory on one canvas. Every number is one cheap read at render: the catalog from the feed
 // index, composition from the Lab Tested list, the poller's last snapshot, and the counts
@@ -18,7 +18,7 @@ export const metadata = { title: "Pipeline" }
 
 export default async function FactoryPage() {
   const gatekeeper = await currentUser()
-  if (!gatekeeper) redirect("/signin?next=/pipeline-2")
+  if (!gatekeeper) redirect("/signin?next=/erd")
   if (!gatekeeper.admin) notFound()
 
   const [catalog, snaps] = await Promise.all([
