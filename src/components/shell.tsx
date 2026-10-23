@@ -733,11 +733,11 @@ const initials = (name: string) =>
     .map((w) => w[0]!.toUpperCase())
     .join("")
 
+// Every signed-in user's default profile image (Gilbert Stuart's Washington); initials stay as its alt text.
 function Initials({ name, size }: { name: string; size: "sm" | "md" }) {
   return (
-    <span className={cn("inline-flex shrink-0 select-none items-center justify-center rounded-full bg-[#DCEBEE] font-semibold text-[#2F6570]", size === "sm" ? "size-7 text-[11px]" : "size-9 text-[13px]")}>
-      {initials(name)}
-    </span>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src="/avatars/default.jpg" alt={initials(name)} width={36} height={36} className={cn("shrink-0 select-none rounded-full object-cover", size === "sm" ? "size-7" : "size-9")} />
   )
 }
 
