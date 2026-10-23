@@ -146,7 +146,7 @@ On-screen text is stored as word counts, not the words, so "what would someone k
 
 **Event wiring.** `chip-shown` and `chip-tap` are added to `USAGE_KINDS` (`src/lib/usage.ts`) and written through the existing `logUsage` beacon. `chip-shown`: subject = chip id, meta `{position, propensity, surface, videoId}`, one row per chip per draw. `chip-tap`: meta `{position, surface, videoId}`. That is exactly the registration in `learning/chat-suggested-prompts.json`. The propensity is exact: each slot draws uniformly from the unshown chips of its register, so P(chip at position) = 1 / (eligible in that register at that draw). The registry's arms now list the 39 chip ids (`scripts/policy/loops/cold_start_specs.py`, regenerated JSON).
 
-**Sketches.** `docs/sketches/question-universe.html` (scorable, scores prefilled from the file), `chips-video-panel.html`, `chips-chat.html`, the last two filled with the resolver's real answers for one Brennan Center short.
+**Sketches.** `docs/sketches/question-universe.html` (scorable, scores prefilled from the file), `chips-video-panel.html`, `chips-chat.html`, the last two filled with the resolver's real answers for one Brennan Center short. The event overlay the brief asked for on `chips-chat.html` was removed by Brendan's ruling; the events live only in the code.
 
 **Deferred.**
 - The 16 held questions (rated 2-3): no resolvers. Their columns are in the file if a later rating lifts them.
