@@ -55,12 +55,12 @@ export function ModelPicker({ value, onChange }: { value: string; onChange: (id:
           setOpen(!open)
         }}
         aria-label={`Model: ${current.label}`}
+        title={current.label}
         aria-expanded={open}
         className="inline-flex h-8 items-center gap-1.5 rounded-full px-2.5 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-100 aria-expanded:bg-slate-100"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={current.logo} alt="" className="size-4 shrink-0 rounded-sm object-contain" />
-        <span className="hidden sm:inline">{current.label}</span>
         <ChevronDown className={cn("size-3.5 text-slate-400 transition-transform", open && "rotate-180")} />
       </button>
       {open && (

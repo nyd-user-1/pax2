@@ -9,8 +9,8 @@ const RING: CSSProperties = {
   position: "absolute",
   inset: "-1px",
   borderRadius: "inherit",
-  padding: "1px",
-  background: "conic-gradient(from var(--pax2-spin), transparent 0deg, #93c5fd 30deg, #1d4ed8 62deg, transparent 96deg, transparent 360deg)",
+  padding: "1.5px",
+  background: "conic-gradient(from var(--pax2-spin), transparent 0deg, #60a5fa 30deg, #1d4ed8 66deg, transparent 106deg, transparent 360deg)",
   WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
   WebkitMaskComposite: "xor",
   maskComposite: "exclude",
@@ -20,7 +20,7 @@ const RING: CSSProperties = {
 export function BorderLight() {
   return (
     // The glow sits on a wrapper: a filter on the masked ring itself would be masked away.
-    <span aria-hidden className="pointer-events-none absolute inset-0 rounded-[inherit]" style={{ filter: "drop-shadow(0 0 3px rgb(37 99 235 / 0.55))" }}>
+    <span aria-hidden className="pointer-events-none absolute inset-0 rounded-[inherit]" style={{ filter: "drop-shadow(0 0 5px rgb(37 99 235 / 0.8))" }}>
       <span data-pax2-spin style={RING} />
     </span>
   )

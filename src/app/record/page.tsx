@@ -76,7 +76,7 @@ export default async function RecordLanding() {
               </h1>
               <p className="max-w-md text-lg leading-relaxed text-slate-900">We help you choose what to say, how to say it and share it. Because your voice is the difference.</p>
               <div className="flex items-center gap-3">
-                <Link href="/#record" className={whiteButton("lg", "w-44")}>
+                <Link href="/chat?record=1" className={whiteButton("lg", "w-44")}>
                   <Video className="size-5" style={{ color: "#033882", fill: "#dbe7fa" }} /> Create
                 </Link>
               </div>

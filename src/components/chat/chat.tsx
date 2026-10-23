@@ -21,7 +21,7 @@ import { ScriptCard } from '@/components/chat/script-card'
 import { useDraft } from '@/components/record/draft'
 import { answersText, parseCiteBlock, parseFieldBlock, stripFieldBlock, stripOpenBlock } from '@/lib/chat-fields'
 import { PlusMenu, type ScriptChip, type VideoChip } from '@/components/chat/plus-menu'
-import { Wordmark } from '@/components/wordmark'
+import dynamic from 'next/dynamic'
 import { BorderLight } from '@/components/border-light'
 import { cn } from '@/ui/lib/utils'
 import { isShelfDrag, readShelfDrag } from '@/lib/shelf-drag'
@@ -60,6 +60,10 @@ type Recognition = { lang: string; continuous: boolean; interimResults: boolean;
 const speechRecognition = () => (typeof window === 'undefined' ? undefined : ((window as unknown as { SpeechRecognition?: new () => Recognition; webkitSpeechRecognition?: new () => Recognition }).SpeechRecognition ?? (window as unknown as { webkitSpeechRecognition?: new () => Recognition }).webkitSpeechRecognition))
 
 const RECORD_OPENER = "I'm ready to make my first video — where do we start?"
+// The empty state's PAX draws itself with GSAP; its code loads only when that state shows, since the
+// chat also sits in every page's side panel.
+const PaxDraw = dynamic(() => import('@/components/pax-draw').then((m) => m.PaxDraw), { loading: () => <span className="block h-12 w-24" /> })
+
 
 // Record mode (the camera button): the conversation becomes an onboarding that ends in a recording,
 // made on this page. Questions go out as real controls (a pax-fields block the transcript renders as
@@ -825,7 +829,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
               {!compact &&
                 (heading ?? (
                   <div className="flex flex-col items-center">
-                    <Wordmark size={34} />
+                    <PaxDraw size={34} />
                   </div>
                 ))}
               {inputBox}

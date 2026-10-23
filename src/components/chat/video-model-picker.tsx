@@ -62,11 +62,11 @@ export function VideoModelPicker({ value, onChange }: { value: VideoProvider; on
           setOpen(!open)
         }}
         aria-label={`Video model: ${current.label}`}
+        title={current.label}
         aria-expanded={open}
         className="inline-flex h-8 items-center gap-1.5 rounded-full px-2.5 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-100 aria-expanded:bg-slate-100"
       >
         <Mark logo={current.logo} className="size-4" />
-        <span className="hidden md:inline">{current.label}</span>
         <ChevronDown className={cn("size-3.5 text-slate-400 transition-transform", open && "rotate-180")} />
       </button>
       {open && (
