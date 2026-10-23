@@ -10,7 +10,6 @@ import { KebabMenu, MenuFlyout, MenuFoot, MenuRow, MenuSeparator } from "@/compo
 import { useShellPanel } from "@/components/shell"
 import { useHiddenBlocks, useShelf } from "@/lib/home-blocks"
 import { useNavFavorites } from "@/lib/nav-favorites"
-import { PaxMark } from "@/components/pax-mark"
 import { whiteButton } from "@/components/white-button"
 import { cn } from "@/ui/lib/utils"
 
@@ -67,16 +66,18 @@ function useAskBlock(from: React.RefObject<HTMLElement | null>, title?: string) 
   }
 }
 
-/** Every block's Ask PAX chip (Brendan, 2026-10-23): the home page's white PAX button in small, "Ask" in
- *  black before the mark, in the header just before the chevron. It opens the side panel's chat with the
- *  block as its context. */
+/** Every block's PAX/AI chip (Brendan, 2026-10-23): the home page's white button in small, PAX in navy and
+ *  /AI in red in the curtain face, shadowed only on hover, in the header just before the chevron. It opens
+ *  the side panel's chat with the block as its context. */
 export function AskPaxChip({ title }: { title?: string }) {
   const self = React.useRef<HTMLButtonElement>(null)
   const ask = useAskBlock(self, title)
   return (
-    <button ref={self} type="button" onClick={ask} aria-label={`Ask PAX about ${title ?? "this block"}`} className={whiteButton("md", "h-7 gap-1 px-2.5 py-0 text-xs shadow-sm")}>
-      <span className="font-medium text-slate-900">Ask</span>
-      <PaxMark size={14} className="translate-y-px" />
+    <button ref={self} type="button" onClick={ask} aria-label={`Ask PAX about ${title ?? "this block"}`} className={whiteButton("md", "h-7 px-3 py-0 shadow-none hover:shadow-md")}>
+      <span className="font-bold leading-none" style={{ fontFamily: "'PAX Curtain', monospace", fontSize: 14 }}>
+        <span className="text-pax2-blue">PAX</span>
+        <span className="text-pax2-red">/AI</span>
+      </span>
     </button>
   )
 }
