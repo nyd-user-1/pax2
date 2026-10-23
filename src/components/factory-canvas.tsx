@@ -7,8 +7,8 @@ import {
   type Edge, type EdgeProps, type InternalNode, type Node, type NodeChange, type NodeProps,
 } from "@xyflow/react"
 import {
-  AudioLines, Binary, ChartLine, ChevronRight, Clock, Columns3, Cpu, Database, Eye, Factory, FileBraces, FileText, Film, FlaskConical, GraduationCap, HardDrive, Layers,
-  Lightbulb, ListVideo, Magnet, Mail, MessageCircleQuestionMark, Monitor, PenLine, RefreshCw, RotateCcw, Rss, Ruler, Save, Scissors, ScrollText,
+  AudioLines, Binary, ChartLine, ChevronRight, Clock, Columns3, Cpu, Database, DraftingCompass, Eye, Factory, FileBraces, FileText, Film, FlaskConical, GraduationCap, HardDrive, Layers,
+  Lightbulb, ListVideo, Magnet, Mail, MessageCircleQuestionMark, Monitor, Network, PenLine, Radical, RefreshCw, RotateCcw, Rss, Ruler, Save, Scissors, ScrollText,
   ScanEye, Search, Server, Settings2, Shapes, Table, Timer, TrendingUp, Zap, type LucideIcon,
 } from "lucide-react"
 
@@ -46,25 +46,33 @@ const PLANNED = "#cbd5e1"
 const LIGHT: Record<Kindof, string> = { flow: "#3b82f6", loop: "#c4b5fd", planned: "#94a3b8" }
 
 type Status = "Live" | "Staged"
-type Chip = { n: number; name: string; status: Status }
+/** What an instrument is, by the Models table's method column: a neural network, a statistical model,
+ *  or measured effects looked up rather than fitted. Its circle wears the kind's icon. */
+type Make = "neural" | "statistical" | "reference"
+type Chip = { n: number; name: string; status: Status; make: Make }
+const MAKE: Record<Make, { icon: LucideIcon; label: string }> = {
+  neural: { icon: Network, label: "neural network" },
+  statistical: { icon: Radical, label: "statistical model" },
+  reference: { icon: DraftingCompass, label: "measured effects" },
+}
 
 // The Models table's passed rows, in its order.
 const MODELS: Chip[] = [
-  { n: 1, name: "Outlier classifier v1", status: "Live" },
-  { n: 2, name: "Outlier classifier v3", status: "Live" },
-  { n: 3, name: "Early-hit predictor", status: "Live" },
-  { n: 4, name: "Behavior-corrected text embedding", status: "Live" },
-  { n: 5, name: "Candidate re-scorer", status: "Live" },
-  { n: 6, name: "Headline picker", status: "Live" },
-  { n: 7, name: "Persuasion evidence reference", status: "Live" },
-  { n: 8, name: "Composition pair picker", status: "Staged" },
-  { n: 9, name: "Pairwise picker, Reform & Voting rights", status: "Staged" },
-  { n: 10, name: "Resonance text embedding, behavior arm", status: "Staged" },
-  { n: 11, name: "Resonance text embedding, full arm", status: "Staged" },
-  { n: 12, name: "Watch-through regressor v0", status: "Live" },
-  { n: 13, name: "Feed ranker v0", status: "Staged" },
-  { n: 14, name: "Ask-a-video (Q)", status: "Staged" },
-  { n: 15, name: "Planner", status: "Staged" },
+  { n: 1, name: "Outlier classifier v1", status: "Live", make: "statistical" },
+  { n: 2, name: "Outlier classifier v3", status: "Live", make: "statistical" },
+  { n: 3, name: "Early-hit predictor", status: "Live", make: "statistical" },
+  { n: 4, name: "Behavior-corrected text embedding", status: "Live", make: "neural" },
+  { n: 5, name: "Candidate re-scorer", status: "Live", make: "neural" },
+  { n: 6, name: "Headline picker", status: "Live", make: "neural" },
+  { n: 7, name: "Persuasion evidence reference", status: "Live", make: "reference" },
+  { n: 8, name: "Composition pair picker", status: "Staged", make: "statistical" },
+  { n: 9, name: "Pairwise picker, Reform & Voting rights", status: "Staged", make: "statistical" },
+  { n: 10, name: "Resonance text embedding, behavior arm", status: "Staged", make: "neural" },
+  { n: 11, name: "Resonance text embedding, full arm", status: "Staged", make: "neural" },
+  { n: 12, name: "Watch-through regressor v0", status: "Live", make: "statistical" },
+  { n: 13, name: "Feed ranker v0", status: "Staged", make: "statistical" },
+  { n: 14, name: "Ask-a-video (Q)", status: "Staged", make: "neural" },
+  { n: 15, name: "Planner", status: "Staged", make: "statistical" },
 ]
 const model = (n: number) => MODELS[n - 1]
 
@@ -186,11 +194,22 @@ function Store({ id, data: d }: NodeProps<Node<StoreData>>) {
 }
 
 // A staged instrument wears the planned dash: fitted or in build, not yet serving.
+function MakeBadge({ make, small = false }: { make: Make; small?: boolean }) {
+  const Icon = MAKE[make].icon
+  return (
+    <span className={cn("flex shrink-0 items-center justify-center rounded-full bg-pax2-blue text-white", small ? "size-5" : "size-[26px]")}>
+      <Icon className={small ? "size-3" : "size-3.5"} strokeWidth={2} />
+    </span>
+  )
+}
+
 function ChipBody({ c }: { c: Chip }) {
   return (
-    <span title={c.status} className={cn("flex min-h-[34px] items-center gap-2 rounded-[18px] border py-1 pl-1 pr-3 text-xs font-semibold leading-tight text-pax2-blue", c.status === "Live" ? "border-indigo-200 bg-indigo-50" : "border-dashed border-indigo-300 bg-white")}>
-      <span className="tabular flex size-[26px] shrink-0 items-center justify-center rounded-full bg-pax2-blue text-[11px] text-white">{c.n}</span>
-      <span>{c.name}</span>
+    <span title={`${c.status} · ${MAKE[c.make].label}`} className={cn("flex min-h-[34px] items-center gap-2 rounded-[18px] border py-1 pl-1 pr-3 text-xs font-semibold leading-tight text-pax2-blue", c.status === "Live" ? "border-indigo-200 bg-indigo-50" : "border-dashed border-indigo-300 bg-white")}>
+      <MakeBadge make={c.make} />
+      <span>
+        <span className="tabular">{c.n}.</span> {c.name}
+      </span>
     </span>
   )
 }
@@ -438,7 +457,7 @@ function Architecture({ view, edges, focus, onFocus, onOpen }: { view: View; edg
           {kind("door", <span className="h-6 w-14 rounded-lg bg-pax2-blue" />, "Door", "How a video enters.")}
           {kind("stage", <span className="h-6 w-14 rounded-xl border-2 border-pax2-light-blue bg-white" />, "Stage", "What the Lab does to the video, with the tools that do it.")}
           {kind("store", <span className="flex h-6 w-14 items-center justify-center rounded-[10px_10px_6px_6px] border border-slate-300 bg-slate-50"><HardDrive className="size-3.5 text-slate-500" /></span>, "Store", "Where it is kept: S3 prefixes, the DynamoDB ledger, the catalog. The count is what it holds; a dated count is from the last accounting run.")}
-          {kind("instrument", <span className="flex h-6 w-14 items-center gap-1 rounded-full border border-indigo-200 bg-indigo-50 pl-0.5"><span className="flex size-5 items-center justify-center rounded-full bg-pax2-blue text-[10px] font-semibold text-white">n</span></span>, "Instrument", "A fitted model, numbered to the Models table. A dashed one is staged: fitted or in build, not yet serving.")}
+          {kind("instrument", <span className="flex h-6 w-14 items-center gap-1 rounded-full border border-indigo-200 bg-indigo-50 pl-0.5"><MakeBadge make="neural" small /></span>, "Instrument", "A fitted model or a measured reference, numbered to the Models table. Its circle names the kind: a network for a neural network, a radical for a statistical model, a compass for measured effects. A dashed one is staged: fitted or in build, not yet serving.")}
           {kind("service", <span className="flex h-6 w-14 items-center justify-center rounded-lg border border-amber-300 bg-amber-50"><Server className="size-3.5 text-amber-700" /></span>, "Service", "A paid external the factory calls, with its unit cost where one is recorded.")}
           {kind("surface", <span className="h-6 w-14 overflow-hidden rounded-lg border border-slate-300 bg-white"><span className="block h-1.5 bg-slate-100" /></span>, "Surface", "A page the factory feeds.")}
         </div>
