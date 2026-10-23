@@ -20,7 +20,7 @@ import { boostCounts } from "@/lib/boost"
 import { ChevronRight } from "lucide-react"
 
 import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, SmallBlock } from "@/components/blocks"
-import { AsideTabs } from "@/components/aside-tabs"
+import { ColumnTabs } from "@/components/aside-tabs"
 import { AsideVideos, TagSections } from "@/components/aside-videos"
 import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/components/codebook-blocks"
 import { CensusCharacteristics } from "@/components/census-characteristics"
@@ -544,6 +544,11 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   // The same score as a credit-report card, at the foot: the number and its band, then what helps and hurts it.
   if (score) right.push(["resonance-card", "Resonance factors", <ChartBlock key="resonance-card" title="Resonance factors" height="auto"><ResonanceCard score={score} factors={factors} /></ChartBlock>])
 
+  // The wide column in three tabs (Brendan, 2026-10-23): Score, Analysis, Research. A block not named here
+  // joins Analysis.
+  const TAB_OF: Record<string, "score" | "research"> = { resonance: "score", "resonance-card": "score", recs: "score", forecast: "score", carry: "research", codebooks: "research", visual: "research", hits: "research", formula: "research" }
+  const inTab = (tab: "score" | "analysis" | "research") => right.filter(([key]) => (TAB_OF[key] ?? "analysis") === tab)
+
   const column = (page: string, blocks: [string, string, ReactNode][], lock: (key: string) => boolean) => (
     <BlockOrder page={page} initial={blocks.map(([key]) => key)}>
       {blocks.map(([key, label, node]) => (
@@ -583,7 +588,12 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
               </div>
             )}
             </div>
-            <AsideTabs av={column("video-left", left, () => false)} comments={column("video-comments", commentBlocks, () => false)} />
+            <ColumnTabs
+              tabs={[
+                { key: "av", label: "A/V", node: column("video-left", left, () => false) },
+                { key: "comments", label: "Comments", node: column("video-comments", commentBlocks, () => false) },
+              ]}
+            />
           </>
         }
         right={
@@ -592,7 +602,13 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
             <div className="mt-5">
               <AskVideo ytId={ytId} title={(v?.title ?? "This short").replace(/\s*#\w+/g, "").trim() || "This short"} />
             </div>
-            {column("video-right", right, (key) => key !== "stats")}
+            <ColumnTabs
+              tabs={[
+                { key: "score", label: "Score", node: column("video-score", inTab("score"), (key) => key !== "stats") },
+                { key: "analysis", label: "Analysis", node: column("video-analysis", inTab("analysis"), (key) => key !== "stats") },
+                { key: "research", label: "Research", node: column("video-research", inTab("research"), (key) => key !== "stats") },
+              ]}
+            />
           </>
         }
       />
