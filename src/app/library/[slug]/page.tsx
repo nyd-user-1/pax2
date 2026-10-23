@@ -34,7 +34,7 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
   if (d.slug === "upworthy-archive") {
     return (
       <div className="flex flex-col gap-8">
-        <BackLink />
+        <BackLink fallback="/library" />
         <header className="rise flex flex-col gap-3">
           <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">Headline experiments</h1>
           <Chips d={d} />
@@ -63,7 +63,7 @@ export default async function DatasetPage({ params, searchParams }: { params: Pr
 
   return (
     <div className="flex flex-col gap-8">
-      <BackLink />
+      <BackLink fallback="/library" />
 
       <header className="rise flex flex-wrap items-start justify-between gap-6">
         <div className="flex max-w-3xl flex-col gap-2">
@@ -138,7 +138,7 @@ async function ReportPage({ r, page }: { r: Report; page?: number }) {
   const context = reportContext(r, about.experiments ? trialsText() : undefined)
   return (
     <div className="flex flex-col gap-8">
-      <BackLink />
+      <BackLink fallback="/library" />
       <header className="rise flex flex-col gap-3">
         <h1 className="font-display text-3xl text-slate-900 md:text-[34px]">{r.title}</h1>
         <div className="flex flex-wrap items-center gap-1.5">

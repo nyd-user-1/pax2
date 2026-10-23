@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { ArrowRight, MailCheck } from "lucide-react"
 
 import { DEMO_ACCOUNTS } from "@/lib/demo"
@@ -30,7 +29,6 @@ export type AuthStep = "form" | "code" | "reset"
 
 /** `onStep`: told each time the form moves between its steps, so the page can retitle itself. */
 export function AuthForm({ mode, onStep }: { mode: Mode; onStep?: (step: AuthStep) => void }) {
-  const router = useRouter()
   const [step, setStep] = React.useState<AuthStep>("form")
   React.useEffect(() => onStep?.(step), [step, onStep])
   const [email, setEmail] = React.useState("")
@@ -66,8 +64,8 @@ export function AuthForm({ mode, onStep }: { mode: Mode; onStep?: (step: AuthSte
       setError(r.error ?? "Something went wrong.")
       return false
     }
-    router.push(nextPath(mode))
-    router.refresh()
+    // A full load, not an in-app push: a video lands as its own full page, never in the drawer over this form.
+    window.location.assign(nextPath(mode))
     return true
   }
 
