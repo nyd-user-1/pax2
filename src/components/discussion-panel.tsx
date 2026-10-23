@@ -181,7 +181,7 @@ function BlocksShelf() {
 
 /** `admin` shows the Slack and Discord rows, each with the workspace or server it reaches. */
 export function DiscussionPanel({ onClose: close, admin = false }: { onClose: () => void; admin?: boolean }) {
-  const { wide, setWide } = useShellPanel()
+  const { wide, setWide, discussSeed } = useShellPanel()
   const router = useRouter()
   const [view, setViewState] = React.useState<View>(keptView)
   const [linked, setLinked] = React.useState<{ slack: string | null; discord: string | null } | null>(null)
@@ -192,6 +192,10 @@ export function DiscussionPanel({ onClose: close, admin = false }: { onClose: ()
   // Inside Slack or Discord, the header names the channel or post and its arrow steps back one level.
   const [sub, setSub] = React.useState<Nav>(null)
   const setView = (v: View) => setViewState((keptView = v))
+  // A page asking about itself (the video page's Ask row) opens straight onto the chat.
+  React.useEffect(() => {
+    if (discussSeed) setViewState((keptView = "chat"))
+  }, [discussSeed?.nonce])
   // Closing starts the next opening fresh, on the list.
   const onClose = () => {
     keptView = "welcome"
@@ -239,7 +243,7 @@ export function DiscussionPanel({ onClose: close, admin = false }: { onClose: ()
           </div>
         )}
         {view === "blocks" && <BlocksShelf />}
-        {view === "chat" && <Chat compact />}
+        {view === "chat" && <Chat compact context={discussSeed?.context} chipVideo={discussSeed?.chipVideo} surface={discussSeed?.chipVideo ? "video-panel" : "chat"} explore={!discussSeed?.chipVideo} seedChip={discussSeed?.ask ?? null} seedNonce={discussSeed?.nonce} />}
         {(view === "slack" || view === "discord") && (linked ? <ConnectView key={view} service={view} mock={!linked[view]} onNav={setSub} /> : <Loader2 className="mx-6 my-6 size-5 animate-spin text-pax2-blue" />)}
       </div>
     </section>

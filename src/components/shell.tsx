@@ -14,6 +14,7 @@ import { Wordmark } from "@/components/wordmark"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/ui/components/nova/dropdown-menu"
 import { cn } from "@/ui/lib/utils"
 import { whiteButton } from "@/components/white-button"
+import type { ChipOffer } from "@/lib/question-resolver"
 
 // The discussion panel carries the whole chat (markdown, the Remotion player): it loads the first time it opens,
 // not with every page.
@@ -134,11 +135,18 @@ type PanelState = {
   openAside: (aside: Aside | null) => void
   /** Which content the right panel holds now, by its key. */
   asideKey: string | null
+  /** Opens the discussion panel's chat about something on this page: its context, the video its chips
+   *  come from, and a chip to ask at once. */
+  askAbout: (seed: Omit<DiscussSeed, "nonce">) => void
+  /** What this page last asked the discussion about. */
+  discussSeed: DiscussSeed | null
 }
+/** `nonce` makes asking the same thing twice a second ask. */
+export type DiscussSeed = { context: () => string; chipVideo?: string; ask?: ChipOffer | null; nonce: number }
 /** `key` names the content's owner, so it can tell whether the panel still shows it. */
 export type Aside = { key: string; title: string; body: React.ReactNode }
 export type PanelSize = "third" | "half" | "full" | "custom"
-const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {}, size: "third", nextSize: "half", cycleSize: () => {}, panelOpen: false, sidebarOpen: false, toggleSidebar: () => {}, discuss: false, toggleDiscuss: () => {}, openAside: () => {}, asideKey: null })
+const PanelCtx = React.createContext<PanelState>({ setOpen: () => {}, wide: false, setWide: () => {}, size: "third", nextSize: "half", cycleSize: () => {}, panelOpen: false, sidebarOpen: false, toggleSidebar: () => {}, discuss: false, toggleDiscuss: () => {}, openAside: () => {}, asideKey: null, askAbout: () => {}, discussSeed: null })
 export const useShellPanel = () => React.useContext(PanelCtx)
 
 export function Shell({ children, drawer, signedIn = false, admin = false }: { children: React.ReactNode; drawer: React.ReactNode; signedIn?: boolean; admin?: boolean }) {
@@ -156,6 +164,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
   const [scrolled, setScrolled] = React.useState(false)
   const [discuss, setDiscuss] = React.useState(false)
   const [aside, setAside] = React.useState<Aside | null>(null)
+  const [seed, setSeed] = React.useState<DiscussSeed | null>(null)
   const animKey = React.useRef("Scored")
   const panel = React.useMemo<PanelState>(
     () => ({
@@ -175,8 +184,10 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
         setAside(a)
       },
       asideKey: aside?.key ?? null,
+      askAbout: (s: Omit<DiscussSeed, "nonce">) => (setAside(null), setSeed({ ...s, nonce: Date.now() }), setDiscuss(true)),
+      discussSeed: seed,
     }),
-    [wide, size, nextSize, panelOpen, sidebarOpen, discuss, aside?.key],
+    [wide, size, nextSize, panelOpen, sidebarOpen, discuss, aside?.key, seed],
   )
   // The dragged split is remembered between visits, but a panel always opens at the third.
   React.useEffect(() => {
@@ -192,7 +203,7 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
   // Closing the panel after the page was closed beside it brings the page back at its old split.
   const open = panelOpen || discuss || !!aside
   // What a page handed the panel belongs to that page.
-  React.useEffect(() => setAside(null), [path])
+  React.useEffect(() => (setAside(null), setSeed(null)), [path])
   // Every panel opens at the one-third view, 420px (Brendan's rule, 2026-10-20); a drag resizes it after.
   // A video opening or closing beside the discussion counts: each lands at the third.
   React.useEffect(() => {

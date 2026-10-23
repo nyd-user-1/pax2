@@ -77,6 +77,9 @@ Terms of the craft (hook, concrete number, explicit ask) are underlined and defi
 Once a video is in, an Enhance card sits under it: captions, the hook on screen, an end card, a clean-up pass on the footage, a generated b-roll insert — each ends in a scored next version measured against the original. Mention it once, lightly, when the moment fits.
 After the script is delivered the Record button stays on its card. If they ask something else instead of recording, answer it, then add one supportive line pointing back to recording — one follow-up, never pushy. If they name a barrier (nerves, time, lighting), address or soothe that barrier and encourage them past it; a named barrier invites one more follow-up, and only one. If they still decline, close warmly: one encouragement, then offer a calendar invite to record another day, or to connect them with a communications specialist who will walk them through it. If they change the subject entirely, say in one line that their script is saved right here in the chat, then help with the new task. Keep every turn to one question or one revision.`
 
+/** Seeds already asked, so reopening the panel does not ask its chip again. */
+const ASKED = new Set<number>()
+
 /** The script: the last ```pax-script block in a reply. Replies written before the tag existed put the
  *  script in an untagged block with its ```pax-cite block right after it; that pairing marks it too.
  *  Every other code block is code, and renders as the code card. */
@@ -130,7 +133,7 @@ const ask = (v: VideoChip) => `What explains the score on ${v.label}?`
  *  `chipVideo` preloads a video for the question bank's chips (the video page's side panel); on /chat a
  *  short attached from the plus menu brings them. `surface` names where the chips show, for the log.
  *  `record` opens in record mode with the opener in the box (/chat?record=1, from /recording). */
-export function Chat({ scripts = [], videos = [], shorts = [], compact = false, context, attachment, heading, below, explore = true, shelf, chatId, initialMessages, chipVideo, surface = 'chat', record = false }: { scripts?: ScriptChip[]; videos?: VideoChip[]; shorts?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode; heading?: React.ReactNode; below?: React.ReactNode; explore?: boolean; shelf?: React.ReactNode; chatId?: string; initialMessages?: Message[]; chipVideo?: string; surface?: Surface; record?: boolean }) {
+export function Chat({ scripts = [], videos = [], shorts = [], compact = false, context, attachment, heading, below, explore = true, shelf, chatId, initialMessages, chipVideo, surface = 'chat', record = false, seedChip = null, seedNonce }: { scripts?: ScriptChip[]; videos?: VideoChip[]; shorts?: VideoChip[]; compact?: boolean; context?: () => string; attachment?: React.ReactNode; heading?: React.ReactNode; below?: React.ReactNode; explore?: boolean; shelf?: React.ReactNode; chatId?: string; initialMessages?: Message[]; chipVideo?: string; surface?: Surface; record?: boolean; seedChip?: ChipOffer | null; seedNonce?: number }) {
   const [messages, setMessages] = useState<Message[]>(initialMessages ?? [])
   const [input, setInput] = useState(record && !initialMessages?.length ? RECORD_OPENER : '')
   const [loading, setLoading] = useState(false)
@@ -140,6 +143,11 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   // position and propensity, each tap as chip-tap (learning/chat-suggested-prompts.json). A tapped chip
   // leaves the row and the next draw excludes it.
   const [chipTarget, setChipTarget] = useState<string | null>(chipVideo ?? null)
+  // The panel's video can change under a mounted chat (the next video page asking): its chips follow.
+  useEffect(() => {
+    if (chipVideo && chipVideo !== chipTarget) { setChipTarget(chipVideo); setTapped([]) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chipVideo])
   const [chips, setChips] = useState<ChipOffer[]>([])
   const [tapped, setTapped] = useState<string[]>([])
   const logUsage = useUsage()
@@ -607,8 +615,8 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   /** A chip's answer comes from the stored measurements, not the model: the question goes in as the
    *  reader's turn, the measured answer as the reply. */
   const tapChip = async (c: ChipOffer) => {
-    if (!chipTarget || loading || streaming) return
-    const videoId = chipTarget
+    const videoId = chipTarget ?? chipVideo
+    if (!videoId || loading || streaming) return
     logUsage('chip-tap', c.id, { position: c.position, surface, videoId })
     stickRef.current = true
     setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'user', content: c.ask }])
@@ -619,6 +627,14 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
     setLoading(false)
     setTapped((t) => [...t, c.id])
   }
+
+  // A chip the page asked from its own row arrives with the panel: asked once per ask.
+  useEffect(() => {
+    if (!seedChip || !seedNonce || ASKED.has(seedNonce)) return
+    ASKED.add(seedNonce)
+    tapChip(seedChip)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seedNonce])
 
   const isEmpty = messages.length === 0
 

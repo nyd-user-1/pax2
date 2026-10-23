@@ -601,6 +601,9 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     <SeekProvider>
       <UsageOpen subject={id} />
       {locked && <SignupGate />}
+      <div className="mb-6">
+        <AskVideo ytId={ytId} title={(v?.title ?? "This short").replace(/\s*#\w+/g, "").trim() || "This short"} />
+      </div>
       <SplitColumns
         at={inDrawer ? "xl" : "4xl"}
         initial={inDrawer ? 280 : 320}
@@ -623,9 +626,6 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 />
               </div>
             )}
-            <div className="mt-4 flex">
-              <AskVideo ytId={ytId} inDrawer={inDrawer} title={(v?.title ?? "This short").replace(/\s*#\w+/g, "").trim() || "This short"} />
-            </div>
             {column("video-left", left, () => false)}
           </>
         }

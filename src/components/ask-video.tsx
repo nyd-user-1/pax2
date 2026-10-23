@@ -1,53 +1,62 @@
 'use client'
 
 import * as React from 'react'
-import { createPortal } from 'react-dom'
-import { MessagesSquare, X } from 'lucide-react'
+import { MessagesSquare } from 'lucide-react'
 
-import dynamic from 'next/dynamic'
-import { whiteButton } from '@/components/white-button'
+import { chipOffers } from '@/app/question-actions'
+import { useShellPanel } from '@/components/shell'
+import { useUsage } from '@/components/usage-beacon'
+import type { ChipOffer } from '@/lib/question-resolver'
 
-// The chat loads when the panel first opens, not with the video page.
-const Chat = dynamic(() => import('@/components/chat/chat').then((m) => m.Chat), { ssr: false })
-
-// The video page's question button: the chat opens in a right panel at the standing 420px, preloaded with
-// this video, its chips drawn from the question bank (src/lib/question-bank.ts). The panel is its own,
-// over the page or the drawer alike; ?ask=1 opens it on load.
-export function AskVideo({ ytId, title }: { ytId: string; title: string; inDrawer?: boolean }) {
-  const [open, setOpen] = React.useState(false)
-  const [mounted, setMounted] = React.useState(false)
-  React.useEffect(() => {
-    setMounted(true)
-    if (new URLSearchParams(window.location.search).get('ask') === '1') setOpen(true)
-  }, [])
+// The video page's question row, above every block: Ask about this video, then this video's suggested
+// prompts from the question bank (src/lib/question-bank.ts). Each opens the shell's discussion panel
+// with this video attached, and a prompt is asked there at once from the stored measurements. ?ask=1
+// opens the panel on load.
+export function AskVideo({ ytId, title }: { ytId: string; title: string }) {
+  const { askAbout } = useShellPanel()
+  const logUsage = useUsage()
+  const [chips, setChips] = React.useState<ChipOffer[]>([])
   const context = React.useCallback(() => `ACTIVE CONTEXT — the user is on the video page of the short "${title}" (/v/yt-${ytId}) and asks about it.`, [title, ytId])
+
+  React.useEffect(() => {
+    let live = true
+    chipOffers(ytId, 'video-panel')
+      .then((cs) => {
+        if (!live) return
+        setChips(cs)
+        for (const c of cs) logUsage('chip-shown', c.id, { position: c.position, propensity: c.propensity, surface: 'video-panel', videoId: ytId })
+      })
+      .catch(() => {})
+    return () => {
+      live = false
+    }
+  }, [ytId, logUsage])
+
+  React.useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('ask') === '1') askAbout({ context, chipVideo: ytId })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
-    <>
+    <div className="flex flex-wrap items-center gap-2">
       <button
         type="button"
-        aria-pressed={open}
-        onClick={() => setOpen((v) => !v)}
-        className="press mx-auto flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-800 shadow-e1 transition-colors hover:border-pax2-light-blue hover:text-pax2-blue"
+        onClick={() => askAbout({ context, chipVideo: ytId })}
+        className="press flex shrink-0 items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-800 shadow-e1 transition-colors hover:border-pax2-light-blue hover:text-pax2-blue"
       >
         <MessagesSquare className="size-4" style={{ color: '#033882', fill: '#dbe7fa' }} />
         Ask about this video
       </button>
-      {mounted &&
-        open &&
-        createPortal(
-          <section className="fixed inset-y-[18px] right-[18px] z-[60] flex w-[min(420px,calc(100vw-36px))] flex-col overflow-hidden rounded-2xl border border-slate-500 bg-pax2-mist shadow-e2">
-            <div className="flex min-h-[73px] shrink-0 items-center justify-between gap-3 border-b border-slate-200/70 px-6 py-4">
-              <p className="truncate font-display text-xl text-slate-900">{title}</p>
-              <button type="button" onClick={() => setOpen(false)} className={whiteButton('circle')} aria-label="Close">
-                <X className="size-4" />
-              </button>
-            </div>
-            <div className="flex min-h-0 flex-1 flex-col">
-              <Chat compact explore={false} chipVideo={ytId} surface="video-panel" context={context} />
-            </div>
-          </section>,
-          document.body,
-        )}
-    </>
+      {chips.map((c) => (
+        <button
+          key={c.id}
+          type="button"
+          onClick={() => askAbout({ context, chipVideo: ytId, ask: c })}
+          className="rounded-full border border-[var(--border,#e2e8f0)] bg-white px-3.5 py-1.5 text-sm text-slate-700 transition-colors hover:border-pax2-light-blue hover:text-pax2-blue"
+        >
+          {c.ask}
+        </button>
+      ))}
+    </div>
   )
 }
