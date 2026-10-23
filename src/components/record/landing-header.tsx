@@ -16,8 +16,9 @@ import { whiteButton } from "@/components/white-button"
  *  search bar sticks just beneath it. Signed in, there's no hero: the sidebar toggle stands where
  *  PAX was and the discussion where Sign up was, and the bar turns white as soon as the feed moves. */
 /** `arriveAt`: when the buttons dissolve in, in ms; the landing waits for its curtain, /signup has none.
- *  `signIn`: the right-hand button reads Sign in, for the sign-up page itself. */
-export function LandingHeader({ signedIn = false, arriveAt = CURTAIN, signIn = false }: { signedIn?: boolean; arriveAt?: number; signIn?: boolean }) {
+ *  `signIn`: the right-hand button reads Sign in, for the sign-up page itself.
+ *  `lead`: stands where the PAX button stands (the sign-in page's typed line). */
+export function LandingHeader({ signedIn = false, arriveAt = CURTAIN, signIn = false, lead }: { signedIn?: boolean; arriveAt?: number; signIn?: boolean; lead?: React.ReactNode }) {
   const [scrolled, setScrolled] = React.useState(false)
   const { sidebarOpen, toggleSidebar, discuss, toggleDiscuss } = useShellPanel()
   // As the curtain clears and the board begins: the header's two white buttons dissolve into place,
@@ -56,6 +57,7 @@ export function LandingHeader({ signedIn = false, arriveAt = CURTAIN, signIn = f
         <>
           {/* The curtain's PAX in small, the A in red, drawn on a white button the height of Sign up; it
               opens the sidebar. Its SVG is the font's full line box with the capitals centred in it. */}
+          {lead ?? (
           <button
             type="button"
             onClick={toggleSidebar}
@@ -79,6 +81,7 @@ export function LandingHeader({ signedIn = false, arriveAt = CURTAIN, signIn = f
               )}
             </span>
           </button>
+          )}
           <Link href={signIn ? "/signin" : "/signup"} className={whiteButton("md", arrive)}>
             {signIn ? "Sign in" : "Sign up"}
           </Link>
