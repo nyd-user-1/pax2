@@ -93,3 +93,7 @@ Appended after the close as slides 11–17, each marked "Alt" bottom left, in li
 17. The whole system, on one page: `/pipeline-2`, cropped to leave out the per-upload price box and the vendor service labels.
 
 The chat capture saved one chat ("I'm Dana Reyes…") under the dev login in the chats ledger rows.
+
+### Revision 4 — first person singular (Brendan, 2026-10-22)
+
+The deck speaks as "I" wherever a voice is needed, per the updated standing rule; no "we", no "the platform" as a stand-in, no model named. A circled chevron at the foot of each slide steps to the next.
