@@ -1,7 +1,9 @@
 "use client"
 
 import * as React from "react"
+import { createPortal } from "react-dom"
 import Link from "next/link"
+import { Check, ChevronsUpDown } from "lucide-react"
 
 import type { Test } from "@/lib/trials"
 import { cn } from "@/ui/lib/utils"
@@ -16,25 +18,12 @@ export function AudienceFinder({ tests }: { tests: Test[] }) {
   }, [tests])
   const [key, setKey] = React.useState("Age|18–34")
   const [dimension, group] = key.split("|")
-  const dims = [...new Set(options.map(([, o]) => o.dimension))]
   return (
     <div className="flex flex-col gap-5">
-      <label className="flex flex-wrap items-center gap-3 text-sm">
+      <div className="flex flex-wrap items-center gap-3 text-sm">
         <span className="text-slate-500">Voter group</span>
-        <select value={key} onChange={(e) => setKey(e.target.value)} className="h-10 min-w-[16rem] rounded-full border border-slate-300 bg-white px-4 text-sm font-medium text-slate-800 shadow-e1 outline-none focus:border-pax2-blue">
-          {dims.map((d) => (
-            <optgroup key={d} label={d}>
-              {options
-                .filter(([, o]) => o.dimension === d)
-                .map(([k, o]) => (
-                  <option key={k} value={k}>
-                    {o.group}
-                  </option>
-                ))}
-            </optgroup>
-          ))}
-        </select>
-      </label>
+        <GroupMenu value={key} onChange={setKey} options={options} />
+      </div>
       <div className="grid gap-6 md:grid-cols-2">
         {tests.map((t) => {
           const g = t.subgroups.find((d) => d.dimension === dimension)?.groups.find((x) => x.group === group)
@@ -78,6 +67,110 @@ export function AudienceFinder({ tests }: { tests: Test[] }) {
           )
         })}
       </div>
+    </div>
+  )
+}
+
+/** The house dropdown (the header's page switcher and the block menu): a pill that opens a Find… box over
+ *  the groups under their dimension headings, the chosen one checked. */
+function GroupMenu({ value, onChange, options }: { value: string; onChange: (k: string) => void; options: [string, { dimension: string; group: string }][] }) {
+  const [open, setOpen] = React.useState(false)
+  const [q, setQ] = React.useState("")
+  const [at, setAt] = React.useState<{ top: number; left: number } | null>(null)
+  const ref = React.useRef<HTMLDivElement>(null)
+  const menu = React.useRef<HTMLDivElement>(null)
+  // The block's body scrolls and would clip the menu, so it opens in a portal under the pill.
+  React.useLayoutEffect(() => {
+    if (!open || !ref.current) return
+    const r = ref.current.getBoundingClientRect()
+    setAt({ top: r.bottom + 6, left: Math.max(8, Math.min(r.left, window.innerWidth - 296)) })
+  }, [open])
+  React.useEffect(() => {
+    if (!open) return
+    const onDown = (e: MouseEvent) => {
+      const t = e.target as Node
+      if (!ref.current?.contains(t) && !menu.current?.contains(t)) setOpen(false)
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false)
+    }
+    const away = (e: Event) => {
+      if (!menu.current?.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener("mousedown", onDown)
+    document.addEventListener("keydown", onKey)
+    window.addEventListener("scroll", away, true)
+    window.addEventListener("resize", away)
+    return () => {
+      document.removeEventListener("mousedown", onDown)
+      document.removeEventListener("keydown", onKey)
+      window.removeEventListener("scroll", away, true)
+      window.removeEventListener("resize", away)
+    }
+  }, [open])
+  const needle = q.trim().toLowerCase()
+  const shown = needle ? options.filter(([, o]) => `${o.group} ${o.dimension}`.toLowerCase().includes(needle)) : options
+  const dims = [...new Set(shown.map(([, o]) => o.dimension))]
+  const current = options.find(([k]) => k === value)?.[1]
+  const pick = (k: string) => {
+    onChange(k)
+    setOpen(false)
+    setQ("")
+  }
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        className={cn("flex h-9 items-center gap-2 rounded-full border border-slate-200 bg-white pl-3.5 pr-2.5 shadow-e1 transition-colors", open ? "bg-slate-100" : "hover:bg-slate-50")}
+      >
+        <span className="max-w-[220px] truncate text-sm font-medium text-slate-900">{current?.group ?? "Choose"}</span>
+        {current && <span className="hidden text-xs text-slate-400 sm:inline">{current.dimension}</span>}
+        <ChevronsUpDown className="size-3.5 shrink-0 text-slate-400" />
+      </button>
+      {open && at && createPortal(
+        <div ref={menu} role="menu" style={{ top: at.top, left: at.left }} className="fixed z-[70] w-72 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-e3">
+          <div className="border-b border-slate-200/70 p-2">
+            <input
+              autoFocus
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Find…"
+              aria-label="Find a voter group"
+              className="w-full rounded-lg bg-pax2-mist px-2.5 py-1.5 text-sm text-slate-900 outline-none placeholder:text-slate-400"
+            />
+          </div>
+          <div className="no-scrollbar max-h-80 overflow-y-auto p-1.5">
+            {shown.length === 0 ? (
+              <p className="px-2.5 py-3 text-sm text-slate-500">No matches.</p>
+            ) : (
+              dims.map((d, i) => (
+                <div key={d} className={cn(i > 0 && "mt-1 border-t border-slate-200/70 pt-1")}>
+                  <p className="px-2.5 pb-1 pt-1.5 text-xs text-slate-400">{d}</p>
+                  {shown
+                    .filter(([, o]) => o.dimension === d)
+                    .map(([k, o]) => (
+                      <button
+                        key={k}
+                        type="button"
+                        role="menuitemradio"
+                        aria-checked={k === value}
+                        onClick={() => pick(k)}
+                        className={cn("flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm font-medium transition-colors hover:bg-pax2-mist hover:text-pax2-blue", k === value ? "text-slate-900" : "text-slate-600")}
+                      >
+                        <span className="flex-1 truncate">{o.group}</span>
+                        {k === value && <Check className="size-4 shrink-0 text-pax2-light-blue" />}
+                      </button>
+                    ))}
+                </div>
+              ))
+            )}
+          </div>
+        </div>,
+        document.body,
+      )}
     </div>
   )
 }
