@@ -68,7 +68,7 @@ type StrokeTextProps = {
   shadowColor?: string
   className?: string
   style?: CSSProperties
-  /** Drawn over the fill in the text's own units (baseline at y = 0); an element marked data-fill-char fades in with the fills. */
+  /** Drawn over the fill in the text's own units (baseline at y = 0); an element marked data-after-fill fades in a beat after the fills. */
   overlay?: ReactNode
 }
 
@@ -185,6 +185,7 @@ const StrokeText = ({
 
     const strokes = gsap.utils.toArray<SVGTSpanElement>(root.querySelectorAll("[data-stroke-char]"))
     const fills = gsap.utils.toArray<SVGTSpanElement>(root.querySelectorAll("[data-fill-char]"))
+    const afters = gsap.utils.toArray<SVGElement>(root.querySelectorAll("[data-after-fill]"))
     const wipe = wipeRectRef.current
     const outline = strokeTextRef.current
     const drop = shadowRef.current
@@ -197,12 +198,13 @@ const StrokeText = ({
     const frames = getWipeFrames(box, wipeFrom)
     const lifted = { dx: lift, dy: lift, "flood-opacity": SHADOW_OPACITY }
     const grounded = { dx: 0, dy: 0, "flood-opacity": 0 }
-    const targets = [...strokes, ...fills, wipe, drop].filter(Boolean) as Element[]
+    const targets = [...strokes, ...fills, ...afters, wipe, drop].filter(Boolean) as Element[]
 
     const setStart = () => {
       gsap.killTweensOf(targets)
       gsap.set(strokes, { strokeDasharray: dash, strokeDashoffset: dash, strokeOpacity: 1 })
       gsap.set(fills, { opacity: useWipe ? 1 : 0 })
+      gsap.set(afters, { opacity: 0 })
       if (wipe) gsap.set(wipe, { attr: frames.start })
       if (drop) gsap.set(drop, { attr: grounded })
     }
@@ -211,6 +213,7 @@ const StrokeText = ({
       gsap.killTweensOf(targets)
       gsap.set(strokes, { strokeDasharray: dash, strokeDashoffset: 0, strokeOpacity: 1 })
       gsap.set(fills, { opacity: fillEnabled ? 1 : 0 })
+      gsap.set(afters, { opacity: fillEnabled ? 1 : 0 })
       if (wipe) gsap.set(wipe, { attr: fillEnabled ? frames.end : frames.start })
       if (drop) gsap.set(drop, { attr: fillEnabled ? lifted : grounded })
     }
@@ -242,6 +245,12 @@ const StrokeText = ({
           { opacity: 1, duration: fillDuration, ease: "power2.out", stagger: staggerConfig },
           drawDuration + fillDelay
         )
+      }
+
+      // Overlay marked data-after-fill lands a beat after the last fill.
+      if (afters.length && fillEnabled) {
+        const fillsEnd = drawDuration + fillDelay + fillDuration + (useWipe ? 0 : stagger * Math.max(0, fills.length - 1))
+        tl.to(afters, { opacity: 1, duration: 0.3, ease: "power2.out" }, fillsEnd + 0.25)
       }
 
       if (drop && fillEnabled) {

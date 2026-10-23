@@ -33,7 +33,7 @@ export function PaxDraw({ size = 34 }: { size?: number }) {
         drawDuration={0.9}
         fillDelay={0.1}
         stagger={0.08}
-        overlay={<polygon data-fill-char points={stripe} style={{ fill: "#fff" }} />}
+        overlay={<polygon data-after-fill points={stripe} style={{ fill: "#fff", opacity: 0 }} />}
       />
     </span>
   )
