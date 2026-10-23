@@ -34,8 +34,9 @@ const n = (x) => x.toLocaleString("en-US")
 const chip = (q) => {
   const c = q.pass === 2 ? null : coverage(q)
   const audit = q.census ? CENSUS_AUDIT[q.census] : null
-  return `<div class="q${q.pass === 2 ? " p2" : ""}">
-  <span class="chip">${esc(q.ask)}</span>${q.scope === "channel" ? `<span class="tag">channel</span>` : ""}
+  return `<div class="q${q.pass === 2 ? " p2" : ""}" data-id="${q.id}" data-ask="${esc(q.ask)}">
+  <button type="button" class="chip">${esc(q.ask)}</button>${q.scope === "channel" ? `<span class="tag">channel</span>` : ""}
+  <div class="lk">${[1, 2, 3, 4, 5].map((v) => `<button type="button" data-v="${v}">${v}</button>`).join("")}</div>
   <div class="meta"><div><b>Reads</b> ${q.reads.map((r) => `<code>${esc(r)}</code>`).join(" ")}</div>
   <div><b>Basis</b> ${esc(q.basis)}${audit ? `; ${audit.right} of ${audit.of} right in audit` : ""}</div>
   ${q.template ? `<div><b>Answer</b> ${esc(q.template)}</div>` : ""}
@@ -62,14 +63,52 @@ h2 small{font-weight:400;color:#94a3b8;font-size:13px;margin-left:8px}
 .meta b{color:#334155;font-weight:600;margin-right:4px}
 code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px;padding:0 4px;color:#334155;word-break:break-all}
 .cov{color:#16a34a}.cov.zero{color:#b45309}.p2 .cov{color:#94a3b8}
+.chip{cursor:pointer;font:inherit;font-size:14px}
+.q.on .chip{background:#1e3a8a;border-color:#1e3a8a;color:#fff}
+.lk{display:flex;gap:4px;margin:8px 2px 0}
+.lk button{width:30px;height:26px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;font:12px -apple-system,system-ui,sans-serif;color:#475569;cursor:pointer}
+.lk button.on{background:#2563eb;border-color:#2563eb;color:#fff}
+.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#f5f7fb;padding:10px 0 14px;margin-bottom:6px}
+.bar button,.bar select{border:1px solid #cbd5e1;border-radius:999px;background:#fff;padding:6px 14px;font:13px -apple-system,system-ui,sans-serif;color:#0f172a;cursor:pointer}
+.bar button.on{background:#1e3a8a;color:#fff;border-color:#1e3a8a}
+.bar .n{font-size:13px;color:#64748b;margin-left:auto}
+.hide{display:none}
 @media (max-width:640px){body{padding:28px 14px}section{padding:18px}}
 </style></head><body><div class="wrap">
 <h1>The question universe</h1>
+<div class="bar"><button type="button" id="picked">Picked only</button><select id="min"><option value="0">Any score</option><option value="5">5</option><option value="4">4 and up</option><option value="3">3 and up</option><option value="-1">Unscored</option></select><button type="button" id="sort">Sort by score</button><button type="button" id="copy">Copy scores</button><button type="button" id="clear">Clear</button><span class="n" id="n"></span></div>
 ${REGISTERS.map((r) => {
   const qs = QUESTIONS.filter((q) => q.register === r.id)
   return `<section><h2>${esc(r.label)}<small>${qs.filter((q) => q.pass !== 2).length}${qs.some((q) => q.pass === 2) ? ` + ${qs.filter((q) => q.pass === 2).length} pass 2` : ""}</small></h2><div class="grid">${qs.map(chip).join("\n")}</div></section>`
 }).join("\n")}
-</div></body></html>
+</div><script>
+const KEY="pax2:question-universe:v1"
+const st=JSON.parse(localStorage.getItem(KEY)||"{}")
+const save=()=>{localStorage.setItem(KEY,JSON.stringify(st));draw()}
+const qs=[...document.querySelectorAll(".q")]
+const grids=[...document.querySelectorAll(".grid")]
+const order=new Map(qs.map((q,i)=>[q,i]))
+let pickedOnly=false,sorted=false
+for(const q of qs){const id=q.dataset.id;st[id]??={}
+q.querySelector(".chip").onclick=()=>{st[id].p=!st[id].p;save()}
+q.querySelectorAll(".lk button").forEach(b=>b.onclick=()=>{const v=+b.dataset.v;st[id].s=st[id].s===v?undefined:v;save()})}
+function draw(){const min=+document.getElementById("min").value;let picked=0,scored=0
+for(const q of qs){const r=st[q.dataset.id]||{};if(r.p)picked++;if(r.s)scored++
+q.classList.toggle("on",!!r.p)
+q.querySelectorAll(".lk button").forEach(b=>b.classList.toggle("on",+b.dataset.v===r.s))
+const hide=(pickedOnly&&!r.p)||(min>0&&!(r.s>=min))||(min===-1&&r.s)
+q.classList.toggle("hide",hide)}
+for(const g of grids){const items=[...g.children];items.sort((a,b)=>sorted?((st[b.dataset.id]?.s||0)-(st[a.dataset.id]?.s||0))||order.get(a)-order.get(b):order.get(a)-order.get(b));items.forEach(i=>g.appendChild(i))}
+document.getElementById("n").textContent=scored+" of "+qs.length+" scored, "+picked+" picked"
+document.getElementById("picked").classList.toggle("on",pickedOnly);document.getElementById("sort").classList.toggle("on",sorted)}
+document.getElementById("picked").onclick=()=>{pickedOnly=!pickedOnly;draw()}
+document.getElementById("sort").onclick=()=>{sorted=!sorted;draw()}
+document.getElementById("min").onchange=draw
+document.getElementById("clear").onclick=()=>{if(confirm("Clear every score and pick?")){for(const k in st)delete st[k];save()}}
+document.getElementById("copy").onclick=async e=>{const lines=qs.map(q=>{const r=st[q.dataset.id]||{};return [q.dataset.id,r.s??"",r.p?"picked":"",q.dataset.ask].join(String.fromCharCode(9))})
+const T=String.fromCharCode(9),N=String.fromCharCode(10);const text=["id","score","picked","ask"].join(T)+N+lines.join(N);try{await navigator.clipboard.writeText(text);e.target.textContent="Copied"}catch{prompt("Copy:",text)}setTimeout(()=>e.target.textContent="Copy scores",1500)}
+draw()
+</script></body></html>
 `
 fs.writeFileSync("docs/sketches/question-universe.html", html)
 console.log(`question-universe.html: ${free} free, ${p2} pass 2, ${(html.length / 1024).toFixed(0)} KB`)
