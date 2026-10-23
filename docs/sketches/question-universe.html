@@ -30,15 +30,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
 </style></head><body><div class="wrap">
 <h1>The question universe</h1>
 <div class="bar"><span class="key">1 cut · 5 keep</span><button type="button" id="picked">Picked only</button><select id="min"><option value="0">Any score</option><option value="5">5</option><option value="4">4 and up</option><option value="3">3 and up</option><option value="-1">Unscored</option></select><button type="button" id="sort">Sort by score</button><button type="button" id="copy">Copy scores</button><button type="button" id="clear">Clear</button><span class="n" id="n"></span></div>
-<section><h2>The video in hand<small>28 + 7 pass 2</small></h2><div class="grid"><div class="q" data-id="first-two-seconds" data-ask="What happens in the first two seconds?">
-  <button type="button" class="chip">What happens in the first two seconds?</button>
-  <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
-  <div class="meta"><div><b>Reads</b> <code>composition.cutsHook</code> <code>composition.textHook</code> <code>composition.wordsHook</code> <code>composition.hookLoudnessDelta</code> <code>raw.frames[0..2].words</code></div>
-  <div><b>Basis</b> the media file: scene cuts, OCR at one frame a second, the loudness curve, the timed transcript</div>
-  <div><b>Answer</b> In the first 2 s: {cuts} cuts, {spoken} spoken words, {onscreen} on-screen words. The opening is {delta} LU {louderQuieter} than the short as a whole.</div>
-  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
-</div>
-<div class="q" data-id="first-word" data-ask="When does my first word land?">
+<section><h2>The video in hand<small>26 + 6 pass 2</small></h2><div class="grid"><div class="q" data-id="first-word" data-ask="When does my first word land?" data-score="3">
   <button type="button" class="chip">When does my first word land?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>composition.firstWordSec</code> <code>transcript.words[0]</code></div>
@@ -46,7 +38,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> The first spoken word, “{word}”, lands at {sec} s. {fieldPct} of baseline shorts speak sooner.</div>
   <div class="cov">4,714 of 5,379 baseline shorts; the rest: Add captions: word timings come from captions or a Whisper pass</div></div>
 </div>
-<div class="q" data-id="before-first-word" data-ask="What happens before my first word lands?">
+<div class="q" data-id="before-first-word" data-ask="What happens before my first word lands?" data-score="2">
   <button type="button" class="chip">What happens before my first word lands?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>composition.firstWordSec</code> <code>raw.cuts</code> <code>raw.frames[].words</code> <code>raw.loudness.perSecond</code></div>
@@ -54,7 +46,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Before the first word at {sec} s: {cuts} cuts, {textSeconds} seconds with on-screen text, loudness {lufs} LUFS on average.</div>
   <div class="cov">4,714 of 5,379 baseline shorts; the rest: Add captions: word timings come from captions or a Whisper pass</div></div>
 </div>
-<div class="q" data-id="hook-opens-on" data-ask="Does my hook open on a face, on text, or on b-roll?">
+<div class="q" data-id="hook-opens-on" data-ask="Does my hook open on a face, on text, or on b-roll?" data-score="4">
   <button type="button" class="chip">Does my hook open on a face, on text, or on b-roll?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.format</code> <code>raw.frames[0..2].words</code></div>
@@ -62,7 +54,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> The first three sampled seconds carry {words} on-screen words. The census reads the format as {format}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="cta-when" data-ask="Is there a call to action, and when does it show?">
+<div class="q" data-id="cta-when" data-ask="Is there a call to action, and when does it show?" data-score="5">
   <button type="button" class="chip">Is there a call to action, and when does it show?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.callToAction</code> <code>census.ctaSec</code></div>
@@ -70,7 +62,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> An on-screen call to action shows at {sec} s. | No on-screen call to action in the sampled frames.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="on-mute" data-ask="What does this look like on mute?">
+<div class="q" data-id="on-mute" data-ask="What does this look like on mute?" data-score="4">
   <button type="button" class="chip">What does this look like on mute?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.captionsBurnedIn</code> <code>composition.textFrameShare</code> <code>composition.textWordsPerFrame</code></div>
@@ -78,7 +70,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {share}% of seconds carry on-screen text, {wpf} words a frame on average. Captions {are} burned in.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="text-moments" data-ask="Show me every moment with on-screen text.">
+<div class="q" data-id="text-moments" data-ask="Show me every moment with on-screen text." data-score="3">
   <button type="button" class="chip">Show me every moment with on-screen text.</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>raw.frames[].t</code> <code>raw.frames[].words</code></div>
@@ -86,7 +78,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {n} stretches carry on-screen text: {spans}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="shots" data-ask="How many shots do I use, and where's the longest?">
+<div class="q" data-id="shots" data-ask="How many shots do I use, and where's the longest?" data-score="3">
   <button type="button" class="chip">How many shots do I use, and where's the longest?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>raw.cuts</code> <code>raw.durationSec</code></div>
@@ -94,7 +86,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {shots} shots over {duration} s. The longest runs {longest} s, from {from} s to {to} s.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="first-cut" data-ask="How long before the first cut?">
+<div class="q" data-id="first-cut" data-ask="How long before the first cut?" data-score="2">
   <button type="button" class="chip">How long before the first cut?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>composition.firstCutSec</code> <code>craft.firstCutSec</code></div>
@@ -102,7 +94,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> The first cut comes at {sec} s, the {pct} percentile of the channel's shorts.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="pace" data-ask="How fast is it cut?">
+<div class="q" data-id="pace" data-ask="How fast is it cut?" data-score="2">
   <button type="button" class="chip">How fast is it cut?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>composition.cutsPerSec</code> <code>craft.cutsPerSec</code></div>
@@ -110,7 +102,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {rate} cuts a second, one every {every} s on average: the {pct} percentile of the channel's shorts.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="loudest-moment" data-ask="What's happening at the loudest moment?">
+<div class="q" data-id="loudest-moment" data-ask="What's happening at the loudest moment?" data-score="2">
   <button type="button" class="chip">What's happening at the loudest moment?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>raw.loudness.perSecond</code> <code>raw.cuts</code> <code>raw.frames[].words</code> <code>transcript.words</code></div>
@@ -118,7 +110,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> The loudest second is {sec} s at {lufs} LUFS, {over} LU over the integrated level. {context}</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="quiet-spots" data-ask="Where does the sound drop out?">
+<div class="q" data-id="quiet-spots" data-ask="Where does the sound drop out?" data-score="3">
   <button type="button" class="chip">Where does the sound drop out?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>raw.loudness.perSecond</code> <code>raw.loudness.integrated</code></div>
@@ -126,7 +118,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {n} drops of 10 LU or more: {spans}. | No second falls 10 LU under the integrated level.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="loud-enough" data-ask="Is it loud enough?">
+<div class="q" data-id="loud-enough" data-ask="Is it loud enough?" data-score="4">
   <button type="button" class="chip">Is it loud enough?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>composition.loudnessLufs</code> <code>composition.loudnessRange</code></div>
@@ -134,7 +126,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Integrated loudness {lufs} LUFS; the baseline median is {median} LUFS ({pct} percentile). Loudness range {range} LU.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="talk-speed" data-ask="How fast do I talk?">
+<div class="q" data-id="talk-speed" data-ask="How fast do I talk?" data-score="3">
   <button type="button" class="chip">How fast do I talk?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>composition.speechWps</code> <code>craft.speechWps</code></div>
@@ -142,7 +134,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {wps} words a second, the {pct} percentile of the channel's shorts; the baseline median is {median}.</div>
   <div class="cov">4,714 of 5,379 baseline shorts; the rest: Add captions: word timings come from captions or a Whisper pass</div></div>
 </div>
-<div class="q" data-id="talk-share" data-ask="How much of it is talking?">
+<div class="q" data-id="talk-share" data-ask="How much of it is talking?" data-score="2">
   <button type="button" class="chip">How much of it is talking?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>composition.speechShare</code></div>
@@ -150,7 +142,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Speech fills {share}% of the audible seconds; the baseline median is {median}%.</div>
   <div class="cov">4,714 of 5,379 baseline shorts; the rest: Add captions: word timings come from captions or a Whisper pass</div></div>
 </div>
-<div class="q" data-id="script-length" data-ask="How many words is the script?">
+<div class="q" data-id="script-length" data-ask="How many words is the script?" data-score="5">
   <button type="button" class="chip">How many words is the script?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>transcript.words</code> <code>composition.durationSec</code></div>
@@ -158,7 +150,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {words} words over {duration} s.</div>
   <div class="cov">5,378 of 5,379 baseline shorts; the rest: Add captions: word timings come from captions or a Whisper pass</div></div>
 </div>
-<div class="q" data-id="said-at-first-text" data-ask="What am I saying when text first appears?">
+<div class="q" data-id="said-at-first-text" data-ask="What am I saying when text first appears?" data-score="3">
   <button type="button" class="chip">What am I saying when text first appears?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>raw.frames[].words</code> <code>transcript.words[].t</code></div>
@@ -166,7 +158,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> On-screen text first appears at {sec} s, over the words “{words}”.</div>
   <div class="cov">4,714 of 5,379 baseline shorts; the rest: Add captions: word timings come from captions or a Whisper pass</div></div>
 </div>
-<div class="q" data-id="ending" data-ask="How does it end?">
+<div class="q" data-id="ending" data-ask="How does it end?" data-score="4">
   <button type="button" class="chip">How does it end?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>raw.frames[-3..].words</code> <code>raw.loudness.perSecond[-3..]</code> <code>census.ctaSec</code> <code>transcript.words[-8..]</code></div>
@@ -174,7 +166,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> The last 3 s: {text}, loudness {lufs} LUFS{cta}. Last words: “{words}”.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="captions" data-ask="Are my captions burned in?">
+<div class="q" data-id="captions" data-ask="Are my captions burned in?" data-score="2">
   <button type="button" class="chip">Are my captions burned in?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.captionsBurnedIn</code></div>
@@ -182,7 +174,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Captions {are} burned in.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="format" data-ask="What kind of video is this?">
+<div class="q" data-id="format" data-ask="What kind of video is this?" data-score="5">
   <button type="button" class="chip">What kind of video is this?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.format</code></div>
@@ -190,7 +182,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Format: {format}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="setting" data-ask="Where was this shot?">
+<div class="q" data-id="setting" data-ask="Where was this shot?" data-score="5">
   <button type="button" class="chip">Where was this shot?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.setting</code></div>
@@ -198,15 +190,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Setting: {setting}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="people-share" data-ask="How much of it has someone on screen?">
-  <button type="button" class="chip">How much of it has someone on screen?</button>
-  <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
-  <div class="meta"><div><b>Reads</b> <code>census.peopleScreenShare</code></div>
-  <div><b>Basis</b> the census: sampled frames with at least one person visible; counts only, no identity; 80 of 99 right in audit</div>
-  <div><b>Answer</b> A person is visible in {share}% of the 13 sampled frames.</div>
-  <div class="cov">5,379 of 5,379 baseline shorts</div></div>
-</div>
-<div class="q" data-id="others-logo" data-ask="Is anyone else's logo on screen?">
+<div class="q" data-id="others-logo" data-ask="Is anyone else's logo on screen?" data-score="2">
   <button type="button" class="chip">Is anyone else's logo on screen?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.thirdPartyWatermark</code></div>
@@ -214,7 +198,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> A third-party watermark or chyron {is} read in the sampled frames.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="motion" data-ask="How much does the picture move?">
+<div class="q" data-id="motion" data-ask="How much does the picture move?" data-score="4">
   <button type="button" class="chip">How much does the picture move?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>composition.visualActivity</code> <code>craft.visualActivity</code></div>
@@ -222,7 +206,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Visual activity {value}, the {pct} percentile of the channel's shorts.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="brightness" data-ask="Is it too dark?">
+<div class="q" data-id="brightness" data-ask="Is it too dark?" data-score="3">
   <button type="button" class="chip">Is it too dark?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>composition.brightness</code> <code>composition.saturation</code></div>
@@ -230,7 +214,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Brightness {y} of 255 (baseline median {median}), saturation {sat}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="title" data-ask="What does my title do?">
+<div class="q" data-id="title" data-ask="What does my title do?" data-score="4">
   <button type="button" class="chip">What does my title do?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>composition.titleChars</code> <code>composition.titleWords</code> <code>composition.titleQuestion</code> <code>composition.titleNumber</code> <code>composition.titleCapsRun</code> <code>composition.titleEmoji</code></div>
@@ -238,7 +222,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {words} words, {chars} characters (baseline median {median}). {traits}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="persuasion-traits" data-ask="Which persuasion techniques does it use?">
+<div class="q" data-id="persuasion-traits" data-ask="Which persuasion techniques does it use?" data-score="5">
   <button type="button" class="chip">Which persuasion techniques does it use?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>codebook.swayable</code> <code>swayable.traits</code></div>
@@ -246,7 +230,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {n} of Swayable's 28 traits: {traits}.</div>
   <div class="cov">5,375 of 5,379 baseline shorts; the rest: Run the codebook on this video: the Swayable, Upworthy and Wesleyan codes land with it</div></div>
 </div>
-<div class="q" data-id="ad-goal" data-ask="Is this trying to persuade?">
+<div class="q" data-id="ad-goal" data-ask="Is this trying to persuade?" data-score="5">
   <button type="button" class="chip">Is this trying to persuade?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>codebook.wesleyan</code></div>
@@ -254,7 +238,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Wesleyan goal: {goal}.</div>
   <div class="cov">5,375 of 5,379 baseline shorts; the rest: Run the codebook on this video: the Swayable, Upworthy and Wesleyan codes land with it</div></div>
 </div>
-<div class="q p2" data-id="thumb-in-video" data-ask="Is my thumbnail frame actually in the video?">
+<div class="q p2" data-id="thumb-in-video" data-ask="Is my thumbnail frame actually in the video?" data-score="4">
   <button type="button" class="chip">Is my thumbnail frame actually in the video?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
@@ -262,7 +246,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   
   <div class="cov">GPU read, pass 2</div></div>
 </div>
-<div class="q p2" data-id="screen-vs-said" data-ask="Does anything on screen contradict what's said?">
+<div class="q p2" data-id="screen-vs-said" data-ask="Does anything on screen contradict what's said?" data-score="5">
   <button type="button" class="chip">Does anything on screen contradict what's said?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>frames-gpu</code> <code>transcript.words</code></div>
@@ -270,7 +254,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   
   <div class="cov">GPU read, pass 2</div></div>
 </div>
-<div class="q p2" data-id="second-three-muted" data-ask="What would someone know by second three with the sound off?">
+<div class="q p2" data-id="second-three-muted" data-ask="What would someone know by second three with the sound off?" data-score="4">
   <button type="button" class="chip">What would someone know by second three with the sound off?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
@@ -278,7 +262,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   
   <div class="cov">GPU read, pass 2</div></div>
 </div>
-<div class="q p2" data-id="captions-readable" data-ask="Are my captions readable on a phone?">
+<div class="q p2" data-id="captions-readable" data-ask="Are my captions readable on a phone?" data-score="4">
   <button type="button" class="chip">Are my captions readable on a phone?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
@@ -286,7 +270,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   
   <div class="cov">GPU read, pass 2</div></div>
 </div>
-<div class="q p2" data-id="speaker-first-second" data-ask="Am I on screen in the first second?">
+<div class="q p2" data-id="speaker-first-second" data-ask="Am I on screen in the first second?" data-score="2">
   <button type="button" class="chip">Am I on screen in the first second?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
@@ -294,15 +278,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   
   <div class="cov">GPU read, pass 2</div></div>
 </div>
-<div class="q p2" data-id="paid-for-by" data-ask="Is the paid-for-by line on screen?">
-  <button type="button" class="chip">Is the paid-for-by line on screen?</button>
-  <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
-  <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
-  <div><b>Basis</b> the disclaimer read from the frames</div>
-  
-  <div class="cov">GPU read, pass 2</div></div>
-</div>
-<div class="q p2" data-id="third-party-footage" data-ask="Does this show a news clip or someone else's footage?">
+<div class="q p2" data-id="third-party-footage" data-ask="Does this show a news clip or someone else's footage?" data-score="2">
   <button type="button" class="chip">Does this show a news clip or someone else's footage?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
@@ -310,7 +286,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   
   <div class="cov">GPU read, pass 2</div></div>
 </div></div></section>
-<section><h2>Against the field<small>21 + 2 pass 2</small></h2><div class="grid"><div class="q" data-id="outlier-score" data-ask="How did this do against my usual?">
+<section><h2>Against the field<small>21 + 2 pass 2</small></h2><div class="grid"><div class="q" data-id="outlier-score" data-ask="How did this do against my usual?" data-score="4">
   <button type="button" class="chip">How did this do against my usual?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>catalog.views</code> <code>catalog.channelMedian</code> <code>catalog.ratio</code> <code>catalog.tier</code></div>
@@ -318,7 +294,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {views} views against a channel median of {median}: an Outlier Score of {ratio}×. {verdict}</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="why-outperformed" data-ask="Why might this one have outperformed?">
+<div class="q" data-id="why-outperformed" data-ask="Why might this one have outperformed?" data-score="4">
   <button type="button" class="chip">Why might this one have outperformed?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>catalog.ratio</code> <code>registry.rows[measured]</code> <code>topics.lift</code> <code>modes.score</code> <code>lengths.bins</code></div>
@@ -326,7 +302,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Outlier Score {ratio}×. Of the traits measured to move the outperform rate, it carries: {traits}. These are associations measured across channels, not causes of this one result.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="channel-rank" data-ask="Where does this rank on my channel?">
+<div class="q" data-id="channel-rank" data-ask="Where does this rank on my channel?" data-score="5">
   <button type="button" class="chip">Where does this rank on my channel?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>catalog.ratio</code> <code>catalog.channelId</code></div>
@@ -334,7 +310,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {rank} of {n} on the channel by Outlier Score; {outperformed} of the {n} outperformed 3x.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="best-video-diff" data-ask="What's different about my best video?">
+<div class="q" data-id="best-video-diff" data-ask="What's different about my best video?" data-score="5">
   <button type="button" class="chip">What's different about my best video?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>catalog.ratio</code> <code>craft.*</code></div>
@@ -342,7 +318,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> The channel's best is “{title}” at {ratio}×. The widest gaps: {gaps}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="neighbors" data-ask="Show me videos like this one.">
+<div class="q" data-id="neighbors" data-ask="Show me videos like this one." data-score="5">
   <button type="button" class="chip">Show me videos like this one.</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>index.neighbors[0..5]</code> <code>catalog.ratio</code></div>
@@ -350,7 +326,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Nearest in the index: {list}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="like-this-differently" data-ask="What do videos like this one do differently?">
+<div class="q" data-id="like-this-differently" data-ask="What do videos like this one do differently?" data-score="5">
   <button type="button" class="chip">What do videos like this one do differently?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>index.neighbors[0..20]</code> <code>catalog.tier</code> <code>composition.*</code></div>
@@ -358,7 +334,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Of its 20 nearest neighbors, {k} outperformed 3x. Against the rest they {diffs}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="topic" data-ask="What's this about, and how does that topic do?">
+<div class="q" data-id="topic" data-ask="What's this about, and how does that topic do?" data-score="4">
   <button type="button" class="chip">What's this about, and how does that topic do?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>topics.cluster</code> <code>topics.lift</code></div>
@@ -366,7 +342,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Topic: {label} ({n} shorts). {lift}</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="good-length" data-ask="Is this a good length?">
+<div class="q" data-id="good-length" data-ask="Is this a good length?" data-score="5">
   <button type="button" class="chip">Is this a good length?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>catalog.durationSec</code> <code>lengths.bins</code> <code>lengths.crossing</code></div>
@@ -374,7 +350,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> At {sec} s it sits in the {bin} bin: {out}% outperformed 3x, {under}% fell to half the median or less. Past {crossing} s the underperform share exceeds the outperform share.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="mode-match" data-ask="Does this match the craft of the winners?">
+<div class="q" data-id="mode-match" data-ask="Does this match the craft of the winners?" data-score="4">
   <button type="button" class="chip">Does this match the craft of the winners?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>modes.scores</code> <code>modes.full.modes[survived]</code></div>
@@ -382,7 +358,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Mode-match {score} of 100 against “{mode}”, which outperformed 3x at {lift}% against a base of {base}% on held-out channels.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="craft-extremes" data-ask="Where does this stand out on my channel?">
+<div class="q" data-id="craft-extremes" data-ask="Where does this stand out on my channel?" data-score="4">
   <button type="button" class="chip">Where does this stand out on my channel?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>craft.*</code></div>
@@ -390,7 +366,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Furthest from the channel's usual: {extremes}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="hook-vs-winners" data-ask="How does my opening compare with ones that outperformed?">
+<div class="q" data-id="hook-vs-winners" data-ask="How does my opening compare with ones that outperformed?" data-score="5">
   <button type="button" class="chip">How does my opening compare with ones that outperformed?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>composition.cutsHook</code> <code>composition.textHook</code> <code>composition.wordsHook</code> <code>composition.firstWordSec</code> <code>findings.overall</code></div>
@@ -398,7 +374,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {rows}</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="format-field" data-ask="How does this format do elsewhere?">
+<div class="q" data-id="format-field" data-ask="How does this format do elsewhere?" data-score="5">
   <button type="button" class="chip">How does this format do elsewhere?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.format</code> <code>registry.rows[format=*]</code></div>
@@ -406,7 +382,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {format} shorts outperform 3x {points} points {moreLess} often than others in the same channels (90% range {low} to {high}, {channels} channels). Descriptive: the format read is below the 0.85 accuracy a recommendation needs.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="engagement" data-ask="Are people liking and commenting more than usual?">
+<div class="q" data-id="engagement" data-ask="Are people liking and commenting more than usual?" data-score="5">
   <button type="button" class="chip">Are people liking and commenting more than usual?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>catalog.likes</code> <code>catalog.comments</code> <code>craft.likeRate</code> <code>craft.commentRate</code></div>
@@ -414,7 +390,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Like rate {likeRate}% ({likePct} percentile on the channel); comment rate {commentRate}% ({commentPct} percentile).</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="first-72h" data-ask="How fast did it pick up views?">
+<div class="q" data-id="first-72h" data-ask="How fast did it pick up views?" data-score="5">
   <button type="button" class="chip">How fast did it pick up views?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>velocity72.views1h</code> <code>velocity72.views6h</code> <code>velocity72.views24h</code> <code>velocity72.views72h</code></div>
@@ -422,7 +398,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {h1} views at 1 h, {h6} at 6 h, {h24} at 24 h, {h72} at 72 h.</div>
   <div class="cov">59 of 5,379 baseline shorts; the rest: Connect the channel: new publishes are polled from their first hour, so the 72-hour curve fills</div></div>
 </div>
-<div class="q" data-id="curve-vs-channel" data-ask="Is it ahead of where my videos usually are?">
+<div class="q" data-id="curve-vs-channel" data-ask="Is it ahead of where my videos usually are?" data-score="4">
   <button type="button" class="chip">Is it ahead of where my videos usually are?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>velocity72.*</code> <code>velocity72.byChannel</code></div>
@@ -430,7 +406,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> At {hour} h it had {views} views; the channel's tracked median at that hour is {median} ({n} shorts).</div>
   <div class="cov">59 of 5,379 baseline shorts; the rest: Connect the channel: new publishes are polled from their first hour, so the 72-hour curve fills</div></div>
 </div>
-<div class="q" data-id="topic-splits" data-ask="What separates winners from the rest on this topic?">
+<div class="q" data-id="topic-splits" data-ask="What separates winners from the rest on this topic?" data-score="5">
   <button type="button" class="chip">What separates winners from the rest on this topic?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>topics.cluster</code> <code>findings.clusters[].splits</code> <code>findings.findings</code></div>
@@ -438,7 +414,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {finding} | No craft split in this cluster clears q &lt; 0.1 ({pairs} pairs); the strongest is {top}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="channel-format-winners" data-ask="Do my videos that outperformed share a format?">
+<div class="q" data-id="channel-format-winners" data-ask="Do my videos that outperformed share a format?" data-score="5">
   <button type="button" class="chip">Do my videos that outperformed share a format?</button><span class="tag">channel</span>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.format</code> <code>catalog.tier</code> <code>catalog.channelId</code></div>
@@ -446,7 +422,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Of the channel's {n} outperformers, {top}. Among the rest: {rest}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="channel-captions" data-ask="How many of my shorts have captions?">
+<div class="q" data-id="channel-captions" data-ask="How many of my shorts have captions?" data-score="3">
   <button type="button" class="chip">How many of my shorts have captions?</button><span class="tag">channel</span>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.captionsBurnedIn</code> <code>catalog.channelId</code></div>
@@ -454,7 +430,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {k} of {n} of the channel's shorts carry burned-in captions.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="channel-opens" data-ask="How many of my shorts open on text?">
+<div class="q" data-id="channel-opens" data-ask="How many of my shorts open on text?" data-score="3">
   <button type="button" class="chip">How many of my shorts open on text?</button><span class="tag">channel</span>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>composition.textHook</code> <code>catalog.channelId</code></div>
@@ -462,7 +438,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {k} of {n} open with on-screen words in the first 2 s; of those, {out} outperformed 3x, against {outRest} of the rest.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="persuade" data-ask="Will this change minds?">
+<div class="q" data-id="persuade" data-ask="Will this change minds?" data-score="5">
   <button type="button" class="chip">Will this change minds?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>codebook.swayable</code> <code>swayable.traits</code></div>
@@ -470,7 +446,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Persuasion lean {lean} points of vote choice against a placebo, summed over the {n} traits it carries; the archive's median ad moved {median}. Largest contributions: {traits}.</div>
   <div class="cov">5,375 of 5,379 baseline shorts; the rest: Run the codebook on this video: the Swayable, Upworthy and Wesleyan codes land with it</div></div>
 </div>
-<div class="q" data-id="title-patterns" data-ask="Is my title built like headlines that win?">
+<div class="q" data-id="title-patterns" data-ask="Is my title built like headlines that win?" data-score="4">
   <button type="button" class="chip">Is my title built like headlines that win?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>codebook.upworthy.patterns</code> <code>upworthy-top.patterns</code></div>
@@ -478,7 +454,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> It carries {patterns}. {rows} | It carries none of the ten Upworthy patterns.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q p2" data-id="branding-seconds" data-ask="How long is our logo on screen in each video?">
+<div class="q p2" data-id="branding-seconds" data-ask="How long is our logo on screen in each video?" data-score="2">
   <button type="button" class="chip">How long is our logo on screen in each video?</button><span class="tag">channel</span>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
@@ -486,7 +462,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   
   <div class="cov">GPU read, pass 2</div></div>
 </div>
-<div class="q p2" data-id="reusable-broll" data-ask="Which of our videos have voting footage we could reuse?">
+<div class="q p2" data-id="reusable-broll" data-ask="Which of our videos have voting footage we could reuse?" data-score="3">
   <button type="button" class="chip">Which of our videos have voting footage we could reuse?</button><span class="tag">channel</span>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>frames-gpu</code></div>
@@ -494,7 +470,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   
   <div class="cov">GPU read, pass 2</div></div>
 </div></div></section>
-<section><h2>What to do<small>8</small></h2><div class="grid"><div class="q" data-id="should-ask-onscreen" data-ask="Should I put a call to action on screen?">
+<section><h2>What to do<small>8</small></h2><div class="grid"><div class="q" data-id="should-ask-onscreen" data-ask="Should I put a call to action on screen?" data-score="5">
   <button type="button" class="chip">Should I put a call to action on screen?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.callToAction</code> <code>census.ctaSec</code> <code>registry.rows[callToAction]</code></div>
@@ -502,7 +478,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Shorts with an on-screen call to action outperformed 3x {points} points less often than others in the same channels (90% range {low} to {high}, {channels} channels). {here}</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="when-ask" data-ask="When should I ask viewers to act?">
+<div class="q" data-id="when-ask" data-ask="When should I ask viewers to act?" data-score="5">
   <button type="button" class="chip">When should I ask viewers to act?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>census.ctaSec</code> <code>registry.rows[callToAction]</code> <code>composition.durationSec</code></div>
@@ -510,15 +486,15 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {here} The measured lift is for asks shown on screen, mostly subscribe overlays and end cards: {points} points (90% range {low} to {high}). Asks in the spoken script are not measured.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="closer-to-mode" data-ask="How do I get closer to the winning craft?">
-  <button type="button" class="chip">How do I get closer to the winning craft?</button>
+<div class="q" data-id="closer-to-mode" data-ask="How should I edit this to look like the ones that outperformed?" data-score="5">
+  <button type="button" class="chip">How should I edit this to look like the ones that outperformed?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>modes.full.modes[survived].center</code> <code>craft.*</code></div>
   <div><b>Basis</b> the surviving mode's held-out lift; the gaps are this short's percentiles against the mode's center</div>
   <div><b>Answer</b> The furthest from the mode: {gaps}. Shorts on the mode outperformed 3x at {lift}% against {base}% on held-out channels.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="one-change" data-ask="What one change would help most?">
+<div class="q" data-id="one-change" data-ask="What one change would help most?" data-score="5">
   <button type="button" class="chip">What one change would help most?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>registry.rows[recommendation]</code> <code>modes.*</code> <code>findings.findings</code></div>
@@ -526,7 +502,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {change} | No measured lift applies: every trait this short carries is descriptive or already on the measured side.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="when-post" data-ask="When should I post the next one like this?">
+<div class="q" data-id="when-post" data-ask="When should I post the next one like this?" data-score="4">
   <button type="button" class="chip">When should I post the next one like this?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>policy.mean</code> <code>policy.precision</code> <code>topics.cluster</code> <code>catalog.durationSec</code> <code>channels.family</code></div>
@@ -534,7 +510,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Best block: {block} ET, {p}% chance to outperform 3x against {worst}% for {worstBlock}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="next-length" data-ask="What length should the next one be?">
+<div class="q" data-id="next-length" data-ask="What length should the next one be?" data-score="4">
   <button type="button" class="chip">What length should the next one be?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>policy.mean</code> <code>topics.cluster</code> <code>channels.family</code></div>
@@ -542,7 +518,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> {best} scores highest for this topic: {p}% chance to outperform 3x, against {worst}% at {worstLen}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="next-topic" data-ask="What should my next one be about?">
+<div class="q" data-id="next-topic" data-ask="What should my next one be about?" data-score="5">
   <button type="button" class="chip">What should my next one be about?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>topics.lift</code></div>
@@ -550,7 +526,7 @@ code{font:11px ui-monospace,Menlo,monospace;background:#f1f5f9;border-radius:4px
   <div><b>Answer</b> Measured topics that outperform within channels: {top}. This short's topic: {mine}.</div>
   <div class="cov">5,379 of 5,379 baseline shorts</div></div>
 </div>
-<div class="q" data-id="more-persuasive" data-ask="What would make it more persuasive?">
+<div class="q" data-id="more-persuasive" data-ask="What would make it more persuasive?" data-score="5">
   <button type="button" class="chip">What would make it more persuasive?</button>
   <div class="lk"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div>
   <div class="meta"><div><b>Reads</b> <code>codebook.swayable</code> <code>swayable.traits</code></div>
@@ -566,7 +542,7 @@ const qs=[...document.querySelectorAll(".q")]
 const grids=[...document.querySelectorAll(".grid")]
 const order=new Map(qs.map((q,i)=>[q,i]))
 let pickedOnly=false,sorted=false
-for(const q of qs){const id=q.dataset.id;st[id]??={}
+for(const q of qs){const id=q.dataset.id;st[id]??={};if(st[id].s==null&&q.dataset.score)st[id].s=+q.dataset.score
 q.querySelector(".chip").onclick=()=>{st[id].p=!st[id].p;save()}
 q.querySelectorAll(".lk button").forEach(b=>b.onclick=()=>{const v=+b.dataset.v;st[id].s=st[id].s===v?undefined:v;save()})}
 function draw(){const min=+document.getElementById("min").value;let picked=0,scored=0

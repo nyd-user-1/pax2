@@ -34,7 +34,7 @@ const n = (x) => x.toLocaleString("en-US")
 const chip = (q) => {
   const c = q.pass === 2 ? null : coverage(q)
   const audit = q.census ? CENSUS_AUDIT[q.census] : null
-  return `<div class="q${q.pass === 2 ? " p2" : ""}" data-id="${q.id}" data-ask="${esc(q.ask)}">
+  return `<div class="q${q.pass === 2 ? " p2" : ""}" data-id="${q.id}" data-ask="${esc(q.ask)}" data-score="${q.score ?? ""}">
   <button type="button" class="chip">${esc(q.ask)}</button>${q.scope === "channel" ? `<span class="tag">channel</span>` : ""}
   <div class="lk">${[1, 2, 3, 4, 5].map((v) => `<button type="button" data-v="${v}">${v}</button>`).join("")}</div>
   <div class="meta"><div><b>Reads</b> ${q.reads.map((r) => `<code>${esc(r)}</code>`).join(" ")}</div>
@@ -90,7 +90,7 @@ const qs=[...document.querySelectorAll(".q")]
 const grids=[...document.querySelectorAll(".grid")]
 const order=new Map(qs.map((q,i)=>[q,i]))
 let pickedOnly=false,sorted=false
-for(const q of qs){const id=q.dataset.id;st[id]??={}
+for(const q of qs){const id=q.dataset.id;st[id]??={};if(st[id].s==null&&q.dataset.score)st[id].s=+q.dataset.score
 q.querySelector(".chip").onclick=()=>{st[id].p=!st[id].p;save()}
 q.querySelectorAll(".lk button").forEach(b=>b.onclick=()=>{const v=+b.dataset.v;st[id].s=st[id].s===v?undefined:v;save()})}
 function draw(){const min=+document.getElementById("min").value;let picked=0,scored=0

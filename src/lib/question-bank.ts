@@ -62,6 +62,9 @@ export type Question = {
   scope?: "video" | "channel"
   /** 2 = needs a GPU read of the frames; registered, not answered here. */
   pass?: 2
+  /** Brendan's rating, 2026-10-22: 1 cut, 5 keep. 4 and 5 are chips; 2 and 3 stay in the universe
+   *  unanswered; the 1s were removed. */
+  score: 2 | 3 | 4 | 5
 }
 
 const RUN_FLASK = "Run the flask: the file's cuts, loudness and on-screen text are measured from the media"
@@ -73,17 +76,8 @@ const RUN_CODEBOOK = "Run the codebook on this video: the Swayable, Upworthy and
 export const QUESTIONS: Question[] = [
   // ── The video in hand ──────────────────────────────────────────────────────────────────────────
   {
-    id: "first-two-seconds",
-    register: "video",
-    ask: "What happens in the first two seconds?",
-    reads: ["composition.cutsHook", "composition.textHook", "composition.wordsHook", "composition.hookLoudnessDelta", "raw.frames[0..2].words"],
-    needs: ["composition"],
-    basis: "the media file: scene cuts, OCR at one frame a second, the loudness curve, the timed transcript",
-    template: "In the first 2 s: {cuts} cuts, {spoken} spoken words, {onscreen} on-screen words. The opening is {delta} LU {louderQuieter} than the short as a whole.",
-    unlock: RUN_FLASK,
-  },
-  {
     id: "first-word",
+    score: 3,
     register: "video",
     ask: "When does my first word land?",
     reads: ["composition.firstWordSec", "transcript.words[0]"],
@@ -94,6 +88,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "before-first-word",
+    score: 2,
     register: "video",
     ask: "What happens before my first word lands?",
     reads: ["composition.firstWordSec", "raw.cuts", "raw.frames[].words", "raw.loudness.perSecond"],
@@ -104,6 +99,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "hook-opens-on",
+    score: 4,
     register: "video",
     ask: "Does my hook open on a face, on text, or on b-roll?",
     reads: ["census.format", "raw.frames[0..2].words"],
@@ -115,6 +111,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "cta-when",
+    score: 5,
     register: "video",
     ask: "Is there a call to action, and when does it show?",
     reads: ["census.callToAction", "census.ctaSec"],
@@ -126,6 +123,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "on-mute",
+    score: 4,
     register: "video",
     ask: "What does this look like on mute?",
     reads: ["census.captionsBurnedIn", "composition.textFrameShare", "composition.textWordsPerFrame"],
@@ -137,6 +135,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "text-moments",
+    score: 3,
     register: "video",
     ask: "Show me every moment with on-screen text.",
     reads: ["raw.frames[].t", "raw.frames[].words"],
@@ -147,6 +146,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "shots",
+    score: 3,
     register: "video",
     ask: "How many shots do I use, and where's the longest?",
     reads: ["raw.cuts", "raw.durationSec"],
@@ -157,6 +157,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "first-cut",
+    score: 2,
     register: "video",
     ask: "How long before the first cut?",
     reads: ["composition.firstCutSec", "craft.firstCutSec"],
@@ -167,6 +168,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "pace",
+    score: 2,
     register: "video",
     ask: "How fast is it cut?",
     reads: ["composition.cutsPerSec", "craft.cutsPerSec"],
@@ -177,6 +179,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "loudest-moment",
+    score: 2,
     register: "video",
     ask: "What's happening at the loudest moment?",
     reads: ["raw.loudness.perSecond", "raw.cuts", "raw.frames[].words", "transcript.words"],
@@ -187,6 +190,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "quiet-spots",
+    score: 3,
     register: "video",
     ask: "Where does the sound drop out?",
     reads: ["raw.loudness.perSecond", "raw.loudness.integrated"],
@@ -197,6 +201,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "loud-enough",
+    score: 4,
     register: "video",
     ask: "Is it loud enough?",
     reads: ["composition.loudnessLufs", "composition.loudnessRange"],
@@ -207,6 +212,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "talk-speed",
+    score: 3,
     register: "video",
     ask: "How fast do I talk?",
     reads: ["composition.speechWps", "craft.speechWps"],
@@ -217,6 +223,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "talk-share",
+    score: 2,
     register: "video",
     ask: "How much of it is talking?",
     reads: ["composition.speechShare"],
@@ -227,6 +234,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "script-length",
+    score: 5,
     register: "video",
     ask: "How many words is the script?",
     reads: ["transcript.words", "composition.durationSec"],
@@ -237,6 +245,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "said-at-first-text",
+    score: 3,
     register: "video",
     ask: "What am I saying when text first appears?",
     reads: ["raw.frames[].words", "transcript.words[].t"],
@@ -247,6 +256,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "ending",
+    score: 4,
     register: "video",
     ask: "How does it end?",
     reads: ["raw.frames[-3..].words", "raw.loudness.perSecond[-3..]", "census.ctaSec", "transcript.words[-8..]"],
@@ -257,6 +267,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "captions",
+    score: 2,
     register: "video",
     ask: "Are my captions burned in?",
     reads: ["census.captionsBurnedIn"],
@@ -268,6 +279,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "format",
+    score: 5,
     register: "video",
     ask: "What kind of video is this?",
     reads: ["census.format"],
@@ -279,6 +291,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "setting",
+    score: 5,
     register: "video",
     ask: "Where was this shot?",
     reads: ["census.setting"],
@@ -289,18 +302,8 @@ export const QUESTIONS: Question[] = [
     unlock: RUN_CENSUS,
   },
   {
-    id: "people-share",
-    register: "video",
-    ask: "How much of it has someone on screen?",
-    reads: ["census.peopleScreenShare"],
-    needs: ["census"],
-    basis: "the census: sampled frames with at least one person visible; counts only, no identity",
-    template: "A person is visible in {share}% of the 13 sampled frames.",
-    census: "peopleScreenShare",
-    unlock: RUN_CENSUS,
-  },
-  {
     id: "others-logo",
+    score: 2,
     register: "video",
     ask: "Is anyone else's logo on screen?",
     reads: ["census.thirdPartyWatermark"],
@@ -312,6 +315,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "motion",
+    score: 4,
     register: "video",
     ask: "How much does the picture move?",
     reads: ["composition.visualActivity", "craft.visualActivity"],
@@ -322,6 +326,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "brightness",
+    score: 3,
     register: "video",
     ask: "Is it too dark?",
     reads: ["composition.brightness", "composition.saturation"],
@@ -332,6 +337,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "title",
+    score: 4,
     register: "video",
     ask: "What does my title do?",
     reads: ["composition.titleChars", "composition.titleWords", "composition.titleQuestion", "composition.titleNumber", "composition.titleCapsRun", "composition.titleEmoji"],
@@ -341,6 +347,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "persuasion-traits",
+    score: 5,
     register: "video",
     ask: "Which persuasion techniques does it use?",
     reads: ["codebook.swayable", "swayable.traits"],
@@ -351,6 +358,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "ad-goal",
+    score: 5,
     register: "video",
     ask: "Is this trying to persuade?",
     reads: ["codebook.wesleyan"],
@@ -363,6 +371,7 @@ export const QUESTIONS: Question[] = [
   // ── Against the field ─────────────────────────────────────────────────────────────────────────
   {
     id: "outlier-score",
+    score: 4,
     register: "field",
     ask: "How did this do against my usual?",
     reads: ["catalog.views", "catalog.channelMedian", "catalog.ratio", "catalog.tier"],
@@ -372,6 +381,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "why-outperformed",
+    score: 4,
     register: "field",
     ask: "Why might this one have outperformed?",
     reads: ["catalog.ratio", "registry.rows[measured]", "topics.lift", "modes.score", "lengths.bins"],
@@ -382,6 +392,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "channel-rank",
+    score: 5,
     register: "field",
     ask: "Where does this rank on my channel?",
     reads: ["catalog.ratio", "catalog.channelId"],
@@ -391,6 +402,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "best-video-diff",
+    score: 5,
     register: "field",
     ask: "What's different about my best video?",
     reads: ["catalog.ratio", "craft.*"],
@@ -401,6 +413,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "neighbors",
+    score: 5,
     register: "field",
     ask: "Show me videos like this one.",
     reads: ["index.neighbors[0..5]", "catalog.ratio"],
@@ -411,6 +424,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "like-this-differently",
+    score: 5,
     register: "field",
     ask: "What do videos like this one do differently?",
     reads: ["index.neighbors[0..20]", "catalog.tier", "composition.*"],
@@ -421,6 +435,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "topic",
+    score: 4,
     register: "field",
     ask: "What's this about, and how does that topic do?",
     reads: ["topics.cluster", "topics.lift"],
@@ -430,6 +445,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "good-length",
+    score: 5,
     register: "field",
     ask: "Is this a good length?",
     reads: ["catalog.durationSec", "lengths.bins", "lengths.crossing"],
@@ -439,6 +455,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "mode-match",
+    score: 4,
     register: "field",
     ask: "Does this match the craft of the winners?",
     reads: ["modes.scores", "modes.full.modes[survived]"],
@@ -449,6 +466,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "craft-extremes",
+    score: 4,
     register: "field",
     ask: "Where does this stand out on my channel?",
     reads: ["craft.*"],
@@ -459,6 +477,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "hook-vs-winners",
+    score: 5,
     register: "field",
     ask: "How does my opening compare with ones that outperformed?",
     reads: ["composition.cutsHook", "composition.textHook", "composition.wordsHook", "composition.firstWordSec", "findings.overall"],
@@ -469,6 +488,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "format-field",
+    score: 5,
     register: "field",
     ask: "How does this format do elsewhere?",
     reads: ["census.format", "registry.rows[format=*]"],
@@ -480,6 +500,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "engagement",
+    score: 5,
     register: "field",
     ask: "Are people liking and commenting more than usual?",
     reads: ["catalog.likes", "catalog.comments", "craft.likeRate", "craft.commentRate"],
@@ -489,6 +510,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "first-72h",
+    score: 5,
     register: "field",
     ask: "How fast did it pick up views?",
     reads: ["velocity72.views1h", "velocity72.views6h", "velocity72.views24h", "velocity72.views72h"],
@@ -499,6 +521,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "curve-vs-channel",
+    score: 4,
     register: "field",
     ask: "Is it ahead of where my videos usually are?",
     reads: ["velocity72.*", "velocity72.byChannel"],
@@ -509,6 +532,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "topic-splits",
+    score: 5,
     register: "field",
     ask: "What separates winners from the rest on this topic?",
     reads: ["topics.cluster", "findings.clusters[].splits", "findings.findings"],
@@ -518,6 +542,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "channel-format-winners",
+    score: 5,
     register: "field",
     scope: "channel",
     ask: "Do my videos that outperformed share a format?",
@@ -530,6 +555,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "channel-captions",
+    score: 3,
     register: "field",
     scope: "channel",
     ask: "How many of my shorts have captions?",
@@ -542,6 +568,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "channel-opens",
+    score: 3,
     register: "field",
     scope: "channel",
     ask: "How many of my shorts open on text?",
@@ -554,6 +581,7 @@ export const QUESTIONS: Question[] = [
 
   {
     id: "persuade",
+    score: 5,
     register: "field",
     ask: "Will this change minds?",
     reads: ["codebook.swayable", "swayable.traits"],
@@ -564,6 +592,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "title-patterns",
+    score: 4,
     register: "field",
     ask: "Is my title built like headlines that win?",
     reads: ["codebook.upworthy.patterns", "upworthy-top.patterns"],
@@ -576,6 +605,7 @@ export const QUESTIONS: Question[] = [
   // ── What to do ────────────────────────────────────────────────────────────────────────────────
   {
     id: "should-ask-onscreen",
+    score: 5,
     register: "action",
     ask: "Should I put a call to action on screen?",
     reads: ["census.callToAction", "census.ctaSec", "registry.rows[callToAction]"],
@@ -587,6 +617,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "when-ask",
+    score: 5,
     register: "action",
     ask: "When should I ask viewers to act?",
     reads: ["census.ctaSec", "registry.rows[callToAction]", "composition.durationSec"],
@@ -598,8 +629,9 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "closer-to-mode",
+    score: 5,
     register: "action",
-    ask: "How do I get closer to the winning craft?",
+    ask: "How should I edit this to look like the ones that outperformed?",
     reads: ["modes.full.modes[survived].center", "craft.*"],
     needs: ["modes", "craft"],
     basis: "the surviving mode's held-out lift; the gaps are this short's percentiles against the mode's center",
@@ -608,6 +640,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "one-change",
+    score: 5,
     register: "action",
     ask: "What one change would help most?",
     reads: ["registry.rows[recommendation]", "modes.*", "findings.findings"],
@@ -618,6 +651,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "when-post",
+    score: 4,
     register: "action",
     ask: "When should I post the next one like this?",
     reads: ["policy.mean", "policy.precision", "topics.cluster", "catalog.durationSec", "channels.family"],
@@ -627,6 +661,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "next-length",
+    score: 4,
     register: "action",
     ask: "What length should the next one be?",
     reads: ["policy.mean", "topics.cluster", "channels.family"],
@@ -636,6 +671,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "next-topic",
+    score: 5,
     register: "action",
     ask: "What should my next one be about?",
     reads: ["topics.lift"],
@@ -645,6 +681,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "more-persuasive",
+    score: 5,
     register: "action",
     ask: "What would make it more persuasive?",
     reads: ["codebook.swayable", "swayable.traits"],
@@ -655,15 +692,14 @@ export const QUESTIONS: Question[] = [
   },
 
   // ── Pass 2: a GPU read of the frames; registered, not answered here ──────────────────────────
-  { id: "thumb-in-video", register: "video", pass: 2, ask: "Is my thumbnail frame actually in the video?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "a frame match of the thumbnail against the file", template: "" },
-  { id: "screen-vs-said", register: "video", pass: 2, ask: "Does anything on screen contradict what's said?", reads: ["frames-gpu", "transcript.words"], needs: ["frames-gpu"], basis: "the on-screen words read against the transcript", template: "" },
-  { id: "second-three-muted", register: "video", pass: 2, ask: "What would someone know by second three with the sound off?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "the text and picture of the first three seconds, read", template: "" },
-  { id: "captions-readable", register: "video", pass: 2, ask: "Are my captions readable on a phone?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "caption size and contrast at phone scale", template: "" },
-  { id: "speaker-first-second", register: "video", pass: 2, ask: "Am I on screen in the first second?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "a person in the frames at 0, 0.5 and 1 s", template: "" },
-  { id: "paid-for-by", register: "video", pass: 2, ask: "Is the paid-for-by line on screen?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "the disclaimer read from the frames", template: "" },
-  { id: "third-party-footage", register: "video", pass: 2, ask: "Does this show a news clip or someone else's footage?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "footage source read from the frames", template: "" },
-  { id: "branding-seconds", register: "field", scope: "channel", pass: 2, ask: "How long is our logo on screen in each video?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "the channel's branding located frame by frame", template: "" },
-  { id: "reusable-broll", register: "field", scope: "channel", pass: 2, ask: "Which of our videos have voting footage we could reuse?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "polling places and ballots located in the frames", template: "" },
+  { id: "thumb-in-video", score: 4, register: "video", pass: 2, ask: "Is my thumbnail frame actually in the video?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "a frame match of the thumbnail against the file", template: "" },
+  { id: "screen-vs-said", score: 5, register: "video", pass: 2, ask: "Does anything on screen contradict what's said?", reads: ["frames-gpu", "transcript.words"], needs: ["frames-gpu"], basis: "the on-screen words read against the transcript", template: "" },
+  { id: "second-three-muted", score: 4, register: "video", pass: 2, ask: "What would someone know by second three with the sound off?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "the text and picture of the first three seconds, read", template: "" },
+  { id: "captions-readable", score: 4, register: "video", pass: 2, ask: "Are my captions readable on a phone?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "caption size and contrast at phone scale", template: "" },
+  { id: "speaker-first-second", score: 2, register: "video", pass: 2, ask: "Am I on screen in the first second?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "a person in the frames at 0, 0.5 and 1 s", template: "" },
+  { id: "third-party-footage", score: 2, register: "video", pass: 2, ask: "Does this show a news clip or someone else's footage?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "footage source read from the frames", template: "" },
+  { id: "branding-seconds", score: 2, register: "field", scope: "channel", pass: 2, ask: "How long is our logo on screen in each video?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "the channel's branding located frame by frame", template: "" },
+  { id: "reusable-broll", score: 3, register: "field", scope: "channel", pass: 2, ask: "Which of our videos have voting footage we could reuse?", reads: ["frames-gpu"], needs: ["frames-gpu"], basis: "polling places and ballots located in the frames", template: "" },
 ]
 
 export const REGISTERS: { id: Register; label: string }[] = [
@@ -673,8 +709,8 @@ export const REGISTERS: { id: Register; label: string }[] = [
 ]
 
 export const questionById = (id: string) => QUESTIONS.find((q) => q.id === id)
-/** The questions that can render as chips today: everything but pass 2. */
-export const CHIP_QUESTIONS = QUESTIONS.filter((q) => q.pass !== 2)
+/** The questions that render as chips: rated 4 or 5, answerable without a GPU. */
+export const CHIP_QUESTIONS = QUESTIONS.filter((q) => q.pass !== 2 && q.score >= 4)
 
 /** The audit line, once and quietly: "read from the frames, 94 of 99 right in audit". */
 export function auditLine(col: CensusColumn): string {
