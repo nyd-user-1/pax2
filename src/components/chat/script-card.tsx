@@ -6,7 +6,6 @@
 // opens the right panel with why each line is written that way; hovering a citation there lights its line.
 
 import * as React from 'react'
-import Link from 'next/link'
 import { Video } from 'lucide-react'
 
 import { ScriptCitations } from '@/components/chat/script-citations'
@@ -40,7 +39,12 @@ export function ScriptCard({ text, cites, onRecord, streaming = false }: { text:
   })
 
   const open = React.useCallback(
-    (lit: number | null) => openAside({ key, title: 'Citations', body: <ScriptCitations text={text} cites={list} hot={lit} onHot={setHot} /> }),
+    (lit: number | null) =>
+      openAside({
+        key,
+        title: 'Citations',
+        body: list.length ? <ScriptCitations text={text} cites={list} hot={lit} onHot={setHot} /> : <p className="text-sm leading-relaxed text-slate-600">This script came without citations. Scripts drafted from now on carry theirs.</p>,
+      }),
     [openAside, key, text, list],
   )
   // While the panel shows these citations, hovering either side lights the same number on both.
@@ -93,14 +97,10 @@ export function ScriptCard({ text, cites, onRecord, streaming = false }: { text:
       <CardFooter className="justify-between gap-3 bg-transparent py-3 text-xs text-slate-800">
         {streaming ? (
           <Skeleton className="h-3 w-16" />
-        ) : list.length > 0 ? (
+        ) : (
           <button type="button" onClick={() => (shown ? openAside(null) : open(hot))} aria-expanded={shown} className="font-medium text-slate-800 underline underline-offset-2 hover:text-pax2-light-blue">
             Citations
           </button>
-        ) : (
-          <Link href="/glossary" className="font-medium text-slate-800 underline underline-offset-2 hover:text-pax2-light-blue">
-            Glossary
-          </Link>
         )}
         {text && (
           <span className="tabular">

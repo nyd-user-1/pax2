@@ -1,18 +1,26 @@
 import * as React from "react"
-import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion"
+import { AbsoluteFill, interpolate, Sequence, spring, useCurrentFrame, useVideoConfig } from "remotion"
 
-import type { GraphicKind, Graphics } from "@/lib/footage"
+import { BRAND_PRESETS, FONTS, type Brand, type GraphicKind, type Graphics } from "@/lib/footage"
 
 // The graphics a script's footage carries, drawn by Remotion at 1080x1920: the checklist card after the
 // team's Question 3 example (a navy panel over the lower half, three white rows with orange checks, an
 // orange footer bar), a callout, a stat card, a quote, an intro and end credits. `backdrop` is the take
-// the graphic sits over; without one, a plain field stands in for it.
+// the graphic sits over; without one, a plain field stands in for it. `brand` dresses every graphic (its two
+// colors, its typeface, its logo top left); without one, the Yes on 3 kit.
 
 const NAVY = "#1e3a8a"
 const ORANGE = "#ea6a24"
 const FONT = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif"
 
-export type GraphicProps = { kind: GraphicKind; graphics: Graphics; backdrop?: string }
+export type GraphicProps = { kind: GraphicKind; graphics: Graphics; backdrop?: string; brand?: Brand }
+
+const BrandCtx = React.createContext<Brand>(BRAND_PRESETS[0])
+/** The brand's colors and typeface under the names the graphics were drawn with. */
+function useBrand() {
+  const b = React.useContext(BrandCtx)
+  return { NAVY: b.primary, ORANGE: b.accent, FONT: FONTS[b.font]?.stack ?? FONTS.jakarta.stack }
+}
 
 function useIn(delay = 0) {
   const frame = useCurrentFrame()
@@ -21,6 +29,7 @@ function useIn(delay = 0) {
 }
 
 function Check() {
+  const { NAVY, ORANGE, FONT } = useBrand()
   return (
     <svg width={64} height={64} viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
       <circle cx={12} cy={12} r={12} fill={ORANGE} />
@@ -30,6 +39,7 @@ function Check() {
 }
 
 function Checklist({ g }: { g: Graphics["checklist"] }) {
+  const { NAVY, ORANGE, FONT } = useBrand()
   const panel = useIn(0)
   const frame = useCurrentFrame()
   return (
@@ -56,6 +66,7 @@ function Checklist({ g }: { g: Graphics["checklist"] }) {
 }
 
 function Callout({ g }: { g: Graphics["callout"] }) {
+  const { NAVY, ORANGE, FONT } = useBrand()
   const s = useIn(0)
   const words = g.text.split(/\s+/).filter(Boolean)
   const hot = (g.highlight ?? "").toUpperCase().replace(/[^\p{L}\p{N}]/gu, "")
@@ -73,6 +84,7 @@ function Callout({ g }: { g: Graphics["callout"] }) {
 }
 
 function Stat({ g }: { g: Graphics["stat"] }) {
+  const { NAVY, ORANGE, FONT } = useBrand()
   const s = useIn(0)
   return (
     <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
@@ -85,6 +97,7 @@ function Stat({ g }: { g: Graphics["stat"] }) {
 }
 
 function Quote({ g }: { g: Graphics["quote"] }) {
+  const { NAVY, ORANGE, FONT } = useBrand()
   const s = useIn(0)
   return (
     <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", padding: 70 }}>
@@ -98,6 +111,7 @@ function Quote({ g }: { g: Graphics["quote"] }) {
 }
 
 function Intro({ g }: { g: Graphics["intro"] }) {
+  const { NAVY, ORANGE, FONT } = useBrand()
   const s = useIn(0)
   const frame = useCurrentFrame()
   return (
@@ -110,6 +124,7 @@ function Intro({ g }: { g: Graphics["intro"] }) {
 }
 
 function End({ g }: { g: Graphics["end"] }) {
+  const { NAVY, ORANGE, FONT } = useBrand()
   const s = useIn(0)
   const frame = useCurrentFrame()
   return (
@@ -121,9 +136,11 @@ function End({ g }: { g: Graphics["end"] }) {
   )
 }
 
-export function GraphicVideo({ kind, graphics, backdrop }: GraphicProps) {
+export function GraphicVideo({ kind, graphics, backdrop, brand }: GraphicProps) {
   const full = kind === "intro" || kind === "end"
+  const b = brand ?? BRAND_PRESETS[0]
   return (
+    <BrandCtx.Provider value={b}>
     <AbsoluteFill style={{ background: backdrop ? "#000" : "linear-gradient(165deg, #cbd5e1 0%, #94a3b8 55%, #475569 100%)" }}>
       {backdrop && !full && <AbsoluteFill style={{ backgroundImage: `url(${backdrop})`, backgroundSize: "cover", backgroundPosition: "center" }} />}
       {kind === "checklist" && <Checklist g={graphics.checklist} />}
@@ -132,6 +149,28 @@ export function GraphicVideo({ kind, graphics, backdrop }: GraphicProps) {
       {kind === "quote" && <Quote g={graphics.quote} />}
       {kind === "intro" && <Intro g={graphics.intro} />}
       {kind === "end" && <End g={graphics.end} />}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {b.logo && <img src={b.logo} alt="" style={{ position: "absolute", top: 70, left: 70, width: 150, height: 150, objectFit: "cover", borderRadius: 32, boxShadow: "0 10px 30px rgba(0,0,0,0.35)" }} />}
+    </AbsoluteFill>
+    </BrandCtx.Provider>
+  )
+}
+
+/** Every graphic the plan can draw, back to back, in one video: the Graphics card's Download. */
+export function GraphicsReel({ kinds, graphics, brand }: { kinds: { id: GraphicKind; seconds: number }[]; graphics: Graphics; brand?: Brand }) {
+  const { fps } = useVideoConfig()
+  let from = 0
+  return (
+    <AbsoluteFill>
+      {kinds.map((k) => {
+        const at = from
+        from += k.seconds * fps
+        return (
+          <Sequence key={k.id} from={at} durationInFrames={k.seconds * fps}>
+            <GraphicVideo kind={k.id} graphics={graphics} brand={brand} />
+          </Sequence>
+        )
+      })}
     </AbsoluteFill>
   )
 }

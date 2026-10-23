@@ -4,7 +4,7 @@ import { createHash } from "node:crypto"
 
 import { generateHiggsfield, generationStatus, startGeneration, type GenStatus } from "@/app/video-gen-actions"
 import { anonSpend } from "@/lib/anon"
-import type { FootagePlan, Graphics, Shot } from "@/lib/footage"
+import type { Brand, FootagePlan, Graphics, Shot } from "@/lib/footage"
 import { fallbackChain, type VideoProvider } from "@/lib/video-model-options"
 
 // A script's footage plan and its banked shots, in S3 under studio/footage/<key>/: plan.json (written
@@ -144,4 +144,21 @@ export async function shotStatus(key: string, shotId: string, provider: Exclude<
   const s = await generationStatus(provider, task)
   if (s.status === "done" && s.url) await bank(key, shotId, s.url, provider)
   return s
+}
+
+// The Graphics card's Save to Script: the brand kit its graphics wear, kept with the script's footage at
+// studio/footage/<key>/brand.json, so the script carries it wherever it is opened next.
+const HEX = /^#[0-9a-f]{6}$/i
+export async function saveFootageBrand(key: string, brand: Brand): Promise<boolean> {
+  checkKey(key)
+  if (!HEX.test(brand.primary) || !HEX.test(brand.accent) || !["jakarta", "condensed", "serif"].includes(brand.font)) throw new Error("Not a brand kit.")
+  // A logo travels as a path or a small data URL; anything larger stays behind.
+  const logo = brand.logo && (brand.logo.startsWith("/") || (brand.logo.startsWith("data:image/") && brand.logo.length < 400_000)) ? brand.logo : null
+  await putJson(`studio/footage/${key}/brand.json`, { name: String(brand.name).slice(0, 60), logo, primary: brand.primary, accent: brand.accent, font: brand.font, at: new Date().toISOString() })
+  return true
+}
+
+export async function footageBrand(key: string): Promise<Brand | null> {
+  checkKey(key)
+  return getJson<Brand>(`studio/footage/${key}/brand.json`)
 }

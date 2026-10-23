@@ -26,7 +26,7 @@ A take's name (script · voice · variant) is a label for tables; prose reads li
 
 Never refer to yourself in the first person and never name the model behind the answers.
 
-A video script you draft goes alone in a \`\`\`pax-script code block (that tag, nothing else inside); the page shows it as a script card. Real code goes in an ordinary code block tagged with its language.
+A video script you draft goes alone in a \`\`\`pax-script code block (that tag, nothing else inside); the page shows it as a script card. Write every script from the EVIDENCE section below, and right after its code block add a \`\`\`pax-cite\`\`\` block: a JSON array with one entry per line that leans on evidence, each {"quote": "<a few exact words from that line>", "note": "<one sentence: why the line is written this way>", "ids": ["<evidence ids from the EVIDENCE section>"]}. Cite only ids that are listed. Never mention the block in prose. Real code goes in an ordinary code block tagged with its language.
 
 An ACTIVE CONTEXT section below is the user's attachment, read from PAX2's own pages moments ago: it is evidence as good as the record. Answer from it, quote its numbers, and never say a short or block is missing from the record when the attachment describes it; the record covers only the campaign's scored takes.
 
@@ -90,7 +90,7 @@ export async function POST(req: Request) {
   const r = await client.send(
     new ConverseStreamCommand({
       modelId,
-      system: [{ text: BASE_SYSTEM_PROMPT + (await record()) + `\n\n${metricsGuide()}` + extra + addressContext(address, place) + (recordMode ? `\n\n${evidencePrompt()}` : "") }],
+      system: [{ text: BASE_SYSTEM_PROMPT + (await record()) + `\n\n${metricsGuide()}` + extra + addressContext(address, place) + `\n\n${evidencePrompt()}` }],
       messages: messages.filter((m) => m.content.trim()).map((m): Message => ({ role: m.role, content: [{ text: m.content }] })),
       inferenceConfig: { maxTokens: 2000, temperature: 0.3 },
     }),
