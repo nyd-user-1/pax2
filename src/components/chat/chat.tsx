@@ -63,7 +63,8 @@ const speechRecognition = () => (typeof window === 'undefined' ? undefined : ((w
 // The empty state's PAX draws itself with GSAP; its code loads only when that state shows, since the
 // chat also sits in every page's side panel.
 const FootageBlock = dynamic(() => import('@/components/chat/footage-block').then((m) => m.FootageBlock), { ssr: false })
-const PaxDraw = dynamic(() => import('@/components/pax-draw').then((m) => m.PaxDraw), { loading: () => <span className="block h-[65px] w-[130px]" /> })
+const TextType = dynamic(() => import('@/components/text-type'), { loading: () => <span className="block h-[65px]" /> })
+const READY = ['Ready to make change?', 'Ready to make a video?', 'Ready to make a storyboard?', 'Ready to make a script?', 'Ready to make a difference?', 'Ready. Set. Go.']
 
 const RECORD_OPENER = "I'm ready to make my first video — where do we start?"
 
@@ -877,8 +878,8 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
             <div className="flex w-full max-w-[773px] flex-col gap-6">
               {!compact &&
                 (heading ?? (
-                  <div className="flex flex-col items-center">
-                    <PaxDraw size={46} />
+                  <div className="flex h-[65px] flex-col items-center justify-center">
+                    <TextType as="span" text={READY} loop={false} typingSpeed={70} className="font-display text-2xl font-normal text-pax2-blue md:text-3xl" />
                   </div>
                 ))}
               {inputBox}
