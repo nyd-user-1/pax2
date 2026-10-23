@@ -9,7 +9,10 @@ import { cn } from "@/ui/lib/utils"
 // moving one is an up or a down. The arrows show at a block's top right while the pointer is on it, and the
 // order is kept per page in this browser. Blocks move with CSS `order`, not remounting, so charts keep state.
 
-const OrderContext = React.createContext<{ order: string[]; move: (id: string, by: number) => void } | null>(null)
+const OrderContext = React.createContext<{ order: string[]; move: (id: string, by: number) => void; pin: (id: string) => void } | null>(null)
+/** The block's own place in its column, for its menu's Pin to top. */
+const PinContext = React.createContext<{ pin: () => void; first: boolean } | null>(null)
+export const usePinTop = () => React.useContext(PinContext)
 
 export function BlockOrder({ page, initial, children }: { page: string; initial: string[]; children: React.ReactNode }) {
   const [order, setOrder] = React.useState(initial)
@@ -36,7 +39,19 @@ export function BlockOrder({ page, initial, children }: { page: string; initial:
       }),
     [key],
   )
-  const value = React.useMemo(() => ({ order, move }), [order, move])
+  const pin = React.useCallback(
+    (id: string) =>
+      setOrder((current) => {
+        if (current.indexOf(id) <= 0) return current
+        const next = [id, ...current.filter((x) => x !== id)]
+        try {
+          window.localStorage.setItem(key, JSON.stringify(next))
+        } catch {}
+        return next
+      }),
+    [key],
+  )
+  const value = React.useMemo(() => ({ order, move, pin }), [order, move, pin])
   return (
     <OrderContext.Provider value={value}>
       <div className="flex flex-col">{children}</div>
@@ -48,6 +63,7 @@ export function OrderedBlock({ id, label, children }: { id: string; label: strin
   const ctx = React.useContext(OrderContext)
   const at = ctx ? ctx.order.indexOf(id) : 0
   const last = ctx ? ctx.order.length - 1 : 0
+  const pinned = React.useMemo(() => (ctx ? { pin: () => ctx.pin(id), first: at <= 0 } : null), [ctx, id, at])
   const arrow = "inline-flex size-6 items-center justify-center rounded-md text-slate-800 transition-colors hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-30 [&_svg]:size-3.5"
   return (
     <div style={{ order: at }} className="group/block relative mt-5">
@@ -61,7 +77,7 @@ export function OrderedBlock({ id, label, children }: { id: string; label: strin
           </button>
         </div>
       )}
-      {children}
+      <PinContext.Provider value={pinned}>{children}</PinContext.Provider>
     </div>
   )
 }

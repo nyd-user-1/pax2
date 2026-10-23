@@ -2,9 +2,10 @@
 
 import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { CheckIcon, ChevronsDownUpIcon, ChevronsUpDownIcon, CopyIcon, DownloadIcon, EllipsisVerticalIcon, LayoutListIcon, RefreshCwIcon } from "lucide-react"
+import { CheckIcon, ChevronsDownUpIcon, ChevronsUpDownIcon, CopyIcon, DownloadIcon, EllipsisVerticalIcon, LayoutListIcon, PinIcon, RefreshCwIcon } from "lucide-react"
 
 import { CardTitle } from "@/ui/components/nova/card"
+import { usePinTop } from "@/components/dash/block-order"
 import { KebabMenu, MenuFlyout, MenuFoot, MenuHeader, MenuRow, MenuSeparator } from "@/components/kebab-menu"
 import { cn } from "@/ui/lib/utils"
 
@@ -105,6 +106,7 @@ export function CardTools({
 }) {
   const router = useRouter()
   const path = usePathname()
+  const pinTop = usePinTop()
   return (
     <div className={cn("flex items-center gap-1", className)}>
       {children}
@@ -118,6 +120,7 @@ export function CardTools({
         )}
         <MenuRow icon={<RefreshCwIcon />} label="Refresh" onClick={() => router.refresh()} />
         {onCollapse && <MenuRow icon={collapsed ? <ChevronsUpDownIcon /> : <ChevronsDownUpIcon />} label={collapsed ? "Expand" : "Collapse"} onClick={onCollapse} />}
+        {pinTop && !pinTop.first && <MenuRow icon={<PinIcon />} label="Pin to top" onClick={pinTop.pin} />}
         {views && views.length > 1 && (
           <MenuFlyout id="view" icon={<LayoutListIcon />} label="View" hint={views.find((v) => v.value === view)?.label}>
             {views.map((v) => (
