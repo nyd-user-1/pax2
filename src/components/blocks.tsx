@@ -13,16 +13,17 @@ import { cn } from "@/ui/lib/utils"
 // The one block (Brendan, 2026-10-06): every dashboard block is the same card —
 // the title, the searchbar beside it, the three-dot menu, the size chevron,
 // and a body that scrolls inside its height. Three sizes (Brendan, 2026-10-23):
-// Half View, 420px, the default; Full View, 840px, where the body scrolls past
-// it; Collapse, the header alone. The chevron steps Half and Full; the menu
+// Half View, 420px, the default; Full View, the content's own height up to
+// 840px, where the body scrolls; Collapse, the header alone. The chevron steps Half and Full; the menu
 // holds all three. TableBlock, CardBlock and
 // AccordionBlock are MainBlock under the variant's name, so the inspector says
 // what the screen shows; only the content inside differs.
 
 /** Half View: every block's default height. */
 export const BLOCK_HEIGHT = "h-[420px]"
-/** Full View: double the default; past it the body scrolls. */
-export const BLOCK_FULL = "h-[840px]"
+/** Full View: as tall as the content needs, never shorter than Half View, at most 840px; past it the
+ *  body scrolls. */
+export const BLOCK_FULL = "min-h-[420px] max-h-[840px]"
 export type BlockSize = "collapsed" | "half" | "full"
 
 export type BlockProps = {
