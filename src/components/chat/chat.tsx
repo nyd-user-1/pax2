@@ -210,6 +210,20 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
   const [dragOver, setDragOver] = useState(false)
   // The drop's page is still being read into context; the ribbon shimmers and Send holds until it lands.
   const reading = !!attached && attached.context == null && !attached.error
+  // A PDF attached with the paperclip: sent with every question in this conversation until let go.
+  const [pdf, setPdf] = useState<{ name: string; data: string; size: number } | null>(null)
+  const [pdfError, setPdfError] = useState<string | null>(null)
+  const pdfInput = useRef<HTMLInputElement>(null)
+  const pickPdf = (f: File | undefined) => {
+    setPdfError(null)
+    if (!f) return
+    if (f.type !== 'application/pdf' && !/\.pdf$/i.test(f.name)) return setPdfError('Only PDFs attach here.')
+    if (f.size > 3_500_000) return setPdfError('That PDF is over 3.5 MB.')
+    const r = new FileReader()
+    r.onload = () => setPdf({ name: f.name, data: String(r.result).split(',')[1] ?? '', size: f.size })
+    r.onerror = () => setPdfError('That PDF could not be read.')
+    r.readAsDataURL(f)
+  }
   // A video picked from Explore or the + menu is attached the way a dropped one is: its video page is read
   // into the chat's context, so the answer works from what PAX2 holds on it, not the scored takes alone.
   const attachVideo = async (v: VideoChip) => {
@@ -355,7 +369,7 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: allMessages.map(m => ({ role: m.role, content: m.content })), ...(selectedAddress ? { address: selectedAddress.description, place: placeInsight } : {}), ...((context || attached?.context || recordMode || analysisRef.current) ? { systemContext: [context?.(), attached?.context, recordMode ? RECORD_GUIDE : null, analysisRef.current].filter(Boolean).join('\n\n') } : {}), ...(recordMode ? { record: true } : {}), model }),
+        body: JSON.stringify({ messages: allMessages.map(m => ({ role: m.role, content: m.content })), ...(pdf ? { document: { name: pdf.name, data: pdf.data } } : {}), ...(selectedAddress ? { address: selectedAddress.description, place: placeInsight } : {}), ...((context || attached?.context || recordMode || analysisRef.current) ? { systemContext: [context?.(), attached?.context, recordMode ? RECORD_GUIDE : null, analysisRef.current].filter(Boolean).join('\n\n') } : {}), ...(recordMode ? { record: true } : {}), model }),
         signal: controller.signal,
       })
       if (!res.ok || !res.body) {
@@ -679,6 +693,23 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
       )}
       {chipTarget && <ChipRow chips={chips} onTap={tapChip} disabled={loading || streaming} />}
       {attachment}
+      {(pdf || pdfError) && (
+        <div className="-mb-2 flex min-w-0 items-center gap-1.5 rounded-t-2xl border border-b-0 border-[var(--border)] bg-slate-100 px-4 pb-4 pt-2 text-[11px] text-slate-600">
+          <Paperclip className="h-3 w-3 shrink-0" />
+          <span className="shrink-0 uppercase tracking-wide">pdf</span>
+          {pdf ? (
+            <>
+              <span className="truncate font-medium text-slate-900">{pdf.name}</span>
+              <span className="shrink-0 text-slate-400">· {(pdf.size / 1_000_000).toFixed(1)} MB, read with every question</span>
+            </>
+          ) : (
+            <span className="truncate text-pax2-red">{pdfError}</span>
+          )}
+          <button type="button" onClick={() => { setPdf(null); setPdfError(null) }} className="ml-auto shrink-0 rounded hover:text-slate-900" aria-label="Let the PDF go">
+            <X className="h-3 w-3" />
+          </button>
+        </div>
+      )}
       {attached && (
         <div className={`-mb-2 flex min-w-0 items-center gap-1.5 rounded-t-2xl border border-b-0 border-[var(--border)] px-4 pb-4 pt-2 text-[11px] text-slate-600 ${reading ? 'animate-pulse bg-pax2-lavender/60' : 'bg-slate-100'}`}>
           {reading ? <Loader2 className="h-3 w-3 shrink-0 animate-spin text-pax2-blue" /> : <Paperclip className="h-3 w-3 shrink-0" />}
@@ -765,6 +796,10 @@ export function Chat({ scripts = [], videos = [], shorts = [], compact = false, 
             hasScript={messages.some((m) => m.role === 'assistant' && !!scriptText(m.content))}
             onFootage={(text, focus) => { setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: '```pax-script\n' + text.trim() + '\n```', model: 'library' }]); setFootageFocus({ script: text.trim(), focus }) }}
             onGraphic={(kind) => { const last = [...messages].reverse().map((m) => (m.role === 'assistant' ? scriptText(m.content) : null)).find(Boolean); if (last) setFootageFocus({ script: last, focus: kind }) }} />
+          <button type="button" onClick={() => pdfInput.current?.click()} aria-label="Attach a PDF" title="Attach a PDF" className="flex size-9 items-center justify-center rounded-full text-[var(--muted)] transition-colors hover:bg-slate-100 hover:text-[var(--txt)]">
+            <Paperclip className="size-[18px]" />
+          </button>
+          <input ref={pdfInput} type="file" accept="application/pdf,.pdf" className="hidden" onChange={(e) => { pickPdf(e.target.files?.[0]); e.target.value = '' }} />
 
           <button
             onClick={() => {

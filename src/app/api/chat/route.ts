@@ -34,7 +34,7 @@ An ACTIVE CONTEXT section below is the user's attachment, read from PAX2's own p
 
 The first time an answer names a short, link its title to its page as markdown, [its title](/v/yt-ID), with an id taken from the context (the SHORTS section, an attachment, the record); never invent an id. Answer about the short the user asks about; bring in the campaign's scored takes only when the question is about them. The SHORTS section lists the shorts PAX2 holds that the user's last message points at, with their figures: answer from them. Only when a short the user names is in no section, say it is not among the shorts PAX2 holds, and ask for its link.
 
-When the context lists blocks from an attached page, you may show one in the answer by writing its reference alone on its own line, exactly as listed: [[block:/v/yt-ID#anchor]]. The chat renders the block there. Show a block when it carries the evidence you cite. Write a [[block:…]] reference only when an ACTIVE CONTEXT lists that exact reference; with no attachment, write none.`
+When the context lists blocks from an attached page, you may show one in the answer by writing its reference alone on its own line, exactly as listed: [[block:/v/yt-ID#anchor]]. The chat renders the block there. When the user's message carries a PDF, answer from it: quote its numbers, cite its pages as (p. N), and say plainly what it does not cover. Show a block when it carries the evidence you cite. Write a [[block:…]] reference only when an ACTIVE CONTEXT lists that exact reference; with no attachment, write none.`
 
 async function record(): Promise<string> {
   try {
@@ -86,7 +86,13 @@ export async function POST(req: Request) {
   } catch (e) {
     return new Response(JSON.stringify({ error: (e as Error).message, gate: true }), { status: 402, headers: { "Content-Type": "application/json" } })
   }
-  const { messages, address, place, systemContext, model, record: recordMode } = (await req.json()) as { messages: { role: "user" | "assistant"; content: string }[]; address?: string; place?: Place | null; systemContext?: string; model?: string; record?: boolean }
+  const { messages, address, place, systemContext, model, record: recordMode, document } = (await req.json()) as { messages: { role: "user" | "assistant"; content: string }[]; address?: string; place?: Place | null; systemContext?: string; model?: string; record?: boolean; document?: { name?: string; data?: string } }
+  // A PDF the user attached in /chat (2026-10-23): read by the model itself, as a document block on the
+  // last user message, re-sent with every question in that conversation. Capped at 3.5 MB.
+  const pdf = document?.data ? Buffer.from(document.data, "base64") : null
+  if (pdf && (pdf.length > 3_700_000 || pdf.subarray(0, 4).toString() !== "%PDF")) return new Response(JSON.stringify({ error: "That file is not a PDF under 3.5 MB." }), { status: 400 })
+  const pdfName = (document?.name ?? "document").replace(/\.pdf$/i, "").replace(/[^A-Za-z0-9()[\] -]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 100) || "document"
+  const lastUserAt = messages.map((m) => m.role).lastIndexOf("user")
   // The picker's choice when it is one of the models this account answers on (lib/model-options); else the default.
   const modelId = model && MODEL_IDS.has(model) ? model : MODEL
   // Extra context from the caller (the graph canvas: what is on it, an attached entity, a prompt step's wiring; a library report, every page), after the record.
@@ -97,7 +103,10 @@ export async function POST(req: Request) {
     new ConverseStreamCommand({
       modelId,
       system: [{ text: BASE_SYSTEM_PROMPT + (await record()) + `\n\n${metricsGuide()}` + extra + addressContext(address, place) + (await videosContext(lastUser)) + `\n\n${evidencePrompt()}` }],
-      messages: messages.filter((m) => m.content.trim()).map((m): Message => ({ role: m.role, content: [{ text: m.content }] })),
+      messages: messages
+        .map((m, i) => ({ m, i }))
+        .filter(({ m }) => m.content.trim())
+        .map(({ m, i }): Message => ({ role: m.role, content: pdf && i === lastUserAt ? [{ document: { format: "pdf", name: pdfName, source: { bytes: pdf } } }, { text: m.content }] : [{ text: m.content }] })),
       inferenceConfig: { maxTokens: 2000, temperature: 0.3 },
     }),
   )
