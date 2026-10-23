@@ -24,7 +24,8 @@ function hit(c: Card, needle: string) {
 export function LibraryBrowser({ cards }: { cards: Card[] }) {
   const [q, setQ] = React.useState("")
   const [kind, setKind] = React.useState<string | null>(null)
-  const kinds = [...new Set(cards.map((c) => c.kind))]
+  // All first, then the kinds A to Z.
+  const kinds = [...new Set(cards.map((c) => c.kind))].sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }))
   const needle = q.trim().toLowerCase()
   const shown = cards.filter((c) => (!kind || c.kind === kind) && (!needle || [c.title, c.summary, c.publisher, ...c.tags].join(" ").toLowerCase().includes(needle) || !!hit(c, needle)))
   return (
