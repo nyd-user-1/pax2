@@ -53,7 +53,7 @@ const pts = (x: number) => `${x > 0 ? "+" : x < 0 ? "−" : ""}${Math.abs(x).toF
 export function SwayableBlock({ codes, footer, videoId }: { codes?: string[]; footer?: string; videoId: string }) {
   if (!codes?.length)
     return (
-      <ListBlock title="Swayable" tools={<Term id="swayable" label={false} />} height="auto">
+      <ListBlock title="Swayable" tools={<Term id="swayable" label={false} />} height="max">
         <Unscored block="Swayable" videoId={videoId} />
       </ListBlock>
     )
@@ -62,7 +62,7 @@ export function SwayableBlock({ codes, footer, videoId }: { codes?: string[]; fo
   // −1.5 to +1.5 points across the bar, zero in the middle.
   const at = (x: number) => Math.min(100, Math.max(0, ((x + 1.5) / 3) * 100))
   return (
-    <ListBlock title="Swayable" tools={<Term id="swayable" label={false} />} height="auto" footer={footer}>
+    <ListBlock title="Swayable" tools={<Term id="swayable" label={false} />} height="max" footer={footer}>
       <div className="flex flex-col gap-6">
         <div className="grid grid-cols-2 gap-4">
           <Figure value={`+${out.meanEffect.toFixed(1)} pts`} label="Vote choice, average tested ad" />
@@ -94,12 +94,12 @@ const GOALS: Record<string, string> = { persuade: "Persuade", money: "Raise mone
 export function WesleyanBlock({ goal, footer, videoId }: { goal?: string; footer?: string; videoId: string }) {
   if (!goal)
     return (
-      <TableBlock title="Wesleyan" tools={<Term id="wesleyan" label={false} />} height="auto">
+      <TableBlock title="Wesleyan" tools={<Term id="wesleyan" label={false} />} height="max">
         <Unscored block="Wesleyan" videoId={videoId} />
       </TableBlock>
     )
   return (
-    <TableBlock title="Wesleyan" tools={<Term id="wesleyan" label={false} />} height="auto" footer={footer}>
+    <TableBlock title="Wesleyan" tools={<Term id="wesleyan" label={false} />} height="max" footer={footer}>
       <div className="flex flex-col gap-6">
         <Figure value={GOALS[goal]} label="Goal" />
         <div className="overflow-x-auto">
@@ -138,7 +138,7 @@ export function WesleyanBlock({ goal, footer, videoId }: { goal?: string; footer
 export function UpworthyBlock({ title, videoId }: { title?: string; videoId: string }) {
   if (!title)
     return (
-      <ListBlock title="Upworthy" tools={<Term id="upworthy" label={false} />} height="auto">
+      <ListBlock title="Upworthy" tools={<Term id="upworthy" label={false} />} height="max">
         <Unscored block="Upworthy" videoId={videoId} />
       </ListBlock>
     )
@@ -149,7 +149,7 @@ export function UpworthyBlock({ title, videoId }: { title?: string; videoId: str
   const carried = patterns.filter((p) => p.has)
   const net = carried.reduce((t, p) => t + p.lift, 0)
   return (
-    <ListBlock title="Upworthy" tools={<Term id="upworthy" label={false} />} height="auto" footer="The same story under different headlines, shown at random, 2013–2015.">
+    <ListBlock title="Upworthy" tools={<Term id="upworthy" label={false} />} height="max" footer="The same story under different headlines, shown at random, 2013–2015.">
       <div className="@container flex flex-col gap-6 pb-2">
         <div className="grid grid-cols-2 gap-4 @lg:grid-cols-3">
           <Figure value={`${upworthy.swing}×`} label="Clicks, best headline over worst" />

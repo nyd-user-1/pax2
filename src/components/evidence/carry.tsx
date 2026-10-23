@@ -19,7 +19,7 @@ export function CarryBlock({ ytId }: { ytId: string }) {
     <ListBlock
       title="Feature index"
       id="carry"
-      height="auto"
+      height="max"
       search="Search features…"
       tools={
         <Hint text="An index compares how often a feature appears among shorts that outperformed 3x with how often it appears among the rest. 2.0x (index 200) means twice as common among outperformers; 1.0x is no difference. The bar is the share of outperformers that carry the feature.">

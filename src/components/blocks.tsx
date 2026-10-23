@@ -21,6 +21,8 @@ import { cn } from "@/ui/lib/utils"
 
 /** Every block's open height. */
 export const BLOCK_HEIGHT = "h-[419px]"
+/** The cap for a block that sizes to its content (height "max"): past it the body scrolls. */
+export const BLOCK_MAX = "max-h-[419px]"
 
 export type BlockProps = {
   title: string
@@ -42,7 +44,8 @@ export type BlockProps = {
   view?: string
   onView?: (value: string) => void
   defaultOpen?: boolean
-  /** Open height when the block shouldn't be BLOCK_HEIGHT: "auto" sizes it to its content. */
+  /** Open height when the block shouldn't be BLOCK_HEIGHT: "auto" sizes it to its content, "max" sizes it
+   *  to its content up to BLOCK_MAX. */
   height?: string
   /** Ignored (Brendan, 2026-10-20): every block's footer is the Glossary link alone. */
   footer?: React.ReactNode
@@ -70,7 +73,7 @@ export function MainBlock({ title, children, search, searchValue, onSearch, tool
   const [open, setOpen] = React.useState(defaultOpen)
   return (
     <PAX2Table2 value={searchValue} onChange={onSearch}>
-      <Card className={cn("gap-4", open && height !== "auto" && (height ?? BLOCK_HEIGHT), className)}>
+      <Card className={cn("gap-4", open && height !== "auto" && (height === "max" ? BLOCK_MAX : (height ?? BLOCK_HEIGHT)), className)}>
         <CardHeader className={cn((open || peek) && "border-b [.border-b]:pb-2")}>
           <div className="flex items-center gap-1">
             <CardAnchor id={id}>{title}</CardAnchor>

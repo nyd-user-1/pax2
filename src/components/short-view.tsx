@@ -315,7 +315,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
       "comps",
       "Comps",
       <Locked key="comps" locked={locked}>
-        <ListBlock title="Comps" height="auto" footer={sampled ? SAMPLE : undefined}>
+        <ListBlock title="Comps" height="max" footer={sampled ? SAMPLE : undefined}>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {siblings.map((x) => {
               const r = ratioOf(x.id)
@@ -337,7 +337,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     left.push([
       "tags",
       "Tags",
-      <AccordionBlock key="tags" title="Tags" height="auto" footer={!realTags.length && tags.length ? SAMPLE : undefined}>
+      <AccordionBlock key="tags" title="Tags" height="max" footer={!realTags.length && tags.length ? SAMPLE : undefined}>
         <div className="flex flex-col gap-2">
           {tags.filter((t) => t !== "aggrieved").map((t, ti) => {
             const others = byTag(t)
@@ -378,7 +378,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "stats",
       "Analytics",
-      <CardBlock key="stats" title="Analytics" height="auto" defaultOpen={false} footer={sampleLikes != null || (!ads && paid && !locked) ? SAMPLE : undefined} peek={statGrid(core)} rows={allStats.map(([stat, value]) => ({ stat, value }))} name={`analytics-${ytId}`}>
+      <CardBlock key="stats" title="Analytics" height="max" defaultOpen={false} footer={sampleLikes != null || (!ads && paid && !locked) ? SAMPLE : undefined} peek={statGrid(core)} rows={allStats.map(([stat, value]) => ({ stat, value }))} name={`analytics-${ytId}`}>
         <div className="flex flex-col gap-6">
           {statGrid(core)}
           <div className="flex flex-col gap-4 border-t border-slate-100 pt-4">
@@ -408,18 +408,18 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
         {match && template ? <ModeMatch score={match.score} mode={match.mode} template={template} rows={recipe!} /> : <UnlockList actions={unlock.length ? unlock : [{ what: "No profile-similarity read for this video yet" }]} />}
       </ChartBlock>,
     ],
-    ["recs", "Recommendations", <ListBlock key="recs" title="Recommendations" height="auto"><Recommendations rows={recipe} unlock={recipe ? [] : unlock} /></ListBlock>],
+    ["recs", "Recommendations", <ListBlock key="recs" title="Recommendations" height="max"><Recommendations rows={recipe} unlock={recipe ? [] : unlock} /></ListBlock>],
     // Moved from /evidence#carry (2026-10-22): the catalog's lift, read against this video.
     ["carry", "Feature index", <CarryBlock key="carry" ytId={ytId} />],
     // The per-video chart homes (docs/RESONANCE-EVAL.md): the craft octagon, then the root's length
     // and topic charts in per-video form. Each appears only when its measure exists for this video.
     ...(template ? ([["craft", "Production profile", <ChartBlock key="craft" title="Production profile" height="auto"><CraftOctagon template={template} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
     ...(lengthSec > 0 ? ([["length", "Resonant Length", <LengthBlock key="length" mark={lengthSec} />]] as [string, string, ReactNode][]) : []),
-    ...(topic != null ? ([["topic", "Resonant Topic", <ChartBlock key="topic" title="Resonant Topic" height="auto"><TopicRows cluster={topic} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
+    ...(topic != null ? ([["topic", "Resonant Topic", <ChartBlock key="topic" title="Resonant Topic" height="max"><TopicRows cluster={topic} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
     [
       "kpis",
       "KPIs",
-      <TableBlock key="kpis" title="KPIs" tools={<Term id="kpis" label={false} />} height="auto" footer={!pr && sample ? SAMPLE : undefined}>
+      <TableBlock key="kpis" title="KPIs" tools={<Term id="kpis" label={false} />} height="max" footer={!pr && sample ? SAMPLE : undefined}>
         <div className="overflow-x-auto">
           <table className="tabular w-full text-sm">
             <thead className="text-left text-xs text-slate-500">
@@ -449,7 +449,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     [
       "paid",
       "Paid",
-      <ListBlock key="paid" title="Spend" tools={<Term id="paid" label={false} />} height="auto" footer={ads ? undefined : paid ? SAMPLE : undefined}>
+      <ListBlock key="paid" title="Spend" tools={<Term id="paid" label={false} />} height="max" footer={ads ? undefined : paid ? SAMPLE : undefined}>
         {ads ? (
           <div className="grid gap-x-6 text-xs @md:grid-cols-2">
             <div className="col-span-full mb-3 grid grid-cols-2 gap-2 @lg:grid-cols-4">
@@ -499,7 +499,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     right.push([
       "notes",
       "Visual Notes",
-      <CardBlock key="notes" title="Visual Notes" height="auto" footer={sampled ? SAMPLE : undefined}>
+      <CardBlock key="notes" title="Visual Notes" height="max" footer={sampled ? SAMPLE : undefined}>
         <Observations part="summary" f={f} />
       </CardBlock>,
     ])
@@ -507,7 +507,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     right.push([
       "characteristics",
       "Visual Characteristics",
-      <CardBlock key="characteristics" title="Visual Characteristics" height="auto" footer={sampled ? SAMPLE : undefined}>
+      <CardBlock key="characteristics" title="Visual Characteristics" height="max" footer={sampled ? SAMPLE : undefined}>
         <Observations part="detail" f={f} />
       </CardBlock>,
     ])
@@ -515,7 +515,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     right.push([
       "transcript",
       "Transcript",
-      <ListBlock key="transcript" title="Transcript" height="auto" footer={sampled ? SAMPLE : undefined}>
+      <ListBlock key="transcript" title="Transcript" height="max" footer={sampled ? SAMPLE : undefined}>
         <ScriptTimeline lines={lines} duration={duration} />
       </ListBlock>,
     ])
@@ -583,7 +583,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   right.push([
     "comments",
     "Comments",
-    <ListBlock key="comments" title="Comments" height="auto">
+    <ListBlock key="comments" title="Comments" height="max">
       <CommentThread videoId={ytId} threads={sevenRows(comments)} />
     </ListBlock>,
   ])
