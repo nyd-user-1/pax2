@@ -22,6 +22,8 @@ import { ChevronRight } from "lucide-react"
 import { CardBlock, ChartBlock, FormulaBlock, ListBlock, MainBlock, SmallBlock } from "@/components/blocks"
 import { ColumnTabs } from "@/components/aside-tabs"
 import { AsideVideos, TagSections } from "@/components/aside-videos"
+import { PageShorts } from "@/lib/home-blocks"
+import { VideoNotes } from "@/components/notes/video-notes"
 import { SwayableBlock, UpworthyBlock, WesleyanBlock, type Codes } from "@/components/codebook-blocks"
 import { CensusCharacteristics } from "@/components/census-characteristics"
 import { BlockOrder, OrderedBlock } from "@/components/dash/block-order"
@@ -324,12 +326,17 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   // Comps short in its first two places; Tags reads as the published app drew it, a few tags at a time.
   const clean = (title: string) => title.replace(/\s*#\w+/g, "").trim() || title
   const compIds = new Set(siblings.map((x) => x.id))
-  const channelVids = v
+  const channelAll = v
     ? [...data.videos, ...(homeFeed as unknown as Yt["videos"])]
         .filter((x, i, all) => x.channelId === v.channelId && x.id !== ytId && all.findIndex((y) => y.id === x.id) === i)
         .sort((a, b) => String(b.published ?? "").localeCompare(String(a.published ?? "")))
-        .map((x) => ({ id: x.id, title: clean(x.title) }))
     : []
+  const channelVids = channelAll.map((x) => ({ id: x.id, title: clean(x.title) }))
+  // Every short of the channel goes on the Blocks shelf while this page is open.
+  const shelfShorts = channelAll.map((x) => {
+    const s = x.duration ? secs(x.duration) : 0
+    return { id: x.id, title: clean(x.title), channel: ch?.name ?? "", ratio: ratioOf(x.id) ?? 0, duration: s ? `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}` : "" }
+  })
   const leadChannel = channelVids.filter((x) => !compIds.has(x.id)).slice(0, 2)
   const channelShown = [...leadChannel, ...channelVids.filter((x) => !leadChannel.includes(x))].slice(0, 8)
   const shownTags = tags.filter((t) => t !== "aggrieved")
@@ -562,6 +569,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
   return (
     <SeekProvider>
       <UsageOpen subject={id} />
+      <PageShorts videos={shelfShorts} />
       {locked && <SignupGate />}
       <SplitColumns
         at={inDrawer ? "xl" : "4xl"}
@@ -605,7 +613,16 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 { key: "score", label: "Score", node: column("video-score", inTab("score"), (key) => key !== "stats") },
                 { key: "analysis", label: "Analysis", node: column("video-analysis", inTab("analysis"), (key) => key !== "stats") },
                 { key: "research", label: "Research", node: column("video-research", inTab("research"), (key) => key !== "stats") },
-                { key: "notes", label: "Notes", node: column("video-notes", inTab("notes"), (key) => key !== "stats") },
+                {
+                  key: "notes",
+                  label: "Notes",
+                  node: (
+                    <>
+                      <VideoNotes video={{ id: ytId, title: (v?.title ?? "This short").replace(/\s*#\w+/g, "").trim() || "This short" }} />
+                      {column("video-notes", inTab("notes"), (key) => key !== "stats")}
+                    </>
+                  ),
+                },
               ]}
             />
           </>
