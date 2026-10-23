@@ -130,7 +130,8 @@ const TOUR: TourStep<Line2>[] = [
   { text: "Now slide your cursor across the chart. The black bar is simply blue minus red at that length, and the little card shows a real short from there.", at: 45 },
 ]
 
-function LengthChart({ tour }: { tour: TourStep<Line2> | null }) {
+/** `mark`: a video's own length (the video page), drawn as a line and where the cursor rests. */
+function LengthChart({ tour, mark }: { tour: TourStep<Line2> | null; mark?: number }) {
   const [hover, setHover] = React.useState<number | null>(null)
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     const box = e.currentTarget.getBoundingClientRect()
@@ -138,7 +139,8 @@ function LengthChart({ tour }: { tour: TourStep<Line2> | null }) {
     setHover(S_MIN + Math.min(1, Math.max(0, x)) * (S_MAX - S_MIN))
   }
   // While the tour runs, it moves the cursor; the pointer takes over again when it ends.
-  const target = tour ? (tour.at ?? CROSS.seconds) : (hover ?? CROSS.seconds)
+  const rest = mark != null ? Math.min(S_MAX, Math.max(5, mark)) : CROSS.seconds
+  const target = tour ? (tour.at ?? CROSS.seconds) : (hover ?? rest)
   const showTip = tour ? tour.at != null : hover != null
   const dim = (line: Line2) => (tour?.focus && tour.focus !== line ? 0.2 : 1)
   const s = Math.min(S_MAX, Math.max(5, useEased(target, !tour && hover != null)))
@@ -178,6 +180,7 @@ function LengthChart({ tour }: { tour: TourStep<Line2> | null }) {
         <ReferenceLine segment={[{ x: S_MIN, y: CROSS.share }, { x: CROSS.seconds, y: CROSS.share }]} stroke="#475569" strokeDasharray="5 5" />
         <Line data={POINTS} dataKey="outperform" stroke={NAVY} strokeOpacity={dim("outperform")} strokeWidth={3} dot={(p: { cx?: number; cy?: number; key?: React.Key | null }) => <Measured key={p.key ?? undefined} cx={p.cx} cy={p.cy} color={NAVY} opacity={dim("outperform")} />} activeDot={false} isAnimationActive={false} />
         <Line data={POINTS} dataKey="underperform" stroke={RED} strokeOpacity={dim("underperform")} strokeWidth={3} dot={(p: { cx?: number; cy?: number; key?: React.Key | null }) => <Measured key={p.key ?? undefined} cx={p.cx} cy={p.cy} color={RED} opacity={dim("underperform")} />} activeDot={false} isAnimationActive={false} />
+        {mark != null && <ReferenceLine x={Math.min(S_MAX, mark)} stroke="#2563eb" strokeWidth={2} strokeDasharray="4 3" label={{ value: `This video, ${Math.round(mark)}s`, position: "insideTopLeft", offset: 8, fontSize: 13, fontWeight: 600, fill: NAVY }} />}
         {!tuned && <ReferenceLine x={s} stroke="#0f172a" strokeOpacity={0.15} />}
         {!tuned && <ReferenceLine segment={[{ x: s, y: outperform }, { x: s, y: underperform }]} stroke={INK} strokeWidth={5} />}
         {!tuned && <ReferenceDot x={s} y={outperform} shape={(p: { cx?: number; cy?: number }) => <Dot {...p} color={NAVY} />} />}
@@ -188,7 +191,7 @@ function LengthChart({ tour }: { tour: TourStep<Line2> | null }) {
   )
 }
 
-export function LengthBlock() {
+export function LengthBlock({ mark }: { mark?: number } = {}) {
   const [step, setStep] = React.useState<number | null>(null)
   return (
     <ChartBlock
@@ -200,7 +203,7 @@ export function LengthBlock() {
       actions={<TourButton on={step != null} onClick={() => setStep(step == null ? 0 : null)} />}
     >
       <div className="relative aspect-[1130/545] min-h-64 w-full">
-        <LengthChart tour={step == null ? null : TOUR[step]} />
+        <LengthChart tour={step == null ? null : TOUR[step]} mark={mark} />
         {/* Bottom right, under the lines: past a minute both sit well above the axis. */}
         {step != null && <TourCard steps={TOUR} step={step} onStep={setStep} className="bottom-14 top-auto" />}
       </div>

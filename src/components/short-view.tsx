@@ -9,7 +9,8 @@ import warBaseline from "../../data/generated/war-baseline.json"
 import sampleVideos from "../../data/sample/videos.json"
 import paidBatch from "../../data/generated/voter-freedom-paid.json"
 import { CarryBlock } from "@/components/evidence/carry"
-import { CraftOctagon, LengthOnCurve, ModeMatch, Recommendations, ResonanceGauge, TopicRows, UnlockList, ingredients } from "@/components/video-reads"
+import { LengthBlock } from "@/components/record/resonance-length"
+import { CraftOctagon, ModeMatch, Recommendations, ResonanceGauge, TopicRows, UnlockList, ingredients } from "@/components/video-reads"
 import { craftTemplate, modeMatch, resonanceScore, topicOf, unlockActions } from "@/lib/video-reads"
 import { boostCounts } from "@/lib/boost"
 import { ChevronRight } from "lucide-react"
@@ -413,7 +414,7 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     // The per-video chart homes (docs/RESONANCE-EVAL.md): the craft octagon, then the root's length
     // and topic charts in per-video form. Each appears only when its measure exists for this video.
     ...(template ? ([["craft", "Production profile", <ChartBlock key="craft" title="Production profile" height="auto"><CraftOctagon template={template} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
-    ...(lengthSec > 0 ? ([["length", "Resonant Length", <ChartBlock key="length" title="Resonant Length" height="auto"><LengthOnCurve seconds={lengthSec} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
+    ...(lengthSec > 0 ? ([["length", "Resonant Length", <LengthBlock key="length" mark={lengthSec} />]] as [string, string, ReactNode][]) : []),
     ...(topic != null ? ([["topic", "Resonant Topic", <ChartBlock key="topic" title="Resonant Topic" height="auto"><TopicRows cluster={topic} /></ChartBlock>]] as [string, string, ReactNode][]) : []),
     [
       "kpis",

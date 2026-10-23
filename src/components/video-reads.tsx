@@ -1,6 +1,5 @@
 import Link from "next/link"
 
-import lengthCrossing from "../../data/generated/model/length-crossing.json"
 import topicLift from "../../data/generated/model/topic-lift.json"
 import { GrowBar } from "@/components/grow-bar"
 import { Hint } from "@/components/hint"
@@ -9,8 +8,8 @@ import { axisLabel, type Mode } from "@/lib/video-reads"
 import { cn } from "@/ui/lib/utils"
 
 // The video page's per-video reads, all drawn as plain SVG from measured artifacts:
-// the craft octagon (docs/RESONANCE-EVAL.md: craft axes only, outcome never inside the shape),
-// the length crossing with this video's length marked, the topic lift with this video's topic
+// the production profile (docs/RESONANCE-EVAL.md: production axes only, outcome never inside the shape),
+// the topic lift with this video's topic
 // highlighted, and Resonance's pair: the banded gauge and the mode match (docs/RESONANCE.md).
 
 const NAVY = "#1e3a8a"
@@ -48,66 +47,6 @@ export function CraftOctagon({ template }: { template: Record<string, number> })
             ))}
           </tbody>
         </table>
-      </div>
-    </div>
-  )
-}
-
-// ---------- the length crossing, this video marked ----------
-
-type Bin = { mid: number; within: { outperform: number; underperform: number } }
-const BINS = lengthCrossing.bins as Bin[]
-const CROSS = lengthCrossing.crossing.within as { seconds: number; share: number }
-
-export function LengthOnCurve({ seconds }: { seconds: number }) {
-  const W = 520
-  const H = 220
-  const L = 36
-  const B = 28
-  const S_MAX = 150
-  const Y_MAX = 26
-  const x = (s: number) => L + (Math.min(S_MAX, Math.max(0, s)) / S_MAX) * (W - L - 8)
-  const y = (p: number) => 10 + (1 - p / Y_MAX) * (H - B - 10)
-  const line = (k: "outperform" | "underperform") => BINS.filter((b) => b.mid <= S_MAX).map((b) => `${x(b.mid)},${y(b.within[k])}`).join(" ")
-  const i = Math.max(1, BINS.findIndex((b) => b.mid >= seconds))
-  const a = BINS[i - 1]
-  const b = BINS[Math.min(i, BINS.length - 1)]
-  const t = b.mid === a.mid ? 0 : Math.min(1, Math.max(0, (seconds - a.mid) / (b.mid - a.mid)))
-  const here = { out: a.within.outperform + t * (b.within.outperform - a.within.outperform), under: a.within.underperform + t * (b.within.underperform - a.within.underperform) }
-  return (
-    <div className="flex flex-col gap-3">
-      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label="Share that outperform and underperform by length">
-        {[0, 10, 20].map((p) => (
-          <g key={p}>
-            <line x1={L} x2={W - 8} y1={y(p)} y2={y(p)} stroke="#f1f5f9" />
-            <text x={L - 6} y={y(p)} textAnchor="end" dominantBaseline="middle" className="fill-slate-400 text-[10px]">
-              {p}%
-            </text>
-          </g>
-        ))}
-        {[0, 30, 60, 90, 120, 150].map((s) => (
-          <text key={s} x={x(s)} y={H - 8} textAnchor="middle" className="fill-slate-400 text-[10px]">
-            {s}s
-          </text>
-        ))}
-        <polyline points={line("outperform")} fill="none" stroke={NAVY} strokeWidth={2.5} />
-        <polyline points={line("underperform")} fill="none" stroke={RED} strokeWidth={2.5} />
-        <circle cx={x(CROSS.seconds)} cy={y(CROSS.share)} r={4} fill="#fff" stroke="#0f172a" strokeWidth={1.5} />
-        <line x1={x(seconds)} x2={x(seconds)} y1={10} y2={H - B} stroke={LIGHT} strokeWidth={1.5} strokeDasharray="4 3" />
-        <circle cx={x(seconds)} cy={y(here.out)} r={4} fill={NAVY} />
-        <circle cx={x(seconds)} cy={y(here.under)} r={4} fill={RED} />
-        <text x={x(seconds) + (seconds > 110 ? -6 : 6)} y={18} textAnchor={seconds > 110 ? "end" : "start"} className="fill-pax2-blue text-[11px] font-semibold">
-          This video, {Math.round(seconds)}s
-        </text>
-      </svg>
-      <div className="tabular flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-600">
-        <span className="flex items-center gap-1.5">
-          <span className="size-2 rounded-full" style={{ background: NAVY }} /> outperform 3x: {here.out.toFixed(1)}% at this length
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="size-2 rounded-full" style={{ background: RED }} /> underperform 0.5x: {here.under.toFixed(1)}%
-        </span>
-        <span>crossing at {CROSS.seconds.toFixed(0)}s</span>
       </div>
     </div>
   )
