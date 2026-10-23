@@ -388,7 +388,8 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
     const k = Math.round(x)
     return `${k}${k % 100 >= 11 && k % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][k % 10] ?? "th"}`
   }
-  // Analytics in the Spend block's shape: four tiles on top, the rest as label and value in two columns. A
+  // Analytics in the Spend block's shape: four tiles on top, then Performance, Channel, Content and Script,
+  // nine rows each, two groups to a row. A
   // channel-level row reads its channel's figure; hovering a value shows the channel and the baseline.
   const TILES = ["Views", "Outlier Score", "Engagement rate", "Hit probability"]
   const tiles = metrics ? TILES.map((label) => metrics.rows.find((r) => r.label === label)).filter((r): r is AnalyticsRow => !!r) : []
@@ -433,12 +434,17 @@ export async function ShortView({ id, inDrawer = false }: { id: string; inDrawer
                 </div>
               ))}
             </div>
-            {listed.map((r) => (
-              <div key={r.label} className="flex items-center justify-between gap-2 border-t py-1.5">
-                <span className="text-slate-800">{r.label}</span>
-                <Hint text={compare(r)}>
-                  <span className="tabular">{shown(r)}</span>
-                </Hint>
+            {[...new Set(listed.map((r) => r.group))].map((g) => (
+              <div key={g} className="mb-4">
+                <div className="pb-1.5 text-[11px] font-semibold uppercase tracking-wide text-slate-500">{g}</div>
+                {listed.filter((r) => r.group === g).map((r) => (
+                  <div key={r.label} className="flex items-center justify-between gap-2 border-t py-1.5">
+                    <span className="text-slate-800">{r.label}</span>
+                    <Hint text={compare(r)}>
+                      <span className="tabular">{shown(r)}</span>
+                    </Hint>
+                  </div>
+                ))}
               </div>
             ))}
           </div>
