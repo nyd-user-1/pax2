@@ -22,6 +22,8 @@ import { VOICES, type VoiceId } from '@/lib/studio-style'
 /*  Each one teaches a metric the site shows: the video page's blocks, /metrics' tabs and the graph. */
 const ANALYTICS_PROMPTS = [
   'What is Resonance, and how do I read its gauge: the needle, the dashed tick and the number in the center?',
+  'What is a Resonance score made of, and what moves it up or down?',
+  'What is a persuasion score, and which traits add to it or take away from it?',
   'What does "outperformed 3x" mean, and why is it measured against the channel\'s own median?',
   'What is the Outlier Score, and how is it different from a view count?',
   'What does the Mode match measure, and what makes a mode a winning one?',
