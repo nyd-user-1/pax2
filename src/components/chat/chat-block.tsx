@@ -26,7 +26,7 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
   const { askAbout } = useShellPanel()
   const { favs, toggle: toggleFav } = useNavFavorites()
   const [state, setState] = React.useState<{ html?: string; error?: string }>({})
-  const [size, setSize] = React.useState<"collapsed" | "half" | "full">("half")
+  const [size, setSize] = React.useState<"collapsed" | "half" | "full">("full")
   const collapsed = size === "collapsed"
   const [nonce, setNonce] = React.useState(0)
   const snap = React.useRef<HTMLDivElement>(null)
@@ -81,7 +81,7 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
           </button>
         </span>
       </div>
-      <div className={cn(size === "full" ? "max-h-[840px]" : "max-h-[420px]", "overflow-auto p-3 text-sm", !state.html && "flex items-center justify-center py-10")}>
+      <div className={cn("p-3 text-sm", !state.html && "flex items-center justify-center py-10")}>
         {state.html ? (
           <div ref={frame} className="relative">
             <div
@@ -89,6 +89,7 @@ export function ChatBlock({ path, anchor }: { path: string; anchor: string }) {
               onClick={onSnapClick}
               className={cn(
                 "[&_[data-slot=card]]:!h-auto [&_[data-slot=card-footer]]:hidden [&_button[aria-label='Block_options']]:invisible",
+                size === "full" ? "[&_[data-slot=card]]:max-h-[840px]" : "[&_[data-slot=card]]:max-h-[420px]",
                 size === "full" && "[&_[data-slot=card-header]_.lucide-chevron-down]:rotate-180",
                 collapsed && "[&_[data-slot=card-content]]:hidden [&_[data-slot=card-header]_.lucide-chevron-down]:!rotate-0 [&_[data-slot=card-header]]:!border-b-0",
               )}
