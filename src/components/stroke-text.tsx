@@ -3,7 +3,7 @@
 // Stroke text, pasted from its gallery source 2026-10-16; only types were
 // added for this repo's strict TypeScript — the logic is untouched.
 
-import { useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from "react"
+import { useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
@@ -68,6 +68,8 @@ type StrokeTextProps = {
   shadowColor?: string
   className?: string
   style?: CSSProperties
+  /** Drawn over the fill in the text's own units (baseline at y = 0); an element marked data-fill-char fades in with the fills. */
+  overlay?: ReactNode
 }
 
 const StrokeText = ({
@@ -95,6 +97,7 @@ const StrokeText = ({
   shadowColor,
   className = "",
   style = {},
+  overlay,
 }: StrokeTextProps) => {
   const rootRef = useRef<HTMLSpanElement>(null)
   const strokeTextRef = useRef<SVGTextElement>(null)
@@ -455,6 +458,8 @@ const StrokeText = ({
             ))}
           </text>
         </g>
+
+        {overlay}
 
         {dashArray && outlineLayer}
       </svg>
