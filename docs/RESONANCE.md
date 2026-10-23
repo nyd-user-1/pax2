@@ -1,5 +1,7 @@
 # Resonance — the definition and the formula
 
+The glossary's Resonance entries (src/lib/glossary.ts) and the video page's Formula card (src/lib/formulas.ts) restate this file; edit them together.
+
 **Definition (Brendan, 2026-10-22).** Resonance is a pre-publication number computed only after a video has entered the Lab through any door: every measurable variable of this video, read against every variable measured for every video that has gone through the pipeline, yielding a prediction of performance and specific, grounded areas of improvement. No Lab run, no Resonance.
 
 ## The formula
