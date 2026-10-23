@@ -73,7 +73,6 @@ const NAV_TREE: (NavLink | NavGroup)[] = [
 ]
 // The product's pages, in order: the search's list and the phone's strip.
 const NAV: NavLink[] = NAV_TREE.filter((n) => !("children" in n) || (n.label !== "Research" && n.label !== "Admin")).flatMap((n) => ("children" in n ? n.children : [n]))
-const OPEN_KEY = "pax2:nav-open"
 // Off the sidebar and the search: early pages kept for reference, under the account menu's Lab.
 const LAB = [{ href: "/campaigns", label: "Campaigns", icon: Clapperboard }]
 
@@ -227,22 +226,9 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
   // Create stays lit through the whole recording flow, whichever prefix a step lives under.
   const active = (href: string) => (href === "/recording" ? path.startsWith("/recording") || path.startsWith("/record/") : path.startsWith(href))
   const { favs, toggle: toggleFav } = useNavFavorites()
-  // Which group rows are folded open, kept in this browser; every group starts shut.
+  // Which group rows are folded open. Every load starts with all of them shut; nothing is remembered.
   const [openGroups, setOpenGroups] = React.useState<string[]>([])
-  React.useEffect(() => {
-    try {
-      const kept = JSON.parse(localStorage.getItem(OPEN_KEY) ?? "[]") as unknown
-      if (Array.isArray(kept)) setOpenGroups(kept.filter((x): x is string => typeof x === "string"))
-    } catch {}
-  }, [])
-  const toggleGroup = (label: string) =>
-    setOpenGroups((g) => {
-      const next = g.includes(label) ? g.filter((x) => x !== label) : [...g, label]
-      try {
-        localStorage.setItem(OPEN_KEY, JSON.stringify(next))
-      } catch {}
-      return next
-    })
+  const toggleGroup = (label: string) => setOpenGroups((g) => (g.includes(label) ? g.filter((x) => x !== label) : [...g, label]))
   const findable = React.useMemo(() => [...NAV, ...RESEARCH, ...(admin ? ADMIN : [])], [admin])
   // The front door (landing, record entry, sign-in) is full bleed; the recording flow, from /recording on, sits in the shell.
   // /signup and /signin are the landing's first screen with a form in place of the hero, sidebar and all.
