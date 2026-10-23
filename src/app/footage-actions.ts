@@ -4,14 +4,12 @@ import { createHash } from "node:crypto"
 
 import { generateHiggsfield, generationStatus, startGeneration, type GenStatus } from "@/app/video-gen-actions"
 import { anonSpend } from "@/lib/anon"
-import { currentUser } from "@/lib/auth"
 import type { FootagePlan, Graphics, Shot } from "@/lib/footage"
 import { fallbackChain, type VideoProvider } from "@/lib/video-model-options"
 
-// A script's footage plan and its banked shots, in S3 under studio/footage/v2/<key>/: plan.json (written
-// by one model call the first time anyone opens that script, then edited in place by signed-in users)
-// and shot-<id>.json (one per finished clip). The key is the script text's hash, so the same script
-// reaches the same plan and clips. v2 holds the comprehension checklist and the lower third.
+// A script's footage plan and its banked shots, in S3 under studio/footage/<key>/: plan.json (written
+// by one model call the first time anyone opens that script) and shot-<id>.json (one per finished
+// clip). The key is the script text's hash, so the same script reaches the same plan and clips.
 
 const REGION = process.env.PAX2_REGION ?? "us-east-1"
 const BUCKET = process.env.PAX2_BUCKET ?? "pax-2-638175140432"
@@ -19,7 +17,6 @@ const MODEL = process.env.PAX2_MODEL ?? "us.anthropic.claude-sonnet-4-6"
 
 export type BankedShot = { url: string; provider: VideoProvider; at: string }
 
-const at = (key: string, file: string) => `studio/footage/v2/${key}/${file}`
 const keyOf = (script: string) => createHash("sha256").update(script.replace(/\s+/g, " ").trim()).digest("hex").slice(0, 20)
 const checkKey = (key: string) => {
   if (!/^[a-f0-9]{20}$/.test(key)) throw new Error("Unknown script.")
@@ -54,13 +51,12 @@ ${script}
 "shots": first one opening shot (5 seconds) showing the problem the script's first sentence names; then one b-roll shot per remaining sentence, at most 6, each 4 or 5 seconds, in script order. Each shot: {"kind": "opening" | "broll", "line": the sentence it sits behind (omit for the opening), "prompt": a text-to-video prompt, "seconds": 4 or 5}. Every prompt: vertical 9:16, photoreal, natural light, no text or captions on screen, no logos, no recognizable faces, no politicians or candidates real or invented — places, objects, documents, hands, crowds from behind, buildings, landscapes.
 
 "graphics", every string taken from the script's own words where it can be, uppercase only where marked:
-- "checklist": the card that explains what the measure does, for a viewer to understand it: {"title": the measure's name as the script says it, UPPERCASE, 1-3 words (for example "QUESTION 3"), "items": exactly 3, each 2-4 words in Title Case, saying what the measure changes (for example "One Primary Ballot", "For Every Voter", "With Every Candidate"), "footer": at most 7 words stating how the result is decided (for example "Top two advance to November.")}
+- "checklist": {"title": 1-3 words, UPPERCASE, "items": exactly 3, each 2-4 words, "footer": at most 7 words}
 - "callout": {"text": a phrase of 2-5 words from the script, UPPERCASE, "highlight": the one word of it to color}
 - "stat": {"value": a number that appears in the script, "label": at most 6 words saying what it counts} — if the script has no number, both ""
 - "quote": {"text": the strongest sentence verbatim, at most 16 words, "by": ""}
 - "intro": {"title": at most 5 words, "sub": at most 8 words}
 - "end": {"ask": the script's ask, at most 8 words, "handle": ""}
-- "lowerThird": {"name": "", "role": ""}
 
 Reply: {"shots": [...], "graphics": {...}}`
 
@@ -69,7 +65,8 @@ export async function footagePlan(script: string): Promise<FootagePlan> {
   const text = script.trim()
   if (!text) throw new Error("No script.")
   const key = keyOf(text)
-  const kept = await getJson<FootagePlan>(at(key, "plan.json"))
+  const at = `studio/footage/${key}/plan.json`
+  const kept = await getJson<FootagePlan>(at)
   if (kept) return kept
   await anonSpend("write")
   const { BedrockRuntimeClient, ConverseCommand } = await import("@aws-sdk/client-bedrock-runtime")
@@ -84,8 +81,8 @@ export async function footagePlan(script: string): Promise<FootagePlan> {
     prompt: s.prompt,
     seconds: s.seconds <= 4 ? 4 : 5,
   }))
-  const plan: FootagePlan = { key, shots, graphics: { ...j.graphics, lowerThird: j.graphics?.lowerThird ?? { name: "", role: "" } } }
-  await putJson(at(key, "plan.json"), plan)
+  const plan: FootagePlan = { key, shots, graphics: j.graphics }
+  await putJson(at, plan)
   return plan
 }
 
@@ -93,7 +90,7 @@ export async function footagePlan(script: string): Promise<FootagePlan> {
 export async function bankedShots(key: string): Promise<Record<string, BankedShot>> {
   checkKey(key)
   const { m, c } = await s3()
-  const r = await c.send(new m.ListObjectsV2Command({ Bucket: BUCKET, Prefix: at(key, "shot-") }))
+  const r = await c.send(new m.ListObjectsV2Command({ Bucket: BUCKET, Prefix: `studio/footage/${key}/shot-` }))
   const out: Record<string, BankedShot> = {}
   for (const o of r.Contents ?? []) {
     const id = o.Key!.slice(o.Key!.lastIndexOf("/shot-") + 6, -5)
@@ -106,21 +103,21 @@ export async function bankedShots(key: string): Promise<Record<string, BankedSho
 /** The clips banked for a script, with the line each sits behind; no plan is written by asking. */
 export async function bankedForScript(script: string): Promise<{ id: string; url: string; line?: string; seconds: number }[]> {
   const key = keyOf(script.trim())
-  const plan = await getJson<FootagePlan>(at(key, "plan.json"))
+  const plan = await getJson<FootagePlan>(`studio/footage/${key}/plan.json`)
   if (!plan) return []
   const banked = await bankedShots(key)
   return plan.shots.filter((s) => banked[s.id]).map((s) => ({ id: s.id, url: banked[s.id].url, ...(s.line ? { line: s.line } : {}), seconds: s.seconds }))
 }
 
-const bank = (key: string, shotId: string, url: string, provider: VideoProvider) => putJson(at(key, `shot-${shotId}.json`), { url, provider, at: new Date().toISOString() } satisfies BankedShot)
+const bank = (key: string, shotId: string, url: string, provider: VideoProvider) => putJson(`studio/footage/${key}/shot-${shotId}.json`, { url, provider, at: new Date().toISOString() } satisfies BankedShot)
 
 /** Start one shot: a banked clip comes straight back; otherwise the chosen model first, then the others
  *  down the fallback list, skipping any that already failed this shot. Higgsfield answers in one call. */
 export async function startShot(key: string, shotId: string, first: VideoProvider, skip: VideoProvider[] = []): Promise<{ provider: VideoProvider; task?: string; url?: string }> {
   checkKey(key)
-  const kept = await getJson<BankedShot>(at(key, `shot-${shotId}.json`))
+  const kept = await getJson<BankedShot>(`studio/footage/${key}/shot-${shotId}.json`)
   if (kept) return { provider: kept.provider, url: kept.url }
-  const plan = await getJson<FootagePlan>(at(key, "plan.json"))
+  const plan = await getJson<FootagePlan>(`studio/footage/${key}/plan.json`)
   const shot = plan?.shots.find((s) => s.id === shotId)
   if (!shot) throw new Error("Unknown shot.")
   const input = { prompt: shot.prompt, seconds: shot.seconds, aspect: "9:16" as const }
@@ -147,23 +144,4 @@ export async function shotStatus(key: string, shotId: string, provider: Exclude<
   const s = await generationStatus(provider, task)
   if (s.status === "done" && s.url) await bank(key, shotId, s.url, provider)
   return s
-}
-
-/** A signed-in edit to the shared plan: one shot's prompt (before it is generated), or one graphic's
- *  words. Everyone who opens the script afterward reads the edited plan. */
-export async function updatePlan(key: string, edit: { shotId: string; prompt: string } | { kind: keyof Graphics; fields: Graphics[keyof Graphics] }): Promise<FootagePlan> {
-  checkKey(key)
-  if (!(await currentUser())) throw new Error("Sign in to save edits.")
-  const plan = await getJson<FootagePlan>(at(key, "plan.json"))
-  if (!plan) throw new Error("Unknown script.")
-  if ("shotId" in edit) {
-    const s = plan.shots.find((x) => x.id === edit.shotId)
-    if (!s) throw new Error("Unknown shot.")
-    s.prompt = edit.prompt.trim().slice(0, 1500)
-  } else {
-    if (!(edit.kind in plan.graphics) && edit.kind !== "lowerThird") throw new Error("Unknown graphic.")
-    ;(plan.graphics as Record<string, unknown>)[edit.kind] = edit.fields
-  }
-  await putJson(at(key, "plan.json"), plan)
-  return plan
 }

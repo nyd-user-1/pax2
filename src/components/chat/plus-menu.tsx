@@ -71,9 +71,6 @@ const ICON = 'icon-pop size-[18px] shrink-0 transition-colors text-slate-500 gro
 
 const VOICE_LINE = 'Open primaries let every voter pick the person, not the party.'
 
-/** The Yes on 3 campaign's script (the library's "Yes on 3, Here's Why"), one tap from Graphics and Generate video. */
-const YES_ON_3 = 'ask-first'
-
 const outlier = (x: number) => `${x >= 10 ? x.toFixed(0) : x.toFixed(1)}×`
 
 /* ------------------------------------------------------------------ */
@@ -155,18 +152,6 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
     { key: 'graphics', label: 'Graphics', icon: <Shapes className={ICON} strokeWidth={1.75} /> },
   ]
 
-  const yes = scripts?.find((s) => s.id === YES_ON_3)
-  const yesRow = (focus: FootageFocus) =>
-    yes && (!search || 'yes on 3'.includes(q) || yes.title.toLowerCase().includes(q)) ? (
-      <button onClick={() => { onFootage?.(yes.text, focus); closeMenu() }} className={row(0)}>
-        <Film className={ICON} strokeWidth={1.75} />
-        <span className="min-w-0 flex-1 text-left">
-          <span className="block text-sm font-semibold text-[var(--txt)]">Yes on 3</span>
-          <span className="block truncate text-xs text-[var(--muted)]">{yes.title}: the script, its shots and every graphic</span>
-        </span>
-      </button>
-    ) : null
-
   const scriptRows = (pick: (s: ListedScript) => void) => (
     <>
       {filteredScripts.map((s, i) => (
@@ -247,17 +232,11 @@ export function PlusMenu({ videos, shorts = [], onSelect, onShort, dropUp = fals
             )}
 
             {/* Generate video — a script, shown in the chat with its shots ready to generate */}
-            {step === 'generate' && (
-              <>
-                {yesRow('shots')}
-                {scriptRows((s) => onFootage?.(s.text, 'shots'))}
-              </>
-            )}
+            {step === 'generate' && scriptRows((s) => onFootage?.(s.text, 'shots'))}
 
             {/* Graphics — the cards Remotion draws from a script, at no cost */}
             {step === 'graphics' && (
               <>
-                {yesRow('checklist')}
                 {GRAPHIC_KINDS.filter((k) => !search || k.label.toLowerCase().includes(q) || k.about.toLowerCase().includes(q)).map((k, i) => (
                   <button
                     key={k.id}
