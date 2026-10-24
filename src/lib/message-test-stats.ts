@@ -135,8 +135,8 @@ export function analyze(test: MessageTest, responses: Response[]): Results {
   const real = responses.filter((r) => !r.preview)
   const done = real.filter((r) => r.step === "done" && r.passed && r.arm && r.vote != null)
   const counts = { started: real.length, screened: real.filter((r) => r.step === "screened").length, incomplete: real.filter((r) => r.step !== "done" && r.step !== "screened").length, complete: done.length }
-  const yesOf = (r: Response) => (test.vote.yes.includes(r.vote!) ? 1 : 0)
-  const compOf = (r: Response) => (test.comprehension && r.comprehension != null ? (r.comprehension === test.comprehension.answer ? 1 : 0) : null)
+  const yesOf = (r: Response): number => (test.vote.yes.includes(r.vote!) ? 1 : 0)
+  const compOf = (r: Response): number | null => (test.comprehension && r.comprehension != null ? (r.comprehension === test.comprehension.answer ? 1 : 0) : null)
   const placeboArm = test.arms.find((a) => a.placebo) ?? null
   const inArm = (id: string) => done.filter((r) => r.arm === id)
   const share = (rs: Response[], f: (r: Response) => number | null) => {

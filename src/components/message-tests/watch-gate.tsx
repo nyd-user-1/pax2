@@ -17,7 +17,7 @@ declare global {
 let ready: Promise<YTNamespace> | null = null
 function loadApi(): Promise<YTNamespace> {
   if (window.YT?.Player) return Promise.resolve(window.YT)
-  ready ??= new Promise((resolve) => {
+  ready ??= new Promise<YTNamespace>((resolve) => {
     const prev = window.onYouTubeIframeAPIReady
     window.onYouTubeIframeAPIReady = () => {
       prev?.()
