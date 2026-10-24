@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Activity, ArrowLeft, Database, Sigma, BadgeCheck, Beaker, Bell, BookA, Brain, ChevronDown, ChevronUp, ChevronsUpDown, Clapperboard, Columns2, Columns3, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, Microscope, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, ShieldCheck, Star, Tag, Target, Tv, TvMinimal, User2, Video, Vote, Workflow, X } from "lucide-react"
+import { Activity, ArrowLeft, Database, Sigma, BadgeCheck, Beaker, Bell, BookA, Brain, ClipboardList, ChevronDown, ChevronUp, ChevronsUpDown, Clapperboard, Columns2, Columns3, Compass, EllipsisVertical, ExternalLink, Film, FlaskConical, GanttChart, Gauge, Hammer, House, LayoutDashboard, Library, LifeBuoy, Link2, ListChecks, LogIn, LogOut, MessagesSquare, Microscope, NotebookPen, PanelLeftClose, PanelLeftOpen, Search, Settings, ShieldCheck, Star, Tag, Target, Tv, TvMinimal, User2, Video, Vote, Workflow, X } from "lucide-react"
 
 import dynamic from "next/dynamic"
 import { SidebarChats } from "@/components/sidebar-chats"
@@ -43,6 +43,7 @@ const ADMIN = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/data", label: "Data", icon: Database },
   { href: "/evals", label: "Evals", icon: Target },
+  { href: "/message-tests", label: "Message tests", icon: ClipboardList },
   { href: "/pipeline", label: "Pipeline", icon: Workflow },
   { href: "/project-management", label: "Project Management", icon: GanttChart },
   { href: "/reinforcement-learning", label: "Reinforcement learning", icon: Brain },
@@ -257,6 +258,8 @@ export function Shell({ children, drawer, signedIn = false, admin = false }: { c
   // The front door (landing, record entry, sign-in) is full bleed; the recording flow, from /recording on, sits in the shell.
   // /signup and /signin are the landing's first screen with a form in place of the hero, sidebar and all.
   const home = path === "/" || path === "/signup" || path === "/signin"
+  // A message test's respondent page (/t/<id>) is a bare survey: no sidebar, nothing of the product.
+  if (path.startsWith("/t/")) return <>{children}</>
   if (path === "/record" || (path.startsWith("/sign") && !home))
     return (
       <div className="min-h-dvh bg-pax2-mist">
