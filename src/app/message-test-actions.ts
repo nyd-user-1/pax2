@@ -2,7 +2,7 @@
 
 import { randomBytes, randomInt } from "node:crypto"
 
-import { currentUser, requireAdmin } from "@/lib/auth"
+import { currentUser, forbidDemo, requireAdmin } from "@/lib/auth"
 import { get, put, query } from "@/lib/ledger"
 import { ABOUT, newTest, publicSurvey, youtubeId, type MessageTest, type PublicSurvey, type Response, type Step } from "@/lib/message-tests"
 
@@ -31,6 +31,7 @@ export async function listTests(): Promise<(MessageTest & { complete: number })[
 
 export async function createTest(): Promise<string> {
   const user = await requireAdmin()
+  forbidDemo(user)
   const id = rid().slice(0, 8)
   await put({ pk: TESTS, sk: id, ...newTest(id, user.email) })
   return id
@@ -50,7 +51,7 @@ const index = (n: unknown, len: number) => (Number.isInteger(n) && (n as number)
 
 /** Save the setup. Arms keep their ids, so responses already given stay attached to them. */
 export async function saveTest(t: MessageTest): Promise<MessageTest> {
-  await requireAdmin()
+  forbidDemo(await requireAdmin())
   const prev = await get<Row>(TESTS, t.id)
   if (!prev) throw new Error("No such test.")
   const attentionOptions = lines(t.attention.options)
