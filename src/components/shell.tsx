@@ -117,6 +117,7 @@ const TITLES: [string, string][] = [
   ["/project-management", "Project Management"],
   ["/reinforcement-learning", "Reinforcement learning"],
   ["/campaigns", "Campaigns"],
+  ["/message-tests", "Message tests"],
 ]
 
 // 420px: the width the discussion and take panels open at (Brendan, 2026-10-20).
