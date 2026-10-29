@@ -2,6 +2,8 @@ import { CognitoIdentityProviderClient, ConfirmForgotPasswordCommand, ConfirmSig
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
+import { isTestAccountSession, purgeTestAccount } from "@/lib/test-account"
+
 const cip = new CognitoIdentityProviderClient({ region: process.env.PAX2_REGION ?? "us-east-1" })
 const CLIENT = process.env.PAX2_COGNITO_CLIENT_ID
 
@@ -47,9 +49,23 @@ export async function GET(_req: Request, { params }: { params: Promise<{ action:
 export async function POST(req: Request, { params }: { params: Promise<{ action: string }> }) {
   if ((await params).action === "signout") {
     const jar = await cookies()
+    // Signing out of the sign-up test account removes it (src/lib/test-account.ts), so the next sign-up
+    // with that email is a first-time one. Any other account only loses its cookies. src/proxy.ts has
+    // already renewed a lapsed session from the refresh cookie, so the token here is current.
+    let purged = false
+    let purgeError: string | undefined
+    if (await isTestAccountSession(jar.get("pax2_session")?.value)) {
+      try {
+        await purgeTestAccount()
+        purged = true
+      } catch (e) {
+        purgeError = (e as Error).message
+        console.error("signout: test account purge failed", e)
+      }
+    }
     jar.delete("pax2_session")
     jar.delete("pax2_refresh")
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true, purged, purgeError })
   }
   if (!CLIENT) return NextResponse.json({ error: "Auth isn't configured in this environment." }, { status: 503 })
   const { action } = await params
