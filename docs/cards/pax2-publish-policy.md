@@ -3,7 +3,7 @@ license: apache-2.0
 tags: [pax2, contextual-bandit, offline-reinforcement-learning, off-policy-evaluation, thompson-sampling, youtube-shorts]
 ---
 
-# Martian Publish Policy (v1)
+# Pax2 Publish Policy (v1)
 
 **Status: passes its registered rule, weakly.** Topic and publish-hour policies clear the doubly-robust bound; self-normalized IPS crosses zero for every factor; the length policy fails; the joint policy has 25 matched rows. Every number is observational: the logged publish choices were never randomized.
 
@@ -11,7 +11,7 @@ A contextual bandit over three publish choices: topic (the text encoder's k = 40
 
 ## Epoch marker
 
-The model was warm-started by replaying 18,307 settled catalog shorts in publish order (reward: settled ratio ≥ 3). The marker in `martian-publish-policy.json` is `epochMarker.replayRows = 18307`; the last replayed short is `CMnptS4ujWU`, published 2026-10-08T15:00:16Z. Updates 1 to 18,307 are replay. Every update after it is a client's own publish, rewarded by outperformed 3× within 72 hours. The 72-hour reward is never used in replay: only about 341 shorts have 72-hour curves.
+The model was warm-started by replaying 18,307 settled catalog shorts in publish order (reward: settled ratio ≥ 3). The marker in `pax2-publish-policy.json` is `epochMarker.replayRows = 18307`; the last replayed short is `CMnptS4ujWU`, published 2026-10-08T15:00:16Z. Updates 1 to 18,307 are replay. Every update after it is a client's own publish, rewarded by outperformed 3× within 72 hours. The 72-hour reward is never used in replay: only about 341 shorts have 72-hour curves.
 
 ## Results (test segment: last 20% by publish time, 3,662 rows, logged rate 0.1319)
 
@@ -35,7 +35,7 @@ Intervals: 1,000-resample bootstrap clustered by channel, seed 20261022.
 
 ## Files
 
-`martian-publish-policy.json` (posterior mean and precision per feature, feature names, arm definitions, epoch marker), `martian-publish-policy-eval.json` (every registered number), `fit.py`.
+`pax2-publish-policy.json` (posterior mean and precision per feature, feature names, arm definitions, epoch marker), `pax2-publish-policy-eval.json` (every registered number), `fit.py`.
 
 ## Registration (verbatim, written 2026-10-22T18:51:28Z before any fit)
 
@@ -66,4 +66,4 @@ Nothing has been fitted when this text is written. The evaluation below runs exa
 
 **Limits.** The logged choices were never randomized. Channels chose topic, length and hour for their own reasons, and those reasons may themselves drive outperformance; π_b is estimated, not known. Every number here is observational: it says which choices co-occur with outperforming in this catalog, not what a channel would gain by switching. The support guard keeps every recommendation inside what the channel has done, which limits both the variance and the reach of the policy.
 
-**Outputs.** Model file `data/generated/model/martian-publish-policy.json` with the epoch marker (everything at or before it is replay; a client's own publishes land after it). Script `scripts/policy/fit.py`. Card `docs/cards/martian-publish-policy.md`, this registration verbatim. Hugging Face: `NYSgpt/martian-publish-policy`, private, pass or fail.
+**Outputs.** Model file `data/generated/model/pax2-publish-policy.json` with the epoch marker (everything at or before it is replay; a client's own publishes land after it). Script `scripts/policy/fit.py`. Card `docs/cards/pax2-publish-policy.md`, this registration verbatim. Hugging Face: `NYSgpt/pax2-publish-policy`, private, pass or fail.
